@@ -1,0 +1,32 @@
+[project]
+name = "phd-research"
+version = "0.0.0"
+description = "Research notebooks for SIM x SINAN-TB comparison"
+requires-python = ">=3.11"
+readme = "README.md"
+
+# Minimal runtime dependencies to execute the notebooks.
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "scikit-learn>=1.4",
+  "imbalanced-learn>=0.12",
+  "matplotlib>=3.8",
+  "seaborn>=0.13",
+  "jupyterlab>=4.0",
+  "ipykernel>=6.0",
+  "papermill>=2.6",
+  "nbconvert>=7.0",
+  "jupyter>=1.0",
+  "xgboost>=2.0",
+  "lightgbm>=4.0",
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
