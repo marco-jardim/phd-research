@@ -1,6 +1,6 @@
-# phd-research (SIM x SINAN-TB)
+# Maximizando Recall ou Precisão: Abordagens de Machine Learning para Pareamento de Registros entre SIM e SINAN-TB
 
-Repositorio de notebooks para exploracao e comparacao de estrategias de linkage/classificacao de pares (SIM x SINAN-TB) usando `data/COMPARADORSEMIDENT.csv`.
+Repositório de notebooks para exploração e comparação de estratégias de linkage/classificação de pares entre o Sistema de Informações sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação - Tuberculose (SINAN-TB).
 
 ## Notebooks
 
