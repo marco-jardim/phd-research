@@ -2,6 +2,38 @@
 
 Repositório de notebooks para exploração e comparação de estratégias de linkage/classificação de pares entre o Sistema de Informações sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação - Tuberculose (SINAN-TB).
 
+## Objetivo
+
+Avaliar e comparar algoritmos de classificação de aprendizado de máquina para linkage probabilístico entre bases de dados de saúde pública (SIM e SINAN-TB), desenvolvendo estratégias que permitam maximizar recall ou precisão conforme a necessidade operacional, sob condições de forte desbalanceamento de classes (~0,4% de pares verdadeiros).
+
+## Status do Projeto
+
+| Fase | Status |
+|------|--------|
+| Coleta e preparação de dados | ✓ Concluída |
+| Implementação dos experimentos | ✓ Concluída (3 notebooks) |
+| Execução e geração de resultados | ✓ Concluída (métricas, CSVs, JSONs) |
+| Documentação técnica | ✓ Parcial |
+| Escrita da tese | ~30% em andamento |
+
+### Resultados preliminares
+
+- **Melhor equilíbrio (F1)**: Random Forest + SMOTE (Precision=0,89, Recall=0,99, F1=0,94)
+- **Melhor precisão**: Gradient Boosting (Precision=0,94)
+- **Melhor recall**: Stacking Ensemble (Recall=1,0)
+
+### Próximos passos
+
+Os experimentos requerem refinamento e expansão:
+
+- Ampliação do espaço de hiperparâmetros com busca sistemática (GridSearch/RandomizedSearch)
+- Validação cruzada mais robusta (k-fold estratificado, repeated k-fold)
+- Inclusão de técnicas adicionais (redes neurais, CatBoost, AutoML)
+- Análise de sensibilidade dos thresholds
+- Avaliação de custo-benefício operacional (trade-off recall vs precisão)
+- Testes com diferentes estratégias de feature engineering
+- Consolidação metodológica para escrita final da tese
+
 ## Notebooks
 
 - `notebooks/01_analise_comparativa_tecnicas.ipynb`
