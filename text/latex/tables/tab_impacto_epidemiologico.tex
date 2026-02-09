@@ -1,0 +1,23 @@
+\begin{table}[htbp]
+\centering
+\caption{Comparação de métodos: óbitos detectados, custo operacional e taxa corrigida}
+\label{tab:impacto-epidemiologico}
+\footnotesize
+\begin{tabular}{@{}lrrrrrl@{}}
+\toprule
+Método & Det. & Perd. & Rev. & Prec. & \textit{Recall} & \% Verd. \\
+\midrule
+Limiar ingênuo $\geq$7 & 58 & 16 & 404 & 0.144 & 0.784 & 78.4\% \\
+Limiar ingênuo $\geq$8 & 43 & 31 & 67 & 0.642 & 0.581 & 58.1\% \\
+Limiar ingênuo $\geq$9 & 31 & 43 & 31 & 1.000 & 0.419 & 41.9\% \\
+Regras $\geq$7 & 55 & 19 & 62 & 0.887 & 0.743 & 74.3\% \\
+Regras $\geq$8 & 36 & 38 & 36 & 1.000 & 0.486 & 48.6\% \\
+ML RF+SMOTE $\geq$0.5 & 67 & 7 & 70 & 0.957 & 0.905 & 90.5\% \\
+ML RF+SMOTE $\geq$0.7 & 64 & 10 & 65 & 0.985 & 0.865 & 86.5\% \\
+ML GB $\geq$0.5 & 60 & 14 & 64 & 0.938 & 0.811 & 81.1\% \\
+Híb.-OR RF$\geq$0.7+R$\geq$8 & 64 & 10 & 65 & 0.985 & 0.865 & 86.5\% \\
+Híb.-AND RF$\geq$0.5+R$\geq$7 & 55 & 19 & 55 & 1.000 & 0.743 & 74.3\% \\
+\bottomrule
+\multicolumn{7}{@{}l}{\footnotesize Det.=Detectados; Perd.=Perdidos; Rev.=Revisões; Prec.=Precisão; Verd.=Verdadeiros.}
+\end{tabular}
+\end{table}

@@ -1,0 +1,17 @@
+\begin{table}[htbp]
+\centering
+\caption{Validação cruzada estratificada (3-\textit{fold}) das configurações selecionadas.}
+\label{tab:cv-results}
+\small
+\begin{tabular}{lccc}
+\toprule
+Configuração & Precisão & Revocação & F1 \\
+\midrule
+Hybrid-AND GB $\geq$0.5 + Rules$\geq$7 & $0.989 \pm 0.016$ & $0.696 \pm 0.002$ & $0.817 \pm 0.006$ \\
+Hybrid-AND GB $\geq$0.6 + Rules$\geq$6 & $0.975 \pm 0.006$ & $0.785 \pm 0.022$ & $0.870 \pm 0.011$ \\
+Hybrid-AND RF+SMOTE $\geq$0.5 + Rules$\geq$7 & $0.952 \pm 0.034$ & $0.708 \pm 0.010$ & $0.812 \pm 0.019$ \\
+ML-only GB $\geq$0.5 & $0.948 \pm 0.011$ & $0.883 \pm 0.025$ & $0.914 \pm 0.017$ \\
+Rules-only $\geq$7 & $0.897 \pm 0.015$ & $0.708 \pm 0.010$ & $0.792 \pm 0.012$ \\
+\bottomrule
+\end{tabular}
+\end{table}

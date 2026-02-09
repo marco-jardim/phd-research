@@ -1,0 +1,119 @@
+\begin{chapter}{Método}\label{cap:metodo}
+
+\section{Desenho do estudo}\label{sec:desenho-estudo}
+
+Trata-se de um estudo metodológico de desenvolvimento e avaliação de algoritmos de aprendizado de máquina (\textit{machine learning}) aplicados ao pós-processamento do \textit{linkage} probabilístico entre bases de dados de saúde. O estudo utiliza dados secundários provenientes de sistemas nacionais de informação em saúde, vinculados por meio de técnicas probabilísticas, e propõe protocolos computacionais para a melhoria da acurácia na classificação de pares candidatos, com vistas à qualificação dos dados vinculados e à produção de indicadores para a vigilância epidemiológica.
+
+\section{Fontes de dados}\label{sec:fontes-dados}
+
+Foram utilizados registros provenientes de duas bases de dados nacionais de saúde:
+
+\begin{itemize}
+\item \textbf{Sistema de Informação sobre Mortalidade (SIM):} base de dados que registra todos os óbitos ocorridos no território nacional, a partir das Declarações de Óbito (DO), contendo variáveis demográficas (nome, data de nascimento, nome da mãe, sexo), geográficas (município de residência, endereço) e relativas à causa do óbito codificada pela Classificação Internacional de Doenças (CID-10) \cite{Paim2011brazilian}.
+
+\item \textbf{Sistema de Informação de Agravos de Notificação, Tuberculose (Sinan-TB):} base que registra os casos de tuberculose notificados compulsoriamente no Brasil, contendo variáveis de identificação do paciente, dados clínicos, laboratoriais e de acompanhamento do tratamento, incluindo a situação de encerramento do caso \cite{Oliveira2012uso, Santos2018factors}.
+\end{itemize}
+
+Os registros correspondem ao município do Rio de Janeiro e foram previamente submetidos a \textit{linkage} probabilístico por meio do programa OpenRecLink \cite{Camargo2000reclink}, gerando uma base de pares candidatos que constitui o objeto de análise do presente estudo. A escolha dessas bases justifica-se pelas razões detalhadas na Seção \ref{sec:justificativas-especificas}, em particular a relevância da tuberculose como condição marcadora da qualidade do cuidado em saúde e a experiência acumulada do grupo de pesquisa no \textit{linkage} dessas fontes de dados \cite{Oliveira2012uso, Bartholomay2014improved, Oliveira2016accuracy}.
+
+\section{Base de pares candidatos}\label{sec:base-pares}
+
+A base de pares candidatos utilizada contém registros classificados pelo OpenRecLink a partir de múltiplos passos de blocagem (\textit{blocking steps}), conforme recomendado na literatura para maximizar a sensibilidade do processo \cite{Coeli2002blocking}. Cada par candidato é representado por um conjunto de escores de similaridade calculados para as variáveis de identificação disponíveis em ambas as bases:
+
+\begin{itemize}
+\item Escores de similaridade para o \textbf{nome} do indivíduo (fragmentos e variações)
+\item Escores de similaridade para o \textbf{nome da mãe}
+\item Escore de concordância para a \textbf{data de nascimento}
+\item Escore de concordância para o \textbf{município de residência}
+\item Escores de similaridade para o \textbf{endereço}
+\item \textbf{Escore final composto} (\textit{nota final}) calculado pelo comparador de registros
+\item \textbf{Passo de blocagem} em que o par foi identificado
+\end{itemize}
+
+Cada par possui uma classificação de referência (padrão-ouro) atribuída por revisão manual, categorizada em: par verdadeiro confirmado, par verdadeiro provável e não-par. Para fins de modelagem, os pares verdadeiros confirmados e prováveis foram agrupados em uma única classe positiva, resultando em uma variável-alvo binária. A disponibilidade dessa classificação de referência possibilita o treinamento e a avaliação dos classificadores supervisionados, na medida em que fornece as observações rotuladas necessárias para o aprendizado.
+
+O padrão-ouro (\textit{gold standard}) foi construído por meio de revisão clerical (\textit{clerical review}) conduzida por dois revisores independentes, vinculados ao Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro (IESC-UFRJ). O procedimento consistiu na consulta manual aos sistemas de origem (SIM e Sinan-TB) para cada par candidato, com avaliação independente do status de par verdadeiro ou não-par, com base na concordância das variáveis de identificação e em evidências complementares disponíveis nos registros originais. Os casos de discordância entre os revisores foram resolvidos por consenso, após discussão conjunta dos elementos de identificação. Esse procedimento de revisão independente seguido de consenso constitui prática estabelecida em estudos de \textit{linkage} no contexto brasileiro \cite{Coeli2021suboptimal}.
+
+Reconhece-se que a ausência de cálculo formal de concordância inter-avaliadores (coeficiente kappa) constitui limitação do padrão-ouro utilizado, na medida em que impede a quantificação da reprodutibilidade do processo de rotulagem. Adicionalmente, a avaliação subjetiva de pares na zona cinzenta pode introduzir viés individual, especialmente quando os campos de identificação apresentam concordância parcial. Outra limitação potencial refere-se a falsos negativos decorrentes de falhas na etapa de blocagem do OpenRecLink: pares verdadeiros que não compartilham nenhuma das chaves de blocagem utilizadas não são incluídos no conjunto de candidatos e, portanto, não podem ser avaliados pelos revisores nem recuperados pelo pós-processamento. Essas limitações devem ser consideradas na interpretação das métricas de desempenho, particularmente da sensibilidade, que pode estar sobrestimada em relação ao universo real de pares verdadeiros existentes nas bases de origem.
+
+A base apresenta severo desbalanceamento de classes, com proporção aproximada de 1 par verdadeiro para cada 250 não-pares (cerca de 0,4\% de registros positivos), característica inerente ao \textit{linkage} em que o número de combinações candidatas cresce de forma quadrática enquanto os pares verdadeiros crescem linearmente \cite{Christen2012book, He2009imbalanced}. Esse desbalanceamento constitui nó crítico para a aplicação de classificadores supervisionados, demandando estratégias específicas de tratamento.
+
+\section{Comparador de registros}\label{sec:comparador-registros}
+
+Os escores de similaridade utilizados como insumo para o pós-processamento não foram calculados pelo OpenRecLink, mas por um comparador de registros probabilístico independente, desenvolvido especificamente para este estudo. A ferramenta constitui uma reimplementação em Python do algoritmo proposto por Lucena \citeyearpar{Lucena2013algoritmos} em dissertação de mestrado apresentada ao Instituto de Estudos em Saúde Coletiva da UFRJ, cujo protótipo original em Java foi desenvolvido por Peçanha (2015) no mesmo grupo de pesquisa. A versão utilizada neste trabalho encontra-se publicada em repositório de código aberto, sob licença GPL-3.0 \cite{Jardim2024comparador}.
+
+O comparador recebe como entrada os pares candidatos gerados pelo OpenRecLink após a etapa de blocagem e executa a comparação campo a campo entre os registros de cada par, produzindo 29 subescores de similaridade e um escore final agregado (\textit{nota final}). As comparações implementadas abrangem seis categorias:
+
+\begin{itemize}
+\item \textbf{Nome próprio e nome da mãe:} normalização textual (remoção de acentos, preposições, sufixos), codificação fonética por algoritmo \textit{Soundex} \cite{Christen2012book}, distância de edição de Levenshtein, e ponderação por tabelas de frequência posicional que diferenciam nomes raros (mais informativos) de nomes comuns (menos discriminatórios) \cite{Winkler1990string};
+\item \textbf{Data de nascimento:} comparação por componentes (dia, mês, ano), com pontuação diferenciada para concordância exata, concordância parcial (transposição de dia/mês) e discordância;
+\item \textbf{Texto livre (endereço):} normalização, tokenização e cálculo de similaridade por coeficiente de Jaccard sobre conjuntos de termos;
+\item \textbf{Município de residência:} comparação exata do código IBGE, com pontuação binária;
+\item \textbf{Campos numéricos:} comparação direta de valores, incluindo número do logradouro e complemento.
+\end{itemize}
+
+A cada par candidato, o comparador atribui subescores para cada campo comparado e calcula o escore final como combinação ponderada dessas comparações. Os pesos e limiares do algoritmo original foram definidos por Lucena \citeyearpar{Lucena2013algoritmos} com base em 20 critérios de comparação e um limiar fixo de corte (escore $\geq 4{,}33$). A versão empregada neste trabalho estende o conjunto de critérios com a inclusão de comparadores de endereço e município, totalizando as 29 variáveis de saída, e substitui o limiar fixo por uma camada de pós-processamento baseada em aprendizado de máquina, que explora a informação contida nos subescores individuais (e não apenas no escore agregado) para classificar pares na zona cinzenta, conforme detalhado nas seções seguintes.
+
+Cabe distinguir, portanto, três camadas do processo de vinculação: (i) o OpenRecLink \cite{Camargo2000reclink}, responsável pela blocagem e geração de pares candidatos; (ii) o comparador de registros \cite{Jardim2024comparador, Lucena2013algoritmos}, responsável pelo cálculo dos escores de similaridade campo a campo; e (iii) a camada de pós-processamento por aprendizado de máquina, que constitui a contribuição central desta tese. Essa separação de responsabilidades permite que cada componente evolua independentemente e facilita a reprodutibilidade do protocolo experimental.
+
+\section{Engenharia de atributos}\label{sec:engenharia-atributos}
+
+A partir dos escores brutos de similaridade fornecidos pelo comparador de registros \cite{Jardim2024comparador}, procedeu-se à derivação de atributos adicionais (\textit{features}) com o objetivo de enriquecer a representação de cada par candidato e possibilitar a captura de padrões não lineares de concordância entre registros. As estratégias de engenharia de atributos incluíram:
+
+\begin{itemize}
+\item \textbf{Indicadores binários de concordância:} variáveis dicotômicas indicando se o escore de similaridade de cada campo ultrapassa limiares predefinidos (concordância ``perfeita'' e concordância ``alta''), com limiares ajustados de acordo com a estratégia de análise empregada, mais permissivos para a estratégia de máximo \textit{recall} e mais restritivos para a estratégia de máxima precisão.
+
+\item \textbf{Escores agregados e ponderados:} combinações lineares dos escores individuais, atribuindo pesos diferenciados conforme o poder discriminatório de cada variável: maior peso para nome e data de nascimento, peso intermediário para nome da mãe e município, menor peso para endereço.
+
+\item \textbf{Termos de interação:} produtos entre escores de campos distintos, possibilitando a captura da concordância simultânea de múltiplas variáveis (por exemplo, nome $\times$ data de nascimento $\times$ nome da mãe), cujo valor conjunto pode ser mais informativo do que os escores individuais isoladamente.
+
+\item \textbf{Indicador de óbito por tuberculose:} variável derivada da situação de encerramento do caso no Sinan-TB, sinalizando registros cuja causa de encerramento indica óbito por tuberculose ou óbito por outras causas, incorporando conhecimento de domínio relevante para a priorização de pares.
+\end{itemize}
+
+\section{Estratégias de análise}\label{sec:estrategias-analise}
+
+O estudo foi estruturado em três etapas analíticas complementares, cada uma orientada por um objetivo distinto, a saber: comparação ampla de classificadores, maximização da sensibilidade e maximização da precisão, configurando protocolos experimentais que exploram diferentes compromissos entre falsos positivos e falsos negativos na classificação de pares, conforme a estratégia delineada na Seção~\ref{sec:estrategia-adotada}.
+
+A seleção dos classificadores empregados neste estudo foi orientada por dois critérios: (i) a representatividade de diferentes famílias de modelos, de modo a cobrir abordagens lineares (regressão logística), baseadas em árvores (Floresta Aleatória, \textit{Gradient Boosting}), baseadas em margens (SVM) e redes neurais (MLP), possibilitando a comparação entre paradigmas de aprendizado distintos; e (ii) a evidência prévia de bom desempenho em problemas com desbalanceamento severo de classes e em aplicações de \textit{linkage} documentadas na literatura \cite{Christen2012book, Hastie2009elements, Sariyar2012ensemble}. A regressão logística foi incluída como modelo de referência (\textit{baseline}), por sua interpretabilidade e ampla utilização na área de saúde.
+
+Cabe distinguir dois componentes do \textit{pipeline} experimental: os \textit{métodos padrão}, que compreendem o \textit{linkage} probabilístico realizado pelo OpenRecLink \cite{Camargo2000reclink} com parâmetros e limiares convencionais, representando a prática corrente no contexto brasileiro; e os \textit{métodos propostos}, que compreendem a camada de pós-processamento por aprendizado de máquina, incluindo as estratégias de balanceamento, a engenharia de atributos e as regras de negócio desenvolvidas neste trabalho. Essa distinção permite avaliar o ganho incremental proporcionado pelos métodos propostos em relação ao processo probabilístico convencional.
+
+\subsection{Análise comparativa de técnicas}\label{sec:analise-comparativa}
+
+Na primeira etapa, procedeu-se à comparação ampla de diferentes classificadores de aprendizado de máquina aplicados à tarefa de classificação de pares. Foram avaliados: regressão logística, Floresta Aleatória (\textit{Random Forest}), \textit{Gradient Boosting}, Máquina de Vetores de Suporte (\textit{SVM}) com núcleo de base radial (\textit{Radial Basis Function, RBF}), rede neural \textit{Multilayer Perceptron} (MLP), Floresta Aleatória com \textit{SMOTE} e combinação por empilhamento (\textit{Stacking Ensemble}). Para cada classificador, foram calculadas métricas de desempenho em conjunto de teste (partição \textit{hold-out} estratificada) e, adicionalmente, por validação cruzada estratificada para avaliação de estabilidade, incluindo precisão, sensibilidade, F$_1$-Score, AUC-ROC e AUC-PR \cite{Hastie2009elements, Hand2018fmeasure}. Adicionalmente, foram geradas curvas de otimização de limiares e análises de importância de atributos, possibilitando a identificação das variáveis de maior poder discriminatório para a classificação de pares.
+
+\subsection{Estratégia de maximização da sensibilidade}\label{sec:estrategia-recall}
+
+Na segunda etapa, o foco recaiu sobre a maximização da sensibilidade (\textit{recall}), buscando recuperar o maior número possível de pares verdadeiros, particularmente aqueles situados na área cinza do comparador. Para tanto, foram empregadas técnicas de balanceamento de classes (\textit{SMOTE} \cite{Chawla2002smote}, \textit{Borderline-SMOTE}, \textit{ADASYN} e \textit{SMOTE-Tomek}), seguindo a lógica de combinação de sobreamostragem e subamostragem proposta por Hassani e colaboradores \citeyearpar{Hassani2025oversampling}, combinadas com classificadores configurados para minimizar falsos negativos: Floresta Aleatória com pesos de classe, \textit{AdaBoost} com sobreamostragem, MLP com \textit{SMOTE} em proporção 1:1, votação suave (\textit{Soft Voting Ensemble}) e classificador em cascata (\textit{Cascade Classifier}) de dois estágios. Os limiares de classificação foram ajustados para valores baixos (entre 0,10 e 0,30), priorizando sensibilidade sobre precisão. Esta abordagem é particularmente relevante para estudos de subnotificação, nos quais a não identificação de um par verdadeiro pode resultar em subestimação da magnitude de desfechos desfavoráveis, comprometendo potencialmente a avaliação do desempenho do sistema de saúde e a identificação de nós críticos no itinerário terapêutico do paciente \cite{Oliveira2012uso, Sousa2011obitos}.
+
+\subsection{Estratégia de maximização da precisão}\label{sec:estrategia-precisao}
+
+Na terceira etapa, o foco direcionou-se à maximização da precisão (\textit{precision}), buscando identificar apenas os pares de alta confiabilidade e minimizar falsos positivos. Foram empregados classificadores com forte regularização (XGBoost \cite{Chen2016xgboost} e LightGBM \cite{Ke2017lightgbm}), Floresta Aleatória calibrada por regressão isotônica, combinação por empilhamento (\textit{Stacking}) com meta-aprendiz de regressão logística, e votação por consenso (unanimidade). Complementarmente, foram desenvolvidas regras de negócio baseadas no conhecimento do domínio, atribuindo pontuação a critérios como qualidade do nome, concordância exata de data de nascimento, similaridade do nome da mãe, concordância de município e endereço, e escore do comparador. Uma abordagem híbrida combinando classificadores de aprendizado de máquina com regras de negócio foi também avaliada. Os limiares foram ajustados para valores elevados (entre 0,60 e 0,90), priorizando a precisão. Esta estratégia é adequada para a construção de conjuntos analíticos de alta confiabilidade, nos quais a inclusão de falsos positivos poderia introduzir viés nas estimativas de associação, sendo, portanto, promissora para estudos que requeiram elevada qualificação dos dados vinculados. Cabe notar que, conforme argumentado por Hand e colaboradores \citeyearpar{Hand2018fmeasure}, o F$_1$-Score pode não refletir adequadamente o desempenho do classificador nesse cenário, recomendando-se a utilização complementar de métricas como AUC-PR.
+
+\subsection{Análises complementares e validação de robustez}\label{sec:analises-complementares}
+
+Além das três estratégias centrais, foram conduzidas análises complementares com o objetivo de (i) explicitar o comportamento do classificador em diferentes regiões de incerteza do comparador, (ii) formalizar a escolha de ponto operacional por meio de ablação e otimização conjunta de limiares, e (iii) avaliar a robustez e a interpretabilidade dos modelos. Em particular, o desempenho foi estratificado por faixas do escore final (\textit{nota final}) do comparador de registros, caracterizando uma zona cinzenta de pares candidatos em que os métodos baseados apenas em limiar apresentam maior incerteza. Foi também realizado estudo de ablação para comparar configurações \textit{rules-only}, \textit{ML-only}, combinações híbridas (lógicas AND/OR), cascatas e consenso entre modelos, incluindo a exploração de grades de limiares e a identificação de pontos de Pareto (precisão $\times$ sensibilidade) para apoiar a recomendação de protocolos por contexto de uso.
+
+Para avaliar estabilidade, as principais configurações foram submetidas à validação cruzada estratificada (5-\textit{fold}), e foi conduzida análise de sensibilidade às estratégias de balanceamento de classes. Por fim, foram produzidas análises de interpretabilidade, combinando importância de atributos derivada de modelos baseados em árvores e valores SHAP (\textit{Shapley Additive Explanations}) \cite{Lundberg2017shap}, incluindo a comparação da relevância dos atributos na zona cinzenta.
+
+\section{Métricas de avaliação}\label{sec:metricas}
+
+O desempenho dos classificadores foi avaliado por meio das seguintes métricas, reconhecidas na literatura de \textit{linkage} e de aprendizado de máquina \cite{Hand2018fmeasure, Hastie2009elements}:
+
+\begin{itemize}
+\item \textbf{Precisão} (\textit{Precision}): proporção de pares classificados como verdadeiros que são efetivamente pares verdadeiros.
+\item \textbf{Sensibilidade} (\textit{Recall}): proporção de pares verdadeiros corretamente identificados dentre todos os pares verdadeiros existentes.
+\item \textbf{F$_1$-Score}: média harmônica entre precisão e sensibilidade, sintetizando o equilíbrio entre ambas.
+\item \textbf{AUC-ROC}: área sob a curva \textit{Receiver Operating Characteristic}, que avalia a capacidade discriminatória do classificador em diferentes limiares de classificação.
+\item \textbf{AUC-PR}: área sob a curva Precisão-Sensibilidade (\textit{Precision-Recall}), métrica particularmente informativa em cenários de desbalanceamento severo de classes, na medida em que é menos influenciada pela grande quantidade de verdadeiros negativos \cite{He2009imbalanced}.
+\end{itemize}
+
+A avaliação principal foi realizada em uma partição \textit{hold-out} estratificada (70\% para treinamento e 30\% para teste), preservando a proporção de classes, e os resultados foram apresentados em quadros comparativos que possibilitam a identificação das combinações de técnica, estratégia de balanceamento e limiar mais adequadas a cada cenário de uso. Em complemento, para as configurações principais, foram realizadas validações cruzadas estratificadas (k-\textit{fold}) para estimar a variabilidade das métricas e avaliar a estabilidade do desempenho em diferentes partições dos dados, com vistas à padronização de protocolos de pós-processamento para o \textit{linkage} em saúde.
+
+\section{Ambiente computacional}\label{sec:ambiente-computacional}
+
+Todos os experimentos foram implementados na linguagem Python (versão 3.12.4), utilizando as bibliotecas \textit{scikit-learn} para os classificadores de aprendizado de máquina e métricas de avaliação, \textit{imbalanced-learn} para as técnicas de balanceamento de classes, \textit{XGBoost} e \textit{LightGBM} para os algoritmos de \textit{Gradient Boosting}, e \textit{pandas} e \textit{NumPy} para manipulação e transformação de dados. As análises foram estruturadas em cadernos Jupyter (\textit{Jupyter Notebooks}) e scripts auxiliares, executados de forma reprodutível por meio do \textit{framework} \textit{Papermill}, e versionados em repositório Git, assegurando rastreabilidade das etapas do processo analítico, em consonância com diretrizes metodológicas internacionais para a utilização de dados vinculados e técnicas de aprendizado de máquina na estimação de indicadores de saúde \cite{Haneef2022guidelines}.
+
+A opção por modelos baseados em árvore (\textit{tree-based models}), tais como Floresta Aleatória, XGBoost e LightGBM, em detrimento de arquiteturas de aprendizado profundo (\textit{deep learning}), decorreu de duas premissas metodológicas. Primeiro, o volume limitado de pares verdadeiros disponíveis para treinamento (247 pares positivos, dos quais aproximadamente 74 compõem o conjunto de teste) desfavorece arquiteturas profundas, como redes recorrentes (LSTM) e \textit{Transformers}, que demandam ordens de grandeza superiores de exemplos rotulados para convergir adequadamente e evitar sobreajuste \cite{Hastie2009elements}. A literatura recente sobre dados tabulares com menos de 10.000 amostras indica que modelos baseados em árvore de decisão com \textit{gradient boosting} tendem a igualar ou superar redes neurais profundas nesse regime de dados, particularmente quando o número de atributos é moderado e as relações entre variáveis são predominantemente de interação entre campos discretos ou semicontínuos. Segundo, a interpretabilidade das decisões constitui requisito do contexto de vigilância em saúde: a análise de valores SHAP (\textit{Shapley Additive Explanations}) \cite{Lundberg2017shap} aplicada a modelos arbóreos permite identificar, para cada par candidato, quais campos de identificação contribuíram para a classificação, possibilitando a auditoria das decisões automatizadas por profissionais de saúde. Modelos de aprendizado profundo, embora dotados de capacidade representacional superior, operam como aproximadores opacos cujas decisões são de difícil explicação em termos dos atributos de entrada, limitação relevante quando o resultado do \textit{linkage} fundamenta ações de vigilância epidemiológica e investigação de óbito.
+
+\end{chapter}

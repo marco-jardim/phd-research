@@ -1,0 +1,45 @@
+\begin{chapter}{Conclusões}
+\label{cap:conclusoes}
+
+Este estudo desenvolveu e avaliou estratégias de pós-processamento baseadas em aprendizado de máquina para o \textit{linkage} probabilístico entre bases de dados de saúde. A discussão apresentada no Capítulo \ref{cap:discussao} evidenciou que o ganho prático do pós-processamento não se restringe a métricas agregadas, mas se manifesta sobretudo na recuperação de pares verdadeiros concentrados na zona cinzenta do escore e na redução do custo de revisão manual, fatores determinantes para a viabilidade do uso rotineiro de dados vinculados em vigilância e gestão.
+
+\section{Síntese dos principais achados}
+\label{sec:cap7-sintese}
+
+Na comparação de técnicas (Capítulo \ref{cap:resultados}), modelos baseados em árvores apresentaram desempenho mais elevado em relação a abordagens lineares e a classificadores mais sensíveis à padronização de escalas, em particular sob desbalanceamento extremo. A estratificação por faixas do escore do OpenRecLink mostrou que a maior parte dos erros e ambiguidades se concentra no intervalo intermediário, no qual a combinação de múltiplas evidências (nominais, data de nascimento, endereço e município) é necessária para reduzir a incerteza.
+
+A análise de ablação e a validação cruzada indicaram que configurações ML-only oferecem excelente desempenho de equilíbrio, enquanto combinações híbridas configuráveis (AND e OR) permitem selecionar pontos operacionais com maior precisão ou maior estabilidade, conforme o objetivo de uso. Por fim, o estudo de impacto epidemiológico evidenciou recuperação de óbitos adicionais e maior rendimento por registro revisado, reforçando a aplicabilidade operacional do pós-processamento supervisionado.
+
+\section{Atendimento aos objetivos específicos}
+\label{sec:cap7-objetivos}
+
+Os objetivos específicos definidos no Capítulo \ref{cap:objetivos} foram atendidos conforme descrito a seguir.
+
+\begin{enumerate}
+
+\item \textbf{Comparação de técnicas de aprendizado de máquina.} Foram comparados classificadores lineares, métodos baseados em árvores, redes neurais e estratégias de combinação de modelos no problema de classificação de pares candidatos SIM--Sinan-TB, evidenciando diferenças de desempenho e comportamento sob desbalanceamento (Seções \ref{sec:cap5-nb01} e \ref{sec:cap5-modelos}).
+
+\item \textbf{Avaliação de estratégias de balanceamento.} Foram avaliadas estratégias de reamostragem e ponderação de classes, com análise de sensibilidade em validação cruzada, demonstrando robustez do desempenho em um conjunto de estratégias e identificando configurações com melhor F$_1$-Score médio (Seção \ref{sec:cap5-robustez-interpretabilidade}, Tabela \ref{tab:imbalance-sensitivity}).
+
+\item \textbf{Ajuste de pontos de corte e regras de negócio.} Foram propostas e avaliadas rotinas de escolha de limiar e regras determinísticas baseadas no conhecimento do domínio, com foco na recuperação de pares verdadeiros na zona cinzenta sem crescimento desproporcional de falsos positivos (Seções \ref{sec:cap5-faixas-escore} e \ref{sec:cap5-nb03}).
+
+\item \textbf{Duas estratégias complementares (revocação e precisão).} Foram operacionalizadas estratégias orientadas à maximização da revocação (recuperação exaustiva) e à maximização da precisão (alta confiabilidade), com discussão explícita das implicações operacionais e da escolha por contexto (Seções \ref{sec:cap5-nb02}, \ref{sec:cap5-nb03} e \ref{sec:cap6-dois-pipelines}).
+
+\item \textbf{Sistematização reprodutível dos resultados.} Os experimentos foram documentados por meio de scripts, tabelas e figuras que registram configurações, pontos operacionais e resultados comparativos, de modo a apoiar reprodutibilidade e uso como protocolo de pós-processamento em cenários similares (Seções \ref{sec:cap5-ablacao-pareto} e \ref{sec:cap5-robustez-interpretabilidade}).
+
+\item \textbf{Discussão de generalização.} Foram discutidas condições e limitações para adaptação a outros cenários de \textit{linkage} em saúde, incluindo dependência de padrão-ouro, qualidade de preenchimento e disponibilidade de variáveis, além da necessidade de validação externa (Seção \ref{sec:cap6-limitacoes}).
+
+\end{enumerate}
+
+\section{Contribuições}
+\label{sec:cap7-contribuicoes}
+
+As contribuições centrais deste estudo concentram-se em quatro dimensões. A primeira é metodológica, ao propor e avaliar um \textit{framework} configurável de pós-processamento que combina classificadores probabilísticos e regras determinísticas e explicita a fronteira de compromisso entre precisão e revocação. A segunda é operacional, ao quantificar o custo de revisão manual e demonstrar como a seleção de ponto operacional pode viabilizar o uso rotineiro de dados vinculados. A terceira é epidemiológica, ao evidenciar a recuperação de eventos relevantes na zona cinzenta e o potencial de qualificação de indicadores derivados de bases integradas. A quarta é de reprodutibilidade, pela sistematização dos experimentos em artefatos e rotinas que podem ser reaplicados em cenários análogos, incluindo a disponibilização do comparador de registros em repositório de código aberto \cite{Jardim2024comparador}.
+
+\section{Trabalhos futuros}
+\label{sec:cap7-trabalhos-futuros}
+
+Como continuidade, destacam-se: (i) validação externa em outros pares de bases e em diferentes contextos epidemiológicos; (ii) incorporação de variáveis clínicas e temporais adicionais para ampliar análises de impacto; (iii) estratégias de amostragem adaptativa e \textit{active learning} para reduzir a dependência de rotulagem manual; (iv) integração do pós-processamento em \textit{pipelines} operacionais com monitoramento contínuo de desempenho e auditoria; e (v) avaliação do efeito de diferentes esquemas de bloqueio e comparadores sobre a distribuição da zona cinzenta e sobre a estabilidade dos modelos.
+Espera-se que os resultados aqui apresentados contribuam para o fortalecimento das práticas de \textit{linkage} probabilístico no âmbito da vigilância epidemiológica no Brasil.
+
+\end{chapter}

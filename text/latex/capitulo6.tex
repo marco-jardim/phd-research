@@ -1,0 +1,164 @@
+\begin{chapter}{Resultados}
+\label{cap:resultados}
+
+Este capítulo expõe os resultados do pós-processamento por aprendizado de máquina (\textit{machine learning}) aplicado aos pares candidatos gerados pelo \textit{linkage} probabilístico entre o Sistema de Informações sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB). A estrutura segue a lógica do \textit{framework} proposto: inicialmente, caracteriza-se o desbalanceamento da base e a distribuição de escores que delimita a zona cinzenta; em seguida, reportam-se os cenários experimentais (análise comparativa, estratégia de revocação e estratégia de precisão); por fim, consolidam-se as análises de ablação, robustez por validação cruzada, sensibilidade ao tratamento do desbalanceamento e interpretabilidade via SHAP (\textit{SHapley Additive exPlanations}). Os detalhes metodológicos, incluindo fontes de dados, engenharia de atributos, métricas e ambiente computacional, encontram-se no Capítulo~\ref{cap:metodo}.
+
+\section{Base de dados e desbalanceamento}
+\label{sec:cap5-dados-desbalanceamento}
+
+A base analisada compreendeu 61.696 pares candidatos extraídos do arquivo \texttt{COMPARADORSEMIDENT.csv}, dos quais 247 foram classificados como pares verdadeiros (\textit{true matches}) após conferência manual, resultando em uma razão de desbalanceamento de aproximadamente 1:248 \cite{Christen2012book}. Esse grau de desbalanceamento não é atípico: estudos de \textit{linkage} em bases de saúde pública frequentemente reportam prevalências de pares verdadeiros inferiores a 1\%, especialmente quando a etapa de blocagem é permissiva para maximizar a cobertura do padrão-ouro (\textit{gold standard}) \cite{Harron2017linkagequality,Doidge2019linkageerror}. A consequência direta é que classificadores treinados sem tratamento do desbalanceamento tendem a otimizar a acurácia global, classificando quase todos os pares como negativos, acarretando revocação próxima de zero para a classe de interesse \cite{He2009imbalanced,Johnson2019survey}.
+
+Tal cenário impõe duas restrições operacionais concretas. Em primeiro lugar, mesmo uma taxa de falsos positivos aparentemente baixa (por exemplo, 0,5\%) pode gerar centenas de revisões manuais desnecessárias quando aplicada a um universo de dezenas de milhares de pares, elevando o custo de revisão manual a patamares incompatíveis com a prática rotineira da vigilância epidemiológica \cite{Coeli2021suboptimal}. Em segundo lugar, a avaliação do modelo não pode se restringir à acurácia: métricas como precisão, revocação e $F_1$ constituem indicadores mais adequados para quantificar o desempenho em cenários raros \cite{Christen2012book,He2009imbalanced}. Os experimentos baseados em partição fixa (\textit{hold-out}) utilizaram divisão estratificada 70/30 (173 pares verdadeiros para treino e 74 para teste), preservando a proporção original de classes. As métricas reportadas seguem a definição apresentada na Seção~\ref{sec:metricas}, com ênfase em precisão, revocação e $F_1$.
+
+\section{Faixas de escore do OpenRecLink e zona cinzenta}
+\label{sec:cap5-faixas-escore}
+
+Para cada par candidato gerado pelo OpenRecLink, o comparador de registros \cite{Lucena2013algoritmos,Jardim2024comparador} produz um conjunto de 29 subescores de similaridade por atributo e um escore agregado final (\texttt{nota\_final}) que sintetiza a evidência de pareamento (ver Seção~\ref{sec:comparador-registros}). Na prática, a abordagem mais simples (aqui denominada ``ingênua'') consiste em aceitar como pares verdadeiros todos os registros cujo escore agregado supere um limiar fixo. Para avaliar os limites intrínsecos dessa estratégia, analisou-se a distribuição dos pares verdadeiros por faixas de escore.
+
+A Tabela~\ref{tab:score-bands} e as Figuras~\ref{fig:score-band-volume} e~\ref{fig:score-band-pct} revelam um padrão de dispersão bimodal. Nas faixas superiores (9 a 10 e acima de~10), a concentração de pares verdadeiros é quase total: 97,7\% e 98,0\% dos registros nessas faixas constituem pareamentos corretos, correspondendo a 93 dos 247 pares verdadeiros (37,7\%). Esses pares possuem concordância elevada em múltiplos atributos e são triviais para qualquer método de classificação. A região intermediária (faixas de 5 a~8), aqui denominada zona cinzenta (\textit{grey zone}), concentra cerca de 47\% dos pares verdadeiros (117 de 247) diluídos em um volume de mais de 21 mil pares candidatos, onde a proporção de verdadeiros varia de 0,12\% (faixa 5 a~6) a 3,98\% (faixa 7 a~8). Essa assimetria entre volume e prevalência explica por que limiares ingênuos enfrentam um dilema insolúvel nessa região: reduzir o limiar para capturar mais pares verdadeiros implica aceitar um aumento exponencial no número de falsos positivos, enquanto elevá-lo implica descartar quase metade dos pareamentos reais \cite{DuVall2010extending,Doidge2018demystifying}.
+
+Esse resultado é consistente com a literatura sobre \textit{linkage} probabilístico de bases de mortalidade e vigilância no Brasil, em que divergências de grafia em nomes, abreviações e inconsistências em campos secundários (endereço, município) reduzem o escore agregado de pares genuínos sem eliminá-los completamente \cite{Paixao2017linkageevaluation,Coeli2021suboptimal}. A existência de uma zona cinzenta com quase metade dos pares verdadeiros constitui a principal justificativa empírica para a aplicação de modelos de aprendizado de máquina, que podem explorar padrões multivariados nos subescores de similaridade para discriminar pares nessa região, possibilitando ganhos de revocação sem degradação proporcional da precisão \cite{Enamorado2019probabilistic}.
+
+\input{tables/tab_score_bands.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/score_band_volume.pgf}
+\caption{Volume de pares candidatos e pares verdadeiros por faixa do escore agregado (escala logarítmica).}
+\label{fig:score-band-volume}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/score_band_pct.pgf}
+\caption{Proporção de pares verdadeiros em relação ao total de pares candidatos por faixa de escore, com destaque para a zona cinzenta (faixas 5 a~8).}
+\label{fig:score-band-pct}
+\end{figure}
+
+\section{Engenharia de atributos e modelos avaliados}
+\label{sec:cap5-modelos}
+
+Conforme descrito nas Seções~\ref{sec:comparador-registros} e~\ref{sec:engenharia-atributos}, o vetor de entrada de cada par candidato foi construído a partir de três camadas de informação: (i) os 29 subescores de similaridade produzidos pelo comparador de registros \cite{Jardim2024comparador}, abrangendo nome, nome da mãe, data de nascimento, município de residência e endereço; (ii) o escore agregado (\texttt{nota\_final}) e o passo (\textit{step}) de blocagem; e (iii) variáveis derivadas por engenharia de atributos (\textit{feature engineering}), incluindo somas ponderadas, interações multiplicativas e marcadores binários de concordância perfeita. Para assegurar comparabilidade entre os cenários experimentais, os três experimentos foram reexecutados com um pipeline único de engenharia de atributos, totalizando 58 variáveis no vetor final em todos os casos.
+
+A decisão de gerar atributos derivados, em vez de utilizar apenas os subescores brutos, apoiou-se na hipótese de que relações não lineares e interações entre campos são informativas para a classificação de pares na zona cinzenta. A variável \texttt{nome\_x\_dtnasc}, por exemplo, captura a concordância conjunta de nome e data de nascimento, combinação que eleva a probabilidade a posteriori de pareamento correto mesmo quando o escore agregado é moderado \cite{Fellegi1969theory,Christen2012book}. Em todos os cenários, foram testados classificadores tradicionais (regressão logística, \textit{Support Vector Machine}) e métodos de \textit{ensemble} (Random Forest, Gradient Boosting). Para mitigar o desbalanceamento, avaliaram-se estratégias de reamostragem do tipo SMOTE (\textit{Synthetic Minority Oversampling Technique}) e variantes, além de ponderação de classes (\textit{class weight}), conforme preconizado na literatura \cite{Chawla2002smote,Galar2012ensembles,He2009imbalanced}. Os modelos e configurações específicas seguem o delineamento da Seção~\ref{sec:estrategias-analise}.
+
+\section{Análise comparativa de técnicas (NB01)}
+\label{sec:cap5-nb01}
+
+No cenário de análise comparativa, sete modelos foram avaliados com limiar de decisão (\textit{threshold}) padrão de 0,5, de forma a estabelecer um panorama inicial de desempenho sob desbalanceamento severo. A Figura~\ref{fig:nb01-model-comparison} sintetiza os resultados em precisão, revocação e $F_1$.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{\input{fig_doc/nb01_model_comparison.pgf}}
+\caption{Comparação de desempenho (precisão, revocação e F1) entre modelos no cenário NB01, com limiar de decisão padrão.}
+\label{fig:nb01-model-comparison}
+\end{figure}
+
+A combinação Random Forest com reamostragem SMOTE (RF+SMOTE) e o Gradient Boosting alcançaram os melhores equilíbrios entre precisão e revocação. Modelos lineares (regressão logística, SVM linear) tenderam a maximizar revocação ao custo de precisão substancialmente inferior, comportamento esperado quando o hiperplano de separação é forçado a capturar todos os positivos em um espaço onde a classe majoritária domina \cite{He2009imbalanced}. Uma explicação plausível para o melhor desempenho dos métodos de \textit{ensemble} reside na sua capacidade de modelar interações não lineares entre subescores de similaridade, capturando padrões compostos (por exemplo, nome parcialmente concordante com data de nascimento exata) que um modelo linear projeta em um único coeficiente insuficiente \cite{Tyagi2025pprl}. Esse resultado orientou a seleção de RF e Gradient Boosting como modelos base para as estratégias especializadas de revocação e de precisão, eliminando classificadores lineares das etapas subsequentes.
+
+\section{Estratégia de maximização da revocação (NB02)}
+\label{sec:cap5-nb02}
+
+No cenário de maximização da revocação (\textit{recall}), o objetivo foi reduzir ao máximo a perda de pares verdadeiros, aceitando maior carga de revisão manual, cenário coerente com \textit{pipelines} de vigilância epidemiológica em que cada par perdido pode representar um óbito não investigado \cite{Bartholomay2014improved,Lima2020tbquality}. Foram avaliadas combinações de modelos, reamostragem e ponderação de classes, além de estratégias em cascata. Entre as configurações testadas, o modelo Gradient Boosting com SMOTE e pesos de classe atingiu revocação de 0,959 com precisão de 0,934, demonstrando que é possível obter sensibilidade elevada sem degradação extrema da precisão quando a engenharia de atributos explora informações complementares ao escore agregado \cite{Chawla2002smote}.
+
+Tal resultado pode ser atribuído a dois fatores convergentes. Primeiro, as variáveis derivadas adicionam dimensões informativas (concordância parcial de nome, interações nome $\times$ data de nascimento) que permitem ao classificador discriminar pares verdadeiros com escore agregado moderado. Segundo, a combinação de reamostragem com ponderação de classes ajusta tanto a distribuição de treinamento quanto a função de perda, gerando um efeito sinérgico que métodos isolados não alcançam \cite{Galar2012ensembles}. Configurações extremamente permissivas (\textit{ensemble} com limiar baixo) atingem revocação próxima de 1,0, porém impõem custos operacionais desproporcionais (centenas de revisões adicionais), reforçando a necessidade de selecionar o ponto operacional com base em restrições reais de capacidade de revisão \cite{Doidge2019linkageerror}.
+
+\section{Estratégia de maximização da precisão (NB03)}
+\label{sec:cap5-nb03}
+
+No cenário de maximização da precisão (\textit{precision}), o propósito foi gerar listas de candidatos de alta confiança para investigação, minimizando falsos positivos. Foram comparadas três abordagens: (i) regras determinísticas baseadas em concordância forte de atributos-chave (nome perfeito, data de nascimento exata, nome da mãe concordante), (ii) consenso por unanimidade entre modelos de aprendizado de máquina e (iii) um classificador híbrido que combina a probabilidade estimada pelo modelo supervisionado com a pontuação de regras determinísticas.
+
+O resultado mais restritivo (regras com limiar alto) produz precisão próxima de 1,0, porém com revocação limitada, aceitável apenas em contextos de auditoria ou validação amostral. O consenso entre múltiplos modelos eleva a revocação mantendo precisão alta, ao exigir concordância majoritária em vez de unanimidade. A configuração híbrida permite parametrizar o equilíbrio precisão/revocação por meio de dois limiares independentes (probabilidade do classificador e escore das regras), conferindo ao operador controle explícito sobre o ponto operacional \cite{Shaw2022biases}. Essa flexibilidade motivou a formalização do \textit{framework} híbrido e o estudo de ablação a seguir, cujo objetivo é quantificar a contribuição marginal de cada componente.
+
+\section{Estudo de ablação e fronteira de Pareto}
+\label{sec:cap5-ablacao-pareto}
+
+Para isolar a contribuição de cada componente do \textit{framework}, foi conduzido um estudo de ablação (\textit{ablation study}) abrangente com 70 configurações, organizadas em nove categorias de decisão: limiar ingênuo por escore, regras apenas, aprendizado de máquina apenas (ML-only), híbridos do tipo AND (interseção), híbridos do tipo OR (união), cascatas ML$\rightarrow$Regras e Regras$\rightarrow$ML, consenso entre modelos e consenso combinado com regras. A Tabela~\ref{tab:ablation-best-category} consolida a melhor configuração por categoria e a Tabela~\ref{tab:ablation-top10} lista as dez melhores segundo $F_1$.
+
+\input{tables/tab_ablation_best_category.tex}
+
+\input{tables/tab_ablation_top10.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/ablation_best_category.pgf}
+\caption{Melhor F1 por categoria de decisão no estudo de ablação.}
+\label{fig:ablation-barplot}
+\end{figure}
+
+O resultado mais evidente é a magnitude da lacuna entre o limiar ingênuo e as demais abordagens. O limiar de escore $\geq 8$ alcança $F_1 = 0{,}610$, enquanto a abordagem ML-only (RF+SMOTE, $th = 0{,}5$) atinge $F_1 = 0{,}931$, um ganho absoluto de 0,321 pontos. Essa diferença decorre da incapacidade do escore agregado, por ser unidimensional, de resolver a ambiguidade da zona cinzenta: pares com escore entre 5 e~8 podem ser verdadeiros (quando a discordância é localizada em campos de baixo peso) ou falsos (quando a concordância parcial é espúria). O classificador multivariado, ao explorar os 29 subescores e suas interações, captura essas distinções estruturais, possibilitando ganhos de discriminação que um limiar escalar não alcança \cite{Enamorado2019probabilistic,Vo2023extending}.
+
+As combinações híbridas ocupam posições intermediárias na fronteira precisão/revocação, deslocando o ponto operacional conforme a exigência do contexto. A configuração Hybrid-OR (RF$\geq$0,7 $\cup$ Rules$\geq$9) alcança $F_1 = 0{,}921$ com precisão de 0,985 e revocação de 0,865, enquanto a Hybrid-AND (RF$\geq$0,5 $\cap$ Rules$\geq$5) eleva a precisão a 1,000 ao custo de reduzir a revocação a 0,838. Esse comportamento é consistente com a teoria de combinação de classificadores: a operação de união (OR) aceita pares que qualquer dos componentes classifica como positivos, favorecendo revocação; a interseção (AND) exige concordância de ambos, favorecendo precisão \cite{Christen2012book}. O consenso entre modelos ($F_1 = 0{,}938$) constitui uma alternativa competitiva, sugerindo que a diversidade de algoritmos funciona como mecanismo de regularização que reduz falsos positivos idiossincráticos de modelos individuais \cite{Galar2012ensembles}.
+
+A parametrização por dois limiares (probabilidade do classificador e escore de regras) permite mapear de forma contínua o espaço de pontos operacionais. A Tabela~\ref{tab:pareto-frontier} e a Figura~\ref{fig:pareto-frontier} apresentam a fronteira de Pareto (\textit{Pareto frontier}) resultante, cujos extremos variam de configurações com revocação máxima (acima de 0,97) e precisão moderada até configurações com precisão unitária e revocação reduzida. Do ponto de vista operacional, a fronteira oferece ao gestor da vigilância um cardápio de opções: para monitoramento contínuo, seleciona-se o ponto de maior revocação; para investigação de alta confiança, seleciona-se o ponto de maior precisão \cite{Doidge2019linkageerror,Rafael2024accuracy}.
+
+\input{tables/tab_pareto_frontier.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/pareto_frontier_v2.pgf}
+\caption{Fronteira de Pareto para seleção de pontos operacionais (precisão e revocação) em combinações de limiares do classificador e das regras.}
+\label{fig:pareto-frontier}
+\end{figure}
+
+\section{Robustez, sensibilidade ao desbalanceamento e interpretabilidade}
+\label{sec:cap5-robustez-interpretabilidade}
+
+A robustez (\textit{robustness}) das principais configurações foi avaliada por validação cruzada estratificada com cinco partições (5-\textit{fold} CV), cujos resultados são sintetizados na Tabela~\ref{tab:cv-5fold} e na Figura~\ref{fig:cv-boxplots}.
+
+\input{tables/tab_cv_5fold.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/cv_boxplots_v2.pgf}
+\caption{Distribuição do F1 por configuração na validação cruzada (5-\textit{fold}).}
+\label{fig:cv-boxplots}
+\end{figure}
+
+A configuração RF+SMOTE ($th \geq 0{,}5$) obteve o maior $F_1$ médio ($0{,}916 \pm 0{,}026$), seguida pela Hybrid-OR RF$\geq$0,7 + Rules$\geq$9 ($0{,}898 \pm 0{,}025$) e pelo Gradient Boosting ($0{,}898 \pm 0{,}032$). O limiar ingênuo $\geq 8$ ficou substancialmente abaixo ($0{,}571 \pm 0{,}057$), com variância também superior, indicando que a abordagem baseada em escore agregado é simultaneamente menos eficaz e menos estável. A magnitude dessa diferença é relevante: o $F_1$ médio do RF+SMOTE supera o do limiar ingênuo em 0,345 pontos, e o desvio-padrão inferior (0,026 contra 0,057) indica que a superioridade se mantém mesmo sob variação amostral \cite{Christen2012book}. Esse resultado é consistente com achados de Tyagi e colaboradores \citeyearpar{Tyagi2025pprl}, que reportam ganhos análogos ao substituir limiares determinísticos por classificadores supervisionados em \textit{linkage} de registros administrativos.
+
+Um aspecto que merece atenção é a inversão de ranking entre \textit{hold-out} e validação cruzada em algumas configurações. No \textit{hold-out}, a ML-only RF+SMOTE alcança o maior $F_1$ absoluto; na validação cruzada, a Hybrid-OR apresenta desvio-padrão menor e desempenho competitivo. Uma explicação plausível reside na complementaridade dos componentes da combinação híbrida: ao unir as previsões do classificador com as regras determinísticas, a Hybrid-OR é menos sensível a flutuações de amostragem que afetam a estimação de probabilidades pelo RF, acarretando menor variabilidade entre partições \cite{DuVall2010extending}. Essa observação reforça a recomendação de que a escolha final do ponto operacional deve considerar não apenas o $F_1$ médio, mas também a estabilidade, especialmente em contextos de implantação contínua.
+
+Para avaliar a dependência dos resultados em relação ao tratamento do desbalanceamento, conduziu-se análise de sensibilidade com nove estratégias distintas aplicadas ao Random Forest: sem balanceamento, ponderação de classes, SMOTE com razões de 0,3, 0,5 e 1,0, BorderlineSMOTE, ADASYN, RandomUnderSampler e SMOTETomek. A Tabela~\ref{tab:imbalance-sensitivity} e a Figura~\ref{fig:imbalance-sensitivity} consolidam os resultados.
+
+\input{tables/tab_imbalance_sensitivity.tex}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.92\textwidth}{!}{\input{fig_doc/imbalance_sensitivity.pgf}}
+\caption{Sensibilidade do desempenho (F1) do classificador a diferentes estratégias de reamostragem para desbalanceamento.}
+\label{fig:imbalance-sensitivity}
+\end{figure}
+
+O $F_1$ variou entre 0,880 (ponderação de classes isolada) e 0,918 (SMOTETomek 0,3), uma faixa de 0,038 pontos. A estratégia SMOTETomek 0,3 ($F_1 = 0{,}918$) figurou como a melhor, combinando geração de exemplos sintéticos na fronteira de decisão com remoção de exemplos ambíguos (\textit{Tomek links}) \cite{Chawla2002smote}. A estreiteza dessa faixa, inferior a 5\% do $F_1$ máximo, indica que o classificador é robusto à escolha da estratégia de balanceamento, desde que alguma forma de tratamento seja empregada. Sem qualquer balanceamento, o $F_1$ ($0{,}897$) permanece competitivo em termos médios, porém apresenta variância mais elevada ($\pm 0{,}041$), sugerindo instabilidade em partições com poucos positivos. A ponderação de classes isolada ($F_1 = 0{,}880$) produz o pior resultado, provavelmente porque ajusta apenas a função de perda sem alterar a distribuição do espaço de atributos, limitando sua capacidade de gerar fronteiras de decisão adequadas em regiões de alta sobreposição \cite{Johnson2019survey}. Do ponto de vista operacional, a robustez à estratégia de balanceamento simplifica a implantação do \textit{framework}: a escolha entre SMOTE, BorderlineSMOTE ou SMOTETomek pode ser orientada por conveniência computacional sem sacrifício relevante de desempenho.
+
+A interpretabilidade (\textit{interpretability}) do classificador foi investigada por meio de valores SHAP \cite{Lundberg2017shap,Lundberg2020treeshap}, que quantificam a contribuição marginal de cada atributo para a previsão individual. A Tabela~\ref{tab:shap-importance} e a Figura~\ref{fig:shap-summary} apresentam a importância global (média do valor absoluto dos SHAP values) para a classe positiva.
+
+\input{tables/tab_shap_importance.tex}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{\textwidth}{!}{\input{fig_doc/shap_summary.pgf}}
+\caption{Resumo SHAP para a classe positiva, indicando a contribuição média (valor absoluto) de cada atributo para a predição.}
+\label{fig:shap-summary}
+\end{figure}
+
+Os cinco atributos mais influentes são: \texttt{nota\_final} (0,077), \texttt{NOME\_qtd\_frag\_iguais} (0,067), \texttt{nome\_perfeito} (0,061), \texttt{NOME\_qtd\_frag\_muito\_parec} (0,057) e \texttt{NOME\_qtd\_frag\_comuns} (0,036). A predominância de variáveis ligadas ao nome é coerente com a estrutura do comparador de registros, no qual o campo nome recebe o maior peso na composição do escore agregado \cite{Jardim2024comparador}. O escore agregado (\texttt{nota\_final}) figura em primeiro lugar, o que era esperado por se tratar de uma síntese ponderada de todos os campos; sua permanência como atributo relevante indica que o classificador não descarta a informação global, mas a complementa com dimensões parciais que o escore escalar comprime \cite{Markus2021role}.
+
+Ao restringir a análise à zona cinzenta (Figura~\ref{fig:feature-importance-heatmap}), atributos relacionados ao nome da mãe (\texttt{NOMEMAE\_qtd\_frag\_comuns}, \texttt{NOMEMAE\_qtd\_frag\_muito\_parec}, \texttt{NOMEMAE\_qtd\_frag\_iguais}) ganham relevância expressiva. Esse comportamento pode ser atribuído ao papel do nome da mãe como variável discriminante residual: quando nome e data de nascimento apresentam concordância apenas parcial (o que posiciona o par na zona cinzenta), a concordância do nome da mãe oferece evidência independente suficiente para resolver a ambiguidade \cite{Fellegi1969theory,Pinto2021ipv}. A implicação prática é direta: a qualidade do preenchimento do campo nome da mãe nas bases do SIM e Sinan-TB condiciona a eficácia do pós-processamento na faixa mais crítica de escores, reforçando recomendações de completude de campos em sistemas de informação de saúde \cite{Santos2018underreporting,Oliveira2019early}. Estudos recentes sobre a qualidade do padrão-ouro em \textit{linkage} confirmam que a confiabilidade dos campos utilizados na classificação afeta diretamente a validade das estimativas de desempenho \cite{Gupta2022framework,Lam2024synthetic,Gupta2024manual}.
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.92\textwidth}{!}{\input{fig_doc/feature_importance_heatmap.pgf}}
+\caption{Importância dos atributos por faixa de escore, com destaque para mudanças de relevância na zona cinzenta.}
+\label{fig:feature-importance-heatmap}
+\end{figure}
+
+\section{Síntese e recomendações operacionais}
+\label{sec:cap5-sintese}
+
+Em conjunto, os resultados demonstram três achados centrais. Primeiro, decisões baseadas exclusivamente em limiar do escore agregado são insuficientes para recuperar a parcela de pares verdadeiros concentrada na zona cinzenta (cerca de 47\% do total), acarretando perdas de detecção incompatíveis com as necessidades da vigilância epidemiológica da tuberculose \cite{Bartholomay2014improved,Bartholomay2020drtb}. Segundo, classificadores supervisionados (RF+SMOTE) elevam substancialmente o $F_1$ (de 0,610 para 0,931 no \textit{hold-out}), com robustez confirmada por validação cruzada e baixa sensibilidade à estratégia de balanceamento, indicando viabilidade de implantação em cenários operacionais com mínima necessidade de ajuste fino \cite{Christen2012book}. Terceiro, as regras determinísticas e os mecanismos de consenso funcionam como instrumentos de calibração do ponto operacional, compondo um \textit{framework} configurável que permite ao gestor priorizar revocação (vigilância) ou precisão (investigação de alta confiança), conforme a disponibilidade de recursos para revisão \cite{Doidge2019linkageerror,Shaw2022biases}.
+
+A recomendação operacional decorrente é a adoção de dois \textit{pipelines} complementares: (i) um \textit{pipeline} orientado à vigilância, com configuração ML-only ou Hybrid-OR e limiares permissivos, priorizando a detecção do maior número de óbitos associados à tuberculose; e (ii) um \textit{pipeline} orientado à investigação, com configurações Hybrid-AND ou consenso e limiares restritivos, minimizando revisões desnecessárias em contextos de recursos limitados \cite{Coeli2021suboptimal,Tassinari2025duckdb}. A análise interpretável via SHAP reforça a importância de campos frequentemente negligenciados (nome da mãe) na resolução da zona cinzenta, projetando a necessidade de políticas de qualidade de dados nas bases de saúde como pré-condição para a eficácia do pós-processamento \cite{Pacheco2008hierarchical,Rafael2024accuracy}. A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada no Capítulo~\ref{cap:discussao}.
+
+\end{chapter}

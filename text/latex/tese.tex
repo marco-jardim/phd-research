@@ -1,0 +1,489 @@
+\documentclass[12pt,a4paper,openany]{book}
+% \usepackage{anysize}  % depreciado, substituido por geometry abaixo
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+% Language (babel): prefer pt-BR if available; fall back to English.
+% This makes compilation work even on minimal TeX installs.
+\IfFileExists{brazilian.ldf}{%
+  \usepackage[brazilian]{babel}%
+}{%
+  \IfFileExists{portuguese.ldf}{%
+    \usepackage[portuguese]{babel}%
+  }{%
+    \usepackage[english]{babel}%
+  }%
+}%
+\usepackage[T1]{fontenc}
+% ABNT NBR 14724: fonte serifada tamanho 12 (Times-like)
+% ABNT recommends Times New Roman (or similar serif).
+% Uncomment ONE of the lines below once the font package is installed:
+%   tlmgr install newtx psnfss       (run as admin)
+% \usepackage{newtxtext}\usepackage{newtxmath}   % preferred: newtx
+% \usepackage{mathptmx}                           % fallback: mathptmx
+% ABNT NBR 14724: espaçamento 1,5 entrelinhas
+\IfFileExists{setspace.sty}{%
+  \usepackage{setspace}%
+  \onehalfspacing
+}{}
+% ---------- Traduções pt-BR manuais (fallback se babel-portuges ausente) ------
+% Usa \AtBeginDocument para garantir que sobrescreve o babel[english].
+\AtBeginDocument{%
+  \renewcommand{\chaptername}{Capítulo}%
+  \renewcommand{\contentsname}{Sumário}%
+  \renewcommand{\listfigurename}{Lista de Figuras}%
+  \renewcommand{\listtablename}{Lista de Tabelas}%
+  \renewcommand{\bibname}{Referências Bibliográficas}%
+  \renewcommand{\figurename}{Figura}%
+  \renewcommand{\tablename}{Tabela}%
+  \renewcommand{\appendixname}{Apêndice}%
+  \renewcommand{\indexname}{Índice Remissivo}%
+  \renewcommand{\abstractname}{Resumo}%
+}
+% ----------------------------------------------------------------------------
+% Optional packages (keep build working on minimal TeX installs)
+\makeatletter
+\newcommand{\maybeusepackage}[2][]{%
+  \IfFileExists{#2.sty}{\usepackage[#1]{#2}}{\typeout{[WARN] Package '#2' not found; skipping.}}%
+}
+\makeatother
+
+\maybeusepackage[ruled,chapter]{algorithm}
+\usepackage{makeidx}
+\maybeusepackage{subfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\maybeusepackage{mathrsfs}
+\usepackage{graphicx}
+\maybeusepackage{pgf}
+% Matplotlib PGF backend uses \mathdefault{} in tick labels
+\providecommand{\mathdefault}[1]{#1}
+\usepackage{fancyhdr}
+\usepackage{array}
+\maybeusepackage{booktabs}
+\usepackage{geometry}
+\maybeusepackage{simplewick}
+\usepackage{latexsym}
+\maybeusepackage[all]{xy}
+\maybeusepackage{euscript}
+\usepackage{enumerate}
+\maybeusepackage{dsfont}
+\maybeusepackage{slashed}
+\usepackage[plainpages=false, pagebackref=true, pdftex]{hyperref}
+% ABNT citations (must come after hyperref)
+\usepackage[alf,abnt-emphasize=bf]{abntex2cite} % ABNT citations
+% Compatibility helper: abntex2cite does not provide \citeyearpar
+% (used in the text as a year-only parenthetical citation)
+\providecommand{\citeyearpar}[1]{(\citeyear{#1})}
+\maybeusepackage{braket}
+
+\maybeusepackage{textcomp}
+\maybeusepackage{siunitx}
+\maybeusepackage{gensymb}
+
+\newcommand{\G}{\mathcal G}
+
+\maybeusepackage{pdfpages}
+\usepackage{indentfirst}
+\setlength{\parindent}{1.25cm}
+% ABNT NBR 14724: formatação de títulos de seções
+\IfFileExists{titlesec.sty}{%
+  \usepackage{titlesec}%
+  % Capítulo: negrito, caixa alta, tamanho \Large
+  \titleformat{\chapter}[display]
+    {\normalfont\bfseries\Large}
+    {\MakeUppercase{\chaptertitlename}\ \thechapter}{12pt}{\Large\bfseries\MakeUppercase}
+  % Seção: negrito, tamanho \large
+  \titleformat{\section}
+    {\normalfont\bfseries\large}{\thesection}{1em}{}
+  % Subseção: negrito, tamanho normal
+  \titleformat{\subsection}
+    {\normalfont\bfseries\normalsize}{\thesubsection}{1em}{}
+  % Sub-subseção: itálico negrito, tamanho normal
+  \titleformat{\subsubsection}
+    {\normalfont\bfseries\itshape\normalsize}{\thesubsubsection}{1em}{}
+}{}
+% enumitem: optional, siglas.tex has a fallback if unavailable
+\maybeusepackage{enumitem}
+\IfFileExists{nomencl.sty}{%
+  \usepackage[intoc]{nomencl}%
+  \makenomenclature
+}{%
+  % Fallback: allow compilation without nomencl.
+  \newcommand{\nomname}{}
+  \newcommand{\makenomenclature}{}
+  \newcommand{\printnomenclature}{}
+  \newcommand{\nomenclature}[2]{}
+}
+
+
+% custom packages
+%\usepackage{natbib}
+\graphicspath{{./fig_doc/}} % If your image is in a subfolder
+
+
+\renewcommand{\nomname}{Lista de Símbolos}
+
+\nomenclature{SUS}{Sistema \'Unico de Sa\'ude}
+\nomenclature{SIM}{Sistema de Informa\c{c}\~ao sobre Mortalidade}
+\nomenclature{Sinan}{Sistema de Informa\c{c}\~ao de Agravos de Notifica\c{c}\~ao}
+\nomenclature{SIH-SUS}{Sistema de Informa\c{c}\~oes Hospitalares do SUS}
+\nomenclature{SIA-SUS}{Sistema de Informa\c{c}\~oes Ambulatoriais do SUS}
+\nomenclature{Sinasc}{Sistema de Informa\c{c}\~ao sobre Nascidos Vivos}
+\nomenclature{GAL}{Gerenciador de Ambiente Laboratorial}
+\nomenclature{SITETB}{Sistema de Informa\c{c}\~ao de Tratamentos Especiais da Tuberculose}
+\nomenclature{TB}{Tuberculose}
+\nomenclature{ML}{Aprendizado de M\'aquina (\textit{Machine Learning})}
+\nomenclature{framework}{Estrutura metodol\'ogica para organiza\c{c}\~ao reprodut\'ivel de componentes e crit\'erios de decis\~ao}
+\nomenclature{pipeline}{Sequ\^encia operacional de etapas anal\'iticas e decis\'orias}
+\nomenclature{RF}{Floresta Aleat\'oria (\textit{Random Forest})}
+\nomenclature{XGBoost}{\textit{Extreme Gradient Boosting}}
+\nomenclature{LightGBM}{\textit{Light Gradient Boosting Machine}}
+\nomenclature{SVM}{M\'aquina de Vetores de Suporte (\textit{Support Vector Machine})}
+\nomenclature{MLP}{Perceptron Multicamadas (\textit{Multilayer Perceptron})}
+\nomenclature{SMOTE}{\textit{Synthetic Minority Over-sampling Technique}}
+\nomenclature{AUC-ROC}{\'Area sob a Curva ROC (\textit{Area Under the ROC Curve})}
+\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Revoca\c{c}\~ao}
+\nomenclature{KDD}{Descoberta de Conhecimento em Bases de Dados (\textit{Knowledge Discovery in Databases})}
+\nomenclature{LGPD}{Lei Geral de Prote\c{c}\~ao de Dados}
+
+
+\makeindex
+
+\geometry{left=3cm, top=3cm, right=2cm, bottom=2cm} % ABNT NBR 14724
+
+\hypersetup{colorlinks=true, breaklinks=true, linkcolor=black, citecolor=black, urlcolor=black}
+
+\begin{document}
+
+\setlength{\abovecaptionskip}{0.0cm}
+\setlength{\belowcaptionskip}{0.0cm}
+% \setlength{\baselineskip}{24pt}  % Substituído por setspace \onehalfspacing (ABNT)
+
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{\thepage}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\fancypagestyle{plain}
+{
+	\fancyhf{}
+	\lhead{}
+	\chead{}
+	\rhead{\thepage}
+	\lfoot{}
+	\cfoot{}
+	\rfoot{}
+}
+
+\renewcommand{\headrulewidth}{0pt}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\frontmatter 
+
+\thispagestyle{empty}
+
+\begin{figure}[h]
+    \includegraphics[scale=0.8]{logo_ufrj.jpg} 
+\end{figure}
+
+\vspace{15pt}
+
+\begin{center}
+
+\textbf{UNIVERSIDADE FEDERAL DO RIO DE JANEIRO}
+
+\textbf{INSTITUTO DE ESTUDOS EM SAÚDE COLETIVA}
+
+\vspace{30pt}
+
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+
+\vspace{25pt}
+
+{\large \bf Marco Elisio Oliveira Jardim}
+
+\vspace{35pt}
+
+\begin{flushright}
+\parbox{10.3cm}{Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).\par
+\vspace{18pt}\par
+{\large \bf Orientadora: Rejane Sobrino Pinheiro}\par
+\vspace{12pt}\par}
+\end{flushright}
+
+\vspace{90pt}
+
+\textbf{Rio de Janeiro}
+
+\textbf{2026}
+
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%% Folha de Assinaturas da Banca %%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\thispagestyle{empty}
+
+\noindent
+\setlength{\headheight}{15pt}
+
+%\begin{figure}[ht]
+%  \begin{center}
+%	\includegraphics[scale=0.742]{fig_doc/Folha_Ata.pdf}
+%  \end{center}
+%\end{figure}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% Ficha Catalográfica %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\mbox{}\vspace{5cm}
+
+\begin{center}
+\begin{tabular}{|c|}
+\hline\\
+\begin{minipage}{15cm}
+\rule{15cm}{0pt} \flushright
+
+
+\begin{minipage}{12.5cm}
+
+Jardim, Marco Elisio Oliveira
+
+% VER http://biblioteca.if.ufrj.br/wp-uploads/2014/09/tutorial-ficha-catalografica.pdf
+% VER TAMBÉM http://biblioteca.if.ufrj.br/servicos-produtos/ficha-catalografica/
+% O código Cutter é gerado pela biblioteca no momento do depósito.
+\hspace{1,59cm} Aprendizado de m\'aquina aplicado ao p\'os-processamento do relacionamento probabil\'{\i}stico de bases de dados de sa\'ude / Marco Elisio Oliveira Jardim. -- Rio de Janeiro, 2026.
+
+\hspace{1cm} 87 f.: il.
+
+\hspace{1cm} Orientadora: Rejane Sobrino Pinheiro.
+
+\hspace{1cm} Tese (Doutorado em Sa\'ude Coletiva) -- Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva, 2026.
+
+\hspace{1cm} 1. \textit{Linkage} probabil\'{\i}stico. 2. Aprendizado de m\'aquina. 3. Desbalanceamento de classes. 4. P\'os-processamento. 5. Tuberculose. 6. Mortalidade. 7. Vigil\^ancia em sa\'ude. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva. III. T\'{\i}tulo.
+
+\bigskip
+\end{minipage}
+\end{minipage}
+\\
+\hline
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Resumo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\noindent
+
+\vspace*{20pt}
+\begin{center}
+{\LARGE\bf Resumo}\\
+\vspace{15pt}
+{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
+\vspace{6pt}
+{\bf Marco Elisio Oliveira Jardim}\\
+\vspace{12pt}
+{\bf Orientadora: Rejane Sobrino Pinheiro}\\
+% {\bf Coorientador: }\\
+\vspace{20pt}
+\parbox{14cm}{Resumo da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).}
+\end{center}
+\vspace*{35pt}
+
+O \textit{linkage} probabilístico de bases de dados, também denominado relacionamento probabilístico de registros (\textit{record linkage}), constitui recurso essencial para a vigilância em saúde no Brasil, na medida em que possibilita a vinculação de registros individuais dispersos em diferentes sistemas de informação.
+A classificação dos pares candidatos resultantes desse processo, contudo, permanece dependente de limiares fixos aplicados sobre escores agregados de similaridade, o que acarreta perda expressiva de registros situados na zona de indecisão (área cinza).
+Essa lacuna é particularmente crítica quando a condição de saúde investigada apresenta elevada subnotificação, como é o caso da tuberculose enquanto condição marcadora de óbito.
+
+Esta tese propôs e avaliou um \textit{framework} (estrutura metodológica) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016.
+A base experimental compreendeu 61.696 pares candidatos gerados pelo OpenRecLink e pontuados por um comparador de registros que produz 29 subescores de similaridade e um escore agregado, tendo como padrão-ouro 247 pares verdadeiros (razão $\approx$1:248).
+Seis algoritmos foram comparados (Regressão Logística, Floresta Aleatória, XGBoost, LightGBM, SVM e Perceptron Multicamada), combinados com nove estratégias de balanceamento de classes (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, ponderação de classes e variantes), totalizando 70 configurações avaliadas por estudo de ablação.
+
+A Floresta Aleatória (\textit{Random Forest}) com SMOTE e limiar de classificação de 0,5 alcançou $F_1$=0,931, ao passo que o limiar convencional $\geq$8 obteve $F_1$=0,610.
+A validação cruzada em cinco partições confirmou a estabilidade das abordagens híbridas, que combinam regras determinísticas e classificadores, com $F_1$ médio de 0,898$\pm$0,025 e menor variância que as abordagens puramente algorítmicas; a Floresta Aleatória com SMOTE obteve $F_1$ médio de 0,916$\pm$0,026.
+A análise de sensibilidade ao desbalanceamento de classes indicou que os classificadores mantiveram $F_1$ entre 0,880 e 0,918 nas nove estratégias avaliadas.
+A interpretação por meio de valores SHAP identificou o escore agregado, a quantidade de nomes iguais e o indicador de nome perfeito como os atributos de maior poder discriminatório; o nome da mãe predominou nas decisões relativas à área cinza.
+Do ponto de vista epidemiológico, a abordagem de máximo \textit{recall} (sensibilidade) recuperou 24 óbitos por tuberculose adicionais ($+$55,8\%) que teriam sido perdidos pelo limiar convencional, a um custo de aproximadamente 1,0 revisão manual por óbito detectado.
+
+A tese disponibiliza dois \textit{pipelines} (sequências operacionais) pré-configurados, um orientado à vigilância (máximo \textit{recall}) e outro à confirmação (máxima precisão), articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
+
+\vspace{15pt}
+
+\textbf{Palavras-chave:} \textit{Linkage} probabilístico. Aprendizado de máquina. Desbalanceamento de classes. Pós-processamento. Tuberculose. Mortalidade. Vigilância em saúde.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\noindent
+
+\vspace*{20pt}
+\begin{center}
+{\LARGE\bf Abstract}\\
+\vspace{15pt}
+{\Large\bf Machine Learning Applied to Post-Processing of\\Probabilistic Record Linkage of Health Databases}\\
+\vspace{6pt}
+{\bf Marco Elisio Oliveira Jardim}\\
+\vspace{12pt}
+{\bf Advisor: Rejane Sobrino Pinheiro}\\
+%{\bf Coorientador: }\\
+\vspace{20pt}
+\parbox{14cm}{\emph{Abstract} da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).} % ATENÇÃO: esse trecho fica em português mesmo!
+\end{center}
+\vspace*{35pt}
+
+Probabilistic record linkage constitutes an essential resource for health surveillance in Brazil, as it enables the connection of individual records dispersed across different information systems.
+Classification of the resulting candidate pairs, however, remains dependent on fixed thresholds applied to aggregate similarity scores, leading to substantial loss of records in the indecision zone (grey zone).
+This limitation is particularly critical when the health condition under investigation presents high underreporting, as is the case of tuberculosis as an underlying cause of death.
+
+This thesis proposed and evaluated a configurable post-processing framework based on machine learning for classifying candidate pairs produced by probabilistic linkage between the Mortality Information System (SIM) and the Tuberculosis Notifiable Diseases Information System (Sinan-TB) in the city of Rio de Janeiro, covering the period from 2006 to 2016.
+The experimental dataset comprised 61,696 candidate pairs generated by OpenRecLink and scored by a record comparator that produces 29 similarity sub-scores and an aggregate score, with a gold standard of 247 true pairs (ratio $\approx$1:248).
+Six algorithms were compared (Logistic Regression, Random Forest, XGBoost, LightGBM, SVM, and Multilayer Perceptron), combined with nine class-balancing strategies (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, class weighting, and variants), yielding 70 configurations evaluated through an ablation study.
+
+Random Forest with SMOTE and a classification threshold of 0.5 achieved $F_1$=0.931, whereas the conventional threshold $\geq$8 yielded $F_1$=0.610.
+Five-fold cross-validation confirmed the stability of hybrid approaches, which combine deterministic rules and classifiers, with a mean $F_1$ of 0.898$\pm$0.025 and lower variance than purely algorithmic approaches; Random Forest with SMOTE achieved a mean $F_1$ of 0.916$\pm$0.026.
+Sensitivity analysis to class imbalance indicated that classifiers maintained $F_1$ between 0.880 and 0.918 across all nine strategies.
+SHAP-based interpretation identified the aggregate score, the number of matching names, and the exact-name indicator as the most discriminating features; mother's name predominated in grey-zone decisions.
+From an epidemiological standpoint, the maximum-recall approach recovered 24 additional tuberculosis deaths ($+$55.8\%) that would have been missed by the conventional threshold, at a cost of approximately 1.0 manual reviews per detected death.
+
+The thesis delivers two pre-configured pipelines, one geared towards surveillance (maximum recall) and another towards confirmation (maximum precision), articulated through a Pareto frontier that allows the health manager or researcher to calibrate the trade-off between sensitivity and specificity according to the requirements of the application scenario.
+
+\vspace{15pt}
+
+\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Agradecimentos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\noindent
+
+\vspace*{20pt}
+
+\begin{center}
+
+{\LARGE\bf Agradecimentos}
+
+\end{center}
+
+\vspace*{40pt}
+
+À minha orientadora, Professora Rejane Sobrino Pinheiro, agradeço pela
+confiança depositada neste trabalho, pela orientação rigorosa e generosa ao
+longo de todos estes anos e pelo exemplo de dedicação à pesquisa em saúde
+pública. Sua capacidade de acolher ideias e, ao mesmo tempo, exigir o melhor
+de cada análise foi determinante para que esta tese chegasse a bom termo.
+
+À minha esposa, Joyce, companheira de todas as horas, agradeço pelo amor
+incondicional, pela paciência com as noites de estudo e pela serenidade que
+manteve nosso lar de pé nos momentos em que esta jornada pareceu longa
+demais. Sem o seu apoio, nada disto teria sido possível.
+
+Aos meus filhos, José Antônio e Marco, agradeço por serem a razão mais
+concreta de seguir adiante. Cada sorriso de vocês renovou a energia
+necessária para mais uma página, mais um experimento, mais um dia de
+trabalho.
+
+A todas as pessoas que, de forma direta ou indireta, contribuíram para esta
+caminhada --- colegas de pesquisa, professores, amigos e familiares ---,
+registro aqui minha gratidão sincera. Cada conversa, sugestão e palavra de
+incentivo deixou marca neste trabalho e em quem o escreveu.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Sumário}
+\tableofcontents
+
+
+
+\printnomenclature
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Lista de Figuras}
+\listoffigures
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Lista de Tabelas}
+\listoftables
+
+\input{siglas.tex}
+
+\mainmatter
+\input{capitulo1.tex}  % Introdução (NEW)
+\input{capitulo2.tex}  % Referencial Teórico (NEW)
+\input{capitulo3.tex}  % Justificativa (was Cap2)
+\input{capitulo4.tex}  % Objetivos (was Cap3)
+\input{capitulo5.tex}  % Método (was Cap4)
+\input{capitulo6.tex}  % Resultados (was Cap5)
+\input{capitulo7.tex}  % Discussão (was Cap6)
+\input{capitulo8.tex}  % Conclusões (was Cap7)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliografia %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\phantomsection
+
+
+\bibliographystyle{abntex2-alf} % Estilo ABNT
+\bibliography{referencias}
+
+\input{glossario.tex}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Apêndices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\appendix
+%\input{apendiceb.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{document}

@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\caption{Melhor configuração por categoria de classificação — estudo de ablação.}
+\label{tab:ablation-best-category}
+\small
+\begin{tabular}{p{4.5cm}p{4.5cm}ccc}
+\toprule
+Categoria & Configuração & Precisão & Revocação & F1 \\
+\midrule
+Limiar ingênuo (escore $\geq t$) & Naive score$\geq$8 & 0.642 & 0.581 & 0.610 \\
+Somente regras determinísticas & Rules-only ($\geq$6) & 0.821 & 0.865 & 0.842 \\
+Somente ML & ML-only RF+SMOTE ($\geq$0.5) & 0.957 & 0.905 & \textbf{0.931} \\
+Híbrido ML $\cap$ Regras (AND) & Hybrid-AND RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 1.000 & 0.838 & 0.912 \\
+Híbrido ML $\cup$ Regras (OR) & Hybrid-OR RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.985 & 0.865 & 0.921 \\
+Cascata ML $\rightarrow$ Regras & Cascade ML$\rightarrow$Rules RF+SMOTE $\geq$0.5 $\rightarrow$ Rules$\geq$7 & 1.000 & 0.743 & 0.853 \\
+Cascata Regras $\rightarrow$ ML & Cascade Rules$\rightarrow$ML Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 1.000 & 0.838 & 0.912 \\
+Consenso entre modelos ML & Consensus ML-majority (th=0.7, 3 models) & 1.000 & 0.865 & 0.928 \\
+Consenso + Regras & Consensus+Rules majority(th=0.5) AND Rules$\geq$6 & 1.000 & 0.811 & 0.896 \\
+\bottomrule
+\end{tabular}
+\end{table}

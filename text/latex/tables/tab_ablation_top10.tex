@@ -1,0 +1,22 @@
+\begin{table}[htbp]
+\centering
+\caption{Dez melhores configurações por F1 — estudo de ablação.}
+\label{tab:ablation-top10}
+\small
+\begin{tabular}{clccc}
+\toprule
+\# & Configuração & Precisão & Revocação & F1 \\
+\midrule
+1 & ML-only RF+SMOTE ($\geq$0.5) & 0.957 & 0.905 & \textbf{0.931} \\
+2 & Consensus ML-majority (th=0.7, 3 models) & 1.000 & 0.865 & 0.928 \\
+3 & ML-only RF+SMOTE ($\geq$0.3) & 0.869 & 0.986 & 0.924 \\
+4 & Consensus ML-majority (th=0.5, 3 models) & 0.957 & 0.892 & 0.923 \\
+5 & Hybrid-OR RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.985 & 0.865 & 0.921 \\
+6 & Hybrid-OR RF+SMOTE $\geq$0.7 + Rules$\geq$8 & 0.985 & 0.865 & 0.921 \\
+7 & ML-only RF+SMOTE ($\geq$0.7) & 0.985 & 0.865 & 0.921 \\
+8 & Hybrid-AND RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 1.000 & 0.838 & 0.912 \\
+9 & Cascade Rules$\rightarrow$ML Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 1.000 & 0.838 & 0.912 \\
+10 & ML-only RF ($\geq$0.3) & 0.875 & 0.946 & 0.909 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -209,3 +209,55 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Private modules (full-text fetcher — never push)
+scripts/ref_audit/private/
+scripts/ref_audit/data/fulltext/
+
+docs/
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.nav
+*.snm
+*.vrb
+missfont.log
+texput.log
+build.log
+text/latex/tese_build*
+text/latex/tese_2026*
+text/latex/tese_final*
+text/pdf/tese_2026*
+
+# TeX dependencies and temp
+.texdeps/
+.tmp/
+
+# Scripts (not part of this commit scope)
+scripts/
+
+# Windows NUL artifacts
+nul
+
+# AI session logs
+session-ses_*.md
+
+# Notebook leftovers
+notebooks/_executed/anotacoes.md
+notebooks/_executed/02_log.txt
+
+# Candidate CSVs with quasi-identifiers (PII re-identification risk)
+candidatos_*.csv

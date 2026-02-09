@@ -1,0 +1,59 @@
+\chapter{Gloss\'{a}rio de Termos T\'{e}cnicos}
+
+Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizados ao longo desta tese, visando facilitar a compreens\~{a}o de conceitos que podem ser menos familiares aos profissionais da \'{a}rea de sa\'{u}de coletiva.
+
+\begin{description}
+
+\item[Acur\'{a}cia] Propor\c{c}\~{a}o de classifica\c{c}\~{o}es corretas (verdadeiros positivos e verdadeiros negativos) em rela\c{c}\~{a}o ao total de pares avaliados.
+
+\item[\'{A}rea cinza] Regi\~{a}o de escores intermedi\'{a}rios no relacionamento probabil\'{i}stico, onde os pares candidatos n\~{a}o podem ser classificados automaticamente como verdadeiros ou falsos, demandando revis\~{a}o adicional.
+
+\item[Blocagem] Estrat\'{e}gia de redu\c{c}\~{a}o do espa\c{c}o de compara\c{c}\~{a}o no relacionamento de registros, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a compara\c{c}\~{a}o exaustiva de todos os pares poss\'{i}veis.
+
+\item[Classifica\c{c}\~{a}o] Tarefa de aprendizado supervisionado que atribui r\'{o}tulos discretos (par verdadeiro ou n\~{a}o-par) a inst\^{a}ncias com base em atributos preditores.
+
+\item[Comparador de registros] Ferramenta que calcula escores de similaridade campo a campo entre pares candidatos, produzindo subescores individuais e um escore final agregado. Neste trabalho, foi utilizada uma implementa\c{c}\~{a}o em Python \cite{Jardim2024comparador} do algoritmo proposto por Lucena \cite{Lucena2013algoritmos}.
+
+\item[Deduplica\c{c}\~{a}o] Processo de identifica\c{c}\~{a}o e remo\c{c}\~{a}o de registros duplicados referentes a um mesmo indiv\'{i}duo dentro de uma \'{u}nica base de dados.
+
+\item[Desbalanceamento de classes] Situa\c{c}\~{a}o em que uma classe (tipicamente os pares verdadeiros) \'{e} muito menos frequente que a outra (n\~{a}o-pares), podendo comprometer o desempenho de classificadores.
+
+\item[\textit{Ensemble}] Abordagem que combina m\'{u}ltiplos classificadores para produzir uma decis\~{a}o agregada, frequentemente superior ao desempenho individual de cada modelo.
+
+\item[Escore de similaridade] Valor num\'{e}rico que quantifica o grau de concord\^{a}ncia entre campos de dois registros comparados (ex.: dist\^{a}ncia de Jaro-Winkler para nomes).
+
+\item[\textit{Framework}] Estrutura metodol\'{o}gica para organiza\c{c}\~{a}o reprodut\'{i}vel de componentes, etapas e crit\'{e}rios de decis\~{a}o em um processo anal\'{i}tico.
+
+\item[F$_1$-Score] M\'{e}dia harm\^{o}nica entre precis\~{a}o e sensibilidade, utilizada como m\'{e}trica-s\'{i}ntese do desempenho de classificadores.
+
+\item[\textit{Gradient Boosting}] Fam\'{i}lia de algoritmos de aprendizado de m\'{a}quina que constr\'{o}i modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementa\c{c}\~{o}es como XGBoost e LightGBM.
+
+\item[\textit{Linkage}] Ver \textit{Relacionamento de registros}.
+
+\item[OpenRecLink] \textit{Software} brasileiro de c\'{o}digo aberto para relacionamento probabil\'{i}stico de registros, desenvolvido por Camargo Jr. e Coeli.
+
+\item[\textit{Pipeline}] Sequ\^{e}ncia operacional de etapas anal\'{i}ticas e decis\'{o}rias, desde a prepara\c{c}\~{a}o dos dados at\'{e} a gera\c{c}\~{a}o de resultados.
+
+\item[Par candidato] Combina\c{c}\~{a}o de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para compara\c{c}\~{a}o detalhada.
+
+\item[Par verdadeiro] Par de registros que se refere ao mesmo indiv\'{i}duo, confirmado por revis\~{a}o manual ou padr\~{a}o-ouro.
+
+\item[Precis\~{a}o] Propor\c{c}\~{a}o de pares classificados como verdadeiros que s\~{a}o efetivamente verdadeiros (\textit{Positive Predictive Value}).
+
+\item[\textit{Random Forest}] Algoritmo de aprendizado de m\'{a}quina baseado em m\'{u}ltiplas \'{a}rvores de decis\~{a}o treinadas em subamostragens aleat\'{o}rias dos dados.
+
+\item[Relacionamento de registros] Processo de identifica\c{c}\~{a}o de registros referentes ao mesmo indiv\'{i}duo em duas ou mais bases de dados distintas (\textit{record linkage}).
+
+\item[Relacionamento determin\'{i}stico] Estrat\'{e}gia de \textit{linkage} baseada em regras exatas de concord\^{a}ncia entre campos identificadores.
+
+\item[Relacionamento probabil\'{i}stico] Estrat\'{e}gia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
+
+\item[Sensibilidade] Propor\c{c}\~{a}o de pares verdadeiros corretamente identificados pelo classificador (\textit{Recall}).
+
+\item[\textit{Stacking}] T\'{e}cnica de \textit{ensemble} que utiliza as sa\'{i}das de m\'{u}ltiplos classificadores de base como atributos de entrada para um meta-classificador.
+
+\item[Tuberculose (TB)] Doen\c{c}a infecciosa de notifica\c{c}\~{a}o compuls\'{o}ria utilizada neste trabalho como condi\c{c}\~{a}o marcadora para avalia\c{c}\~{a}o do relacionamento de bases de dados.
+
+\item[Valida\c{c}\~{a}o cruzada] T\'{e}cnica de avalia\c{c}\~{a}o que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ parti\c{c}\~{o}es e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com vari\^{a}ncia reduzida (\textit{cross-validation}, CV).
+
+\end{description}
