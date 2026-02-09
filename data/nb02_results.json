@@ -1,0 +1,96 @@
+{
+  "notebook": "02_estrategia_maximo_recall",
+  "n_features": 58,
+  "n_train": 43187,
+  "n_test": 18509,
+  "pos_train": 173,
+  "pos_test": 74,
+  "best_model": "AdaBoost + SMOTE (th=0.3)",
+  "best_recall": 1.0,
+  "best_precision": 0.0072,
+  "best_f1": 0.0142,
+  "all_results": [
+    {
+      "Modelo": "RF ClassWeight Extremo (th=0.3)",
+      "Precision": 0.9444,
+      "Recall": 0.9189,
+      "F1-Score": 0.9315,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9837
+    },
+    {
+      "Modelo": "RF + SMOTE (th=0.3)",
+      "Precision": 0.8313,
+      "Recall": 0.9324,
+      "F1-Score": 0.879,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9787
+    },
+    {
+      "Modelo": "RF + BorderlineSMOTE (th=0.3)",
+      "Precision": 0.8765,
+      "Recall": 0.9595,
+      "F1-Score": 0.9161,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9851
+    },
+    {
+      "Modelo": "GB + SMOTE + Class Weight (th=0.3)",
+      "Precision": 0.8846,
+      "Recall": 0.9324,
+      "F1-Score": 0.9079,
+      "AUC-ROC": 0.9997,
+      "AUC-PR": 0.9756
+    },
+    {
+      "Modelo": "AdaBoost + SMOTE (th=0.3)",
+      "Precision": 0.0072,
+      "Recall": 1.0,
+      "F1-Score": 0.0142,
+      "AUC-ROC": 0.9998,
+      "AUC-PR": 0.9749
+    },
+    {
+      "Modelo": "MLP + SMOTE (th=0.25)",
+      "Precision": 0.6283,
+      "Recall": 0.9595,
+      "F1-Score": 0.7594,
+      "AUC-ROC": 0.9993,
+      "AUC-PR": 0.9606
+    },
+    {
+      "Modelo": "Ensemble Soft (th=0.15)",
+      "Precision": 0.094,
+      "Recall": 1.0,
+      "F1-Score": 0.1719,
+      "AUC-ROC": 0.9996,
+      "AUC-PR": 0.9588
+    }
+  ],
+  "threshold_analysis": [
+    {
+      "Modelo": "RF+SMOTE (th=0.2)",
+      "Precision": 0.7157,
+      "Recall": 0.9865,
+      "F1-Score": 0.8295,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9787
+    },
+    {
+      "Modelo": "RF+SMOTE (th=0.3)",
+      "Precision": 0.8313,
+      "Recall": 0.9324,
+      "F1-Score": 0.879,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9787
+    },
+    {
+      "Modelo": "RF+SMOTE (th=0.4)",
+      "Precision": 0.8846,
+      "Recall": 0.9324,
+      "F1-Score": 0.9079,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9787
+    }
+  ]
+}

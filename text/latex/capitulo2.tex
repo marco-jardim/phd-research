@@ -1,0 +1,82 @@
+\begin{chapter}{Referencial Teórico}\label{cap:referencial}
+
+% =============================================================================
+% CAPÍTULO 2 - REFERENCIAL TEÓRICO
+% Estrutura:
+%   2.1 Linkage de bases de dados
+%   2.2 Estratégias de classificação
+%   2.3 Aprendizado de máquina aplicado ao linkage
+%   2.4 Desbalanceamento de classes
+%   2.5 Comparador de registros e ajuste de escores
+% =============================================================================
+
+
+\section{\textit{Linkage} de bases de dados}\label{sec:linkage-conceitos}
+
+O \textit{linkage} de bases de dados, também denominado relacionamento de registros (\textit{record linkage}), consiste no processo de identificar, em duas ou mais bases de dados distintas, registros que se referem a uma mesma entidade, possibilitando a integração de informações provenientes de diferentes fontes para a produção de conhecimento em saúde \cite{Christen2012book}. Originalmente proposto por Newcombe e colaboradores \citeyearpar{Newcombe1959automatic} e formalizado por Fellegi e Sunter \citeyearpar{Fellegi1969theory}, o método evoluiu consideravelmente, incorporando métricas de comparação de campos textuais \cite{Jaro1989advances, Winkler1990string}, estratégias de blocagem para viabilizar o processamento de grandes volumes \cite{Coeli2002blocking} e, mais recentemente, abordagens baseadas em aprendizado de máquina para a classificação automatizada de potenciais pares \cite{Christen2012book, Enamorado2019fastlink}.
+
+No campo da saúde pública, o \textit{linkage} tem se mostrado particularmente relevante para a identificação de óbitos por tuberculose não notificados ao sistema de vigilância \cite{Sousa2011obitos, Oliveira2012uso}, a análise de causas múltiplas de morte em coortes de pacientes \cite{Rocha2015causas} e a melhoria da qualidade dos dados registrados em sistemas nacionais \cite{Bartholomay2014improved}. A técnica constitui, portanto, ferramenta fundamental para a avaliação do desempenho de sistemas e serviços de saúde \cite{Viacava2012avaliacao}.
+
+No Brasil, o Sistema Único de Saúde (SUS) dispõe de um amplo conjunto de Sistemas de Informação em Saúde (SIS), cada qual concebido para finalidades distintas \cite{Paim2011brazilian, Macinko2015family}. Entre os principais sistemas, destacam-se o SIM (mortalidade), o Sinan (agravos de notificação), o SIH-SUS (internações hospitalares), o SIA-SUS (procedimentos ambulatoriais), o Sinasc (nascidos vivos), o GAL (exames laboratoriais) e o SITETB (tuberculose drogarresistente). Uma característica fundamental dessas bases é a ausência de um identificador unívoco que permita a vinculação inequívoca entre registros de diferentes sistemas \cite{Camargo2000reclink}. Embora o Cartão Nacional de Saúde (CNS) tenha sido concebido com essa finalidade, sua cobertura permanece incompleta e sua qualidade de preenchimento é heterogênea, limitando sua utilidade como chave primária para o \textit{linkage} direto \cite{Barreto2019The}. Essa lacuna impõe a necessidade de métodos indiretos de relacionamento, baseados na comparação de variáveis de identificação comuns (nome, nome da mãe, data de nascimento, sexo e município de residência), que estão sujeitos a erros de digitação, abreviações, homônimos e incompletude \cite{Christen2012book, silva2012linkage}.
+
+
+\section{Estratégias de classificação}\label{sec:estrategias-linkage}
+
+Diferentes estratégias têm sido empregadas para a classificação de potenciais pares no \textit{linkage}, podendo ser agrupadas em três abordagens principais. O \textit{linkage} determinístico exige concordância exata (ou quase exata) em variáveis-chave, apresentando elevada especificidade, porém baixa sensibilidade na presença de imperfeições nos dados. O \textit{linkage} probabilístico, fundamentado no modelo de Fellegi e Sunter \cite{Fellegi1969theory}, atribui pesos diferenciados por variável e permite acomodar imperfeições, sendo amplamente empregado no contexto brasileiro por meio do OpenRecLink \cite{Camargo2000reclink}. As abordagens baseadas em aprendizado de máquina capturam padrões não lineares de concordância e incorporam múltiplas variáveis simultaneamente, ao custo de maior dependência de conjuntos de treinamento rotulados \cite{Christen2012book}. O Quadro~\ref{quadro:comparacao-estrategias} sintetiza as principais características de cada abordagem.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparação entre estratégias de \textit{linkage} de bases de dados.}
+\label{quadro:comparacao-estrategias}
+\begin{tabular}{p{3cm}p{5cm}p{5cm}}
+\hline
+\textbf{Estratégia} & \textbf{Vantagens} & \textbf{Limitações} \\
+\hline
+Determinístico & Simplicidade conceitual e computacional; elevada especificidade dos pares identificados; resultados facilmente auditáveis & Baixa sensibilidade na presença de erros de grafia, campos incompletos ou variações ortográficas; incapacidade de acomodar imperfeições nos dados \\
+\hline
+Probabilístico & Flexibilidade para acomodar imperfeições nos dados; possibilidade de atribuir pesos diferenciados por variável; ampla utilização no contexto brasileiro (OpenRecLink) & Dependência da calibração de limiares; geração de área cinza que demanda revisão manual; sensibilidade à qualidade dos parâmetros $m$ e $u$ \\
+\hline
+Aprendizado de máquina & Captura de padrões não lineares; incorporação de múltiplas variáveis e interações; potencial de automatização da classificação & Necessidade de conjunto de treinamento rotulado; sensibilidade ao desbalanceamento de classes; menor interpretabilidade de alguns modelos \\
+\hline
+\end{tabular}
+\end{table}
+
+No modelo probabilístico, dois limiares dividem o espaço de escores em três regiões\label{sec:area-cinza}: acima do limiar superior, os pares são aceitos; abaixo do limiar inferior, são descartados; entre ambos, configura-se a área cinza (\textit{grey zone}), composta por potenciais pares cujos escores não são suficientemente elevados para aceitação automática nem suficientemente baixos para rejeição \cite{Fellegi1969theory, Christen2012book}. A extensão dessa região depende da qualidade das variáveis de identificação e do poder discriminatório das métricas de comparação empregadas. A resolução tradicional por revisão manual (\textit{clerical review}) é demorada, custosa, não escalável e sujeita à variabilidade entre avaliadores \cite{Nasseh2016semisupervised}. Nesse contexto, a aplicação de classificadores supervisionados como etapa de pós-processamento constitui alternativa promissora, possibilitando a priorização de sensibilidade ou precisão conforme o objetivo do estudo \cite{Hand2018fmeasure}.
+
+
+\section{Aprendizado de máquina aplicado ao \textit{linkage}}\label{sec:tecnicas-ml}
+
+Para a classificação de potenciais pares e a recuperação de pares verdadeiros da área cinza, diferentes técnicas de aprendizado de máquina supervisionado podem ser empregadas, selecionadas por suas propriedades complementares no tratamento de dados desbalanceados e na modelagem de padrões não lineares de similaridade entre campos de identificação \cite{Hastie2009elements}.
+
+A \textbf{regressão logística} constitui modelo linear generalizado que estima a probabilidade de pertinência à classe positiva por meio de função logística aplicada a combinação linear das variáveis preditoras. Apesar de sua simplicidade, apresenta vantagens como modelo de referência (\textit{baseline}): eficiência computacional, interpretabilidade e produção de probabilidades calibradas \cite{Hastie2009elements}.
+
+O algoritmo de \textbf{Floresta Aleatória} (\textit{Random Forest}), proposto por Breiman \citeyearpar{Breiman2001rf}, baseia-se na construção de um conjunto (\textit{ensemble}) de árvores de decisão treinadas em amostras aleatórias dos dados, com seleção aleatória de subconjuntos de variáveis em cada nó. A predição final é obtida por votação majoritária. A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis.
+
+Na família de \textbf{\textit{Gradient Boosting}}, modelos são construídos sequencialmente, de modo que cada um corrige os erros residuais dos anteriores \cite{Hastie2009elements}. Duas implementações foram consideradas: o \textbf{XGBoost} (\textit{eXtreme Gradient Boosting}) \cite{Chen2016xgboost}, com regularização L1/L2 e tratamento nativo de valores ausentes; e o \textbf{LightGBM} (\textit{Light Gradient Boosting Machine}), com amostragem baseada em gradiente para redução do custo computacional.
+
+Para a separação não linear de classes, a \textbf{Máquina de Vetores de Suporte} (\textit{Support Vector Machine, SVM}) busca o hiperplano ótimo que maximiza a margem entre as classes. Funções de núcleo (\textit{kernel}), como o núcleo de base radial (\textit{RBF}), projetam os dados em espaço de maior dimensão, viabilizando a separação de classes não linearmente separáveis no espaço original \cite{Hastie2009elements}.
+
+Como representante de redes neurais artificiais, o \textbf{Perceptron Multicamadas} (\textit{Multilayer Perceptron, MLP}) aprende representações hierárquicas dos dados por meio do algoritmo de retropropagação do erro. Sua flexibilidade arquitetural permite a modelagem de relações altamente não lineares, embora com maior sensibilidade à configuração de hiperparâmetros \cite{Hastie2009elements}.
+
+Além desses classificadores individuais, foram empregadas técnicas de \textbf{combinação de modelos} (\textit{ensemble}), cuja eficácia para o \textit{linkage} tem sido demonstrada na literatura \cite{Sariyar2012ensemble, Vo2019ensemble}. O \textit{stacking} (empilhamento) treina um metaclassificador sobre as predições de classificadores de base, enquanto a votação por consenso (\textit{consensus voting}) exige concordância entre modelos independentes para classificação positiva. Complementarmente, regras de classificação baseadas em conhecimento de domínio podem ser combinadas com modelos de aprendizado de máquina em abordagens híbridas, integrando evidências estatísticas e conhecimento especializado \cite{Jiao2021hybrid}.
+
+
+\section{Desbalanceamento de classes no \textit{linkage}}\label{sec:desbalanceamento}
+
+O desbalanceamento entre as classes de pares verdadeiros e não-pares constitui característica estrutural do \textit{linkage}. A combinação de registros entre duas bases gera número de potenciais pares que cresce de forma quadrática com o tamanho das bases, enquanto o número de pares verdadeiros cresce linearmente. Mesmo após a aplicação de estratégias de blocagem, a proporção de pares verdadeiros permanece tipicamente muito pequena \cite{Christen2012book, He2009imbalanced}. Algoritmos de classificação treinados em conjuntos desbalanceados tendem a apresentar viés em favor da classe majoritária, resultando em modelos que falham na identificação de pares verdadeiros \cite{Hassani2025oversampling}.
+
+Diferentes estratégias têm sido propostas para mitigar esse efeito. A sobreamostragem da classe minoritária, cujo representante mais empregado é o algoritmo SMOTE (\textit{Synthetic Minority Over-sampling Technique}) \cite{Chawla2002smote}, gera exemplos sintéticos da classe sub-representada. Variações incluem o Borderline-SMOTE, que concentra a geração nas regiões de fronteira, e o ADASYN (\textit{Adaptive Synthetic Sampling}), que adapta a densidade conforme a dificuldade de classificação. Técnicas combinadas, como o SMOTE-Tomek, integram sobreamostragem com remoção de exemplos ruidosos. A ponderação de classes (\textit{class weights}) atribui pesos diferenciados na função de custo, penalizando erros sobre a classe minoritária sem alterar a composição do conjunto de treinamento. Métodos de \textit{ensemble}, como o \textit{Balanced Random Forest}, incorporam estratégias de balanceamento em cada iteração \cite{He2009imbalanced}.
+
+A escolha da estratégia adequada depende das características do problema e dos objetivos do estudo. No contexto do \textit{linkage} em bases de saúde, a comparação sistemática de diferentes estratégias de balanceamento constitui questão ainda insuficientemente explorada, cujos resultados podem contribuir para a padronização de protocolos e a melhoria da acurácia do processo de vinculação \cite{Christen2012book,Hassani2025oversampling}.
+
+
+\section{Comparador de registros e ajuste de escores}\label{sec:ajustes-escores}
+
+Os escores de similaridade produzidos pelo comparador de registros \cite{Lucena2013algoritmos, Jardim2024comparador}, a partir dos potenciais pares gerados pelo OpenRecLink \cite{Camargo2000reclink}, representam medida agregada do grau de concordância entre os campos de identificação de cada par candidato. A classificação final depende da definição de pontos de corte (\textit{thresholds}) sobre esses escores, que delimitam as fronteiras entre pares aceitos, pares rejeitados e a área cinza \cite{Fellegi1969theory}.
+
+A definição de pontos de corte adequados é tarefa complexa. Pontos de corte excessivamente elevados resultam em alta especificidade, porém com perda de pares verdadeiros que apresentam escores intermediários, frequentemente aqueles com campos incompletos ou com erros de grafia. Pontos de corte excessivamente baixos incorporam falsos positivos, comprometendo a confiabilidade dos vínculos \cite{Christen2012book}.
+
+Neste trabalho, propõe-se a utilização de técnicas de aprendizado de máquina para a análise e otimização dos pontos de corte, empregando os escores de similaridade individuais (e não apenas o escore composto) como variáveis preditoras. Essa abordagem possibilita a identificação de padrões que indicam pares verdadeiros mesmo em regiões de escore intermediário. A otimização pode ser orientada por métricas como o F$_1$-Score \cite{Hand2018fmeasure}, a área sob a curva ROC (\textit{AUC-ROC}) ou a área sob a curva precisão-sensibilidade (\textit{AUC-PR}), sendo esta última particularmente adequada para cenários com desbalanceamento severo de classes.
+O capítulo seguinte contextualiza a relevância epidemiológica dessa abordagem, argumentando que a tuberculose constitui condição marcadora adequada para a validação de tais estratégias.
+
+\end{chapter}

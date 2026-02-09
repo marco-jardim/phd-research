@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Fronteira de Pareto: pontos operacionais do classificador híbrido (RF+SMOTE).}
+\label{tab:pareto-frontier}
+\small
+\begin{tabular}{cccccc}
+\toprule
+$\theta_{\text{ML}}$ & $\theta_{\text{Regras}}$ & Precisão & Revocação & F1 & Perfil \\
+\midrule
+0.10 & 2.0 & 0.655 & 1.000 & 0.791 & Máx. revocação \\
+0.30 & 0.0 & 0.869 & 0.986 & 0.924 & Máx. revocação \\
+0.35 & 0.0 & 0.911 & 0.973 & 0.941 & \textbf{Equilíbrio ótimo} \\
+0.35 & 3.5 & 0.934 & 0.959 & 0.947 & \textbf{Equilíbrio ótimo} \\
+0.40 & 0.5 & 0.945 & 0.932 & 0.939 & Intermediário \\
+0.50 & 1.0 & 0.957 & 0.905 & 0.931 & Intermediário \\
+0.35 & 5.0 & 1.000 & 0.878 & 0.935 & Máx. precisão \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,72 @@
+{
+  "notebook": "01_analise_comparativa_tecnicas",
+  "n_features": 58,
+  "n_train": 43187,
+  "n_test": 18509,
+  "pos_train": 173,
+  "pos_test": 74,
+  "best_model": "Random Forest",
+  "best_f1": 0.9103,
+  "best_precision": 0.9296,
+  "best_recall": 0.8919,
+  "best_threshold_rf": 0.54,
+  "best_f1_at_threshold": 0.9154929577464789,
+  "all_results": [
+    {
+      "Modelo": "Logistic Regression",
+      "Precision": 0.3216,
+      "Recall": 0.9865,
+      "F1-Score": 0.485,
+      "AUC-ROC": 0.9991,
+      "AUC-PR": 0.9667
+    },
+    {
+      "Modelo": "Random Forest",
+      "Precision": 0.9296,
+      "Recall": 0.8919,
+      "F1-Score": 0.9103,
+      "AUC-ROC": 0.9997,
+      "AUC-PR": 0.9564
+    },
+    {
+      "Modelo": "Gradient Boosting",
+      "Precision": 0.9375,
+      "Recall": 0.8108,
+      "F1-Score": 0.8696,
+      "AUC-ROC": 0.9538,
+      "AUC-PR": 0.9045
+    },
+    {
+      "Modelo": "SVM (RBF)",
+      "Precision": 0.3806,
+      "Recall": 0.7973,
+      "F1-Score": 0.5153,
+      "AUC-ROC": 0.9973,
+      "AUC-PR": 0.5715
+    },
+    {
+      "Modelo": "MLP Neural Network",
+      "Precision": 0.8806,
+      "Recall": 0.7973,
+      "F1-Score": 0.8369,
+      "AUC-ROC": 0.9954,
+      "AUC-PR": 0.936
+    },
+    {
+      "Modelo": "RF + SMOTE",
+      "Precision": 0.8846,
+      "Recall": 0.9324,
+      "F1-Score": 0.9079,
+      "AUC-ROC": 0.9999,
+      "AUC-PR": 0.9726
+    },
+    {
+      "Modelo": "Stacking Ensemble",
+      "Precision": 0.2711,
+      "Recall": 1.0,
+      "F1-Score": 0.4265,
+      "AUC-ROC": 0.9997,
+      "AUC-PR": 0.9609
+    }
+  ]
+}

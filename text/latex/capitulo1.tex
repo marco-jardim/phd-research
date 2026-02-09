@@ -1,0 +1,46 @@
+\begin{chapter}{Introdução}\label{cap:introducao}
+
+% =============================================================================
+% CAPÍTULO 1 - INTRODUÇÃO (versão reestruturada)
+% Estrutura:
+%   1.1 Contextualização
+%   1.2 Problema e lacuna
+%   1.3 Proposta e estratégia
+%   1.4 Organização da tese
+% =============================================================================
+
+
+\section{Contextualização}\label{sec:contextualizacao}
+
+A avaliação do desempenho de sistemas de saúde depende da capacidade de acompanhar o percurso de pacientes através de múltiplos sistemas de informação, desde a notificação de agravos até o desfecho clínico \cite{Donabedian1988quality, Viacava2012avaliacao}. No Brasil, os Sistemas de Informação em Saúde (SIS) foram concebidos para finalidades específicas e não dispõem de um identificador unívoco comum, o que impõe a necessidade de técnicas de vinculação de registros para integrar dados de diferentes fontes \cite{Camargo2000reclink}. Bases como o Sistema de Informação sobre Mortalidade (SIM), o Sistema de Informação de Agravos de Notificação (Sinan), o Sistema de Informações Hospitalares (SIH-SUS) e o Sistema de Informações sobre Nascidos Vivos (Sinasc) registram eventos complementares sobre um mesmo indivíduo, porém sem mecanismo padronizado de interligação \cite{Christen2012book, Barreto2019The}.
+
+O \textit{linkage} (vinculação de registros, do inglês \textit{record linkage}) de bases de dados constitui etapa indispensável para a produção de indicadores de qualidade do cuidado, a identificação de subnotificação de agravos e a construção de trajetórias longitudinais de pacientes \cite{Fellegi1969theory, Newcombe1959automatic}. No contexto da vigilância epidemiológica brasileira, o \textit{linkage} probabilístico, operacionalizado por ferramentas como o OpenRecLink \cite{Camargo2000reclink}, é amplamente empregado para vincular registros de diferentes sistemas com base na comparação de variáveis de identificação pessoal (nome, nome da mãe, data de nascimento, sexo e município de residência) \cite{Coeli2002blocking}.
+
+Não obstante a consolidação dessa abordagem, a qualidade dos dados vinculados permanece dependente de limiares de classificação definidos empiricamente e de procedimentos de revisão manual cuja reprodutibilidade é limitada \cite{Christen2012book}. A superação dessas limitações constitui desafio relevante para a produção de informação oportuna e qualificada em saúde pública.
+
+
+\section{Problema e lacuna}\label{sec:problema-lacuna}
+
+No modelo de decisão proposto por Fellegi e Sunter \citeyearpar{Fellegi1969theory}, dois limiares dividem o espaço de escores de similaridade em três regiões: pares aceitos, pares rejeitados e uma faixa intermediária denominada área cinza (\textit{grey zone}). Os potenciais pares situados nessa região apresentam escores insuficientes para classificação automatizada e constituem o principal nó crítico do processo de vinculação \cite{Christen2012book}. A resolução da área cinza é tradicionalmente realizada por revisão manual (\textit{clerical review}), procedimento dispendioso, pouco escalável e sujeito à variabilidade intra e interavaliador \cite{Nasseh2016semisupervised}.
+
+A adoção de limiares fixos sobre escores agregados acarreta perda expressiva de pares verdadeiros, especialmente quando os campos de identificação apresentam erros de digitação, abreviações ou incompletude. Essa limitação é particularmente crítica no \textit{linkage} entre o SIM e o Sinan para tuberculose (TB), condição marcadora (\textit{tracer condition}) da qualidade do cuidado em saúde cujos indicadores de mortalidade evidenciam subnotificação significativa \cite{Oliveira2012uso, Sousa2011obitos, Pinheiro2012subnotificacao}. A perda de pares verdadeiros nesse cenário compromete a estimação da magnitude de desfechos desfavoráveis e a avaliação da efetividade do programa de controle da tuberculose \cite{Rocha2015causas, WHO2024tb}.
+
+Embora a aplicação de técnicas de aprendizado de máquina (\textit{machine learning}) ao \textit{linkage} venha sendo investigada em contextos internacionais \cite{Binette2022entity, Vo2019ensemble, Jiao2021hybrid, Almadani2026linking}, a literatura brasileira sobre o tema é incipiente, restringindo-se predominantemente a abordagens determinísticas e probabilísticas tradicionais. Soma-se a isso a carência de investigações que avaliem sistematicamente o impacto de estratégias de balanceamento de classes e de ajustes nos pontos de corte do comparador sobre a acurácia do processo de vinculação em bases de saúde brasileiras \cite{He2009imbalanced, Hassani2025oversampling}.
+
+
+\section{Proposta e estratégia}\label{sec:proposta-estrategia}\label{sec:estrategia-adotada}
+
+A estratégia adotada neste trabalho consiste no emprego de técnicas de aprendizado de máquina como camada de pós-processamento do \textit{linkage} probabilístico. Os escores de similaridade produzidos por um comparador de registros probabilístico \cite{Lucena2013algoritmos, Jardim2024comparador}, a partir dos potenciais pares gerados pelo OpenRecLink \cite{Camargo2000reclink}, bem como variáveis derivadas desses escores, são utilizados como atributos de entrada para classificadores supervisionados. A abordagem não substitui o processo probabilístico, mas o complementa, focalizando a resolução automatizada da área cinza e a reclassificação de pares situados nas regiões de incerteza do espaço de escores.
+
+A arquitetura proposta organiza-se em três camadas: (i) o OpenRecLink, responsável pela blocagem e geração de potenciais pares; (ii) o comparador de registros \cite{Jardim2024comparador, Lucena2013algoritmos}, responsável pelo cálculo de 29 subescores de similaridade e um escore agregado para cada par candidato; e (iii) a camada de pós-processamento por aprendizado de máquina, que constitui a contribuição central desta tese. Essa separação de responsabilidades permite que cada componente evolua independentemente e facilita a reprodutibilidade do protocolo experimental.
+
+Operacionalmente, o protocolo estrutura-se em seis etapas: (i) execução do \textit{linkage} probabilístico mediante OpenRecLink, com múltiplos passos de blocagem \cite{Coeli2002blocking}; (ii) cálculo dos escores de similaridade campo a campo pelo comparador de registros; (iii) engenharia de atributos, incluindo indicadores binários de concordância, escores ponderados e termos de interação; (iv) treinamento de classificadores supervisionados sobre o conjunto rotulado, com avaliação por validação cruzada estratificada; (v) aplicação dos classificadores treinados aos pares da área cinza, com possibilidade de priorização de sensibilidade (\textit{recall}) ou precisão (\textit{precision}), conforme o objetivo do estudo; e (vi) integração de regras de negócio baseadas no conhecimento do domínio. O \textit{framework} (estrutura metodológica) resultante é configurável, disponibilizando dois \textit{pipelines} (sequências operacionais) pré-definidos, um orientado à vigilância e outro à confirmação, articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
+
+O protocolo foi desenhado para ser reprodutível e automatizável, executável em ambiente computacional padronizado (Python, \textit{scikit-learn}, \textit{Jupyter}/\textit{Papermill}) e versionável em repositório Git, atendendo à necessidade de padronização identificada na literatura sobre \textit{linkage} em saúde \cite{Christen2012book, Asher2020introduction, Schnell2023microsimulation}. A descrição detalhada de cada etapa encontra-se no Capítulo~\ref{cap:metodo}.
+
+
+\section{Organização da tese}\label{sec:organizacao-tese}
+
+A tese está organizada em oito capítulos. O Capítulo~\ref{cap:referencial} apresenta o referencial teórico, abordando os fundamentos do \textit{linkage} de bases de dados, as estratégias de classificação de pares, as técnicas de aprendizado de máquina empregadas e o problema do desbalanceamento de classes. A justificativa do estudo, com ênfase na tuberculose como condição marcadora e na urgência de protocolos automatizados, é desenvolvida no Capítulo~\ref{cap:justificativa}, enquanto os objetivos geral e específicos são enunciados no Capítulo~\ref{cap:objetivos}. No Capítulo~\ref{cap:metodo}, descreve-se o método, incluindo fontes de dados, engenharia de atributos, estratégias de análise e métricas de avaliação. Os resultados dos experimentos são apresentados no Capítulo~\ref{cap:resultados}, seguidos pela discussão dos achados, implicações epidemiológicas e limitações no Capítulo~\ref{cap:discussao}. Por fim, o Capítulo~\ref{cap:conclusoes} sintetiza as contribuições e indica direções para trabalhos futuros.
+
+\end{chapter}

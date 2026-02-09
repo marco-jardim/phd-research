@@ -1,0 +1,26 @@
+\begin{chapter}{Objetivos}\label{cap:objetivos}
+
+\section{Objetivo geral}\label{sec:objetivo-geral}
+
+O presente estudo tem como objetivo geral desenvolver e avaliar um \textit{framework} configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre bases de dados de saúde, com vistas a aumentar a acurácia do processo e recuperar registros da área cinza que permaneceriam não classificados ou incorretamente descartados pelo método probabilístico convencional. O \textit{framework} proposto foi aplicado ao \textit{linkage} entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016, contribuindo para a qualificação dos dados vinculados e para a produção de indicadores de desempenho de sistemas e serviços de saúde.
+
+\section{Objetivos específicos}\label{sec:objetivos-especificos}
+
+\begin{enumerate}
+
+\item Comparar o desempenho de diferentes técnicas de aprendizado de máquina, a saber: regressão logística, Floresta Aleatória (\textit{Random Forest}), \textit{Gradient Boosting} (XGBoost e LightGBM), Máquina de Vetores de Suporte (\textit{Support Vector Machine, SVM}), redes neurais artificiais (\textit{Multilayer Perceptron, MLP}) e métodos de combinação de modelos (\textit{ensemble}: \textit{Stacking} e votação por consenso), na tarefa de classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB).
+
+\item Avaliar e comparar estratégias de balanceamento de classes, incluindo \textit{SMOTE} \cite{Chawla2002smote}, \textit{Borderline-SMOTE}, \textit{ADASYN}, \textit{SMOTE-Tomek} e ponderação de classes (\textit{class weights}), quanto ao seu efeito sobre a sensibilidade e a especificidade dos classificadores, considerando o severo desbalanceamento inerente ao \textit{linkage}, no que tange à identificação de combinações que possibilitem a melhoria da acurácia do processo de vinculação.
+
+\item Desenvolver e avaliar protocolos de ajuste nos pontos de corte dos escores do comparador, empregando otimização de limiares (\textit{threshold optimization}) e regras de negócio baseadas no conhecimento do domínio, de modo a maximizar a recuperação de pares verdadeiros na área cinza sem comprometer a proporção de falsos positivos, contribuindo para a qualificação dos dados vinculados e para a melhoria do desempenho do comparador probabilístico.
+
+\item Comparar duas estratégias complementares de pós-processamento: uma orientada à maximização da sensibilidade (\textit{recall}), voltada à identificação de subnotificação e à recuperação exaustiva de pares, e outra orientada à maximização da precisão (\textit{precision}), voltada à construção de conjuntos analíticos de alta confiabilidade; avaliando as implicações de cada abordagem para diferentes finalidades de uso dos dados vinculados no âmbito da vigilância, da assistência e da gestão em saúde.
+
+\item Sistematizar os resultados das comparações em quadros e tabelas que possibilitem a reprodução dos experimentos e a identificação das combinações de técnicas, parâmetros e estratégias de balanceamento mais adequadas a cada cenário de aplicação do \textit{linkage} em saúde, com vistas à produção de protocolos reprodutíveis e à padronização de abordagens de pós-processamento.
+
+\item Avaliar o potencial de generalização das abordagens desenvolvidas para outros cenários de \textit{linkage} em saúde, discutindo as condições sob as quais os classificadores treinados e os protocolos propostos podem ser adaptados a diferentes pares de bases de dados e a distintos contextos epidemiológicos.
+
+\end{enumerate}
+O capítulo seguinte descreve o percurso metodológico adotado para a consecução desses objetivos.
+
+\end{chapter}

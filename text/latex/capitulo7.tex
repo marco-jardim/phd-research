@@ -1,0 +1,87 @@
+\begin{chapter}{Discussão}
+\label{cap:discussao}
+
+Este capítulo discute os achados apresentados no Capítulo \ref{cap:resultados} à luz da literatura sobre \textit{linkage} probabilístico, aprendizado de máquina em saúde e vigilância da tuberculose no Brasil. A discussão está organizada em seis eixos: (i) o impacto epidemiológico da recuperação de óbitos na zona cinzenta, (ii) a racionalidade operacional dos dois \textit{pipelines} propostos, (iii) a leitura dos resultados sob a ótica do pensamento sistêmico, (iv) as implicações para a reconstrução de episódios de cuidado, (v) o potencial de alimentação de painéis de monitoramento e (vi) as limitações do estudo e possibilidades de generalização.
+
+\section{Impacto epidemiológico e operacional}
+\label{sec:cap6-impacto-epidemiologico}
+
+A subestimação de óbitos por tuberculose constitui problema recorrente nos sistemas de vigilância brasileiros, decorrente tanto da subnotificação de casos quanto de falhas no encerramento oportuno das fichas de investigação \cite{Bartholomay2014improved, Santos2018factors}. Quando o \textit{linkage} entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação (Sinan-TB) é utilizado para recuperar esses óbitos, a acurácia da etapa de classificação dos pares candidatos determina diretamente a magnitude do viés de mensuração remanescente \cite{Doidge2019linkageerror, Shaw2022biases}.
+
+Os resultados obtidos neste estudo quantificam esse impacto com precisão operacional. A configuração RF+SMOTE (limiar 0,5) recuperou 24 óbitos adicionais em relação ao limiar ingênuo $\geq 8$ do escore agregado, o que representa incremento de 55,8\% na detecção de pares verdadeiros no conjunto de teste (Tabela \ref{tab:impacto-epidemiologico}). Esse ganho não é marginal: cada óbito não vinculado ao registro de notificação impede a correção do desfecho na ficha do Sinan, comprometendo o cálculo de indicadores como a taxa de mortalidade entre casos notificados e a proporção de encerramentos por óbito \cite{Lima2020tbquality, Oliveira2019early}.
+
+\input{tables/tab_impacto_epidemiologico.tex}
+
+O custo operacional reforça a vantagem do pós-processamento supervisionado. A razão de revisões por par verdadeiro recuperado situou-se em aproximadamente 1,0 para RF+SMOTE, contra 1,6 para o limiar ingênuo $\geq 8$, indicando que o modelo de aprendizado de máquina concentra a revisão manual em candidatos com maior probabilidade de serem pares verdadeiros. Essa eficiência é particularmente relevante em contextos municipais, onde a capacidade de revisão clerical é limitada e o custo de oportunidade de cada registro avaliado erroneamente é alto \cite{Coeli2021suboptimal}.
+
+A distribuição dos óbitos recuperados por faixa de escore (Tabela \ref{tab:perfil-recuperados}) confirma que o ganho se concentra na zona cinzenta (escores 5 a 8), região que abriga aproximadamente 47\% dos pares verdadeiros do conjunto de teste. Limiares fixos aplicados ao escore agregado falham precisamente nessa faixa, onde a heterogeneidade de erros de digitação, abreviações e variações nominais torna a evidência de similaridade insuficiente para decisão automatizada. A capacidade do classificador de explorar padrões multivariados nos 29 subescores de similaridade permite discriminar pares que seriam indistinguíveis por um único ponto de corte, resultado consistente com achados de Paixão et al. \citeyearpar{Paixao2017linkageevaluation} sobre a superioridade de abordagens combinadas em bases administrativas brasileiras.
+
+\input{tables/tab_perfil_recuperados.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_deteccao.pgf}
+\caption{Pares verdadeiros detectados e perdidos por método de classificação.}
+\label{fig:epi-deteccao}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_revisoes.pgf}
+\caption{Volume total de pares encaminhados para revisão manual por método.}
+\label{fig:epi-revisoes}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_custo.pgf}
+\caption{Custo operacional: número de revisões manuais por par verdadeiro recuperado.}
+\label{fig:epi-custo}
+\end{figure}
+
+\section{Dois \textit{pipelines} e escolha de ponto operacional}
+\label{sec:cap6-dois-pipelines}
+
+A exploração sistemática de 828 configurações na fronteira de Pareto (Tabela \ref{tab:pareto-frontier}, Figura \ref{fig:pareto-frontier}) demonstrou que precisão e sensibilidade não podem ser maximizadas simultaneamente, resultado esperado pela teoria de decisão estatística, mas aqui quantificado para o contexto específico do \textit{linkage} SIM$\times$Sinan-TB. A implicação prática é direta: não existe um único ponto operacional ótimo, e a escolha deve ser orientada pela finalidade do \textit{linkage} \cite{Harron2017linkagequality}.
+
+O \textit{pipeline} orientado à vigilância prioriza sensibilidade. A configuração RF+SMOTE (limiar 0,5) atingiu F$_1$-Score de 0,916$\pm$0,026 na validação cruzada estratificada com cinco partições, apresentando o menor coeficiente de variação entre as configurações avaliadas (Tabela \ref{tab:cv-5fold}). Essa estabilidade é relevante para uso em rotina: um classificador cuja sensibilidade oscila entre partições comprometeria a comparabilidade temporal dos indicadores de mortalidade. Em contextos de monitoramento contínuo e análise de tendências, o custo de um falso negativo (óbito não detectado) supera o custo de um falso positivo (par incorreto encaminhado para revisão), justificando a operação em ponto de maior sensibilidade \cite{Bartholomay2014improved}.
+
+No polo oposto, o \textit{pipeline} de confirmação prioriza precisão. Configurações híbridas do tipo AND (por exemplo, Gradient Boosting com limiar $\geq 0,6$ combinado a regras com escore $\geq 5$) exigem concordância simultânea entre o classificador probabilístico e evidências determinísticas em atributos-chave. O estudo de ablação (Tabela \ref{tab:ablation-best-category}) mostrou que essa exigência dupla eleva a precisão ao custo de sensibilidade moderada, padrão compatível com ações administrativas, relatórios formais de encerramento e situações em que a auditoria posterior é inviável ou onerosa.
+
+A análise de robustez ao desbalanceamento fortalece a confiança nos dois \textit{pipelines}. O F$_1$-Score permaneceu na faixa de 0,880 a 0,918 sob nove estratégias de reamostragem distintas (Tabela \ref{tab:imbalance-sensitivity}), indicando que o desempenho não depende criticamente de uma única técnica de balanceamento. Combinações do tipo OR, por sua vez, melhoraram a estabilidade média do F$_1$-Score sob validação cruzada ao recuperar pares verdadeiros por duas vias complementares (probabilística ou determinística), reduzindo a dependência de uma única fonte de evidência \cite{Doidge2018demystifying}.
+
+A escolha entre os \textit{pipelines}, portanto, não é meramente técnica: envolve análise de risco, volume esperado de revisão e finalidade institucional do \textit{linkage}. O \textit{framework} configurável proposto nesta tese formaliza essa decisão, tornando explícitos os compromissos envolvidos e permitindo que gestores e epidemiologistas selecionem o ponto operacional mais adequado ao seu contexto, com base em evidência empírica documentada.
+
+\input{reserva_cap6.tex}
+
+\section{Contribuição do \textit{framework} em relação ao uso isolado de classificadores}
+\label{sec:cap6-contribuicao-framework}
+
+Cabe explicitar a distinção entre o \textit{framework} proposto neste trabalho e a aplicação isolada de um classificador, como a Floresta Aleatória (\textit{Random Forest}). A execução direta de um único modelo com hiperparâmetros padrão produz um ponto de operação no espaço precisão-sensibilidade, sem oferecer ao operador elementos para avaliar alternativas ou ajustar o comportamento do sistema ao contexto de uso. O \textit{framework} desenvolvido nesta tese distingue-se por cinco componentes integrados.
+
+Primeiro, o Comparador de Registros \cite{Jardim2024comparador, Lucena2013algoritmos} fornece 29 subescores de similaridade campo a campo, e não apenas o escore final agregado (\textit{nota final}), ampliando substancialmente a representação de cada par candidato e possibilitando que os classificadores explorem padrões de concordância parcial entre campos distintos.
+
+Em seguida, a etapa de engenharia de atributos (\textit{feature engineering}) deriva sistematicamente variáveis adicionais a partir dos escores brutos, incluindo termos de interação entre campos, escores quadráticos e indicadores binários de concordância com limiares diferenciados por estratégia, conforme detalhado na Seção~\ref{sec:engenharia-atributos}. Essa camada de transformação enriquece o espaço de atributos e permite a captura de evidências combinadas que não seriam acessíveis a um classificador operando diretamente sobre o escore agregado.
+
+Adicionalmente, o estudo de ablação sistemático, abrangendo mais de 70 configurações experimentais (variações de classificador, estratégia de balanceamento, combinação híbrida e limiar de decisão), substitui a escolha \textit{ad hoc} de um modelo por uma exploração exaustiva do espaço de configurações. Essa exploração viabiliza a identificação de configurações dominantes e a construção da fronteira de Pareto (\textit{Pareto frontier}) no plano precisão $\times$ sensibilidade.
+
+Como quarto diferencial, a fronteira de Pareto assim obtida não constitui artefato analítico isolado, mas instrumento de apoio à decisão: permite ao gestor ou pesquisador selecionar explicitamente o compromisso entre falsos positivos e falsos negativos adequado ao objetivo do estudo, seja vigilância epidemiológica (prioridade à sensibilidade), seja construção de coortes analíticas de alta confiabilidade (prioridade à precisão). A execução isolada de uma Floresta Aleatória com parâmetros padrão produz um único ponto nesse espaço; o \textit{framework} fornece a fronteira completa e o protocolo operacional para selecionar o ponto adequado.
+
+Por fim, os dois \textit{pipelines} pré-configurados (vigilância e confirmação de alta confiança), descritos na Seção~\ref{sec:cap6-dois-pipelines}, traduzem os achados experimentais em recomendações operacionais diretamente aplicáveis, reduzindo a dependência de expertise em aprendizado de máquina por parte dos profissionais de saúde que operam o \textit{linkage}. Em conjunto, esses componentes configuram uma abordagem de pós-processamento que ultrapassa a mera aplicação de um classificador e constitui protocolo reprodutível, configurável e auditável para a qualificação de dados vinculados em saúde.
+
+\section{Limitações e generalização}
+\label{sec:cap6-limitacoes}
+
+A principal limitação deste estudo reside na construção do padrão-ouro. O conjunto de referência foi elaborado por dois revisores do IESC-UFRJ por meio de revisão clerical, busca manual complementar e classificação subjetiva de cada candidato como par ou não par, com desacordos resolvidos por consenso. Embora esse procedimento seja consistente com práticas estabelecidas na literatura de \textit{linkage} \cite{Gupta2022framework, Gupta2024manual}, a ausência de cálculo de concordância inter-avaliadores (\textit{kappa} de Cohen) impede a quantificação formal da reprodutibilidade da rotulagem. Estudos futuros que incorporem métricas de concordância poderão estimar a magnitude da incerteza associada à classificação manual, especialmente na zona cinzenta, onde a ambiguidade dos registros é maior \cite{Harron2017linkagequality}.
+
+Uma segunda limitação refere-se ao risco de falsos negativos no padrão-ouro decorrentes de falhas na etapa de blocagem (\textit{blocking}). Se um par verdadeiro não foi gerado como candidato pelo OpenRecLink em nenhum dos passos de blocagem, ele estará ausente do universo avaliado, e tanto o classificador quanto a revisão manual serão incapazes de recuperá-lo. Essa limitação é inerente a qualquer estudo de \textit{linkage} probabilístico baseado em blocagem \cite{Doidge2019linkageerror} e implica que as métricas de sensibilidade reportadas nesta tese representam estimativas condicionais ao conjunto de candidatos gerados, não estimativas absolutas da capacidade de detecção. Abordagens alternativas, como a geração de identidades sintéticas \cite{Lam2024synthetic} ou a validação cruzada com múltiplas estratégias de blocagem, poderiam mitigar parcialmente essa restrição.
+
+O desbalanceamento extremo (1:248) entre pares verdadeiros e não pares constitui desafio estatístico relevante, pois pequenas variações na taxa de falsos positivos podem gerar grandes volumes de revisão. A análise de sensibilidade com nove estratégias de reamostragem indicou estabilidade do F$_1$-Score (0,880 a 0,918), sugerindo robustez do classificador a escolhas de balanceamento. Entretanto, a transposição direta dos limiares ótimos para bases com proporções de desbalanceamento distintas requer recalibração, uma vez que os valores preditivos positivo e negativo dependem da prevalência \cite{Shaw2022biases}.
+
+A disponibilidade restrita de variáveis clínicas no conjunto exportado pelo comparador de registros limita análises epidemiológicas mais detalhadas. Atributos como sexo, raça/cor, bairro de residência e comorbidades, embora presentes nas bases originais do SIM e do Sinan, não integraram o vetor de características por razões de escopo e privacidade, impedindo a estratificação do desempenho do classificador por subgrupos populacionais. A literatura documenta que a qualidade do preenchimento varia por região e por sistema de informação \cite{Lima2020tbquality, Bartholomay2020drtb}, de modo que a generalização para outras localidades e pares de bases (por exemplo, SIM$\times$SIH ou Sinan-TB$\times$GAL) depende de revalidação externa com padrões-ouro locais \cite{Coeli2021suboptimal}.
+
+A validação de arquiteturas de aprendizado profundo \textit{(deep learning)} em bases de maior volume configura agenda relevante para trabalhos futuros. A escolha por algoritmos baseados em árvore fundamenta-se na dimensão reduzida do conjunto positivo (247 pares verdadeiros) e na estrutura tabular dos atributos, condições que podem ser superadas em bases administrativas nacionais, as quais acumulam milhões de registros anuais \cite{Shaw2022biases}. Redes neurais profundas, particularmente arquiteturas híbridas que combinem camadas convolucionais para processamento de campos textuais com camadas densas para atributos estruturados, poderiam capturar padrões latentes em dados de linkage em larga escala, embora a vantagem preditiva dessas arquiteturas sobre métodos tradicionais em bases epidemiológicas brasileiras permaneça por quantificar.
+
+Apesar dessas restrições, os resultados sustentam que o pós-processamento supervisionado com \textit{framework} configurável constitui avanço operacional em relação a limiares fixos e regras ad hoc. A documentação explícita dos compromissos entre precisão, sensibilidade e custo de revisão, associada à interpretabilidade via SHAP, confere transparência ao processo decisório, condição necessária para a adoção em rotinas de vigilância \cite{Markus2021role}.
+
+\end{chapter}

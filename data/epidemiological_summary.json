@@ -1,0 +1,108 @@
+{
+  "total_test": 18509,
+  "true_pairs_test": 74,
+  "methods": {
+    "Naive threshold >=7": {
+      "detected": 58,
+      "missed": 16,
+      "to_review": 404,
+      "precision": 0.1436,
+      "recall": 0.7838,
+      "f1": 0.2427,
+      "cost_per_death": 6.97,
+      "pct_of_true_found": 78.4
+    },
+    "Naive threshold >=8": {
+      "detected": 43,
+      "missed": 31,
+      "to_review": 67,
+      "precision": 0.6418,
+      "recall": 0.5811,
+      "f1": 0.6099,
+      "cost_per_death": 1.56,
+      "pct_of_true_found": 58.1
+    },
+    "Naive threshold >=9": {
+      "detected": 31,
+      "missed": 43,
+      "to_review": 31,
+      "precision": 1.0,
+      "recall": 0.4189,
+      "f1": 0.5905,
+      "cost_per_death": 1.0,
+      "pct_of_true_found": 41.9
+    },
+    "Rules >=7": {
+      "detected": 55,
+      "missed": 19,
+      "to_review": 62,
+      "precision": 0.8871,
+      "recall": 0.7432,
+      "f1": 0.8088,
+      "cost_per_death": 1.13,
+      "pct_of_true_found": 74.3
+    },
+    "Rules >=8": {
+      "detected": 36,
+      "missed": 38,
+      "to_review": 36,
+      "precision": 1.0,
+      "recall": 0.4865,
+      "f1": 0.6545,
+      "cost_per_death": 1.0,
+      "pct_of_true_found": 48.6
+    },
+    "ML RF+SMOTE >=0.5": {
+      "detected": 67,
+      "missed": 7,
+      "to_review": 70,
+      "precision": 0.9571,
+      "recall": 0.9054,
+      "f1": 0.9306,
+      "cost_per_death": 1.04,
+      "pct_of_true_found": 90.5
+    },
+    "ML RF+SMOTE >=0.7": {
+      "detected": 64,
+      "missed": 10,
+      "to_review": 65,
+      "precision": 0.9846,
+      "recall": 0.8649,
+      "f1": 0.9209,
+      "cost_per_death": 1.02,
+      "pct_of_true_found": 86.5
+    },
+    "ML GB >=0.5": {
+      "detected": 60,
+      "missed": 14,
+      "to_review": 64,
+      "precision": 0.9375,
+      "recall": 0.8108,
+      "f1": 0.8696,
+      "cost_per_death": 1.07,
+      "pct_of_true_found": 81.1
+    },
+    "Hybrid-OR RF>=0.7+Rules>=8": {
+      "detected": 64,
+      "missed": 10,
+      "to_review": 65,
+      "precision": 0.9846,
+      "recall": 0.8649,
+      "f1": 0.9209,
+      "cost_per_death": 1.02,
+      "pct_of_true_found": 86.5
+    },
+    "Hybrid-AND RF>=0.5+Rules>=7": {
+      "detected": 55,
+      "missed": 19,
+      "to_review": 55,
+      "precision": 1.0,
+      "recall": 0.7432,
+      "f1": 0.8527,
+      "cost_per_death": 1.0,
+      "pct_of_true_found": 74.3
+    }
+  },
+  "recovered_by_ml_vs_naive8": 27,
+  "pct_recovered": 36.5
+}
