@@ -3,6 +3,9 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .config import load_config
+from .eval import evaluate_v3_csv
+from .reporting import summarize_runs, summary_to_latex_table, write_csv, write_text
 from .runner import run_v3
 
 
@@ -81,6 +84,84 @@ def build_parser() -> argparse.ArgumentParser:
         help="Disable MACD feature engineering (not used by calibration, but keeps pipeline consistent)",
     )
 
+    ev = sub.add_parser("eval", help="Evaluate v3 with train/test split")
+    ev.add_argument(
+        "--input",
+        default=str(Path("data") / "COMPARADORSEMIDENT.csv"),
+        help="Input CSV path (default: data/COMPARADORSEMIDENT.csv)",
+    )
+    ev.add_argument(
+        "--config",
+        default=str(Path("gzcmd") / "gzcmd_v3_config.yaml"),
+        help="Config YAML path (default: gzcmd/gzcmd_v3_config.yaml)",
+    )
+    ev.add_argument(
+        "--modes",
+        nargs="+",
+        default=[],
+        help="Modes to evaluate (default: all modes in config)",
+    )
+    ev.add_argument(
+        "--split-by",
+        choices=["row", "comprec", "refrec"],
+        default="",
+        help="Split strategy (default: config.evaluation.split_by)",
+    )
+    ev.add_argument(
+        "--test-size",
+        type=float,
+        default=None,
+        help="Test fraction in (0,1) (default: config.evaluation.test_size)",
+    )
+    ev.add_argument(
+        "--seeds",
+        nargs="+",
+        type=int,
+        default=[],
+        help="Random seeds (default: config.evaluation.seeds)",
+    )
+    ev.add_argument(
+        "--no-group-stratify",
+        action="store_true",
+        help="Disable stratifying groups by any-positive label",
+    )
+    ev.add_argument(
+        "--calibration",
+        choices=["platt", "stub"],
+        default="",
+        help="Calibration method (default: platt)",
+    )
+    ev.add_argument(
+        "--no-macd",
+        action="store_true",
+        help="Disable MACD feature engineering",
+    )
+    ev.add_argument(
+        "--metrics-out",
+        default="",
+        help="Write per-run metrics CSV to this path (sep=';')",
+    )
+    ev.add_argument(
+        "--summary-out",
+        default="",
+        help="Write aggregated summary CSV to this path (sep=';')",
+    )
+    ev.add_argument(
+        "--latex-out",
+        default="",
+        help="Write a LaTeX table to this path",
+    )
+    ev.add_argument(
+        "--latex-caption",
+        default="GZ-CMD++ v3 evaluation summary",
+        help="Caption for LaTeX table (default provided)",
+    )
+    ev.add_argument(
+        "--latex-label",
+        default="tab:gzcmd_v3_eval",
+        help="Label for LaTeX table (default: tab:gzcmd_v3_eval)",
+    )
+
     return p
 
 
@@ -131,6 +212,93 @@ def main(argv: list[str] | None = None) -> int:
         )
         print(f"wrote_model={args.output_model}")
         print(f"p_cal_params={summary.p_cal_params}")
+        return 0
+
+    if args.cmd == "eval":
+        cfg = load_config(args.config)
+
+        modes = None if not args.modes else [str(m) for m in args.modes]
+        split_by = str(args.split_by or cfg.evaluation.split_by).strip().lower()
+        test_size = (
+            float(cfg.evaluation.test_size)
+            if args.test_size is None
+            else float(args.test_size)
+        )
+        seeds = (
+            list(cfg.evaluation.seeds)
+            if not args.seeds
+            else [int(s) for s in args.seeds]
+        )
+        group_stratify = (
+            False if args.no_group_stratify else bool(cfg.evaluation.group_stratify)
+        )
+        calibration = str(args.calibration or "platt").strip().lower()
+
+        runs = evaluate_v3_csv(
+            input_csv=args.input,
+            config_path=args.config,
+            modes=modes,
+            split_by=split_by,
+            seeds=seeds,
+            test_size=test_size,
+            group_stratify=group_stratify,
+            calibration=calibration,
+            macd_enabled=not args.no_macd,
+        )
+
+        print(f"runs={len(runs)}")
+
+        if args.metrics_out:
+            write_csv(runs, args.metrics_out)
+            print(f"wrote_metrics={args.metrics_out}")
+
+        # Build a compact configuration label for summary tables.
+        runs_for_summary = runs.copy()
+        runs_for_summary["config"] = (
+            runs_for_summary["mode"].astype(str)
+            + " | split="
+            + runs_for_summary["split_by"].astype(str)
+            + " | cal="
+            + runs_for_summary["calibration"].astype(str)
+            + " | macd="
+            + runs_for_summary["macd_enabled"].map(lambda x: "on" if bool(x) else "off")
+        )
+
+        metric_cols = [
+            "exp_precision",
+            "exp_recall",
+            "exp_f1",
+            "exp_fbeta",
+            "auto_coverage",
+            "llm_used",
+        ]
+        summary = summarize_runs(
+            runs_for_summary, group_cols=["config"], metric_cols=metric_cols
+        ).rename(columns={"config": "Config"})
+
+        if args.summary_out:
+            write_csv(summary, args.summary_out)
+            print(f"wrote_summary={args.summary_out}")
+
+        if args.latex_out:
+            latex = summary_to_latex_table(
+                summary,
+                group_cols=["Config"],
+                metrics=[
+                    ("exp_precision", "Precision"),
+                    ("exp_recall", "Recall"),
+                    ("exp_f1", "F1"),
+                    ("exp_fbeta", "Fbeta"),
+                    ("auto_coverage", "Coverage"),
+                    ("llm_used", "LLM"),
+                ],
+                caption=args.latex_caption,
+                label=args.latex_label,
+                decimals=3,
+            )
+            write_text(args.latex_out, latex)
+            print(f"wrote_latex={args.latex_out}")
+
         return 0
 
     raise AssertionError(f"Unhandled command: {args.cmd}")

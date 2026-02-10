@@ -104,25 +104,41 @@ def run_v3(
     cfg = load_config(config_path)
     df = load_comparador_csv(Path(input_csv), cfg=LoadConfig(macd_enabled=macd_enabled))
 
-    nota = pd.to_numeric(get_nota_series(df), errors="coerce")
+    nota_raw = pd.to_numeric(get_nota_series(df), errors="coerce")
+    if isinstance(nota_raw, pd.Series):
+        nota = nota_raw
+    else:  # pragma: no cover (pd.to_numeric returns Series for Series input)
+        nota = pd.Series(nota_raw, index=df.index)
+
     band_assigner = BandAssigner.from_config(cfg)
     df["band"] = band_assigner.assign(nota)
-    if df["band"].isna().any():
+    if df["band"].isna().to_numpy(dtype=bool).any():
         n_bad = int(df["band"].isna().sum())
         raise ValueError(
             f"Unable to assign band for {n_bad} rows (nota final out of range?)."
         )
 
     p_cal_params: dict[str, float] | None = None
+    clip_min = float(cfg.calibration.clip_min)
+    clip_max = float(cfg.calibration.clip_max)
     if p_cal == "stub":
-        df["p_cal"] = compute_p_cal(df, method="stub")
+        df["p_cal"] = compute_p_cal(
+            df, method="stub", clip_min=clip_min, clip_max=clip_max
+        )
     elif p_cal == "fit_platt":
-        model = fit_platt_from_df(df)
+        model = fit_platt_from_df(
+            df,
+            l2=cfg.calibration.platt.l2,
+            max_iter=cfg.calibration.platt.max_iter,
+            tol=cfg.calibration.platt.tol,
+        )
         p_cal_params = {
             "intercept": float(model.intercept),
             "slope": float(model.slope),
         }
-        df["p_cal"] = compute_p_cal(df, method="platt", model=model)
+        df["p_cal"] = compute_p_cal(
+            df, method="platt", model=model, clip_min=clip_min, clip_max=clip_max
+        )
         if save_platt_model_path is not None:
             save_platt_model(model, save_platt_model_path)
     elif p_cal == "load_platt":
@@ -133,11 +149,20 @@ def run_v3(
             "intercept": float(model.intercept),
             "slope": float(model.slope),
         }
-        df["p_cal"] = compute_p_cal(df, method="platt", model=model)
+        df["p_cal"] = compute_p_cal(
+            df, method="platt", model=model, clip_min=clip_min, clip_max=clip_max
+        )
     else:
         raise ValueError("p_cal must be one of: stub, fit_platt, load_platt")
 
-    g = apply_guardrails(df)
+    g = apply_guardrails(
+        df,
+        temporal_days=cfg.guardrails.temporal_days,
+        nota_always_match=cfg.guardrails.nota_always_match,
+        nota_always_nonmatch=cfg.guardrails.nota_always_nonmatch,
+        homonimia_min_nota=cfg.guardrails.homonimia_min_nota,
+        homonimia_year_gap=cfg.guardrails.homonimia_year_gap,
+    )
     df["guardrail"] = g.guardrail
     df["guardrail_reason"] = g.reason
 
@@ -150,7 +175,9 @@ def run_v3(
     guardrails = out["guardrail"].value_counts(dropna=False).to_dict()
     guardrails = {str(k): int(v) for k, v in guardrails.items()}
 
-    review_requested = int(out.get("review_requested", pd.Series([], dtype=bool)).sum())
+    review_requested = (
+        int(out["review_requested"].sum()) if "review_requested" in out.columns else 0
+    )
 
     summary = RunSummary(
         rows=int(len(out)),
