@@ -101,6 +101,12 @@ calibration:
   # Online / rolling calibration WITHOUT human labels.
   method: "anchor_platt"   # sigmoid(a*logit(p_base)+b) fitted using anchors
   by_band: true            # fit separate (a,b) per band; recommended for grey bands
+  clip_min: 1.0e-6
+  clip_max: 0.999999
+  platt:
+    l2: 1.0e-3
+    max_iter: 100
+    tol: 1.0e-10
   safeguards:
     clip_p_base:
       min: 1.0e-6
@@ -115,6 +121,12 @@ calibration:
 
 guardrails:
   # Deterministic safety rules (PII-free), to avoid catastrophic false positives.
+  params:
+    temporal_days: 180
+    nota_always_match: 10.0
+    nota_always_nonmatch: 3.0
+    homonimia_min_nota: 7.0
+    homonimia_year_gap: 5.0
   always_match:
     - "nota_final >= 9.0"
   always_nonmatch:
@@ -244,3 +256,9 @@ logging:
   store_dossiers: true
   store_llm_traces: true
   redact_logs: true
+
+evaluation:
+  test_size: 0.3
+  seeds: [42, 123, 456, 789, 2024]
+  split_by: "row"        # row | comprec | refrec
+  group_stratify: true

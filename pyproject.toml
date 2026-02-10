@@ -20,13 +20,22 @@ dependencies = [
   "jupyter>=1.0",
   "xgboost>=2.0",
   "lightgbm>=4.0",
+  "pyyaml>=6.0",
+  "joblib>=1.3",
 ]
 
 [tool.ruff]
 line-length = 88
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 
 [tool.pytest.ini_options]
 addopts = "-q"
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
