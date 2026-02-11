@@ -47,7 +47,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     run.add_argument(
         "--p-cal",
-        choices=["fit_platt", "load_platt", "stub"],
+        choices=["fit_platt", "load_platt", "stub", "fit_ml_rf", "load_ml_rf"],
         default="fit_platt",
         help="How to compute p_cal (default: fit_platt)",
     )
@@ -60,6 +60,16 @@ def build_parser() -> argparse.ArgumentParser:
         "--save-platt-model",
         default="",
         help="If set, save fitted Platt model to this path",
+    )
+    run.add_argument(
+        "--ml-rf-model",
+        default="",
+        help="Path to a saved ML RF model (required for --p-cal load_ml_rf)",
+    )
+    run.add_argument(
+        "--save-ml-rf-model",
+        default="",
+        help="If set, save fitted ML RF model to this path",
     )
 
     fit = sub.add_parser("fit-calibration", help="Fit and save Platt calibration")
@@ -127,7 +137,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     ev.add_argument(
         "--calibration",
-        choices=["platt", "stub"],
+        choices=["platt", "stub", "ml_rf"],
         default="",
         help="Calibration method (default: platt)",
     )
@@ -189,6 +199,8 @@ def main(argv: list[str] | None = None) -> int:
             p_cal=args.p_cal,
             platt_model_path=(args.platt_model or None),
             save_platt_model_path=(args.save_platt_model or None),
+            ml_rf_model_path=(args.ml_rf_model or None),
+            save_ml_rf_model_path=(args.save_ml_rf_model or None),
         )
 
         if args.output:
