@@ -16,6 +16,7 @@ from .calibration import (
     predict_platt,
     predict_stub,
 )
+from .classifier import GZCMDClassifier
 from .config import GZCMDConfig, load_config
 from .guardrails import apply_guardrails
 from .loader import LoadConfig, load_comparador_csv
@@ -24,7 +25,7 @@ from .runner import build_engine_from_config
 from .splitting import SplitBy, SplitSpec, split_train_test_indices
 
 
-CalibrationMethod = Literal["platt", "stub"]
+CalibrationMethod = Literal["platt", "stub", "ml_rf"]
 
 
 @dataclass(frozen=True)
@@ -203,8 +204,13 @@ def evaluate_v3_dataframe(
                     clip_min=cfg.calibration.clip_min,
                     clip_max=cfg.calibration.clip_max,
                 )
+            elif calibration == "ml_rf":
+                clf = GZCMDClassifier()
+                clf.fit(train)
+                probs = clf.predict_proba(test)[:, 1]
+                test["p_cal"] = probs
             else:
-                raise ValueError("calibration must be one of: platt, stub")
+                raise ValueError("calibration must be one of: platt, stub, ml_rf")
 
             engine = build_engine_from_config(cfg, mode=str(mode), llm_used=0)
             out = engine.triage(test)

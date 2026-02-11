@@ -72,6 +72,9 @@ def summary_to_latex_table(
 
     metrics: list of (metric_name, header_label). Expects columns
       - f"{metric_name}_mean" and f"{metric_name}_std" in `summary`.
+
+    ``caption`` and ``label`` are emitted verbatim (no escaping) so the
+    caller may include LaTeX commands such as ``\\textsubscript{}``.
     """
 
     needed = list(group_cols)
@@ -84,19 +87,17 @@ def summary_to_latex_table(
         raise KeyError(f"Missing summary columns: {missing}")
 
     col_spec = "l" * len(group_cols) + "r" * len(metrics)
-    header_cells = [*group_cols, *[h for _, h in metrics]]
+    header_cells = [_latex_escape(c) for c in group_cols] + [h for _, h in metrics]
 
     lines: list[str] = []
     lines.append("\\begin{table}[htbp]")
     lines.append("\\centering")
-    lines.append(f"\\caption{{{_latex_escape(caption)}}}")
-    lines.append(f"\\label{{{_latex_escape(label)}}}")
+    lines.append(f"\\caption{{{caption}}}")
+    lines.append(f"\\label{{{label}}}")
     lines.append("\\small")
     lines.append(f"\\begin{{tabular}}{{{col_spec}}}")
     lines.append("\\toprule")
-    lines.append(
-        " ".join(["{}".format(_latex_escape(c)) for c in header_cells]) + " \\"
-    )
+    lines.append(" & ".join(header_cells) + " \\\\")
     lines.append("\\midrule")
 
     for _, row in summary.iterrows():
@@ -113,7 +114,7 @@ def summary_to_latex_table(
 
             s = 0.0 if math.isnan(s_float) else s_float
             row_cells.append(_fmt_pm(m, s, decimals=decimals))
-        lines.append(" ".join(row_cells) + " \\")
+        lines.append(" & ".join(row_cells) + " \\\\")
 
     lines.append("\\bottomrule")
     lines.append("\\end{tabular}")
