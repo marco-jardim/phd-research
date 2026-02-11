@@ -1,0 +1,489 @@
+{
+  "qwen3_235b": [
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 4.38,
+      "band": "grey_low",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "NONMATCH",
+        "confidence": 0.65,
+        "reason_codes": [
+          "GREY_LOW",
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "NAME_WEAK",
+          "MODEL_AMBIGUOUS"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "Nome com fragmentos inicial e final iguais (NOME prim frag igual=1.0, NOME ult frag igual=1.0)",
+            "Município de residência com UF e local iguais"
+          ],
+          "supports_nonmatch": [
+            "Data de nascimento com baixa similaridade (todas as features de DTNASC = 0.0)",
+            "Nome da mãe com nenhuma similaridade (todas as features = 0.0)",
+            "Modelo com saída nula (p_cal=null), indicando ambiguidade"
+          ],
+          "tie_breakers": [
+            "Apesar de alguma similaridade no nome próprio, ausência de apoio em data de nascimento e nome da mãe enfraquece o match"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 25.06,
+      "prompt_tokens": 1600,
+      "completion_tokens": 271,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 5.35,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.55,
+        "reason_codes": [
+          "GREY_MID",
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_WEAK",
+          "MUNICIPALITY_STRONG",
+          "MODEL_AMBIGUOUS"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "Primeiro e último fragmento do nome coincidem",
+            "Município de residência é idêntico em local e UF"
+          ],
+          "supports_nonmatch": [
+            "Data de nascimento não apresenta similaridade",
+            "Nome da mãe apresenta baixa similaridade (apenas último fragmento igual)"
+          ],
+          "tie_breakers": [
+            "Ausência de probabilidade calibrada (p_cal) impede reforço decisório"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 23.89,
+      "prompt_tokens": 1596,
+      "completion_tokens": 217,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 6.45,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.55,
+        "reason_codes": [
+          "GREY_MID",
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_WEAK",
+          "MUNICIPALITY_STRONG",
+          "MODEL_AMBIGUOUS"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "Primeiro e último fragmento do nome coincidem",
+            "Quantidade de fragmentos iguais no nome é moderadamente alta",
+            "Município de residência é idêntico (mesmo local e UF)"
+          ],
+          "supports_nonmatch": [
+            "Data de nascimento não apresenta similaridade (nem mesmo parcial)",
+            "Nome da mãe apresenta baixa similaridade (apenas último fragmento igual)"
+          ],
+          "tie_breakers": [
+            "Ausência de probabilidade calibrada (p_cal) impede reforço decisório",
+            "Campos de endereço não fornecem evidência"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 20.35,
+      "prompt_tokens": 1598,
+      "completion_tokens": 253,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 7.33,
+      "band": "near_high",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "MATCH",
+        "confidence": 0.75,
+        "reason_codes": [
+          "HIGH_SCORE_ANCHOR",
+          "NAME_STRONG",
+          "MOTHER_STRONG",
+          "MUNICIPALITY_STRONG"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "Nome completo altamente compatível (todas as partes iguais ou muito parecidas)",
+            "Mãe com fragmentos iniciais e finais iguais, indicando alto grau de similaridade",
+            "Município de residência idêntico (mesmo local e UF)"
+          ],
+          "supports_nonmatch": [],
+          "tie_breakers": [
+            "Ausência de similaridade na data de nascimento (não há igualdade nem proximidade nos dígitos)"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 20.29,
+      "prompt_tokens": 1598,
+      "completion_tokens": 214,
+      "finish_reason": "stop"
+    }
+  ],
+  "kimi_k2.5": [
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 4.38,
+      "band": "grey_low",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "NONMATCH",
+        "confidence": 0.7,
+        "reason_codes": [
+          "LOW_SCORE_ANCHOR",
+          "DOB_WEAK",
+          "MOTHER_MISSING",
+          "NAME_WEAK",
+          "MODEL_AMBIGUOUS"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "MUNICIPALITY_STRONG"
+          ],
+          "supports_nonmatch": [
+            "DOB_WEAK",
+            "MOTHER_MISSING",
+            "NAME_WEAK"
+          ],
+          "tie_breakers": []
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 4.08,
+      "prompt_tokens": 1624,
+      "completion_tokens": 147,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 5.35,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.55,
+        "reason_codes": [
+          "GREY_MID_BAND",
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_WEAK",
+          "MUNICIPALITY_STRONG"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NOME prim frag igual = 1.0",
+            "NOME ult frag igual = 1.0",
+            "CODMUNRES uf igual = 1.0",
+            "CODMUNRES local igual = 1.0"
+          ],
+          "supports_nonmatch": [
+            "DTNASC dt iguais = 0.0 (data de nascimento não coincide)",
+            "NOMEMAE prim frag igual = 0.0 (primeiro nome da mãe diferente)"
+          ],
+          "tie_breakers": [
+            "NOME qtd frag muito parec = 0.4 (similaridade parcial no nome)",
+            "NOMEMAE ult frag igual = 1.0 (último nome da mãe coincide)"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 5.17,
+      "prompt_tokens": 1624,
+      "completion_tokens": 237,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 6.45,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.55,
+        "reason_codes": [
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_MISSING",
+          "MODEL_AMBIGUOUS",
+          "INSUFFICIENT_EVIDENCE"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NOME prim frag igual = 1.0 (nome idêntico)",
+            "NOME ult frag igual = 1.0 (sobrenome idêntico)",
+            "CODMUNRES local igual = 1.0 (mesmo município)",
+            "CODMUNRES uf igual = 1.0 (mesma UF)"
+          ],
+          "supports_nonmatch": [
+            "DTNASC dt iguais = 0.0 (data de nascimento não coincide)",
+            "NOMEMAE prim frag igual = 0.0 (primeiro nome da mãe diferente)",
+            "NOMEMAE qtd frag iguais = 0.33 (baixa similaridade no nome da mãe)"
+          ],
+          "tie_breakers": [
+            "NOME qtd frag comuns = -0.5 (alguns fragmentos comuns podem reduzir discriminação)",
+            "NOME qtd frag muito parec = 0.6 (fragmentos similares mas não idênticos)",
+            "NOMEMAE ult frag igual = 1.0 (último nome da mãe coincide, possível coincidência de sobrenome comum)"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": true,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 2.59,
+      "prompt_tokens": 1624,
+      "completion_tokens": 332,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 7.33,
+      "band": "near_high",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "MATCH",
+        "confidence": 0.75,
+        "reason_codes": [
+          "NAME_STRONG",
+          "MOTHER_STRONG",
+          "MUNICIPALITY_STRONG",
+          "DOB_WEAK",
+          "MODEL_AMBIGUOUS"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "Nome: primário e último fragmento idênticos (1.0), alta similaridade geral",
+            "Nome da mãe: primário e último fragmento idênticos (1.0), 67% de fragmentos iguais",
+            "Município de residência: UF e localidade idênticos"
+          ],
+          "supports_nonmatch": [],
+          "tie_breakers": [
+            "Data de nascimento: ausência de sinais de similaridade (todos os indicadores zero) — não é contradição ativa, apenas ausência de evidência"
+          ]
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 4.31,
+      "prompt_tokens": 1624,
+      "completion_tokens": 239,
+      "finish_reason": "stop"
+    }
+  ],
+  "deepseek_r1": [
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 4.38,
+      "band": "grey_low",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.5,
+        "reason_codes": [
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_MISSING",
+          "MUNICIPALITY_STRONG",
+          "INSUFFICIENT_EVIDENCE"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NOME prim frag igual: 1.0",
+            "NOME ult frag igual: 1.0",
+            "CODMUNRES uf igual: 1.0",
+            "CODMUNRES local igual: 1.0"
+          ],
+          "supports_nonmatch": [
+            "DTNASC dt iguais: 0.0",
+            "NOMEMAE prim frag igual: 0.0",
+            "NOMEMAE ult frag igual: 0.0"
+          ],
+          "tie_breakers": []
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": true,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 6.52,
+      "prompt_tokens": 1665,
+      "completion_tokens": 227,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 5.35,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.5,
+        "reason_codes": [
+          "NAME_STRONG",
+          "MOTHER_MISSING",
+          "DOB_WEAK",
+          "MUNICIPALITY_STRONG",
+          "INSUFFICIENT_EVIDENCE"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NOME prim frag igual: 1.0",
+            "NOME ult frag igual: 1.0",
+            "CODMUNRES uf igual: 1.0",
+            "CODMUNRES local igual: 1.0"
+          ],
+          "supports_nonmatch": [
+            "DTNASC dt iguais: 0.0",
+            "NOMEMAE prim frag igual: 0.0"
+          ],
+          "tie_breakers": []
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": true,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 6.44,
+      "prompt_tokens": 1665,
+      "completion_tokens": 213,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 6.45,
+      "band": "grey_mid",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.5,
+        "reason_codes": [
+          "NAME_STRONG",
+          "DOB_WEAK",
+          "MOTHER_MISSING",
+          "MUNICIPALITY_STRONG",
+          "INSUFFICIENT_EVIDENCE"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NOME prim frag igual: 1.0",
+            "NOME ult frag igual: 1.0",
+            "CODMUNRES uf igual: 1.0",
+            "CODMUNRES local igual: 1.0"
+          ],
+          "supports_nonmatch": [
+            "DTNASC dt iguais: 0.0",
+            "NOMEMAE prim frag igual: 0.0",
+            "NOMEMAE qtd frag iguais: 0.33"
+          ],
+          "tie_breakers": []
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": true,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 6.74,
+      "prompt_tokens": 1665,
+      "completion_tokens": 230,
+      "finish_reason": "stop"
+    },
+    {
+      "pair_id": "0a80f4496cf07322",
+      "nota_final": 7.33,
+      "band": "near_high",
+      "error": false,
+      "parsed": {
+        "pair_id": "0a80f4496cf07322",
+        "decision": "UNSURE",
+        "confidence": 0.5,
+        "reason_codes": [
+          "DOB_WEAK",
+          "MOTHER_MISSING",
+          "ADDRESS_WEAK"
+        ],
+        "evidence_summary": {
+          "supports_match": [
+            "NAME_STRONG",
+            "MUNICIPALITY_STRONG"
+          ],
+          "supports_nonmatch": [],
+          "tie_breakers": []
+        },
+        "quality_flags": {
+          "pii_leak_detected": false,
+          "insufficient_evidence": false,
+          "inconsistent_input": false
+        }
+      },
+      "elapsed_s": 2.78,
+      "prompt_tokens": 1665,
+      "completion_tokens": 132,
+      "finish_reason": "stop"
+    }
+  ]
+}

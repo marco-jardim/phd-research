@@ -1,0 +1,117 @@
+[
+  {
+    "pair_id": "e02833fc18ec0d61",
+    "decision": "MATCH",
+    "confidence": 0.92,
+    "reason_codes": [
+      "HIGH_SCORE_ANCHOR",
+      "NAME_STRONG",
+      "MOTHER_STRONG",
+      "MUNICIPALITY_STRONG",
+      "MODEL_HIGH_P"
+    ],
+    "evidence_summary": {
+      "supports_match": [
+        "nota_final 9.77 (excede limiar STRONG 9.0)",
+        "nome_score_total 1.0 (excede limiar STRONG 0.80)",
+        "mae_score_total 1.0 (excede limiar STRONG 0.75)",
+        "municipio_score 1.0 (excede limiar STRONG 0.70)",
+        "p_cal 0.9078 (excede limiar STRONG 0.70)",
+        "MACD: mês e dia de nascimento coincidem (macd_nasc_month_match=1, macd_nasc_day_match=1)",
+        "MACD: nome perfeito apesar de diferença de 7 anos (macd_nome_perf_x_date_far=1)"
+      ],
+      "supports_nonmatch": [
+        "dtnasc_score_total 0.0 (datas de nascimento diferentes)",
+        "macd_nasc_diff_capped 7.0007 (diferença de 7 anos entre datas)"
+      ],
+      "tie_breakers": [
+        "Nome e mãe perfeitos (1.0) com município idêntico sobrepõem divergência de ano de nascimento",
+        "MACD indica mesmo mês/dia de nascimento, sugerindo possível erro de digitação no ano ou registro duplicado com data ligeiramente alterada",
+        "Guardrail de homonimia ativado, mas nome + mãe + município eliminam risco de homonimia genuína"
+      ]
+    },
+    "quality_flags": {
+      "pii_leak_detected": false,
+      "insufficient_evidence": false,
+      "inconsistent_input": false
+    },
+    "protocol": "consensus",
+    "agent_a_decision": "MATCH",
+    "agent_b_decision": "MATCH",
+    "total_latency_s": 5.78,
+    "total_tokens": 3832
+  },
+  {
+    "pair_id": "3312f130a5485666",
+    "decision": "MATCH",
+    "confidence": 0.85,
+    "reason_codes": [
+      "HIGH_SCORE_ANCHOR",
+      "NAME_STRONG",
+      "MOTHER_STRONG",
+      "MUNICIPALITY_STRONG",
+      "DOB_WEAK"
+    ],
+    "evidence_summary": {
+      "supports_match": [
+        "Nome perfeito (score 1.0, todos fragmentos iguais)",
+        "Nome da mãe perfeito (score 1.0, todos fragmentos iguais)",
+        "Município idêntico (score 1.0)",
+        "Nota final 8.93 (próxima de 9.0, banda near_high)",
+        "MACD: mês e dia de nascimento coincidem (macd_nasc_month_match=1, macd_nasc_day_match=1)",
+        "Modelo calibrado p=0.62 acima de 0.5, base_choice=MATCH"
+      ],
+      "supports_nonmatch": [
+        "Ano de nascimento diferente (macd_nasc_year_match=0, dtnasc_score_total=0.2)",
+        "Endereço completamente divergente (score 0.0)"
+      ],
+      "tie_breakers": [
+        "Nome e nome da mãe perfeitos com município idêntico superam divergência no ano de nascimento",
+        "MACD indica mesmo mês/dia de nascimento, sugerindo possível erro de digitação no ano"
+      ]
+    },
+    "quality_flags": {
+      "pii_leak_detected": false,
+      "insufficient_evidence": false,
+      "inconsistent_input": false
+    },
+    "protocol": "consensus",
+    "agent_a_decision": "MATCH",
+    "agent_b_decision": "MATCH",
+    "total_latency_s": 7.42,
+    "total_tokens": 3758
+  },
+  {
+    "pair_id": "b0f99dae26f3addb",
+    "decision": "NONMATCH",
+    "confidence": 0.75,
+    "reason_codes": [
+      "DOB_WEAK",
+      "MODEL_AMBIGUOUS",
+      "CONFLICTING_SIGNALS"
+    ],
+    "evidence_summary": {
+      "supports_match": [
+        "Nome: PNOME e UNOME com match perfeito (1.0 cada)",
+        "Município de residência idêntico (1.0)",
+        "Nome da mãe: primeiro fragmento igual (1.0)"
+      ],
+      "supports_nonmatch": [
+        "Data de nascimento completamente diferente (0.0)",
+        "MACD de nascimento elevado (8.88 anos de diferença)",
+        "Modelo calibrado com baixa probabilidade de match (p_cal=0.17)"
+      ],
+      "tie_breakers": []
+    },
+    "quality_flags": {
+      "pii_leak_detected": false,
+      "insufficient_evidence": false,
+      "inconsistent_input": false
+    },
+    "protocol": "consensus",
+    "agent_a_decision": "NONMATCH",
+    "agent_b_decision": "NONMATCH",
+    "total_latency_s": 5.05,
+    "total_tokens": 3488
+  }
+]
