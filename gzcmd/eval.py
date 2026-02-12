@@ -139,6 +139,7 @@ def evaluate_v3_dataframe(
     group_stratify: bool,
     calibration: CalibrationMethod,
     macd_enabled: bool,
+    guardrails_enabled: bool = True,
 ) -> pd.DataFrame:
     work = df.copy()
     y_all = _ensure_binary_target(work)
@@ -155,15 +156,18 @@ def evaluate_v3_dataframe(
         n_bad = int(work["band"].isna().sum())
         raise ValueError(f"Unable to assign band for {n_bad} rows")
 
-    g = apply_guardrails(
-        work,
-        temporal_days=cfg.guardrails.temporal_days,
-        nota_always_match=cfg.guardrails.nota_always_match,
-        nota_always_nonmatch=cfg.guardrails.nota_always_nonmatch,
-        homonimia_min_nota=cfg.guardrails.homonimia_min_nota,
-        homonimia_year_gap=cfg.guardrails.homonimia_year_gap,
-    )
-    work["guardrail"] = g.guardrail
+    if guardrails_enabled:
+        g = apply_guardrails(
+            work,
+            temporal_days=cfg.guardrails.temporal_days,
+            nota_always_match=cfg.guardrails.nota_always_match,
+            nota_always_nonmatch=cfg.guardrails.nota_always_nonmatch,
+            homonimia_min_nota=cfg.guardrails.homonimia_min_nota,
+            homonimia_year_gap=cfg.guardrails.homonimia_year_gap,
+        )
+        work["guardrail"] = g.guardrail
+    else:
+        work["guardrail"] = pd.NA
 
     records: list[dict[str, float | int | str | bool]] = []
     for mode in modes:
@@ -245,6 +249,7 @@ def evaluate_v3_dataframe(
                 "test_size": float(test_size),
                 "group_stratify": bool(group_stratify),
                 "macd_enabled": bool(macd_enabled),
+                "guardrails_enabled": bool(guardrails_enabled),
                 "calibration": str(calibration),
                 "n_train": int(len(train)),
                 "n_test": n_test,
@@ -284,6 +289,7 @@ def evaluate_v3_csv(
     group_stratify: bool,
     calibration: CalibrationMethod,
     macd_enabled: bool,
+    guardrails_enabled: bool = True,
 ) -> pd.DataFrame:
     cfg = load_config(config_path)
     df = load_comparador_csv(Path(input_csv), cfg=LoadConfig(macd_enabled=macd_enabled))
@@ -308,4 +314,5 @@ def evaluate_v3_csv(
         group_stratify=group_stratify,
         calibration=calibration,
         macd_enabled=macd_enabled,
+        guardrails_enabled=guardrails_enabled,
     )
