@@ -1,0 +1,26 @@
+\begin{table}[htbp]
+\centering
+\caption{Ablation study: impact of calibration, MACD, and guardrails on expected metrics.}
+\label{tab:exp1_ablation}
+\small
+\begin{tabular}{llrrrrr}
+\toprule
+ablation & mode & Exp Precision & Exp Recall & Exp F1 & Exp Fbeta & Llm Used \\
+\midrule
+GR\_OFF & confirmacao & $0.973 \pm 0.013$ & $0.945 \pm 0.023$ & $0.958 \pm 0.008$ & $0.967 \pm 0.007$ & $77.800 \pm 18.213$ \\
+GR\_OFF & vigilancia & $0.958 \pm 0.015$ & $0.967 \pm 0.024$ & $0.962 \pm 0.009$ & $0.965 \pm 0.017$ & $80.400 \pm 23.923$ \\
+GR\_ON & confirmacao & $0.948 \pm 0.012$ & $0.945 \pm 0.023$ & $0.946 \pm 0.008$ & $0.947 \pm 0.007$ & $126.200 \pm 19.370$ \\
+GR\_ON & vigilancia & $0.938 \pm 0.013$ & $0.967 \pm 0.024$ & $0.952 \pm 0.009$ & $0.961 \pm 0.017$ & $123.600 \pm 21.709$ \\
+MACD\_OFF & confirmacao & $0.948 \pm 0.012$ & $0.945 \pm 0.023$ & $0.946 \pm 0.008$ & $0.947 \pm 0.007$ & $126.200 \pm 19.370$ \\
+MACD\_OFF & vigilancia & $0.938 \pm 0.013$ & $0.967 \pm 0.024$ & $0.952 \pm 0.009$ & $0.961 \pm 0.017$ & $123.600 \pm 21.709$ \\
+MACD\_ON & confirmacao & $0.948 \pm 0.012$ & $0.945 \pm 0.023$ & $0.946 \pm 0.008$ & $0.947 \pm 0.007$ & $126.200 \pm 19.370$ \\
+MACD\_ON & vigilancia & $0.938 \pm 0.013$ & $0.967 \pm 0.024$ & $0.952 \pm 0.009$ & $0.961 \pm 0.017$ & $123.600 \pm 21.709$ \\
+cal=ml\_rf & confirmacao & $0.948 \pm 0.012$ & $0.945 \pm 0.023$ & $0.946 \pm 0.008$ & $0.947 \pm 0.007$ & $126.200 \pm 19.370$ \\
+cal=ml\_rf & vigilancia & $0.938 \pm 0.013$ & $0.967 \pm 0.024$ & $0.952 \pm 0.009$ & $0.961 \pm 0.017$ & $123.600 \pm 21.709$ \\
+cal=platt & confirmacao & $0.920 \pm 0.007$ & $0.530 \pm 0.036$ & $0.672 \pm 0.029$ & $0.802 \pm 0.018$ & $123.600 \pm 10.761$ \\
+cal=platt & vigilancia & $0.748 \pm 0.006$ & $0.693 \pm 0.047$ & $0.719 \pm 0.026$ & $0.703 \pm 0.038$ & $416.600 \pm 25.225$ \\
+cal=stub & confirmacao & $0.533 \pm 0.019$ & $0.808 \pm 0.056$ & $0.642 \pm 0.032$ & $0.572 \pm 0.023$ & $1000.000 \pm 0.000$ \\
+cal=stub & vigilancia & $0.006 \pm 0.000$ & $0.998 \pm 0.001$ & $0.012 \pm 0.000$ & $0.029 \pm 0.001$ & $2000.000 \pm 0.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -188,6 +188,88 @@ def _load_user_template() -> str:
     )
 
 
+# ── public message builders (for batch inference) ─────────────────────
+
+_ROLE_INSTRUCTION: dict[str, str] = {
+    "Agent-A": (
+        "\n\nVocê é o Agent-A. Analise o dossiê de forma direta e objetiva. "
+        "Priorize a evidência mais forte."
+    ),
+    "Agent-B": (
+        "\n\nVocê é o Agent-B. Analise o dossiê com atenção especial a "
+        "possíveis contradições e dados faltantes. Seja cético mas justo."
+    ),
+    "Arbiter": (
+        "\n\nVocê é o Árbitro. Dois revisores divergiram na decisão. "
+        "Analise o dossiê original e as duas opiniões. "
+        "Dê a decisão final com justificativa."
+    ),
+}
+
+
+def build_review_messages(
+    dossier: "Dossier",
+    agent_role: str = "Agent-A",
+    batch_mode: bool = False,
+) -> list[dict[str, str]]:
+    """Build chat messages for a review agent (public, no class instance needed).
+
+    Suitable for Fireworks batch inference JSONL generation.
+    When *batch_mode* is True an extra instruction is appended to
+    suppress chain-of-thought reasoning so the model outputs **only**
+    the JSON object (avoids token-budget exhaustion in batch jobs).
+    """
+    system_prompt = _load_system_prompt()
+    user_template = _load_user_template()
+    full_system = system_prompt + _ROLE_INSTRUCTION.get(agent_role, "")
+    if batch_mode:
+        full_system += (
+            "\n\nCRITICAL: Output ONLY the JSON object. "
+            "Do NOT include any reasoning, analysis, chain-of-thought, "
+            "or explanation before or after the JSON. "
+            "Start your response with { and end with }."
+        )
+    dossier_json = dossier.to_json(indent=2)
+    user_msg = f"{user_template}\n\n```json\n{dossier_json}\n```"
+    return [
+        {"role": "system", "content": full_system},
+        {"role": "user", "content": user_msg},
+    ]
+
+
+def build_arbiter_messages(
+    dossier: "Dossier",
+    response_a: dict[str, Any],
+    response_b: dict[str, Any],
+) -> list[dict[str, str]]:
+    """Build chat messages for the arbiter (public, no class instance needed)."""
+    system_prompt = _load_system_prompt()
+    user_template = _load_user_template()
+    full_system = (
+        system_prompt
+        + "\n\nVocê é o Árbitro. Dois revisores independentes divergiram. "
+        "Analise o dossiê original e as duas opiniões abaixo. "
+        "Dê a decisão final. Não repita PII."
+    )
+    dossier_json = dossier.to_json(indent=2)
+    user_msg = (
+        f"{user_template}\n\n"
+        f"### Dossiê original\n```json\n{dossier_json}\n```\n\n"
+        f"### Opinião Agent-A\n```json\n{json.dumps(response_a, ensure_ascii=False, indent=2)}\n```\n\n"
+        f"### Opinião Agent-B\n```json\n{json.dumps(response_b, ensure_ascii=False, indent=2)}\n```\n\n"
+        "Analise as divergências e dê sua decisão final no formato JSON."
+    )
+    return [
+        {"role": "system", "content": full_system},
+        {"role": "user", "content": user_msg},
+    ]
+
+
+def extract_and_validate(raw_content: str, pair_id: str) -> dict[str, Any]:
+    """Extract JSON from raw LLM output and validate against schema (public)."""
+    return _validate_response(_extract_json(raw_content), pair_id)
+
+
 # ---------------------------------------------------------------------------
 # Response parsing & validation
 # ---------------------------------------------------------------------------
@@ -213,7 +295,30 @@ def _extract_json(text: str) -> dict[str, Any]:
         except json.JSONDecodeError:
             pass
 
-    # Try finding the outermost {...}
+    # Try finding JSON starting with {"decision" (our expected schema key)
+    decision_start = text.find('{"decision"')
+    if decision_start == -1:
+        decision_start = text.find('"decision"')
+        if decision_start > 0:
+            # Walk back to the opening brace
+            candidate = text[:decision_start].rfind("{")
+            if candidate != -1:
+                decision_start = candidate
+    if decision_start != -1:
+        # Find matching closing brace via bracket counting
+        depth = 0
+        for i in range(decision_start, len(text)):
+            if text[i] == "{":
+                depth += 1
+            elif text[i] == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        return json.loads(text[decision_start : i + 1])
+                    except json.JSONDecodeError:
+                        break
+
+    # Fallback: outermost {...}
     brace_start = text.find("{")
     brace_end = text.rfind("}")
     if brace_start != -1 and brace_end > brace_start:
