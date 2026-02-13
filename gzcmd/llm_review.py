@@ -280,6 +280,12 @@ def _extract_json(text: str) -> dict[str, Any]:
     # Strip <think>...</think> blocks (DeepSeek R1 style)
     text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL)
 
+    # Strip untagged thinking text before the first '{' (DeepSeek V3 style)
+    # These models sometimes output reasoning in natural language before the JSON
+    first_brace = text.find("{")
+    if first_brace > 0:
+        text = text[first_brace:]
+
     # Try direct parse
     text = text.strip()
     try:
@@ -427,9 +433,14 @@ class LLMReviewer:
     api_key: str
     base_url: str = "https://api.fireworks.ai/inference/v1/chat/completions"
     model: str = "accounts/fireworks/models/kimi-k2p5"
-    fallback_model: str = "accounts/fireworks/models/qwen3-235b-a22b-instruct-2507"
+    fallback_model: str = "accounts/fireworks/models/qwen3-235b-a22b"
     temperature: float = 0.0
     max_tokens: int = 800
+    top_p: float = 1.0
+    top_k: int = 40
+    presence_penalty: float = 0.0
+    frequency_penalty: float = 0.0
+    stop: list[str] | None = None
     max_retries: int = 3
     retry_delay_s: float = 2.0
     timeout_s: float = 60.0
@@ -489,8 +500,14 @@ class LLMReviewer:
             "messages": messages,
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,
+            "top_p": self.top_p,
+            "top_k": self.top_k,
+            "presence_penalty": self.presence_penalty,
+            "frequency_penalty": self.frequency_penalty,
             "response_format": {"type": "json_object"},
         }
+        if self.stop:
+            payload["stop"] = self.stop
 
         last_error: Exception | None = None
         for attempt in range(1, self.max_retries + 1):

@@ -1,0 +1,137 @@
+{
+  "kimi_k2.5": {
+    "n_evaluated": 517,
+    "n_valid": 499,
+    "n_unsure": 18,
+    "n_errors": 0,
+    "concordance": 0.978,
+    "concordance_ci95": [
+      0.961,
+      0.9876
+    ],
+    "precision": 0.9091,
+    "recall": 0.7895,
+    "f1": 0.8451,
+    "tp": 30,
+    "fp": 3,
+    "fn": 8,
+    "tn": 458,
+    "unsure_rate": 0.0348,
+    "mean_confidence": 0.8471,
+    "mean_latency_s": 7.28,
+    "median_latency_s": 6.34,
+    "protocols": {
+      "consensus": 503,
+      "arbiter": 14
+    },
+    "model_name": "Kimi K2.5"
+  },
+  "gpt4o": {
+    "n_evaluated": 517,
+    "n_valid": 508,
+    "n_unsure": 9,
+    "n_errors": 0,
+    "concordance": 0.9547,
+    "concordance_ci95": [
+      0.933,
+      0.9696
+    ],
+    "precision": 1.0,
+    "recall": 0.3429,
+    "f1": 0.5106,
+    "tp": 12,
+    "fp": 0,
+    "fn": 23,
+    "tn": 473,
+    "unsure_rate": 0.0174,
+    "mean_confidence": 0.9212,
+    "mean_latency_s": 6.34,
+    "median_latency_s": 5.73,
+    "protocols": {
+      "consensus": 511,
+      "arbiter": 6
+    },
+    "model_name": "GPT-4o"
+  },
+  "deepseek_v3.2": {
+    "n_evaluated": 517,
+    "n_valid": 232,
+    "n_unsure": 285,
+    "n_errors": 0,
+    "concordance": 0.9353,
+    "concordance_ci95": [
+      0.8961,
+      0.9604
+    ],
+    "precision": 0.6154,
+    "recall": 0.7619,
+    "f1": 0.6809,
+    "tp": 16,
+    "fp": 10,
+    "fn": 5,
+    "tn": 201,
+    "unsure_rate": 0.5513,
+    "mean_confidence": 0.6534,
+    "mean_latency_s": 54.02,
+    "median_latency_s": 51.73,
+    "protocols": {
+      "consensus": 304,
+      "arbiter": 213
+    },
+    "model_name": "DeepSeek V3.2"
+  },
+  "qwen3_vl_30b": {
+    "n_evaluated": 517,
+    "n_valid": 509,
+    "n_unsure": 8,
+    "n_errors": 0,
+    "concordance": 0.9489,
+    "concordance_ci95": [
+      0.9262,
+      0.9649
+    ],
+    "precision": 1.0,
+    "recall": 0.3333,
+    "f1": 0.5,
+    "tp": 13,
+    "fp": 0,
+    "fn": 26,
+    "tn": 470,
+    "unsure_rate": 0.0155,
+    "mean_confidence": 0.9233,
+    "mean_latency_s": 7.52,
+    "median_latency_s": 5.02,
+    "protocols": {
+      "consensus": 511,
+      "arbiter": 6
+    },
+    "model_name": "Qwen3-VL-30B"
+  },
+  "glm5": {
+    "n_evaluated": 517,
+    "n_valid": 212,
+    "n_unsure": 305,
+    "n_errors": 0,
+    "concordance": 0.9528,
+    "concordance_ci95": [
+      0.9154,
+      0.9742
+    ],
+    "precision": 0.7692,
+    "recall": 0.8333,
+    "f1": 0.8,
+    "tp": 20,
+    "fp": 6,
+    "fn": 4,
+    "tn": 182,
+    "unsure_rate": 0.5899,
+    "mean_confidence": 0.7651,
+    "mean_latency_s": 57.57,
+    "median_latency_s": 54.61,
+    "protocols": {
+      "consensus": 362,
+      "arbiter": 155
+    },
+    "model_name": "GLM-5"
+  }
+}
