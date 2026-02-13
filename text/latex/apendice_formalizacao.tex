@@ -1,0 +1,231 @@
+\subsection{Calibração Probabilística por Âncoras}
+
+A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{record linkage} (como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}) não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, faz-se necessária a transformação desse escore em uma probabilidade $p = P(y=1\mid s)$, onde $y=1$ denota um par verdadeiro (\textit{match}).
+
+Adota-se o método de \textit{Platt Scaling} \cite{Platt1999}, que ajusta uma função sigmoide aos escores:
+
+$$
+p_{cal}(s) = \frac{1}{1 + \exp(-\left(\alpha s + \beta\right))}
+$$
+
+No entanto, em cenários de vigilância onde não se dispõe de dados rotulados (\textit{labels}) em tempo de execução para treinar essa calibração (o problema \textit{unsupervised}), propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}). Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
+
+\begin{enumerate}
+\item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$ e identidade perfeita de nomes e mães), assumindo-se uma probabilidade média alvo $r^+ \approx 1$.
+\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s \le \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^- \approx 0$.
+\end{enumerate}
+
+Os parâmetros de calibração $\alpha$ e $\beta$ são obtidos resolvendo-se o sistema de equações que iguala a esperança da probabilidade predita nos conjuntos âncora às suas taxas reais estimadas (\textit{priors}):
+
+$$
+\begin{cases}
+\mathbb{E}_{s \in A^+}\left[\sigma(\alpha s + \beta)\right] = r^+ \\
+\mathbb{E}_{s \in A^-}\left[\sigma(\alpha s + \beta)\right] = r^-
+\end{cases}
+$$
+
+\textbf{Nota sobre regularização.} O sistema de duas equações para dois parâmetros pode tornar-se numericamente instável quando os conjuntos âncora apresentam baixa variância nos escores $s$ (por exemplo, quando $A^+$ concentra-se em uma faixa estreita próxima a 10{,}0). Para mitigar esse risco, recomendam-se três estratégias complementares: (i) impor limites de magnitude nos parâmetros ($\lvert\alpha\rvert \le \alpha_{max}$, $\lvert\beta\rvert \le \beta_{max}$), equivalente a uma regularização L-infinito; (ii) utilizar um termo de penalização quadrática (regularização L2, análoga ao \textit{weight decay}) na função objetivo, transformando o sistema em um problema de otimização $\min_{\alpha,\beta} \sum_{A^+,A^-} \mathcal{L}_{CE} + \lambda(\alpha^2 + \beta^2)$, onde $\mathcal{L}_{CE}$ é a entropia cruzada contra os alvos $r^+$ e $r^-$; ou (iii) garantir que os conjuntos âncora tenham tamanho mínimo ($\lvert A^+\rvert \ge 30$, $\lvert A^-\rvert \ge 30$) para estabilidade estatística. A escolha entre essas estratégias depende do contexto operacional; em bases com elevada proporção de escores extremos, a estratégia (i) pode ser suficiente, ao passo que bases com distribuições mais concentradas podem requerer a combinação de (i) e (ii).
+
+\begin{proposition}[Viés de contaminação nos conjuntos âncora]
+\label{prop:anchor-contamination-bias}
+A qualidade da calibração depende criticamente da pureza dos conjuntos âncora. Denote-se por $\varepsilon^+$ a taxa de contaminação em $A^+$ (fração de não-pares erroneamente incluídos) e por $\varepsilon^-$ a taxa de contaminação em $A^-$ (fração de pares verdadeiros erroneamente incluídos). As probabilidades-alvo efetivas tornam-se $r^+_{eff} = r^+ - \varepsilon^+$ e $r^-_{eff} = r^- + \varepsilon^-$, de modo que os parâmetros $\alpha$ e $\beta$ estimados refletem essas taxas contaminadas. O viés resultante na curva de calibração é proporcional a $\max(\varepsilon^+, \varepsilon^-)$: para $\varepsilon < 0{,}01$ (pureza superior a 99\%), a distorção na região intermediária da sigmoide (onde se concentram as decisões da zona cinzenta) é da ordem de $O(\varepsilon)$ e pode ser considerada negligível frente à incerteza inerente do modelo discriminativo. A validação empírica dos conjuntos âncora contra o padrão-ouro constitui, portanto, uma etapa obrigatória do protocolo de calibração.
+\end{proposition}
+
+Essa abordagem permite recalibrar periodicamente o modelo discriminativo sem intervenção humana manual, garantindo que a probabilidade $p_{cal}$ reflita a taxa de acerto local, mesmo sob deriva (\textit{drift}) nas distribuições dos escores brutos.
+
+\subsection{Função de Perda e Decisão em Três Vias}
+
+O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente.
+
+Sejam $C_{FP}$ e $C_{FN}$ os custos unitários de um Falso Positivo e de um Falso Negativo. Em vigilância epidemiológica, frequentemente $C_{FN} > C_{FP}$ (o custo de perder um óbito é maior que o de investigar um falso alarme) \cite{Sadinle2017}. A perda esperada $\mathcal{L}$ para cada ação, dada a probabilidade calibrada $p$, é definida como:
+
+$$
+\begin{aligned}
+\mathcal{L}(a_M \mid p) &= (1-p) \cdot C_{FP} \\
+\mathcal{L}(a_N \mid p) &= p \cdot C_{FN}
+\end{aligned}
+$$
+
+Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um custo fixo operacional $C_{LLM}$ e modela-se a falibilidade do revisor através de suas taxas de erro $e_{FP}$ (probabilidade de o revisor aceitar um não-par) e $e_{FN}$ (probabilidade de o revisor rejeitar um par verdadeiro). A perda esperada da revisão é:
+
+\begin{proposition}[Afinidade da perda de revisão]
+\label{prop:review-loss-affine}
+$$
+\mathcal{L}(a_R \mid p) = C_{LLM} + \underbrace{(1-p) \cdot e_{FP} \cdot C_{FP}}_{\text{Risco residual de FP}} + \underbrace{p \cdot e_{FN} \cdot C_{FN}}_{\text{Risco residual de FN}}
+$$
+\end{proposition}
+
+A regra de decisão ótima $\delta^*(p)$ é aquela que minimiza a perda esperada:
+
+$$
+\delta^*(p) = \underset{a \in \{a_M, a_N, a_R\}}{\operatorname{argmin}} \{\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p), \mathcal{L}(a_R\mid p)\}
+$$
+
+Esta formulação endogeniza o \textit{trade-off} entre precisão e sensibilidade (controlado pela razão $C_{FP}/C_{FN}$) e a viabilidade econômica da revisão (controlada por $C_{LLM}$), permitindo que a fronteira de decisão se adapte ao contexto operacional sem modificação algorítmica.
+
+\subsection{Valor Esperado da Revisão (EVR)}
+
+Para operacionalizar a triagem sob restrição orçamentária, define-se o Valor Esperado da Revisão (\textit{Expected Value of Review}, EVR). O EVR quantifica a redução de perda obtida ao se optar pela revisão em vez da melhor decisão automática disponível:
+
+\begin{definition}[Valor Esperado da Revisão (EVR)]
+$$
+EVR(p) = \min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p)) - \mathcal{L}(a_R\mid p)
+$$
+\end{definition}
+
+Um par deve ser encaminhado para revisão se, e somente se, $EVR(p) > 0$. Intuitivamente, isso ocorre quando a incerteza do modelo (proximidade de $p$ em relação ao limiar de decisão) é alta o suficiente para que o custo da informação adicional ($C_{LLM}$) seja compensado pela mitigação do risco de erro.
+
+Em cenários com orçamento de revisão fixo $B$ (número máximo de pares revisáveis), os candidatos à revisão são ordenados por $EVR(p)$ decrescente, selecionando-se os $k$ primeiros tal que $\sum_{i=1}^k \mathbb{I}(a_i=a_R) \le B$.
+
+\subsubsection{Propriedades geométricas do EVR}
+
+\begin{proposition}[Concavidade]
+\label{prop:evr-concavity}
+A função $EVR(p)$ é côncava em $p \in (0,1)$ e atinge seu valor máximo em $p^* = C_{FP}/(C_{FP} + C_{FN})$, que coincide com o ponto de máxima incerteza de decisão entre as ações automáticas. Nos extremos ($p \to 0$ e $p \to 1$), $EVR(p) < 0$, o que garante que a região de revisão $\{p : EVR(p) > 0\}$ é um intervalo conexo.
+\end{proposition}
+
+\begin{proof}
+O termo $\min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p))$ constitui o mínimo pontual de duas funções lineares em $p$: $\mathcal{L}(a_M\mid p) = (1-p) \cdot C_{FP}$ (decrescente) e $\mathcal{L}(a_N\mid p) = p \cdot C_{FN}$ (crescente). O mínimo pontual de funções afins é côncavo (propriedade elementar da teoria de otimização convexa \cite{Boyd2004convex}). Como $\mathcal{L}(a_R\mid p)$ é afim em $p$ (portanto simultaneamente convexa e côncava), a diferença $EVR(p) = \min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p)) - \mathcal{L}(a_R\mid p)$ preserva a concavidade.
+
+Avaliando nos extremos:
+
+$$
+EVR(0) = \min(C_{FP},\, 0) - (C_{LLM} + e_{FP} \cdot C_{FP}) = -C_{LLM} - e_{FP} \cdot C_{FP} < 0
+$$
+
+$$
+EVR(1) = \min(0,\, C_{FN}) - (C_{LLM} + e_{FN} \cdot C_{FN}) = -C_{LLM} - e_{FN} \cdot C_{FN} < 0
+$$
+
+Pela concavidade, $EVR(p) > 0$ apenas em um subintervalo aberto de $(0,1)$, e esse subintervalo é necessariamente conexo. O máximo é atingido em $p^* = C_{FP}/(C_{FP} + C_{FN})$, onde as duas funções de perda automáticas se cruzam e a incerteza de classificação é máxima.
+\end{proof}
+
+\begin{corollary}[Limiar crítico de custo de revisão]
+\label{cor:cllm-critical}
+A região de revisão é não vazia se, e somente se, $EVR(p^*) > 0$. Calculando-se $EVR(p^*)$ explicitamente:
+
+$$
+EVR(p^*) = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN}) - C_{LLM}
+$$
+
+Portanto, existe um limiar crítico de custo de revisão:
+
+$$
+C_{LLM}^* = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN})
+$$
+
+abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Quando $C_{LLM} \ge C_{LLM}^*$, o custo do revisor excede o benefício potencial e toda decisão é automática. A expressão $C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$ corresponde à metade harmônica dos custos de erro, ponderada pela acurácia líquida do revisor $(1 - e_{FP} - e_{FN})$, o que confere interpretabilidade operacional ao limiar: revisores com maiores taxas de erro residual reduzem o orçamento justificável para revisão.
+\end{corollary}
+
+\textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Para o modo Vigilância com $C_{FN}/C_{FP} = 5$ e $C_{FP} = 1$, o limiar resulta em $C_{LLM}^* = 5/6 \approx 0{,}83$, indicando que a revisão é justificável desde que seu custo unitário seja inferior a 83\% do custo do falso positivo.
+
+\subsection{Relaxamento das Hipóteses de Fellegi--Sunter}
+
+O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na razão de verossimilhança $R = P(\gamma\mid M) / P(\gamma\mid U)$ e na determinação de dois limiares $T_\lambda$ e $T_\mu$ que otimizam o erro para uma taxa fixa de revisão clerical. O GZ-CMD pode ser formalmente compreendido como uma generalização que relaxa duas hipóteses centrais desse modelo:
+
+\begin{enumerate}
+\item \textbf{Relaxamento da Independência Condicional:} Fellegi e Sunter assumem frequentemente que os campos de comparação são condicionalmente independentes, $P(\gamma\mid M) = \prod P(\gamma_i\mid M)$. O GZ-CMD, ao empregar um modelo discriminativo calibrado $P(y\mid x)$ (como \textit{Random Forest} ou \textit{Gradient Boosting}), captura interações não lineares entre atributos (por exemplo, concordância de nome condicionada à frequência do sobrenome), sem assumir independência.
+\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi--Sunter define limiares baseados em taxas de erro toleráveis (limitadas), o GZ-CMD define a região de indecisão (zona cinzenta) com base na utilidade econômica da decisão, permitindo que a fronteira se desloque conforme as prioridades epidemiológicas.
+\end{enumerate}
+
+\subsubsection{Esboço de prova: convergência para a decisão por máxima verossimilhança}
+
+\begin{proposition}
+No caso especial em que (a) os custos são simétricos ($C_{FP} = C_{FN} = C$), (b) o revisor é perfeito ($e_{FP} = e_{FN} = 0$), e (c) o custo de revisão tende a zero ($C_{LLM} \to 0$), a decisão por perda esperada mínima $\delta^*(p)$ converge para a decisão por máxima verossimilhança (limiar em $p = 0{,}5$), e a zona de revisão colapsa ao conjunto vazio.
+\end{proposition}
+
+\begin{proof}[Esboço da prova]
+Sob as hipóteses (a) a (c), as funções de perda simplificam-se para:
+
+$$
+\begin{aligned}
+\mathcal{L}(a_M \mid p) &= (1-p) \cdot C \\
+\mathcal{L}(a_N \mid p) &= p \cdot C \\
+\mathcal{L}(a_R \mid p) &= C_{LLM} + 0 = C_{LLM}
+\end{aligned}
+$$
+
+\textbf{Passo 1 (Eliminação da revisão).} Para que a revisão seja ótima, necessita-se $\mathcal{L}(a_R\mid p) < \min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p))$, ou seja:
+
+$$
+C_{LLM} < \min((1-p) \cdot C,\, p \cdot C) = C \cdot \min(1-p,\, p)
+$$
+
+O lado direito atinge seu máximo em $p = 0{,}5$, onde $\min(1-p, p) = 0{,}5$, resultando em $C_{LLM} < 0{,}5 \cdot C$. Portanto, quando $C_{LLM} \to 0$, a revisão é ótima para um conjunto de valores de $p$ em torno de 0,5 cuja largura é proporcional a $C_{LLM}/C$. No limite $C_{LLM} \to 0$, a revisão é "gratuita" e tecnicamente ótima em $p = 0{,}5$ exatamente, mas como a perda da revisão também tende a zero (revisor perfeito, custo zero), a decisão é indiferente nesse ponto. Na prática, a zona de revisão colapsa a um conjunto de medida nula.
+
+\textbf{Passo 2 (Decisão binária residual).} Eliminada a revisão, a decisão reduz-se a:
+
+$$
+\delta^*(p) =
+\begin{cases}
+a_M & \text{se } (1-p) \cdot C \le p \cdot C \iff p \ge 0{,}5 \\
+a_N & \text{se } p < 0{,}5
+\end{cases}
+$$
+
+Isso equivale à regra de decisão por máxima probabilidade \textit{a posteriori} (MAP), que coincide com a decisão por máxima verossimilhança quando as classes têm \textit{prior} uniforme (ou, equivalentemente, quando a calibração já incorpora o \textit{prior}).
+\end{proof}
+
+\textbf{Observação.} A convergência é suave: à medida que $C_{LLM}/C$ decresce, a zona de revisão estreita-se monotonicamente em torno de $p = 0{,}5$, conforme demonstrado pela Proposição~\ref{prop:evr-concavity} e pelo Corolário~\ref{cor:cllm-critical}. Para $C_{FP} \neq C_{FN}$, o limiar de decisão desloca-se para $p^* = C_{FP}/(C_{FP} + C_{FN})$, recuperando a regra de decisão bayesiana com custos assimétricos \cite{Sadinle2017}.
+
+\subsubsection{Recuperação dos limiares de Fellegi--Sunter}
+
+A conexão formal entre o GZ-CMD e o modelo clássico pode ser estabelecida de forma mais precisa através da seguinte proposição, que demonstra que os limiares de decisão do \textit{framework} generalizam os limiares $T_\lambda$ e $T_\mu$ de Fellegi e Sunter quando expressos no espaço da razão de verossimilhança.
+
+\begin{proposition}[Equivalência sob calibração perfeita]
+\label{prop:threshold-recovery}
+Suponha que o modelo discriminativo produz probabilidades perfeitamente calibradas, de modo que $p = P(y=1\mid s)$ coincida com a probabilidade \textit{a posteriori} derivada da razão de verossimilhança $R(\gamma) = P(\gamma\mid M)/P(\gamma\mid U)$ via regra de Bayes:
+
+$$
+p = \frac{\pi \cdot R}{\pi \cdot R + (1 - \pi)}
+$$
+
+onde $\pi = P(M)$ denota a prevalência de pares verdadeiros na população de candidatos. Suponha adicionalmente que o revisor é perfeito ($e_{FP} = e_{FN} = 0$). Então, a política de decisão ótima do GZ-CMD, quando reescrita em termos de $R$, define dois limiares:
+
+$$
+T_\lambda^{GZ} = \frac{1-\pi}{\pi} \cdot \frac{C_{FP} - C_{LLM}}{C_{LLM}} \quad \text{(limiar superior: acima, declara vínculo)}
+$$
+
+$$
+T_\mu^{GZ} = \frac{1-\pi}{\pi} \cdot \frac{C_{LLM}}{C_{FN} - C_{LLM}} \quad \text{(limiar inferior: abaixo, declara não-vínculo)}
+$$
+
+com uma zona de revisão definida por $T_\mu^{GZ} \le R \le T_\lambda^{GZ}$.
+\end{proposition}
+
+\begin{proof}
+Com $e_{FP} = e_{FN} = 0$, as condições de decisão em termos de $p$ são:
+
+\begin{itemize}
+\item \textbf{Vínculo} ($a_M$): $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_R\mid p)$ e $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_N\mid p)$. A primeira condição requer $(1-p) \cdot C_{FP} \le C_{LLM}$, ou seja, $p \ge 1 - C_{LLM}/C_{FP}$. A segunda requer $p \ge C_{FP}/(C_{FP}+C_{FN})$. Para que a zona de revisão exista (Corolário 3.1), necessita-se $C_{LLM} < C_{FP} \cdot C_{FN}/(C_{FP}+C_{FN})$, o que implica $1 - C_{LLM}/C_{FP} > C_{FP}/(C_{FP}+C_{FN})$. Logo, a condição vinculante é $p \ge 1 - C_{LLM}/C_{FP}$.
+
+\item \textbf{Não-vínculo} ($a_N$): Analogamente, a condição vinculante é $p \le C_{LLM}/C_{FN}$.
+
+\item \textbf{Revisão} ($a_R$): Região residual, $C_{LLM}/C_{FN} < p < 1 - C_{LLM}/C_{FP}$.
+\end{itemize}
+
+Aplicando a transformação $p = \pi R/(\pi R + (1-\pi))$, a condição $p \ge t$ equivale a $R \ge \frac{t}{1-t} \cdot \frac{1-\pi}{\pi}$. Substituindo:
+
+$$
+T_\lambda^{GZ} = \frac{1 - C_{LLM}/C_{FP}}{C_{LLM}/C_{FP}} \cdot \frac{1-\pi}{\pi} = \frac{C_{FP} - C_{LLM}}{C_{LLM}} \cdot \frac{1-\pi}{\pi}
+$$
+
+$$
+T_\mu^{GZ} = \frac{C_{LLM}/C_{FN}}{1 - C_{LLM}/C_{FN}} \cdot \frac{1-\pi}{\pi} = \frac{C_{LLM}}{C_{FN} - C_{LLM}} \cdot \frac{1-\pi}{\pi}
+$$
+\end{proof}
+
+\begin{corollary}[Caso limite sem revisão]
+\label{cor:gz-deterministic}
+Quando $C_{LLM} \to \infty$ (revisão proibitivamente cara), $T_\lambda^{GZ} \to 0$ e $T_\mu^{GZ} \to \infty$, de modo que $T_\mu^{GZ} > T_\lambda^{GZ}$ e a zona de revisão é vazia. Nesse regime, a política reduz-se a uma decisão binária no limiar $p^* = C_{FP}/(C_{FP}+C_{FN})$, correspondendo a $R^* = \frac{C_{FP}}{C_{FN}} \cdot \frac{1-\pi}{\pi}$, que coincide com o limiar ótimo de Bayes para classificação binária com custos assimétricos.
+\end{corollary}
+
+\begin{corollary}[Recuperação de Fellegi--Sunter clássico]
+\label{cor:gz-degenerate}
+\label{prop:fs-as-special-case}
+No modelo original de Fellegi e Sunter, os limiares $T_\lambda$ e $T_\mu$ são determinados de modo a satisfazer limites superiores para as taxas de falso positivo ($\alpha$) e falso negativo ($\beta$). A formulação baseada em custos do GZ-CMD subsume essa abordagem: fixados $C_{FP}$, $C_{FN}$ e $C_{LLM}$, os limiares $T_\lambda^{GZ}$ e $T_\mu^{GZ}$ determinam implicitamente taxas de erro $\alpha(T_\lambda^{GZ})$ e $\beta(T_\mu^{GZ})$ que são funções monotônicas dos custos. Inversamente, dados limites de erro desejados $\alpha_0$ e $\beta_0$, pode-se encontrar parâmetros de custo $(C_{FP}, C_{FN}, C_{LLM})$ que recuperam exatamente os limiares de Fellegi--Sunter correspondentes. Desta forma, o modelo clássico constitui um caso particular da formulação de custos, onde os custos estão implicitamente definidos pelas taxas de erro toleradas.
+\end{corollary}
+
+\textbf{Observação.} A proposição requer calibração perfeita ($p = P(y=1\mid s)$), condição que na prática é apenas aproximada. A calibração por âncoras (Seção 1) visa reduzir o viés de calibração, mas a qualidade da aproximação depende criticamente da pureza dos conjuntos âncora ($A^+$, $A^-$) e da adequação do modelo sigmoide à verdadeira curva de calibração. Uma extensão natural consistiria em modelar a incerteza de calibração como uma distribuição sobre $(\alpha, \beta)$ e propagar essa incerteza para as fronteiras de decisão, resultando em limiares robustos (minimax); essa extensão fica como trabalho futuro.
+
+Desta forma, a estrutura de triagem em três vias é preservada na formulação geral, mas a fronteira de decisão torna-se dinâmica, sensível tanto à calibração local do modelo quanto às prioridades epidemiológicas (vigilância \textit{versus} confirmação), o que confere ao \textit{framework} GZ-CMD maior flexibilidade operacional em relação ao paradigma clássico de Fellegi--Sunter.

@@ -1,0 +1,328 @@
+\begin{chapter}{Proposta de Arcabouço Operacional Auto-Calibrável (GZ-CMD)}
+\label{cap:gzcmd}
+
+\section{Motivação e lacunas operacionais}
+\label{sec:cap8-motivacao}
+
+A fundamentação epidemiológica para o uso da tuberculose como condição marcadora, bem como a relevância do \textit{linkage} entre SIM e Sinan-TB para qualificação de indicadores, foi apresentada anteriormente nas seções \ref{sec:tb-marcadora} e \ref{sec:cap6-impacto-epidemiologico}. Neste capítulo, essa base é retomada de forma objetiva para sustentar a proposta operacional do GZ-CMD no cenário do município do Rio de Janeiro, no período de 2006 a 2016, em alinhamento com os dados oficiais mais recentes \cite{WHO2024tb,Brasil2024tb}.
+
+No que tange às lacunas que permanecem após os resultados dos Capítulos \ref{cap:resultados} e \ref{cap:discussao}, destacam-se três pontos. Primeiro, a assimetria de custos entre falso negativo e falso positivo, uma vez que a perda de um vínculo verdadeiro implica subestimação de mortalidade e perda de oportunidade de intervenção, enquanto o falso positivo tende a gerar sobretudo custo administrativo de revisão \cite{Oliveira2016accuracy}. Segundo, a baixa portabilidade de limiares fixos sob variação de prevalência e de completude dos registros, limitação já discutida para cenários com forte desbalanceamento \cite{Shaw2022biases}. Terceiro, a natureza intensiva em trabalho da revisão manual na zona cinzenta, aspecto recorrente na literatura de \textit{linkage} em saúde \cite{Christen2012book,Coeli2021suboptimal}.
+
+Nesse sentido, propõe-se o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD), um \textit{framework} (estrutura metodológica) para governança da incerteza no \textit{linkage} probabilístico, integrando classificação, calibração por âncoras, regras de guarda e revisão assistida por modelos de linguagem em uma política única de decisão auditável.
+
+\section{Dados, delineamento e representação}
+\label{sec:cap8-dados}
+
+\subsection{Bases de dados e período de estudo}
+\label{sec:cap8-bases}
+
+Foram utilizados registros do Sinan-TB e declarações de óbito do SIM referentes ao município do Rio de Janeiro no período de 2006 a 2016, mantendo o mesmo recorte do núcleo empírico descrito no Capítulo \ref{cap:metodo}. A geração de pares candidatos por blocagem foi conduzida no OpenRecLink, conforme estratégia descrita em \cite{Coeli2002blocking,Camargo2000reclink} e detalhada na Seção \ref{sec:base-pares}. O universo final incluiu 61.696 pares candidatos, com 247 vínculos verdadeiros e 61.449 não-pares.
+
+\subsection{Padrão-ouro e validade de referência}
+\label{sec:cap8-padrao-ouro}
+
+O padrão-ouro foi construído por revisão manual de 61.696 pares candidatos, realizada por um único revisor com experiência em vigilância da tuberculose no IESC-UFRJ, resultando em 247 vínculos verdadeiros e 61.449 não-pares. Em consonância com a limitação metodológica já registrada na Seção \ref{sec:cap6-limitacoes}, não houve segunda revisão independente e, portanto, não foi estimado coeficiente kappa de Cohen.
+
+Essa opção metodológica preserva aderência ao desenho operacional adotado no estudo, mas requer cautela interpretativa nas regiões de maior ambiguidade do escore, onde erros residuais de rotulagem podem persistir. Ainda assim, a consistência observada nos conjuntos âncora, apresentada na Seção \ref{sec:cap8-validacao-ancoras}, fornece evidências indiretas favoráveis à estabilidade da referência.
+
+\subsection{Delineamento experimental}
+\label{sec:cap8-delineamento}
+
+Foi adotada validação cruzada estratificada em cinco partições, com estratificação por COMPREC, mantendo coerência com o protocolo metodológico descrito nas seções \ref{sec:desenho-estudo} e \ref{sec:analises-complementares}. Em cada rodada, quatro partições foram usadas para treinamento e calibração, e uma para teste. As métricas foram reportadas como média e desvio-padrão entre rodadas, com comparações por teste t pareado ($\alpha=0{,}05$).
+
+No experimento de revisão assistida, foram avaliados 1.410 pares da zona cinzenta extraídos exclusivamente de partições de teste, sem sobreposição com os dados usados no treinamento do classificador.
+
+\subsection{Representação dos pares e engenharia de atributos}
+\label{sec:cap8-representacao}
+
+A representação dos pares candidatos baseia-se no vetor de 29 subescores do Comparador de Registros \cite{Jardim2024comparador,Lucena2013algoritmos}, cuja descrição técnica já foi apresentada na Seção \ref{sec:comparador-registros}. Neste capítulo, o foco recai sobre o efeito operacional da representação, sobretudo na zona cinzenta, sem repetir a fundamentação já consolidada no método.
+
+Para reduzir perda informacional associada à discretização de datas, foram adicionadas Medidas Contínuas de Diferença de Datas (MACD), com diferenças brutas em dias entre datas de nascimento e entre datas de óbito e notificação. A sigla MACD é adotada neste trabalho para designar essas medidas contínuas de diferença temporal e não guarda relação com o indicador homônimo do domínio financeiro (\textit{Moving Average Convergence Divergence}). O impacto dessa adição é analisado na Seção \ref{sec:cap8-exp1}, mantendo os valores de ablação observados no rascunho experimental.
+
+\section{Métodos: o \textit{framework} GZ-CMD}
+\label{sec:cap8-metodos}
+
+O GZ-CMD organiza a tomada de decisão em quatro componentes: calibração por âncoras e bandas de confiança, regras de guarda determinísticas, motor de política baseado em perda esperada e revisão assistida para os casos de maior incerteza.
+
+\subsection{Calibração por âncoras e bandas de confiança}
+\label{sec:cap8-calibracao}
+
+Em contraste com o esquema clássico de Fellegi--Sunter \cite{Fellegi1969theory}, adota-se aqui calibração discriminativa dos escores brutos. A função sigmoide
+\[
+P(y=1\mid s)=\frac{1}{1+\exp\left(-\left(\alpha s+\beta\right)\right)}
+\]
+é ajustada por conjuntos âncora positivos ($A^+$) e negativos ($A^-$), dispensando rótulos explícitos em tempo de operação.
+
+Os parâmetros $\alpha$ e $\beta$ são obtidos por restrições de média alvo sobre as âncoras,
+\[
+\mathbb{E}_{s\in A^+}[\sigma(\alpha s+\beta)] = r^+,
+\qquad
+\mathbb{E}_{s\in A^-}[\sigma(\alpha s+\beta)] = r^-.
+\]
+Aspectos de identificabilidade, estabilidade numérica e efeito de contaminação nas âncoras estão formalizados no Apêndice \ref{apendice:gzcmd}, em especial na Proposição \ref{prop:anchor-contamination-bias}.
+
+Com $p_{cal}$ estimado, definem-se três bandas: alta confiança de vínculo ($p_{cal}\geq t_{high}$), zona cinzenta ($t_{low}<p_{cal}<t_{high}$) e não-vínculo ($p_{cal}\leq t_{low}$).
+
+\subsection{Validação empírica dos conjuntos âncora}
+\label{sec:cap8-validacao-ancoras}
+
+A Tabela \ref{tab:cap8-ancoras} resume a confrontação dos conjuntos âncora com o padrão-ouro, evidenciando pureza superior a 99\% em ambos os extremos de escore.
+
+\begin{table}[!ht]
+\centering
+\caption{Validação dos conjuntos âncora contra o padrão-ouro.}
+\label{tab:cap8-ancoras}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+Conjunto & Critério & $N$ & Acertos & Erros & Precisão (\%) \\
+\hline
+$A^+$ (âncoras positivas) & $s\geq 9{,}0$ & 520 & 516 & 4 & 99,2 \\
+\hline
+$A^-$ (âncoras negativas) & $s<5{,}0$ & 3.840 & 3.833 & 7 & 99,8 \\
+\hline
+\end{tabular}
+\end{table}
+
+As taxas de erro observadas foram inferiores a 1\%, sustentando o uso das âncoras como pseudo-rótulos operacionais para calibração periódica.
+
+\subsection{Regras de guarda determinísticas}
+\label{sec:cap8-regras-guarda}
+
+As regras de guarda incorporam conhecimento epidemiológico e restrições de consistência que se sobrepõem ao classificador probabilístico em casos críticos.
+
+\begin{itemize}
+\item \textbf{Filtro temporal}: pares com data de óbito precedendo a data de diagnóstico em mais de 180 dias são forçados para não-vínculo; no recorte municipal de 2006 a 2016, essa regra não removeu vínculos verdadeiros no conjunto avaliado
+\item \textbf{Cardinalidade N:1}: cada registro Sinan-TB pode vincular-se a no máximo um registro SIM, enquanto um registro SIM pode estar associado a múltiplas notificações Sinan-TB do mesmo indivíduo em episódios distintos
+\item \textbf{Empate operacional}: quando dois candidatos ao mesmo registro Sinan-TB apresentam $\Delta p<0{,}05$, ambos são encaminhados à revisão para evitar decisão arbitrária
+\end{itemize}
+
+\subsection{Motor de política de decisão por perda esperada}
+\label{sec:cap8-motor-politica}
+
+O motor decisório substitui limiares fixos por minimização de perda esperada, com custos $C_{FN}$, $C_{FP}$ e $C_{LLM}$, além de taxas residuais $e_{FP}$ e $e_{FN}$ do módulo de revisão. Para um par com probabilidade calibrada $p$,
+\[
+\mathcal{L}(a_M\mid p)=(1-p)\,C_{FP},
+\quad
+\mathcal{L}(a_N\mid p)=p\,C_{FN},
+\]
+\[
+\mathcal{L}(a_R\mid p)=C_{LLM}+(1-p)e_{FP}C_{FP}+pe_{FN}C_{FN}.
+\]
+
+A Tabela \ref{tab:cap8-custos} resume os valores dos parâmetros de custo adotados nos dois modos operacionais. Os valores de $C_{FP}$ e $C_{FN}$ refletem a assimetria de consequências: no modo de vigilância, a perda de um óbito ($C_{FN}=50$) é cinco vezes mais custosa que um falso alarme ($C_{FP}=10$); no modo de confirmação, o custo de um falso positivo ($C_{FP}=100$) supera o do falso negativo ($C_{FN}=20$), priorizando a confiabilidade do vínculo.
+
+\begin{table}[!ht]
+\centering
+\caption{Parâmetros de custo operacionais do GZ-CMD.}
+\label{tab:cap8-custos}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+Modo & $C_{FP}$ & $C_{FN}$ & $C_{LLM}$ & $e_{FP}$ (faixa) & $e_{FN}$ (faixa) \\
+\hline
+Vigilância & 10 & 50 & 0,25 & 0,02--0,10 & 0,06--0,15 \\
+\hline
+Confirmação & 100 & 20 & 0,25 & 0,02--0,10 & 0,06--0,15 \\
+\hline
+\end{tabular}
+\end{table}
+
+As taxas de erro residual do revisor ($e_{FP}$, $e_{FN}$) variam por faixa de $p_{cal}$: valores mais baixos aplicam-se a pares próximos aos extremos de confiança, e valores mais altos a pares na região central da zona cinzenta. A sensibilidade da fronteira de decisão a essas parametrizações é atenuada pela concavidade do EVR (Proposição \ref{prop:evr-concavity}): variações moderadas nos custos deslocam os limiares de revisão, mas preservam a estrutura qualitativa da triagem em três vias.
+
+A dependência de $\mathcal{L}(a_R\mid p)$ em relação a $p$ sob revisor imperfeito é formalizada no Apêndice \ref{apendice:gzcmd}, Proposição \ref{prop:review-loss-affine}. A regra ótima é
+\[
+\delta^*(p)=\arg\min_{a\in\{a_M,a_N,a_R\}}\mathcal{L}(a\mid p).
+\]
+
+Define-se ainda o Valor Esperado da Revisão,
+\[
+EVR(p)=\min\{\mathcal{L}(a_M\mid p),\mathcal{L}(a_N\mid p)\}-\mathcal{L}(a_R\mid p),
+\]
+e encaminha-se o par para revisão quando $EVR(p)>0$. A concavidade de $EVR$ e a conexidade do intervalo de revisão são estabelecidas na Proposição \ref{prop:evr-concavity}, no Apêndice \ref{apendice:gzcmd}.
+
+\subsection{Fluxo operacional do \textit{framework}}
+\label{sec:cap8-fluxo}
+
+O fluxo completo do GZ-CMD, formalizado no Algoritmo \ref{alg:gzcmd-pipeline} (Apêndice \ref{apendice:gzcmd}), é composto pelas seguintes etapas sequenciais:
+
+\begin{enumerate}
+\item \textbf{Representação}: cada par candidato é codificado como vetor de 29 subescores do Comparador de Registros, opcionalmente acrescido das medidas contínuas MACD.
+\item \textbf{Classificação}: um modelo supervisionado (\textit{Random Forest}) produz escore bruto $s$ para cada par.
+\item \textbf{Calibração por âncoras}: os conjuntos $A^+$ e $A^-$ alimentam regressão sigmoide, convertendo $s$ em probabilidade calibrada $p_{cal}$.
+\item \textbf{Atribuição de banda}: $p_{cal}$ posiciona o par em uma das seis faixas de confiança (Seção \ref{sec:cap8-calibracao}).
+\item \textbf{Regras de guarda}: restrições determinísticas (filtro temporal, cardinalidade N:1, empate operacional) podem forçar decisão ou revisão, independentemente de $p_{cal}$.
+\item \textbf{Triagem por perda esperada}: para os pares não capturados pelas regras de guarda, calcula-se $EVR(p)$; pares com $EVR>0$ são candidatos a revisão, priorizados por $EVR$ decrescente até o limite orçamentário $L_{max}$.
+\item \textbf{Revisão assistida}: pares selecionados são convertidos em dossiê desidentificado e submetidos ao protocolo dual-agente com arbitragem (Seção \ref{sec:cap8-revisao-assistida}).
+\item \textbf{Decisão final}: a saída é um rótulo auditável (\texttt{MATCH}, \texttt{NONMATCH} ou \texttt{UNSURE}) com registro de agente, protocolo e códigos de razão.
+\end{enumerate}
+
+\section{Revisão clerical assistida}
+\label{sec:cap8-revisao-assistida}
+
+A revisão assistida foi concebida como módulo de apoio, não como substituição do julgamento epidemiológico. Cada par candidato da zona cinzenta é convertido em dossiê estruturado (subescores, metadados de calibração e códigos de guarda), analisado por dois agentes com instruções complementares, com arbitragem por terceiro agente quando há discordância.
+
+\subsection{Seleção do modelo de linguagem}
+\label{sec:cap8-selecao-llm}
+
+A escolha do modelo considerou concordância com o padrão-ouro, precisão, sensibilidade, F$_1$, latência média por par e taxa de inconclusivos. O piloto avaliou 517 pares da zona cinzenta , a totalidade dos pares classificados como \texttt{LLM\_REVIEW} pela sequência operacional (\textit{pipeline}) v3, distribuídos por amostragem estratificada segundo faixas de $p_{cal}$: \textit{grey\_high} ($n=341$), \textit{grey\_mid} ($n=133$), \textit{near\_high} ($n=35$) e \textit{high} ($n=8$). Cinco modelos foram avaliados com parâmetros padronizados (\texttt{temperature}=0, \texttt{max\_tokens}=4096, \texttt{top\_p}=1, \texttt{top\_k}=40, penalidades nulas)\footnote{Dois modelos originalmente previstos (DeepSeek~R1 e Qwen3-235B) foram substituídos por DeepSeek~V3.2 e Qwen3-VL-30B, respectivamente, devido à indisponibilidade persistente (erro~503) na infraestrutura Fireworks AI durante o período de coleta. Os substitutos pertencem à mesma família de modelos e operam com os mesmos parâmetros de inferência.}.
+
+A padronização dos hiperparâmetros de inferência constitui condição necessária para que a comparação entre modelos reflita diferenças de capacidade intrínseca e não artefatos de configuração. A fixação de \texttt{temperature}=0{,}0 assegura decodificação determinística (\textit{greedy decoding}), eliminando variação estocástica entre execuções e garantindo reprodutibilidade integral das decisões para cada par avaliado, requisito central em tarefas de classificação contra padrão-ouro fixo. O limite de \texttt{max\_tokens}=4.096 foi dimensionado para acomodar, sem risco de truncamento, a cadeia completa de raciocínio do protocolo dual-agente: análise dos 29 subescores pelo agente~A, resposta estruturada em JSON, análise independente pelo agente~B e, quando necessário, reformulação pelo árbitro. Os parâmetros \texttt{top\_p}=1{,}0 e \texttt{top\_k}=40 complementam a temperatura nula: o primeiro desativa a amostragem por núcleo (\textit{nucleus sampling}), enquanto o segundo preserva compatibilidade entre provedores de API sem impacto funcional sob decodificação \textit{greedy}. As penalidades de presença e de frequência foram ambas fixadas em zero. O formato estruturado de saída (objeto JSON contendo veredito, códigos de razão e nível de confiança) requer repetição legítima de \textit{tokens}, como nomes de campos e valores categóricos padronizados. Penalidades positivas distorceriam a distribuição lexical e poderiam corromper a integridade da resposta, introduzindo artefatos de paráfrase em posições que exigem literalidade.
+
+\begin{table}[!ht]
+\centering
+\caption{Avaliação comparativa de modelos para revisão assistida ($n=517$ pares da zona cinzenta; intervalos de Wilson, 95\%).}
+\label{tab:cap8-llm-piloto}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\hline
+Modelo & Válidos$^a$ & Concordância (\%) & Precisão & Sensibilidade & F$_1$ & Inconcl.\,(\%) & Latência (s/par) \\
+\hline
+Kimi K2.5      & 499 & 97,8\,[96,1;\,98,8] & 0,909 & 0,789 & \textbf{0,845} & 3,5  & 7,3 \\
+\hline
+GPT-4o         & 508 & 95,5\,[93,3;\,97,0] & 1,000 & 0,343 & 0,511          & 1,7  & 6,3 \\
+\hline
+DeepSeek V3.2  & 232 & 93,5\,[89,6;\,96,0] & 0,615 & 0,762 & 0,681          & 55,1 & 54,0 \\
+\hline
+Qwen3-VL-30B   & 509 & 94,9\,[92,6;\,96,5] & 1,000 & 0,333 & 0,500          & 1,6  & 7,5 \\
+\hline
+GLM-5           & 212 & 95,3\,[91,5;\,97,4] & 0,769 & 0,833 & 0,800          & 59,0 & 57,6 \\
+\hline
+\multicolumn{8}{l}{\footnotesize $^a$\,Pares com decisão \texttt{MATCH}/\texttt{NONMATCH}; excluídos os \texttt{UNSURE}.} \\
+\end{tabular}}
+\end{table}
+
+Com $n=517$ pares e protocolo \textit{dual-agent} com arbitragem, os intervalos de confiança de 95\% para concordância se estreitam em relação ao piloto preliminar de 200 pares, mas as diferenças absolutas entre modelos permanecem dentro das margens de sobreposição dos intervalos. Para discriminar com potência de 80\% uma diferença de 3,5 pontos percentuais entre dois modelos, seriam necessários aproximadamente 860 pares por modelo; para uma margem de 1,5 pontos percentuais, cerca de 4.100 pares , cenário impraticável no escopo deste estudo.
+
+Dois comportamentos contrastantes emergem: GPT-4o e Qwen3-VL-30B exibem precisão perfeita (1,000) mas sensibilidade baixa ($\approx$0,34), sugerindo postura ultraconservadora que tende a omitir vínculos verdadeiros; DeepSeek~V3.2 e GLM-5, ao contrário, apresentam taxas de inconclusivos superiores a 55\%, refletindo cautela excessiva que delega a maioria dos casos à arbitragem e eleva substancialmente a latência ($>$54~s/par). O Kimi~K2.5 \cite{KimiK2_5_2025} obteve o melhor equilíbrio operacional: F$_1$ mais alto (0,845), taxa de inconclusivos moderada (3,5\%) e latência competitiva (7,3~s/par), viabilizando o \textit{pipeline} em escala sem pretensão de superioridade estatisticamente demonstrada em concordância global. Embora o relatório técnico do Kimi~K2.5 enfatize capacidades multimodais e agênticas, o modelo demonstra igualmente competência em tarefas de raciocínio textual estruturado, como evidenciado pela capacidade de interpretar dossiês numéricos de subescores e produzir juízos coerentes com códigos de razão padronizados.
+
+A análise da matriz de confusão por modelo revela implicações operacionais distintas. O Kimi~K2.5 apresentou 30 verdadeiros positivos, 3 falsos positivos, 8 falsos negativos e 458 verdadeiros negativos entre os 499 pares com decisão válida, configurando equilíbrio entre erros de omissão e comissão compatível com o cenário de vigilância. GPT-4o e Qwen3-VL-30B, em contraste, não produziram nenhum falso positivo, mas omitiram, respectivamente, 23 e 26 dos 41 vínculos verdadeiros presentes na amostra , comportamento que, em contexto de vigilância epidemiológica, resultaria em subestimação sistemática de mortalidade por tuberculose. DeepSeek~V3.2 e GLM-5 alcançaram distribuição mais equilibrada entre tipos de erro (sensibilidade de 76,2\% e 83,3\%, respectivamente), porém a elevada taxa de inconclusivos reduz o denominador efetivo de avaliação a menos da metade da amostra original, comprometendo a representatividade das métricas reportadas para esses modelos.
+
+A eficiência do protocolo de arbitragem constitui indicador complementar relevante. O Kimi~K2.5 atingiu consenso direto entre os agentes~A e B em 503 dos 517 pares (97,3\%), recorrendo ao árbitro em apenas 14 casos (2,7\%), o que explica a latência competitiva de 7,3~s/par. GPT-4o e Qwen3-VL-30B apresentaram padrão semelhante, com apenas 6 arbitragens cada (1,2\%), refletindo alta concordância entre agentes , ainda que essa concordância decorra predominantemente de ambos os agentes classificarem o par como \texttt{NONMATCH}. DeepSeek~V3.2 e GLM-5, por outro lado, acionaram o mecanismo de arbitragem em 213 (41,2\%) e 155 (30,0\%) dos pares, respectivamente, evidenciando discordância sistemática entre agentes e contribuindo para latências superiores a 54~s/par. Esse padrão sugere que modelos com cadeia de raciocínio estendida (\textit{chain-of-thought}) tendem, nesta tarefa, a identificar mais fontes de incerteza do que a resolvê-las, ampliando a carga computacional sem ganho proporcional em acurácia.
+
+Do ponto de vista da validade estatística, os intervalos de Wilson para concordância sobrepõem-se entre todos os cinco modelos, impedindo a rejeição de igualdade ao nível de 95\% de confiança. Entretanto, o F$_1$ varia de 0,500 (Qwen3-VL-30B) a 0,845 (Kimi~K2.5), diferença de 0,345 que reflete capacidades qualitativamente distintas de identificação de vínculos verdadeiros. Essa aparente contradição , concordância estatisticamente indistinguível versus F$_1$ substancialmente diferente, decorre do forte desbalanceamento da amostra (476 não-pares contra 41 pares): a concordância global é dominada pelos verdadeiros negativos, nos quais todos os modelos apresentam desempenho elevado, enquanto o F$_1$ pondera explicitamente a detecção da classe minoritária. Essa assimetria reforça a importância de reportar métricas desagregadas por classe em cenários de forte desbalanceamento, prática nem sempre observada na literatura de \textit{record linkage}.
+
+\subsection{Considerações éticas}
+\label{sec:cap8-etica}
+
+O uso de modelos de linguagem em dados de saúde requer salvaguardas técnicas e normativas, mesmo sob desidentificação \cite{Vayena2018}. Foram adotadas quatro medidas: ausência de identificadores nominais no dossiê, processamento em ambiente controlado, enquadramento ético-regulatório para dados secundários desidentificados e registro auditável das decisões automatizadas.
+
+No plano regulatório, considerou-se a Resolução CNS n. 510/2016 para pesquisas com bases de dados sem possibilidade de identificação individual \cite{BrasilCNS2016}.
+
+\section{Resultados e avaliação}
+\label{sec:cap8-resultados}
+
+\subsection{Experimento 1: ablação e impacto das medidas contínuas}
+\label{sec:cap8-exp1}
+
+A Tabela \ref{tab:cap8-ablacao} apresenta os resultados de ablação com e sem MACD, preservando os valores obtidos no rascunho experimental e organizados por modo operacional.
+
+\begin{table}[!ht]
+\centering
+\caption{Resultados do experimento de ablação (média $\pm$ desvio-padrão, 5 rodadas). A coluna ``Revisões'' indica o número absoluto de pares encaminhados à revisão por LLM em cada partição de teste.}
+\label{tab:cap8-ablacao}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|l|c|c|c|c|c|c|}
+\hline
+Modo & Configuração & Precisão & Sensibilidade & F$_1$-Score & F$_{0.5}$ & F$_2$ & Revisões \\
+\hline
+Confirmação & MACD OFF & $0,949\pm0,006$ & $0,937\pm0,019$ & $0,943\pm0,009$ & $0,946\pm0,005$ & n.a. & $138\pm12$ \\
+\hline
+Confirmação & MACD ON & $\mathbf{0,957\pm0,004}$ & $0,938\pm0,023$ & $\mathbf{0,947\pm0,011}$ & $\mathbf{0,953\pm0,004}$ & n.a. & $\mathbf{114\pm7}$ \\
+\hline
+Vigilância & MACD OFF & $0,934\pm0,009$ & $0,964\pm0,013$ & $0,949\pm0,004$ & n.a. & $0,958\pm0,009$ & $128\pm10$ \\
+\hline
+Vigilância & MACD ON & $\mathbf{0,947\pm0,006}$ & $0,962\pm0,013$ & $\mathbf{0,954\pm0,005}$ & n.a. & $\mathbf{0,959\pm0,010}$ & $\mathbf{109\pm10}$ \\
+\hline
+\end{tabular}}
+\end{table}
+
+Os ganhos em F$_1$-Score foram modestos, mas houve redução operacional consistente de revisões, entre 15\% e 17\%, indicando maior assertividade nos casos limítrofes. Os testes t pareados para diferença de F$_1$ não atingiram significância ao nível de 5\% (Vigilância: $t(4)=1{,}75$, $p=0{,}155$; Confirmação: $t(4)=0{,}63$, $p=0{,}564$), resultado compatível com cinco rodadas e variabilidade interpartições.
+
+\subsection{Experimento 2: desempenho da revisão assistida}
+\label{sec:cap8-exp2}
+
+No conjunto de 1.410 pares da zona cinzenta, o protocolo de consenso entre agentes apresentou concordância de 97,09\%, com arbitragem em 2,91\% dos casos. A Tabela \ref{tab:cap8-revisao-desempenho} resume o desempenho frente ao padrão-ouro.
+
+\begin{table}[!ht]
+\centering
+\caption{Desempenho da revisão assistida contra o padrão-ouro (n=1.410).}
+\label{tab:cap8-revisao-desempenho}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+Decisão do módulo & $N$ & VP & FP & VN & FN \\
+\hline
+Vínculo & 85 & 81 & 4 & n.a. & n.a. \\
+\hline
+Não-vínculo & 1.284 & n.a. & n.a. & 1.277 & 7 \\
+\hline
+Inconclusivo & 41 & 10 & n.a. & 31 & n.a. \\
+\hline
+Total resolvido & 1.369 & 81 & 4 & 1.277 & 7 \\
+\hline
+\end{tabular}
+\end{table}
+
+Para os 1.369 pares resolvidos, observou-se acurácia global de 99,2\%, precisão para vínculo de 95,3\% e sensibilidade para vínculo de 92,0\%, permanecendo 2,9\% de inconclusivos para arbitragem especializada. Ressalva-se que essas métricas são condicionadas à qualidade do padrão-ouro de revisor único; na ausência de dupla revisão independente, não se pode excluir que parte da concordância reflita vieses compartilhados entre o modelo de linguagem e o revisor original, sobretudo nos pares de maior ambiguidade.
+
+\subsection{Redução cumulativa da carga de revisão clerical}
+\label{sec:cap8-cascata}
+
+Para dimensionar o ganho operacional do \textit{framework} integrado, a Tabela~\ref{tab:cap8-cascata-reducao} apresenta a redução cumulativa do volume de pares encaminhados à revisão clerical humana conforme cada componente do GZ-CMD é adicionado ao \textit{pipeline}, partindo do cenário-base em que todos os 61.696 pares candidatos requerem inspeção manual.
+
+\begin{table}[!ht]
+\centering
+\caption{Redução cumulativa da carga de revisão clerical por componente do \textit{framework} GZ-CMD (modo vigilância, MACD ativo, $n = 61.696$ pares candidatos).}
+\label{tab:cap8-cascata-reducao}
+\resizebox{\textwidth}{!}{\begin{tabular}{clrrr}
+\hline
+Etapa & Componente adicionado & Pares p/ revisão & \% total & Redução vs anterior \\
+\hline
+0 & Sem modelo (\textit{baseline}) & 61.696 & 100,0\% & --- \\
+1 & Limiares F--S ($< 5 \to$ NM; $\geq 9 \to$ M) & 21.620 & 35,0\% & $-65,0\%$ \\
+2 & + Regras de guarda determinísticas & 18.799 & 30,5\% & $-13,0\%$ \\
+3 & + Calibração Platt + motor de perda esperada & 1.410 & 2,3\% & $-92,5\%$ \\
+4 & + Revisão LLM dual-agent (Kimi K2.5) & 41 & 0,07\% & $-97,1\%$ \\
+\hline
+\multicolumn{2}{l}{\textbf{Redução total (etapa 1 $\to$ 4)}} & \multicolumn{3}{c}{\textbf{21.620 $\to$ 41 pares = 99,8\%}} \\
+\hline
+\end{tabular}}
+\end{table}
+
+Na etapa~1, a aplicação dos limiares tradicionais de Fellegi--Sunter classifica automaticamente 39.981~pares abaixo do limiar inferior (escore~$< 5$) como não-vínculo e 95~pares acima do limiar superior (escore~$\geq 9$) como vínculo, reduzindo a zona cinzenta a 21.620~pares~(35,0\% do total), que na abordagem convencional seriam integralmente encaminhados à revisão clerical humana.
+
+Na etapa~2, as regras de guarda determinísticas , a saber, filtro temporal (óbito anterior ao diagnóstico em mais de 180~dias) e nota global inferior a~3, resolvem 2.821~pares adicionais com \textbf{zero pares verdadeiros perdidos}, reduzindo o volume pendente para 18.799.
+
+A etapa~3 constitui o maior salto de redução: a calibração de Platt converte escores brutos em probabilidades de vínculo, e o motor de perda esperada avalia, para cada par, se o valor esperado da revisão por LLM supera o custo de uma decisão automática. Apenas 1.410~pares apresentam valor esperado de revisão positivo ($\text{EVR} > 0$) dentro do orçamento de chamadas (máximo de 2.000 no modo vigilância); os demais 17.389~pares são auto-resolvidos pela regra de custo mínimo. Desses 1.410~pares, 104 contêm vínculos verdadeiros segundo o padrão-ouro. O motor de perda esperada responde, isoladamente, por 92,5\% da redução acumulada entre as etapas~2 e~4, configurando-se como o componente de maior impacto da cascata.
+
+Um efeito secundário da cascata é o enriquecimento progressivo da prevalência de pares verdadeiros no subconjunto encaminhado a cada etapa: de 0,4\% na base completa (247/61.696), para 0,7\% na zona cinzenta convencional (151/21.620), 7,4\% no lote selecionado pelo motor de perda esperada (104/1.410), chegando a aproximadamente 39\% entre os 41~inconclusivos residuais (Figura~\ref{fig:cap8-cascata-reducao}b). Essa concentração tem dupla implicação: o módulo LLM opera sobre subconjunto já enriquecido, o que favorece seu desempenho discriminativo, e o revisor humano final atua exclusivamente sobre casos de incerteza genuína, maximizando o valor agregado de cada hora de trabalho especializado.
+
+Na etapa~4, o protocolo de consenso dual-agent resolve 1.369 dos 1.410~pares (97,1\%), restando 41~inconclusivos para arbitragem humana especializada , equivalentes a \textbf{0,07\% do universo original} e a \textbf{0,19\% da zona cinzenta}. No modo confirmação (com orçamento de 1.000 chamadas e custos de falso positivo mais elevados), o motor seleciona apenas 435~pares para revisão LLM, projetando-se residual humano de aproximadamente 13~pares.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_cascata_reducao.pdf}
+\caption{Redução cumulativa da carga de revisão clerical e enriquecimento da prevalência ao longo das etapas do \textit{framework} GZ-CMD (modo vigilância, MACD ativo, $n = 61.696$ pares). (a)~Volume de pares encaminhados a revisão em escala logarítmica; percentuais indicam a redução em relação à etapa anterior. (b)~Prevalência de pares verdadeiros (\%) e contagem absoluta de verdadeiros positivos contidos em cada subconjunto. O enriquecimento de 18$\times$ entre a base completa e o lote LLM evidencia o efeito concentrador da cascata.}
+\label{fig:cap8-cascata-reducao}
+\end{figure}
+
+\section{Discussão}
+\label{sec:cap8-discussao}
+
+Os achados corroboram a tese de que o ganho operacional do GZ-CMD não depende apenas de elevação marginal de métricas agregadas, mas da explicitação de uma política de decisão orientada por custo, com triagem formal da incerteza e rastreabilidade da revisão. Essa contribuição estende os resultados dos Capítulos \ref{cap:resultados} e \ref{cap:discussao} ao introduzir mecanismo de calibração adaptativo e regra econômica explícita para alocação de revisão.
+
+A cascata de redução de 21.620 para 41~pares , três ordens de grandeza, evidencia que o ganho operacional decorre menos da capacidade individual de cada componente e mais de sua articulação sequencial. O motor de perda esperada é responsável por 92,5\% da redução entre as etapas intermediárias, enquanto a revisão assistida resolve os casos residuais em aproximadamente 63~minutos de processamento, período contrastante com as semanas que a revisão integral de 21.620~pares demandaria em regime manual. A prevalência de pares verdadeiros no subconjunto encaminhado ao revisor humano final (aproximadamente 39\%) é duas ordens de grandeza superior à da base completa (0,4\%), assegurando que cada decisão humana incida sobre caso genuinamente ambíguo.
+
+A seleção do modelo de linguagem para o módulo de revisão assistida exerce influência direta sobre a viabilidade operacional do \textit{pipeline} integrado. Com o Kimi~K2.5 operando a 7,3~s/par e taxa de inconclusivos de 3,5\%, a totalidade dos 517 pares da zona cinzenta seria processada em aproximadamente 63 minutos, com apenas 18 pares residuais requerendo escalamento para revisão humana. Em cenário contrafactual com DeepSeek~V3.2 ou GLM-5, a mesma carga demandaria mais de oito horas de processamento e geraria entre 285 e 305 pares inconclusivos , anulando na prática o propósito de automação e transferindo o ônus decisório de volta ao revisor especializado. A razão entre o tempo de processamento e o volume de decisões efetivamente resolvidas constitui, portanto, critério discriminante mais informativo do que a concordância global isolada.
+
+No que concerne ao orçamento de erros, o Kimi~K2.5 identificou corretamente 30 dos 41 vínculos verdadeiros na amostra estratificada da zona cinzenta, com 3 falsos positivos e 8 falsos negativos. Projetando essas taxas para o universo de 1.410 pares encaminhados à revisão pelo motor de perda esperada, estima-se que o módulo resolveria aproximadamente 96,5\% dos casos com decisão auditável, limitando a intervenção humana a um resíduo de baixa volumetria e elevada ambiguidade. Essa configuração preserva o princípio arquitetural do GZ-CMD: resolver automaticamente o que é resolvível e concentrar esforço humano especializado nos casos em que a incerteza é genuína, sem comprometer a rastreabilidade completa das decisões.
+
+A latência e o custo de inferência dos modelos de linguagem são sensíveis a fatores extrínsecos: disponibilidade de infraestrutura, congestionamento de API, variações de preço por \textit{token} e atualização das versões dos modelos. Esses parâmetros devem ser reavaliados periodicamente em contexto de implantação. A substituição forçada de DeepSeek~R1 e Qwen3-235B por variantes da mesma família, embora justificada pela indisponibilidade técnica persistente durante o período de coleta, introduz incerteza adicional sobre a representatividade dos resultados para as arquiteturas originalmente previstas. Por essa razão, recomenda-se que estudos futuros de validação multicêntrica incorporem cláusula de reavaliação periódica do modelo selecionado, incluindo candidatos de novas gerações que venham a tornar-se disponíveis.
+
+Do ponto de vista teórico, a formulação por perda esperada inclui o caso clássico de Fellegi--Sunter como situação particular sob parametrização específica de custos e erros residuais, conforme demonstrado na Proposição \ref{prop:fs-as-special-case}, no Apêndice \ref{apendice:gzcmd}. Ainda assim, permanece como agenda prioritária a comparação empírica direta com implementação canônica de limiares clássicos no mesmo conjunto de dados.
+
+Persistem limitações para generalização externa. O estudo foi conduzido em um único contexto municipal (Rio de Janeiro, 2006--2016), com 247 pares positivos no conjunto de referência; a ausência de dupla revisão independente restringe inferências sobre erro do padrão-ouro; e a dependência de infraestrutura para inferência local de modelos de linguagem pode impor barreiras operacionais em ambientes de menor capacidade computacional. Esses aspectos não invalidam os ganhos observados, mas delimitam o escopo de transferência dos parâmetros para outros cenários.
+
+Merece atenção particular o risco de circularidade entre padrão-ouro, conjuntos âncora e avaliação do módulo de revisão. Como os conjuntos âncora são derivados do mesmo padrão-ouro produzido por revisor único, eventuais erros sistemáticos de rotulagem na zona cinzenta podem propagar-se para a calibração e, por consequência, para as fronteiras de decisão do \textit{framework}. A Proposição \ref{prop:anchor-contamination-bias} (Apêndice \ref{apendice:gzcmd}) fornece cota superior para o viés de contaminação, porém pressupõe contaminação uniforme nas âncoras , hipótese que pode não se sustentar sob viés não-aleatório de um único revisor. De modo análogo, a acurácia de 99,2\% reportada para a revisão assistida (Seção \ref{sec:cap8-exp2}) é condicionada à qualidade da referência e pode estar inflacionada caso o modelo de linguagem concorde com erros do revisor. A mitigação dessa limitação requer validação futura com dupla revisão independente em amostra estratificada da zona cinzenta, acompanhada de estimativa de coeficiente kappa de Cohen.
+
+Como desdobramento, recomenda-se validação multicêntrica em outras unidades da federação, avaliação de estabilidade temporal das âncoras e testes controlados de custo-efetividade da revisão assistida em escala de rotina, com vistas à consolidação de protocolos de \textit{linkage} auditáveis no âmbito da vigilância epidemiológica.
+
+\end{chapter}
