@@ -2,7 +2,7 @@
 
 \section{Objetivo geral}\label{sec:objetivo-geral}
 
-O presente estudo tem como objetivo geral desenvolver e avaliar um \textit{framework} configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre bases de dados de saúde, com vistas a aumentar a acurácia do processo e recuperar registros da área cinza que permaneceriam não classificados ou incorretamente descartados pelo método probabilístico convencional. O \textit{framework} proposto foi aplicado ao \textit{linkage} entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016, contribuindo para a qualificação dos dados vinculados e para a produção de indicadores de desempenho de sistemas e serviços de saúde.
+O presente estudo tem como objetivo geral desenvolver e avaliar um arcabouço (\textit{framework}) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre bases de dados de saúde. Busca-se aumentar a acurácia do processo e recuperar registros da zona cinzenta que permaneceriam não classificados ou incorretamente descartados pelo método probabilístico convencional. O arcabouço proposto foi aplicado ao \textit{linkage} entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016, contribuindo para a qualificação dos dados vinculados e para a produção de indicadores de desempenho de sistemas e serviços de saúde.
 
 \section{Objetivos específicos}\label{sec:objetivos-especificos}
 
@@ -20,7 +20,9 @@ O presente estudo tem como objetivo geral desenvolver e avaliar um \textit{frame
 
 \item Avaliar o potencial de generalização das abordagens desenvolvidas para outros cenários de \textit{linkage} em saúde, discutindo as condições sob as quais os classificadores treinados e os protocolos propostos podem ser adaptados a diferentes pares de bases de dados e a distintos contextos epidemiológicos.
 
+\item Propor e avaliar um arcabouço operacional auto-calibrável (\textit{Grey-Zone Cost-based Mixture Deferral}, GZ-CMD) que integre calibração por conjuntos âncora, política de decisão por perda esperada com custos assimétricos e revisão assistida por modelo de linguagem de grande porte, com vistas à governança formal da incerteza na zona cinzenta do \textit{linkage}, à redução do volume de revisão manual e à realocação do revisor humano para os casos genuinamente ambíguos.
+
 \end{enumerate}
-O capítulo seguinte descreve o percurso metodológico adotado para a consecução desses objetivos.
+O capítulo seguinte descreve o percurso metodológico adotado para a consecução desses objetivos, detalhando as fontes de dados, os algoritmos empregados e as estratégias de validação experimental.
 
 \end{chapter}

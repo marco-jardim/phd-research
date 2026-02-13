@@ -10,11 +10,14 @@ Na comparação de técnicas (Capítulo \ref{cap:resultados}), modelos baseados 
 
 A análise de ablação e a validação cruzada indicaram que configurações ML-only oferecem excelente desempenho de equilíbrio, enquanto combinações híbridas configuráveis (AND e OR) permitem selecionar pontos operacionais com maior precisão ou maior estabilidade, conforme o objetivo de uso. Por fim, o estudo de impacto epidemiológico evidenciou recuperação de óbitos adicionais e maior rendimento por registro revisado, reforçando a aplicabilidade operacional do pós-processamento supervisionado.
 
+O arcabouço (\textit{framework}) GZ-CMD, apresentado no Capítulo~\ref{cap:gzcmd}, estendeu a abordagem de pós-processamento ao incorporar calibração por âncoras, uma política de decisão em três vias (aceitar, rejeitar e revisar) fundamentada no valor esperado de revisão e revisão assistida por modelos de linguagem de grande porte (\textit{large language models}) para os pares candidatos da zona cinzenta. Os resultados indicaram que a configuração orientada à vigilância atingiu F$_1$-Score de 0,954, enquanto o modo orientado à confirmação alcançou precisão de 0,957. Quando considerada a cascata completa da sequência operacional (\textit{pipeline}) , composta por limiares Fellegi--Sunter, regras de guarda determinísticas, motor de perda esperada e revisão LLM dual-agent, o volume de revisão clerical humana reduziu-se de 21.620 para 41~pares, correspondendo a três ordens de grandeza (99,8\%), com processamento em aproximadamente 63~minutos de inferência.
+
 \section{Atendimento aos objetivos específicos}
 \label{sec:cap7-objetivos}
 
 Os objetivos específicos definidos no Capítulo \ref{cap:objetivos} foram atendidos conforme descrito a seguir.
 
+\begin{sloppypar}
 \begin{enumerate}
 
 \item \textbf{Comparação de técnicas de aprendizado de máquina.} Foram comparados classificadores lineares, métodos baseados em árvores, redes neurais e estratégias de combinação de modelos no problema de classificação de pares candidatos SIM--Sinan-TB, evidenciando diferenças de desempenho e comportamento sob desbalanceamento (Seções \ref{sec:cap5-nb01} e \ref{sec:cap5-modelos}).
@@ -30,16 +33,20 @@ Os objetivos específicos definidos no Capítulo \ref{cap:objetivos} foram atend
 \item \textbf{Discussão de generalização.} Foram discutidas condições e limitações para adaptação a outros cenários de \textit{linkage} em saúde, incluindo dependência de padrão-ouro, qualidade de preenchimento e disponibilidade de variáveis, além da necessidade de validação externa (Seção \ref{sec:cap6-limitacoes}).
 
 \end{enumerate}
+\end{sloppypar}
 
 \section{Contribuições}
 \label{sec:cap7-contribuicoes}
 
 As contribuições centrais deste estudo concentram-se em quatro dimensões. A primeira é metodológica, ao propor e avaliar um \textit{framework} configurável de pós-processamento que combina classificadores probabilísticos e regras determinísticas e explicita a fronteira de compromisso entre precisão e revocação. A segunda é operacional, ao quantificar o custo de revisão manual e demonstrar como a seleção de ponto operacional pode viabilizar o uso rotineiro de dados vinculados. A terceira é epidemiológica, ao evidenciar a recuperação de eventos relevantes na zona cinzenta e o potencial de qualificação de indicadores derivados de bases integradas. A quarta é de reprodutibilidade, pela sistematização dos experimentos em artefatos e rotinas que podem ser reaplicados em cenários análogos, incluindo a disponibilização do comparador de registros em repositório de código aberto \cite{Jardim2024comparador}.
 
+A quinta dimensão, desenvolvida no Capítulo~\ref{cap:gzcmd}, é de governança da incerteza, ao propor o \textit{framework} GZ-CMD como arcabouço auto-calibrável que integra classificação, calibração por âncoras (\textit{Platt scaling}), política de três vias baseada em perda esperada e revisão assistida por modelos de linguagem , consolidando em uma estrutura única e auditável componentes que a literatura de \textit{linkage} em saúde costuma tratar de forma isolada. No cenário empírico avaliado, essa estrutura reduziu o volume de revisão clerical de 21.620 para 41~pares (99,8\%), com enriquecimento progressivo da prevalência de verdadeiros no subconjunto encaminhado a cada camada (de 0,4\% na base completa para 7,4\% no lote LLM e $\approx$39\% nos inconclusivos finais), demonstrando que o \textit{pipeline} concentra o esforço humano nos casos de incerteza genuína. Os detalhes experimentais, incluindo os atributos temporais MACD (Medidas Contínuas de Diferença de Datas) e a análise de custo-benefício da revisão, encontram-se no Capítulo~\ref{cap:gzcmd} e no Apêndice~\ref{apendice:material-suplementar}.
+
 \section{Trabalhos futuros}
 \label{sec:cap7-trabalhos-futuros}
 
 Como continuidade, destacam-se: (i) validação externa em outros pares de bases e em diferentes contextos epidemiológicos; (ii) incorporação de variáveis clínicas e temporais adicionais para ampliar análises de impacto; (iii) estratégias de amostragem adaptativa e \textit{active learning} para reduzir a dependência de rotulagem manual; (iv) integração do pós-processamento em \textit{pipelines} operacionais com monitoramento contínuo de desempenho e auditoria; e (v) avaliação do efeito de diferentes esquemas de bloqueio e comparadores sobre a distribuição da zona cinzenta e sobre a estabilidade dos modelos.
-Espera-se que os resultados aqui apresentados contribuam para o fortalecimento das práticas de \textit{linkage} probabilístico no âmbito da vigilância epidemiológica no Brasil.
+No que concerne ao GZ-CMD, sua validação empírica restringiu-se ao município do Rio de Janeiro no período de 2006 a 2016, com padrão-ouro produzido por revisor único , condições que limitam a generalização imediata para outros municípios, períodos ou pares de bases de dados com prevalências e completudes distintas. A replicação em cenários com múltiplos revisores e a avaliação de sensibilidade a variações na qualidade de preenchimento constituem passos necessários antes da adoção em escala.
+Espera-se que os resultados aqui apresentados contribuam para o fortalecimento das práticas de \textit{linkage} probabilístico no âmbito da vigilância epidemiológica no Brasil.
 
 \end{chapter}
