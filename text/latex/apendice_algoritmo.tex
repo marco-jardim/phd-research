@@ -1,0 +1,61 @@
+\label{apendice:gzcmd}
+
+\begin{figure}[htbp]
+\caption{Pipeline decisorio do GZ-CMD com calibracao por ancoras, politica de custo e trilha de auditoria}
+\label{alg:gzcmd-pipeline}
+\centering
+\begin{minipage}{0.96\textwidth}
+\scriptsize
+\begin{enumerate}
+    \item \textbf{Entrada:} conjunto de pares candidatos $P$ com escores brutos $\{s_i\}$; parametros $(C_{FP}, C_{FN}, C_{LLM}, e_{FP}, e_{FN})$; conjuntos ancora $A^+$ e $A^-$; orcamento de revisao $B$.
+    \item \textbf{Saida:} decisao $d_i \in \{\text{MATCH}, \text{NONMATCH}, \text{REVIEW}\}$ para cada par $i$, com campos de auditoria $(\text{razao}_i, \text{justificativa}_i)$.
+
+    \item \textbf{Fase 1: Calibracao por ancoras.}
+    \begin{enumerate}
+        \item Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^+] = r^+$.
+        \item Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^-] = r^-$.
+        \item Para cada par $i$, calcular $p_i \leftarrow \sigma(\alpha s_i + \beta)$.
+    \end{enumerate}
+
+    \item \textbf{Fase 2: Regras de guarda deterministicas.}
+    \begin{enumerate}
+        \item Para cada par $i$, se $(\text{data\_obito}_i - \text{data\_diagnostico}_i) < -180$ dias, definir $d_i \leftarrow \text{NONMATCH}$.
+        \item Atribuir $\text{razao}_i \leftarrow \texttt{FILTRO\_TEMPORAL}$ e seguir para o proximo par quando a regra temporal for acionada.
+        \item Se o par $i$ competir com outro par $j$ pelo mesmo registro Sinan-TB, calcular $\Delta p \leftarrow |p_i - p_j|$.
+        \item Se $\Delta p < 0{,}05$, marcar ambos como candidatos a $\text{REVIEW}$ e registrar $\text{razao}_i \leftarrow \texttt{MARGEM\_ESTREITA}$.
+        \item Se $\Delta p \geq 0{,}05$, manter apenas o par com maior probabilidade calibrada e registrar descarte por cardinalidade para o preterido.
+    \end{enumerate}
+
+    \item \textbf{Fase 3: Motor de politica de decisao baseado em perda esperada.}
+    \begin{enumerate}
+        \item Para cada par $i$ ainda nao resolvido, calcular $L_M \leftarrow (1-p_i)\cdot C_{FP}$, $L_N \leftarrow p_i\cdot C_{FN}$ e $L_R \leftarrow C_{LLM} + (1-p_i)e_{FP}C_{FP} + p_ie_{FN}C_{FN}$.
+        \item Calcular $EVR_i \leftarrow \min(L_M,L_N) - L_R$.
+        \item Se $L_M \leq L_N$ e $L_M \leq L_R$, definir $d_i \leftarrow \text{MATCH}$.
+        \item Se $L_N \leq L_M$ e $L_N \leq L_R$, definir $d_i \leftarrow \text{NONMATCH}$.
+        \item Nos demais casos, definir $d_i \leftarrow \text{REVIEW}$ como candidato para triagem orcamentaria.
+        \item Registrar $(L_M,L_N,L_R,EVR_i)$, codigo de razao preliminar e vetor de evidencias para rastreabilidade.
+    \end{enumerate}
+
+    \item \textbf{Fase 4: Triagem sob restricao de orcamento.}
+    \begin{enumerate}
+        \item Ordenar candidatos a $\text{REVIEW}$ por $EVR_i$ em ordem decrescente.
+        \item Selecionar os $k$ primeiros candidatos com $k \leq B$ para revisao assistida.
+        \item Para cada candidato excedente com posicao $> B$, substituir por decisao automatica $\arg\min(L_M,L_N)$ e registrar $\texttt{ORCAMENTO\_EXCEDIDO}$.
+    \end{enumerate}
+
+    \item \textbf{Fase 5: Revisao assistida por LLM em protocolo dual.}
+    \begin{enumerate}
+        \item Para cada par com $d_i = \text{REVIEW}$, montar dossie JSON com subescores, $p_{cal}$ e codigos de guarda.
+        \item Submeter o dossie ao Agente Objetivo e ao Agente Cetico, de forma independente.
+        \item Se houver consenso entre os dois agentes, adotar a decisao consensual como decisao final.
+        \item Se houver discordancia, encaminhar o caso ao Agente Arbitro para deliberacao final.
+        \item Registrar codigo de razao clinico-operacional, justificativa textual, identificador de versao do modelo, carimbo temporal e assinatura do lote.
+    \end{enumerate}
+
+    \item \textbf{Fase 6: Consolidacao e retorno auditavel.}
+    \begin{enumerate}
+        \item Retornar $\{(d_i, \text{razao}_i, \text{justificativa}_i)\}$ para todo par $i$ de $P$.
+    \end{enumerate}
+\end{enumerate}
+\end{minipage}
+\end{figure}
