@@ -73,6 +73,15 @@ class EvaluationDefaults:
 
 
 @dataclass(frozen=True)
+class MonitoringConfig:
+    enabled: bool
+    metrics: dict[str, dict[str, float]]
+    slices: list[str]
+    monitored_fields: list[str]
+    actions_on_critical_drift: list[str]
+
+
+@dataclass(frozen=True)
 class GZCMDConfig:
     version: str
     bands: BandsConfig
@@ -81,6 +90,7 @@ class GZCMDConfig:
     guardrails: GuardrailsParams = field(default_factory=GuardrailsParams)
     calibration: CalibrationConfig = field(default_factory=CalibrationConfig)
     evaluation: EvaluationDefaults = field(default_factory=EvaluationDefaults)
+    monitoring: MonitoringConfig = field(default_factory=MonitoringConfig)
 
 
 def _as_mapping(x: Any, *, field: str) -> Mapping[str, Any]:
@@ -304,8 +314,7 @@ def _load_evaluation_defaults(data: Mapping[str, Any]) -> EvaluationDefaults:
     split_by = str(ev.get("split_by", "row")).strip().lower()
     group_stratify = bool(ev.get("group_stratify", True))
 
-    test_size_raw = ev.get("test_size", 0.3)
-    test_size = 0.3 if test_size_raw is None else float(test_size_raw)
+    test_size = float(ev.get("test_size", 0.3))
     if not (0.0 < test_size < 1.0):
         raise ValueError("evaluation.test_size must be in (0,1)")
 
@@ -314,6 +323,32 @@ def _load_evaluation_defaults(data: Mapping[str, Any]) -> EvaluationDefaults:
         seeds=tuple(seeds_list),
         split_by=split_by,
         group_stratify=group_stratify,
+    )
+
+
+def _load_monitoring_config(data: Mapping[str, Any]) -> MonitoringConfig:
+    mon = _as_mapping(data.get("monitoring"), field="monitoring")
+    drift = _as_mapping(mon.get("drift"), field="monitoring.drift")
+
+    if not drift.get("enabled", False):
+        return MonitoringConfig(enabled=False)
+
+    metrics = _as_mapping(drift.get("metrics"), field="monitoring.drift.metrics")
+    safe_metrics: dict[str, dict[str, float]] = {}
+    for k, v in metrics.items():
+        v_map = _as_mapping(v, field=f"monitoring.drift.metrics[{k}]")
+        safe_metrics[k] = {sk: float(sv) for sk, sv in v_map.items()}
+
+    slices = [str(x) for x in drift.get("slices", [])]
+    fields = [str(x) for x in drift.get("monitored_fields", [])]
+    actions = [str(x) for x in drift.get("actions_on_critical_drift", [])]
+
+    return MonitoringConfig(
+        enabled=True,
+        metrics=safe_metrics,
+        slices=slices,
+        monitored_fields=fields,
+        actions_on_critical_drift=actions,
     )
 
 
@@ -335,6 +370,7 @@ def load_config(path: str | Path) -> GZCMDConfig:
     guardrails = _load_guardrails_params(data)
     calibration = _load_calibration_config(data)
     evaluation = _load_evaluation_defaults(data)
+    monitoring = _load_monitoring_config(data)
 
     return GZCMDConfig(
         version=version,
@@ -344,4 +380,5 @@ def load_config(path: str | Path) -> GZCMDConfig:
         guardrails=guardrails,
         calibration=calibration,
         evaluation=evaluation,
+        monitoring=monitoring,
     )
