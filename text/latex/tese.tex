@@ -14,11 +14,11 @@
   }%
 }%
 \usepackage[T1]{fontenc}
+\usepackage{amsthm}   % must load BEFORE newtxmath (\openbox clash)
 % ABNT NBR 14724: fonte serifada tamanho 12 (Times-like)
 % ABNT recommends Times New Roman (or similar serif).
-% Uncomment ONE of the lines below once the font package is installed:
 %   tlmgr install newtx psnfss       (run as admin)
-% \usepackage{newtxtext}\usepackage{newtxmath}   % preferred: newtx
+\usepackage{newtxtext}\usepackage{newtxmath}   % preferred: newtx
 % \usepackage{mathptmx}                           % fallback: mathptmx
 % ABNT NBR 14724: espaçamento 1,5 entrelinhas
 \IfFileExists{setspace.sty}{%
@@ -50,9 +50,10 @@
 \maybeusepackage[ruled,chapter]{algorithm}
 \usepackage{makeidx}
 \maybeusepackage{subfig}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
+% amsmath and amssymb loaded by newtxmath — do not reload (Bbbk clash)
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+% amsthm moved before newtxmath (line 17) to avoid \openbox clash
 \maybeusepackage{mathrsfs}
 \usepackage{graphicx}
 \maybeusepackage{pgf}
@@ -82,6 +83,27 @@
 \maybeusepackage{gensymb}
 
 \newcommand{\G}{\mathcal G}
+
+% Pacotes para apêndice GZ-CMD
+\maybeusepackage{algorithmic}          % pseudocódigo (\STATE, \FOR, \IF etc.)
+\maybeusepackage{listings}             % blocos de código (lstlisting)
+\IfFileExists{listings.sty}{%
+  \lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    inputencoding=utf8,
+    literate={ã}{{\~a}}1 {õ}{{\~o}}1 {ç}{{\c{c}}}1
+             {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+             {â}{{\^a}}1 {ê}{{\^e}}1 {ô}{{\^o}}1
+             {Ã}{{\~A}}1 {Õ}{{\~O}}1 {Ç}{{\c{C}}}1
+             {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1,
+  }%
+}{}
+% Ambientes de teorema (amsthm já carregado na linha 55)
+\newtheorem{definition}{Definição}
+\newtheorem{proposition}{Proposição}
+\newtheorem{corollary}{Corolário}
 
 \maybeusepackage{pdfpages}
 \usepackage{indentfirst}
@@ -160,6 +182,7 @@
 \setlength{\belowcaptionskip}{0.0cm}
 % \setlength{\baselineskip}{24pt}  % Substituído por setspace \onehalfspacing (ABNT)
 
+% --- Estilos de página (definição global, restaurados em \mainmatter) ---
 \pagestyle{fancy}
 \lhead{}
 \chead{}
@@ -184,8 +207,13 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: Capa (obrigatório) — instituição, autor, título, cidade, ano.
 
-\frontmatter 
+\frontmatter
+
+% ABNT NBR 14724: páginas pré-textuais são contadas mas NÃO numeradas.
+\pagestyle{empty}
+\fancypagestyle{plain}{\fancyhf{}}
 
 \thispagestyle{empty}
 
@@ -209,16 +237,7 @@
 
 {\large \bf Marco Elisio Oliveira Jardim}
 
-\vspace{35pt}
-
-\begin{flushright}
-\parbox{10.3cm}{Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).\par
-\vspace{18pt}\par
-{\large \bf Orientadora: Rejane Sobrino Pinheiro}\par
-\vspace{12pt}\par}
-\end{flushright}
-
-\vspace{90pt}
+\vspace{\fill}
 
 \textbf{Rio de Janeiro}
 
@@ -230,22 +249,38 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%% Folha de Assinaturas da Banca %%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Folha de Rosto %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: Folha de rosto (obrigatório) — autor, título,
+% natureza do trabalho, orientador, cidade, ano.
 
 \newpage
 
 \thispagestyle{empty}
 
-\noindent
-\setlength{\headheight}{15pt}
+\begin{center}
 
-%\begin{figure}[ht]
-%  \begin{center}
-%	\includegraphics[scale=0.742]{fig_doc/Folha_Ata.pdf}
-%  \end{center}
-%\end{figure}
+{\large \bf Marco Elisio Oliveira Jardim}
 
-\clearpage
+\vspace{40pt}
+
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+
+\vspace{50pt}
+
+\begin{flushright}
+\parbox{10.3cm}{Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).\par
+\vspace{18pt}\par
+{\large \bf Orientadora: Rejane Sobrino Pinheiro}\par
+\vspace{12pt}\par}
+\end{flushright}
+
+\vspace{\fill}
+
+\textbf{Rio de Janeiro}
+
+\textbf{2026}
+
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -272,13 +307,13 @@ Jardim, Marco Elisio Oliveira
 % O código Cutter é gerado pela biblioteca no momento do depósito.
 \hspace{1,59cm} Aprendizado de m\'aquina aplicado ao p\'os-processamento do relacionamento probabil\'{\i}stico de bases de dados de sa\'ude / Marco Elisio Oliveira Jardim. -- Rio de Janeiro, 2026.
 
-\hspace{1cm} 87 f.: il.
+\hspace{1cm} 112 f.: il.
 
 \hspace{1cm} Orientadora: Rejane Sobrino Pinheiro.
 
 \hspace{1cm} Tese (Doutorado em Sa\'ude Coletiva) -- Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva, 2026.
 
-\hspace{1cm} 1. \textit{Linkage} probabil\'{\i}stico. 2. Aprendizado de m\'aquina. 3. Desbalanceamento de classes. 4. P\'os-processamento. 5. Tuberculose. 6. Mortalidade. 7. Vigil\^ancia em sa\'ude. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva. III. T\'{\i}tulo.
+\hspace{1cm} 1. \textit{Linkage} probabil\'{\i}stico. 2. Aprendizado de m\'aquina. 3. Desbalanceamento de classes. 4. P\'os-processamento. 5. Tuberculose. 6. Mortalidade. 7. Vigil\^ancia em sa\'ude. 8. Modelos de linguagem. 9. Zona cinzenta. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva. III. T\'{\i}tulo.
 
 \bigskip
 \end{minipage}
@@ -292,91 +327,87 @@ Jardim, Marco Elisio Oliveira
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Resumo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%% Folha de Aprovação %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: Folha de aprovação (obrigatória após defesa).
 
 \newpage
 
+\thispagestyle{empty}
+
 \noindent
+\setlength{\headheight}{15pt}
 
-\vspace*{20pt}
 \begin{center}
-{\LARGE\bf Resumo}\\
-\vspace{15pt}
-{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
-\vspace{6pt}
-{\bf Marco Elisio Oliveira Jardim}\\
-\vspace{12pt}
-{\bf Orientadora: Rejane Sobrino Pinheiro}\\
-% {\bf Coorientador: }\\
+
+{\large \bf Marco Elisio Oliveira Jardim}
+
 \vspace{20pt}
-\parbox{14cm}{Resumo da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).}
+
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+
+\vspace{25pt}
+
+\parbox{12cm}{\centering Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).}
+
+\vspace{25pt}
+
+Aprovada em \_\_\_\_\_\_ de \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ de 2026.
+
 \end{center}
-\vspace*{35pt}
 
-O \textit{linkage} probabilístico de bases de dados, também denominado relacionamento probabilístico de registros (\textit{record linkage}), constitui recurso essencial para a vigilância em saúde no Brasil, na medida em que possibilita a vinculação de registros individuais dispersos em diferentes sistemas de informação.
-A classificação dos pares candidatos resultantes desse processo, contudo, permanece dependente de limiares fixos aplicados sobre escores agregados de similaridade, o que acarreta perda expressiva de registros situados na zona de indecisão (área cinza).
-Essa lacuna é particularmente crítica quando a condição de saúde investigada apresenta elevada subnotificação, como é o caso da tuberculose enquanto condição marcadora de óbito.
+\vspace{35pt}
 
-Esta tese propôs e avaliou um \textit{framework} (estrutura metodológica) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016.
-A base experimental compreendeu 61.696 pares candidatos gerados pelo OpenRecLink e pontuados por um comparador de registros que produz 29 subescores de similaridade e um escore agregado, tendo como padrão-ouro 247 pares verdadeiros (razão $\approx$1:248).
-Seis algoritmos foram comparados (Regressão Logística, Floresta Aleatória, XGBoost, LightGBM, SVM e Perceptron Multicamada), combinados com nove estratégias de balanceamento de classes (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, ponderação de classes e variantes), totalizando 70 configurações avaliadas por estudo de ablação.
+\begin{center}
+\rule{10cm}{0.5pt}\\
+Prof.\textsuperscript{a} Dr.\textsuperscript{a} Rejane Sobrino Pinheiro (Orientadora)\\
+IESC/UFRJ
 
-A Floresta Aleatória (\textit{Random Forest}) com SMOTE e limiar de classificação de 0,5 alcançou $F_1$=0,931, ao passo que o limiar convencional $\geq$8 obteve $F_1$=0,610.
-A validação cruzada em cinco partições confirmou a estabilidade das abordagens híbridas, que combinam regras determinísticas e classificadores, com $F_1$ médio de 0,898$\pm$0,025 e menor variância que as abordagens puramente algorítmicas; a Floresta Aleatória com SMOTE obteve $F_1$ médio de 0,916$\pm$0,026.
-A análise de sensibilidade ao desbalanceamento de classes indicou que os classificadores mantiveram $F_1$ entre 0,880 e 0,918 nas nove estratégias avaliadas.
-A interpretação por meio de valores SHAP identificou o escore agregado, a quantidade de nomes iguais e o indicador de nome perfeito como os atributos de maior poder discriminatório; o nome da mãe predominou nas decisões relativas à área cinza.
-Do ponto de vista epidemiológico, a abordagem de máximo \textit{recall} (sensibilidade) recuperou 24 óbitos por tuberculose adicionais ($+$55,8\%) que teriam sido perdidos pelo limiar convencional, a um custo de aproximadamente 1,0 revisão manual por óbito detectado.
+\vspace{25pt}
 
-A tese disponibiliza dois \textit{pipelines} (sequências operacionais) pré-configurados, um orientado à vigilância (máximo \textit{recall}) e outro à confirmação (máxima precisão), articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
+\rule{10cm}{0.5pt}\\
+{[NOME\_DO\_EXAMINADOR\_1]}\\
+{[INSTITUIÇÃO\_1]}
 
-\vspace{15pt}
+\vspace{25pt}
 
-\textbf{Palavras-chave:} \textit{Linkage} probabilístico. Aprendizado de máquina. Desbalanceamento de classes. Pós-processamento. Tuberculose. Mortalidade. Vigilância em saúde.
+\rule{10cm}{0.5pt}\\
+{[NOME\_DO\_EXAMINADOR\_2]}\\
+{[INSTITUIÇÃO\_2]}
+
+\vspace{25pt}
+
+\rule{10cm}{0.5pt}\\
+{[NOME\_DO\_EXAMINADOR\_3]}\\
+{[INSTITUIÇÃO\_3]}
+
+\vspace{25pt}
+
+\rule{10cm}{0.5pt}\\
+{[NOME\_DO\_EXAMINADOR\_4]}\\
+{[INSTITUIÇÃO\_4]}
+
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% Dedicatória %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: Dedicatória (opcional).
 
 \newpage
 
-\noindent
+\thispagestyle{empty}
 
-\vspace*{20pt}
-\begin{center}
-{\LARGE\bf Abstract}\\
-\vspace{15pt}
-{\Large\bf Machine Learning Applied to Post-Processing of\\Probabilistic Record Linkage of Health Databases}\\
-\vspace{6pt}
-{\bf Marco Elisio Oliveira Jardim}\\
-\vspace{12pt}
-{\bf Advisor: Rejane Sobrino Pinheiro}\\
-%{\bf Coorientador: }\\
-\vspace{20pt}
-\parbox{14cm}{\emph{Abstract} da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).} % ATENÇÃO: esse trecho fica em português mesmo!
-\end{center}
-\vspace*{35pt}
+\vspace*{\fill}
 
-Probabilistic record linkage constitutes an essential resource for health surveillance in Brazil, as it enables the connection of individual records dispersed across different information systems.
-Classification of the resulting candidate pairs, however, remains dependent on fixed thresholds applied to aggregate similarity scores, leading to substantial loss of records in the indecision zone (grey zone).
-This limitation is particularly critical when the health condition under investigation presents high underreporting, as is the case of tuberculosis as an underlying cause of death.
-
-This thesis proposed and evaluated a configurable post-processing framework based on machine learning for classifying candidate pairs produced by probabilistic linkage between the Mortality Information System (SIM) and the Tuberculosis Notifiable Diseases Information System (Sinan-TB) in the city of Rio de Janeiro, covering the period from 2006 to 2016.
-The experimental dataset comprised 61,696 candidate pairs generated by OpenRecLink and scored by a record comparator that produces 29 similarity sub-scores and an aggregate score, with a gold standard of 247 true pairs (ratio $\approx$1:248).
-Six algorithms were compared (Logistic Regression, Random Forest, XGBoost, LightGBM, SVM, and Multilayer Perceptron), combined with nine class-balancing strategies (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, class weighting, and variants), yielding 70 configurations evaluated through an ablation study.
-
-Random Forest with SMOTE and a classification threshold of 0.5 achieved $F_1$=0.931, whereas the conventional threshold $\geq$8 yielded $F_1$=0.610.
-Five-fold cross-validation confirmed the stability of hybrid approaches, which combine deterministic rules and classifiers, with a mean $F_1$ of 0.898$\pm$0.025 and lower variance than purely algorithmic approaches; Random Forest with SMOTE achieved a mean $F_1$ of 0.916$\pm$0.026.
-Sensitivity analysis to class imbalance indicated that classifiers maintained $F_1$ between 0.880 and 0.918 across all nine strategies.
-SHAP-based interpretation identified the aggregate score, the number of matching names, and the exact-name indicator as the most discriminating features; mother's name predominated in grey-zone decisions.
-From an epidemiological standpoint, the maximum-recall approach recovered 24 additional tuberculosis deaths ($+$55.8\%) that would have been missed by the conventional threshold, at a cost of approximately 1.0 manual reviews per detected death.
-
-The thesis delivers two pre-configured pipelines, one geared towards surveillance (maximum recall) and another towards confirmation (maximum precision), articulated through a Pareto frontier that allows the health manager or researcher to calibrate the trade-off between sensitivity and specificity according to the requirements of the application scenario.
-
-\vspace{15pt}
-
-\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance.
+\begin{flushright}
+\textit{À Joyce, José Antônio e Marco,\\
+por darem sentido a cada passo desta jornada.\\[6pt]
+A todos que dedicam suas vidas\\
+à construção de um sistema de saúde\\
+mais justo e integral.}
+\end{flushright}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -415,7 +446,7 @@ necessária para mais uma página, mais um experimento, mais um dia de
 trabalho.
 
 A todas as pessoas que, de forma direta ou indireta, contribuíram para esta
-caminhada --- colegas de pesquisa, professores, amigos e familiares ---,
+caminhada, colegas de pesquisa, professores, amigos e familiares,
 registro aqui minha gratidão sincera. Cada conversa, sugestão e palavra de
 incentivo deixou marca neste trabalho e em quem o escreveu.
 
@@ -424,16 +455,117 @@ incentivo deixou marca neste trabalho e em quem o escreveu.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Epígrafe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: Epígrafe (opcional).
 
 \newpage
-\phantomsection
-\addcontentsline{toc}{chapter}{Sumário}
-\tableofcontents
+
+\thispagestyle{empty}
+
+\vspace*{\fill}
+
+\begin{flushright}
+\textit{``Se a educação sozinha não transforma\\
+a sociedade, sem ela tampouco\\
+a sociedade muda.''}\\[6pt]
+\textsc{Paulo Freire}
+\end{flushright}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
-\printnomenclature
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Resumo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\noindent
+
+\vspace*{20pt}
+\begin{center}
+{\LARGE\bf Resumo}\\
+\vspace{15pt}
+{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
+\vspace{6pt}
+{\bf Marco Elisio Oliveira Jardim}\\
+\vspace{12pt}
+{\bf Orientadora: Rejane Sobrino Pinheiro}\\
+% {\bf Coorientador: }\\
+\vspace{20pt}
+\parbox{14cm}{Resumo da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).}
+\end{center}
+\vspace*{35pt}
+
+O \textit{linkage} probabilístico de bases de dados, também denominado relacionamento probabilístico de registros (\textit{record linkage}), constitui recurso essencial para a vigilância em saúde no Brasil, na medida em que possibilita a vinculação de registros individuais dispersos em diferentes sistemas de informação.
+A classificação dos pares candidatos resultantes desse processo, contudo, permanece dependente de limiares fixos aplicados sobre escores agregados de similaridade, o que acarreta perda expressiva de registros situados na zona de indecisão (área cinza).
+Essa lacuna é particularmente crítica quando a condição de saúde investigada apresenta elevada subnotificação, como é o caso da tuberculose enquanto condição marcadora de óbito.
+
+Esta tese propôs e avaliou um arcabouço (\textit{framework}) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016.
+A base experimental compreendeu 61.696 pares candidatos gerados pelo OpenRecLink e pontuados por um comparador de registros que produz 29 subescores de similaridade e um escore agregado, tendo como padrão-ouro 247 pares verdadeiros (razão $\approx$1:248).
+Seis algoritmos foram comparados (Regressão Logística, Floresta Aleatória, XGBoost, LightGBM, SVM e Perceptron Multicamada), combinados com nove estratégias de balanceamento de classes (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, ponderação de classes e variantes), totalizando 70 configurações avaliadas por estudo de ablação.
+
+A Floresta Aleatória (\textit{Random Forest}) com SMOTE e limiar de classificação de 0,5 alcançou $F_1$=0,931, ao passo que o limiar convencional $\geq$8 obteve $F_1$=0,610.
+A validação cruzada em cinco partições confirmou a estabilidade das abordagens híbridas, que combinam regras determinísticas e classificadores, com $F_1$ médio de 0,898$\pm$0,025 e menor variância que as abordagens puramente algorítmicas; a Floresta Aleatória com SMOTE obteve $F_1$ médio de 0,916$\pm$0,026.
+A análise de sensibilidade ao desbalanceamento de classes indicou que os classificadores mantiveram $F_1$ entre 0,880 e 0,918 nas nove estratégias avaliadas.
+A interpretação por meio de valores SHAP identificou o escore agregado, a quantidade de nomes iguais e o indicador de nome perfeito como os atributos de maior poder discriminatório; o nome da mãe predominou nas decisões relativas à área cinza.
+Do ponto de vista epidemiológico, a abordagem de máximo \textit{recall} (sensibilidade) recuperou 24 óbitos por tuberculose adicionais ($+$55,8\%) que teriam sido perdidos pelo limiar convencional, a um custo de aproximadamente 1,0 revisão manual por óbito detectado. A tese disponibiliza duas sequências operacionais (\textit{pipelines}) pré-configuradas, um orientado à vigilância (máximo \textit{recall}) e outro à confirmação (máxima precisão), articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
+
+Adicionalmente, a tese propôs o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD), arcabouço operacional auto-calibrável que estende o \textit{framework} ao integrar calibração por conjuntos âncora, política de decisão por perda esperada com custos assimétricos e revisão assistida por modelo de linguagem de grande porte. No modo de vigilância, o GZ-CMD alcançou $F_1$=0,954; no modo de confirmação, precisão de 0,957. Considerando a cascata completa do \textit{pipeline} , composta por limiares Fellegi--Sunter, regras de guarda, motor de perda esperada e revisão LLM dual-agent, o volume de revisão clerical humana reduziu-se de 21.620 para apenas 41~pares (redução de 99,8\%, três ordens de grandeza), processados em aproximadamente 63~minutos de inferência.
+
+\vspace{15pt}
+
+\textbf{Palavras-chave:} \textit{Linkage} probabilístico. Aprendizado de máquina. Desbalanceamento de classes. Pós-processamento. Tuberculose. Mortalidade. Vigilância em saúde. Modelos de linguagem. Zona cinzenta.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\noindent
+
+\vspace*{20pt}
+\begin{center}
+{\LARGE\bf Abstract}\\
+\vspace{15pt}
+{\Large\bf Machine Learning Applied to Post-Processing of\\Probabilistic Record Linkage of Health Databases}\\
+\vspace{6pt}
+{\bf Marco Elisio Oliveira Jardim}\\
+\vspace{12pt}
+{\bf Advisor: Rejane Sobrino Pinheiro}\\
+%{\bf Coorientador: }\\
+\vspace{20pt}
+\parbox{14cm}{\emph{Abstract} da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).} % ATENÇÃO: esse trecho fica em português mesmo!
+\end{center}
+\vspace*{35pt}
+
+Probabilistic record linkage constitutes an essential resource for health surveillance in Brazil, as it enables the connection of individual records dispersed across different information systems.
+Classification of the resulting candidate pairs, however, remains dependent on fixed thresholds applied to aggregate similarity scores, leading to substantial loss of records in the indecision zone (grey zone).
+This limitation is particularly critical when the health condition under investigation presents high underreporting, as is the case of tuberculosis as an underlying cause of death.
+
+This thesis proposed and evaluated a configurable post-processing framework based on machine learning for classifying candidate pairs produced by probabilistic linkage between the Mortality Information System (SIM) and the Tuberculosis Notifiable Diseases Information System (Sinan-TB) in the city of Rio de Janeiro, covering the period from 2006 to 2016.
+The experimental dataset comprised 61,696 candidate pairs generated by OpenRecLink and scored by a record comparator that produces 29 similarity sub-scores and an aggregate score, with a gold standard of 247 true pairs (ratio $\approx$1:248).
+Six algorithms were compared (Logistic Regression, Random Forest, XGBoost, LightGBM, SVM, and Multilayer Perceptron), combined with nine class-balancing strategies (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, class weighting, and variants), yielding 70 configurations evaluated through an ablation study.
+
+Random Forest with SMOTE and a classification threshold of 0.5 achieved $F_1$=0.931, whereas the conventional threshold $\geq$8 yielded $F_1$=0.610.
+Five-fold cross-validation confirmed the stability of hybrid approaches, which combine deterministic rules and classifiers, with a mean $F_1$ of 0.898$\pm$0.025 and lower variance than purely algorithmic approaches; Random Forest with SMOTE achieved a mean $F_1$ of 0.916$\pm$0.026.
+Sensitivity analysis to class imbalance indicated that classifiers maintained $F_1$ between 0.880 and 0.918 across all nine strategies.
+SHAP-based interpretation identified the aggregate score, the number of matching names, and the exact-name indicator as the most discriminating features; mother's name predominated in grey-zone decisions.
+From an epidemiological standpoint, the maximum-recall approach recovered 24 additional tuberculosis deaths ($+$55.8\%) that would have been missed by the conventional threshold, at a cost of approximately 1.0 manual reviews per detected death. The thesis delivers two pre-configured pipelines, one geared towards surveillance (maximum recall) and another towards confirmation (maximum precision), articulated through a Pareto frontier that allows the health manager or researcher to calibrate the trade-off between sensitivity and specificity according to the requirements of the application scenario.
+
+Additionally, the thesis proposed the Grey-Zone Cost-based Mixture Deferral (GZ-CMD), a self-calibrating operational framework that extends the base framework by integrating anchor-based calibration, an asymmetric expected-loss decision policy, and large language model-assisted review. In surveillance mode, GZ-CMD achieved $F_1$=0.954; in confirmation mode, precision of 0.957. Considering the full pipeline cascade , comprising Fellegi--Sunter thresholds, deterministic guardrails, expected-loss engine, and dual-agent LLM review, the human clerical review volume was reduced from 21,620 to only 41~pairs (99.8\% reduction, three orders of magnitude), processed in approximately 63~minutes of inference.
+
+\vspace{15pt}
+
+\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance. Large language models. Grey zone.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%% Listas (antes do Sumário) %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
 \phantomsection
@@ -447,6 +579,34 @@ incentivo deixou marca neste trabalho e em quem o escreveu.
 
 \input{siglas.tex}
 
+\printnomenclature
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%% Sumário (último pré-textual) %%%%%%%%%%%%%%%%%%%%%%%%
+% ABNT NBR 14724: o sumário é o último elemento pré-textual.
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Sumário}
+\tableofcontents
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% --- Restaurar estilo de página numerado para a parte textual ----------
+\fancypagestyle{plain}{%
+	\fancyhf{}
+	\lhead{}
+	\chead{}
+	\rhead{\thepage}
+	\lfoot{}
+	\cfoot{}
+	\rfoot{}
+}
+\pagestyle{fancy}
+
 \mainmatter
 \input{capitulo1.tex}  % Introdução (NEW)
 \input{capitulo2.tex}  % Referencial Teórico (NEW)
@@ -455,6 +615,7 @@ incentivo deixou marca neste trabalho e em quem o escreveu.
 \input{capitulo5.tex}  % Método (was Cap4)
 \input{capitulo6.tex}  % Resultados (was Cap5)
 \input{capitulo7.tex}  % Discussão (was Cap6)
+\input{capitulo_gzcmd}  % GZ-CMD Framework
 \input{capitulo8.tex}  % Conclusões (was Cap7)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -481,6 +642,7 @@ incentivo deixou marca neste trabalho e em quem o escreveu.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Apêndices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \appendix
+\input{apendicea.tex}
 %\input{apendiceb.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
