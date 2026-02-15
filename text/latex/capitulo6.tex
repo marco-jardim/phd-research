@@ -175,7 +175,7 @@ As redes MLP apresentaram desempenho intermediário, enquanto o TabNet ficou em 
 \input{tables/tab_qw1_deep_learning}
 
 A variabilidade do TabNet entre partições (desvio-padrão de $F_1 = 0{,}055$) foi a maior entre todos os modelos, o que sugere instabilidade frente à escassez de exemplos positivos (247 pares verdadeiros em 61\,696 candidatos).
-Esse achado corrobora a evidência recente de que métodos de \textit{gradient boosting} e florestas aleatórias tendem a igualar ou superar redes neurais em tarefas tabulares de pequena e média escala, sobretudo quando a proporção de sinais positivos é baixa \cite{Grinsztajn2022trees, ShwartzZiv2022tabular}.
+Esse achado corrobora a evidência recente de que métodos de \textit{gradient boosting} e florestas aleatórias tendem a igualar ou superar redes neurais em tarefas tabulares de pequena e média escala, sobretudo quando a proporção de sinais positivos é baixa \cite{Grinsztajn2022tabular, ShwartzZiv2022tabular}.
 Os resultados empíricos sustentam a adoção do XGBoost como classificador principal do \textit{pipeline} proposto, em consonância com a literatura sobre dados tabulares de dimensão moderada.
 
 \section{Revisão assistida por modelo de linguagem de grande escala}
