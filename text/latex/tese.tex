@@ -14,6 +14,7 @@
   }%
 }%
 \usepackage[T1]{fontenc}
+\hyphenation{apro-xi-ma-da-men-te}
 \usepackage{amsthm}   % must load BEFORE newtxmath (\openbox clash)
 % ABNT NBR 14724: fonte serifada tamanho 12 (Times-like)
 % ABNT recommends Times New Roman (or similar serif).
@@ -70,7 +71,7 @@
 \usepackage{enumerate}
 \maybeusepackage{dsfont}
 \maybeusepackage{slashed}
-\usepackage[plainpages=false, pagebackref=true, pdftex]{hyperref}
+\usepackage[plainpages=false, pdfpagelabels, pagebackref=true, pdftex]{hyperref}
 % ABNT citations (must come after hyperref)
 \usepackage[alf,abnt-emphasize=bf]{abntex2cite} % ABNT citations
 % Compatibility helper: abntex2cite does not provide \citeyearpar
@@ -105,6 +106,21 @@
 \newtheorem{proposition}{Proposição}
 \newtheorem{corollary}{Corolário}
 
+% --- Tradução de rótulos para português ---
+\floatname{algorithm}{Algoritmo}                    % "Algorithm" → "Algoritmo"
+\renewcommand{\algorithmicrequire}{\textbf{Entrada:}} % "Require" → "Entrada:"
+\renewcommand{\algorithmicensure}{\textbf{Saída:}}    % "Ensure" → "Saída:"
+\renewcommand{\algorithmicend}{\textbf{fim}}
+\renewcommand{\algorithmicif}{\textbf{se}}
+\renewcommand{\algorithmicthen}{\textbf{então}}
+\renewcommand{\algorithmicelse}{\textbf{senão}}
+\renewcommand{\algorithmicfor}{\textbf{para}}
+\renewcommand{\algorithmicforall}{\textbf{para todo}}
+\renewcommand{\algorithmicdo}{\textbf{faça}}
+\renewcommand{\algorithmicwhile}{\textbf{enquanto}}
+\renewcommand{\algorithmicreturn}{\textbf{retornar}}
+\renewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1}
+\renewcommand{\proofname}{Demonstração}              % "Proof" → "Demonstração"
 \maybeusepackage{pdfpages}
 \usepackage{indentfirst}
 \setlength{\parindent}{1.25cm}
@@ -127,6 +143,7 @@
 }{}
 % enumitem: optional, siglas.tex has a fallback if unavailable
 \maybeusepackage{enumitem}
+\usepackage{longtable}           % tabelas com quebra de página (siglas)
 \IfFileExists{nomencl.sty}{%
   \usepackage[intoc]{nomencl}%
   \makenomenclature
@@ -614,8 +631,8 @@ Additionally, the thesis proposed the Grey-Zone Cost-based Mixture Deferral (GZ-
 \input{capitulo4.tex}  % Objetivos (was Cap3)
 \input{capitulo5.tex}  % Método (was Cap4)
 \input{capitulo6.tex}  % Resultados (was Cap5)
-\input{capitulo7.tex}  % Discussão (was Cap6)
 \input{capitulo_gzcmd}  % GZ-CMD Framework
+\input{capitulo7.tex}  % Discussão (was Cap6)
 \input{capitulo8.tex}  % Conclusões (was Cap7)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
