@@ -167,7 +167,7 @@ Ao restringir a análise à zona cinzenta (Figura~\ref{fig:feature-importance-he
 A cascata de filtragem descrita nas seções anteriores reduz o universo de pares candidatos a um subconjunto residual de decisão ambígua, para o qual os classificadores supervisionados e as regras determinísticas não atingem consenso.
 Nesse estrato, a inclusão de um modelo de linguagem de grande escala (\textit{Large Language Model}, LLM) como revisor complementar constitui extensão natural do \textit{framework}, na medida em que explora capacidades de raciocínio sobre dossiês textuais que métodos numéricos não capturam diretamente \cite{Wei2022chainofthought}.
 
-O experimento empregou o modelo Kimi K2.5, acessado pela API Fireworks \cite{Fireworks2025}, com temperatura fixa em $0{,}0$ e semente determinística (\textit{seed}~$=43$) para garantir reprodutibilidade.
+O experimento empregou o modelo Kimi K2.5, acessado pela API Fireworks \cite{Fireworks2024}, com temperatura fixa em $0{,}0$ e semente determinística (\textit{seed}~$=43$) para garantir reprodutibilidade.
 Cada par candidato recebeu um dossiê estruturado contendo os 29 subescores de similaridade, a probabilidade calibrada do classificador ($p_{\text{cal}}$), a \textit{nota final} agregada, indicadores MACD e a classificação por faixa de escore.
 A avaliação seguiu protocolo de duplo agente com árbitro: dois agentes independentes emitiram pareceres sobre cada dossiê e, havendo discordância, um terceiro agente arbitrador proferiu a decisão final.
 A taxa de consenso entre os dois agentes primários alcançou 97{,}2\% no modo vigilância e 94{,}7\% no modo confirmação, sugerindo elevada concordância interna do protocolo.
@@ -199,7 +199,7 @@ Neste trabalho, optou-se por avaliar a TVP em conjunto com o valor preditivo pos
 
 Cinco dimensões de estratificação foram avaliadas: (a)~quartis de concordância do campo nome (\texttt{NOME qtd frag iguais}), (b)~bandeira do registro (\textit{controle} \textit{versus} \textit{tb\_origem}), (c)~faixa etária (0--17, 18--39, 40--59, 60--79, 80+), (d)~sexo (F, M) e (e)~unidade federativa de residência.
 A dimensão UF produziu grupo único elegível (UF~33, Rio de Janeiro), inviabilizando comparações pareadas; as demais quatro dimensões geraram 36 testes de contingência $2 \times 2$, empregando qui-quadrado sem correção de Yates quando todas as frequências esperadas superaram cinco, e teste exato de Fisher nos demais casos.
-A correção de Benjamini-Hochberg para taxa de falsas descobertas (\textit{FDR}) a $\alpha = 0{,}05$ foi aplicada conjuntamente aos 36 testes \cite{BenjaminiHochberg1995}.
+A correção de Benjamini-Hochberg para taxa de falsas descobertas (\textit{FDR}) a $\alpha = 0{,}05$ foi aplicada conjuntamente aos 36 testes \cite{Benjamini1995fdr}.
 
 \input{tables/tab_qw3_group_metrics.tex}
 
