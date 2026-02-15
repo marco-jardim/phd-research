@@ -3,19 +3,17 @@
 \caption{Matrizes de confus\~ao da revis\~ao assistida por LLM, por modo de opera\c{c}\~ao.}
 \label{tab:qw2-confusion}
 \small
-\begin{tabular}{llrrrr}
+\begin{tabular}{llrrrl}
 \toprule
-Modo & & \multicolumn{2}{c}{Predi\c{c}\~ao} & & \\
+Modo & Classe real & \multicolumn{2}{c}{Predi\c{c}\~ao} & Total & Protocolo \\
 \cmidrule(lr){3-4}
- & & MATCH & NONMATCH & Total & Protocolo \\
+ & & MATCH & NONMATCH & & \\
 \midrule
-\multirow{2}{*}{Vigil\^ancia}
- & Positivo & 72  & 32   & 104   & \multirow{2}{*}{\shortstack[r]{consenso: 1\,371\\\'arbitro: 39}} \\
- & Negativo & 6   & 1\,300 & 1\,306 & \\
+Vigil\^ancia & Positivo & 72 & 32 & 104 & consenso: 1\,371; \'arbitro: 39 \\
+Vigil\^ancia & Negativo & 6 & 1\,300 & 1\,306 & -- \\
 \midrule
-\multirow{2}{*}{Confirma\c{c}\~ao}
- & Positivo & 91  & 10   & 101   & \multirow{2}{*}{\shortstack[r]{consenso: 412\\\'arbitro: 23}} \\
- & Negativo & 3   & 331  & 334   & \\
+Confirma\c{c}\~ao & Positivo & 91 & 10 & 101 & consenso: 412; \'arbitro: 23 \\
+Confirma\c{c}\~ao & Negativo & 3 & 331 & 334 & -- \\
 \bottomrule
 \end{tabular}
 \end{table}
