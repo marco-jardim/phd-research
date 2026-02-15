@@ -161,11 +161,75 @@ Ao restringir a análise à zona cinzenta (Figura~\ref{fig:feature-importance-he
 \label{fig:feature-importance-heatmap}
 \end{figure}
 
+\section{Revisão assistida por modelo de linguagem de grande escala}
+\label{sec:cap5-qw2-llm}
+
+A cascata de filtragem descrita nas seções anteriores reduz o universo de pares candidatos a um subconjunto residual de decisão ambígua, para o qual os classificadores supervisionados e as regras determinísticas não atingem consenso.
+Nesse estrato, a inclusão de um modelo de linguagem de grande escala (\textit{Large Language Model}, LLM) como revisor complementar constitui extensão natural do \textit{framework}, na medida em que explora capacidades de raciocínio sobre dossiês textuais que métodos numéricos não capturam diretamente \cite{Wei2022chainofthought}.
+
+O experimento empregou o modelo Kimi K2.5, acessado pela API Fireworks \cite{Fireworks2025}, com temperatura fixa em $0{,}0$ e semente determinística (\textit{seed}~$=43$) para garantir reprodutibilidade.
+Cada par candidato recebeu um dossiê estruturado contendo os 29 subescores de similaridade, a probabilidade calibrada do classificador ($p_{\text{cal}}$), a \textit{nota final} agregada, indicadores MACD e a classificação por faixa de escore.
+A avaliação seguiu protocolo de duplo agente com árbitro: dois agentes independentes emitiram pareceres sobre cada dossiê e, havendo discordância, um terceiro agente arbitrador proferiu a decisão final.
+A taxa de consenso entre os dois agentes primários alcançou 97{,}2\% no modo vigilância e 94{,}7\% no modo confirmação, sugerindo elevada concordância interna do protocolo.
+
+\input{tables/tab_qw2_confusion.tex}
+
+Os resultados indicam desempenho assimétrico entre os dois modos operacionais (Tabela~\ref{tab:qw2-confusion}).
+No modo vigilância, o LLM revisou 1\,410 pares e obteve precisão de 0{,}923 com revocação de 0{,}692, resultando em $F_1 = 0{,}791$.
+A especificidade elevada ($0{,}995$) confirma que o modelo raramente classifica pares verdadeiramente negativos como correspondências, comportamento desejável quando o custo de falsos positivos é alto.
+Contudo, 32 pares verdadeiros foram classificados como não correspondentes, o que representa perda de 30{,}8\% dos positivos nesse estrato residual.
+Esse padrão conservador pode decorrer da ausência de campos textuais brutos no dossiê, restringindo a evidência disponível ao LLM a escores numéricos já sintetizados \cite{Mudgal2018deepmatcher,Li2020ditto}.
+
+No modo confirmação, o cenário se inverte favoravelmente: sobre 435 pares, a precisão atinge 0{,}968 e a revocação sobe para 0{,}901, elevando o $F_1$ para 0{,}933.
+A prevalência de pares verdadeiros nesse modo (23{,}2\%) é substancialmente maior do que no modo vigilância (7{,}4\%), o que facilita a tarefa de classificação e contribui para o ganho observado.
+
+\input{tables/tab_qw2_llm_comparison.tex}
+
+A Tabela~\ref{tab:qw2-llm-comparison} sintetiza as métricas de desempenho nos dois modos.
+A diferença de revocação entre os modos ($0{,}692$ \textit{versus} $0{,}901$) reforça a sensibilidade do revisor LLM à composição do estrato avaliado: quando a proporção de pares verdadeiros é baixa e a evidência disponível se limita a subescores numéricos, o modelo tende a adotar postura mais conservadora, priorizando especificidade em detrimento de sensibilidade.
+Em termos operacionais, esses achados sugerem que a revisão por LLM é particularmente adequada ao modo confirmação, no qual a prevalência mais elevada e a finalidade investigativa se alinham ao perfil de alta precisão do revisor.
+Para o modo vigilância, a perda de revocação demanda cautela e aponta para a necessidade de estratégias complementares, como a revisão humana dos pares rejeitados pelo LLM ou a inclusão de campos textuais no dossiê.
+
+\section{Análise de equidade por subgrupos demográficos e de similaridade}
+\label{sec:cap5-qw3-fairness}
+
+A avaliação do desempenho agregado de um classificador de \textit{linkage} pode mascarar disparidades relevantes entre subgrupos da população, comprometendo a equidade da vigilância epidemiológica \cite{Mehrabi2021fairness,Barocas2019fairml}.
+Para investigar essa possibilidade, conduziu-se análise de equidade inspirada no critério de \textit{equalized odds} \cite{Hardt2016equality}, que na formulação original exige paridade simultânea da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) entre grupos protegidos.
+Neste trabalho, optou-se por avaliar a TVP em conjunto com o valor preditivo positivo (VPP), uma vez que o VPP reflete mais diretamente o impacto operacional da classificação na vigilância: um VPP baixo implica que a equipe investigará proporção elevada de pares incorretamente preditos como correspondências.
+
+Cinco dimensões de estratificação foram avaliadas: (a)~quartis de concordância do campo nome (\texttt{NOME qtd frag iguais}), (b)~bandeira do registro (\textit{controle} \textit{versus} \textit{tb\_origem}), (c)~faixa etária (0--17, 18--39, 40--59, 60--79, 80+), (d)~sexo (F, M) e (e)~unidade federativa de residência.
+A dimensão UF produziu grupo único elegível (UF~33, Rio de Janeiro), inviabilizando comparações pareadas; as demais quatro dimensões geraram 36 testes de contingência $2 \times 2$, empregando qui-quadrado sem correção de Yates quando todas as frequências esperadas superaram cinco, e teste exato de Fisher nos demais casos.
+A correção de Benjamini-Hochberg para taxa de falsas descobertas (\textit{FDR}) a $\alpha = 0{,}05$ foi aplicada conjuntamente aos 36 testes \cite{BenjaminiHochberg1995}.
+
+\input{tables/tab_qw3_group_metrics.tex}
+
+A Tabela~\ref{tab:qw3-group-metrics} apresenta as métricas por subgrupo.
+A TVP manteve-se estável na maioria das comparações, com rejeição da hipótese nula em apenas um par: faixa etária 18--39 \textit{versus} 40--59 ($p_{\text{FDR}} = 0{,}039$; TVP de $0{,}851$ e $0{,}958$, respectivamente), configurando disparidade limítrofe cuja relevância prática depende do tamanho do denominador (87 e 95 positivos verdadeiros).
+Essa relativa homogeneidade da TVP indica que a capacidade do classificador de detectar pares verdadeiros não varia de forma sistemática entre os subgrupos avaliados.
+
+O cenário do VPP revelou-se distinto.
+Onze dos doze testes com rejeição da hipótese nula ($p_{\text{FDR}} < 0{,}05$) recaíram sobre o VPP, distribuídos em quatro das cinco dimensões avaliadas (Tabela~\ref{tab:qw3-fairness-rejections}).
+Na dimensão de concordância do nome, o VPP do quarto quartil (Q4: $0{,}134$) superou o dos quartis inferiores (Q1--Q3: $< 0{,}004$) por ampla margem, refletindo o fato de que pares com alta similaridade de nome concentram a quase totalidade dos verdadeiros positivos.
+Na dimensão bandeira, registros de origem tuberculosa apresentaram VPP de $0{,}170$, contra $0{,}019$ do grupo controle (razão de chances $= 0{,}094$; $p_{\text{FDR}} < 10^{-88}$), evidenciando que o classificador opera com precisão substancialmente maior no estrato mais relevante para a vigilância.
+Na dimensão sexo, o VPP feminino ($0{,}049$) superou o masculino ($0{,}026$) com significância estatística ($p_{\text{FDR}} < 10^{-4}$; RC~$= 1{,}92$), embora a magnitude absoluta da diferença seja modesta.
+Na faixa etária, o grupo 0--17 anos exibiu VPP de $0{,}800$, contrastando com valores entre $0{,}017$ e $0{,}042$ nas demais faixas; todavia, o denominador reduzido desse grupo (cinco predições positivas) limita a generalização do achado.
+
+\input{tables/tab_qw3_fairness_rejections.tex}
+
+A interpretação conjunta desses resultados aponta para um padrão coerente: as disparidades de VPP decorrem predominantemente da distribuição desigual de pares verdadeiros entre subgrupos, e não de viés intrínseco do classificador na atribuição de escores.
+Quando um subgrupo concentra maior prevalência de correspondências reais (como ocorre no quartil Q4 de concordância de nome ou na bandeira de origem tuberculosa), o VPP eleva-se mecanicamente, mesmo que a TVP permaneça homogênea.
+A quase ausência de rejeições na TVP sustenta essa leitura, indicando que o classificador detecta pares verdadeiros com probabilidade similar independentemente do subgrupo, porém a proporção de falsos positivos varia conforme a composição do estrato avaliado \cite{Chouldechova2017fair}.
+
 \section{Síntese e recomendações operacionais}
 \label{sec:cap5-sintese}
 
 Em conjunto, os resultados demonstram três achados centrais. Primeiro, decisões baseadas exclusivamente em limiar do escore agregado são insuficientes para recuperar a parcela de pares verdadeiros concentrada na zona cinzenta (cerca de 47\% do total), acarretando perdas de detecção incompatíveis com as necessidades da vigilância epidemiológica da tuberculose \cite{Bartholomay2014improved,Bartholomay2020drtb}. Segundo, classificadores supervisionados (RF+SMOTE) elevam substancialmente o $F_1$ (de 0,610 para 0,931 no \textit{hold-out}), com robustez confirmada por validação cruzada e baixa sensibilidade à estratégia de balanceamento, indicando viabilidade de implantação em cenários operacionais com mínima necessidade de ajuste fino \cite{Christen2012book}. Terceiro, as regras determinísticas e os mecanismos de consenso funcionam como instrumentos de calibração do ponto operacional, compondo um \textit{framework} configurável que permite ao gestor priorizar revocação (vigilância) ou precisão (investigação de alta confiança), conforme a disponibilidade de recursos para revisão \cite{Doidge2019linkageerror,Shaw2022biases}.
 
-A recomendação operacional decorrente é a adoção de dois \textit{pipelines} complementares: (i) um \textit{pipeline} orientado à vigilância, com configuração ML-only ou Hybrid-OR e limiares permissivos, priorizando a detecção do maior número de óbitos associados à tuberculose; e (ii) um \textit{pipeline} orientado à investigação, com configurações Hybrid-AND ou consenso e limiares restritivos, minimizando revisões desnecessárias em contextos de recursos limitados \cite{Coeli2021suboptimal,Tassinari2025duckdb}. A análise interpretável via SHAP reforça a importância de campos frequentemente negligenciados (nome da mãe) na resolução da zona cinzenta, projetando a necessidade de políticas de qualidade de dados nas bases de saúde como pré-condição para a eficácia do pós-processamento \cite{Pacheco2008hierarchical,Rafael2024accuracy}. A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada no Capítulo~\ref{cap:discussao}.
+A recomendação operacional decorrente é a adoção de dois \textit{pipelines} complementares: (i) um \textit{pipeline} orientado à vigilância, com configuração ML-only ou Hybrid-OR e limiares permissivos, priorizando a detecção do maior número de óbitos associados à tuberculose; e (ii) um \textit{pipeline} orientado à investigação, com configurações Hybrid-AND ou consenso e limiares restritivos, minimizando revisões desnecessárias em contextos de recursos limitados \cite{Coeli2021suboptimal,Tassinari2025duckdb}. A análise interpretável via SHAP reforça a importância de campos frequentemente negligenciados (nome da mãe) na resolução da zona cinzenta, projetando a necessidade de políticas de qualidade de dados nas bases de saúde como pré-condição para a eficácia do pós-processamento \cite{Pacheco2008hierarchical,Rafael2024accuracy}.
+
+A esses achados somam-se duas extensões complementares.
+A revisão assistida por LLM (Seção~\ref{sec:cap5-qw2-llm}) demonstrou que modelos de linguagem podem atuar como revisores na camada de decisão residual, com desempenho mais expressivo no modo confirmação ($F_1 = 0{,}933$) do que no modo vigilância ($F_1 = 0{,}791$), padrão coerente com a prevalência distinta de pares verdadeiros em cada estrato.
+A análise de equidade (Seção~\ref{sec:cap5-qw3-fairness}) revelou que a taxa de verdadeiros positivos do classificador se mantém homogênea entre subgrupos, enquanto as disparidades de valor preditivo positivo refletem diferenças de prevalência subjacentes, e não viés discriminatório do modelo.
+A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada no Capítulo~\ref{cap:discussao}.
 
 \end{chapter}

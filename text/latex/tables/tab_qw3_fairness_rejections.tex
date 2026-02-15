@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\caption{Rejei\c{c}\~oes significativas na an\'alise de equidade (FDR $\alpha = 0{,}05$, corre\c{c}\~ao de Benjamini--Hochberg).}
+\label{tab:qw3-fairness-rejections}
+\small
+\begin{tabular}{llllrrl}
+\toprule
+Dimens\~ao & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ taxa & OR \\
+\midrule
+nome (quartis) & VPP & Q3 & Q4 & $<$0{,}001 & $-$0{,}130 & 0{,}025 \\
+nome (quartis) & VPP & Q2 & Q4 & $<$0{,}001 & $-$0{,}133 & 0{,}005 \\
+nome (quartis) & VPP & Q1 & Q4 & $<$0{,}001 & $-$0{,}134 & 0{,}017 \\
+bandeira       & VPP & controle & TB origem & $<$0{,}001 & $-$0{,}151 & 0{,}094 \\
+faixa et\'aria  & VPP & 0--17 & 60--79 & $<$0{,}001 & $+$0{,}783 & 224{,}7 \\
+faixa et\'aria  & VPP & 0--17 & 40--59 & $<$0{,}001 & $+$0{,}766 & 113{,}2 \\
+faixa et\'aria  & VPP & 0--17 & 80+ & $<$0{,}001 & $+$0{,}768 & 121{,}2 \\
+faixa et\'aria  & VPP & 0--17 & 18--39 & $<$0{,}001 & $+$0{,}758 & 91{,}9 \\
+faixa et\'aria  & VPP & 18--39 & 60--79 & $<$0{,}001 & $+$0{,}024 & 2{,}44 \\
+faixa et\'aria  & VPP & 40--59 & 60--79 & $<$0{,}001 & $+$0{,}017 & 1{,}98 \\
+faixa et\'aria  & TVP & 18--39 & 40--59 & 0{,}039     & $-$0{,}107 & 0{,}25 \\
+sexo           & VPP & F & M & $<$0{,}001 & $+$0{,}023 & 1{,}92 \\
+\bottomrule
+\end{tabular}
+\end{table}
