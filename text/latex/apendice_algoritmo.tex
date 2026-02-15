@@ -1,61 +1,84 @@
 \label{apendice:gzcmd}
 
-\begin{figure}[htbp]
-\caption{Pipeline decisorio do GZ-CMD com calibracao por ancoras, politica de custo e trilha de auditoria}
+% Sem float: permite quebra de página natural no algoritmo longo
+\refstepcounter{algorithm}%
+\noindent\textbf{Algoritmo~\thealgorithm} --- \textit{Pipeline} decisório do GZ-CMD com calibração por âncoras, política de custo e trilha de auditoria.
 \label{alg:gzcmd-pipeline}
-\centering
-\begin{minipage}{0.96\textwidth}
-\scriptsize
-\begin{enumerate}
-    \item \textbf{Entrada:} conjunto de pares candidatos $P$ com escores brutos $\{s_i\}$; parametros $(C_{FP}, C_{FN}, C_{LLM}, e_{FP}, e_{FN})$; conjuntos ancora $A^+$ e $A^-$; orcamento de revisao $B$.
-    \item \textbf{Saida:} decisao $d_i \in \{\text{MATCH}, \text{NONMATCH}, \text{REVIEW}\}$ para cada par $i$, com campos de auditoria $(\text{razao}_i, \text{justificativa}_i)$.
 
-    \item \textbf{Fase 1: Calibracao por ancoras.}
-    \begin{enumerate}
-        \item Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^+] = r^+$.
-        \item Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^-] = r^-$.
-        \item Para cada par $i$, calcular $p_i \leftarrow \sigma(\alpha s_i + \beta)$.
-    \end{enumerate}
+\noindent\rule{\textwidth}{0.4pt}
+\begin{algorithmic}[1]
 
-    \item \textbf{Fase 2: Regras de guarda deterministicas.}
-    \begin{enumerate}
-        \item Para cada par $i$, se $(\text{data\_obito}_i - \text{data\_diagnostico}_i) < -180$ dias, definir $d_i \leftarrow \text{NONMATCH}$.
-        \item Atribuir $\text{razao}_i \leftarrow \texttt{FILTRO\_TEMPORAL}$ e seguir para o proximo par quando a regra temporal for acionada.
-        \item Se o par $i$ competir com outro par $j$ pelo mesmo registro Sinan-TB, calcular $\Delta p \leftarrow |p_i - p_j|$.
-        \item Se $\Delta p < 0{,}05$, marcar ambos como candidatos a $\text{REVIEW}$ e registrar $\text{razao}_i \leftarrow \texttt{MARGEM\_ESTREITA}$.
-        \item Se $\Delta p \geq 0{,}05$, manter apenas o par com maior probabilidade calibrada e registrar descarte por cardinalidade para o preterido.
-    \end{enumerate}
+\REQUIRE \parbox[t]{0.85\linewidth}{Conjunto de pares candidatos $P$ com escores brutos $\{s_i\}$;
+  parâmetros $(C_{FP}, C_{FN}, C_{LLM}, e_{FP}, e_{FN})$;
+  conjuntos âncora $A^+$ e $A^-$; orçamento de revisão $B$.}
+\ENSURE \parbox[t]{0.85\linewidth}{Decisão $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{review}\}$ para cada par $i$,
+  com campos de auditoria $(\mathit{razao}_i, \mathit{justificativa}_i)$.}
 
-    \item \textbf{Fase 3: Motor de politica de decisao baseado em perda esperada.}
-    \begin{enumerate}
-        \item Para cada par $i$ ainda nao resolvido, calcular $L_M \leftarrow (1-p_i)\cdot C_{FP}$, $L_N \leftarrow p_i\cdot C_{FN}$ e $L_R \leftarrow C_{LLM} + (1-p_i)e_{FP}C_{FP} + p_ie_{FN}C_{FN}$.
-        \item Calcular $EVR_i \leftarrow \min(L_M,L_N) - L_R$.
-        \item Se $L_M \leq L_N$ e $L_M \leq L_R$, definir $d_i \leftarrow \text{MATCH}$.
-        \item Se $L_N \leq L_M$ e $L_N \leq L_R$, definir $d_i \leftarrow \text{NONMATCH}$.
-        \item Nos demais casos, definir $d_i \leftarrow \text{REVIEW}$ como candidato para triagem orcamentaria.
-        \item Registrar $(L_M,L_N,L_R,EVR_i)$, codigo de razao preliminar e vetor de evidencias para rastreabilidade.
-    \end{enumerate}
+\medskip
+\STATE \textbf{--- Fase 1: Calibração por âncoras ---}
+\STATE Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^+] = r^+$
+\STATE Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^-] = r^-$
+\FORALL{par $i \in P$}
+    \STATE $p_i \leftarrow \sigma(\alpha\, s_i + \beta)$
+\ENDFOR
 
-    \item \textbf{Fase 4: Triagem sob restricao de orcamento.}
-    \begin{enumerate}
-        \item Ordenar candidatos a $\text{REVIEW}$ por $EVR_i$ em ordem decrescente.
-        \item Selecionar os $k$ primeiros candidatos com $k \leq B$ para revisao assistida.
-        \item Para cada candidato excedente com posicao $> B$, substituir por decisao automatica $\arg\min(L_M,L_N)$ e registrar $\texttt{ORCAMENTO\_EXCEDIDO}$.
-    \end{enumerate}
+\medskip
+\STATE \textbf{--- Fase 2: Regras de guarda determinísticas ---}
+\FORALL{par $i \in P$}
+    \IF{$(\mathit{data\_obito}_i - \mathit{data\_diagnostico}_i) < -180$ dias}
+        \STATE $d_i \leftarrow \textsc{nonmatch}$; \quad $\mathit{razao}_i \leftarrow \texttt{FILTRO\_TEMPORAL}$
+        \STATE \textbf{continuar} para o próximo par
+    \ENDIF
+    \IF{par $i$ compete com par $j$ pelo mesmo registro Sinan-TB}
+        \STATE $\Delta p \leftarrow |p_i - p_j|$
+        \IF{$\Delta p < 0{,}05$}
+            \STATE Marcar ambos como candidatos a \textsc{review}; \quad $\mathit{razao}_i \leftarrow \texttt{MARGEM\_ESTREITA}$
+        \ELSE
+            \STATE Manter apenas o par com maior $p_i$; descartar o outro por cardinalidade
+        \ENDIF
+    \ENDIF
+\ENDFOR
 
-    \item \textbf{Fase 5: Revisao assistida por LLM em protocolo dual.}
-    \begin{enumerate}
-        \item Para cada par com $d_i = \text{REVIEW}$, montar dossie JSON com subescores, $p_{cal}$ e codigos de guarda.
-        \item Submeter o dossie ao Agente Objetivo e ao Agente Cetico, de forma independente.
-        \item Se houver consenso entre os dois agentes, adotar a decisao consensual como decisao final.
-        \item Se houver discordancia, encaminhar o caso ao Agente Arbitro para deliberacao final.
-        \item Registrar codigo de razao clinico-operacional, justificativa textual, identificador de versao do modelo, carimbo temporal e assinatura do lote.
-    \end{enumerate}
+\medskip
+\STATE \textbf{--- Fase 3: Motor de política baseado em perda esperada ---}
+\FORALL{par $i$ ainda não resolvido}
+    \STATE $L_M \leftarrow (1-p_i)\cdot C_{FP}$; \quad $L_N \leftarrow p_i\cdot C_{FN}$
+    \STATE $L_R \leftarrow C_{LLM} + (1-p_i)\,e_{FP}\,C_{FP} + p_i\,e_{FN}\,C_{FN}$
+    \STATE $\mathit{EVR}_i \leftarrow \min(L_M, L_N) - L_R$
+    \IF{$L_M \leq L_N$ \AND $L_M \leq L_R$}
+        \STATE $d_i \leftarrow \textsc{match}$
+    \ELSIF{$L_N \leq L_M$ \AND $L_N \leq L_R$}
+        \STATE $d_i \leftarrow \textsc{nonmatch}$
+    \ELSE
+        \STATE $d_i \leftarrow \textsc{review}$ \COMMENT{candidato à triagem orçamentária}
+    \ENDIF
+    \STATE Registrar $(L_M, L_N, L_R, \mathit{EVR}_i)$ e código de razão preliminar
+\ENDFOR
 
-    \item \textbf{Fase 6: Consolidacao e retorno auditavel.}
-    \begin{enumerate}
-        \item Retornar $\{(d_i, \text{razao}_i, \text{justificativa}_i)\}$ para todo par $i$ de $P$.
-    \end{enumerate}
-\end{enumerate}
-\end{minipage}
-\end{figure}
+\medskip
+\STATE \textbf{--- Fase 4: Triagem sob restrição de orçamento ---}
+\STATE Ordenar candidatos a \textsc{review} por $\mathit{EVR}_i$ em ordem decrescente
+\STATE Selecionar os $k$ primeiros candidatos com $k \leq B$ para revisão assistida
+\FORALL{candidato excedente com posição $> B$}
+    \STATE $d_i \leftarrow \arg\min(L_M, L_N)$; \quad $\mathit{razao}_i \leftarrow \texttt{ORCAMENTO\_EXCEDIDO}$
+\ENDFOR
+
+\medskip
+\STATE \textbf{--- Fase 5: Revisão assistida por LLM em protocolo dual ---}
+\FORALL{par $i$ com $d_i = \textsc{review}$}
+    \STATE Montar dossiê JSON com subescores, $p_{\mathit{cal}}$ e códigos de guarda
+    \STATE Submeter ao Agente Objetivo e ao Agente Cético, de forma independente
+    \IF{há consenso entre os dois agentes}
+        \STATE Adotar decisão consensual como decisão final
+    \ELSE
+        \STATE Encaminhar ao Agente Árbitro para deliberação final
+    \ENDIF
+    \STATE Registrar código de razão, justificativa textual, versão do modelo e carimbo temporal
+\ENDFOR
+
+\medskip
+\STATE \textbf{--- Fase 6: Consolidação e retorno auditável ---}
+\RETURN $\{(d_i, \mathit{razao}_i, \mathit{justificativa}_i)\}$ para todo par $i \in P$
+
+\end{algorithmic}
+\noindent\rule{\textwidth}{0.4pt}
