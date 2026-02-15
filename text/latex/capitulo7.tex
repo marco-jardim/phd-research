@@ -54,14 +54,14 @@ A escolha entre os \textit{pipelines}, portanto, não é meramente técnica: env
 
 \input{reserva_cap6.tex}
 
-\section{Comparação com aprendizado profundo: confirmação empírica da adequação arbórea}
+\section{Comparação entre famílias de classificadores}
 \label{sec:cap6-qw1-discussion}
 
-A avaliação comparativa de cinco classificadores (Seção~\ref{sec:qw1-deep-learning}) forneceu evidência empírica para uma escolha metodológica que, até então, apoiava-se apenas em argumentos teóricos. O XGBoost obteve o melhor desempenho médio em validação cruzada ($F_1 = 0{,}924$), seguido pelo Random Forest ($F_1 = 0{,}913$), enquanto o TabNet, representante do aprendizado profundo tabular, ficou na última posição ($F_1 = 0{,}821$). Na avaliação em \textit{holdout}, a distância ampliou-se: o TabNet atingiu $F_1 = 0{,}610$, ao passo que os demais mantiveram-se acima de $0{,}84$.
+A avaliação comparativa de cinco classificadores (Seção~\ref{sec:qw1-deep-learning}) permite situar os modelos arbóreos, as redes neurais convencionais e o aprendizado profundo tabular em relação ao problema de \textit{record linkage} aqui estudado. O XGBoost obteve o melhor desempenho médio em validação cruzada ($F_1 = 0{,}924$), seguido pelo Random Forest ($F_1 = 0{,}913$), enquanto o TabNet ficou na última posição ($F_1 = 0{,}821$). Na avaliação em \textit{holdout}, a distância ampliou-se: o TabNet atingiu $F_1 = 0{,}610$, ao passo que os demais mantiveram-se acima de $0{,}84$.
 
 Essa hierarquia de desempenho é coerente com a literatura recente sobre dados tabulares de dimensão moderada \citep{Grinsztajn2022, ShwartzZiv2022tabular}. Com apenas 247 pares positivos em 61\,696 comparações, o conjunto de dados apresenta desbalanceamento extremo e escassez de exemplos na classe alvo, condições nas quais os métodos baseados em árvores tendem a generalizar de forma mais robusta do que redes neurais profundas. Contribui para esse resultado a ausência de estrutura sequencial ou espacial nos sub-escores de comparação, o que reduz a vantagem de arquiteturas como o TabNet, projetadas para capturar dependências entre atributos por meio de mecanismos de atenção.
 
-Cabe destacar que o XGBoost superou o Random Forest tanto na média de validação cruzada quanto no \textit{holdout}, sugerindo que o \textit{boosting} sequencial captura interações entre sub-escores que o \textit{bagging} do RF não explora. Esse achado indica que futuras iterações do \textit{pipeline} podem se beneficiar da adoção do XGBoost como classificador principal, embora a diferença observada ($\Delta F_1 \approx 0{,}01$ na validação cruzada) requeira avaliação em cenários com maior volume de dados antes de se generalizar.
+Entre os modelos arbóreos, o XGBoost superou o Random Forest tanto na média de validação cruzada quanto no \textit{holdout}, o que sugere que o \textit{boosting} sequencial captura interações entre sub-escores que o \textit{bagging} do RF não explora. Essa diferença, ainda que moderada na validação cruzada ($\Delta F_1 \approx 0{,}01$), justifica a adoção do XGBoost como classificador principal do \textit{pipeline}, embora sua magnitude requeira confirmação em cenários com maior volume de dados antes de se generalizar.
 
 \section{Revisão por modelo de linguagem: alcance e limites do revisor complementar}
 \label{sec:cap6-qw2-llm-discussion}
