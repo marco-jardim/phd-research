@@ -164,9 +164,8 @@ Ao restringir a análise à zona cinzenta (Figura~\ref{fig:feature-importance-he
 \section{Comparação com classificadores de aprendizado profundo}
 \label{sec:qw1-deep-learning}
 
-A predominância de modelos baseados em árvores de decisão na literatura de \textit{record linkage} tabular levanta a questão sobre o desempenho de alternativas de aprendizado profundo quando aplicadas a dados de pares de similaridade.
-Para avaliar essa hipótese de forma empírica, cinco classificadores foram treinados sob validação cruzada estratificada $5 \times 5$ (25 partições), seguida de avaliação em conjunto independente (\textit{holdout}, 30\% do total).
-Os modelos comparados foram: \textit{Random Forest} (RF), XGBoost, duas arquiteturas de perceptron multicamada (MLP com camadas ocultas de 128--64 e 64--32 neurônios) e TabNet \cite{Arik2021tabnet}, rede neural com mecanismo de atenção projetada especificamente para dados tabulares.
+O delineamento experimental incluiu classificadores de famílias distintas para permitir comparação direta entre abordagens arbóreas, redes neurais convencionais e aprendizado profundo tabular.
+Cinco modelos foram treinados sob validação cruzada estratificada $5 \times 5$ (25 partições), seguida de avaliação em conjunto independente (\textit{holdout}, 30\% do total): \textit{Random Forest} (RF), XGBoost, duas arquiteturas de perceptron multicamada (MLP com camadas ocultas de 128--64 e 64--32 neurônios) e TabNet \cite{Arik2021tabnet}, rede neural com mecanismo de atenção projetada especificamente para dados tabulares.
 
 A Tabela~\ref{tab:qw1-deep-learning} resume os resultados.
 O XGBoost obteve o melhor desempenho médio na validação cruzada ($F_1 = 0{,}924 \pm 0{,}030$), seguido pelo RF ($F_1 = 0{,}913 \pm 0{,}029$).
@@ -177,7 +176,7 @@ As redes MLP apresentaram desempenho intermediário, enquanto o TabNet ficou em 
 
 A variabilidade do TabNet entre partições (desvio-padrão de $F_1 = 0{,}055$) foi a maior entre todos os modelos, o que sugere instabilidade frente à escassez de exemplos positivos (247 pares verdadeiros em 61\,696 candidatos).
 Esse achado corrobora a evidência recente de que métodos de \textit{gradient boosting} e florestas aleatórias tendem a igualar ou superar redes neurais em tarefas tabulares de pequena e média escala, sobretudo quando a proporção de sinais positivos é baixa \cite{Grinsztajn2022trees, ShwartzZiv2022tabular}.
-A convergência entre a fundamentação teórica e o resultado empírico reforça a escolha do XGBoost como classificador principal do \textit{pipeline} proposto.
+Os resultados empíricos sustentam a adoção do XGBoost como classificador principal do \textit{pipeline} proposto, em consonância com a literatura sobre dados tabulares de dimensão moderada.
 
 \section{Revisão assistida por modelo de linguagem de grande escala}
 \label{sec:cap5-qw2-llm}
