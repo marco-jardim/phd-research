@@ -261,3 +261,37 @@ notebooks/_executed/02_log.txt
 
 # Candidate CSVs with quasi-identifiers (PII re-identification risk)
 candidatos_*.csv
+
+# Local research artifacts (generated/manual review)
+.claude/
+data/pipeline_output/
+data/qw1/
+data/qw2/
+data/qw3/
+data/zenodo/
+data/feature_importance_per_band_combined.csv
+data/shap_importance_combined.csv
+data/kimi_k2_5_tech_report.pdf
+gitphd-researchdataqw1modal_checkpoint_*.json
+
+# Temporary thesis review/conversion artifacts
+text/drafts/
+text/latex/build_log.txt
+text/latex/fig_png/
+text/latex/figures/pgf_png/
+text/latex/figures/fig_custo_computacional.pdf
+text/latex/figures/fig_custo_computacional.png
+text/latex/review_pages/
+text/latex/review_targets/
+text/latex/tese.docx
+text/latex/tese_completa.docx
+text/latex/tese_check.pdf
+text/latex/tese_test.pdf
+text/latex/tese_flat.tex
+text/latex/tables/*_UPDATED.tex
+
+# One-off helper scripts from document QA
+data/extract_pdf.py
+text/latex/build_docx.py
+text/latex/extract_figures_from_pdf.py
+text/latex/render_pgf_to_png.py
