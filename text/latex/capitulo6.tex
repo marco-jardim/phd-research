@@ -1,7 +1,7 @@
 \begin{chapter}{Resultados}
 \label{cap:resultados}
 
-Os resultados do pós-processamento por aprendizado de máquina (\textit{machine learning}) aplicado aos pares candidatos gerados pelo \textit{linkage} probabilístico entre o Sistema de Informações sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan) são apresentados a seguir, abrangendo a caracterização do desbalanceamento da base e da zona cinzenta, os cenários experimentais comparativos e as análises complementares de ablação, robustez, sensibilidade ao balanceamento e interpretabilidade via SHAP (\textit{SHapley Additive exPlanations}). Os detalhes metodológicos, incluindo fontes de dados, engenharia de atributos, métricas e ambiente computacional, encontram-se no Capítulo~\ref{cap:metodo}.
+Os resultados do pós-processamento por aprendizado de máquina (\textit{machine learning}) aplicado aos pares candidatos gerados pelo \textit{linkage} probabilístico entre o SIM e o Sinan são apresentados a seguir, abrangendo a caracterização do desbalanceamento da base e da zona cinzenta, os cenários experimentais comparativos e as análises complementares de ablação, robustez, sensibilidade ao balanceamento e interpretabilidade via SHAP. Os detalhes metodológicos, incluindo fontes de dados, engenharia de atributos, métricas e ambiente computacional, encontram-se no Capítulo~\ref{cap:metodo}.
 
 \section{Base de dados e desbalanceamento}
 \label{sec:cap5-dados-desbalanceamento}
@@ -211,8 +211,8 @@ Para o modo vigilância, a perda de revocação demanda cautela e aponta para a 
 \label{sec:cap5-qw3-fairness}
 
 A avaliação do desempenho agregado de um classificador de \textit{linkage} pode mascarar disparidades relevantes entre subgrupos da população, comprometendo a equidade da vigilância epidemiológica \cite{Mehrabi2021fairness,Barocas2019fairml}.
-Para investigar essa possibilidade, conduziu-se análise de equidade inspirada no critério de \textit{equalized odds} \cite{Hardt2016equality}, que na formulação original exige paridade simultânea da taxa de verdadeiros positivos (TVP) e da taxa de falsos positivos (TFP) entre grupos protegidos.
-Neste trabalho, optou-se por avaliar a TVP em conjunto com o valor preditivo positivo (VPP), uma vez que o VPP reflete mais diretamente o impacto operacional da classificação na vigilância: um VPP baixo implica que a equipe investigará proporção elevada de pares incorretamente preditos como correspondências.
+Para investigar essa possibilidade, conduziu-se análise de equidade inspirada no critério de \textit{equalized odds} \cite{Hardt2016equality}, que na formulação original exige paridade simultânea da TVP e da taxa de falsos positivos (TFP) entre grupos protegidos.
+Neste trabalho, optou-se por avaliar a TVP em conjunto com o VPP, uma vez que o VPP reflete mais diretamente o impacto operacional da classificação na vigilância: um VPP baixo implica que a equipe investigará proporção elevada de pares incorretamente preditos como correspondências.
 
 Cinco dimensões de estratificação foram avaliadas: (a)~quartis de concordância do campo nome (\texttt{NOME qtd frag iguais}), (b)~bandeira do registro (\textit{controle} \textit{versus} \textit{tb\_origem}), (c)~faixa etária (0--17, 18--39, 40--59, 60--79, 80+), (d)~sexo (F, M) e (e)~unidade federativa de residência.
 A dimensão UF produziu grupo único elegível (UF~33, Rio de Janeiro), inviabilizando comparações pareadas; as demais quatro dimensões geraram 36 testes de contingência $2 \times 2$, empregando qui-quadrado sem correção de Yates quando todas as frequências esperadas superaram cinco, e teste exato de Fisher nos demais casos.
