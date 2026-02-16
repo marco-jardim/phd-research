@@ -6,6 +6,7 @@
 \toprule
 Configura\c{c}\~ao & F1 & Precis\~ao & \textit{Recall} \\
 \midrule
+XGBoost $\geq$0.5 & \textbf{0.924 $\pm$ 0.030} & 0.951 $\pm$ 0.036 & 0.901 $\pm$ 0.048 \\
 RF+SMOTE $\geq$0.5 & 0.916 $\pm$ 0.026 & 0.929 $\pm$ 0.022 & 0.903 $\pm$ 0.041 \\
 GB $\geq$0.5 & 0.898 $\pm$ 0.032 & 0.938 $\pm$ 0.028 & 0.862 $\pm$ 0.044 \\
 Rules $\geq$7 & 0.792 $\pm$ 0.034 & 0.898 $\pm$ 0.037 & 0.709 $\pm$ 0.044 \\
@@ -15,4 +16,6 @@ Hybrid-OR RF+SMOTE$\geq$0.7+Rules$\geq$8 & 0.898 $\pm$ 0.025 & 0.967 $\pm$ 0.012
 Naive $\geq$8 & 0.571 $\pm$ 0.057 & 0.649 $\pm$ 0.074 & 0.515 $\pm$ 0.076 \\
 \bottomrule
 \end{tabular}
+\vspace{2pt}
+\par\small Nota: A abla\c{c}\~ao original utilizou RF+SMOTE e GB como classificadores-base. Os resultados com XGBoost foram adicionados sob as mesmas condi\c{c}\~oes experimentais (5-\textit{fold} $\times$ 5 repeti\c{c}\~oes, seed=42, \textit{split}=0,3).
 \end{table}
