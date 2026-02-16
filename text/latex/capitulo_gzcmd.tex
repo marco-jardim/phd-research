@@ -146,7 +146,7 @@ O fluxo completo do GZ-CMD, formalizado no Algoritmo \ref{alg:gzcmd-pipeline} (A
 
 \begin{enumerate}
 \item \textbf{Representação}: cada par candidato é codificado como vetor de 29 subescores do Comparador de Registros, opcionalmente acrescido das medidas contínuas MACD.
-\item \textbf{Classificação}: um modelo supervisionado (\textit{Random Forest}) produz escore bruto $s$ para cada par.
+\item \textbf{Classificação}: um modelo supervisionado (XGBoost, por padrão; \textit{Random Forest} como alternativa) produz escore bruto $s$ para cada par.
 \item \textbf{Calibração por âncoras}: os conjuntos $A^+$ e $A^-$ alimentam regressão sigmoide, convertendo $s$ em probabilidade calibrada $p_{cal}$.
 \item \textbf{Atribuição de banda}: $p_{cal}$ posiciona o par em uma das seis faixas de confiança (Seção \ref{sec:cap8-calibracao}).
 \item \textbf{Regras de guarda}: restrições determinísticas (filtro temporal, cardinalidade N:1, empate operacional) podem forçar decisão ou revisão, independentemente de $p_{cal}$.
@@ -187,7 +187,8 @@ Qwen3-VL-30B   & 509 & 94,9\,[92,6;\,96,5] & 1,000 & 0,333 & 0,500          & 1,
 GLM-5           & 212 & 95,3\,[91,5;\,97,4] & 0,769 & 0,833 & 0,800          & 59,0 & 57,6 \\
 \hline
 \multicolumn{8}{l}{\footnotesize $^a$\,Pares com decisão \texttt{MATCH}/\texttt{NONMATCH}; excluídos os \texttt{UNSURE}.} \\
-\end{tabular}}
+\end{tabular}%
+}
 \end{table}
 
 Com $n=517$ pares e protocolo \textit{dual-agent} com arbitragem, os intervalos de confiança de 95\% para concordância se estreitam em relação ao piloto preliminar de 200 pares, mas as diferenças absolutas entre modelos permanecem dentro das margens de sobreposição dos intervalos. Para discriminar com potência de 80\% uma diferença de 3,5 pontos percentuais entre dois modelos, seriam necessários aproximadamente 860 pares por modelo; para uma margem de 1,5 pontos percentuais, cerca de 4.100 pares, cenário impraticável no escopo deste estudo.
@@ -232,7 +233,8 @@ Vigilância & MACD OFF & $0,934\pm0,009$ & $0,964\pm0,013$ & $0,949\pm0,004$ & n
 \hline
 Vigilância & MACD ON & $\mathbf{0,947\pm0,006}$ & $0,962\pm0,013$ & $\mathbf{0,954\pm0,005}$ & n.a. & $\mathbf{0,959\pm0,010}$ & $\mathbf{109\pm10}$ \\
 \hline
-\end{tabular}}
+\end{tabular}%
+}
 \end{table}
 
 Os ganhos em F$_1$-Score foram modestos, mas houve redução operacional consistente de revisões, entre 15\% e 17\%, indicando maior assertividade nos casos limítrofes. Os testes t pareados para diferença de F$_1$ não atingiram significância ao nível de 5\% (Vigilância: $t(4)=1{,}75$, $p=0{,}155$; Confirmação: $t(4)=0{,}63$, $p=0{,}564$), resultado compatível com cinco rodadas e variabilidade interpartições.
@@ -258,7 +260,7 @@ Inconclusivo & 41 & 10 & n.a. & 31 & n.a. \\
 \hline
 Total resolvido & 1.369 & 81 & 4 & 1.277 & 7 \\
 \hline
-\end{tabular}
+\end{tabular}%
 \end{table}
 
 Para os 1.369 pares resolvidos, observou-se acurácia global de 99,2\%, precisão para vínculo de 95,3\% e sensibilidade para vínculo de 92,0\%, permanecendo 2,9\% de inconclusivos para arbitragem especializada. Ressalva-se que essas métricas são condicionadas à qualidade do padrão-ouro de revisor único; na ausência de dupla revisão independente, não se pode excluir que parte da concordância reflita vieses compartilhados entre o modelo de linguagem e o revisor original, sobretudo nos pares de maior ambiguidade.
@@ -284,7 +286,8 @@ Etapa & Componente adicionado & Pares p/ revisão & \% total & Redução vs ante
 \hline
 \multicolumn{2}{l}{\textbf{Redução total (etapa 1 $\to$ 4)}} & \multicolumn{3}{c}{\textbf{21.620 $\to$ 41 pares = 99,8\%}} \\
 \hline
-\end{tabular}}
+\end{tabular}%
+}
 \end{table}
 
 Na etapa~1, a aplicação dos limiares tradicionais de Fellegi--Sunter classifica automaticamente 39.981~pares abaixo do limiar inferior (escore~$< 5$) como não-vínculo e 95~pares acima do limiar superior (escore~$\geq 9$) como vínculo, reduzindo a zona cinzenta a 21.620~pares~(35,0\% do total), que na abordagem convencional seriam integralmente encaminhados à revisão clerical humana.

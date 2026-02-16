@@ -1,26 +1,26 @@
 \begin{table}[htbp]
 \centering
-\caption{Importância dos 15 atributos mais relevantes (RF+SMOTE, Gini)}
-\label{tab:feature-importance}
+\caption{Importância dos 15 atributos mais relevantes (XGBoost, gain)}
+\label{tab:feature-importance-xgboost}
 \begin{tabular}{clc}
 \toprule
-\textbf{\#} & \textbf{Atributo} & \textbf{Importância} \\
+\textbf{\#} & \textbf{Atributo} & \textbf{Importância (gain)} \\
 \midrule
-  1 & NOME qtd frag iguais & 0.1699 \\
-  2 & NOME qtd frag muito parec & 0.1294 \\
-  3 & nota final & 0.1291 \\
-  4 & nome\_perfeito & 0.1213 \\
-  5 & nome\_score\_total & 0.0887 \\
-  6 & dtnasc\_score\_total & 0.0710 \\
-  7 & nome\_x\_dtnasc & 0.0637 \\
-  8 & NOME qtd frag comuns & 0.0434 \\
-  9 & NOMEMAE qtd frag comuns & 0.0289 \\
-  10 & NOMEMAE qtd frag muito parec & 0.0212 \\
-  11 & NOMEMAE qtd frag iguais & 0.0206 \\
-  12 & dtnasc\_perfeito & 0.0175 \\
-  13 & mae\_score\_total & 0.0144 \\
-  14 & NOME qtd frag raros & 0.0133 \\
-  15 & DTNASC dt iguais & 0.0133 \\
+  1 & score\_recall & 81.0671 \\
+  2 & NOME qtd frag comuns & 33.5921 \\
+  3 & NOME qtd frag muito parec & 7.4712 \\
+  4 & ratio\_nome\_mae & 5.6524 \\
+  5 & NOMEMAE qtd frag muito parec & 4.5513 \\
+  6 & NOME qtd frag raros & 4.3675 \\
+  7 & dtnasc\_total & 3.8428 \\
+  8 & NOMEMAE qtd frag comuns & 3.6325 \\
+  9 & ENDERECO texto prox & 3.5870 \\
+  10 & nota final & 3.5774 \\
+  11 & ENDERECO via prox & 3.4838 \\
+  12 & endereco\_total & 2.4344 \\
+  13 & nome\_x\_dtnasc & 2.0684 \\
+  14 & nome\_total & 1.9327 \\
+  15 & nome\_x\_mae & 1.8809 \\
 \bottomrule
 \end{tabular}
 \end{table}
