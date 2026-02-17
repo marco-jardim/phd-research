@@ -11,7 +11,9 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[Blocagem] Estrat\'{e}gia de redu\c{c}\~{a}o do espa\c{c}o de compara\c{c}\~{a}o no relacionamento de registros, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a compara\c{c}\~{a}o exaustiva de todos os pares poss\'{i}veis.
 
-\item[Calibra\c{c}\~{a}o de Platt] T\'{e}cnica de p\'{o}s-processamento que ajusta os escores brutos de um classificador por meio de regress\~{a}o log\'{i}stica (fun\c{c}\~{a}o sigmoide), convertendo-os em probabilidades calibradas (\textit{Platt scaling}).
+\item[\textit{Platt scaling}] T\'{e}cnica de p\'{o}s-processamento que ajusta os escores brutos de um classificador por meio de regress\~{a}o log\'{i}stica (fun\c{c}\~{a}o sigmoide), convertendo-os em probabilidades calibradas.
+
+\item[Calibra\c{c}\~{a}o sigmoidal] Forma de calibra\c{c}\~{a}o probabil\'{i}stica equivalente ao \textit{Platt scaling}, usada para mapear escores n\~{a}o calibrados em probabilidades utiliz\'{a}veis para tomada de decis\~{a}o.
 
 \item[Cascata de decis\~{a}o] Arquitetura de processamento em m\'{u}ltiplas etapas de custo crescente, na qual filtros computacionalmente baratos eliminam a maior parcela do volume nos est\'{a}gios iniciais, reservando recursos onerosos para o subconjunto residual de maior incerteza.
 
@@ -47,7 +49,11 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[\textit{Gradient Boosting}] Fam\'{i}lia de algoritmos de aprendizado de m\'{a}quina que constr\'{o}i modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementa\c{c}\~{o}es como XGBoost e LightGBM.
 
-\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. Arcabou\c{c}o operacional proposto nesta tese para governan\c{c}a da incerteza no \textit{linkage} probabil\'{i}stico, integrando calibra\c{c}\~{a}o por conjuntos \^{a}ncora, regras de guarda, motor de perda esperada com custos assim\'{e}tricos e revis\~{a}o assistida por modelo de linguagem em pol\'{i}tica \'{u}nica de decis\~{a}o audit\'{a}vel.
+\item[\textit{Holdout} (conjunto de avalia\c{c}\~{a}o independente)] Subconjunto de dados reservado antes do treinamento e utilizado exclusivamente na etapa final de teste do classificador, ap\'{o}s a valida\c{c}\~{a}o cruzada, com vistas a estimar a capacidade de generaliza\c{c}\~{a}o em observa\c{c}\~{o}es n\~{a}o utilizadas no ajuste.
+
+\item[\textit{Expected loss}] Crit\'{e}rio de decis\~{a}o que estima, para cada a\c{c}\~{a}o poss\'{i}vel, o custo esperado associado aos erros de classifica\c{c}\~{a}o e ao custo de revis\~{a}o, permitindo selecionar a alternativa de menor risco operacional.
+
+\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governan\c{c}a da incerteza no \textit{linkage} probabil\'{i}stico, integrando calibra\c{c}\~{a}o por conjuntos \^{a}ncora, regras de guarda, \textit{expected loss engine} com custos assim\'{e}tricos e revis\~{a}o assistida por modelo de linguagem em pol\'{i}tica \'{u}nica de decis\~{a}o audit\'{a}vel.
 
 \item[Kimi K2.5] Modelo de linguagem de grande porte desenvolvido pela Moonshot AI (China), selecionado como modelo operacional do m\'{o}dulo de revis\~{a}o assistida do GZ-CMD com base no melhor equil\'{i}brio entre F$_1$ (0,845), lat\^{e}ncia (7,3\,s/par) e taxa de inconclusivos (3,5\%).
 
@@ -55,7 +61,7 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[MACD] Medidas Cont\'{i}nuas de Diferen\c{c}a de Datas. Atributos derivados que capturam diferen\c{c}as temporais brutas (em dias) entre datas de nascimento e entre datas de \'{o}bito e notifica\c{c}\~{a}o, complementando os subescores discretizados do Comparador de Registros.
 
-\item[Motor de perda esperada] Componente decis\'{o}rio do GZ-CMD que substitui limiares fixos por minimiza\c{c}\~{a}o de perda esperada com custos assim\'{e}tricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$), determinando para cada par se o valor esperado da revis\~{a}o por modelo de linguagem supera o custo da decis\~{a}o autom\'{a}tica.
+\item[\textit{Expected loss engine}] Componente decis\'{o}rio do GZ-CMD que substitui limiares fixos por minimiza\c{c}\~{a}o de \textit{expected loss} com custos assim\'{e}tricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$), determinando para cada par se o valor esperado da revis\~{a}o por modelo de linguagem supera o custo da decis\~{a}o autom\'{a}tica.
 
 \item[OpenRecLink] \textit{Software} brasileiro de c\'{o}digo aberto para relacionamento probabil\'{i}stico de registros, desenvolvido por Camargo Jr. e Coeli.
 
@@ -73,7 +79,7 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[\textit{Random Forest}] Algoritmo de aprendizado de m\'{a}quina baseado em m\'{u}ltiplas \'{a}rvores de decis\~{a}o treinadas em subamostragens aleat\'{o}rias dos dados.
 
-\item[Regras de guarda] Conjunto de filtros determin\'{i}sticos aplicados antes do motor de perda esperada no GZ-CMD, incluindo filtro temporal (diferen\c{c}a entre \'{o}bito e diagn\'{o}stico superior a 180 dias), limiar inferior de nota global e filtro de homonimia.
+\item[Regras de guarda] Conjunto de filtros determin\'{i}sticos aplicados antes do \textit{expected loss engine} no GZ-CMD, incluindo filtro temporal (diferen\c{c}a entre \'{o}bito e diagn\'{o}stico superior a 180 dias), limiar inferior de nota global e filtro de homonimia.
 
 \item[Relacionamento de registros] Processo de identifica\c{c}\~{a}o de registros referentes ao mesmo indiv\'{i}duo em duas ou mais bases de dados distintas (\textit{record linkage}).
 
@@ -81,7 +87,7 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[Relacionamento probabil\'{i}stico] Estrat\'{e}gia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
 
-\item[Sensibilidade] Propor\c{c}\~{a}o de pares verdadeiros corretamente identificados pelo classificador (\textit{Recall}).
+\item[Sensibilidade] Propor\c{c}\~{a}o de pares verdadeiros corretamente identificados pelo classificador (Sensibilidade).
 
 \item[SHAP] \textit{SHapley Additive exPlanations}. M\'{e}todo de interpretabilidade baseado na teoria de jogos cooperativos que atribui a cada atributo uma contribui\c{c}\~{a}o marginal para a previs\~{a}o individual do classificador.
 

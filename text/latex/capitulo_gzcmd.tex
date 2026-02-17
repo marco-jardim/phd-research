@@ -1,4 +1,4 @@
-\begin{chapter}{Proposta de Arcabouço Operacional Auto-Calibrável (GZ-CMD)}
+\begin{chapter}{Proposta de \textit{Framework} Operacional Auto-Calibrável (GZ-CMD)}
 \label{cap:gzcmd}
 
 \section{Motivação e lacunas operacionais}
@@ -42,7 +42,7 @@ Para reduzir perda informacional associada à discretização de datas, foram ad
 \section{Métodos: o \textit{framework} GZ-CMD}
 \label{sec:cap8-metodos}
 
-O GZ-CMD organiza a tomada de decisão em quatro componentes: calibração por âncoras e bandas de confiança, regras de guarda determinísticas, motor de política baseado em perda esperada e revisão assistida para os casos de maior incerteza.
+O GZ-CMD organiza a tomada de decisão em quatro componentes: calibração por âncoras e bandas de confiança, regras de guarda determinísticas, \textit{expected loss engine} e revisão assistida para os casos de maior incerteza.
 
 \subsection{Calibração por âncoras e bandas de confiança}
 \label{sec:cap8-calibracao}
@@ -96,10 +96,10 @@ As regras de guarda incorporam conhecimento epidemiológico e restrições de co
 \item \textbf{Empate operacional}: quando dois candidatos ao mesmo registro Sinan-TB apresentam $\Delta p<0{,}05$, ambos são encaminhados à revisão para evitar decisão arbitrária
 \end{itemize}
 
-\subsection{Motor de política de decisão por perda esperada}
+\subsection{\textit{Expected loss engine}}
 \label{sec:cap8-motor-politica}
 
-O motor decisório substitui limiares fixos por minimização de perda esperada, com custos $C_{FN}$, $C_{FP}$ e $C_{LLM}$, além de taxas residuais $e_{FP}$ e $e_{FN}$ do módulo de revisão. Para um par com probabilidade calibrada $p$,
+O motor decisório substitui limiares fixos por minimização de \textit{expected loss}, com custos $C_{FN}$, $C_{FP}$ e $C_{LLM}$, além de taxas residuais $e_{FP}$ e $e_{FN}$ do módulo de revisão. Para um par com probabilidade calibrada $p$,
 \[
 \mathcal{L}(a_M\mid p)=(1-p)\,C_{FP},
 \quad
@@ -150,7 +150,7 @@ O fluxo completo do GZ-CMD, formalizado no Algoritmo \ref{alg:gzcmd-pipeline} (A
 \item \textbf{Calibração por âncoras}: os conjuntos $A^+$ e $A^-$ alimentam regressão sigmoide, convertendo $s$ em probabilidade calibrada $p_{cal}$.
 \item \textbf{Atribuição de banda}: $p_{cal}$ posiciona o par em uma das seis faixas de confiança (Seção \ref{sec:cap8-calibracao}).
 \item \textbf{Regras de guarda}: restrições determinísticas (filtro temporal, cardinalidade N:1, empate operacional) podem forçar decisão ou revisão, independentemente de $p_{cal}$.
-\item \textbf{Triagem por perda esperada}: para os pares não capturados pelas regras de guarda, calcula-se $EVR(p)$; pares com $EVR>0$ são candidatos a revisão, priorizados por $EVR$ decrescente até o limite orçamentário $L_{max}$.
+\item \textbf{Triagem por \textit{expected loss}}: para os pares não capturados pelas regras de guarda, calcula-se $EVR(p)$; pares com $EVR>0$ são candidatos a revisão, priorizados por $EVR$ decrescente até o limite orçamentário $L_{max}$.
 \item \textbf{Revisão assistida}: pares selecionados são convertidos em dossiê desidentificado e submetidos ao protocolo dual-agente com arbitragem (Seção \ref{sec:cap8-revisao-assistida}).
 \item \textbf{Decisão final}: a saída é um rótulo auditável (\texttt{MATCH}, \texttt{NONMATCH} ou \texttt{UNSURE}) com registro de agente, protocolo e códigos de razão.
 \end{enumerate}
@@ -281,7 +281,7 @@ Etapa & Componente adicionado & Pares p/ revisão & \% total & Redução vs ante
 0 & Sem modelo (\textit{baseline}) & 61.696 & 100,0\% & -- \\
 1 & Limiares F--S ($< 5 \to$ NM; $\geq 9 \to$ M) & 21.620 & 35,0\% & $-65,0\%$ \\
 2 & + Regras de guarda determinísticas & 18.799 & 30,5\% & $-13,0\%$ \\
-3 & + Calibração Platt + motor de perda esperada & 1.410 & 2,3\% & $-92,5\%$ \\
+3 & + \textit{Platt scaling} + \textit{expected loss engine} & 1.410 & 2,3\% & $-92,5\%$ \\
 4 & + Revisão LLM dual-agent (Kimi K2.5) & 41 & 0,07\% & $-97,1\%$ \\
 \hline
 \multicolumn{2}{l}{\textbf{Redução total (etapa 1 $\to$ 4)}} & \multicolumn{3}{c}{\textbf{21.620 $\to$ 41 pares = 99,8\%}} \\
@@ -294,9 +294,9 @@ Na etapa~1, a aplicação dos limiares tradicionais de Fellegi--Sunter classific
 
 Na etapa~2, as regras de guarda determinísticas, que compreendem o filtro temporal (óbito registrado mais de 180~dias antes do diagnóstico), o limiar inferior de nota global e o filtro de homonímia, resolvem 2.821~pares adicionais com \textbf{zero pares verdadeiros perdidos}, reduzindo o volume pendente para 18.799.
 
-A etapa~3 constitui o maior salto de redução: a calibração de Platt converte escores brutos em probabilidades de vínculo, e o motor de perda esperada avalia, para cada par, se o valor esperado da revisão por LLM supera o custo de uma decisão automática. Apenas 1.410~pares apresentam valor esperado de revisão positivo ($\text{EVR} > 0$) dentro do orçamento de chamadas (máximo de 2.000 no modo vigilância); os demais 17.389~pares são auto-resolvidos pela regra de custo mínimo. Desses 1.410~pares, 104 contêm vínculos verdadeiros segundo o padrão-ouro. O motor de perda esperada responde, isoladamente, por 92,5\% da redução acumulada entre as etapas~2 e~4, configurando-se como o componente de maior impacto da cascata.
+A etapa~3 constitui o maior salto de redução: o \textit{Platt scaling} converte escores brutos em probabilidades de vínculo, e o \textit{expected loss engine} avalia, para cada par, se o valor esperado da revisão por LLM supera o custo de uma decisão automática. Apenas 1.410~pares apresentam valor esperado de revisão positivo ($\text{EVR} > 0$) dentro do orçamento de chamadas (máximo de 2.000 no modo vigilância); os demais 17.389~pares são auto-resolvidos pela regra de custo mínimo. Desses 1.410~pares, 104 contêm vínculos verdadeiros segundo o padrão-ouro. O \textit{expected loss engine} responde, isoladamente, por 92,5\% da redução acumulada entre as etapas~2 e~4, configurando-se como o componente de maior impacto da cascata.
 
-Um efeito secundário da cascata é o enriquecimento progressivo da prevalência de pares verdadeiros no subconjunto encaminhado a cada etapa: de 0,4\% na base completa (247/61.696), para 0,7\% na zona cinzenta convencional (151/21.620)\footnote{A zona cinzenta convencional do GZ-CMD compreende os pares com escore $\geq 5$ e $< 9$ (21.620 pares, 151 verdadeiros). Esse intervalo difere ligeiramente da zona cinzenta reportada no Capítulo~\ref{cap:resultados} (faixas de 5 a 8, com 117 pares verdadeiros), pois o GZ-CMD inclui a faixa de escore 8 a~9 na região de incerteza, ao passo que a análise do Capítulo~\ref{cap:resultados} a classifica na faixa superior.}, 7,4\% no lote selecionado pelo motor de perda esperada (104/1.410), chegando a aproximadamente 39\% entre os 41~inconclusivos residuais (Figura~\ref{fig:cap8-cascata-reducao}b). Essa concentração tem dupla implicação: o módulo LLM opera sobre subconjunto já enriquecido, o que favorece seu desempenho discriminativo, e o revisor humano final atua exclusivamente sobre casos de incerteza genuína, maximizando o valor agregado de cada hora de trabalho especializado.
+Um efeito secundário da cascata é o enriquecimento progressivo da prevalência de pares verdadeiros no subconjunto encaminhado a cada etapa: de 0,4\% na base completa (247/61.696), para 0,7\% na zona cinzenta convencional (151/21.620)\footnote{A zona cinzenta convencional do GZ-CMD compreende os pares com escore $\geq 5$ e $< 9$ (21.620 pares, 151 verdadeiros). Esse intervalo difere ligeiramente da zona cinzenta reportada no Capítulo~\ref{cap:resultados} (faixas de 5 a 8, com 117 pares verdadeiros), pois o GZ-CMD inclui a faixa de escore 8 a~9 na região de incerteza, ao passo que a análise do Capítulo~\ref{cap:resultados} a classifica na faixa superior.}, 7,4\% no lote selecionado pelo \textit{expected loss engine} (104/1.410), chegando a aproximadamente 39\% entre os 41~inconclusivos residuais (Figura~\ref{fig:cap8-cascata-reducao}b). Essa concentração tem dupla implicação: o módulo LLM opera sobre subconjunto já enriquecido, o que favorece seu desempenho discriminativo, e o revisor humano final atua exclusivamente sobre casos de incerteza genuína, maximizando o valor agregado de cada hora de trabalho especializado.
 
 Na etapa~4, o protocolo de consenso dual-agent resolve 1.369 dos 1.410~pares (97,1\%), restando 41~inconclusivos para arbitragem humana especializada, equivalentes a \textbf{0,07\% do universo original} e a \textbf{0,19\% da zona cinzenta}. No modo confirmação (com orçamento de 1.000 chamadas e custos de falso positivo mais elevados), o motor seleciona apenas 435~pares para revisão LLM, projetando-se residual humano de aproximadamente 13~pares.
 
@@ -323,7 +323,7 @@ Etapa & Componente & Pares & Operação por par & Complexidade & Custo unitário
 \hline
 1 & Limiares Fellegi--Sunter & 61.696 & Comparação numérica (\texttt{nota} $<5$, $\geq 9$) & $O(1)$ & $\approx$\,80\,ns & $\approx$\,5\,ms \\
 2 & Regras de guarda & 21.620 & 4 filtros booleanos vetorizados & $O(1)$ & $\approx$\,700\,ns & $\approx$\,15\,ms \\
-3 & Calibração Platt + motor de perda & 18.799 & Sigmoide, 3 perdas esperadas, ordenação EVR & $O(n \log n)$ & $\approx$\,3\,$\mu$s & $\approx$\,50\,ms \\
+3 & \textit{Platt scaling} + \textit{expected loss engine} & 18.799 & Sigmoide, 3 \textit{expected losses}, ordenação EVR & $O(n \log n)$ & $\approx$\,3\,$\mu$s & $\approx$\,50\,ms \\
 4 & Revisão LLM \textit{dual-agent} & 1.410 & 2--3 chamadas API REST por par & $O(s)$ & $\approx$\,1,1\,s & $\approx$\,26\,min \\
 \hline
 \end{tabular}%
@@ -350,15 +350,15 @@ Essa eficiência computacional possui implicação direta para a prática epidem
 
 Os achados corroboram a tese de que o ganho operacional do GZ-CMD não depende apenas de elevação marginal de métricas agregadas, mas da explicitação de uma política de decisão orientada por custo, com triagem formal da incerteza e rastreabilidade da revisão. Essa contribuição estende os resultados do Capítulo \ref{cap:resultados} ao introduzir mecanismo de calibração adaptativo e regra econômica explícita para alocação de revisão.
 
-A cascata de redução de 21.620 para 41~pares, cerca de três ordens de grandeza, evidencia que o ganho operacional decorre menos da capacidade individual de cada componente e mais de sua articulação sequencial. O motor de perda esperada é responsável por 92,5\% da redução entre as etapas intermediárias, enquanto a revisão assistida resolve os 1.410~pares selecionados em aproximadamente 26~minutos de processamento, período contrastante com as semanas que a revisão integral de 21.620~pares demandaria em regime manual. A prevalência de pares verdadeiros no subconjunto encaminhado ao revisor humano final (aproximadamente 39\%) é duas ordens de grandeza superior à da base completa (0,4\%), assegurando que cada decisão humana incida sobre caso genuinamente ambíguo.
+A cascata de redução de 21.620 para 41~pares, cerca de três ordens de grandeza, evidencia que o ganho operacional decorre menos da capacidade individual de cada componente e mais de sua articulação sequencial. O \textit{expected loss engine} é responsável por 92,5\% da redução entre as etapas intermediárias, enquanto a revisão assistida resolve os 1.410~pares selecionados em aproximadamente 26~minutos de processamento, período contrastante com as semanas que a revisão integral de 21.620~pares demandaria em regime manual. A prevalência de pares verdadeiros no subconjunto encaminhado ao revisor humano final (aproximadamente 39\%) é duas ordens de grandeza superior à da base completa (0,4\%), assegurando que cada decisão humana incida sobre caso genuinamente ambíguo.
 
-A seleção do modelo de linguagem para o módulo de revisão assistida exerce influência direta sobre a viabilidade operacional do \textit{pipeline} integrado. Com o Kimi~K2.5 operando a 1,1~s/par e taxa de inconclusivos de 2,8\%, os 1.410~pares selecionados pelo motor de perda esperada foram processados em aproximadamente 26~minutos, com 41~pares residuais requerendo escalamento para revisão humana. Em cenário contrafactual com DeepSeek~V3.2 ou GLM-5, a mesma carga demandaria mais de oito horas de processamento e geraria entre 285 e 305 pares inconclusivos, anulando na prática o propósito de automação e transferindo o ônus decisório de volta ao revisor especializado. A razão entre o tempo de processamento e o volume de decisões efetivamente resolvidas constitui, portanto, critério discriminante mais informativo do que a concordância global isolada.
+A seleção do modelo de linguagem para o módulo de revisão assistida exerce influência direta sobre a viabilidade operacional do \textit{pipeline} integrado. Com o Kimi~K2.5 operando a 1,1~s/par e taxa de inconclusivos de 2,8\%, os 1.410~pares selecionados pelo \textit{expected loss engine} foram processados em aproximadamente 26~minutos, com 41~pares residuais requerendo escalamento para revisão humana. Em cenário contrafactual com DeepSeek~V3.2 ou GLM-5, a mesma carga demandaria mais de oito horas de processamento e geraria entre 285 e 305 pares inconclusivos, anulando na prática o propósito de automação e transferindo o ônus decisório de volta ao revisor especializado. A razão entre o tempo de processamento e o volume de decisões efetivamente resolvidas constitui, portanto, critério discriminante mais informativo do que a concordância global isolada.
 
-No que concerne ao orçamento de erros, o Kimi~K2.5 identificou corretamente 30 dos 41 vínculos verdadeiros na amostra estratificada da zona cinzenta, com 3 falsos positivos e 8 falsos negativos. Projetando essas taxas para o universo de 1.410 pares encaminhados à revisão pelo motor de perda esperada, estima-se que o módulo resolveria aproximadamente 96,5\% dos casos com decisão auditável, limitando a intervenção humana a um resíduo de baixa volumetria e elevada ambiguidade. Essa configuração preserva o princípio arquitetural do GZ-CMD: resolver automaticamente o que é resolvível e concentrar esforço humano especializado nos casos em que a incerteza é genuína, sem comprometer a rastreabilidade completa das decisões.
+No que concerne ao orçamento de erros, o Kimi~K2.5 identificou corretamente 30 dos 41 vínculos verdadeiros na amostra estratificada da zona cinzenta, com 3 falsos positivos e 8 falsos negativos. Projetando essas taxas para o universo de 1.410 pares encaminhados à revisão pelo \textit{expected loss engine}, estima-se que o módulo resolveria aproximadamente 96,5\% dos casos com decisão auditável, limitando a intervenção humana a um resíduo de baixa volumetria e elevada ambiguidade. Essa configuração preserva o princípio arquitetural do GZ-CMD: resolver automaticamente o que é resolvível e concentrar esforço humano especializado nos casos em que a incerteza é genuína, sem comprometer a rastreabilidade completa das decisões.
 
 A latência e o custo de inferência dos modelos de linguagem são sensíveis a fatores extrínsecos: disponibilidade de infraestrutura, congestionamento de API, variações de preço por \textit{token} e atualização das versões dos modelos. Esses parâmetros devem ser reavaliados periodicamente em contexto de implantação. Por essa razão, recomenda-se que estudos futuros de validação multicêntrica incorporem cláusula de reavaliação periódica do modelo selecionado, incluindo candidatos de novas gerações que venham a tornar-se disponíveis.
 
-Do ponto de vista teórico, a formulação por perda esperada inclui o caso clássico de Fellegi--Sunter como situação particular sob parametrização específica de custos e erros residuais, conforme demonstrado na Proposição \ref{prop:fs-as-special-case}, no Apêndice \ref{apendice:gzcmd}. Ainda assim, permanece como agenda prioritária a comparação empírica direta com implementação canônica de limiares clássicos no mesmo conjunto de dados.
+Do ponto de vista teórico, a formulação por \textit{expected loss} inclui o caso clássico de Fellegi--Sunter como situação particular sob parametrização específica de custos e erros residuais, conforme demonstrado na Proposição \ref{prop:fs-as-special-case}, no Apêndice \ref{apendice:gzcmd}. Ainda assim, permanece como agenda prioritária a comparação empírica direta com implementação canônica de limiares clássicos no mesmo conjunto de dados.
 
 Persistem limitações para generalização externa. O estudo foi conduzido em um único contexto municipal (Rio de Janeiro, 2006--2016), com 247 pares positivos no conjunto de referência; a ausência de dupla revisão independente restringe inferências sobre erro do padrão-ouro; e a dependência de infraestrutura para inferência local de modelos de linguagem pode impor barreiras operacionais em ambientes de menor capacidade computacional. Esses aspectos não invalidam os ganhos observados, mas delimitam o escopo de transferência dos parâmetros para outros cenários.
 
@@ -366,6 +366,6 @@ Merece atenção particular o risco de circularidade entre padrão-ouro, conjunt
 
 Como desdobramento, recomenda-se validação multicêntrica em outras unidades da federação, avaliação de estabilidade temporal das âncoras e testes controlados de custo-efetividade da revisão assistida em escala de rotina, com vistas à consolidação de protocolos de \textit{linkage} auditáveis no âmbito da vigilância epidemiológica.
 
-A implementação de referência do GZ-CMD encontra-se disponível como pacote Python de código aberto, distribuído sob licença CC-BY-NC-4.0 e instalável via gerenciador de pacotes (\texttt{pip install gzcmd-record-linkage}) \cite{Jardim2026gzcmd}. O pacote encapsula os módulos de similaridade, blocagem, classificação, calibração e decisão por perda descritos neste capítulo, acompanhados de conjunto de testes automatizados com cobertura de 85\%. Essa disponibilização visa facilitar a reprodução dos experimentos aqui reportados e a adaptação do arcabouço a outros cenários de vigilância epidemiológica, reduzindo a barreira técnica para grupos de pesquisa que não disponham de equipe dedicada de engenharia de software.
+A implementação de referência do GZ-CMD encontra-se disponível como pacote Python de código aberto, distribuído sob licença CC-BY-NC-4.0 e instalável via gerenciador de pacotes (\texttt{pip install gzcmd-record-linkage}) \cite{Jardim2026gzcmd}. O pacote encapsula os módulos de similaridade, blocagem, classificação, calibração e decisão por perda descritos neste capítulo, acompanhados de conjunto de testes automatizados com cobertura de 85\%. Essa disponibilização visa facilitar a reprodução dos experimentos aqui reportados e a adaptação do \textit{framework} a outros cenários de vigilância epidemiológica, reduzindo a barreira técnica para grupos de pesquisa que não disponham de equipe dedicada de engenharia de software.
 
 \end{chapter}

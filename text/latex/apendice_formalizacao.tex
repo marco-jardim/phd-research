@@ -2,7 +2,7 @@
 
 A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{record linkage} (como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}) não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, faz-se necessária a transformação desse escore em uma probabilidade $p = P(y=1\mid s)$, onde $y=1$ denota um par verdadeiro (\textit{match}).
 
-Adota-se o método de \textit{Platt Scaling} \cite{Platt1999}, que ajusta uma função sigmoide aos escores:
+Adota-se o método de \textit{Platt scaling} \cite{Platt1999}, que ajusta uma função sigmoide aos escores:
 
 \[
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
@@ -35,9 +35,9 @@ Essa abordagem permite recalibrar periodicamente o modelo discriminativo sem int
 
 \subsection{Função de Perda e Decisão em Três Vias}
 
-O arcabouço GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente.
+O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente.
 
-Sejam $C_{FP}$ e $C_{FN}$ os custos unitários de um Falso Positivo e de um Falso Negativo. Em vigilância epidemiológica, frequentemente $C_{FN} > C_{FP}$ (o custo de perder um óbito é maior que o de investigar um falso alarme) \cite{Sadinle2017}. A perda esperada $\mathcal{L}$ para cada ação, dada a probabilidade calibrada $p$, é definida como:
+Sejam $C_{FP}$ e $C_{FN}$ os custos unitários de um Falso Positivo e de um Falso Negativo. Em vigilância epidemiológica, frequentemente $C_{FN} > C_{FP}$ (o custo de perder um óbito é maior que o de investigar um falso alarme) \cite{Sadinle2017}. A \textit{expected loss} $\mathcal{L}$ para cada ação, dada a probabilidade calibrada $p$, é definida como:
 
 \[
 \begin{aligned}
@@ -46,7 +46,7 @@ Sejam $C_{FP}$ e $C_{FN}$ os custos unitários de um Falso Positivo e de um Fals
 \end{aligned}
 \]
 
-Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um custo fixo operacional $C_{LLM}$ e modela-se a falibilidade do revisor através de suas taxas de erro $e_{FP}$ (probabilidade de o revisor aceitar um não-par) e $e_{FN}$ (probabilidade de o revisor rejeitar um par verdadeiro). A perda esperada da revisão é:
+Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um custo fixo operacional $C_{LLM}$ e modela-se a falibilidade do revisor através de suas taxas de erro $e_{FP}$ (probabilidade de o revisor aceitar um não-par) e $e_{FN}$ (probabilidade de o revisor rejeitar um par verdadeiro). A \textit{expected loss} da revisão é:
 
 \begin{proposition}[Afinidade da perda de revisão]
 \label{prop:review-loss-affine}
@@ -55,7 +55,7 @@ Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um c
 \]
 \end{proposition}
 
-A regra de decisão ótima $\delta^*(p)$ é aquela que minimiza a perda esperada:
+A regra de decisão ótima $\delta^*(p)$ é aquela que minimiza a \textit{expected loss}:
 
 \[
 \delta^*(p) = \underset{a \in \{a_M, a_N, a_R\}}{\operatorname{argmin}} \bigl\{\mathcal{L}(a_M\mid p),\; \mathcal{L}(a_N\mid p),\; \mathcal{L}(a_R\mid p)\bigr\}
@@ -65,7 +65,7 @@ Essa formulação internaliza o compromisso entre precisão e sensibilidade (con
 
 \subsection{Valor Esperado da Revisão (EVR)}
 
-Para operacionalizar a triagem sob restrição orçamentária, define-se o Valor Esperado da Revisão (\textit{Expected Value of Review}, EVR). O EVR quantifica a redução de perda obtida ao se optar pela revisão em vez da melhor decisão automática disponível:
+Para operacionalizar a triagem sob restrição orçamentária, define-se o Valor Esperado da Revisão (\textit{Expected Value of Review}, EVR). O EVR quantifica a redução de \textit{expected loss} obtida ao se optar pela revisão em vez da melhor decisão automática disponível:
 
 \begin{definition}[Valor Esperado da Revisão (EVR)]
 \[
@@ -131,7 +131,7 @@ O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na
 \subsubsection{Esboço de demonstração: convergência para a decisão por máxima verossimilhança}
 
 \begin{proposition}
-No caso especial em que (a) os custos são simétricos ($C_{FP} = C_{FN} = C$), (b) o revisor é perfeito ($e_{FP} = e_{FN} = 0$), e (c) o custo de revisão tende a zero ($C_{LLM} \to 0$), a decisão por perda esperada mínima $\delta^*(p)$ converge para a decisão por máxima verossimilhança (limiar em $p = 0{,}5$), e a zona de revisão colapsa ao conjunto vazio.
+No caso especial em que (a) os custos são simétricos ($C_{FP} = C_{FN} = C$), (b) o revisor é perfeito ($e_{FP} = e_{FN} = 0$), e (c) o custo de revisão tende a zero ($C_{LLM} \to 0$), a decisão por \textit{expected loss} mínima $\delta^*(p)$ converge para a decisão por máxima verossimilhança (limiar em $p = 0{,}5$), e a zona de revisão colapsa ao conjunto vazio.
 \end{proposition}
 
 \begin{proof}[Esboço da prova]
@@ -170,7 +170,7 @@ Isso equivale à regra de decisão por máxima probabilidade \textit{a posterior
 
 \subsubsection{Recuperação dos limiares de Fellegi--Sunter}
 
-A conexão formal entre o GZ-CMD e o modelo clássico pode ser estabelecida de forma mais precisa através da seguinte proposição, que demonstra que os limiares de decisão do arcabouço generalizam os limiares $T_\lambda$ e $T_\mu$ de Fellegi e Sunter quando expressos no espaço da razão de verossimilhança.
+A conexão formal entre o GZ-CMD e o modelo clássico pode ser estabelecida de forma mais precisa através da seguinte proposição, que demonstra que os limiares de decisão do \textit{framework} generalizam os limiares $T_\lambda$ e $T_\mu$ de Fellegi e Sunter quando expressos no espaço da razão de verossimilhança.
 
 \begin{proposition}[Equivalência sob calibração perfeita]
 \label{prop:threshold-recovery}
@@ -228,4 +228,4 @@ No modelo original de Fellegi e Sunter, os limiares $T_\lambda$ e $T_\mu$ são d
 
 \textbf{Observação.} A proposição requer calibração perfeita ($p = P(y=1\mid s)$), condição que na prática é apenas aproximada. A calibração por âncoras (Seção 1) visa reduzir o viés de calibração, mas a qualidade da aproximação depende criticamente da pureza dos conjuntos âncora ($A^+$, $A^-$) e da adequação do modelo sigmoide à verdadeira curva de calibração. Uma extensão natural consistiria em modelar a incerteza de calibração como uma distribuição sobre $(\alpha, \beta)$ e propagar essa incerteza para as fronteiras de decisão, resultando em limiares robustos (minimax); essa extensão fica como trabalho futuro.
 
-Desta forma, a estrutura de triagem em três vias é preservada na formulação geral, mas a fronteira de decisão torna-se dinâmica, sensível tanto à calibração local do modelo quanto às prioridades epidemiológicas (vigilância \textit{versus} confirmação), o que confere ao arcabouço GZ-CMD maior flexibilidade operacional em relação ao paradigma clássico de Fellegi--Sunter.
+Desta forma, a estrutura de triagem em três vias é preservada na formulação geral, mas a fronteira de decisão torna-se dinâmica, sensível tanto à calibração local do modelo quanto às prioridades epidemiológicas (vigilância \textit{versus} confirmação), o que confere ao \textit{framework} GZ-CMD maior flexibilidade operacional em relação ao paradigma clássico de Fellegi--Sunter.
