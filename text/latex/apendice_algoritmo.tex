@@ -40,7 +40,7 @@
 \ENDFOR
 
 \medskip
-\STATE \textbf{--- Fase 3: Motor de política baseado em perda esperada ---}
+\STATE \textbf{--- Fase 3: \textit{Expected loss engine} ---}
 \FORALL{par $i$ ainda não resolvido}
     \STATE $L_M \leftarrow (1-p_i)\cdot C_{FP}$; \quad $L_N \leftarrow p_i\cdot C_{FN}$
     \STATE $L_R \leftarrow C_{LLM} + (1-p_i)\,e_{FP}\,C_{FP} + p_i\,e_{FN}\,C_{FN}$

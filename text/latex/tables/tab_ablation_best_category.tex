@@ -12,14 +12,14 @@
 Limiar ing\^enuo & Naive score$\geq$8 & 0.610 & Naive score$\geq$8 & 0.610 \\
 Somente regras & Rules-only ($\geq$6) & 0.842 & Rules-only ($\geq$6) & 0.842 \\
 Somente ML & RF+SMOTE ($\geq$0.5) & 0.931 & XGBoost ($\geq$0.7) & \textbf{0.943} \\
-H\'ibrido AND & RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 0.912 & --- & --- \\
-H\'ibrido OR & RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.921 & --- & --- \\
-Cascata ML$\rightarrow$Rules & RF+SMOTE $\geq$0.5 $\rightarrow$ Rules$\geq$7 & 0.853 & --- & --- \\
-Cascata Rules$\rightarrow$ML & Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 0.912 & --- & --- \\
-Consenso ML & Majority (th=0.7, 3 models) & 0.928 & --- & --- \\
-Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & --- & --- \\
+H\'ibrido AND & RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 0.912 & XGBoost $\geq$0.5 + Rules$\geq$5 & 0.442 \\
+H\'ibrido OR & RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.921 & XGBoost $\geq$0.7 + Rules$\geq$8 & 0.943 \\
+Cascata ML$\rightarrow$Rules & RF+SMOTE $\geq$0.5 $\rightarrow$ Rules$\geq$7 & 0.853 & XGBoost $\geq$0.3 $\rightarrow$ Rules$\geq$7 & 0.000$^{*}$ \\
+Cascata Rules$\rightarrow$ML & Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 0.912 & Rules$\geq$5 $\rightarrow$ XGBoost $\geq$0.5 & 0.442 \\
+Consenso ML & Majority (th=0.7, 3 models) & 0.928 & Majority (th=0.7, 3 models incl. XGBoost) & 0.943 \\
+Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & Majority (th=0.5) AND Rules$\geq$6 & 0.150$^{\dagger}$ \\
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: A abla\c{c}\~ao original utilizou RF+SMOTE e GB como classificadores-base. A compara\c{c}\~ao com XGBoost foi realizada sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, \textit{split}=0,3). Categorias h\'ibridas, cascata e consenso envolvem m\'ultiplos modelos ou configura\c{c}\~oes espec\'ificas de RF+SMOTE, portanto n\~ao se aplicam diretamente ao XGBoost isoladamente; valores ser\~ao preenchidos ap\'os execu\c{c}\~ao do \textit{pipeline} Modal unificado.
+\par\small Nota: Todos os modelos foram avaliados sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, \textit{split}=0,3). Categorias h\'ibridas e de cascata combinam a probabilidade do classificador com o escore de regras determin\'isticas; o consenso utiliza vota\c{c}\~ao majorit\'aria entre 3 modelos (XGBoost, RF+SMOTE e GB). $^{*}$~Nenhum par verdadeiro no \textit{holdout} possui escore de regras $\geq 7$ (m\'aximo observado: 6{,}5), de modo que qualquer cascata com limiar de regras $\geq 7$ produz zero positivos (TP=0; FN=74). $^{\dagger}$~Apenas 6 dos 74 pares verdadeiros atingem escore de regras $\geq 6$, resultando em alta precis\~ao e baixa cobertura (TP=6; FN=68; revoca\c{c}\~ao=0{,}081).
 \end{table}

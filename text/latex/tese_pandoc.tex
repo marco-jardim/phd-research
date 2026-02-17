@@ -4,19 +4,27 @@
 \usepackage[utf8]{inputenc}
 \DeclareUnicodeCharacter{2265}{\ensuremath{\geq}}
 \DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}
-% Language (babel): prefer pt-BR if available; fall back to English.
-% This makes compilation work even on minimal TeX installs.
+% Language (babel): enforce Portuguese as main language when available.
+% Keep English as secondary language for abstract/foreign terms.
 \IfFileExists{brazilian.ldf}{%
-  \usepackage[brazilian]{babel}%
+  \IfFileExists{english.ldf}{%
+    \usepackage[english,brazilian]{babel}%
+  }{%
+    \usepackage[brazilian]{babel}%
+  }%
 }{%
   \IfFileExists{portuguese.ldf}{%
-    \usepackage[portuguese]{babel}%
+    \IfFileExists{english.ldf}{%
+      \usepackage[english,portuguese]{babel}%
+    }{%
+      \usepackage[portuguese]{babel}%
+    }%
   }{%
     \usepackage[english]{babel}%
   }%
 }%
 \usepackage[T1]{fontenc}
-\hyphenation{apro-xi-ma-da-men-te}
+\hyphenation{apro-xi-ma-da-men-te in-te-ra-va-li-a-do-res linkage}
 \usepackage{amsthm}   % must load BEFORE newtxmath (\openbox clash)
 % ABNT NBR 14724: fonte serifada tamanho 12 (Times-like)
 % ABNT recommends Times New Roman (or similar serif).
@@ -31,6 +39,13 @@
 % ---------- Traduções pt-BR manuais (fallback se babel-portuges ausente) ------
 % Usa \AtBeginDocument para garantir que sobrescreve o babel[english].
 \AtBeginDocument{%
+  \ifcsname l@brazilian\endcsname
+    \selectlanguage{brazilian}%
+  \else
+    \ifcsname l@portuguese\endcsname
+      \selectlanguage{portuguese}%
+    \fi
+  \fi
   \renewcommand{\chaptername}{Capítulo}%
   \renewcommand{\contentsname}{Sumário}%
   \renewcommand{\listfigurename}{Lista de Figuras}%
@@ -179,6 +194,7 @@
 \nomenclature{ML}{Aprendizado de M\'aquina (\textit{Machine Learning})}
 \nomenclature{framework}{Estrutura metodol\'ogica para organiza\c{c}\~ao reprodut\'ivel de componentes e crit\'erios de decis\~ao}
 \nomenclature{pipeline}{Sequ\^encia operacional de etapas anal\'iticas e decis\'orias}
+\nomenclature{holdout}{Conjunto de avalia\c{c}\~ao independente reservado para teste final do classificador}
 \nomenclature{RF}{Floresta Aleat\'oria (\textit{Random Forest})}
 \nomenclature{XGBoost}{\textit{Extreme Gradient Boosting}}
 \nomenclature{LightGBM}{\textit{Light Gradient Boosting Machine}}
@@ -521,7 +537,7 @@ O \textit{linkage} probabilístico de bases de dados, também denominado relacio
 A classificação dos pares candidatos resultantes desse processo, contudo, permanece dependente de limiares fixos aplicados sobre escores agregados de similaridade, o que acarreta perda expressiva de registros situados na zona de indecisão (área cinza).
 Essa lacuna é particularmente crítica quando a condição de saúde investigada apresenta elevada subnotificação, como é o caso da tuberculose enquanto condição marcadora de óbito.
 
-Esta tese propôs e avaliou um arcabouço (\textit{framework}) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016.
+Esta tese propôs e avaliou um \textit{framework} (\textit{framework}) configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares produzidos pelo \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB) no município do Rio de Janeiro, no período de 2006 a 2016.
 A base experimental compreendeu 61.696 pares candidatos gerados pelo OpenRecLink e pontuados por um comparador de registros que produz 29 subescores de similaridade e um escore agregado, tendo como padrão-ouro 247 pares verdadeiros (razão $\approx$1:248).
 No estudo de ablação inicial, seis algoritmos foram comparados (Regressão Logística, Floresta Aleatória, XGBoost, LightGBM, SVM e Perceptron Multicamada), combinados com nove estratégias de balanceamento de classes (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, ponderação de classes e variantes), totalizando 70 configurações. Na comparação final entre famílias de classificadores, cinco modelos foram retidos para análise aprofundada.
 
@@ -529,9 +545,9 @@ A Floresta Aleatória (\textit{Random Forest}) com SMOTE e limiar de classifica�
 A validação cruzada em cinco partições confirmou a estabilidade das abordagens híbridas, que combinam regras determinísticas e classificadores, com $F_1$ médio de 0,898$\pm$0,025 e menor variância que as abordagens puramente algorítmicas; a Floresta Aleatória com SMOTE obteve $F_1$ médio de 0,916$\pm$0,026.
 A análise de sensibilidade ao desbalanceamento de classes indicou que os classificadores mantiveram $F_1$ entre 0,880 e 0,918 nas nove estratégias avaliadas.
 A interpretação por meio de valores SHAP identificou o escore agregado, a quantidade de nomes iguais e o indicador de nome perfeito como os atributos de maior poder discriminatório; o nome da mãe predominou nas decisões relativas à área cinza.
-Do ponto de vista epidemiológico, a abordagem de máximo \textit{recall} (sensibilidade) recuperou 24 óbitos por tuberculose adicionais ($+$55,8\%) que teriam sido perdidos pelo limiar convencional, a um custo de aproximadamente 1,0 revisão manual por óbito detectado. A tese disponibiliza duas sequências operacionais (\textit{pipelines}) pré-configuradas, um orientado à vigilância (máximo \textit{recall}) e outro à confirmação (máxima precisão), articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
+Do ponto de vista epidemiológico, a abordagem de máxima sensibilidade recuperou 24 óbitos por tuberculose adicionais ($+$55,8\%) que teriam sido perdidos pelo limiar convencional, a um custo de aproximadamente 1,0 revisão manual por óbito detectado. A tese disponibiliza duas sequências operacionais (\textit{pipelines}) pré-configuradas, um orientado à vigilância (máxima sensibilidade) e outro à confirmação (máxima precisão), articulados por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar o equilíbrio entre sensibilidade e especificidade conforme as necessidades do cenário de aplicação.
 
-Adicionalmente, a tese propôs o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD), arcabouço operacional auto-calibrável que estende o \textit{framework} ao integrar calibração por conjuntos âncora, política de decisão por perda esperada com custos assimétricos e revisão assistida por modelo de linguagem de grande porte. No modo de vigilância, o GZ-CMD alcançou $F_1$=0,954; no modo de confirmação, precisão de 0,957. Considerando a cascata completa do \textit{pipeline} , composta por limiares Fellegi--Sunter, regras de guarda, motor de perda esperada e revisão LLM dual-agent, o volume de revisão clerical humana reduziu-se de 21.620 para apenas 41~pares (redução de 99,8\%, três ordens de grandeza), processados em aproximadamente 63~minutos de inferência.
+Adicionalmente, a tese propôs o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD), \textit{framework} operacional auto-calibrável que estende o \textit{framework} ao integrar calibração por conjuntos âncora, política de decisão por \textit{expected loss} com custos assimétricos e revisão assistida por modelo de linguagem de grande porte. No modo de vigilância, o GZ-CMD alcançou $F_1$=0,954; no modo de confirmação, precisão de 0,957. Considerando a cascata completa do \textit{pipeline} , composta por limiares Fellegi--Sunter, regras de guarda, \textit{expected loss engine} e revisão LLM dual-agent, o volume de revisão clerical humana reduziu-se de 21.620 para apenas 41~pares (redução de 99,8\%, três ordens de grandeza), processados em aproximadamente 63~minutos de inferência.
 
 \vspace{15pt}
 
@@ -576,7 +592,7 @@ Sensitivity analysis to class imbalance indicated that classifiers maintained $F
 SHAP-based interpretation identified the aggregate score, the number of matching names, and the exact-name indicator as the most discriminating features; mother's name predominated in grey-zone decisions.
 From an epidemiological standpoint, the maximum-recall approach recovered 24 additional tuberculosis deaths ($+$55.8\%) that would have been missed by the conventional threshold, at a cost of approximately 1.0 manual reviews per detected death. The thesis delivers two pre-configured pipelines, one geared towards surveillance (maximum recall) and another towards confirmation (maximum precision), articulated through a Pareto frontier that allows the health manager or researcher to calibrate the trade-off between sensitivity and specificity according to the requirements of the application scenario.
 
-Additionally, the thesis proposed the Grey-Zone Cost-based Mixture Deferral (GZ-CMD), a self-calibrating operational framework that extends the base framework by integrating anchor-based calibration, an asymmetric expected-loss decision policy, and large language model-assisted review. In surveillance mode, GZ-CMD achieved $F_1$=0.954; in confirmation mode, precision of 0.957. Considering the full pipeline cascade , comprising Fellegi--Sunter thresholds, deterministic guardrails, expected-loss engine, and dual-agent LLM review, the human clerical review volume was reduced from 21,620 to only 41~pairs (99.8\% reduction, three orders of magnitude), processed in approximately 63~minutes of inference.
+Additionally, the thesis proposed the Grey-Zone Cost-based Mixture Deferral (GZ-CMD), a self-calibrating operational framework that extends the base framework by integrating anchor-based calibration, an asymmetric expected loss decision policy, and large language model-assisted review. In surveillance mode, GZ-CMD achieved $F_1$=0.954; in confirmation mode, precision of 0.957. Considering the full pipeline cascade , comprising Fellegi--Sunter thresholds, deterministic guardrails, expected loss engine, and dual-agent LLM review, the human clerical review volume was reduced from 21,620 to only 41~pairs (99.8\% reduction, three orders of magnitude), processed in approximately 63~minutes of inference.
 
 \vspace{15pt}
 

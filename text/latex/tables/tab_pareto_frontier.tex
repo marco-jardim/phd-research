@@ -1,19 +1,25 @@
 \begin{table}[htbp]
 \centering
-\caption{Fronteira de Pareto: pontos operacionais do classificador híbrido (RF+SMOTE).}
+\caption{Fronteira de Pareto: pontos operacionais dos classificadores RF+SMOTE e XGBoost.}
 \label{tab:pareto-frontier}
 \small
-\begin{tabular}{cccccc}
+\begin{tabular}{lcccccc}
 \toprule
-$\theta_{\text{ML}}$ & $\theta_{\text{Regras}}$ & Precisão & Revocação & F1 & Perfil \\
+Modelo & $\theta_{\text{ML}}$ & $\theta_{\text{Regras}}$ & Precisão & Sensibilidade & F1 & Perfil \\
 \midrule
-0.10 & 2.0 & 0.655 & 1.000 & 0.791 & Máx. revocação \\
-0.30 & 0.0 & 0.869 & 0.986 & 0.924 & Máx. revocação \\
-0.35 & 0.0 & 0.911 & 0.973 & 0.941 & \textbf{Equilíbrio ótimo} \\
-0.35 & 3.5 & 0.934 & 0.959 & 0.947 & \textbf{Equilíbrio ótimo} \\
-0.40 & 0.5 & 0.945 & 0.932 & 0.939 & Intermediário \\
-0.50 & 1.0 & 0.957 & 0.905 & 0.931 & Intermediário \\
-0.35 & 5.0 & 1.000 & 0.878 & 0.935 & Máx. precisão \\
+RF+SMOTE & 0.10 & 2.0 & 0.655 & 1.000 & 0.791 & Máx. sensibilidade \\
+RF+SMOTE & 0.30 & 0.0 & 0.869 & 0.986 & 0.924 & Máx. sensibilidade \\
+RF+SMOTE & 0.35 & 0.0 & 0.911 & 0.973 & 0.941 & Equilíbrio ótimo \\
+RF+SMOTE & 0.35 & 3.5 & 0.934 & 0.959 & 0.947 & Equilíbrio ótimo \\
+RF+SMOTE & 0.40 & 0.5 & 0.945 & 0.932 & 0.939 & Intermediário \\
+RF+SMOTE & 0.50 & 1.0 & 0.957 & 0.905 & 0.931 & Intermediário \\
+RF+SMOTE & 0.35 & 5.0 & 1.000 & 0.878 & 0.935 & Máx. precisão \\
+\midrule
+XGBoost & 0.10 & 0.0 & 0.855 & 0.959 & 0.904 & Máx. sensibilidade \\
+XGBoost & 0.30 & 0.0 & 0.944 & 0.919 & 0.932 & Intermediário \\
+XGBoost & 0.50 & 0.0 & 0.985 & 0.892 & 0.936 & Intermediário \\
+XGBoost & 0.70 & 0.0 & 1.000 & 0.892 & 0.943 & Equilíbrio ótimo \\
+XGBoost & 0.90 & 0.0 & 1.000 & 0.797 & 0.887 & Máx. precisão \\
 \bottomrule
 \end{tabular}
 \end{table}
