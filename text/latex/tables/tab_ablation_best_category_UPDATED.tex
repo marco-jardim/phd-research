@@ -1,0 +1,27 @@
+\begin{table}[htbp]
+\centering
+\caption{Melhor configuração por categoria de classificação — comparação Random Forest vs. XGBoost (estudo de ablação).}
+\label{tab:ablation-best-category}
+\footnotesize
+\begin{tabular}{p{3cm}p{3.2cm}cp{3.2cm}c}
+\toprule
+\multirow{2}{*}{Categoria} & \multicolumn{2}{c}{Random Forest} & \multicolumn{2}{c}{XGBoost} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+ & Configuração & F1 & Configuração & F1 \\
+\midrule
+Limiar ingênuo & Naive score$\geq$8 & 0.610 & Naive score$\geq$8 & 0.610 \\
+Somente regras & Rules-only ($\geq$6) & 0.842 & Rules-only ($\geq$6) & 0.842 \\
+Somente ML & RF+SMOTE ($\geq$0.5) & 0.931 & XGBoost ($\geq$0.5) & \textbf{0.936} \\
+Híbrido AND & RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 0.912 & XGBoost $\geq$0.5 + Rules$\geq$5 & 0.442 \\
+Híbrido OR & RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.921 & XGBoost $\geq$0.7 + Rules$\geq$9 & 0.943 \\
+Cascata ML→Rules & RF+SMOTE $\geq$0.5 → Rules$\geq$7 & 0.853 & XGBoost $\geq$0.5 → Rules$\geq$7 & 0.000 \\
+Cascata Rules→ML & Rules$\geq$5 → RF+SMOTE $\geq$0.5 & 0.912 & Rules$\geq$5 → XGBoost $\geq$0.5 & 0.442 \\
+Consenso ML & Majority (th=0.7, 3 models) & 0.928 & — & — \\
+Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & — & — \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Nota: O estudo de abla\c{c}\~ao original utilizou RF+SMOTE e Gradient Boosting como classificadores-base. A comparação com XGBoost foi realizada sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, split=0.3). Consenso envolve m\'ultiplos modelos (RF, RF+SMOTE, GB), portanto não se aplica a XGBoost isoladamente.
+\end{tablenotes}
+\end{table}
