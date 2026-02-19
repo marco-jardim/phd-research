@@ -1,0 +1,29 @@
+\begin{table}[htbp]
+\centering
+\caption{Dez melhores configurações por F1 — estudo de ablação.}
+\label{tab:ablation-top10}
+\small
+\begin{tabular}{clccc}
+\toprule
+\# & Configuração & Precisão & Sensibilidade & F1 \\
+\midrule
+% TODO: Re-ranquear após preencher valores XGBoost
+% XGBoost ML-only provavelmente assume #1 ou #2
+% Template: 1 & ML-only XGBoost ($\geq$0.5) & TODO_P & TODO_R & \textbf{TODO_F1} \\
+1 & ML-only XGBoost ($\geq$0.5) & \textbf{0.985} & 0.892 & \textbf{0.936} \\
+2 & ML-only RF+SMOTE ($\geq$0.5) & 0.957 & 0.905 & 0.931 \\
+3 & Consensus ML-majority (th=0.7, 3 models) & 1.000 & 0.865 & 0.928 \\
+4 & ML-only RF+SMOTE ($\geq$0.3) & 0.869 & 0.986 & 0.924 \\
+5 & Consensus ML-majority (th=0.5, 3 models) & 0.957 & 0.892 & 0.923 \\
+6 & Hybrid-OR RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.985 & 0.865 & 0.921 \\
+7 & Hybrid-OR RF+SMOTE $\geq$0.7 + Rules$\geq$8 & 0.985 & 0.865 & 0.921 \\
+8 & ML-only RF+SMOTE ($\geq$0.7) & 0.985 & 0.865 & 0.921 \\
+9 & Hybrid-AND RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 1.000 & 0.838 & 0.912 \\
+10 & Cascade Rules$\rightarrow$ML Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 1.000 & 0.838 & 0.912 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Nota: O estudo de abla\c{c}\~ao original utilizou RF+SMOTE e Gradient Boosting como classificadores-base. Os resultados com XGBoost foram obtidos sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, split=0.3).
+\end{tablenotes}
+\end{table}
