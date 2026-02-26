@@ -12,31 +12,6 @@ A análise de ablação e a validação cruzada indicaram que configurações ML
 
 O \textit{framework} GZ-CMD, apresentado no Capítulo~\ref{cap:gzcmd}, estendeu a abordagem de pós-processamento com calibração por âncoras e política de decisão em três vias baseada em \textit{expected loss}, reservando a revisão assistida por modelos de linguagem de grande porte (\textit{large language models}) para os pares residuais de maior incerteza na zona cinzenta. A configuração orientada à vigilância atingiu F$_1$-Score de 0,954, enquanto a orientada à confirmação alcançou precisão de 0,957 (F$_1$=0,947), refletindo a ênfase de cada modo operacional na métrica prioritária. No percurso da cascata, o volume de revisão clerical reduziu-se de 21.620 para 41~pares (99,8\%, cerca de três ordens de grandeza). No modo vigilância, o tempo total de processamento do \textit{pipeline} completo, incluindo chamadas à API do modelo de linguagem para os 1.410 pares encaminhados à etapa final, com 15 requisições concorrentes, foi de aproximadamente 18~minutos.
 
-\section{Atendimento aos objetivos específicos}
-\label{sec:cap7-objetivos}
-
-Os objetivos específicos definidos no Capítulo \ref{cap:objetivos} foram atendidos, conforme descrito a seguir.
-
-\begin{sloppypar}
-\begin{enumerate}
-
-\item \textbf{Comparação de técnicas de aprendizado de máquina.} Foram comparados classificadores lineares, métodos baseados em árvores, redes neurais e estratégias de combinação de modelos no problema de classificação de pares candidatos SIM--Sinan-TB, evidenciando diferenças de desempenho e comportamento sob desbalanceamento (Seções \ref{sec:cap5-nb01} e \ref{sec:cap5-modelos}).
-
-\item \textbf{Avaliação de estratégias de balanceamento.} Foram avaliadas estratégias de reamostragem e ponderação de classes, com análise de sensibilidade em validação cruzada, demonstrando robustez do desempenho em um conjunto de estratégias e identificando configurações com melhor F$_1$-Score médio (Seção \ref{sec:cap5-robustez-interpretabilidade}, Tabela \ref{tab:imbalance-sensitivity}).
-
-\item \textbf{Ajuste de pontos de corte e regras de negócio.} Foram propostas e avaliadas rotinas de escolha de limiar e regras determinísticas baseadas no conhecimento do domínio, com foco na recuperação de pares verdadeiros na zona cinzenta sem crescimento desproporcional de falsos positivos (Seções \ref{sec:cap5-faixas-escore} e \ref{sec:cap5-nb03}).
-
-\item \textbf{Duas estratégias complementares (sensibilidade e precisão).} Foram operacionalizadas estratégias orientadas à maximização da sensibilidade (recuperação exaustiva) e à maximização da precisão (alta confiabilidade), com discussão explícita das implicações operacionais e da escolha por contexto (Seções \ref{sec:cap5-nb02}, \ref{sec:cap5-nb03} e \ref{sec:cap6-dois-pipelines}).
-
-\item \textbf{Sistematização reprodutível dos resultados.} Os experimentos foram documentados por meio de scripts, tabelas e figuras que registram configurações, pontos operacionais e resultados comparativos, de modo a apoiar reprodutibilidade e uso como protocolo de pós-processamento em cenários similares (Seções \ref{sec:cap5-ablacao-pareto} e \ref{sec:cap5-robustez-interpretabilidade}).
-
-\item \textbf{Discussão de generalização.} Foram discutidas condições e limitações para adaptação a outros cenários de \textit{linkage} em saúde, incluindo dependência de padrão-ouro, qualidade de preenchimento e disponibilidade de variáveis, além da necessidade de validação externa (Seção \ref{sec:cap6-limitacoes}).
-
-\item \textbf{\textit{Framework} operacional de governança da incerteza (GZ-CMD).} Foi proposto e avaliado um \textit{framework} auto-calibrável que integra classificação supervisionada, calibração por âncoras, política de decisão em três vias e revisão assistida por modelo de linguagem em uma cascata de filtragem auditável, reduzindo o volume de revisão clerical de 21.620 para 41~pares (Capítulo~\ref{cap:gzcmd}).
-
-\end{enumerate}
-\end{sloppypar}
-
 \section{Contribuições}
 \label{sec:cap7-contribuicoes}
 
