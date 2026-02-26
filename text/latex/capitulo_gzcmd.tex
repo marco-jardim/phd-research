@@ -16,21 +16,17 @@ Diante dessas lacunas, propõe-se o GZ-CMD, um \textit{framework} para governan�
 \subsection{Bases de dados e período de estudo}
 \label{sec:cap8-bases}
 
-Foram utilizados registros do Sinan-TB e declarações de óbito do SIM referentes ao município do Rio de Janeiro (Sinan-TB: notificações de 2013 a 2022; SIM: óbitos de 2019 a 2022), mantendo o mesmo recorte do núcleo empírico descrito no Capítulo \ref{cap:metodo}. A geração de pares candidatos por blocagem foi conduzida no OpenRecLink, conforme estratégia descrita em \cite{Coeli2002blocking,Camargo2000reclink} e detalhada na Seção \ref{sec:base-pares}. O universo final incluiu 61.696 pares candidatos, com 247 vínculos verdadeiros e 61.449 não-pares.
+Foram utilizados os mesmos registros do Sinan-TB e do SIM, o mesmo recorte temporal e a mesma estratégia de blocagem descritos nas Seções \ref{sec:fontes-dados} e~\ref{sec:base-pares}, resultando em 61.696 pares candidatos (247 vínculos verdadeiros, 61.449 não-pares).
 
 \subsection{Padrão-ouro e validade de referência}
 \label{sec:cap8-padrao-ouro}
 
-O padrão-ouro foi construído por revisão manual de 61.696 pares candidatos, realizada por um único revisor com experiência em vigilância da tuberculose no IESC-UFRJ, resultando em 247 vínculos verdadeiros e 61.449 não-pares. Em consonância com a limitação metodológica já registrada na Seção \ref{sec:cap6-limitacoes}, não houve segunda revisão independente e, portanto, não foi estimado coeficiente kappa de Cohen.
-
-Essa opção metodológica preserva aderência ao desenho operacional adotado no estudo, mas requer cautela interpretativa nas regiões de maior ambiguidade do escore, onde erros residuais de rotulagem podem persistir. Ainda assim, a consistência observada nos conjuntos âncora, apresentada na Seção \ref{sec:cap8-validacao-ancoras}, fornece evidências indiretas favoráveis à estabilidade da referência.
+O padrão-ouro e suas limitações (revisor único, sem estimativa de kappa de Cohen) foram descritos na Seção \ref{sec:base-pares} e discutidos na Seção \ref{sec:cap6-limitacoes}. Para o GZ-CMD, essa ressalva é particularmente relevante nas regiões de maior ambiguidade do escore, onde erros residuais de rotulagem podem persistir; a consistência observada nos conjuntos âncora (Seção \ref{sec:cap8-validacao-ancoras}) fornece, contudo, evidências indiretas favoráveis à estabilidade da referência.
 
 \subsection{Delineamento experimental}
 \label{sec:cap8-delineamento}
 
-Foi adotada validação cruzada estratificada em cinco partições, com estratificação por COMPREC, mantendo coerência com o protocolo metodológico descrito no Capítulo~\ref{cap:metodo} (Seção~\ref{sec:analises-complementares}). Em cada rodada, quatro partições foram usadas para treinamento e calibração, e uma para teste. As métricas foram reportadas como média e desvio-padrão entre rodadas, com comparações por teste t pareado ($\alpha=0{,}05$).
-
-No experimento de revisão assistida, foram avaliados 1.410 pares da zona cinzenta extraídos exclusivamente de partições de teste, sem sobreposição com os dados usados no treinamento do classificador.
+Foi adotado o mesmo protocolo de validação cruzada estratificada em cinco partições descrito na Seção \ref{sec:analises-complementares}, com métricas reportadas como média e desvio-padrão entre rodadas e comparações por teste t pareado ($\alpha=0{,}05$). No experimento de revisão assistida, foram avaliados 1.410 pares da zona cinzenta extraídos exclusivamente de partições de teste, sem sobreposição com os dados usados no treinamento do classificador.
 
 \subsection{Representação dos pares e engenharia de atributos}
 \label{sec:cap8-representacao}
