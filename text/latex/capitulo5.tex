@@ -14,18 +14,30 @@ Foram utilizados registros provenientes de duas bases de dados nacionais de saú
 
 Os registros correspondem ao município do Rio de Janeiro, com notificações do Sinan-TB de 2013 a 2022 e óbitos do SIM de 2019 a 2022, e foram previamente submetidos a \textit{linkage} probabilístico por meio do programa OpenRecLink \cite{Camargo2000reclink}, gerando uma base de pares candidatos que constitui o objeto de análise do presente estudo. A escolha dessas bases justifica-se pelas razões detalhadas na Seção \ref{sec:justificativas-especificas}, em particular a relevância da tuberculose como condição marcadora da qualidade do cuidado em saúde e a experiência acumulada do grupo de pesquisa no \textit{linkage} dessas fontes de dados \cite{Oliveira2012uso, Bartholomay2014improved, Oliveira2016accuracy}.
 
+O procedimento de \textit{linkage} probabilístico no OpenRecLink seguiu o modelo de decisão de Fellegi e Sunter \citeyearpar{Fellegi1969theory}. Na etapa de padronização, os campos textuais de ambas as bases foram convertidos para caixa alta, com remoção de acentos diacríticos, preposições e artigos, e as datas de nascimento foram normalizadas para formato numérico contínuo (AAAAMMDD). A etapa de comparação utilizou quatro campos de identificação: nome próprio e nome da mãe, comparados por algoritmo caráter a caráter; data de nascimento, por concordância exata e parcial; e sexo, por concordância binária. Para cada par candidato, o programa calculou um escore probabilístico correspondente à soma das razões de log-verossimilhança (\textit{log-likelihood ratios}) dos campos comparados, no qual campos concordantes contribuem positivamente e campos discordantes contribuem negativamente para o escore total \cite{Fellegi1969theory, Christen2012book}. Na base utilizada, os escores probabilísticos do OpenRecLink variaram de $-12{,}85$ (discordância em todos os campos) a $+15{,}58$ (concordância plena), distribuindo-se em 116 valores distintos.
+
 \section{Base de pares candidatos}\label{sec:base-pares}
 
-A base de pares candidatos utilizada contém registros classificados pelo OpenRecLink a partir de múltiplos passos de blocagem (\textit{blocking steps}), conforme recomendado na literatura para maximizar a sensibilidade do processo \cite{Coeli2002blocking}. Cada par candidato é representado por um conjunto de escores de similaridade calculados para as variáveis de identificação disponíveis em ambas as bases:
+A geração de pares candidatos no OpenRecLink empregou múltiplos passos de blocagem (\textit{blocking steps}), estratégia recomendada para maximizar a sensibilidade do processo ao permitir que pares não capturados por uma chave restritiva sejam recuperados por chaves alternativas \cite{Coeli2002blocking}. Foram utilizados três passos com as seguintes chaves:
+
+\begin{enumerate}
+\item \textbf{Passo restritivo (passo~9):} código \textit{Soundex} do primeiro fragmento do nome + sexo + ano de nascimento, gerando 1\,449 pares candidatos;
+\item \textbf{Passo por nome da mãe (passo~6):} código \textit{Soundex} do primeiro fragmento do nome da mãe, gerando 2\,649 pares candidatos;
+\item \textbf{Passo aberto (passo~11):} código \textit{Soundex} do primeiro fragmento do nome + sexo + código do município de residência (IBGE), gerando 57\,598 pares candidatos.
+\end{enumerate}
+
+O passo aberto, por empregar chave de blocagem com menor especificidade, produziu a grande maioria dos pares candidatos (93,4\%), predominantemente não-pares, mas permitiu a recuperação de pares verdadeiros cujo ano de nascimento ou nome da mãe apresentava discordância entre as bases. A base analítica foi composta pela união dos pares provenientes dos três passos, sem aplicação de limiar inferior de escore no OpenRecLink, totalizando 61\,696 pares candidatos originados da comparação de 19\,388 notificações do Sinan-TB com 1\,515 declarações de óbito do SIM. A numeração dos passos (6, 9 e 11) indica que o OpenRecLink foi configurado com pelo menos onze passos de blocagem, dos quais apenas os três que geraram candidatos foram exportados para a base analítica.
+
+Cada par candidato foi subsequentemente submetido ao comparador de registros descrito na Seção~\ref{sec:comparador-registros}, que calculou escores de similaridade campo a campo para as variáveis de identificação disponíveis em ambas as bases:
 
 \begin{itemize}
-\item Escores de similaridade para o \textbf{nome} do indivíduo (fragmentos e variações)
-\item Escores de similaridade para o \textbf{nome da mãe}
-\item Escore de concordância para a \textbf{data de nascimento}
-\item Escore de concordância para o \textbf{município de residência}
-\item Escores de similaridade para o \textbf{endereço}
-\item \textbf{Escore final composto} (\textit{nota final}) calculado pelo comparador de registros
-\item \textbf{Passo de blocagem} em que o par foi identificado
+\item \textbf{Nome próprio} (7 subescores): concordância do primeiro e último fragmento, quantidade de fragmentos iguais, raros, comuns, foneticamente semelhantes e abreviados;
+\item \textbf{Nome da mãe} (7 subescores): mesma estrutura de comparação aplicada ao nome próprio;
+\item \textbf{Data de nascimento} (5 subescores): data exata, proximidade de um dígito, inversão de dia, inversão de mês e inversão de ano;
+\item \textbf{Município de residência} (4 subescores): concordância e proximidade da UF, concordância e proximidade do município;
+\item \textbf{Endereço} (6 subescores): concordância e proximidade da via, número, complemento, texto livre e coeficiente de Jaccard;
+\item \textbf{Escore final composto} (\textit{nota final}): escore agregado calculado pelo comparador de registros;
+\item \textbf{Passo de blocagem} em que o par foi identificado.
 \end{itemize}
 
 Cada par possui uma classificação de referência (padrão-ouro) atribuída por revisão manual, categorizada em: par verdadeiro confirmado, par verdadeiro provável e não-par. Para fins de modelagem, os pares verdadeiros confirmados e prováveis foram agrupados em uma única classe positiva, resultando em uma variável-alvo binária. A disponibilidade dessa classificação de referência possibilita o treinamento e a avaliação dos classificadores supervisionados, pois fornece as observações rotuladas necessárias para o aprendizado.
