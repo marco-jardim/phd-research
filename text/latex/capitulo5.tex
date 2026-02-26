@@ -18,7 +18,7 @@ O procedimento de \textit{linkage} probabilístico no OpenRecLink seguiu o model
 
 \section{Base de pares candidatos}\label{sec:base-pares}
 
-A geração de pares candidatos no OpenRecLink empregou múltiplos passos de blocagem (\textit{blocking steps}), estratégia recomendada para maximizar a sensibilidade do processo ao permitir que pares não capturados por uma chave restritiva sejam recuperados por chaves alternativas \cite{Coeli2002blocking}. Foram utilizados três passos com as seguintes chaves:
+A geração de pares candidatos no OpenRecLink empregou a técnica de blocagem (\textit{blocking}), que particiona os registros em subgrupos definidos por chaves comuns e restringe as comparações aos pares que compartilham a mesma chave, reduzindo substancialmente o custo computacional \cite{Christen2012book}. Foram utilizados múltiplos passos de blocagem (\textit{blocking steps}), estratégia recomendada para maximizar a sensibilidade do processo ao permitir que pares não capturados por uma chave restritiva sejam recuperados por chaves alternativas \cite{Coeli2002blocking}. Três passos foram empregados com as seguintes chaves:
 
 \begin{enumerate}
 \item \textbf{Passo restritivo (passo~9):} código \textit{Soundex} do primeiro fragmento do nome + sexo + ano de nascimento, gerando 1\,449 pares candidatos;
@@ -67,9 +67,9 @@ A partir dos escores brutos de similaridade fornecidos pelo comparador de regist
 
 \begin{sloppypar}
 \begin{itemize}
-\item \textbf{Indicadores binários de concordância:} variáveis dicotômicas indicando se o escore de similaridade de cada campo ultrapassa limiares predefinidos (concordância ``perfeita'' e concordância ``alta''), com limiares ajustados de acordo com a estratégia de análise empregada, mais permissivos para a estratégia de máxima sensibilidade e mais restritivos para a estratégia de máxima precisão.
+\item \textbf{Indicadores binários de concordância:} variáveis dicotômicas indicando se o escore de similaridade de cada campo ultrapassa limiares definidos com base em conhecimento de domínio. A concordância ``perfeita'' do nome, por exemplo, é indicada quando a proporção de fragmentos idênticos $\geq 0{,}95$, e a data de nascimento exata quando o subescore de igualdade $= 1$. Os limiares foram ajustados de acordo com a estratégia de análise empregada: mais permissivos para a estratégia de máxima sensibilidade (por exemplo, concordância do nome $\geq 0{,}70$) e mais restritivos para a estratégia de máxima precisão.
 
-\item \textbf{Escores agregados e ponderados:} combinações lineares dos escores individuais, atribuindo pesos diferenciados conforme o poder discriminatório de cada variável: maior peso para nome e data de nascimento, peso intermediário para nome da mãe e município, menor peso para endereço.
+\item \textbf{Escores agregados e ponderados:} combinações lineares dos escores individuais, atribuindo pesos definidos com base no poder discriminatório esperado de cada variável. Nome e data de nascimento recebem os maiores pesos, por constituírem os identificadores com maior capacidade de distinção individual; nome da mãe e município recebem peso intermediário, sendo o município pouco discriminatório nesta base (99\% dos registros concentram-se no município do Rio de Janeiro, mas a variável diferencia os casos remanescentes); endereço recebe o menor peso, em razão de inconsistências de formato, mudanças de domicílio e incompletude dos registros.
 
 \item \textbf{Termos de interação:} produtos entre escores de campos distintos, possibilitando a captura da concordância simultânea de múltiplas variáveis (por exemplo, nome $\times$ data de nascimento $\times$ nome da mãe), cujo valor conjunto pode ser mais informativo do que os escores individuais isoladamente.
 
