@@ -10,7 +10,7 @@ A base analisada compreendeu 61.696 pares candidatos gerados em três passos de 
 
 Do ponto de vista operacional, mesmo uma taxa de falsos positivos de 0,5\% gera centenas de revisões desnecessárias em um universo de dezenas de milhares de pares. As métricas, a partição experimental e as estratégias de balanceamento seguem o delineamento apresentado no Capítulo~\ref{cap:metodo}.
 
-\section{Faixas de escore agregado e zona cinzenta}
+\section{Faixas do escore do \textit{linkage} probabilístico e zona cinzenta}
 \label{sec:cap5-faixas-escore}
 
 A abordagem mais simples (``ingênua'') de classificação consiste em aceitar como pares verdadeiros todos os registros cujo escore agregado do \textit{linkage} probabilístico (cf.\ Seção~\ref{sec:fontes-dados}) supere um limiar fixo. Para avaliar os limites intrínsecos dessa estratégia, analisou-se a distribuição dos pares verdadeiros por faixas de escore.
@@ -24,14 +24,14 @@ A existência de uma zona cinzenta com quase metade dos pares verdadeiros consti
 \begin{figure}[!ht]
 \centering
 \input{fig_doc/score_band_volume.pgf}
-\caption{Volume de pares candidatos e pares verdadeiros por faixa do escore agregado (escala logarítmica).}
+\caption{Volume de pares candidatos e pares verdadeiros por faixa do escore do \textit{linkage} probabilístico (escala logarítmica).}
 \label{fig:score-band-volume}
 \end{figure}
 
 \begin{figure}[!ht]
 \centering
 \input{fig_doc/score_band_pct.pgf}
-\caption{Proporção de pares verdadeiros em relação ao total de pares candidatos por faixa de escore, com destaque para a zona cinzenta (faixas 5 a~8).}
+\caption{Proporção de pares verdadeiros em relação ao total de pares candidatos por faixa do escore do \textit{linkage} probabilístico, com destaque para a zona cinzenta (faixas 5 a~8).}
 \label{fig:score-band-pct}
 \end{figure}
 

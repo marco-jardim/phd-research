@@ -47,7 +47,7 @@ Em contraste com o esquema clássico de Fellegi--Sunter \cite{Fellegi1969theory}
 \[
 P(y=1\mid s)=\frac{1}{1+\exp\left(-\left(\alpha s+\beta\right)\right)}
 \]
-é ajustada por conjuntos âncora positivos ($A^+$) e negativos ($A^-$), dispensando rótulos explícitos em tempo de operação.
+é ajustada por conjuntos âncora positivos ($A^+$) e negativos ($A^-$), dispensando \textit{labels} explícitos em tempo de operação.
 
 Os parâmetros $\alpha$ e $\beta$ são obtidos por restrições de média alvo sobre as âncoras,
 \[
@@ -79,7 +79,7 @@ $A^-$ (âncoras negativas) & $s<5{,}0$ & 3.840 & 3.833 & 7 & 99,8 \\
 \end{tabular}
 \end{table}
 
-As taxas de erro observadas foram inferiores a 1\%, sustentando o uso das âncoras como pseudo-rótulos operacionais para calibração periódica.
+As taxas de erro observadas foram inferiores a 1\%, sustentando o uso das âncoras como pseudo-\textit{labels} operacionais para calibração periódica.
 
 \subsection{Regras de guarda determinísticas}
 \label{sec:cap8-regras-guarda}
@@ -148,7 +148,7 @@ O fluxo completo do GZ-CMD, formalizado no Algoritmo \ref{alg:gzcmd-pipeline} (A
 \item \textbf{Regras de guarda}: restrições determinísticas (filtro temporal, cardinalidade N:1, empate operacional) podem forçar decisão ou revisão, independentemente de $p_{cal}$.
 \item \textbf{Triagem por \textit{expected loss}}: para os pares não capturados pelas regras de guarda, calcula-se $EVR(p)$; pares com $EVR>0$ são candidatos a revisão, priorizados por $EVR$ decrescente até o limite orçamentário $L_{max}$.
 \item \textbf{Revisão assistida}: pares selecionados são convertidos em dossiê desidentificado e submetidos ao protocolo dual-agente com arbitragem (Seção \ref{sec:cap8-revisao-assistida}).
-\item \textbf{Decisão final}: a saída é um rótulo auditável (\texttt{MATCH}, \texttt{NONMATCH} ou \texttt{UNSURE}) com registro de agente, protocolo e códigos de razão.
+\item \textbf{Decisão final}: a saída é um \textit{label} auditável (\texttt{MATCH}, \texttt{NONMATCH} ou \texttt{UNSURE}) com registro de agente, protocolo e códigos de razão.
 \end{enumerate}
 
 \section{Revisão clerical assistida}
