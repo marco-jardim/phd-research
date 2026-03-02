@@ -1,4 +1,4 @@
-\begin{chapter}{Justificativa}\label{cap:justificativa}
+\begin{chapter}{Justificativa e objetivos}\label{cap:justificativa}\label{cap:objetivos}
 
 O \textit{linkage} (vinculação de registros), conforme apresentado no Capítulo \ref{cap:introducao}, constitui etapa indispensável para a integração de dados entre os múltiplos Sistemas de Informação em Saúde do Brasil \cite{Camargo2000reclink, Christen2012book}. A ausência de um identificador unívoco que permeie bases como o SIM, o Sinan e o SIH-SUS torna necessário o emprego de procedimentos de vinculação baseados na comparação de variáveis de identificação pessoal \cite{Fellegi1969theory, Camargo2000reclink}, cujos resultados dependem diretamente da qualidade dos dados disponíveis e da adequação dos limiares de classificação adotados.
 
@@ -31,6 +31,26 @@ A necessidade de protocolos automatizados e reprodutíveis de \textit{linkage} �
 
 \section{Vinculação institucional}\label{sec:vinculacao-institucional}
 
-O presente trabalho insere-se no programa de pós-graduação do IESC-UFRJ, no âmbito da linha de pesquisa em Ciência de Dados aplicada à Saúde. O instituto abriga o Laboratório de Linkage e Análise de Dados Populacionais, que desenvolve, há mais de duas décadas, metodologias de vinculação de bases de dados para a vigilância epidemiológica e a avaliação de serviços de saúde \cite{Camargo2000reclink, Coeli2002blocking, Oliveira2016accuracy}. O estudo conta ainda com a colaboração da Secretaria Acadêmica de Saúde, que articula atividades de ensino, pesquisa e extensão voltadas à qualificação dos dados em saúde e ao fortalecimento da capacidade analítica dos sistemas de informação do SUS. Essa vinculação institucional assegura o acesso a bases de dados previamente vinculadas, protocolos consolidados e \textit{expertise} multidisciplinar necessários para o desenvolvimento e a validação das abordagens propostas.
+O presente trabalho insere-se no programa de pós-graduação do IESC-UFRJ, no âmbito da linha de pesquisa em Ciência de Dados em Saúde Publica. O instituto abriga o Laboratório de Linkage e Análise de Dados Populacionais, que desenvolve, há mais de duas décadas, metodologias de vinculação de bases de dados para a vigilância epidemiológica e a avaliação de serviços de saúde \cite{Camargo2000reclink, Coeli2002blocking, Oliveira2016accuracy}. 
+
+\section{Objetivo geral}\label{sec:objetivo-geral}
+
+O presente estudo tem como objetivo geral desenvolver e avaliar um \textit{framework} configurável de pós-processamento, baseado em aprendizado de máquina (\textit{machine learning}), para a classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre bases de dados de saúde. Busca-se aumentar a acurácia do processo e recuperar registros da zona cinzenta que permaneceriam não classificados ou incorretamente descartados pelo método probabilístico convencional. O \textit{framework} proposto foi aplicado ao \textit{linkage} entre o SIM e o Sinan-TB no município do Rio de Janeiro, com registros do Sinan-TB referentes a notificações de 2013 a 2022 e registros do SIM referentes a óbitos de 2019 a 2022, contribuindo para a qualificação dos dados vinculados e para a produção de indicadores de desempenho de sistemas e serviços de saúde.
+
+\section{Objetivos específicos}\label{sec:objetivos-especificos}
+
+\begin{enumerate}
+
+\item Comparar o desempenho de diferentes técnicas de aprendizado de máquina, a saber: regressão logística, Floresta Aleatória, \textit{Gradient Boosting} (XGBoost e LightGBM), SVM, MLP, aprendizado profundo tabular (TabNet) e métodos de combinação de modelos (\textit{ensemble}: \textit{Stacking} e votação por consenso), na tarefa de classificação de pares candidatos produzidos pelo \textit{linkage} probabilístico entre o SIM e o Sinan-TB. Na avaliação comparativa aprofundada entre famílias de classificadores (Seção~\ref{sec:qw1-deep-learning}), o escopo foi restrito a cinco modelos representativos: Floresta Aleatória, XGBoost, duas arquiteturas de MLP e TabNet.
+
+\item Avaliar e comparar estratégias de balanceamento de classes, incluindo \textit{SMOTE} \cite{Chawla2002smote}, \textit{Borderline-SMOTE}, \textit{ADASYN}, \textit{SMOTE-Tomek} e ponderação de classes (\textit{class weights}), quanto ao seu efeito sobre a sensibilidade e a especificidade dos classificadores. A comparação considera o severo desbalanceamento inerente ao \textit{linkage}, com vistas à identificação de combinações que possibilitem a melhoria da acurácia do processo de vinculação.
+
+\item Desenvolver e avaliar protocolos de ajuste nos pontos de corte dos escores do comparador, empregando otimização de limiares (\textit{threshold optimization}) e regras de negócio baseadas no conhecimento do domínio. O objetivo é maximizar a recuperação de pares verdadeiros na zona cinzenta sem comprometer a proporção de falsos positivos, contribuindo para a qualificação dos dados vinculados e para a melhoria do desempenho do comparador probabilístico.
+
+\item Comparar duas estratégias complementares de pós-processamento: uma orientada à maximização da sensibilidade, voltada à identificação de subnotificação e à recuperação exaustiva de pares, e outra orientada à maximização da precisão (\textit{precision}), voltada à construção de conjuntos analíticos de alta confiabilidade. A comparação avalia as implicações de cada abordagem para diferentes finalidades de uso dos dados vinculados no âmbito da vigilância, da assistência e da gestão em saúde.
+
+\item Propor e avaliar um \textit{framework} operacional auto-calibrável (GZ-CMD) que organize a classificação dos pares da zona cinzenta em cascata de filtragem auditável, integrando classificação supervisionada, calibração por conjuntos âncora, regras de guarda determinísticas, política de decisão em três vias baseada em \textit{expected loss} com custos assimétricos e revisão assistida por modelo de linguagem de grande porte. O \textit{framework} visa à governança formal da incerteza na zona cinzenta do \textit{linkage}, à redução do volume de revisão manual e à realocação do revisor humano para os casos genuinamente ambíguos.
+
+\end{enumerate}
 
 \end{chapter}
