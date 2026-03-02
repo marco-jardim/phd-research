@@ -1,0 +1,34 @@
+{
+  "paperId": "90f68bfc62617a406fb1d48fd0b9ee87ce72acbe",
+  "externalIds": {
+    "PubMedCentral": "10463005",
+    "DOI": "10.23889/ijpds.v8i1.2122",
+    "CorpusId": 270065325,
+    "PubMed": "37649490"
+  },
+  "title": "Microsimulation of an educational attainment register to predict future record linkage quality",
+  "year": 2023,
+  "citationCount": 2,
+  "openAccessPdf": {
+    "url": "https://ijpds.org/article/download/2122/4165",
+    "status": "GOLD",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC10463005, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": null,
+  "journal": {
+    "name": "International Journal of Population Data Science",
+    "volume": "8"
+  },
+  "authors": [
+    {
+      "authorId": "2303440181",
+      "name": "Rainer Schnell"
+    },
+    {
+      "authorId": "2303440128",
+      "name": "Severin Weiand"
+    }
+  ],
+  "abstract": "Abstract Introduction Population wide educational attainment registers are necessary for educational planning and research. Regular linking of databases is needed to build and update such a register. Without availability of unique national identification numbers, record linkage must be based on quasi-identifiers such as name, date of birth and sex. However, the data protection principle of data minimization aims to minimize the set of identifiers in databases. Objectives Therefore, the German Federal Ministry of Research and Education commissioned a study to inform legislation on the minimum set of identifiers required for a national educational register. Methods To justify our recommendations empirically, we implemented a microsimulation of about 20 million people. The simulated register accumulates changes and errors in identifiers due to migration, regional mobility, marriage, school career and mortality, thereby allowing the study of errors on longitudinal datasets. Updated records were linked yearly to the simulated register using several linkage methods. Clear-text methods as well as privacy-preserving (PPRL) methods were compared. Results The results indicate linkage bias if only the primary identifiers are available in the register. More detailed identifiers, including place of birth, are required to minimize linkage bias. The amount of information available to identify a person for matching is more critical for linkage quality than the record linkage method applied. Differences in linkage quality between the best procedures (probabilistic linkage and multiple matchkeys) are minor. Conclusions Microsimulation is a valuable tool for designing record linkage procedures. By modelling the processes resulting in changes or errors in quasi-identifiers, predicting data quality to be expected after the implementation of a register seems possible."
+}

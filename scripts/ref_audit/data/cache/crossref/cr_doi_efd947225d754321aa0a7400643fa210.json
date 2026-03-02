@@ -1,0 +1,167 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        7
+      ]
+    ],
+    "date-time": "2026-02-07T07:46:28Z",
+    "timestamp": 1770450388803,
+    "version": "3.49.0"
+  },
+  "reference-count": 0,
+  "publisher": "AI Access Foundation",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "jair"
+  ],
+  "abstract": "<jats:p>An approach to the construction of classifiers from    imbalanced datasets is described. A dataset is imbalanced if the    classification categories are not approximately equally    represented. Often real-world data sets are predominately composed of    ``normal'' examples with only a small percentage of ``abnormal'' or    ``interesting'' examples. It is also the case that the cost of    misclassifying an abnormal (interesting) example as a normal example    is often much higher than the cost of the reverse    error. Under-sampling of the majority (normal) class has been proposed    as a good means of increasing the sensitivity of a classifier to the    minority class. This paper shows that a combination of our method of    over-sampling the minority (abnormal) class and under-sampling the    majority (normal) class can achieve better classifier performance (in    ROC space) than only under-sampling the majority class.  This paper    also shows that a combination of our method of over-sampling the    minority class and under-sampling the majority class can achieve    better classifier performance (in ROC space) than varying the loss    ratios in Ripper or class priors in Naive Bayes. Our method of    over-sampling the minority class involves creating synthetic minority    class examples.  Experiments are performed using C4.5, Ripper and a    Naive Bayes classifier. The method is evaluated using the area under    the Receiver Operating Characteristic curve (AUC) and the ROC convex    hull strategy.</jats:p>",
+  "DOI": "10.1613/jair.953",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2018,
+        7,
+        12
+      ]
+    ],
+    "date-time": "2018-07-12T09:11:50Z",
+    "timestamp": 1531386710000
+  },
+  "page": "321-357",
+  "source": "Crossref",
+  "is-referenced-by-count": 23808,
+  "title": [
+    "SMOTE: Synthetic Minority Over-sampling Technique"
+  ],
+  "prefix": "10.1613",
+  "volume": "16",
+  "author": [
+    {
+      "given": "N. V.",
+      "family": "Chawla",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "K. W.",
+      "family": "Bowyer",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "L. O.",
+      "family": "Hall",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "W. P.",
+      "family": "Kegelmeyer",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "16860",
+  "published-online": {
+    "date-parts": [
+      [
+        2002,
+        6,
+        1
+      ]
+    ]
+  },
+  "container-title": [
+    "Journal of Artificial Intelligence Research"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://www.jair.org/index.php/jair/article/download/10302/24590",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://www.jair.org/index.php/jair/article/download/10302/24592",
+      "content-type": "application/postscript",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://www.jair.org/index.php/jair/article/download/10302/24589",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://www.jair.org/index.php/jair/article/download/10302/24591",
+      "content-type": "application/zip",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://www.jair.org/index.php/jair/article/download/10302/24590",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2019,
+        10,
+        29
+      ]
+    ],
+    "date-time": "2019-10-29T18:24:45Z",
+    "timestamp": 1572373485000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.jair.org/index.php/jair/article/view/10302"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2002,
+        6,
+        1
+      ]
+    ]
+  },
+  "references-count": 0,
+  "URL": "https://doi.org/10.1613/jair.953",
+  "relation": {},
+  "ISSN": [
+    "1076-9757"
+  ],
+  "issn-type": [
+    {
+      "value": "1076-9757",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2002,
+        6,
+        1
+      ]
+    ]
+  }
+}

@@ -1,0 +1,706 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        25
+      ]
+    ],
+    "date-time": "2025-10-25T12:46:15Z",
+    "timestamp": 1761396375870,
+    "version": "3.37.3"
+  },
+  "reference-count": 46,
+  "publisher": "Oxford University Press (OUP)",
+  "issue": "12",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            28
+          ]
+        ],
+        "date-time": "2022-10-28T00:00:00Z",
+        "timestamp": 1666915200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/100000133",
+      "name": "Agency for Healthcare Research and Quality",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "5R01HS023808-04"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "5R01HS023808-04"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/100000133",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [],
+  "published-print": {
+    "date-parts": [
+      [
+        2022,
+        11,
+        14
+      ]
+    ]
+  },
+  "abstract": "<jats:title>Abstract</jats:title>\n               <jats:p>Healthcare systems are hampered by incomplete and fragmented patient health records. Record linkage is widely accepted as a solution to improve the quality and completeness of patient records. However, there does not exist a systematic approach for manually reviewing patient records to create gold standard record linkage data sets. We propose a robust framework for creating and evaluating manually reviewed gold standard data sets for measuring the performance of patient matching algorithms. Our 8-point approach covers data preprocessing, blocking, record adjudication, linkage evaluation, and reviewer characteristics. This framework can help record linkage method developers provide necessary transparency when creating and validating gold standard reference matching data sets. In turn, this transparency will support both the internal and external validity of recording linkage studies and improve the robustness of new record linkage strategies.</jats:p>",
+  "DOI": "10.1093/jamia/ocac175",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2022,
+        10,
+        28
+      ]
+    ],
+    "date-time": "2022-10-28T15:37:11Z",
+    "timestamp": 1666971431000
+  },
+  "page": "2105-2109",
+  "source": "Crossref",
+  "is-referenced-by-count": 3,
+  "title": [
+    "A framework for a consistent and reproducible evaluation of manual review for patient matching algorithms"
+  ],
+  "prefix": "10.1093",
+  "volume": "29",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-9600-4932",
+      "authenticated-orcid": false,
+      "given": "Agrayan K",
+      "family": "Gupta",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Indiana University , Indianapolis, Indiana, USA"
+        }
+      ]
+    },
+    {
+      "given": "Suranga N",
+      "family": "Kasthurirathne",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Center for Biomedical Informatics, Regenstrief Institute , Indianapolis, Indiana, USA"
+        },
+        {
+          "name": "Department of Family Medicine, Indiana University School of Medicine , Indianapolis, Indiana, USA"
+        },
+        {
+          "name": "Black Dog Institute, University of New South Wales , Sydney, New South Wales, Australia"
+        }
+      ]
+    },
+    {
+      "given": "Huiping",
+      "family": "Xu",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Biostatistics, Indiana University School of Medicine , Indianapolis, Indiana, USA"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-1547-3041",
+      "authenticated-orcid": false,
+      "given": "Xiaochun",
+      "family": "Li",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Biostatistics, Indiana University School of Medicine , Indianapolis, Indiana, USA"
+        }
+      ]
+    },
+    {
+      "given": "Matthew M",
+      "family": "Ruppert",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Medicine, University of Florida Health , Gainesville, Florida, USA"
+        },
+        {
+          "name": "Precision and Intelligent Systems in Medicine (PrismaP), University of Florida , Gainesville, Florida, USA"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-4803-3632",
+      "authenticated-orcid": false,
+      "given": "Christopher A",
+      "family": "Harle",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Health Outcomes and Biomedical Informatics, College of Medicine, University of Florida , Gainesville, Florida, USA"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-8093-6639",
+      "authenticated-orcid": false,
+      "given": "Shaun J",
+      "family": "Grannis",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Center for Biomedical Informatics, Regenstrief Institute , Indianapolis, Indiana, USA"
+        },
+        {
+          "name": "Department of Family Medicine, Indiana University School of Medicine , Indianapolis, Indiana, USA"
+        }
+      ]
+    }
+  ],
+  "member": "286",
+  "published-online": {
+    "date-parts": [
+      [
+        2022,
+        10,
+        28
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "2022111608010024000_ocac175-B1",
+      "first-page": "409",
+      "article-title": "All health care is not local: an evaluation of the distribution of Emergency Department care delivered in Indiana",
+      "volume": "2011",
+      "author": "Finnell",
+      "year": "2011",
+      "journal-title": "AMIA Annu Symp Proc"
+    },
+    {
+      "issue": "57",
+      "key": "2022111608010024000_ocac175-B2",
+      "doi-asserted-by": "crossref",
+      "first-page": "57cm29",
+      "DOI": "10.1126/scitranslmed.3001456",
+      "article-title": "Achieving a nationwide learning health system",
+      "volume": "2",
+      "author": "Friedman",
+      "year": "2010",
+      "journal-title": "Sci Transl Med"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B3",
+      "doi-asserted-by": "crossref",
+      "first-page": "35",
+      "DOI": "10.1001/jama.1995.03530010049034",
+      "article-title": "Systems analysis of adverse drug events. ADE Prevention Study Group",
+      "volume": "274",
+      "author": "Leape",
+      "year": "1995",
+      "journal-title": "JAMA"
+    },
+    {
+      "issue": "10",
+      "key": "2022111608010024000_ocac175-B4",
+      "first-page": "54",
+      "article-title": "A decade of standardization: data integrity as a foundation for trustworthiness of clinical information",
+      "volume": "86",
+      "author": "Lusk",
+      "year": "2015",
+      "journal-title": "J AHIMA"
+    },
+    {
+      "year": "2018",
+      "author": "Research",
+      "key": "2022111608010024000_ocac175-B5"
+    },
+    {
+      "year": "2021",
+      "author": "Park",
+      "key": "2022111608010024000_ocac175-B6"
+    },
+    {
+      "volume-title": "Healthcare Investing Trends Report",
+      "year": "2021",
+      "author": "Amato",
+      "key": "2022111608010024000_ocac175-B7"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B8",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.7249/RB9393",
+      "volume-title": "Identity Crisis? Approaches to Patient Identification in a National Health Information Network",
+      "author": "Hillestad",
+      "year": "2008"
+    },
+    {
+      "year": "2021",
+      "key": "2022111608010024000_ocac175-B9"
+    },
+    {
+      "issue": "4",
+      "key": "2022111608010024000_ocac175-B10",
+      "doi-asserted-by": "crossref",
+      "first-page": "997",
+      "DOI": "10.1257/jel.20191526",
+      "article-title": "How well do automated linking methods perform? Lessons from U.S. historical data",
+      "volume": "58",
+      "author": "Bailey",
+      "year": "2020",
+      "journal-title": "J Econ Lit"
+    },
+    {
+      "year": "2009",
+      "key": "2022111608010024000_ocac175-B11"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B12",
+      "doi-asserted-by": "crossref",
+      "first-page": "191",
+      "DOI": "10.1093/pubmed/fdx037",
+      "article-title": "GUILD: GUidance for Information about Linking Data sets",
+      "volume": "40",
+      "author": "Gilbert",
+      "year": "2018",
+      "journal-title": "J Public Health"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B13",
+      "doi-asserted-by": "crossref",
+      "first-page": "9",
+      "DOI": "10.1002/pds.4924",
+      "article-title": "Data linkage in pharmacoepidemiology: a call for rigorous evaluation and reporting",
+      "volume": "29",
+      "author": "Pratt",
+      "year": "2020",
+      "journal-title": "Pharmacoepidemiol Drug Saf"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B14",
+      "doi-asserted-by": "crossref",
+      "first-page": "22",
+      "DOI": "10.1097/EDE.0000000000001110",
+      "article-title": "Record linkage approaches using Prescription Drug Monitoring Program and mortality data for public health analyses and epidemiologic studies",
+      "volume": "31",
+      "author": "Nechuta",
+      "year": "2020",
+      "journal-title": "Epidemiology"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B15",
+      "doi-asserted-by": "crossref",
+      "first-page": "97",
+      "DOI": "10.1136/amiajnl-2013-001744",
+      "article-title": "A benchmark comparison of deterministic and probabilistic methods for defining manual review datasets in duplicate records reconciliation",
+      "volume": "21",
+      "author": "Joffe",
+      "year": "2014",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B16",
+      "first-page": "1671",
+      "article-title": "Linking education and hospital data in England: linkage process and quality",
+      "volume": "6",
+      "author": "Libuy",
+      "year": "2021",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B17",
+      "doi-asserted-by": "crossref",
+      "first-page": "129",
+      "DOI": "10.1007/s10994-013-5421-0",
+      "article-title": "Tracking people over time in 19th century Canada for longitudinal analysis",
+      "volume": "95",
+      "author": "Antonie",
+      "year": "2014",
+      "journal-title": "Mach Learn"
+    },
+    {
+      "issue": "2",
+      "key": "2022111608010024000_ocac175-B18",
+      "doi-asserted-by": "crossref",
+      "first-page": "395",
+      "DOI": "10.1016/j.ejca.2009.09.010",
+      "article-title": "New opportunities for drug outcomes research in cancer patients: the linkage of the Eindhoven Cancer Registry and the PHARMO Record Linkage System",
+      "volume": "46",
+      "author": "van Herk-Sukel",
+      "year": "2010",
+      "journal-title": "Eur J Cancer"
+    },
+    {
+      "issue": "10",
+      "key": "2022111608010024000_ocac175-B19",
+      "doi-asserted-by": "crossref",
+      "first-page": "881",
+      "DOI": "10.1097/GIM.0b013e31821e485b",
+      "article-title": "Long-term follow-up of children with confirmed newborn screening disorders using record linkage",
+      "volume": "13",
+      "author": "Wang",
+      "year": "2011",
+      "journal-title": "Genet Med"
+    },
+    {
+      "issue": "6",
+      "key": "2022111608010024000_ocac175-B20",
+      "doi-asserted-by": "crossref",
+      "first-page": "549",
+      "DOI": "10.1016/j.amepre.2009.01.035",
+      "article-title": "Tribal linkage and race data quality for American Indians in a state cancer registry",
+      "volume": "36",
+      "author": "Johnson",
+      "year": "2009",
+      "journal-title": "Am J Prev Med"
+    },
+    {
+      "issue": "4",
+      "key": "2022111608010024000_ocac175-B21",
+      "first-page": "25",
+      "article-title": "Evaluation of machine learning algorithms in a human–computer hybrid record linkage system",
+      "volume": "2846",
+      "author": "Ramezani",
+      "year": "2021",
+      "journal-title": "CEUR Workshop Proc"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B22",
+      "doi-asserted-by": "crossref",
+      "first-page": "23",
+      "DOI": "10.1186/s12874-017-0306-8",
+      "article-title": "Utilising identifier error variation in linkage of large administrative data sources",
+      "volume": "17",
+      "author": "Harron",
+      "year": "2017",
+      "journal-title": "BMC Med Res Methodol"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B23",
+      "first-page": "351",
+      "volume-title": "Handbook of Statistics",
+      "author": "Winkler",
+      "year": "2009"
+    },
+    {
+      "issue": "5",
+      "key": "2022111608010024000_ocac175-B24",
+      "doi-asserted-by": "crossref",
+      "first-page": "447",
+      "DOI": "10.1093/jamia/ocy191",
+      "article-title": "Evaluating the effect of data standardization and validation on patient matching accuracy",
+      "volume": "26",
+      "author": "Grannis",
+      "year": "2019",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "year": "2014",
+      "author": "Genevieve Morris",
+      "key": "2022111608010024000_ocac175-B25"
+    },
+    {
+      "year": "2014",
+      "author": "Lusk",
+      "key": "2022111608010024000_ocac175-B26"
+    },
+    {
+      "year": "2021",
+      "author": "Technology OotNCfHI",
+      "key": "2022111608010024000_ocac175-B27"
+    },
+    {
+      "volume-title": "A Comparison of Blocking Methods for Record Linkage",
+      "year": "2014",
+      "key": "2022111608010024000_ocac175-B28"
+    },
+    {
+      "year": "2006",
+      "key": "2022111608010024000_ocac175-B29"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B30",
+      "doi-asserted-by": "crossref",
+      "first-page": "8",
+      "DOI": "10.1016/j.csbj.2014.11.005",
+      "article-title": "Machine learning applications in cancer prognosis and prediction",
+      "volume": "13",
+      "author": "Kourou",
+      "year": "2015",
+      "journal-title": "Comput Struct Biotechnol J"
+    },
+    {
+      "issue": "3",
+      "key": "2022111608010024000_ocac175-B31",
+      "doi-asserted-by": "crossref",
+      "first-page": "500",
+      "DOI": "10.1002/sim.5946",
+      "article-title": "Optimal two-phase sampling design for comparing accuracies of two binary classification rules",
+      "volume": "33",
+      "author": "Xu",
+      "year": "2014",
+      "journal-title": "Stat Med"
+    },
+    {
+      "issue": "3",
+      "key": "2022111608010024000_ocac175-B32",
+      "doi-asserted-by": "crossref",
+      "first-page": "793",
+      "DOI": "10.1148/radiol.13122633",
+      "article-title": "Simple cyst-appearing renal masses at unenhanced CT: can they be presumed to be benign?",
+      "volume": "269",
+      "author": "O’Connor",
+      "year": "2013",
+      "journal-title": "Radiology"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B33",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1200/CCI.17.00069",
+      "article-title": "Comparison of natural language processing and manual coding for the identification of cross-sectional imaging reports suspicious for lung cancer",
+      "volume": "2",
+      "author": "Wadia",
+      "year": "2018",
+      "journal-title": "JCO Clin Cancer Inform"
+    },
+    {
+      "issue": "1",
+      "key": "2022111608010024000_ocac175-B34",
+      "doi-asserted-by": "crossref",
+      "first-page": "179",
+      "DOI": "10.1186/s12911-021-01533-7",
+      "article-title": "A systematic review of natural language processing applied to radiology reports",
+      "volume": "21",
+      "author": "Casey",
+      "year": "2021",
+      "journal-title": "BMC Med Inform Decis Mak"
+    },
+    {
+      "issue": "4",
+      "key": "2022111608010024000_ocac175-B35",
+      "doi-asserted-by": "crossref",
+      "first-page": "1061",
+      "DOI": "10.1037/0033-295X.111.4.1061",
+      "article-title": "The concept of validity",
+      "volume": "111",
+      "author": "Borsboom",
+      "year": "2004",
+      "journal-title": "Psychol Rev"
+    },
+    {
+      "issue": "4",
+      "key": "2022111608010024000_ocac175-B36",
+      "first-page": "1",
+      "article-title": "A comparison of consensus, consistency, and measurement approaches to estimating interrater reliability",
+      "volume": "9",
+      "author": "Stemler",
+      "year": "2004",
+      "journal-title": "PARE"
+    },
+    {
+      "first-page": "1065",
+      "year": "2008",
+      "author": "Christen",
+      "key": "2022111608010024000_ocac175-B37"
+    },
+    {
+      "year": "2020",
+      "author": "Prevention CfDCa",
+      "key": "2022111608010024000_ocac175-B38"
+    },
+    {
+      "year": "2016",
+      "author": "David Rock",
+      "key": "2022111608010024000_ocac175-B39"
+    },
+    {
+      "year": "2021",
+      "author": "VanHouten",
+      "key": "2022111608010024000_ocac175-B40"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B41",
+      "doi-asserted-by": "crossref",
+      "first-page": "1409",
+      "DOI": "10.1093/jamia/ocac068",
+      "article-title": "Evaluation of real-world referential and probabilistic patient matching to advance patient identification strategy",
+      "author": "Grannis",
+      "year": "2022",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "year": "2022",
+      "author": "Steven Posnack CS",
+      "key": "2022111608010024000_ocac175-B42"
+    },
+    {
+      "year": "2022",
+      "author": "United States Core Data for Interoperability (USCDI)",
+      "key": "2022111608010024000_ocac175-B43"
+    },
+    {
+      "year": "2022",
+      "key": "2022111608010024000_ocac175-B44"
+    },
+    {
+      "key": "2022111608010024000_ocac175-B45",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1007/978-3-540-44918-8",
+      "volume-title": "Quality Measures in Data Mining",
+      "author": "Guillet",
+      "year": "2007"
+    },
+    {
+      "issue": "5",
+      "key": "2022111608010024000_ocac175-B46",
+      "doi-asserted-by": "crossref",
+      "first-page": "752",
+      "DOI": "10.1016/j.amepre.2016.07.004",
+      "article-title": "Measuring preventive care delivery: comparing rates across three data sources",
+      "volume": "51",
+      "author": "Bailey",
+      "year": "2016",
+      "journal-title": "Am J Prev Med"
+    }
+  ],
+  "container-title": [
+    "Journal of the American Medical Informatics Association"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://academic.oup.com/jamia/article-pdf/29/12/2105/47027899/ocac175.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "syndication"
+    },
+    {
+      "URL": "https://academic.oup.com/jamia/article-pdf/29/12/2105/47027899/ocac175.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2022,
+        11,
+        16
+      ]
+    ],
+    "date-time": "2022-11-16T08:03:05Z",
+    "timestamp": 1668585785000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://academic.oup.com/jamia/article/29/12/2105/6777825"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2022,
+        10,
+        28
+      ]
+    ]
+  },
+  "references-count": 46,
+  "journal-issue": {
+    "issue": "12",
+    "published-online": {
+      "date-parts": [
+        [
+          2022,
+          10,
+          28
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2022,
+          11,
+          14
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.1093/jamia/ocac175",
+  "relation": {},
+  "ISSN": [
+    "1067-5027",
+    "1527-974X"
+  ],
+  "issn-type": [
+    {
+      "type": "print",
+      "value": "1067-5027"
+    },
+    {
+      "type": "electronic",
+      "value": "1527-974X"
+    }
+  ],
+  "subject": [],
+  "published-other": {
+    "date-parts": [
+      [
+        2022,
+        12,
+        1
+      ]
+    ]
+  },
+  "published": {
+    "date-parts": [
+      [
+        2022,
+        10,
+        28
+      ]
+    ]
+  }
+}

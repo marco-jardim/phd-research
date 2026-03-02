@@ -1,0 +1,50 @@
+{
+  "paperId": "b39aa6f62ebddd9a04439976dc0841a7cccc680f",
+  "externalIds": {
+    "MAG": "2518081821",
+    "PubMedCentral": "4988803",
+    "DOI": "10.1590/S1518-8787.2016050006327",
+    "CorpusId": 15568740,
+    "PubMed": "27556963"
+  },
+  "title": "Accuracy of probabilistic and deterministic record linkage: the case of tuberculosis",
+  "year": 2016,
+  "citationCount": 31,
+  "openAccessPdf": {
+    "url": "http://www.scielo.br/pdf/rsp/v50/0034-8910-rsp-S1518-87872016050006327.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC4988803, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": "Although deterministic linkage identified more duplicate records than probabilistic linkage, the latter retrieved records not identified by the former, and the two techniques showed a high level of correlation for pair classification."
+  },
+  "journal": {
+    "name": "Revista de Saúde Pública",
+    "volume": "50"
+  },
+  "authors": [
+    {
+      "authorId": "5208482",
+      "name": "G. P. de Oliveira"
+    },
+    {
+      "authorId": "4220322",
+      "name": "A. Bierrenbach"
+    },
+    {
+      "authorId": "32115724",
+      "name": "K. D. de Camargo"
+    },
+    {
+      "authorId": "3628262",
+      "name": "C. Coeli"
+    },
+    {
+      "authorId": "39724436",
+      "name": "R. Pinheiro"
+    }
+  ],
+  "abstract": "ABSTRACT OBJECTIVE To analyze the accuracy of deterministic and probabilistic record linkage to identify TB duplicate records, as well as the characteristics of discordant pairs. METHODS The study analyzed all TB records from 2009 to 2011 in the state of Rio de Janeiro. A deterministic record linkage algorithm was developed using a set of 70 rules, based on the combination of fragments of the key variables with or without modification (Soundex or substring). Each rule was formed by three or more fragments. The probabilistic approach required a cutoff point for the score, above which the links would be automatically classified as belonging to the same individual. The cutoff point was obtained by linkage of the Notifiable Diseases Information System – Tuberculosis database with itself, subsequent manual review and ROC curves and precision-recall. Sensitivity and specificity for accurate analysis were calculated. RESULTS Accuracy ranged from 87.2% to 95.2% for sensitivity and 99.8% to 99.9% for specificity for probabilistic and deterministic record linkage, respectively. The occurrence of missing values for the key variables and the low percentage of similarity measure for name and date of birth were mainly responsible for the failure to identify records of the same individual with the techniques used. CONCLUSIONS The two techniques showed a high level of correlation for pair classification. Although deterministic linkage identified more duplicate records than probabilistic linkage, the latter retrieved records not identified by the former. User need and experience should be considered when choosing the best technique to be used."
+}

@@ -1,0 +1,214 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        2
+      ]
+    ],
+    "date-time": "2022-09-02T18:10:59Z",
+    "timestamp": 1662142259294
+  },
+  "reference-count": 0,
+  "publisher": "Swansea University",
+  "issue": "3",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2022,
+            8,
+            25
+          ]
+        ],
+        "date-time": "2022-08-25T00:00:00Z",
+        "timestamp": 1661385600000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IJPDS"
+  ],
+  "abstract": "<jats:p>ObjectivesCovid-19 databases have detailed information about each affected person in Brazil, but it has flaws in counting the number of cases, which are underreported. We aimed to construct and correct the cases dataset by linking different sources of data observations to study the pandemic evolution in Brazilian municipalities.&#x0D;\nApproachUsing the electronic Unified Health System (e-SUS), a public and governmental database, we calculated the pandemic curves of COVID-19 cases. We applied the following approaches to investigate data anomalies a) to perform a descriptive analysis and compare these results with  a non-governmental database using Dynamic Time Warping distance; b) to verify and correct municipalities data anomalies linking to other public governmental database namely National Council of Health Secretaries (CONASS) with e-SUS. c) To apply a K-means DTW Barycenter Averaging in clustering analysis to describe the general behaviors of pandemic in Brazilian Municipalities.&#x0D;\nResultsAround 10% records of cases in the e-SUS public governmental database were underreported. After the linkage and the data updating procedure, the time-dependent clustering analysis presents no anomalies and more interpretable results. The clustering analysis provided eight different behaviors of COVID-19 curves of cases. The degree of intensity for prevalence and incidence rates were identified according to eight clusters from the lowest to highest.&#x0D;\nConclusionsUsing the matching procedure based on Dynamic Time Warping distance to correct the municipalities unreported cases, we provided a richer dataset to support a clustering time dependent analysis to characterize the Pandemic evolution in Brazil. These results may be explored in future deprivation social studies.</jats:p>",
+  "DOI": "10.23889/ijpds.v7i3.2092",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2022,
+        8,
+        25
+      ]
+    ],
+    "date-time": "2022-08-25T18:30:51Z",
+    "timestamp": 1661452251000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Brazilian governmental database linkage to correct the municipalities underreported cases in a time-dependent cluster analysis on COVID-19."
+  ],
+  "prefix": "10.23889",
+  "volume": "7",
+  "author": [
+    {
+      "given": "Anderson",
+      "family": "Ara",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Jonatas Espirito",
+      "family": "Santo",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Jackson",
+      "family": "Conceição",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Marcos Ennes",
+      "family": "Barreto",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Lilia Carolina Carneiro",
+      "family": "Costa",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Rafael Felipe da Silva",
+      "family": "Souza",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Rosemeire Leovigildo",
+      "family": "Fiaccone",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Mauricio Lima",
+      "family": "Barreto",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Maria Yury Travassos",
+      "family": "Ichihara",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "9980",
+  "published-online": {
+    "date-parts": [
+      [
+        2022,
+        8,
+        25
+      ]
+    ]
+  },
+  "container-title": [
+    "International Journal of Population Data Science"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://ijpds.org/article/download/2092/4057",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2092/4058",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2092/4057",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        2
+      ]
+    ],
+    "date-time": "2022-09-02T10:45:39Z",
+    "timestamp": 1662115539000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ijpds.org/article/view/2092"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2022,
+        8,
+        25
+      ]
+    ]
+  },
+  "references-count": 0,
+  "journal-issue": {
+    "issue": "3",
+    "published-online": {
+      "date-parts": [
+        [
+          2022,
+          8,
+          25
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.23889/ijpds.v7i3.2092",
+  "relation": {},
+  "ISSN": [
+    "2399-4908"
+  ],
+  "issn-type": [
+    {
+      "value": "2399-4908",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2022,
+        8,
+        25
+      ]
+    ]
+  }
+}

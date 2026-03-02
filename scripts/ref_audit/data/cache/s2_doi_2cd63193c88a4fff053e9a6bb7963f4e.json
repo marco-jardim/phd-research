@@ -1,0 +1,41 @@
+{
+  "paperId": "a13ae76465f6d6498a6e48c7c9965b60fdc0084f",
+  "externalIds": {
+    "PubMedCentral": "12872214",
+    "DOI": "10.2196/79869",
+    "CorpusId": 285299520,
+    "PubMed": "41637753"
+  },
+  "title": "Linking Electronic Health Records for Multiple Sclerosis Research: Comparative Study of Deterministic, Probabilistic, and Machine Learning Linkage Methods",
+  "year": 2026,
+  "citationCount": 0,
+  "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC12872214, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": null
+  },
+  "journal": {
+    "name": "JMIR Medical Informatics",
+    "volume": "14"
+  },
+  "authors": [
+    {
+      "authorId": "114727041",
+      "name": "Ohoud A. Almadani"
+    },
+    {
+      "authorId": "15830305",
+      "name": "Yasser Albogami"
+    },
+    {
+      "authorId": "2310136879",
+      "name": "Adel Alrwisan"
+    }
+  ],
+  "abstract": "Abstract Background Data linkage in pharmacoepidemiological research is commonly employed to ascertain exposures and outcomes or to obtain additional information on confounding variables. However, to protect patient confidentiality, unique patient identifiers are not provided, which makes data linkage across multiple sources challenging. The Saudi Real-World Evidence Network (SRWEN) aggregates electronic health records from various hospitals, which may require robust linkage techniques. Objective We aimed to evaluate and compare the performance of deterministic, probabilistic, and machine learning (ML) approaches for linking deidentified data of patients with multiple sclerosis (MS) from the SRWEN and Ministry of National Guard Health Affairs electronic health record systems. Methods A simulation-based validation framework was applied before linking real-world data sources. Deterministic linkage was based on predefined rules, whereas probabilistic linkage was based on a similarity score–based matching. For ML, both similarity score–based and classification approaches were applied using neural networks, logistic regression, and random forest models. The performance of each approach was assessed using confusion matrices, focusing on sensitivity, positive predictive value, F1 score, and computational efficiency. Results The study included linked data of 2247 patients with MS from 2016 to 2023. The deterministic approach resulted in an average F1 score of 97.2% in the simulation and demonstrated varying match rates in real-world linkage: 1046/2247 (46.6%) to 1946/2247 (86.6%). This linkage was computationally efficient, with run times of <1 second per rule. The probabilistic approach provided an average F1 score of 93.9% in the simulation, with real-world match rates ranging from 1472/2247 (65.5%) to 2144/2247 (95.4%) and processing times ranging from approximately 0.1 to 5 seconds per rule. ML approaches achieved high performance (F1 score reached 99.8%) but were computationally expensive. Processing times ranged from approximately 13 to 16,936 seconds for the classification-based approaches and from approximately 13 to 7467 seconds for the similarity score–based approaches. Real-world match rates from ML models were highly variable depending on the method used; the similarity score–based approach identified 789/2247 (35.1%) matched pairs, whereas the classification-based approach identified 2014/2247 (89.6%). Conclusions Probabilistic linkage offers high linkage capacity by recovering matches missed by deterministic methods and proved to be both flexible and efficient, particularly in real-world scenarios where unique identifiers are lacking. This method achieved a great balance between recall and precision, enabling better integration of various data sources that could be useful in MS research."
+}

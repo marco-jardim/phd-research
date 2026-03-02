@@ -1,0 +1,356 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2024,
+        8,
+        30
+      ]
+    ],
+    "date-time": "2024-08-30T17:22:46Z",
+    "timestamp": 1725038566199
+  },
+  "reference-count": 21,
+  "publisher": "FapUNIFESP (SciELO)",
+  "issue": "2",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Rev. bras. epidemiol."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2002,
+        8
+      ]
+    ]
+  },
+  "abstract": "<jats:p>A blocagem (blocking), que consiste na criação de blocos lógicos de registros dentro de arquivos a serem relacionados, é um dos processos que faz parte do relacionamento probabilístico de grandes bases de dados. Os objetivos deste trabalho são comparar a eficiência de diferentes esquemas de blocagem e estudar a eficiência da utilização de uma rotina de padronização desenvolvida pelos autores, que aplica a mesma grafia para as primeiras sílabas de nomes com o mesmo som. Procedemos ao relacionamento de uma base de dados de mortalidade com 59.065 óbitos com uma base de óbitos hospitalares com 531 registros, que apresentavam um registro correspondente na base de mortalidade. Diferentes estratégias de blocagem foram comparadas em relação ao custo para o processamento e a proporção de pares verdadeiros perdidos. A estratégia de blocagem em múltiplos passos foi mais eficiente, permitindo a identificação de todos os pares verdadeiros com a formação de um número total de pares que foi inferior ao obtido em duas rotinas diferentes de passo único. Já entre as estratégias de passo único avaliadas, a que se baseou no emprego da chave formada pela combinação do código soundex do primeiro nome e sexo apresentou o melhor resultado. A utilização da rotina de padronização que aplica a mesma grafia para as primeiras sílabas de nomes com o mesmo som não apresentou um impacto importante, quer em custos, quer na redução da perda de pares verdadeiros.</jats:p>",
+  "DOI": "10.1590/s1415-790x2002000200006",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2005,
+        4,
+        26
+      ]
+    ],
+    "date-time": "2005-04-26T15:42:25Z",
+    "timestamp": 1114530145000
+  },
+  "page": "185-196",
+  "source": "Crossref",
+  "is-referenced-by-count": 44,
+  "title": [
+    "Avaliação de diferentes estratégias de blocagem no relacionamento probabilístico de registros"
+  ],
+  "prefix": "10.1590",
+  "volume": "5",
+  "author": [
+    {
+      "given": "Cláudia Medina",
+      "family": "Coeli",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro"
+        }
+      ]
+    },
+    {
+      "given": "Kenneth Rochel de",
+      "family": "Camargo Jr.",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro"
+        }
+      ]
+    }
+  ],
+  "member": "530",
+  "reference": [
+    {
+      "key": "ref1",
+      "doi-asserted-by": "crossref",
+      "first-page": "444",
+      "DOI": "10.1093/ije/27.3.444",
+      "article-title": "Pre-natal and early risk factors for childhood onset diabetes mellitus: a record linkage study",
+      "volume": "27",
+      "author": "Jones ME",
+      "year": "1998",
+      "journal-title": "Int J Epidemiol",
+      "ISSN": "http://id.crossref.org/issn/0300-5771",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref2",
+      "doi-asserted-by": "crossref",
+      "first-page": "823",
+      "DOI": "10.1093/aje/152.9.823",
+      "article-title": "Reproductive Factors, Subfertility, and Risk of Neural Tube Defects: A Case-Control Study Based on the Oxford Record Linkage Study Register",
+      "volume": "152",
+      "author": "Whiteman D",
+      "year": "2000",
+      "journal-title": "Am J Epidemiol",
+      "ISSN": "http://id.crossref.org/issn/0002-9262",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref3",
+      "doi-asserted-by": "crossref",
+      "first-page": "336",
+      "DOI": "10.1136/jech.55.5.336",
+      "article-title": "Abortion and breast cancer: a case-control record linkage study",
+      "volume": "55",
+      "author": "Goldacre MJ",
+      "year": "2001",
+      "journal-title": "J Epidemiol Community Health",
+      "ISSN": "http://id.crossref.org/issn/0141-7681",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref4",
+      "author": "Probert A",
+      "year": "1997"
+    },
+    {
+      "key": "ref5",
+      "doi-asserted-by": "crossref",
+      "first-page": "453",
+      "DOI": "10.1111/j.1467-842X.1999.tb01297.x",
+      "article-title": "Population-based linkage of health records in Western Australia: development of a health services research linked database",
+      "volume": "23",
+      "author": "Holman CD",
+      "year": "1999",
+      "journal-title": "Aust N Z J Public Health",
+      "ISSN": "http://id.crossref.org/issn/1326-0200",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref6",
+      "doi-asserted-by": "crossref",
+      "first-page": "954",
+      "DOI": "10.1126/science.130.3381.954",
+      "article-title": "Automatic Linkage of Vital Records",
+      "volume": "130",
+      "author": "Newcombe HB",
+      "year": "1959",
+      "journal-title": "Science",
+      "ISSN": "http://id.crossref.org/issn/0036-8075",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref7",
+      "doi-asserted-by": "crossref",
+      "first-page": "1183",
+      "DOI": "10.1080/01621459.1969.10501049",
+      "article-title": "A theory for record linkage",
+      "volume": "64",
+      "author": "Fellegi IP",
+      "year": "1969",
+      "journal-title": "J Am Stat Assoc",
+      "ISSN": "http://id.crossref.org/issn/0162-1459",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref8",
+      "doi-asserted-by": "crossref",
+      "first-page": "414",
+      "DOI": "10.1080/01621459.1989.10478785",
+      "article-title": "Advances in record-linkage methodology as applied to matching the 1985 Census of Tampa, Florida",
+      "volume": "84",
+      "author": "Jaro MA",
+      "year": "1989",
+      "journal-title": "J Am Stat Assoc",
+      "ISSN": "http://id.crossref.org/issn/0162-1459",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "crossref",
+      "first-page": "491",
+      "DOI": "10.1002/sim.4780140510",
+      "article-title": "Probabilistic linkage of large public health",
+      "volume": "14",
+      "author": "Jaro MA",
+      "year": "1995",
+      "journal-title": "Stat Med",
+      "ISSN": "http://id.crossref.org/issn/0277-6715",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref10",
+      "series-title": "Record Linkage: Methods for health and statistical studies, administration and business",
+      "author": "Newcombe HB",
+      "year": "1989"
+    },
+    {
+      "key": "ref11",
+      "series-title": "Epidemiologia",
+      "first-page": "337",
+      "volume-title": "Sistemas de Informação em saúde",
+      "author": "Sanches KRB",
+      "year": "2002"
+    },
+    {
+      "key": "ref12",
+      "doi-asserted-by": "crossref",
+      "first-page": "217",
+      "DOI": "10.1590/S0034-89101998000300003",
+      "article-title": "Pequenos para idade gestacional: fator de risco para mortalidade neonatal",
+      "volume": "32",
+      "author": "Almeida MF",
+      "year": "1998",
+      "journal-title": "Rev Saúde Pública"
+    },
+    {
+      "key": "ref13",
+      "doi-asserted-by": "crossref",
+      "first-page": "477",
+      "DOI": "10.1590/S0102-311X2000000200018",
+      "article-title": "Fatores de risco para mortalidade neonatal e pós-neonatal na Região Centro-Oeste do Brasil: linkage entre bancos de dados de nascidos vivos e óbitos infantis",
+      "volume": "16",
+      "author": "Morais Neto OLB",
+      "year": "2000",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref14",
+      "first-page": "335+",
+      "article-title": "Record linking: the design of efficient systems for linking records into individual and family histories",
+      "volume": "19 (3) Suppl 19",
+      "author": "Newcombe HB",
+      "year": "1967",
+      "journal-title": "Am J Hum Genet",
+      "ISSN": "http://id.crossref.org/issn/0002-9297",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref15",
+      "series-title": "Record linkage techniques: 1985. Proceedings of the workshop on exact matching methodologies",
+      "first-page": "199",
+      "volume-title": "Surname blocking for record linkage",
+      "author": "Quiaoit F.",
+      "year": "1985"
+    },
+    {
+      "key": "ref16",
+      "author": "Winkler EW",
+      "year": "1997"
+    },
+    {
+      "key": "ref17",
+      "doi-asserted-by": "crossref",
+      "first-page": "439",
+      "DOI": "10.1590/S0102-311X2000000200014",
+      "article-title": "RECLINK: Aplicativo para o relacionamento de banco de dados implementando o método probabilistic record linkage",
+      "volume": "16",
+      "author": "Camargo JR KR",
+      "year": "2000",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref18",
+      "series-title": "RecLink II: Guia do Usuário",
+      "author": "Camargo JR KR",
+      "year": "2002"
+    },
+    {
+      "key": "ref19",
+      "series-title": "Stata Statistical Software: Release 70",
+      "year": "2001"
+    },
+    {
+      "key": "ref20",
+      "series-title": "Using misture models to calibrate error rates in record-linkage procedures, with application to computer matching for census undercount estimation",
+      "author": "Belin TR",
+      "year": "1991"
+    },
+    {
+      "key": "ref21",
+      "series-title": "Record linkage techniques - 1997: Proceedings of an international workshop and exposition",
+      "volume-title": "On matching with personal names",
+      "author": "Kagawa",
+      "year": "1997"
+    }
+  ],
+  "container-title": [
+    "Revista Brasileira de Epidemiologia"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://www.scielo.br/pdf/rbepid/v5n2/06.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2017,
+        5,
+        25
+      ]
+    ],
+    "date-time": "2017-05-25T10:18:35Z",
+    "timestamp": 1495707515000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S1415-790X2002000200006&lng=pt&tlng=pt"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2002,
+        8
+      ]
+    ]
+  },
+  "references-count": 21,
+  "journal-issue": {
+    "issue": "2",
+    "published-print": {
+      "date-parts": [
+        [
+          2002,
+          8
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "S1415-790X2002000200006"
+  ],
+  "URL": "https://doi.org/10.1590/s1415-790x2002000200006",
+  "relation": {},
+  "ISSN": [
+    "1415-790X"
+  ],
+  "issn-type": [
+    {
+      "value": "1415-790X",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2002,
+        8
+      ]
+    ]
+  }
+}

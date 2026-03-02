@@ -1,0 +1,805 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        6
+      ]
+    ],
+    "date-time": "2026-02-06T04:30:41Z",
+    "timestamp": 1770352241994,
+    "version": "3.49.0"
+  },
+  "reference-count": 58,
+  "publisher": "MDPI AG",
+  "issue": "8",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2023,
+            4,
+            7
+          ]
+        ],
+        "date-time": "2023-04-07T00:00:00Z",
+        "timestamp": 1680825600000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "name": "Deanship of Scientific Research, Vice Presidency for Graduate Studies and Scientific Research, King Faisal University, Saudi Arabia",
+      "award": [
+        "3091"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "3091"
+          ]
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Sustainability"
+  ],
+  "abstract": "<jats:p>The healthcare industry has been transitioning from paper-based medical records to electronic health records (EHRs) in most healthcare facilities. However, the current EHR frameworks face challenges in secure data storage, credibility, and management. Interoperability and user control of personal data are also significant concerns in the healthcare sector. Although block chain technology has emerged as a powerful solution that can offer the properties of immutability, security, and user control on stored records, its potential application in EHR frameworks is not yet fully understood. To address this gap in knowledge, this research aims to provide an interoperable blockchain-based EHR framework that can fulfill the requirements defined by various national and international EHR standards such as HIPAA and HL7. The research method employed is a systematic literature review to explore the current state of the art in the field of EHRs, including blockchain-based implementations of EHRs. The study defines the interoperability issues in the existing blockchain-based EHR frameworks, reviews various national and international standards of EHR, and further defines the interoperability requirements based on these standards. The proposed framework can offer safer methods to interchange health information for the healthcare sector and can provide the properties of immutability, security, and user control on stored records without the need for centralized storage. The contributions of this work include enhancing the understanding of the potential application of blockchain technology in EHR frameworks and proposing an interoperable blockchain-based EHR framework that can fulfill the requirements defined by various national and international EHR standards. Overall, this study has significant implications for the healthcare sector, as it can enhance the secure sharing and storage of electronic health data while ensuring the confidentiality, privacy, and integrity of medical records.</jats:p>",
+  "DOI": "10.3390/su15086337",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2023,
+        4,
+        7
+      ]
+    ],
+    "date-time": "2023-04-07T04:08:03Z",
+    "timestamp": 1680840483000
+  },
+  "page": "6337",
+  "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 121,
+  "title": [
+    "Blockchain-Based Framework for Interoperable Electronic Health Records for an Improved Healthcare System"
+  ],
+  "prefix": "10.3390",
+  "volume": "15",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-9167-3061",
+      "authenticated-orcid": false,
+      "given": "Faheem Ahmad",
+      "family": "Reegu",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Razak Faculty of Technology and Informatics, Universiti Teknologi, Johor Bahru 50480, Malaysia"
+        },
+        {
+          "name": "College of Computer science and Information Technology, Jazan University, Jazan 45142, Saudi Arabia"
+        }
+      ]
+    },
+    {
+      "given": "Hafiza",
+      "family": "Abas",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Razak Faculty of Technology and Informatics, Universiti Teknologi, Johor Bahru 50480, Malaysia"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-6515-1569",
+      "authenticated-orcid": false,
+      "given": "Yonis",
+      "family": "Gulzar",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Management Information Systems, College of Business Administration, King Faisal University, Al-Ahsa 31982, Saudi Arabia"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-6178-8538",
+      "authenticated-orcid": false,
+      "given": "Qin",
+      "family": "Xin",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Faculty of Science and Technology, University of the Faroe Islands, Vestarabryggja 15, FO 100 Torshavn, Denmark"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-3279-9366",
+      "authenticated-orcid": false,
+      "given": "Ali A.",
+      "family": "Alwan",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Schools of Theoretical and Applied Science, Ramapo College of New Jersey, Mahwah, NJ 07430, USA"
+        }
+      ]
+    },
+    {
+      "given": "Abdoh",
+      "family": "Jabbari",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "College of Computer science and Information Technology, Jazan University, Jazan 45142, Saudi Arabia"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-6075-9519",
+      "authenticated-orcid": false,
+      "given": "Rahul Ganpatrao",
+      "family": "Sonkamble",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Computer Engineering, MIT Art, Desgin and Technology University, Pune 412201, India"
+        }
+      ]
+    },
+    {
+      "given": "Rudzidatul Akmam",
+      "family": "Dziyauddin",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Razak Faculty of Technology and Informatics, Universiti Teknologi, Johor Bahru 50480, Malaysia"
+        }
+      ]
+    }
+  ],
+  "member": "1968",
+  "published-online": {
+    "date-parts": [
+      [
+        2023,
+        4,
+        7
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref_1",
+      "doi-asserted-by": "crossref",
+      "first-page": "156",
+      "DOI": "10.1007/s10916-018-1007-5",
+      "article-title": "A Proposed Solution and Future Direction for Blockchain-Based Heterogeneous Medicare Data in Cloud Environment",
+      "volume": "42",
+      "author": "Kaur",
+      "year": "2018",
+      "journal-title": "J. Med. Syst."
+    },
+    {
+      "key": "ref_2",
+      "first-page": "2425",
+      "article-title": "Towards trustworthiness of electronic health record system using blockchain",
+      "volume": "25",
+      "author": "Reegu",
+      "year": "2021",
+      "journal-title": "Ann. Rom. Soc. Cell Biol."
+    },
+    {
+      "key": "ref_3",
+      "doi-asserted-by": "crossref",
+      "first-page": "267",
+      "DOI": "10.1016/j.csbj.2018.07.004",
+      "article-title": "FHIRChain: Applying Blockchain to Securely and Scalably Share Clinical Data",
+      "volume": "16",
+      "author": "Zhang",
+      "year": "2018",
+      "journal-title": "Comput. Struct. Biotechnol. J."
+    },
+    {
+      "key": "ref_4",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Khan, A.U., Shahid, A., Tariq, F., Ghaffar, A., Jamal, A., Abbas, S., and Javaid, N. (2020). Enhanced Decentralized Management of Patient-Driven Interoperability Based on Blockchain, Springer International Publishing.",
+      "DOI": "10.1007/978-3-030-33506-9_74"
+    },
+    {
+      "key": "ref_5",
+      "doi-asserted-by": "crossref",
+      "first-page": "1211",
+      "DOI": "10.1093/jamia/ocx068",
+      "article-title": "Blockchain distributed ledger technologies for biomedical and health care applications",
+      "volume": "24",
+      "author": "Kuo",
+      "year": "2017",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "ref_6",
+      "doi-asserted-by": "crossref",
+      "first-page": "22328",
+      "DOI": "10.1109/ACCESS.2019.2896108",
+      "article-title": "A survey on consensus mechanisms and mining strategy management in blockchain networks",
+      "volume": "7",
+      "author": "Wang",
+      "year": "2019",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_7",
+      "unstructured": "Pillai, B., and Biswas, K. (2019). Blockchain—ICBC 2019, Springer International Publishing."
+    },
+    {
+      "key": "ref_8",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Kim, D.H., Ullah, R., and Kim, B.S. (2019, January 18–20). RSP Consensus Algorithm for Blockchain. Proceedings of the 2019 20th Asia-Pacific Network Operations and Management Symposium (APNOMS), Matsue, Japan.",
+      "DOI": "10.23919/APNOMS.2019.8893063"
+    },
+    {
+      "key": "ref_9",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Ekblaw, A., Azaria, A., Halamka, J.D., Lippman, A., and Vieira, T. (2016). A Case Study for Blockchain in Healthcare: “MedRec” Prototype for Electronic Health Records and Medical Research Data White Paper MedRec: Using Blockchain for Medical Data Access and Permission Management, IEEE Access.",
+      "DOI": "10.1109/OBD.2016.11"
+    },
+    {
+      "key": "ref_10",
+      "doi-asserted-by": "crossref",
+      "first-page": "2169",
+      "DOI": "10.1109/JBHI.2020.2993072",
+      "article-title": "A patient-centric health information exchange framework using blockchain technology",
+      "volume": "24",
+      "author": "Zhuang",
+      "year": "2020",
+      "journal-title": "IEEE J. Biomed. Health Inform."
+    },
+    {
+      "key": "ref_11",
+      "doi-asserted-by": "crossref",
+      "first-page": "760",
+      "DOI": "10.1016/j.future.2017.09.023",
+      "article-title": "From blockchain consensus back to Byzantine consensus",
+      "volume": "107",
+      "author": "Gramoli",
+      "year": "2020",
+      "journal-title": "Future Gener. Comput. Syst."
+    },
+    {
+      "key": "ref_12",
+      "first-page": "1781",
+      "article-title": "Configuration of Input Forms in EHR Systems Using Spreadsheets, openEHR Archetypes and Template",
+      "volume": "264",
+      "author": "Sundvall",
+      "year": "2019",
+      "journal-title": "Stud. Health Technol. Inform."
+    },
+    {
+      "key": "ref_13",
+      "doi-asserted-by": "crossref",
+      "first-page": "283",
+      "DOI": "10.1016/j.scs.2018.02.014",
+      "article-title": "Ancile: Privacy-preserving framework for access control and interoperability of electronic health records using blockchain technology",
+      "volume": "39",
+      "author": "Dagher",
+      "year": "2018",
+      "journal-title": "Sustain. Cities Soc."
+    },
+    {
+      "key": "ref_14",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Riaz, R., Kim, K.H., and Ahmed, H.F. (2009, January 23–25). Security analysis survey and framework design for IP connected LoWPANs. Proceedings of the Proceedings—2009 International Symposium on Autonomous Decentralized Systems, ISADS 2009, Athens, Greece.",
+      "DOI": "10.1109/ISADS.2009.5207373"
+    },
+    {
+      "key": "ref_15",
+      "doi-asserted-by": "crossref",
+      "first-page": "7025485",
+      "DOI": "10.1155/2022/7025485",
+      "article-title": "Blockchain Framework for Secure COVID-19 Pandemic Data Handling and Protection",
+      "volume": "2022",
+      "author": "Dar",
+      "year": "2022",
+      "journal-title": "Comput. Intell. Neurosci."
+    },
+    {
+      "key": "ref_16",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1177/1847979018790589",
+      "article-title": "Blockchain technology for providing an architecture model of decentralized personal health information",
+      "volume": "10",
+      "author": "Rahmadika",
+      "year": "2018",
+      "journal-title": "Int. J. Eng. Bus. Manag."
+    },
+    {
+      "key": "ref_17",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Azaria, A., Ekblaw, A., Vieira, T., and Lippman, A. (2016, January 22–24). MedRec: Using blockchain for medical data access and permission management. Proceedings of the 2016 2nd International Conference on Open and Big Data (OBD), Vienna, Austria.",
+      "DOI": "10.1109/OBD.2016.11"
+    },
+    {
+      "key": "ref_18",
+      "doi-asserted-by": "crossref",
+      "first-page": "e13585",
+      "DOI": "10.2196/13585",
+      "article-title": "Towards a stakeholder-oriented blockchain-based architecture for electronic health records: Design science research study",
+      "volume": "21",
+      "author": "Beinke",
+      "year": "2019",
+      "journal-title": "J. Med. Internet Res."
+    },
+    {
+      "key": "ref_19",
+      "doi-asserted-by": "crossref",
+      "first-page": "104040",
+      "DOI": "10.1016/j.ijmedinf.2019.104040",
+      "article-title": "Blockchain in healthcare and health sciences—A scoping review",
+      "volume": "134",
+      "author": "Hasselgren",
+      "year": "2020",
+      "journal-title": "Int. J. Med. Inform."
+    },
+    {
+      "key": "ref_20",
+      "first-page": "762",
+      "article-title": "Resolving data interoperability in ubiquitous health profile using semi-structured storage and processing",
+      "volume": "F1477",
+      "author": "Satti",
+      "year": "2019",
+      "journal-title": "Proc. ACM Symp. Appl. Comput."
+    },
+    {
+      "key": "ref_21",
+      "doi-asserted-by": "crossref",
+      "first-page": "4613",
+      "DOI": "10.1007/s12652-020-01710-y",
+      "article-title": "MedSBA: A novel and secure scheme to share medical data based on blockchain technology and attribute-based encryption",
+      "volume": "11",
+      "author": "Pournaghi",
+      "year": "2020",
+      "journal-title": "J. Ambient Intell. Humaniz. Comput."
+    },
+    {
+      "key": "ref_22",
+      "doi-asserted-by": "crossref",
+      "unstructured": "He, X., Alqahtani, S., and Gamble, R. (August, January 30). Toward Privacy-Assured Health Insurance Claims. Proceedings of the 2018 IEEE International Conference on Internet of Things (iThings) and IEEE Green Computing and Communications (GreenCom) and IEEE Cyber, Physical and Social Computing (CPSCom) and IEEE Smart Data (SmartData), Halifax, NS, Canada.",
+      "DOI": "10.1109/Cybermatics_2018.2018.00273"
+    },
+    {
+      "key": "ref_23",
+      "doi-asserted-by": "crossref",
+      "first-page": "141",
+      "DOI": "10.1016/j.ijmedinf.2008.06.013",
+      "article-title": "Inter-organizational future proof EHR systems. A review of the security and privacy related issues",
+      "volume": "78",
+      "author": "Kalra",
+      "year": "2009",
+      "journal-title": "Int. J. Med. Inform."
+    },
+    {
+      "key": "ref_24",
+      "first-page": "15017",
+      "article-title": "Blockchain in healthcare: A patient-centered model",
+      "volume": "20",
+      "author": "Chen",
+      "year": "2019",
+      "journal-title": "Biomed. J. Sci. Tech. Res."
+    },
+    {
+      "key": "ref_25",
+      "doi-asserted-by": "crossref",
+      "first-page": "e2060",
+      "DOI": "10.1002/nem.2060",
+      "article-title": "A survey on blockchain cybersecurity vulnerabilities and possible countermeasures",
+      "volume": "29",
+      "author": "Hasanova",
+      "year": "2019",
+      "journal-title": "Int. J. Netw. Manag."
+    },
+    {
+      "key": "ref_26",
+      "first-page": "572",
+      "article-title": "EHRs: The Challenge of Making Electronic Data Usable and Interoperable",
+      "volume": "42",
+      "author": "Reisman",
+      "year": "2017",
+      "journal-title": "Pharm. Ther."
+    },
+    {
+      "key": "ref_27",
+      "doi-asserted-by": "crossref",
+      "first-page": "20",
+      "DOI": "10.1016/j.hlpt.2016.08.002",
+      "article-title": "A review of PHR, EMR and EHR integration: A more personalized healthcare and public health policy",
+      "volume": "6",
+      "author": "Heart",
+      "year": "2017",
+      "journal-title": "Health Policy Technol."
+    },
+    {
+      "key": "ref_28",
+      "doi-asserted-by": "crossref",
+      "first-page": "5768",
+      "DOI": "10.1109/ACCESS.2022.3141079",
+      "article-title": "Blockchain-Based Electronic Health Records Management: A Comprehensive Review and Future Research Direction",
+      "volume": "10",
+      "author": "Azam",
+      "year": "2022",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_29",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Donawa, A., Orukari, I., and Baker, C.E. (2019, January 10–12). Scaling Blockchains to Support Electronic Health Records for Hospital Systems. Proceedings of the 2019 IEEE 10th Annual Ubiquitous Computing, Electronics & Mobile Communication Conference (UEMCON), New York, NY, USA.",
+      "DOI": "10.1109/UEMCON47517.2019.8993101"
+    },
+    {
+      "key": "ref_30",
+      "doi-asserted-by": "crossref",
+      "first-page": "104246",
+      "DOI": "10.1016/j.ijmedinf.2020.104246",
+      "article-title": "The benefits and threats of blockchain technology in healthcare: A scoping review",
+      "volume": "142",
+      "author": "Hassan",
+      "year": "2020",
+      "journal-title": "Int. J. Med. Inform."
+    },
+    {
+      "key": "ref_31",
+      "first-page": "244",
+      "article-title": "Blockchain for Internet of Things (IoT) Research Issues Challenges & Future Directions: A Review",
+      "volume": "19",
+      "author": "Alamri",
+      "year": "2019",
+      "journal-title": "Int. J. Comput. Sci. Netw. Secur."
+    },
+    {
+      "key": "ref_32",
+      "doi-asserted-by": "crossref",
+      "first-page": "5736",
+      "DOI": "10.1109/TVT.2020.2974005",
+      "article-title": "Lightweight Blockchain Consensus Protocols for Vehicular Social Networks",
+      "volume": "69",
+      "author": "Zheng",
+      "year": "2020",
+      "journal-title": "IEEE Trans. Veh. Technol."
+    },
+    {
+      "key": "ref_33",
+      "doi-asserted-by": "crossref",
+      "first-page": "76153",
+      "DOI": "10.1109/ACCESS.2021.3081998",
+      "article-title": "Exploring Sybil and Double-Spending Risks in Blockchain Systems",
+      "volume": "9",
+      "author": "Iqbal",
+      "year": "2021",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_34",
+      "doi-asserted-by": "crossref",
+      "first-page": "153",
+      "DOI": "10.1007/s12243-020-00753-8",
+      "article-title": "Proof of usage: User-centric consensus for data provision and exchange",
+      "volume": "75",
+      "author": "Masseport",
+      "year": "2020",
+      "journal-title": "Ann. Telecommun."
+    },
+    {
+      "key": "ref_35",
+      "first-page": "365",
+      "article-title": "Ontological Representation of Healthcare Application Security Using Blockchain Technology",
+      "volume": "33",
+      "author": "Iqbal",
+      "year": "2022",
+      "journal-title": "Informatica"
+    },
+    {
+      "key": "ref_36",
+      "doi-asserted-by": "crossref",
+      "first-page": "787",
+      "DOI": "10.1007/s00530-020-00687-0",
+      "article-title": "Blockchain-enabled supply chain: Analysis, challenges, and future directions",
+      "volume": "27",
+      "author": "Jabbar",
+      "year": "2021",
+      "journal-title": "Multimed. Syst."
+    },
+    {
+      "key": "ref_37",
+      "doi-asserted-by": "crossref",
+      "first-page": "1059",
+      "DOI": "10.1016/j.procs.2020.03.073",
+      "article-title": "Modular Blockchain Implementation in Intensive Medicine",
+      "volume": "170",
+      "author": "Silva",
+      "year": "2020",
+      "journal-title": "Procedia Comput. Sci."
+    },
+    {
+      "key": "ref_38",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lahami, M., Maalej, A.J., Krichen, M., and Hammami, M.A. (2022). A Comprehensive Review of Testing Blockchain Oriented Software. ENASE, 355–362.",
+      "DOI": "10.5220/0011042800003176"
+    },
+    {
+      "key": "ref_39",
+      "doi-asserted-by": "crossref",
+      "first-page": "147",
+      "DOI": "10.1016/j.dcan.2019.01.005",
+      "article-title": "A systematic literature review of blockchain cyber security",
+      "volume": "6",
+      "author": "Taylor",
+      "year": "2020",
+      "journal-title": "Digit. Commun. Netw."
+    },
+    {
+      "key": "ref_40",
+      "first-page": "9227343",
+      "article-title": "Interoperability Requirements for Blockchain-Enabled Electronic Health Records in Healthcare: A Systematic Review and Open Research Challenges",
+      "volume": "2022",
+      "author": "Reegu",
+      "year": "2022",
+      "journal-title": "Secur. Commun. Netw."
+    },
+    {
+      "key": "ref_41",
+      "doi-asserted-by": "crossref",
+      "first-page": "352",
+      "DOI": "10.1504/IJWGS.2018.095647",
+      "article-title": "Blockchain challenges and opportunities: A survey",
+      "volume": "14",
+      "author": "Wang",
+      "year": "2018",
+      "journal-title": "Int. J. Web Grid Serv."
+    },
+    {
+      "key": "ref_42",
+      "doi-asserted-by": "crossref",
+      "first-page": "102507",
+      "DOI": "10.1016/j.ipm.2021.102507",
+      "article-title": "Proof-of-Contribution consensus mechanism for blockchain and its application in intellectual property protection",
+      "volume": "58",
+      "author": "Song",
+      "year": "2021",
+      "journal-title": "Inf. Process. Manag."
+    },
+    {
+      "key": "ref_43",
+      "doi-asserted-by": "crossref",
+      "first-page": "54371",
+      "DOI": "10.1109/ACCESS.2020.2981415",
+      "article-title": "A survey on decentralized consensus mechanisms for cyber physical systems",
+      "volume": "8",
+      "author": "Bodkhe",
+      "year": "2020",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_44",
+      "first-page": "1953723",
+      "article-title": "Systematic Assessment of the Interoperability Requirements and Challenges of Secure Blockchain-Based Electronic Health Records",
+      "volume": "2022",
+      "author": "Reegu",
+      "year": "2022",
+      "journal-title": "Secur. Commun. Netw."
+    },
+    {
+      "key": "ref_45",
+      "unstructured": "Lau, E. (2018). Decoding the Hype: Blockchain in Healthcare—A Software Architecture for the Provision of a Patient Summary to Overcome Interoperability Issues. [Master’s Thesis, Utrecht University]."
+    },
+    {
+      "key": "ref_46",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Reegu, F., Zada, K.W., Mohd, D.S., Arshad, Q., and Armi, N. (2020, January 18–20). A Reliable Public Safety Framework for Industrial Internet of Things (IIoT). Proceedings of the 2020 International Conference on Radar, Antenna, Microwave, Electronics, and Telecommunications (ICRAMET), Virtual Conference.",
+      "DOI": "10.1109/ICRAMET51080.2020.9298690"
+    },
+    {
+      "key": "ref_47",
+      "doi-asserted-by": "crossref",
+      "first-page": "810",
+      "DOI": "10.4338/ACI-2017-01-RA-0011",
+      "article-title": "Special Topic Interoperability and EHR: Combining openEHR, SNOMED, IHE, and Continua as approaches to interoperability on national eHealth",
+      "volume": "8",
+      "year": "2017",
+      "journal-title": "Appl. Clin. Inf."
+    },
+    {
+      "key": "ref_48",
+      "first-page": "6486",
+      "article-title": "Blockchain-Based Framework for Interoperable Electronic Health Record",
+      "volume": "25",
+      "author": "Reegu",
+      "year": "2021",
+      "journal-title": "Ann. Rom. Soc. Cell Biol."
+    },
+    {
+      "key": "ref_49",
+      "doi-asserted-by": "crossref",
+      "first-page": "164595",
+      "DOI": "10.1109/ACCESS.2019.2952942",
+      "article-title": "MedChain: A design of blockchain-based system for medical records access and permissions management",
+      "volume": "7",
+      "author": "Daraghmi",
+      "year": "2019",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_50",
+      "doi-asserted-by": "crossref",
+      "first-page": "158367",
+      "DOI": "10.1109/ACCESS.2021.3129284",
+      "article-title": "Survey of Interoperability in Electronic Health Records Management and Proposed Blockchain Based Framework: MyBlockEHR",
+      "volume": "9",
+      "author": "Sonkamble",
+      "year": "2021",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_51",
+      "doi-asserted-by": "crossref",
+      "first-page": "103188",
+      "DOI": "10.1016/j.jbi.2019.103188",
+      "article-title": "Using HL7 FHIR to achieve interoperability in patient health record",
+      "volume": "94",
+      "author": "Saripalle",
+      "year": "2019",
+      "journal-title": "J. Biomed. Inform."
+    },
+    {
+      "key": "ref_52",
+      "doi-asserted-by": "crossref",
+      "first-page": "104102",
+      "DOI": "10.1016/j.ijmedinf.2020.104102",
+      "article-title": "Technology-facilitated care coordination in rural areas: What is needed?",
+      "volume": "137",
+      "author": "Gill",
+      "year": "2020",
+      "journal-title": "Int. J. Med. Inform."
+    },
+    {
+      "key": "ref_53",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Farhadi, M., Haddad, H., and Shahriar, H. (2019, January 15–19). Compliance Checking of Open Source EHR Applications for HIPAA and ONC Security and Privacy Requirements. Proceedings of the 2019 IEEE 43rd Annual Computer Software and Applications Conference (COMPSAC), Milwaukee, WI, USA.",
+      "DOI": "10.1109/COMPSAC.2019.00106"
+    },
+    {
+      "key": "ref_54",
+      "doi-asserted-by": "crossref",
+      "first-page": "552",
+      "DOI": "10.1136/jamia.2001.0080552",
+      "article-title": "The HL7 clinical document architecture",
+      "volume": "8",
+      "author": "Dolin",
+      "year": "2001",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "ref_55",
+      "doi-asserted-by": "crossref",
+      "first-page": "e22",
+      "DOI": "10.2196/medinform.8403",
+      "article-title": "Implementing an Open Source Electronic Health Record System in Kenyan Health Care Facilities: Case Study",
+      "volume": "6",
+      "author": "Muinga",
+      "year": "2018",
+      "journal-title": "JMIR Med. Inform."
+    },
+    {
+      "key": "ref_56",
+      "doi-asserted-by": "crossref",
+      "first-page": "103140",
+      "DOI": "10.1016/j.jbi.2019.103140",
+      "article-title": "Analyzing the performance of a blockchain-based personal health record implementation",
+      "volume": "92",
+      "author": "Roehrs",
+      "year": "2019",
+      "journal-title": "J. Biomed. Inform."
+    },
+    {
+      "key": "ref_57",
+      "unstructured": "Roehrs, A. (2019). OmniPHR: A Blockchain Based Interoperable Architecture for Personal Health Records. [Ph.D. Thesis, Universidade do Vale do Rio dos Sinos]."
+    },
+    {
+      "key": "ref_58",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Wani, S., Imthiyas, M., Almohamedh, H., Alhamed, K.M., Almotairi, S., and Gulzar, Y. (2021). Distributed denial of service (Ddos) mitigation using blockchain—A comprehensive insight. Symmetry, 13.",
+      "DOI": "10.3390/sym13020227"
+    }
+  ],
+  "container-title": [
+    "Sustainability"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.mdpi.com/2071-1050/15/8/6337/pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        10
+      ]
+    ],
+    "date-time": "2025-10-10T19:11:42Z",
+    "timestamp": 1760123502000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.mdpi.com/2071-1050/15/8/6337"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2023,
+        4,
+        7
+      ]
+    ]
+  },
+  "references-count": 58,
+  "journal-issue": {
+    "issue": "8",
+    "published-online": {
+      "date-parts": [
+        [
+          2023,
+          4
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "su15086337"
+  ],
+  "URL": "https://doi.org/10.3390/su15086337",
+  "relation": {},
+  "ISSN": [
+    "2071-1050"
+  ],
+  "issn-type": [
+    {
+      "value": "2071-1050",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2023,
+        4,
+        7
+      ]
+    ]
+  }
+}

@@ -1,0 +1,206 @@
+[
+  {
+    "paperId": "442e10a3c6640ded9408622005e3c2a8906ce4c2",
+    "externalIds": {
+      "MAG": "2618851150",
+      "DBLP": "journals/corr/LundbergL17",
+      "ArXiv": "1705.07874",
+      "CorpusId": 21889700
+    },
+    "title": "A Unified Approach to Interpreting Model Predictions",
+    "year": 2017,
+    "citationCount": 30389,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://arxiv.org/abs/1705.07874, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A unified framework for interpreting predictions, SHAP (SHapley Additive exPlanations), which unifies six existing methods and presents new methods that show improved computational performance and/or better consistency with human intuition than previous approaches."
+    },
+    "journal": {
+      "pages": "4765-4774"
+    },
+    "authors": [
+      {
+        "authorId": "23451726",
+        "name": "Scott M. Lundberg"
+      },
+      {
+        "authorId": "2180463",
+        "name": "Su-In Lee"
+      }
+    ],
+    "abstract": "Understanding why a model makes a certain prediction can be as crucial as the prediction's accuracy in many applications. However, the highest accuracy for large modern datasets is often achieved by complex models that even experts struggle to interpret, such as ensemble or deep learning models, creating a tension between accuracy and interpretability. In response, various methods have recently been proposed to help users interpret the predictions of complex models, but it is often unclear how these methods are related and when one method is preferable over another. To address this problem, we present a unified framework for interpreting predictions, SHAP (SHapley Additive exPlanations). SHAP assigns each feature an importance value for a particular prediction. Its novel components include: (1) the identification of a new class of additive feature importance measures, and (2) theoretical results showing there is a unique solution in this class with a set of desirable properties. The new class unifies six existing methods, notable because several recent methods in the class lack the proposed desirable properties. Based on insights from this unification, we present new methods that show improved computational performance and/or better consistency with human intuition than previous approaches."
+  },
+  {
+    "paperId": "7cb4ecd0e9b10810d7e7a347adacd5e4050502ae",
+    "externalIds": {
+      "DBLP": "journals/ais/Phillips25",
+      "DOI": "10.1007/s00146-025-02337-3",
+      "CorpusId": 277728329
+    },
+    "title": "A counterintuitive approach to explainable AI in healthcare: balancing transparency, efficiency, and cost",
+    "year": 2025,
+    "citationCount": 3,
+    "openAccessPdf": {
+      "url": "",
+      "status": "CLOSED",
+      "license": null,
+      "disclaimer": "Notice: The following paper fields have been elided by the publisher: {'abstract'}. Paper or abstract available at https://api.unpaywall.org/v2/10.1007/s00146-025-02337-3?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1007/s00146-025-02337-3, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "It is argued that aligning AI design with the practical demands of clinical workflows, establishing standardized metrics for interpretability, and embedding transparency directly within model architectures are crucial steps towards realizing trustworthy and cost-efficient decision support."
+    },
+    "journal": {
+      "name": "AI & SOCIETY",
+      "pages": "5735 - 5741",
+      "volume": "40"
+    },
+    "authors": [
+      {
+        "authorId": "2328924004",
+        "name": "Vidith Phillips"
+      }
+    ],
+    "abstract": null
+  },
+  {
+    "paperId": "59002ecb49fb734ed181224e8884e37e21e8a9da",
+    "externalIds": {
+      "DOI": "10.1080/02331888.2025.2487853",
+      "CorpusId": 277806076
+    },
+    "title": "A review of the transition from Shapley values and SHAP values to RGE",
+    "year": 2025,
+    "citationCount": 11,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1080/02331888.2025.2487853?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1080/02331888.2025.2487853, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "RGE is proposed as a new metric for predictive explainability, providing a more concise and efficient method for assessing model performance by comparing full models with reduced models lacking specific variables."
+    },
+    "journal": {
+      "name": "Statistics",
+      "pages": "1161 - 1183",
+      "volume": "59"
+    },
+    "authors": [
+      {
+        "authorId": "2348957137",
+        "name": "Lunshuai Wu"
+      }
+    ],
+    "abstract": "The paper reviews the transition from Shapley values [Shapley LS. A value for n-person games. 1953;2] and SHapley Additive exPlanations (SHAP) [Lundberg SM, Lee S. A unified approach to interpreting model predictions. In: Proceedings of NIPS2017; 2017. p 4768–4777] to Rank Graduation Explainability (RGE) [Babaei G, Giudici P, Raffinetti E. A rank graduation box for safe AI. Expert Syst Appl. 2025;259:125239], exploring how these methods enhance explainability in machine learning (ML) and artificial intelligence (AI) models. Shapley values, initially used for the fair allocation of payoffs in cooperative game theory, are extended into SHAP values to evaluate feature importance, finding extensive applications in credit evaluation, economic analysis, neural networks and multiple other fields. However, the computational complexity associated with calculating Shapley values and SHAP values on high-dimensional datasets limits their practical utility in real-time or large-scale application scenarios. To address these challenges, RGE is proposed as a new metric for predictive explainability, providing a more concise and efficient method for assessing model performance by comparing full models with reduced models lacking specific variables. Recent studies which are about SHAP values also introduce improvements such as CF-SHAP, FF-SHAP, aiming to increase computational efficiency and explanatory power. Future research could further investigate the balance between theoretical rigorness and practical applicability, aiming to develop more precise and easier understandable tools to analyse complex models."
+  },
+  {
+    "paperId": "0a93627a1446eaaa608321ec3263f42fc7bcf29f",
+    "externalIds": {
+      "PubMedCentral": "12810829",
+      "DOI": "10.1371/journal.pone.0337800",
+      "CorpusId": 284810421,
+      "PubMed": "41544026"
+    },
+    "title": "Alzheimer’s disease prediction via an explainable CNN using genetic algorithm and SHAP values",
+    "year": 2026,
+    "citationCount": 0,
+    "openAccessPdf": {
+      "url": "",
+      "status": null,
+      "license": "CCBY",
+      "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC12810829, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A novel XAI technique is introduced, GASHAP, which integrates a genetic algorithm (GA) with SHapley Additive exPlanations (SHAP) to improve the explainability of the 3D convolutional neural network (3D-CNN) model, designed to classify magnetic resonance imaging brain scans of individuals with Alzheimer’s disease and cognitively normal controls."
+    },
+    "journal": {
+      "name": "PLOS One",
+      "volume": "21"
+    },
+    "authors": [
+      {
+        "authorId": "2405087569",
+        "name": "Mohammad Zahedipour"
+      },
+      {
+        "authorId": "30768895",
+        "name": "Mohammad Saniee Abadeh"
+      },
+      {
+        "authorId": "2208555816",
+        "name": "Shakila Shojaei"
+      }
+    ],
+    "abstract": "Convolutional neural networks (CNNs) are widely recognized for their high precision in image classification. Nevertheless, the lack of transparency in these black-box models raises concerns in sensitive domains such as healthcare, where understanding the knowledge acquired to derive outcomes can be challenging. To address this concern, several strategies within the field of explainable AI (XAI) have been developed to enhance model interpretability. This study introduces a novel XAI technique, GASHAP, which integrates a genetic algorithm (GA) with SHapley Additive exPlanations (SHAP) to improve the explainability of our 3D convolutional neural network (3D-CNN) model. The model is designed to classify magnetic resonance imaging (MRI) brain scans of individuals with Alzheimer’s disease and cognitively normal controls. Deep SHAP, a widely used XAI technique, facilitates the understanding of the influence exerted by various voxels on the final classification outcome (Lundberg SM, Lee SI. A unified approach to interpreting model predictions. In: Advances in Neural Information Processing Systems, 2017. 4765–74. https://doi.org/10.5555/3295222.3295230). However, voxel-level representation alone lacks interpretive clarity. Therefore, the objective of this study is to provide findings at the level of anatomically defined brain regions. Critical regions are identified by leveraging their SHAP values, followed by the application of a genetic algorithm to generate a definitive mask highlighting the most significant regions for Alzheimer’s disease diagnosis (Shahamat H, Saniee Abadeh M. Brain MRI analysis using a deep learning based evolutionary approach. Neural Netw. 2020;126:218–34. https://doi.org/10.1016/j.neunet.2020.03.017 PMID: 32259762). The research commenced by implementing a 3D-CNN for MRI image classification. Subsequently, the GASHAP technique was applied to enhance model transparency. The final result is a brain mask that delineates the pertinent regions crucial for Alzheimer’s disease diagnosis. Finally, a comparative analysis is conducted between our findings and those of previous studies."
+  },
+  {
+    "paperId": "c8299e540e4115f8f44fa3ca966f1736c6d04a4f",
+    "externalIds": {
+      "MAG": "3043310174",
+      "DOI": "10.1200/CCI.20.00002",
+      "CorpusId": 220606676,
+      "PubMed": "32673068"
+    },
+    "title": "Machine Learning-Based Interpretation and Visualization of Nonlinear Interactions in Prostate Cancer Survival.",
+    "year": 2020,
+    "citationCount": 71,
+    "openAccessPdf": {
+      "url": "https://ascopubs.org/doi/pdfdirect/10.1200/CCI.20.00002",
+      "status": "BRONZE",
+      "license": null,
+      "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1200/CCI.20.00002?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1200/CCI.20.00002, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+    },
+    "tldr": {
+      "model": "tldr@v2.0.0",
+      "text": "A novel application of SHAP values for modeling and visualizing nonlinear interaction effects in prostate cancer is described, with the potential to meaningfully improve risk stratification and staging systems."
+    },
+    "journal": {
+      "name": "JCO clinical cancer informatics",
+      "pages": "\n          637-646\n        ",
+      "volume": "4"
+    },
+    "authors": [
+      {
+        "authorId": "50392067",
+        "name": "Richard Li"
+      },
+      {
+        "authorId": "35699702",
+        "name": "A. Shinde"
+      },
+      {
+        "authorId": "144675148",
+        "name": "An Liu"
+      },
+      {
+        "authorId": "5672382",
+        "name": "S. Glaser"
+      },
+      {
+        "authorId": "4779907",
+        "name": "Y. Lyou"
+      },
+      {
+        "authorId": "2080656842",
+        "name": "Bertram Yuh"
+      },
+      {
+        "authorId": "13672947",
+        "name": "J. Wong"
+      },
+      {
+        "authorId": "2639649",
+        "name": "A. Amini"
+      }
+    ],
+    "abstract": "PURPOSE\nShapley additive explanation (SHAP) values represent a unified approach to interpreting predictions made by complex machine learning (ML) models, with superior consistency and accuracy compared with prior methods. We describe a novel application of SHAP values to the prediction of mortality risk in prostate cancer.\n\n\nMETHODS\nPatients with nonmetastatic, node-negative prostate cancer, diagnosed between 2004 and 2015, were identified using the National Cancer Database. Model features were specified a priori: age, prostate-specific antigen (PSA), Gleason score, percent positive cores (PPC), comorbidity score, and clinical T stage. We trained a gradient-boosted tree model and applied SHAP values to model predictions. Open-source libraries in Python 3.7 were used for all analyses.\n\n\nRESULTS\nWe identified 372,808 patients meeting the inclusion criteria. When analyzing the interaction between PSA and Gleason score, we demonstrated consistency with the literature using the example of low-PSA, high-Gleason prostate cancer, recently identified as a unique entity with a poor prognosis. When analyzing the PPC-Gleason score interaction, we identified a novel finding of stronger interaction effects in patients with Gleason ≥ 8 disease compared with Gleason 6-7 disease, particularly with PPC ≥ 50%. Subsequent confirmatory linear analyses supported this finding: 5-year overall survival in Gleason ≥ 8 patients was 87.7% with PPC < 50% versus 77.2% with PPC ≥ 50% (P < .001), compared with 89.1% versus 86.0% in Gleason 7 patients (P < .001), with a significant interaction term between PPC ≥ 50% and Gleason ≥ 8 (P < .001).\n\n\nCONCLUSION\nWe describe a novel application of SHAP values for modeling and visualizing nonlinear interaction effects in prostate cancer. This ML-based approach is a promising technique with the potential to meaningfully improve risk stratification and staging systems."
+  }
+]

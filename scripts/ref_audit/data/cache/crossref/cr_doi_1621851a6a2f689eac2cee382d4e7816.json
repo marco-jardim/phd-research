@@ -1,0 +1,377 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        6,
+        17
+      ]
+    ],
+    "date-time": "2025-06-17T13:02:31Z",
+    "timestamp": 1750165351566
+  },
+  "reference-count": 19,
+  "publisher": "FapUNIFESP (SciELO)",
+  "issue": "0",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Rev. Saúde Pública"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  },
+  "abstract": "<jats:p>ABSTRACT  OBJECTIVE  To analyze the accuracy of deterministic and probabilistic record linkage to identify TB duplicate records, as well as the characteristics of discordant pairs.  METHODS  The study analyzed all TB records from 2009 to 2011 in the state of Rio de Janeiro. A deterministic record linkage algorithm was developed using a set of 70 rules, based on the combination of fragments of the key variables with or without modification (Soundex or substring). Each rule was formed by three or more fragments. The probabilistic approach required a cutoff point for the score, above which the links would be automatically classified as belonging to the same individual. The cutoff point was obtained by linkage of the Notifiable Diseases Information System – Tuberculosis database with itself, subsequent manual review and ROC curves and precision-recall. Sensitivity and specificity for accurate analysis were calculated.  RESULTS  Accuracy ranged from 87.2% to 95.2% for sensitivity and 99.8% to 99.9% for specificity for probabilistic and deterministic record linkage, respectively. The occurrence of missing values for the key variables and the low percentage of similarity measure for name and date of birth were mainly responsible for the failure to identify records of the same individual with the techniques used.  CONCLUSIONS  The two techniques showed a high level of correlation for pair classification. Although deterministic linkage identified more duplicate records than probabilistic linkage, the latter retrieved records not identified by the former. User need and experience should be considered when choosing the best technique to be used.</jats:p>",
+  "DOI": "10.1590/s1518-8787.2016050006327",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2016,
+        8,
+        20
+      ]
+    ],
+    "date-time": "2016-08-20T14:00:47Z",
+    "timestamp": 1471701647000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 20,
+  "title": [
+    "Accuracy of probabilistic and deterministic record linkage: the case of tuberculosis"
+  ],
+  "prefix": "10.1590",
+  "volume": "50",
+  "author": [
+    {
+      "given": "Gisele Pinto de",
+      "family": "Oliveira",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brasil"
+        }
+      ]
+    },
+    {
+      "given": "Ana Luiza de Souza",
+      "family": "Bierrenbach",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Hospital Sírio-Libanês,  Brasil"
+        }
+      ]
+    },
+    {
+      "given": "Kenneth Rochel de",
+      "family": "Camargo Júnior",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade do Estado do Rio de Janeiro,  Brasil"
+        }
+      ]
+    },
+    {
+      "given": "Cláudia Medina",
+      "family": "Coeli",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brasil"
+        }
+      ]
+    },
+    {
+      "given": "Rejane Sobrino",
+      "family": "Pinheiro",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brasil"
+        }
+      ]
+    }
+  ],
+  "member": "530",
+  "reference": [
+    {
+      "issue": "11",
+      "key": "ref1",
+      "doi-asserted-by": "crossref",
+      "first-page": "2459",
+      "DOI": "10.1590/0102-311X00116313",
+      "article-title": "Melhoria da qualidade das informações sobre tuberculose a partir do relacionamento entre bases de dados",
+      "volume": "30",
+      "author": "Bartholomay P",
+      "year": "2014",
+      "journal-title": "Cad Saude Publica"
+    },
+    {
+      "key": "ref2",
+      "doi-asserted-by": "crossref",
+      "first-page": "67",
+      "DOI": "10.1590/S0034-89102007000800010",
+      "article-title": "Efeito da remoção de notificações repetidas sobre a incidência da tuberculose no Brasil",
+      "volume": "41",
+      "author": "Bierrenbach AL",
+      "year": "2007",
+      "journal-title": "Rev Saude Publica"
+    },
+    {
+      "issue": "5",
+      "key": "ref3",
+      "first-page": "593",
+      "article-title": "Duplicates and misclassification of tuberculosis notification records in Brazil, 2001–2007",
+      "volume": "14",
+      "author": "Bierrenbach AL",
+      "year": "2010",
+      "journal-title": "Int J Tuberc Lung Dis"
+    },
+    {
+      "issue": "2",
+      "key": "ref4",
+      "doi-asserted-by": "crossref",
+      "first-page": "257",
+      "DOI": "10.1590/0102-311X00041214",
+      "article-title": "Going open source: some lessons learned from the development of OpenRecLink",
+      "volume": "31",
+      "author": "Camargo Jr KR",
+      "year": "2015",
+      "journal-title": "Cad Saude Publica"
+    },
+    {
+      "issue": "8",
+      "key": "ref5",
+      "doi-asserted-by": "crossref",
+      "first-page": "1623",
+      "DOI": "10.1590/0102-311X00024914",
+      "article-title": "Accuracy of a probabilistic record-linkage methodology used to track blood donors in the Mortality Information System database",
+      "volume": "30",
+      "author": "Capuani L",
+      "year": "2014",
+      "journal-title": "Cad Saude Publica"
+    },
+    {
+      "key": "ref6",
+      "series-title": "Data matching: concepts and techniques for record linkage, entity resolution, and duplicate detection",
+      "author": "Christen P",
+      "year": "2012"
+    },
+    {
+      "issue": "2",
+      "key": "ref7",
+      "doi-asserted-by": "crossref",
+      "first-page": "185",
+      "DOI": "10.1590/S1415-790X2002000200006",
+      "article-title": "Avaliação de diferentes estratégias de blocagem no relacionamento probabilístico de registros",
+      "volume": "5",
+      "author": "Coeli CM",
+      "year": "2002",
+      "journal-title": "Rev Bras Epidemiol"
+    },
+    {
+      "issue": "7",
+      "key": "ref8",
+      "doi-asserted-by": "crossref",
+      "first-page": "1431",
+      "DOI": "10.1590/S0102-311X2010000700022",
+      "article-title": "Accuracy of a probabilistic record linkage strategy applied to identify deaths among cases reported to the Brazilian AIDS surveillance database",
+      "volume": "26",
+      "author": "Fonseca MGP",
+      "year": "2010",
+      "journal-title": "Cad Saude Publica"
+    },
+    {
+      "key": "ref9",
+      "first-page": "259",
+      "article-title": "Analysis of a probabilistic record linkage technique without human review",
+      "author": "Grannis SJ",
+      "year": "2003",
+      "journal-title": "AMIA Annu Symp Proc"
+    },
+    {
+      "key": "ref10",
+      "series-title": "Data quality and record linkage techniques",
+      "author": "Herzog TN",
+      "year": "2007"
+    },
+    {
+      "issue": "3",
+      "key": "ref11",
+      "first-page": "245",
+      "article-title": "Avaliação da completitude do Sistema de Informação de Agravos de Notificação da Tuberculose, Brasil, 2001-2006",
+      "volume": "19",
+      "author": "Malhão TA",
+      "year": "2014",
+      "journal-title": "Epidemiol Serv Saude"
+    },
+    {
+      "issue": "2",
+      "key": "ref12",
+      "doi-asserted-by": "crossref",
+      "first-page": "269",
+      "DOI": "10.1590/S0034-89102011005000012",
+      "article-title": "Acurácia do relacionamento probabilístico na avaliação da alta complexidade em cardiologia",
+      "volume": "45",
+      "author": "Migowski A",
+      "year": "2011",
+      "journal-title": "Rev Saude Publica"
+    },
+    {
+      "issue": "4",
+      "key": "ref13",
+      "doi-asserted-by": "crossref",
+      "first-page": "531",
+      "DOI": "10.1007/s10995-008-0377-6",
+      "article-title": "Accuracy of public health data linkages",
+      "volume": "13",
+      "author": "Mohamed GQ",
+      "year": "2009",
+      "journal-title": "Matern Child Health J"
+    },
+    {
+      "issue": "4",
+      "key": "ref14",
+      "doi-asserted-by": "crossref",
+      "first-page": "225",
+      "DOI": "10.1590/S1806-37132008000400007",
+      "article-title": "Completude dos dados do Programa de Controle da Tuberculose no Sistema de Informação de Agravos de Notificação no Estado do Espírito Santo, Brasil: uma análise do período de 2001 a 2005",
+      "volume": "34",
+      "author": "Moreira CMM",
+      "year": "2008",
+      "journal-title": "J Bras Pneumol"
+    },
+    {
+      "issue": "11",
+      "key": "ref15",
+      "doi-asserted-by": "crossref",
+      "first-page": "1326",
+      "DOI": "10.1093/aje/kwn249",
+      "article-title": "Validation of a hierarchical deterministic record-linkage algorithm using data from 2 different cohorts of human immunodeficiency virus-infected persons and mortality databases in Brazil",
+      "volume": "168",
+      "author": "Pacheco AG",
+      "year": "2008",
+      "journal-title": "Am J Epidemiol"
+    },
+    {
+      "issue": "5",
+      "key": "ref16",
+      "doi-asserted-by": "crossref",
+      "first-page": "875",
+      "DOI": "10.1590/S0034-89102009005000060",
+      "article-title": "Acurácia em métodos de relacionamento probabilístico de bases de dados em saúde: revisão sistemática",
+      "volume": "43",
+      "author": "Silveira DP",
+      "year": "2009",
+      "journal-title": "Rev Saude Publica"
+    },
+    {
+      "issue": "20",
+      "key": "ref17",
+      "doi-asserted-by": "crossref",
+      "first-page": "3940",
+      "DOI": "10.1093/bioinformatics/bti623",
+      "article-title": "ROCR: visualizing classifier performance in R",
+      "volume": "21",
+      "author": "Sing T",
+      "year": "2005",
+      "journal-title": "Bioinformatics"
+    },
+    {
+      "issue": "12",
+      "key": "ref18",
+      "doi-asserted-by": "crossref",
+      "first-page": "1606",
+      "DOI": "10.1017/S0950268808000496",
+      "article-title": "Record-linkage and capture-recapture analysis to estimate the incidence and completeness of reporting of tuberculosis in England 1999-2002",
+      "volume": "136",
+      "author": "Van Hest NA",
+      "year": "2008",
+      "journal-title": "Epidemiol Infect"
+    },
+    {
+      "key": "ref19",
+      "series-title": "Assessing tuberculosis under-reporting through inventory studies",
+      "year": "2012"
+    }
+  ],
+  "container-title": [
+    "Revista de Saúde Pública"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://www.scielo.br/pdf/rsp/v50/0034-8910-rsp-S1518-87872016050006327.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2017,
+        5,
+        24
+      ]
+    ],
+    "date-time": "2017-05-24T01:26:13Z",
+    "timestamp": 1495589173000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S0034-89102016000100236&lng=en&tlng=en"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  },
+  "references-count": 19,
+  "journal-issue": {
+    "issue": "0",
+    "published-print": {
+      "date-parts": [
+        [
+          2016
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "S0034-89102016000100236"
+  ],
+  "URL": "https://doi.org/10.1590/s1518-8787.2016050006327",
+  "relation": {},
+  "ISSN": [
+    "0034-8910"
+  ],
+  "issn-type": [
+    {
+      "value": "0034-8910",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  }
+}

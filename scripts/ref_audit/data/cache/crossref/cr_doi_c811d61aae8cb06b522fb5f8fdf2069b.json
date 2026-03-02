@@ -1,0 +1,477 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        7,
+        30
+      ]
+    ],
+    "date-time": "2025-07-30T15:02:40Z",
+    "timestamp": 1753887760356,
+    "version": "3.41.2"
+  },
+  "reference-count": 25,
+  "publisher": "FapUNIFESP (SciELO)",
+  "issue": "12",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2019-01-01T00:00:00Z",
+        "timestamp": 1546300800000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2019-01-01T00:00:00Z",
+        "timestamp": 1546300800000
+      },
+      "content-version": "am",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2019-01-01T00:00:00Z",
+        "timestamp": 1546300800000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Cad. Saúde Pública"
+  ],
+  "abstract": "<jats:p>Resumo: O Sistema de Informação de Agravos de Notificação (Sinan) é a principal ferramenta utilizada pelos programas de controle da tuberculose (TB), para avaliar as ações de controle e a taxa de incidência da doença. Para tal, faz-se necessário que os dados provenientes desse sistema sejam, dentre outros, confiáveis e acurados. Dessa forma, o objetivo deste estudo foi qualificar as variáveis tipo de entrada, situação de encerramento, teste para HIV, agravo associado aids e diabetes. Foi realizado um linkage entre a base de dados do Sinan-TB, do Sistema de Informações sobre Mortalidade (SIM) e a base única da aids do Município do Rio de Janeiro, Brasil. Os critérios para qualificação das variáveis estão fundamentados em materiais técnicos sobre a TB e sobre o Sinan, e foram implementados em um script em Structured Query Language (SQL). Observou-se um aumento de 115% do abandono de tratamento decorrente da diminuição das transferências, dos registros sem encerramento e de pacientes encerrados por cura com menos de 150 dias. Houve acréscimo de 2,4% de registros com agravo associado diabetes na categoria sim, após utilizada a informação contida no SIM. Para as variáveis teste para HIV e agravo associado à aids o acréscimo foi de 5,3% e 8,7%, respectivamente, com a consideração da informação contida na base da aids. Concluiu-se que a qualificação da base de dados do Sinan-TB, valendo-se da integração com outros sistemas de informação, aprimorou a qualidade da informação para a tomada de decisão para o controle da TB.</jats:p>",
+  "DOI": "10.1590/0102-311x00074318",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2019,
+        11,
+        27
+      ]
+    ],
+    "date-time": "2019-11-27T19:36:50Z",
+    "timestamp": 1574883410000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 7,
+  "title": [
+    "Uso de linkage entre diferentes bases de dados para qualificação de variáveis do Sinan-TB e a partir de regras de scripting"
+  ],
+  "prefix": "10.1590",
+  "volume": "35",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0003-2358-0848",
+      "authenticated-orcid": false,
+      "given": "Marli Souza",
+      "family": "Rocha",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-0689-5055",
+      "authenticated-orcid": false,
+      "given": "Gisele Pinto de",
+      "family": "Oliveira",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-5246-733X",
+      "authenticated-orcid": false,
+      "given": "Luis Carlos Torres",
+      "family": "Guillen",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-1757-3940",
+      "authenticated-orcid": false,
+      "given": "Claudia Medina",
+      "family": "Coeli",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-7360-6490",
+      "authenticated-orcid": false,
+      "given": "Valéria",
+      "family": "Saraceni",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Secretaria Municipal de Saúde do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-3361-3626",
+      "authenticated-orcid": false,
+      "given": "Rejane Sobrino",
+      "family": "Pinheiro",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brazil"
+        }
+      ]
+    }
+  ],
+  "member": "530",
+  "published-online": {
+    "date-parts": [
+      [
+        2019
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "year": "2011",
+      "series-title": "Manual de recomendações para o controle da tuberculose no Brasil",
+      "key": "ref1"
+    },
+    {
+      "key": "ref2",
+      "doi-asserted-by": "crossref",
+      "first-page": "150",
+      "DOI": "10.1590/1414-462X201500020092",
+      "article-title": "Confiabilidade do desfecho do tratamento usando linkage de bases de dados para a tuberculose",
+      "volume": "23",
+      "author": "Rocha MS",
+      "year": "2015",
+      "journal-title": "Cad Saúde Colet (Rio J.)"
+    },
+    {
+      "key": "ref3",
+      "first-page": "107",
+      "article-title": "Linkage entre SIM e SINAN para a melhoria da qualidade dos dados do sistema de informação da tuberculose a experiência nacional",
+      "volume": "18",
+      "author": "Oliveira GP",
+      "year": "2010",
+      "journal-title": "Cad Saúde Colet (Rio J.)"
+    },
+    {
+      "key": "ref4",
+      "first-page": "146",
+      "article-title": "Análise da qualidade das informações sobre tuberculose no Município de Belford Roxo, Rio de Janeiro, 2006 a 2008",
+      "volume": "20",
+      "author": "Medeiros D",
+      "year": "2012",
+      "journal-title": "Cad Saúde Colet (Rio J.)"
+    },
+    {
+      "key": "ref5",
+      "doi-asserted-by": "crossref",
+      "first-page": "2459",
+      "DOI": "10.1590/0102-311X00116313",
+      "article-title": "Melhoria da qualidade das informações sobre tuberculose a partir do relacionamento entre bases de dados",
+      "volume": "30",
+      "author": "Bartholomay P",
+      "year": "2014",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref6",
+      "first-page": "1143",
+      "article-title": "Completude das fichas de notificação de tuberculose nos municípios prioritários da Bahia para controle da doença em indivíduos com HIV/AIDS",
+      "volume": "20",
+      "author": "Lírio M",
+      "year": "2015",
+      "journal-title": "Ciênc Saúde Colet"
+    },
+    {
+      "key": "ref7",
+      "first-page": "221",
+      "article-title": "Completude das fichas de notificações de tuberculose em cinco capitais do Brasil com elevada incidência da doença",
+      "volume": "39",
+      "author": "Santos NP",
+      "year": "2013",
+      "journal-title": "J Bras Pneumol"
+    },
+    {
+      "key": "ref8",
+      "doi-asserted-by": "crossref",
+      "first-page": "245",
+      "DOI": "10.5123/S1679-49742010000300007",
+      "article-title": "Avaliação da completitude do Sistema de Informação de Agravos de Notificação da Tuberculose, Brasil, 2001-2006",
+      "volume": "19",
+      "author": "Malhão TA",
+      "year": "2010",
+      "journal-title": "Epidemiol Serv Saúde"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "crossref",
+      "first-page": "1151",
+      "DOI": "10.1016/S0140-6736(17)32152-9",
+      "article-title": "Global, regional, and national age-sex specific mortality for 264 causes of death, 1980-2016: a systematic analysis for the Global Burden of Disease Study 2016",
+      "volume": "390",
+      "year": "2017",
+      "journal-title": "Lancet"
+    },
+    {
+      "key": "ref10",
+      "first-page": "49",
+      "article-title": "Acurácia das técnicas de relacionamento probabilístico e determinístico: o caso da tuberculose",
+      "volume": "50",
+      "author": "Oliveira GP",
+      "year": "2016",
+      "journal-title": "Rev Saúde Pública"
+    },
+    {
+      "key": "ref11",
+      "first-page": "593",
+      "article-title": "Duplicates and misclassification of tuberculosis notification records in Brazil, 2001-2007",
+      "volume": "14",
+      "author": "Bierrenbach AL",
+      "year": "2010",
+      "journal-title": "Int J Tuberc Lung Dis"
+    },
+    {
+      "key": "ref12"
+    },
+    {
+      "year": "2014",
+      "author": "Santos ML",
+      "series-title": "Fatores associados à subnotificação de TB e AIDS, durante os anos de 2001 a 2010, a partir do Sinan",
+      "key": "ref13"
+    },
+    {
+      "year": "2007",
+      "series-title": "Sistema de Informação Agravos de Notificação - SinanNET: manual do sistema",
+      "key": "ref14"
+    },
+    {
+      "year": "2002",
+      "series-title": "Guia de vigilância epidemiológica",
+      "key": "ref15"
+    },
+    {
+      "key": "ref16",
+      "series-title": "Introdução a sistemas de banco de dados.",
+      "volume": "v. 1",
+      "author": "Date CJ",
+      "year": "2004"
+    },
+    {
+      "year": "1998",
+      "author": "Simkovics S",
+      "series-title": "Enhancement of the ANSI SQL Implementation of PostgreSQL",
+      "key": "ref17"
+    },
+    {
+      "key": "ref18",
+      "doi-asserted-by": "crossref",
+      "first-page": "257",
+      "DOI": "10.1590/0102-311X00041214",
+      "article-title": "Going open source: some lessons learned from the development of OpenRecLink",
+      "volume": "31",
+      "author": "Camargo Jr KR",
+      "year": "2015",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref19",
+      "doi-asserted-by": "crossref",
+      "first-page": "599",
+      "DOI": "10.1590/S0104-07072011000300023",
+      "article-title": "Fatores associados ao abandono do tratamento da tuberculose uma revisão integrativa",
+      "volume": "20",
+      "author": "Chirinos NEC",
+      "year": "2011",
+      "journal-title": "Texto & Contexto Enferm"
+    },
+    {
+      "key": "ref20",
+      "doi-asserted-by": "crossref",
+      "first-page": "158",
+      "DOI": "10.1136/thx.2005.045963",
+      "article-title": "Risk factors for multidrug resistant tuberculosis in Europe a systematic review",
+      "volume": "61",
+      "author": "Faustini A",
+      "year": "2006",
+      "journal-title": "Thorax"
+    },
+    {
+      "key": "ref21",
+      "doi-asserted-by": "crossref",
+      "first-page": "531",
+      "DOI": "10.5588/ijtld.14.0291",
+      "article-title": "Multidrug-resistant tuberculosis in the Amazonas State, Brazil, 2000-2011",
+      "volume": "19",
+      "author": "Garrido MS",
+      "year": "2015",
+      "journal-title": "Int J Tuberc Lung Dis"
+    },
+    {
+      "key": "ref22",
+      "doi-asserted-by": "crossref",
+      "first-page": "232",
+      "DOI": "10.1590/S1020-49892000000400004",
+      "article-title": "Recidivas em tuberculose e seus fatores de risco",
+      "volume": "7",
+      "author": "Oliveira HB",
+      "year": "2000",
+      "journal-title": "Rev Panam Salud Pública"
+    },
+    {
+      "key": "ref23",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1590/0102-311x00019315",
+      "article-title": "Fatores associados à coinfecção tuberculose e HIV o que apontam os dados de notificação do Estado do Amazonas, Brasil, 2001-2012",
+      "volume": "33",
+      "author": "Magno ES",
+      "year": "2017",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref24",
+      "doi-asserted-by": "crossref",
+      "first-page": "548",
+      "DOI": "10.1590/S0034-89102011005000021",
+      "article-title": "Subnotificação da comorbidade tuberculose e AIDS uma aplicação do método de linkage",
+      "volume": "45",
+      "author": "Carvalho CN",
+      "year": "2011",
+      "journal-title": "Rev Saúde Pública"
+    },
+    {
+      "key": "ref25",
+      "doi-asserted-by": "crossref",
+      "first-page": "134",
+      "DOI": "10.1590/S1415-790X2012000100012",
+      "article-title": "Qualidade da informação sobre mortalidade numa coorte de diabéticos - Estado do Rio de Janeiro, 2000 a 2003",
+      "volume": "15",
+      "author": "Cascão AM",
+      "year": "2012",
+      "journal-title": "Rev Bras Epidemiol"
+    }
+  ],
+  "container-title": [
+    "Cadernos de Saúde Pública"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://www.scielo.br/pdf/csp/v35n12/1678-4464-csp-35-12-e00074318.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2020,
+        7,
+        31
+      ]
+    ],
+    "date-time": "2020-07-31T21:19:44Z",
+    "timestamp": 1596230384000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S0102-311X2019001404001&tlng=pt"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2019
+      ]
+    ]
+  },
+  "references-count": 25,
+  "journal-issue": {
+    "issue": "12",
+    "published-online": {
+      "date-parts": [
+        [
+          2019
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "S0102-311X2019001404001"
+  ],
+  "URL": "https://doi.org/10.1590/0102-311x00074318",
+  "relation": {},
+  "ISSN": [
+    "1678-4464",
+    "0102-311X"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "1678-4464"
+    },
+    {
+      "type": "print",
+      "value": "0102-311X"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2019
+      ]
+    ]
+  },
+  "article-number": "e00074318"
+}

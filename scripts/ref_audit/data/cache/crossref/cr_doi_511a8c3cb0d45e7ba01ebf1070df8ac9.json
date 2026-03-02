@@ -1,0 +1,872 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        2,
+        21
+      ]
+    ],
+    "date-time": "2025-02-21T10:50:27Z",
+    "timestamp": 1740135027536,
+    "version": "3.37.3"
+  },
+  "reference-count": 58,
+  "publisher": "Springer Science and Business Media LLC",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            1
+          ]
+        ],
+        "date-time": "2024-06-01T00:00:00Z",
+        "timestamp": 1717200000000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            1
+          ]
+        ],
+        "date-time": "2024-06-01T00:00:00Z",
+        "timestamp": 1717200000000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100003593",
+      "name": "Conselho Nacional de Desenvolvimento Científico e Tecnológico",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "312056/2022-2"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "312056/2022-2"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100003593",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100004586",
+      "name": "Fundação Carlos Chagas Filho de Amparo à Pesquisa do Estado do Rio de Janeiro",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "211.970/2021"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "211.970/2021"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100004586",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100006702",
+      "name": "Universidade do Estado do Rio de Janeiro",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "Program for Incentives to Scientific, Technical, and Artistic Production of the State University of Rio de Janeiro (PROCIENCIA/UERJ)"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "Program for Incentives to Scientific, Technical, and Artistic Production of the State University of Rio de Janeiro (PROCIENCIA/UERJ)"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100006702",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "link.springer.com"
+    ],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "BMC Public Health"
+  ],
+  "abstract": "<jats:title>Abstract</jats:title><jats:sec>\n                <jats:title>Background</jats:title>\n                <jats:p>Globally, the counting of deaths based on gender identity and sexual orientation has been a challenge for health systems. In most cases, non-governmental organizations have dedicated themselves to this work. Despite these efforts in generating information, the scarcity of official data presents significant limitations in policy formulation and actions guided by population needs. Therefore, this manuscript aims to evaluate the accuracy, potential, and limits of probabilistic data relationships to yield information on deaths according to gender identity and sexual orientation in the State of Rio de Janeiro.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Methods</jats:title>\n                <jats:p>This study evaluated the accuracy of the probabilistic record linkage to obtain information on deaths according to gender and sexual orientation. Data from two information systems were used from June 15, 2015 to December 31, 2020. We constructed nine probabilistic data relationship strategies and identified the performance and cutoff points of the best strategy.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Results</jats:title>\n                <jats:p>The best data blocking strategy was established through logical blocks with the first and last names, birthdate, and mother’s name in the pairing strategy. With a population base of 80,178 records, 1556 deaths were retrieved. With an area under the curve of 0.979, this strategy presented 93.26% accuracy, 98.46% sensitivity, and 90.04% specificity for the cutoff point ≥ 17.9 of the data relationship score. The adoption of the cutoff point optimized the manual review phase, identifying 2259 (90.04%) of the 2509 false pairs and identifying 1532 (98.46%) of the 1556 true pairs.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Conclusion</jats:title>\n                <jats:p>With the identification of possible strategies for determining probabilistic data relationships, the retrieval of information on mortality according to sexual and gender markers has become feasible. Based on information from the daily routine of health services, the formulation of public policies that consider the LGBTQ + population more closely reflects the reality experienced by these population groups.</jats:p>\n              </jats:sec>",
+  "DOI": "10.1186/s12889-024-19002-x",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2024,
+        6,
+        1
+      ]
+    ],
+    "date-time": "2024-06-01T16:01:49Z",
+    "timestamp": 1717257709000
+  },
+  "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Accuracy, potential, and limitations of probabilistic record linkage in identifying deaths by gender identity and sexual orientation in the state of Rio De Janeiro, Brazil"
+  ],
+  "prefix": "10.1186",
+  "volume": "24",
+  "author": [
+    {
+      "given": "Ricardo",
+      "family": "de Mattos Russo Rafael",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Kleison Pereira",
+      "family": "da Silva",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Helena Gonçalves",
+      "family": "de Souza Santos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Davi Gomes",
+      "family": "Depret",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Jaime Alonso",
+      "family": "Caravaca-Morera",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Karen Marie Lucas",
+      "family": "Breda",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "297",
+  "published-online": {
+    "date-parts": [
+      [
+        2024,
+        6,
+        1
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "19002_CR1",
+      "doi-asserted-by": "publisher",
+      "first-page": "e1018",
+      "DOI": "10.1016/S2214-109X(20)30285-0",
+      "volume": "8",
+      "author": "P Baqui",
+      "year": "2020",
+      "unstructured": "Baqui P, Bica I, Marra V, Ercole A, van der Schaar M. Ethnic and regional variations in hospital mortality from COVID-19 in Brazil: a cross-sectional observational study. Lancet Glob Health. 2020;8:e1018–26.",
+      "journal-title": "Lancet Glob Health"
+    },
+    {
+      "key": "19002_CR2",
+      "doi-asserted-by": "publisher",
+      "first-page": "e1003509",
+      "DOI": "10.1371/journal.pmed.1003509",
+      "volume": "18",
+      "author": "D Ramos",
+      "year": "2021",
+      "unstructured": "Ramos D, da Silva NB, Ichihara MY, Fiaccone RL, Almeida D, Sena S, et al. Conditional cash transfer program and child mortality: a cross-sectional analysis nested within the 100 million Brazilian cohort. PLoS Med. 2021;18:e1003509.",
+      "journal-title": "PLoS Med"
+    },
+    {
+      "key": "19002_CR3",
+      "doi-asserted-by": "publisher",
+      "first-page": "1628",
+      "DOI": "10.1016/S0140-6736(19)30235-1",
+      "volume": "393",
+      "author": "TJ Bollyky",
+      "year": "2019",
+      "unstructured": "Bollyky TJ, Templin T, Cohen M, Schoder D, Dieleman JL, Wigley S. The relationships between democratic experience, adult health, and cause-specific mortality in 170 countries between 1980 and 2016: an observational analysis. Lancet. 2019;393:1628–40.",
+      "journal-title": "Lancet"
+    },
+    {
+      "key": "19002_CR4",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Rebora P, Scirè CA, Occhino G, Bortolan F, Leoni O, Cideni F et al. Development and validation of an electronic database-based frailty index to predict mortality and hospitalization in a population-based study of adults with SARS-CoV-2. Front Med (Lausanne). 2023;10.",
+      "DOI": "10.3389/fmed.2023.1134377"
+    },
+    {
+      "key": "19002_CR5",
+      "doi-asserted-by": "publisher",
+      "first-page": "1596",
+      "DOI": "10.1186/s12889-020-09639-9",
+      "volume": "20",
+      "author": "AZZ Phyo",
+      "year": "2020",
+      "unstructured": "Phyo AZZ, Freak-Poli R, Craig H, Gasevic D, Stocks NP, Gonzalez-Chica DA, et al. Quality of life and mortality in the general population: a systematic review and meta-analysis. BMC Public Health. 2020;20:1596.",
+      "journal-title": "BMC Public Health"
+    },
+    {
+      "key": "19002_CR6",
+      "doi-asserted-by": "publisher",
+      "first-page": "e504",
+      "DOI": "10.1016/S2468-2667(22)00081-0",
+      "volume": "7",
+      "author": "GD Batty",
+      "year": "2022",
+      "unstructured": "Batty GD, Kivimäki M, Frank P. State care in childhood and adult mortality: a systematic review and meta-analysis of prospective cohort studies. Lancet Public Health. 2022;7:e504–14.",
+      "journal-title": "Lancet Public Health"
+    },
+    {
+      "key": "19002_CR7",
+      "volume-title": "Declaração De Óbito: manual de instruções para preenchimento",
+      "author": "Ministério da Saúde",
+      "year": "2022",
+      "unstructured": "Ministério da Saúde. Declaração De Óbito: manual de instruções para preenchimento. Brasília: Ministério da Saúde; 2022."
+    },
+    {
+      "key": "19002_CR8",
+      "doi-asserted-by": "crossref",
+      "unstructured": "de Morais RM, Costa AL. Uma avaliação do Sistema de Informações sobre Mortalidade. Saúde em Debate. 2017;41 spe:101–17.",
+      "DOI": "10.1590/0103-11042017s09"
+    },
+    {
+      "key": "19002_CR9",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Ranzani OT, Marinho M, de Bierrenbach F. AL. Utilidade do Sistema De Informação Hospitalar na vigilância da mortalidade materna no Brasil. Revista Brasileira De Epidemiologia. 2023;26.",
+      "DOI": "10.1590/1980-549720230007"
+    },
+    {
+      "key": "19002_CR10",
+      "doi-asserted-by": "publisher",
+      "first-page": "e0259074",
+      "DOI": "10.1371/journal.pone.0259074",
+      "volume": "16",
+      "author": "R Rafael",
+      "year": "2021",
+      "unstructured": "Rafael R, de MR, Jalil EM, Luz PM, de Castro CRV, Wilson EC, Monteiro L, et al. Prevalence and factors associated with suicidal behavior among trans women in Rio De Janeiro, Brazil. PLoS ONE. 2021;16:e0259074.",
+      "journal-title": "PLoS ONE"
+    },
+    {
+      "key": "19002_CR11",
+      "doi-asserted-by": "publisher",
+      "first-page": "1",
+      "DOI": "10.1007/s10461-019-02470-3",
+      "volume": "24",
+      "author": "L Montenegro",
+      "year": "2020",
+      "unstructured": "Montenegro L, Velasque L, LeGrand S, Whetten K, Rafael R, de MR, Malta M. Public Health, HIV Care and Prevention, Human Rights and Democracy at a crossroad in Brazil. AIDS Behav. 2020;24:1–4.",
+      "journal-title": "AIDS Behav"
+    },
+    {
+      "key": "19002_CR12",
+      "doi-asserted-by": "publisher",
+      "first-page": "1348",
+      "DOI": "10.1017/S0033291719001284",
+      "volume": "50",
+      "author": "JK Spittlehouse",
+      "year": "2020",
+      "unstructured": "Spittlehouse JK, Boden JM, Horwood LJ. Sexual orientation and mental health over the life course in a birth cohort. Psychol Med. 2020;50:1348–55.",
+      "journal-title": "Psychol Med"
+    },
+    {
+      "key": "19002_CR13",
+      "doi-asserted-by": "publisher",
+      "first-page": "67",
+      "DOI": "10.1186/s12888-016-0767-z",
+      "volume": "16",
+      "author": "J Semlyen",
+      "year": "2016",
+      "unstructured": "Semlyen J, King M, Varney J, Hagger-Johnson G. Sexual orientation and symptoms of common mental disorder or low wellbeing: combined meta-analysis of 12 UK Population health surveys. BMC Psychiatry. 2016;16:67.",
+      "journal-title": "BMC Psychiatry"
+    },
+    {
+      "key": "19002_CR14",
+      "doi-asserted-by": "publisher",
+      "first-page": "454",
+      "DOI": "10.1186/s12889-023-15384-6",
+      "volume": "23",
+      "author": "R Bränström",
+      "year": "2023",
+      "unstructured": "Bränström R, Narusyte J, Svedberg P. Sexual-orientation differences in risk of health-related impaired ability to work and to remain in the paid workforce: a prospective population-based twin study. BMC Public Health. 2023;23:454.",
+      "journal-title": "BMC Public Health"
+    },
+    {
+      "key": "19002_CR15",
+      "doi-asserted-by": "publisher",
+      "first-page": "241",
+      "DOI": "10.1007/978-3-031-33875-5_17",
+      "volume-title": "Human trafficking: A Global Health Emergency",
+      "author": "KML Breda",
+      "year": "2023",
+      "unstructured": "Breda KML, Carava-Morera JA, de Rafael R. Trans trafficking and sex work in Brazil, Costa Rica, and the USA. In: de Chesnay M, Sabella D, editors. Human trafficking: A Global Health Emergency. Cham: Springer International Publishing; 2023. pp. 241–65."
+    },
+    {
+      "key": "19002_CR16",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Rafael R, de MR, Santos HG, de Caravaca-Morera S, Wilson JA, Breda EC. KL. Inclusão Ou ilusão Da Identidade De gênero no país com o maior número de assassinatos de transgêneros: um ensaio crítico brasileiro. Escola Anna Nery. 2023;27.",
+      "DOI": "10.1590/2177-9465-ean-2023-0117pt"
+    },
+    {
+      "key": "19002_CR17",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Rafael R, de MR, Gil AC, Santos HG, de Caravaca-Morera S, Breda JA. KL. Ensaio teórico-metodológico sobre validade da informação da identidade de gênero no monitoramento epidemiológico da violência. Volume 57. Revista da Escola de Enfermagem da USP; 2023.",
+      "DOI": "10.1590/1980-220x-reeusp-2023-0240pt"
+    },
+    {
+      "key": "19002_CR18",
+      "volume-title": "Dossiê dos Assassinatos E Da violência contra travestis e transexuais no Brasil em 2018",
+      "author": "BG Benevides",
+      "year": "2020",
+      "unstructured": "Benevides BG, Nogueira SNB. Dossiê dos Assassinatos E Da violência contra travestis e transexuais no Brasil em 2018. Brasília: Associação Nacional de Travestis e Transexuais no Brasil (ANTRA); 2020."
+    },
+    {
+      "key": "19002_CR19",
+      "unstructured": "Ministério da Saúde. Viva: instrutivo notificação de violência interpessoal e autoprovocada. 2nd edition. Brasília: Ministério da Saúde; 2016."
+    },
+    {
+      "key": "19002_CR20",
+      "doi-asserted-by": "crossref",
+      "unstructured": "de Oliveira GP, Bierrenbach AL, de Camargo Júnior S, de Coeli KR, Pinheiro CM. RS. Accuracy of probabilistic and deterministic record linkage: the case of tuberculosis. Rev Saude Publica. 2016;50.",
+      "DOI": "10.1590/S1518-8787.2016050006327"
+    },
+    {
+      "key": "19002_CR21",
+      "doi-asserted-by": "publisher",
+      "first-page": "43",
+      "DOI": "10.1590/S1415-790X2008000100004",
+      "volume": "11",
+      "author": "JP Machado",
+      "year": "2008",
+      "unstructured": "Machado JP, da Silveira DP, Santos IS, Piovesan MF, Albuquerque C. Aplicação Da metodologia de relacionamento probabilístico de base de dados para a identificação de óbitos em estudos epidemiológicos. Revista Brasileira De Epidemiologia. 2008;11:43–54.",
+      "journal-title": "Revista Brasileira De Epidemiologia"
+    },
+    {
+      "key": "19002_CR22",
+      "doi-asserted-by": "publisher",
+      "first-page": "e12311",
+      "DOI": "10.1016/j.heliyon.2022.e12311",
+      "volume": "8",
+      "author": "AD Quezada-Sánchez",
+      "year": "2022",
+      "unstructured": "Quezada-Sánchez AD, Espín-Arellano I, Morales-Carmona E, Molina-Vélez D, Palacio-Mejía LS, González-González EL, et al. Implementation and validation of a probabilistic linkage method for population databases without identification variables. Heliyon. 2022;8:e12311.",
+      "journal-title": "Heliyon"
+    },
+    {
+      "key": "19002_CR23",
+      "doi-asserted-by": "publisher",
+      "first-page": "6937",
+      "DOI": "10.3390/ijerph17186937",
+      "volume": "17",
+      "author": "J Asher",
+      "year": "2020",
+      "unstructured": "Asher J, Resnick D, Brite J, Brackbill R, Cone J. An introduction to probabilistic record linkage with a focus on Linkage Processing for WTC Registries. Int J Environ Res Public Health. 2020;17:6937.",
+      "journal-title": "Int J Environ Res Public Health"
+    },
+    {
+      "key": "19002_CR24",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Peres SV, Latorre M do RD, de O, Michels FAS, Tanaka LF, Coeli CM, Almeida MF. de. Determinação de um ponto de corte para a identificação de pares verdadeiros pelo método probabilístico de linkage de base de dados. Cad Saude Colet. 2014;22:428–36.",
+      "DOI": "10.1590/1414-462X201400040017"
+    },
+    {
+      "key": "19002_CR25",
+      "doi-asserted-by": "publisher",
+      "first-page": "e0291581",
+      "DOI": "10.1371/journal.pone.0291581",
+      "volume": "18",
+      "author": "J Prindle",
+      "year": "2023",
+      "unstructured": "Prindle J, Suthar H, Putnam-Hornstein E. An open-source probabilistic record linkage process for records with family-level information: Simulation study and applied analysis. PLoS ONE. 2023;18:e0291581.",
+      "journal-title": "PLoS ONE"
+    },
+    {
+      "key": "19002_CR26",
+      "unstructured": "Centers for Disease Control and Prevention (CDC). National Program of Cancer Registries. Link Plus 3.0 version. 2007."
+    },
+    {
+      "key": "19002_CR27",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Silva DRMe, Luizaga CT, de Toporcov M, Algranti TN. E. Concordância E Validade dos diagnósticos de cânceres associados ao asbesto no sistema de informação hospitalar do Sistema Único De Saúde. Revista Brasileira De Epidemiologia. 2021;24.",
+      "DOI": "10.1590/1980-549720210044"
+    },
+    {
+      "key": "19002_CR28",
+      "doi-asserted-by": "publisher",
+      "first-page": "1945",
+      "DOI": "10.1590/1413-81232018245.19632017",
+      "volume": "24",
+      "author": "M Agranonik",
+      "year": "2019",
+      "unstructured": "Agranonik M, Jung RO. Qualidade dos sistemas de informações sobre nascidos vivos e sobre mortalidade no Rio Grande do sul, Brasil, 2000 a 2014. Cien Saude Colet. 2019;24:1945–58.",
+      "journal-title": "Cien Saude Colet"
+    },
+    {
+      "key": "19002_CR29",
+      "volume-title": "Saúde Brasil 2020/2021: uma análise da situação de saúde e da qualidade da informação",
+      "author": "Ministério da Saúde",
+      "year": "2021",
+      "unstructured": "Ministério da Saúde. Saúde Brasil 2020/2021: uma análise da situação de saúde e da qualidade da informação. Brasília: Ministério da Saúde; 2021."
+    },
+    {
+      "key": "19002_CR30",
+      "doi-asserted-by": "publisher",
+      "first-page": "159",
+      "DOI": "10.2307/2529310",
+      "volume": "33",
+      "author": "JR Landis",
+      "year": "1977",
+      "unstructured": "Landis JR, Koch GG. The measurement of Observer Agreement for Categorical Data. Biometrics. 1977;33:159.",
+      "journal-title": "Biometrics"
+    },
+    {
+      "key": "19002_CR31",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Altman DG. Practical Statistics for Medical Research. Chapman and Hall/CRC; 1990.",
+      "DOI": "10.1201/9780429258589"
+    },
+    {
+      "key": "19002_CR32",
+      "doi-asserted-by": "publisher",
+      "first-page": "190",
+      "DOI": "10.1186/s12911-021-01550-6",
+      "volume": "21",
+      "author": "CM Coeli",
+      "year": "2021",
+      "unstructured": "Coeli CM, Saraceni V, Medeiros PM, da Silva Santos HP, Guillen LCT, Alves LGSB, et al. Record linkage under suboptimal conditions for data-intensive evaluation of primary care in Rio De Janeiro, Brazil. BMC Med Inf Decis Mak. 2021;21:190.",
+      "journal-title": "BMC Med Inf Decis Mak"
+    },
+    {
+      "key": "19002_CR33",
+      "doi-asserted-by": "publisher",
+      "first-page": "316",
+      "DOI": "10.1590/1982-0259.2022.e83737",
+      "volume": "25",
+      "author": "RT Veroneze",
+      "year": "2022",
+      "unstructured": "Veroneze RT. Vulnerabilidades das travestis e das mulheres trans no contexto pandêmico. Revista Katálysis. 2022;25:316–25.",
+      "journal-title": "Revista Katálysis"
+    },
+    {
+      "key": "19002_CR34",
+      "doi-asserted-by": "publisher",
+      "first-page": "e169",
+      "DOI": "10.1016/S2352-3018(17)30015-2",
+      "volume": "4",
+      "author": "B Grinsztejn",
+      "year": "2017",
+      "unstructured": "Grinsztejn B, Jalil EM, Monteiro L, Velasque L, Moreira RI, Garcia ACF, et al. Unveiling of HIV dynamics among transgender women: a respondent-driven sampling study in Rio De Janeiro, Brazil. Lancet HIV. 2017;4:e169–76.",
+      "journal-title": "Lancet HIV"
+    },
+    {
+      "key": "19002_CR35",
+      "doi-asserted-by": "publisher",
+      "first-page": "756",
+      "DOI": "10.1001/jama.2019.11330",
+      "volume": "322",
+      "author": "I Sasson",
+      "year": "2019",
+      "unstructured": "Sasson I, Hayward MD. Association between Educational Attainment and Causes of Death among White and Black US Adults, 2010–2017. JAMA. 2019;322:756.",
+      "journal-title": "JAMA"
+    },
+    {
+      "key": "19002_CR36",
+      "doi-asserted-by": "publisher",
+      "first-page": "444",
+      "DOI": "10.1001/jamapsychiatry.2022.0347",
+      "volume": "79",
+      "author": "NC Momen",
+      "year": "2022",
+      "unstructured": "Momen NC, Plana-Ripoll O, Agerbo E, Christensen MK, Iburg KM, Laursen TM, et al. Mortality Associated with Mental disorders and Comorbid General Medical conditions. JAMA Psychiatry. 2022;79:444.",
+      "journal-title": "JAMA Psychiatry"
+    },
+    {
+      "key": "19002_CR37",
+      "doi-asserted-by": "publisher",
+      "first-page": "e2012241",
+      "DOI": "10.1001/jamanetworkopen.2020.12241",
+      "volume": "3",
+      "author": "NB Ferdows",
+      "year": "2020",
+      "unstructured": "Ferdows NB, Aranda MP, Baldwin JA, Baghban Ferdows S, Ahluwalia JS, Kumar A. Assessment of racial disparities in Mortality Rates among older adults living in US Rural vs Urban counties from 1968 to 2016. JAMA Netw Open. 2020;3:e2012241.",
+      "journal-title": "JAMA Netw Open"
+    },
+    {
+      "key": "19002_CR38",
+      "doi-asserted-by": "publisher",
+      "first-page": "102740",
+      "DOI": "10.1016/j.bjid.2023.102740",
+      "volume": "27",
+      "author": "LE Coelho",
+      "year": "2023",
+      "unstructured": "Coelho LE, Torres TS, Jalil EM, Cardoso SW, Moreira RI, Calvet GA, et al. Mortality rates by gender and sexual orientation reveal a disproportionally high mortality among cisgender men of unknown sexual orientation and men who have sex with women in a cohort of people living with HIV in Rio De Janeiro, Brazil. Brazilian J Infect Dis. 2023;27:102740.",
+      "journal-title": "Brazilian J Infect Dis"
+    },
+    {
+      "key": "19002_CR39",
+      "doi-asserted-by": "publisher",
+      "first-page": "e2253687",
+      "DOI": "10.1001/jamanetworkopen.2022.53687",
+      "volume": "6",
+      "author": "SS Jackson",
+      "year": "2023",
+      "unstructured": "Jackson SS, Brown J, Pfeiffer RM, Shrewsbury D, O’Callaghan S, Berner AM, et al. Analysis of mortality among transgender and gender diverse adults in England. JAMA Netw Open. 2023;6:e2253687.",
+      "journal-title": "JAMA Netw Open"
+    },
+    {
+      "key": "19002_CR40",
+      "doi-asserted-by": "publisher",
+      "first-page": "135",
+      "DOI": "10.1373/clinchem.2018.288332",
+      "volume": "65",
+      "author": "EM Crimmins",
+      "year": "2019",
+      "unstructured": "Crimmins EM, Shim H, Zhang YS, Kim JK. Differences between Men and Women in Mortality and the Health dimensions of the morbidity process. Clin Chem. 2019;65:135–45.",
+      "journal-title": "Clin Chem"
+    },
+    {
+      "key": "19002_CR41",
+      "doi-asserted-by": "publisher",
+      "first-page": "10589",
+      "DOI": "10.1038/s41598-019-47111-w",
+      "volume": "9",
+      "author": "P Lenart",
+      "year": "2019",
+      "unstructured": "Lenart P, Kuruczova D, Joshi PK, Bienertová-Vašků J. Male mortality rates mirror mortality rates of older females. Sci Rep. 2019;9:10589.",
+      "journal-title": "Sci Rep"
+    },
+    {
+      "key": "19002_CR42",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Mota M, Santana AD, da Silva S, de Melo LR. Clara, esta sou eu! Nome, acesso à saúde e sofrimento social entre pessoas transgênero. Interface - Comunicação, Saúde, Educação. 2022;26.",
+      "DOI": "10.1590/interface.210017"
+    },
+    {
+      "key": "19002_CR43",
+      "doi-asserted-by": "publisher",
+      "first-page": "1",
+      "DOI": "10.1590/1980-549720200006.supl.1",
+      "volume": "23",
+      "author": "IV Pinto",
+      "year": "2020",
+      "unstructured": "Pinto IV, Andrade SS, de Rodrigues A, Santos LL, Marinho MAS, Benício MMA. Perfil das notificações de violências em lésbicas, gays, bissexuais, travestis e transexuais registradas no Sistema De Informação De Agravos De Notificação, Brasil, 2015 a 2017. Revista Brasileira De Epidemiologia. 2020;23:1.",
+      "journal-title": "Revista Brasileira De Epidemiologia"
+    },
+    {
+      "key": "19002_CR44",
+      "doi-asserted-by": "publisher",
+      "first-page": "1049",
+      "DOI": "10.1001/jama.2021.2104",
+      "volume": "325",
+      "author": "A Flanagin",
+      "year": "2021",
+      "unstructured": "Flanagin A, Frey T, Christiansen SL, Bauchner H. The reporting of race and ethnicity in Medical and Science Journals. JAMA. 2021;325:1049.",
+      "journal-title": "JAMA"
+    },
+    {
+      "key": "19002_CR45",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Santos RV, Bastos JL, Kaingang JD, Batista LE. Cabem recomendações para usos de raça nas publicações em saúde? Um enfático sim, inclusive pelas implicações para as práticas antirracistas. Cad Saude Publica. 2022;38.",
+      "DOI": "10.1590/0102-311x00021922"
+    },
+    {
+      "key": "19002_CR46",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Correia LO dos, Padilha S, Vasconcelos BM. Métodos para avaliar a completitude dos Dados Dos Sistemas De informação em saúde do Brasil: uma revisão sistemática. Cien Saude Colet. 2014;19:4467–78.",
+      "DOI": "10.1590/1413-812320141911.02822013"
+    },
+    {
+      "key": "19002_CR47",
+      "doi-asserted-by": "publisher",
+      "first-page": "4021",
+      "DOI": "10.1590/1413-81232021269.05732021",
+      "volume": "26",
+      "author": "B Cobo",
+      "year": "2021",
+      "unstructured": "Cobo B, Cruz C, Dick PC. Desigualdades De gênero E raciais no acesso e uso dos serviços De atenção primária à saúde no Brasil. Cien Saude Colet. 2021;26:4021–32.",
+      "journal-title": "Cien Saude Colet"
+    },
+    {
+      "key": "19002_CR48",
+      "doi-asserted-by": "publisher",
+      "first-page": "433",
+      "DOI": "10.1590/1414-462x202129030453",
+      "volume": "29",
+      "author": "AUD Evedove",
+      "year": "2021",
+      "unstructured": "Evedove AUD, Dellaroza MS, Carvalho WO, Loch MR. Mudança na situação conjugal e incidência de comportamentos de proteção à saúde em adultos com 40 anos ou mais: Estudo VigiCardio (2011–2015). Cad Saude Colet. 2021;29:433–43.",
+      "journal-title": "Cad Saude Colet"
+    },
+    {
+      "key": "19002_CR49",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Malta DC, Bernal RTI, Lima MG, Silva AG da, Szwarcwald CL, de Barros MB. A. Socioeconomic inequalities related to noncommunicable diseases and their limitations: National Health Survey, 2019. Revista Brasileira de Epidemiologia. 2021;24 suppl 2.",
+      "DOI": "10.1590/1980-549720210011.supl.2"
+    },
+    {
+      "key": "19002_CR50",
+      "doi-asserted-by": "publisher",
+      "first-page": "4153",
+      "DOI": "10.1590/1413-812320182411.05762018",
+      "volume": "24",
+      "author": "CMS Castro",
+      "year": "2019",
+      "unstructured": "Castro CMS, Costa MFL, Cesar CC, Neves JAB, Sampaio RF. Influência Da Escolaridade E das condições de saúde no trabalho remunerado de idosos brasileiros. Cien Saude Colet. 2019;24:4153–62.",
+      "journal-title": "Cien Saude Colet"
+    },
+    {
+      "key": "19002_CR51",
+      "doi-asserted-by": "publisher",
+      "first-page": "e66665",
+      "DOI": "10.12957/reuerj.2022.66665",
+      "volume": "30",
+      "author": "DC Alcântara",
+      "year": "2022",
+      "unstructured": "Alcântara DC, Caravaca-Morera JA, Peixoto EM, Rafael RDMR, De Andrade MDC, Gil AC. Intersectionality and transsexuality in the process of discrimination: an integrative review. Revista Enfermagem UERJ. 2022;30:e66665.",
+      "journal-title": "Revista Enfermagem UERJ"
+    },
+    {
+      "key": "19002_CR52",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Leite FMC, Santos DF, Ribeiro LA, Tavares FL, Correa ES, Ribeiro LEP et al. Análise dos casos de violência interpessoal contra mulheres. Acta Paulista De Enfermagem. 2023;36.",
+      "DOI": "10.37689/acta-ape/2023AO00181"
+    },
+    {
+      "key": "19002_CR53",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lima VMda, Stochero F, Azeredo L, Moraes CM, de Hasselmann CL, Marques MH. ES. Characterization and completeness of notification sheet of violence against the older adults in Niterói-RJ, 2011–2020. Epidemiologia e Serviços de Saúde. 2023;32.",
+      "DOI": "10.1590/s2237-96222023000100024"
+    },
+    {
+      "key": "19002_CR54",
+      "doi-asserted-by": "crossref",
+      "unstructured": "da Silva MMA, Mascarenhas MDM, Lima CM, Malta DC, Monteiro RA, de Freitas MG et al. Perfil do Inquérito de Violências e Acidentes em Serviços Sentinela de Urgência e Emergência. Epidemiologia e Serviços de Saúde. 2017;26:183–94.",
+      "DOI": "10.5123/S1679-49742017000100019"
+    },
+    {
+      "key": "19002_CR55",
+      "doi-asserted-by": "publisher",
+      "unstructured": "Rafael R, de MR, Jalil EM, Velasque L, de Friedman S, Ramos RK, Cunha M. CB, Intimate Partner Violence among Brazilian trans and Cisgender Women living with HIV or at HIV Risk during COVID-19 era: another epidemic? Transgend Health. 2023. https://doi.org/10.1089/trgh.2023.0057.",
+      "DOI": "10.1089/trgh.2023.0057"
+    },
+    {
+      "key": "19002_CR56",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Krug EG, Dahlberg LL, Mercy JA, Zwi AB, Lozano R. World report on violence and health. Geneva; 2002.",
+      "DOI": "10.1016/S0140-6736(02)11133-0"
+    },
+    {
+      "key": "19002_CR57",
+      "volume-title": "Precarious life: the Powers of mourning and violence",
+      "author": "J Butler",
+      "year": "2004",
+      "unstructured": "Butler J. Precarious life: the Powers of mourning and violence. London: Verso; 2004."
+    },
+    {
+      "key": "19002_CR58",
+      "first-page": "4191",
+      "volume": "27",
+      "author": "D Canavese",
+      "year": "2022",
+      "unstructured": "Canavese D, Polidoro M, Signorelli MC, Moretti-Pires RO, Parker R, Terto Jr. V. A call for the urgent and definitive inclusion of gender identity and sexual orientation data in the Brazilian health information systems: what can we learn from the monkeypox outbreak? Cien Saude Colet. 2022;27:4191–4.",
+      "journal-title": "Cien Saude Colet"
+    }
+  ],
+  "container-title": [
+    "BMC Public Health"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://link.springer.com/content/pdf/10.1186/s12889-024-19002-x.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://link.springer.com/article/10.1186/s12889-024-19002-x/fulltext.html",
+      "content-type": "text/html",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://link.springer.com/content/pdf/10.1186/s12889-024-19002-x.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2024,
+        6,
+        1
+      ]
+    ],
+    "date-time": "2024-06-01T16:02:26Z",
+    "timestamp": 1717257746000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://bmcpublichealth.biomedcentral.com/articles/10.1186/s12889-024-19002-x"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2024,
+        6,
+        1
+      ]
+    ]
+  },
+  "references-count": 58,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          12
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "19002"
+  ],
+  "URL": "https://doi.org/10.1186/s12889-024-19002-x",
+  "relation": {},
+  "ISSN": [
+    "1471-2458"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "1471-2458"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2024,
+        6,
+        1
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "2 February 2024",
+      "order": 1,
+      "name": "received",
+      "label": "Received",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "value": "29 May 2024",
+      "order": 2,
+      "name": "accepted",
+      "label": "Accepted",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "value": "1 June 2024",
+      "order": 3,
+      "name": "first_online",
+      "label": "First Online",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "order": 1,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Declarations"
+      }
+    },
+    {
+      "value": "This study adhered to all Brazilian ethical principles for research involving human subjects. Due to the study’s basis on information from two databases systematically collected by health professionals, the State University of Rio de Janeiro Research Ethics Committee waived the need for informed consent. Personal and confidential information, such as names and addresses, was required. To maintain privacy, this non-anonymized data was only processed by the project coordinator and then coded and stored in separate files. The research project, titled “Effects of (trans)gender identity and sexual orientation on notification and mortality due to violence: a cohort study”, received approval from the State University of Rio de Janeiro Research Ethics Committee (Rio de Janeiro, Brazil) under protocol number 5,009,244.",
+      "order": 2,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Ethics approval and consent to participate"
+      }
+    },
+    {
+      "value": "Not applicable.",
+      "order": 3,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Consent for publication"
+      }
+    },
+    {
+      "value": "The authors declare no competing interests.",
+      "order": 4,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Competing interests"
+      }
+    }
+  ],
+  "article-number": "1475"
+}

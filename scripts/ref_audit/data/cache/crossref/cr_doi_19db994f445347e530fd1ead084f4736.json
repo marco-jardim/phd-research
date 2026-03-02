@@ -1,0 +1,1012 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        8
+      ]
+    ],
+    "date-time": "2026-02-08T01:23:24Z",
+    "timestamp": 1770513804174,
+    "version": "3.49.0"
+  },
+  "reference-count": 93,
+  "publisher": "Elsevier BV",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2021,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2021-01-01T00:00:00Z",
+        "timestamp": 1609459200000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2021,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2021-01-01T00:00:00Z",
+        "timestamp": 1609459200000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/legal/tdmrep-license"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            12,
+            11
+          ]
+        ],
+        "date-time": "2020-12-11T00:00:00Z",
+        "timestamp": 1607644800000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/100013322",
+      "name": "European Federation of Pharmaceutical Industries and Associations",
+      "doi-asserted-by": "publisher",
+      "id": [
+        {
+          "id": "10.13039/100013322",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100000780",
+      "name": "European Commission",
+      "doi-asserted-by": "publisher",
+      "id": [
+        {
+          "id": "10.13039/501100000780",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/100010661",
+      "name": "Horizon 2020 Framework Programme",
+      "doi-asserted-by": "publisher",
+      "id": [
+        {
+          "id": "10.13039/100010661",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100010767",
+      "name": "Innovative Medicines Initiative",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "806968"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "806968"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100010767",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "elsevier.com",
+      "sciencedirect.com"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "Journal of Biomedical Informatics"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2021,
+        1
+      ]
+    ]
+  },
+  "DOI": "10.1016/j.jbi.2020.103655",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2020,
+        12,
+        10
+      ]
+    ],
+    "date-time": "2020-12-10T05:39:59Z",
+    "timestamp": 1607578799000
+  },
+  "page": "103655",
+  "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 612,
+  "special_numbering": "C",
+  "title": [
+    "The role of explainability in creating trustworthy artificial intelligence for health care: A comprehensive survey of the terminology, design choices, and evaluation strategies"
+  ],
+  "prefix": "10.1016",
+  "volume": "113",
+  "author": [
+    {
+      "given": "Aniek F.",
+      "family": "Markus",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Jan A.",
+      "family": "Kors",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Peter R.",
+      "family": "Rijnbeek",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "78",
+  "reference": [
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0005",
+      "unstructured": "International Data Corporation, Worldwide spending on artificial intelligence systems will be nearly $98 billion in 2023, according to new IDC spending guide, 2019. Accessed: July 4, 2020. https://www.idc.com/getdoc.jsp?containerId=prUS45481219."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0010",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1038/s41746-018-0029-1",
+      "article-title": "Scalable and accurate deep learning with electronic health records",
+      "volume": "1",
+      "author": "Rajkomar",
+      "year": "2018",
+      "journal-title": "NPJ Digit. Med."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0015",
+      "first-page": "1",
+      "article-title": "What clinicians want: Contextualizing explainable machine learning for clinical end use",
+      "author": "Tonekaboni",
+      "year": "2019",
+      "journal-title": "Proc. Mach. Learn. Res."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0020",
+      "doi-asserted-by": "crossref",
+      "first-page": "2283",
+      "DOI": "10.1001/jama.2019.17831",
+      "article-title": "Machine learning, predictive analytics, and clinical practice: Can the past inform the present?",
+      "volume": "322",
+      "author": "Peterson",
+      "year": "2019",
+      "journal-title": "JAMA"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0025",
+      "doi-asserted-by": "crossref",
+      "first-page": "30",
+      "DOI": "10.1038/s41591-018-0307-0",
+      "article-title": "The practical implementation of artificial intelligence technologies in medicine",
+      "volume": "25",
+      "author": "He",
+      "year": "2019",
+      "journal-title": "Nat. Med."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0030",
+      "doi-asserted-by": "crossref",
+      "first-page": "44",
+      "DOI": "10.1038/s41591-018-0300-7",
+      "article-title": "High-performance medicine: The convergence of human and artificial intelligence",
+      "volume": "25",
+      "author": "Topol",
+      "year": "2019",
+      "journal-title": "Nat. Med."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0035",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M.A. Ahmad, C. Eckert, A. Teredesai, Interpretable machine learning in healthcare, Proceedings of the 2018 ACM International Conference on Bioinformatics, Computational Biology, and Health Informatics. (2018) pp. 559-560. https://doi.org/10.1145/3233547.3233667.",
+      "DOI": "10.1145/3233547.3233667"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0040",
+      "unstructured": "European Commission, High level expert group on artificial intelligence. Ethics guidelines for trustworthy AI. Published in Brussels: April 8, 2019. https://ec.europa.eu/newsroom/dae/document.cfm?doc_id=60419."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0045",
+      "doi-asserted-by": "crossref",
+      "first-page": "501",
+      "DOI": "10.1038/s42256-019-0114-4",
+      "article-title": "Principles alone cannot guarantee ethical AI",
+      "author": "Mittelstadt",
+      "year": "2019",
+      "journal-title": "Nat. Mach. Intell."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0050",
+      "unstructured": "European Institute of Innovation and Technology Health. Transforming healthcare with AI: The impact on the workforce and organisations. Published: March, 2020. https://eithealth.eu/wp-content/uploads/2020/03/EIT-Health-and-McKinsey_Transforming-Healthcare-with-AI.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0055",
+      "unstructured": "Select Committee on Artificial Intelligence. The national artificial intelligence research and development strategic plan: 2019 update. Published: June, 2019. https://www.nitrd.gov/pubs/National-AI-RD-Strategy-2019.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0060",
+      "doi-asserted-by": "crossref",
+      "first-page": "31",
+      "DOI": "10.1145/3236386.3241340",
+      "article-title": "The mythos of model interpretability",
+      "author": "Lipton",
+      "year": "2018",
+      "journal-title": "Queue"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0065",
+      "unstructured": "F. Doshi-Velez, B. Kim, Towards a rigorous science of interpretable machine learning [Preprint]. March 2, 2017. https://arxiv.org/abs/1702.08608."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0070",
+      "first-page": "93",
+      "article-title": "A survey of methods for explaining black box models",
+      "volume": "51",
+      "author": "Guidotti",
+      "year": "2018",
+      "journal-title": "ACM Computing Surveys (CSUR)"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0075",
+      "unstructured": "S. Mohseni, N. Zarei, E.D. Ragan, A survey of evaluation methods and measures for interpretable machine learning [Preprint]. April 26, 2020. https://arxiv.org/pdf/1811.11839v4.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0080",
+      "doi-asserted-by": "crossref",
+      "first-page": "52138",
+      "DOI": "10.1109/ACCESS.2018.2870052",
+      "article-title": "Peeking inside the black-box: A survey on explainable artificial intelligence (XAI)",
+      "volume": "6",
+      "author": "Adadi",
+      "year": "2018",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0085",
+      "doi-asserted-by": "crossref",
+      "first-page": "82",
+      "DOI": "10.1016/j.inffus.2019.12.012",
+      "article-title": "Explainable artificial intelligence (XAI): Concepts, taxonomies, opportunities and challenges toward responsible AI",
+      "volume": "58",
+      "author": "Arrieta",
+      "year": "2019",
+      "journal-title": "Inf. Fusion."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0090",
+      "doi-asserted-by": "crossref",
+      "first-page": "832",
+      "DOI": "10.3390/electronics8080832",
+      "article-title": "Machine learning interpretability: A survey on methods and metrics",
+      "volume": "8",
+      "author": "Carvalho",
+      "year": "2019",
+      "journal-title": "Electronics."
+    },
+    {
+      "issue": "2019",
+      "key": "10.1016/j.jbi.2020.103655_b0095",
+      "doi-asserted-by": "crossref",
+      "first-page": "22071",
+      "DOI": "10.1073/pnas.1900654116",
+      "article-title": "Definitions, methods, and applications in interpretable machine learning",
+      "volume": "116",
+      "author": "Murdoch",
+      "year": "2019",
+      "journal-title": "Proc. Natl. Acad. Sci."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0100",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1093/jamia/ocaa053",
+      "article-title": "Explainable artificial intelligence models using real-world electronic health record data: A systematic scoping review",
+      "author": "Payrovnaziri",
+      "year": "2020",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0105",
+      "doi-asserted-by": "crossref",
+      "first-page": "e1",
+      "DOI": "10.1016/j.jclinepi.2009.06.006",
+      "article-title": "The PRISMA statement for reporting systematic reviews and meta-analyses of studies that evaluate health care interventions: Explanation and elaboration",
+      "volume": "62",
+      "author": "Liberati",
+      "year": "2009",
+      "journal-title": "J. Clin. Epidemiol."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0110",
+      "unstructured": "D. Doran, S. Schulz, T.R. Besold, What does explainable AI really mean? A new conceptualization of perspectives [Preprint]. October 2, 2017. https://arxiv.org/abs/1710.00794."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0115",
+      "doi-asserted-by": "crossref",
+      "first-page": "27",
+      "DOI": "10.1007/978-3-030-29726-8_3",
+      "article-title": "New frontiers in explainable AI: Understanding the gi to interpret the go",
+      "author": "Cabitza",
+      "year": "2019",
+      "journal-title": "Int. Cross-Domain Conf. Mach. Learn. Knowledge Extract."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0120",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1016/j.artint.2018.07.007",
+      "article-title": "Explanation in artificial intelligence: Insights from the social sciences",
+      "volume": "267",
+      "author": "Miller",
+      "year": "2019",
+      "journal-title": "Artif. Intell."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0125",
+      "series-title": "2018 IEEE 5th International Conference on Data Science and Advanced Analytics (DSAA)",
+      "article-title": "Explaining explanations: An approach to evaluating interpretability of machine learning",
+      "author": "Gilpin",
+      "year": "2018"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0130",
+      "series-title": "Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
+      "first-page": "1135",
+      "article-title": "Why should i trust you?: Explaining the predictions of any classifier",
+      "author": "Ribeiro",
+      "year": "2016"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0135",
+      "unstructured": "S.T. Mueller, R.R. Hoffman, W. Clancey, A. Emrey, G. Klein, Explanation in human-AI systems: A literature meta-review, synopsis of key ideas and publications, and bibliography for explainable AI [Preprint]. February 9, 2019. https://arxiv.org/pdf/1902.01876.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0140",
+      "unstructured": "F. Poursabzi-Sangdeh, D.G. Goldstein, J.M. Hofman, J.W. Vaughan, H. Wallach, Manipulating and measuring model interpretability [Preprint]. November 8, 2018. https://arxiv.org/pdf/1802.07810.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0145",
+      "series-title": "Explainable and interpretable models in computer vision and machine learning",
+      "first-page": "19",
+      "article-title": "Explanation methods in deep learning: Users, values, concerns and challenges",
+      "author": "Ras",
+      "year": "2018"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0150",
+      "doi-asserted-by": "crossref",
+      "first-page": "3",
+      "DOI": "10.1109/VLHCC.2013.6645235",
+      "article-title": "Too much, too little, or just right? Ways explanations impact end users' mental models",
+      "author": "Kulesza",
+      "year": "2013",
+      "journal-title": "2013 IEEE Symposium on Visual Languages and Human Centric Computing"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0155",
+      "unstructured": "D.S. Weld, G. Bansal, The challenge of crafting intelligible intelligence [Preprint]. October 15, 2018. https://arxiv.org/abs/1803.04263."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0160",
+      "series-title": "Proceedings of the 19th ACM SIGKDD international conference on Knowledge discovery and data mining",
+      "first-page": "623",
+      "article-title": "Accurate intelligible models with pairwise interactions",
+      "author": "Lou",
+      "year": "2013"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0165",
+      "doi-asserted-by": "crossref",
+      "unstructured": "W. Samek, Explainable AI: Interpreting, explaining and visualizing deep learning: Springer Nature, 2019.",
+      "DOI": "10.1007/978-3-030-28954-6"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0170",
+      "doi-asserted-by": "crossref",
+      "first-page": "50",
+      "DOI": "10.1609/aimag.v38i3.2741",
+      "article-title": "European Union regulations on algorithmic decision-making and a “right to explanation”",
+      "volume": "38",
+      "author": "Goodman",
+      "year": "2017",
+      "journal-title": "AI Magazine"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0175",
+      "series-title": "Proceedings of the 2012 ACM International Conference on Intelligent User Interfaces",
+      "first-page": "169",
+      "article-title": "Are explanations always important?: A study of deployed, low-cost intelligent interactive systems",
+      "author": "Bunt",
+      "year": "2012"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0180",
+      "unstructured": "E. Tjoa, C. Guan, A survey on explainable artificial intelligence (XAI): Towards medical XAI [Preprint]. June 7, 2020. https://arxiv.org/pdf/1907.07374.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0185",
+      "unstructured": "H. Lakkaraju, E. Kamar, R. Caruana, J. Leskovec, Interpretable & explorable approximations of black box models [Preprint]. July 4, 2017. https://arxiv.org/pdf/1707.01154.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0190",
+      "unstructured": "O. Bastani, C. Kim, H. Bastani, Interpreting blackbox models via model extraction [Preprint]. January 24, 2017. https://arxiv.org/abs/1904.11829."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0195",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Tan, R. Caruana, G. Hooker, Y. Lou, Distill-and-compare: Auditing black-box models using transparent model distillation, Proceedings of the 2018 AAAI/ACM Conference on AI, Ethics, and Society, 2018, pp. 303-310.",
+      "DOI": "10.1145/3278721.3278725"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0200",
+      "first-page": "11304",
+      "article-title": "Demystifying black-box models with symbolic metamodels",
+      "volume": "33",
+      "author": "Alaa",
+      "year": "2019",
+      "journal-title": "Adv. Neural Inform. Process. Syst."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0205",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M.T. Ribeiro, S. Singh, C. Guestrin, Anchors: High-precision model-agnostic explanations, Thirty-Second AAAI Conference on Artificial Intelligence, 2018.",
+      "DOI": "10.1609/aaai.v32i1.11491"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0210",
+      "first-page": "1189",
+      "article-title": "Greedy function approximation: A gradient boosting machine",
+      "author": "Friedman",
+      "year": "2001",
+      "journal-title": "Ann. Stat."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0215",
+      "doi-asserted-by": "crossref",
+      "first-page": "916",
+      "DOI": "10.1214/07-AOAS148",
+      "article-title": "Predictive learning via rule ensembles",
+      "volume": "2",
+      "author": "Friedman",
+      "year": "2008",
+      "journal-title": "Ann. Appl. Stat."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0220",
+      "unstructured": "D.W. Apley, J. Zhu, Visualizing the effects of predictor variables in black box supervised learning models [Preprint]. August 18, 2019. https://arxiv.org/pdf/1612.08468.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0225",
+      "unstructured": "A. Fisher, C. Rudin, F. Dominici, All models are wrong but many are useful: Variable importance for black-box, proprietary, or misspecified prediction models, using model class reliance [Preprint]. December 23, 2018. https://arxiv.org/pdf/1801.01489.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0230",
+      "doi-asserted-by": "crossref",
+      "first-page": "1094",
+      "DOI": "10.1080/01621459.2017.1307116",
+      "article-title": "Distribution-free predictive inference for regression",
+      "volume": "113",
+      "author": "Lei",
+      "year": "2018",
+      "journal-title": "J. Am. Stat. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0235",
+      "doi-asserted-by": "crossref",
+      "first-page": "44",
+      "DOI": "10.1080/10618600.2014.907095",
+      "article-title": "Peeking inside the black box: Visualizing statistical learning with plots of individual conditional expectation",
+      "volume": "24",
+      "author": "Goldstein",
+      "year": "2015",
+      "journal-title": "J. Comput. Graph. Stat."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0240",
+      "doi-asserted-by": "crossref",
+      "first-page": "598",
+      "DOI": "10.1109/SP.2016.42",
+      "article-title": "Algorithmic transparency via quantitative input influence: Theory and experiments with learning systems",
+      "author": "Datta",
+      "year": "2016",
+      "journal-title": "2016 IEEE Symposium on Security and Privacy"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0245",
+      "first-page": "4765",
+      "article-title": "A unified approach to interpreting model predictions",
+      "volume": "30",
+      "author": "Lundberg",
+      "year": "2017",
+      "journal-title": "Adv. Neural Inform. Process. Syst."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0250",
+      "unstructured": "J. Yoon, J. Jordon, M. van der Schaar, Invase: Instance-wise variable selection using neural networks, International Conference of Learning Representations, 2018, pp. 1-24."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0255",
+      "doi-asserted-by": "crossref",
+      "first-page": "15",
+      "DOI": "10.1080/00401706.1977.10489493",
+      "article-title": "Detection of influential observation in linear regression",
+      "volume": "19",
+      "author": "Cook",
+      "year": "1977",
+      "journal-title": "Technometrics"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0260",
+      "first-page": "2280",
+      "article-title": "Examples are not enough, learn to criticize! Criticism for interpretability",
+      "volume": "29",
+      "author": "Kim",
+      "year": "2016",
+      "journal-title": "Adv. Neural Inform. Process. Syst."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0265",
+      "first-page": "841",
+      "article-title": "Counterfactual explanations without opening the black box: Automated decisions and the gpdr",
+      "volume": "31",
+      "author": "Wachter",
+      "year": "2017",
+      "journal-title": "Harv. J. L. & Tech."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0270",
+      "series-title": "Interactive and interpretable machine learning models for human machine collaboration [Doctoral dissertation]",
+      "author": "Kim",
+      "year": "2015"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0275",
+      "series-title": "Proceedings of the 21th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
+      "first-page": "1721",
+      "article-title": "Intelligible models for healthcare: Predicting pneumonia risk and hospital 30-day readmission",
+      "author": "Caruana",
+      "year": "2015"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0280",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Wu, M.C. Hughes, S. Parbhoo, M. Zazzi, V. Roth, F. Doshi-Velez, Beyond sparsity: Tree regularization of deep models for interpretability, Thirty-Second AAAI Conference on Artificial Intelligence, 2018.",
+      "DOI": "10.1609/aaai.v32i1.11501"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0285",
+      "first-page": "8827",
+      "article-title": "Interpretable convolutional neural networks",
+      "author": "Zhang",
+      "year": "2018",
+      "journal-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0290",
+      "unstructured": "J. Vaughan, A. Sudjianto, E. Brahimi, J. Chen, V.N. Nair, Explainable neural networks based on additive index models [Preprint]. June 5, 2018. https://arxiv.org/pdf/1806.01933.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0295",
+      "first-page": "1",
+      "article-title": "Hybrid decision making: When interpretable models collaborate with black-box models",
+      "author": "Wang",
+      "year": "2019",
+      "journal-title": "J. Mach. Learn. Res."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0300",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Hind, D. Wei, M. Campbell, N.C. Codella, A. Dhurandhar, A. Mojsilović et al., Ted: Teaching AI to explain its decisions, Proceedings of the 2019 AAAI/ACM Conference on AI, Ethics, and Society, 2019, pp. 123-129. https://doi.org/10.1145/3306618.3314273.",
+      "DOI": "10.1145/3306618.3314273"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0305",
+      "first-page": "371",
+      "article-title": "Interpretable deep models for ICU outcome prediction",
+      "author": "Che",
+      "year": "2016",
+      "journal-title": "AMIA Annual Symposium Proceedings"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0310",
+      "unstructured": "M. Ancona, E. Ceolini, C. Öztireli, M. Gross, Towards better understanding of gradient-based attribution methods for deep neural networks [Preprint]. March 7, 2018. https://arxiv.org/abs/1711.06104."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0315",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.2196/11728",
+      "article-title": "Development of prediction models using machine learning algorithms for girls with suspected central precocious puberty: Retrospective study",
+      "volume": "7",
+      "author": "Pan",
+      "year": "2019",
+      "journal-title": "JMIR Med. Inform."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0320",
+      "unstructured": "G.J. Katuwal, R. Chen, Machine learning model interpretability for precision medicine [Preprint]. October 28, 2016. https://arxiv.org/pdf/1610.09045.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0325",
+      "doi-asserted-by": "crossref",
+      "first-page": "515",
+      "DOI": "10.1007/s12031-019-01311-1",
+      "article-title": "Application of single-nucleotide polymorphisms in the diagnosis of autism spectrum disorders: A preliminary study with artificial neural networks",
+      "volume": "68",
+      "author": "Ghafouri-Fard",
+      "year": "2019",
+      "journal-title": "J. Mol. Neurosci."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0330",
+      "doi-asserted-by": "crossref",
+      "first-page": "141",
+      "DOI": "10.1016/j.dss.2010.12.003",
+      "article-title": "An empirical evaluation of the comprehensibility of decision table, tree and rule based predictive models",
+      "volume": "51",
+      "author": "Huysmans",
+      "year": "2011",
+      "journal-title": "Decis. Support Syst."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0335",
+      "unstructured": "I. Lage, E. Chen, J. He, M. Narayanan, B. Kim, S. Gershman et al., An evaluation of the human-interpretability of explanation [Preprint]. August 28, 2019. https://arxiv.org/pdf/1902.00006.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0340",
+      "unstructured": "S.A. Friedler, C.D. Roy, C. Scheidegger, D. Slack, Assessing the local interpretability of machine learning models [Preprint]. August 2, 2019. https://arxiv.org/abs/1902.03501."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0345",
+      "unstructured": "C. Molnar, G. Casalicchio, B. Bischl, Quantifying interpretability of arbitrary machine learning models through functional decomposition [Preprint]. September 23, 2019. https://arxiv.org/pdf/1904.03867.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0350",
+      "doi-asserted-by": "crossref",
+      "unstructured": "L. Arras, A. Osman, K.-R. Müller, W. Samek, Evaluating recurrent neural network explanations [Preprint]. June 4, 2019. https://arxiv.org/abs/1904.11829.",
+      "DOI": "10.18653/v1/W19-4813"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0355",
+      "doi-asserted-by": "crossref",
+      "first-page": "211",
+      "DOI": "10.1016/j.patcog.2016.11.008",
+      "article-title": "Explaining nonlinear classification decisions with deep taylor decomposition",
+      "volume": "65",
+      "author": "Montavon",
+      "year": "2017",
+      "journal-title": "Pattern Recognit."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0360",
+      "article-title": "A benchmark for interpretability methods in deep neural networks",
+      "volume": "33",
+      "author": "Hooker",
+      "year": "2018",
+      "journal-title": "Adv. Neural Inform. Process. Syst."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0365",
+      "series-title": "Proceedings of the 34th International Conference on Machine Learning",
+      "first-page": "3319",
+      "article-title": "Axiomatic attribution for deep networks",
+      "author": "Sundararajan",
+      "year": "2017"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0370",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1016/j.dsp.2017.10.011",
+      "article-title": "Methods for interpreting and understanding deep neural networks",
+      "volume": "73",
+      "author": "Montavon",
+      "year": "2018",
+      "journal-title": "Digit. Signal Process."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0375",
+      "doi-asserted-by": "crossref",
+      "unstructured": "B. Mittelstadt, C. Russell, S. Wachter, Explaining explanations in AI, Proceedings of the Conference on Fairness, Accountability, and Transparency. (2019) pp. 279-288. https://doi.org/10.1145/3287560.3287574.",
+      "DOI": "10.1145/3287560.3287574"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0380",
+      "doi-asserted-by": "crossref",
+      "first-page": "206",
+      "DOI": "10.1038/s42256-019-0048-x",
+      "article-title": "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead",
+      "volume": "1",
+      "author": "Rudin",
+      "year": "2019",
+      "journal-title": "Nat. Mach. Intell."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0385",
+      "unstructured": "European Commission. White paper: On artificial intelligence - a European approach to excellence and trust. Published in Brussels: February 19, 2020. https://ec.europa.eu/info/sites/info/files/commission-white-paper-artificial-intelligence-feb2020_en.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0390",
+      "unstructured": "The Royal Society. Explainable AI: The basics. Published: November, 2019. https://royalsociety.org/-/media/policy/projects/explainable-ai/AI-and-interpretability-policy-briefing.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0395",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Z. Buçinca, P. Lin, K.Z. Gajos, E.L. Glassman, Proxy tasks and subjective measures can be misleading in evaluating explainable AI systems [Preprint]. January 22, 2020. https://arxiv.org/pdf/2001.08298.pdf.",
+      "DOI": "10.1145/3377325.3377498"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0400",
+      "series-title": "Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems",
+      "first-page": "1",
+      "article-title": "Gamut: A design probe to understand how data scientists understand machine learning models",
+      "author": "Hohman",
+      "year": "2019"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0405",
+      "unstructured": "P. Hall, N. Gill, N. Schmidt, Proposed guidelines for the responsible use of explainable machine learning [Preprint]. November 29, 2019. https://arxiv.org/pdf/1906.03533.pdf."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0410",
+      "series-title": "Proceedings of the 21st International Conference on Intelligent User Interfaces",
+      "first-page": "164",
+      "article-title": "User trust in intelligent systems: A journey over time",
+      "author": "Holliday",
+      "year": "2016"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0415",
+      "doi-asserted-by": "crossref",
+      "first-page": "99",
+      "DOI": "10.1145/3351095.3372827",
+      "article-title": "“The human body is a black box” supporting clinical decision-making with deep learning",
+      "author": "Sendak",
+      "year": "2020",
+      "journal-title": "Proceedings of the 2020 Conference on Fairness, Accountability, and Transparency."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0420",
+      "doi-asserted-by": "crossref",
+      "first-page": "1244",
+      "DOI": "10.13063/2327-9214.1244",
+      "article-title": "A harmonized data quality assessment terminology and framework for the secondary use of electronic health record data",
+      "volume": "4",
+      "author": "Kahn",
+      "year": "2016",
+      "journal-title": "EGEMS"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0425",
+      "doi-asserted-by": "crossref",
+      "first-page": "198",
+      "DOI": "10.1093/jamia/ocw042",
+      "article-title": "Opportunities and challenges in developing risk prediction models with electronic health records data: A systematic review",
+      "volume": "24",
+      "author": "Goldstein",
+      "year": "2017",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0430",
+      "doi-asserted-by": "crossref",
+      "first-page": "54",
+      "DOI": "10.1136/amiajnl-2011-000376",
+      "article-title": "Validation of a common data model for active safety surveillance research",
+      "volume": "19",
+      "author": "Overhage",
+      "year": "2012",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0435",
+      "doi-asserted-by": "crossref",
+      "first-page": "969",
+      "DOI": "10.1093/jamia/ocy032",
+      "article-title": "Design and implementation of a standardized framework to generate and evaluate patient-level prediction models using observational healthcare data",
+      "volume": "25",
+      "author": "Reps",
+      "year": "2018",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0440",
+      "doi-asserted-by": "crossref",
+      "first-page": "102",
+      "DOI": "10.1186/s12874-020-00991-3",
+      "article-title": "Feasibility and evaluation of a large-scale external validation approach for patient-level prediction in an international data network: Validation of models predicting stroke in female patients newly diagnosed with atrial fibrillation",
+      "volume": "20",
+      "author": "Reps",
+      "year": "2020",
+      "journal-title": "BMC Med. Res. Methodol."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0445",
+      "doi-asserted-by": "crossref",
+      "first-page": "685",
+      "DOI": "10.1080/10618600.2018.1473779",
+      "article-title": "Measuring the stability of results from supervised statistical learning",
+      "volume": "27",
+      "author": "Philipp",
+      "year": "2018",
+      "journal-title": "J. Comput. Graph. Stat."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0450",
+      "series-title": "Proceedings of the 30th International Conference on Neural Information Processing Systems",
+      "first-page": "3315",
+      "article-title": "Equality of opportunity in supervised learning",
+      "author": "Hardt",
+      "year": "2016"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0455",
+      "series-title": "Proceedings of the 3rd Innovations in Theoretical Computer Science Conference",
+      "first-page": "214",
+      "article-title": "Fairness through awareness",
+      "author": "Dwork",
+      "year": "2012"
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0460",
+      "unstructured": "US Food and Drug Administration. Proposed regulatory framework for modifications to artificial intelligence/machine learning (AI/ML) ‐ based software as a medical device (SAMD). Published: January, 2020. https://www.fda.gov/media/122535/download."
+    },
+    {
+      "key": "10.1016/j.jbi.2020.103655_b0465",
+      "article-title": "Digital health and regulatory experimentation at the FDA",
+      "volume": "21",
+      "author": "Cortez",
+      "year": "2019",
+      "journal-title": "Yale J. Law Technol."
+    }
+  ],
+  "container-title": [
+    "Journal of Biomedical Informatics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S1532046420302835?httpAccept=text/xml",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S1532046420302835?httpAccept=text/plain",
+      "content-type": "text/plain",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        26
+      ]
+    ],
+    "date-time": "2025-10-26T22:46:12Z",
+    "timestamp": 1761518772000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1532046420302835"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2021,
+        1
+      ]
+    ]
+  },
+  "references-count": 93,
+  "alternative-id": [
+    "S1532046420302835"
+  ],
+  "URL": "https://doi.org/10.1016/j.jbi.2020.103655",
+  "relation": {},
+  "ISSN": [
+    "1532-0464"
+  ],
+  "issn-type": [
+    {
+      "value": "1532-0464",
+      "type": "print"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2021,
+        1
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "Elsevier",
+      "name": "publisher",
+      "label": "This article is maintained by"
+    },
+    {
+      "value": "The role of explainability in creating trustworthy artificial intelligence for health care: A comprehensive survey of the terminology, design choices, and evaluation strategies",
+      "name": "articletitle",
+      "label": "Article Title"
+    },
+    {
+      "value": "Journal of Biomedical Informatics",
+      "name": "journaltitle",
+      "label": "Journal Title"
+    },
+    {
+      "value": "https://doi.org/10.1016/j.jbi.2020.103655",
+      "name": "articlelink",
+      "label": "CrossRef DOI link to publisher maintained version"
+    },
+    {
+      "value": "article",
+      "name": "content_type",
+      "label": "Content Type"
+    },
+    {
+      "value": "© 2020 The Authors. Published by Elsevier Inc.",
+      "name": "copyright",
+      "label": "Copyright"
+    }
+  ],
+  "article-number": "103655"
+}

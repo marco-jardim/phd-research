@@ -1,0 +1,612 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        1,
+        28
+      ]
+    ],
+    "date-time": "2026-01-28T07:36:32Z",
+    "timestamp": 1769585792712,
+    "version": "3.49.0"
+  },
+  "reference-count": 66,
+  "publisher": "Cambridge University Press (CUP)",
+  "issue": "2",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            2
+          ]
+        ],
+        "date-time": "2019-01-02T00:00:00Z",
+        "timestamp": 1546387200000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "https://www.cambridge.org/core/terms"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            2
+          ]
+        ],
+        "date-time": "2019-01-02T00:00:00Z",
+        "timestamp": 1546387200000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "https://www.cambridge.org/core/terms"
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "www.cambridge.org"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "Am Polit Sci Rev"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2019,
+        5
+      ]
+    ]
+  },
+  "abstract": "<jats:p>Since most social science research relies on multiple data sources, merging data sets is an essential part of researchers’ workflow. Unfortunately, a unique identifier that unambiguously links records is often unavailable, and data may contain missing and inaccurate information. These problems are severe especially when merging large-scale administrative records. We develop a fast and scalable algorithm to implement a canonical model of probabilistic record linkage that has many advantages over deterministic methods frequently used by social scientists. The proposed methodology efficiently handles millions of observations while accounting for missing data and measurement error, incorporating auxiliary information, and adjusting for uncertainty about merging in post-merge analyses. We conduct comprehensive simulation studies to evaluate the performance of our algorithm in realistic scenarios. We also apply our methodology to merging campaign contribution records, survey data, and nationwide voter files. An open-source software package is available for implementing the proposed methodology.</jats:p>",
+  "DOI": "10.1017/s0003055418000783",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        2
+      ]
+    ],
+    "date-time": "2019-01-02T10:10:25Z",
+    "timestamp": 1546423825000
+  },
+  "page": "353-371",
+  "update-policy": "https://doi.org/10.1017/policypage",
+  "source": "Crossref",
+  "is-referenced-by-count": 133,
+  "title": [
+    "Using a Probabilistic Model to Assist Merging of Large-Scale Administrative Records"
+  ],
+  "prefix": "10.1017",
+  "volume": "113",
+  "author": [
+    {
+      "given": "TED",
+      "family": "ENAMORADO",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "BENJAMIN",
+      "family": "FIFIELD",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-2748-1022",
+      "authenticated-orcid": false,
+      "given": "KOSUKE",
+      "family": "IMAI",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "56",
+  "published-online": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        2
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "S0003055418000783_ref15",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Enamorado Ted . 2018. “Active Learning for Probabilisitic Record Linkage.” Social Science Research Network (SSRN). URL: https://ssrn.com/abstract=3257638.",
+      "DOI": "10.2139/ssrn.3257638"
+    },
+    {
+      "key": "S0003055418000783_ref13",
+      "unstructured": "de Bruin Jonathan . 2017. “Record Linkage. Python library. Version 0.8.1.” https://recordlinkage.readthedocs.io/."
+    },
+    {
+      "key": "S0003055418000783_ref24",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1002/9781119072454",
+      "volume-title": "Methodological Developments in Data Linkage",
+      "author": "Harron",
+      "year": "2015"
+    },
+    {
+      "key": "S0003055418000783_ref41",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1086/687569"
+    },
+    {
+      "key": "S0003055418000783_ref31",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1540-5907.2011.00555.x"
+    },
+    {
+      "key": "S0003055418000783_ref53",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/15-BA965SI"
+    },
+    {
+      "key": "S0003055418000783_ref10",
+      "volume-title": "International Joint Conference on Artificial Intelligence (IJCAI) 18",
+      "author": "Cohen",
+      "year": "2003"
+    },
+    {
+      "key": "S0003055418000783_ref30",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/sim.5498"
+    },
+    {
+      "key": "S0003055418000783_ref33",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1989.10478785"
+    },
+    {
+      "key": "S0003055418000783_ref14",
+      "doi-asserted-by": "crossref",
+      "first-page": "1243089-1",
+      "DOI": "10.1126/science.1243089",
+      "article-title": "Economics in the Age of Big Data",
+      "volume": "346",
+      "author": "Einav",
+      "year": "2014",
+      "journal-title": "Science"
+    },
+    {
+      "key": "S0003055418000783_ref46",
+      "doi-asserted-by": "crossref",
+      "first-page": "5469",
+      "DOI": "10.1016/S1573-4412(07)06075-8",
+      "volume-title": "Handbook of Econometrics",
+      "volume": "6",
+      "author": "Ridder",
+      "year": "2007"
+    },
+    {
+      "key": "S0003055418000783_ref25",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1017/CBO9781316212783"
+    },
+    {
+      "key": "S0003055418000783_ref62",
+      "volume-title": "Proceedings of the Section on Survey Research Methods",
+      "author": "Winkler",
+      "year": "2006a"
+    },
+    {
+      "key": "S0003055418000783_ref37",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1198/016214501750332956"
+    },
+    {
+      "key": "S0003055418000783_ref50",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1136/amiajnl-2011-000461"
+    },
+    {
+      "key": "S0003055418000783_ref49",
+      "unstructured": "Sariyar Murat , and Borg Andreas . 2016. Record Linkage in R. R package. Version 0.4-10. http://cran.r-project.org/package=RecordLinkage."
+    },
+    {
+      "key": "S0003055418000783_ref64",
+      "volume-title": "Proceedings of the Section on Survey Research Methods",
+      "author": "Winkler",
+      "year": "2006"
+    },
+    {
+      "key": "S0003055418000783_ref47",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/14-AOAS779"
+    },
+    {
+      "key": "S0003055418000783_ref19",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1257/aer.104.12.3921"
+    },
+    {
+      "key": "S0003055418000783_ref54",
+      "doi-asserted-by": "crossref",
+      "first-page": "253",
+      "DOI": "10.1007/978-3-319-11257-2_20",
+      "volume-title": "Privacy in Statistical Databases",
+      "author": "Steorts",
+      "year": "2014"
+    },
+    {
+      "key": "S0003055418000783_ref55",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/00045608.2012.720229"
+    },
+    {
+      "key": "S0003055418000783_ref20",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10115-014-0812-5"
+    },
+    {
+      "key": "S0003055418000783_ref1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/qje/qjv030"
+    },
+    {
+      "key": "S0003055418000783_ref56",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/10-AOAS447"
+    },
+    {
+      "key": "S0003055418000783_ref11",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/1468-0262.00279"
+    },
+    {
+      "key": "S0003055418000783_ref3",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/2330443X.2017.1389620"
+    },
+    {
+      "key": "S0003055418000783_ref21",
+      "doi-asserted-by": "crossref",
+      "first-page": "109",
+      "DOI": "10.1002/9781119072454.ch6",
+      "volume-title": "Methodological Developments in Data Linkage",
+      "author": "Goldstein",
+      "year": "2015"
+    },
+    {
+      "key": "S0003055418000783_ref5",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/poq/nfw021"
+    },
+    {
+      "key": "S0003055418000783_ref36",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1198/016214504000001277"
+    },
+    {
+      "key": "S0003055418000783_ref39",
+      "author": "McVeigh",
+      "year": "2017"
+    },
+    {
+      "key": "S0003055418000783_ref52",
+      "first-page": "157",
+      "article-title": "Regression Analysis of Data Files that Are Computer Matched II",
+      "volume": "23",
+      "author": "Scheuren",
+      "year": "1997",
+      "journal-title": "Survey Methodology"
+    },
+    {
+      "key": "S0003055418000783_ref38",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/0471721182"
+    },
+    {
+      "key": "S0003055418000783_ref63",
+      "author": "Winkler",
+      "year": "2006b"
+    },
+    {
+      "key": "S0003055418000783_ref58",
+      "volume-title": "Proceedings of the Section on Survey Research Methods",
+      "author": "Winkler",
+      "year": "1990"
+    },
+    {
+      "key": "S0003055418000783_ref32",
+      "author": "Jaro",
+      "year": "1972"
+    },
+    {
+      "key": "S0003055418000783_ref48",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.2016.1148612"
+    },
+    {
+      "key": "S0003055418000783_ref42",
+      "first-page": "3",
+      "article-title": "Probabilistic Record Linkage and Deduplication after Indexing, Blocking, and Filtering",
+      "volume": "7",
+      "author": "Murray",
+      "year": "2016",
+      "journal-title": "Journal of Privacy and Confidentiality"
+    },
+    {
+      "key": "S0003055418000783_ref66",
+      "author": "Yancey",
+      "year": "2005"
+    },
+    {
+      "key": "S0003055418000783_ref34",
+      "doi-asserted-by": "crossref",
+      "first-page": "91",
+      "DOI": "10.1146/annurev-publhealth-031210-100700",
+      "article-title": "Administrative Record Linkage as a Tool for Public Health Research",
+      "volume": "32",
+      "author": "Jutte",
+      "year": "2011",
+      "journal-title": "Annual Review of Public Health"
+    },
+    {
+      "key": "S0003055418000783_ref2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/pan/mps023"
+    },
+    {
+      "key": "S0003055418000783_ref40",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/0002716213502931"
+    },
+    {
+      "key": "S0003055418000783_ref59",
+      "volume-title": "Proceedings of Survey Research Methods Section",
+      "author": "Winkler",
+      "year": "1993"
+    },
+    {
+      "key": "S0003055418000783_ref43",
+      "first-page": "1005",
+      "article-title": "The Effect of Mismatching on the Measurement of Response Errors",
+      "volume": "60",
+      "author": "Neter",
+      "year": "1965",
+      "journal-title": "Journal of the American Statistical Association"
+    },
+    {
+      "key": "S0003055418000783_ref9",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1007/978-3-642-31164-2",
+      "volume-title": "Data Matching. Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection",
+      "author": "Christen",
+      "year": "2012"
+    },
+    {
+      "key": "S0003055418000783_ref4",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1995.10476563"
+    },
+    {
+      "key": "S0003055418000783_ref28",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.electstud.2017.06.001"
+    },
+    {
+      "key": "S0003055418000783_ref22",
+      "first-page": "34",
+      "article-title": "A Bayesian Procedure for File Linking to End-of-Life Medical Costs",
+      "volume": "103",
+      "author": "Gutman",
+      "year": "2013",
+      "journal-title": "Journal of the American Medical Informatics Association"
+    },
+    {
+      "key": "S0003055418000783_ref7",
+      "volume-title": "Database on Ideology, Money in Politics, and Elections: Public Version 1.0 [Computer File]",
+      "author": "Bonica",
+      "year": "2013"
+    },
+    {
+      "key": "S0003055418000783_ref6",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/ajps.12052"
+    },
+    {
+      "key": "S0003055418000783_ref44",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2014.01.016"
+    },
+    {
+      "key": "S0003055418000783_ref61",
+      "author": "Winkler",
+      "year": "2005"
+    },
+    {
+      "key": "S0003055418000783_ref51",
+      "first-page": "39",
+      "article-title": "Regression Analysis of Data Files that Are Computer Matched",
+      "volume": "19",
+      "author": "Scheuren",
+      "year": "1993",
+      "journal-title": "Survey Methodology"
+    },
+    {
+      "key": "S0003055418000783_ref29",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s11109-016-9343-y"
+    },
+    {
+      "key": "S0003055418000783_ref16",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1257/aer.p20171013"
+    },
+    {
+      "key": "S0003055418000783_ref27",
+      "volume-title": "Data Quality and Record Linkage Techniques",
+      "author": "Herzog",
+      "year": "2007"
+    },
+    {
+      "key": "S0003055418000783_ref65",
+      "volume-title": "Proceedings of the Secion on Survey Research Methods",
+      "author": "Winkler",
+      "year": "2010"
+    },
+    {
+      "key": "S0003055418000783_ref45",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.electstud.2014.09.001"
+    },
+    {
+      "key": "S0003055418000783_ref12",
+      "first-page": "1",
+      "article-title": "Regression Modeling and File Matching Using Possibly Erroneous Matching Variables",
+      "author": "Dalzell",
+      "year": "2018",
+      "journal-title": "Journal of Computational and Graphical Statistics"
+    },
+    {
+      "key": "S0003055418000783_ref60",
+      "author": "Winkler",
+      "year": "2000"
+    },
+    {
+      "key": "S0003055418000783_ref18",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1969.10501049"
+    },
+    {
+      "key": "S0003055418000783_ref26",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/wics.108"
+    },
+    {
+      "key": "S0003055418000783_ref23",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/sim.6586"
+    },
+    {
+      "key": "S0003055418000783_ref17",
+      "author": "Feigenbaum",
+      "year": "2016"
+    },
+    {
+      "key": "S0003055418000783_ref8",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/qje/qjw001"
+    },
+    {
+      "key": "S0003055418000783_ref57",
+      "first-page": "19",
+      "article-title": "The Discrimination Power of Dependency Structures in Record Linkage",
+      "author": "Thibaudeau",
+      "year": "1993",
+      "journal-title": "Survey Methodology"
+    },
+    {
+      "key": "S0003055418000783_ref35",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.csda.2012.02.026"
+    }
+  ],
+  "container-title": [
+    "American Political Science Review"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/S0003055418000783",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2023,
+        9,
+        12
+      ]
+    ],
+    "date-time": "2023-09-12T16:32:54Z",
+    "timestamp": 1694536374000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.cambridge.org/core/product/identifier/S0003055418000783/type/journal_article"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        2
+      ]
+    ]
+  },
+  "references-count": 66,
+  "journal-issue": {
+    "issue": "2",
+    "published-print": {
+      "date-parts": [
+        [
+          2019,
+          5
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "S0003055418000783"
+  ],
+  "URL": "https://doi.org/10.1017/s0003055418000783",
+  "relation": {},
+  "ISSN": [
+    "0003-0554",
+    "1537-5943"
+  ],
+  "issn-type": [
+    {
+      "value": "0003-0554",
+      "type": "print"
+    },
+    {
+      "value": "1537-5943",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        2
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "Copyright © American Political Science Association 2019 ",
+      "name": "license",
+      "label": "License",
+      "group": {
+        "name": "copyright_and_licensing",
+        "label": "Copyright and Licensing"
+      }
+    }
+  ]
+}

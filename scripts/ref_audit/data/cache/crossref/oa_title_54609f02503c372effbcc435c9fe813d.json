@@ -1,0 +1,5056 @@
+[
+  {
+    "id": "https://openalex.org/W2810476200",
+    "doi": "https://doi.org/10.1016/j.csbj.2018.06.003",
+    "title": "Blockchain Technology for Healthcare: Facilitating the Transition to Patient-Driven Interoperability",
+    "display_name": "Blockchain Technology for Healthcare: Facilitating the Transition to Patient-Driven Interoperability",
+    "relevance_score": 7969.1377,
+    "publication_year": 2018,
+    "publication_date": "2018-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2810476200",
+      "doi": "https://doi.org/10.1016/j.csbj.2018.06.003",
+      "mag": "2810476200",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/30069284"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1016/j.csbj.2018.06.003",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1016/j.csbj.2018.06.003",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764539591",
+        "display_name": "Computational and Structural Biotechnology Journal",
+        "issn_l": "2001-0370",
+        "issn": [
+          "2001-0370"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320990",
+        "host_organization_name": "Elsevier BV",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320990"
+        ],
+        "host_organization_lineage_names": [
+          "Elsevier BV"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Computational and Structural Biotechnology Journal",
+      "raw_type": "journal-article"
+    },
+    "type": "review",
+    "indexed_in": [
+      "crossref",
+      "doaj",
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://doi.org/10.1016/j.csbj.2018.06.003",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5017285963",
+          "display_name": "William J. Gordon",
+          "orcid": "https://orcid.org/0000-0002-6975-3225"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I136199984",
+            "display_name": "Harvard University",
+            "ror": "https://ror.org/03vek6s52",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I136199984"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1283280774",
+            "display_name": "Brigham and Women's Hospital",
+            "ror": "https://ror.org/04b6nzv94",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1283280774",
+              "https://openalex.org/I48633490"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I2801543288",
+            "display_name": "Lemuel Shattuck Hospital",
+            "ror": "https://ror.org/01wpqwr25",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I2801543288"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210087915",
+            "display_name": "Massachusetts General Hospital",
+            "ror": "https://ror.org/002pd6e78",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I4210087915",
+              "https://openalex.org/I48633490"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "William J. Gordon",
+        "raw_affiliation_strings": [
+          "Brigham and Women's Hospital, 41 Avenue Louis Pasteur #209, Boston, MA 02115, United States",
+          "Harvard Medical School, 25 Shattuck St, Boston, MA 02115, United States",
+          "Massachusetts General Hospital, 55 Fruit St, Boston, MA 02114, United States"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Brigham and Women's Hospital, 41 Avenue Louis Pasteur #209, Boston, MA 02115, United States",
+            "institution_ids": [
+              "https://openalex.org/I1283280774"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Harvard Medical School, 25 Shattuck St, Boston, MA 02115, United States",
+            "institution_ids": [
+              "https://openalex.org/I2801543288",
+              "https://openalex.org/I136199984"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Massachusetts General Hospital, 55 Fruit St, Boston, MA 02114, United States",
+            "institution_ids": [
+              "https://openalex.org/I4210087915"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5109041474",
+          "display_name": "Christian Catalini",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I63966007",
+            "display_name": "Massachusetts Institute of Technology",
+            "ror": "https://ror.org/042nb2s44",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I63966007"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1321305853",
+            "display_name": "National Bureau of Economic Research",
+            "ror": "https://ror.org/04grmx538",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1321305853"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Christian Catalini",
+        "raw_affiliation_strings": [
+          "MIT Sloan School of Management, 30 Memorial Drive, Cambridge, MA 02142, United States",
+          "National Bureau of Economic Research, 1050 Massachusetts Ave., Cambridge, MA 02138, United States"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "MIT Sloan School of Management, 30 Memorial Drive, Cambridge, MA 02142, United States",
+            "institution_ids": [
+              "https://openalex.org/I63966007"
+            ]
+          },
+          {
+            "raw_affiliation_string": "National Bureau of Economic Research, 1050 Massachusetts Ave., Cambridge, MA 02138, United States",
+            "institution_ids": [
+              "https://openalex.org/I1321305853"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 2,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5017285963"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I1283280774",
+      "https://openalex.org/I136199984",
+      "https://openalex.org/I2801543288",
+      "https://openalex.org/I4210087915"
+    ],
+    "apc_list": {
+      "value": 2450,
+      "currency": "EUR",
+      "value_usd": 2642
+    },
+    "apc_paid": {
+      "value": 2450,
+      "currency": "EUR",
+      "value_usd": 2642
+    },
+    "fwci": 151.80745799,
+    "has_fulltext": false,
+    "cited_by_count": 794,
+    "citation_normalized_percentile": {
+      "value": 0.9996824,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 99,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "16",
+      "issue": null,
+      "first_page": "224",
+      "last_page": "230"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9993000030517578,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9993000030517578,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10273",
+        "display_name": "IoT and Edge/Fog Computing",
+        "score": 0.9377999901771545,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10350",
+        "display_name": "Electronic Health Records Systems",
+        "score": 0.9052000045776367,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/interoperability",
+        "display_name": "Interoperability",
+        "score": 0.8483515977859497
+      },
+      {
+        "id": "https://openalex.org/keywords/data-sharing",
+        "display_name": "Data sharing",
+        "score": 0.5764795541763306
+      },
+      {
+        "id": "https://openalex.org/keywords/incentive",
+        "display_name": "Incentive",
+        "score": 0.4832621216773987
+      },
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.4653041958808899
+      },
+      {
+        "id": "https://openalex.org/keywords/health-care",
+        "display_name": "Health care",
+        "score": 0.4465300738811493
+      },
+      {
+        "id": "https://openalex.org/keywords/immutability",
+        "display_name": "Immutability",
+        "score": 0.42748916149139404
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.42684459686279297
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.406161367893219
+      },
+      {
+        "id": "https://openalex.org/keywords/internet-privacy",
+        "display_name": "Internet privacy",
+        "score": 0.37281131744384766
+      },
+      {
+        "id": "https://openalex.org/keywords/knowledge-management",
+        "display_name": "Knowledge management",
+        "score": 0.3657524287700653
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.35449397563934326
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.21668803691864014
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.20183181762695312
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C20136886",
+        "wikidata": "https://www.wikidata.org/wiki/Q749647",
+        "display_name": "Interoperability",
+        "level": 2,
+        "score": 0.8483515977859497
+      },
+      {
+        "id": "https://openalex.org/C2779965156",
+        "wikidata": "https://www.wikidata.org/wiki/Q5227350",
+        "display_name": "Data sharing",
+        "level": 3,
+        "score": 0.5764795541763306
+      },
+      {
+        "id": "https://openalex.org/C29122968",
+        "wikidata": "https://www.wikidata.org/wiki/Q1414816",
+        "display_name": "Incentive",
+        "level": 2,
+        "score": 0.4832621216773987
+      },
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.4653041958808899
+      },
+      {
+        "id": "https://openalex.org/C160735492",
+        "wikidata": "https://www.wikidata.org/wiki/Q31207",
+        "display_name": "Health care",
+        "level": 2,
+        "score": 0.4465300738811493
+      },
+      {
+        "id": "https://openalex.org/C2776126399",
+        "wikidata": "https://www.wikidata.org/wiki/Q3942906",
+        "display_name": "Immutability",
+        "level": 3,
+        "score": 0.42748916149139404
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.42684459686279297
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.406161367893219
+      },
+      {
+        "id": "https://openalex.org/C108827166",
+        "wikidata": "https://www.wikidata.org/wiki/Q175975",
+        "display_name": "Internet privacy",
+        "level": 1,
+        "score": 0.37281131744384766
+      },
+      {
+        "id": "https://openalex.org/C56739046",
+        "wikidata": "https://www.wikidata.org/wiki/Q192060",
+        "display_name": "Knowledge management",
+        "level": 1,
+        "score": 0.3657524287700653
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.35449397563934326
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.21668803691864014
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.20183181762695312
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C50522688",
+        "wikidata": "https://www.wikidata.org/wiki/Q189833",
+        "display_name": "Economic growth",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C204787440",
+        "wikidata": "https://www.wikidata.org/wiki/Q188504",
+        "display_name": "Alternative medicine",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C175444787",
+        "wikidata": "https://www.wikidata.org/wiki/Q39072",
+        "display_name": "Microeconomics",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C162324750",
+        "wikidata": "https://www.wikidata.org/wiki/Q8134",
+        "display_name": "Economics",
+        "level": 0,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 5,
+    "locations": [
+      {
+        "id": "doi:10.1016/j.csbj.2018.06.003",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1016/j.csbj.2018.06.003",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764539591",
+          "display_name": "Computational and Structural Biotechnology Journal",
+          "issn_l": "2001-0370",
+          "issn": [
+            "2001-0370"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310320990",
+          "host_organization_name": "Elsevier BV",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310320990"
+          ],
+          "host_organization_lineage_names": [
+            "Elsevier BV"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Computational and Structural Biotechnology Journal",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmid:30069284",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/30069284",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Computational and structural biotechnology journal",
+        "raw_type": null
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:210e8c7879894cafa20033619d42a926",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/210e8c7879894cafa20033619d42a926",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Computational and Structural Biotechnology Journal, Vol 16, Iss , Pp 224-230 (2018)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:europepmc.org:5023575",
+        "is_oa": true,
+        "landing_page_url": "http://europepmc.org/pmc/articles/PMC6068317",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400806",
+          "display_name": "Europe PMC (PubMed Central)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1303153112",
+          "host_organization_name": "European Bioinformatics Institute",
+          "host_organization_lineage": [
+            "https://openalex.org/I1303153112"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": "Text"
+      },
+      {
+        "id": "pmh:oai:pubmedcentral.nih.gov:6068317",
+        "is_oa": true,
+        "landing_page_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/6068317",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764455111",
+          "display_name": "PubMed Central",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Comput Struct Biotechnol J",
+        "raw_type": "Text"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1016/j.csbj.2018.06.003",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1016/j.csbj.2018.06.003",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764539591",
+        "display_name": "Computational and Structural Biotechnology Journal",
+        "issn_l": "2001-0370",
+        "issn": [
+          "2001-0370"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320990",
+        "host_organization_name": "Elsevier BV",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320990"
+        ],
+        "host_organization_lineage_names": [
+          "Elsevier BV"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Computational and Structural Biotechnology Journal",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.41999998688697815,
+        "id": "https://metadata.un.org/sdg/17",
+        "display_name": "Partnerships for the goals"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 42,
+    "referenced_works": [
+      "https://openalex.org/W98226599",
+      "https://openalex.org/W160070906",
+      "https://openalex.org/W179368776",
+      "https://openalex.org/W1559136758",
+      "https://openalex.org/W1773412827",
+      "https://openalex.org/W1802568394",
+      "https://openalex.org/W2016960024",
+      "https://openalex.org/W2034898504",
+      "https://openalex.org/W2038327184",
+      "https://openalex.org/W2069726734",
+      "https://openalex.org/W2075796489",
+      "https://openalex.org/W2151867385",
+      "https://openalex.org/W2276530525",
+      "https://openalex.org/W2286036512",
+      "https://openalex.org/W2290152652",
+      "https://openalex.org/W2345935983",
+      "https://openalex.org/W2409730778",
+      "https://openalex.org/W2411436621",
+      "https://openalex.org/W2413905792",
+      "https://openalex.org/W2439521206",
+      "https://openalex.org/W2514994441",
+      "https://openalex.org/W2522448907",
+      "https://openalex.org/W2537935735",
+      "https://openalex.org/W2555782333",
+      "https://openalex.org/W2559524379",
+      "https://openalex.org/W2737948908",
+      "https://openalex.org/W2751179194",
+      "https://openalex.org/W2754931682",
+      "https://openalex.org/W2756138490",
+      "https://openalex.org/W2763496415",
+      "https://openalex.org/W2764231377",
+      "https://openalex.org/W2848255162",
+      "https://openalex.org/W2963993810",
+      "https://openalex.org/W2964119695",
+      "https://openalex.org/W3123130758",
+      "https://openalex.org/W4248175462",
+      "https://openalex.org/W6603962782",
+      "https://openalex.org/W6606609032",
+      "https://openalex.org/W6633543543",
+      "https://openalex.org/W6705045372",
+      "https://openalex.org/W6714214568",
+      "https://openalex.org/W6727277121"
+    ],
+    "related_works": [
+      "https://openalex.org/W1517747134",
+      "https://openalex.org/W2802479602",
+      "https://openalex.org/W4386576376",
+      "https://openalex.org/W4210406818",
+      "https://openalex.org/W4306779889",
+      "https://openalex.org/W4386732777",
+      "https://openalex.org/W3130746757",
+      "https://openalex.org/W4380683080",
+      "https://openalex.org/W3216065934",
+      "https://openalex.org/W3022984010"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 77
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 95
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 126
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 153
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 139
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 120
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 81
+      }
+    ],
+    "updated_date": "2026-02-07T08:09:18.108334",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2946158639",
+    "doi": null,
+    "title": "Blockchain Technology for Healthcare: Facilitating the Transition to Patient-Driven Interoperability",
+    "display_name": "Blockchain Technology for Healthcare: Facilitating the Transition to Patient-Driven Interoperability",
+    "relevance_score": 547.02454,
+    "publication_year": 2018,
+    "publication_date": "2018-06-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2946158639",
+      "mag": "2946158639"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "pmh:oai:dspace.mit.edu:1721.1/120464",
+      "is_oa": true,
+      "landing_page_url": "http://hdl.handle.net/1721.1/120464",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306400425",
+        "display_name": "DSpace@MIT (Massachusetts Institute of Technology)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/I63966007",
+        "host_organization_name": "Massachusetts Institute of Technology",
+        "host_organization_lineage": [
+          "https://openalex.org/I63966007"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": "cc-by-nc",
+      "license_id": "https://openalex.org/licenses/cc-by-nc",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": "Elsevier",
+      "raw_type": "http://purl.org/eprint/type/JournalArticle"
+    },
+    "type": "book-chapter",
+    "indexed_in": [],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "green",
+      "oa_url": "http://hdl.handle.net/1721.1/120464",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5017285963",
+          "display_name": "William J. Gordon",
+          "orcid": "https://orcid.org/0000-0002-6975-3225"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210087915",
+            "display_name": "Massachusetts General Hospital",
+            "ror": "https://ror.org/002pd6e78",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I4210087915",
+              "https://openalex.org/I48633490"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1283280774",
+            "display_name": "Brigham and Women's Hospital",
+            "ror": "https://ror.org/04b6nzv94",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1283280774",
+              "https://openalex.org/I48633490"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "William J. Gordon",
+        "raw_affiliation_strings": [
+          "Brigham and Women's Hospital, 41 Avenue Louis Pasteur #209, Boston, MA 02115, United States",
+          "Massachusetts General Hospital, 55 Fruit St, Boston, MA 02114, United States"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Brigham and Women's Hospital, 41 Avenue Louis Pasteur #209, Boston, MA 02115, United States",
+            "institution_ids": [
+              "https://openalex.org/I1283280774"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Massachusetts General Hospital, 55 Fruit St, Boston, MA 02114, United States",
+            "institution_ids": [
+              "https://openalex.org/I4210087915"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5109041474",
+          "display_name": "Christian Catalini",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I63966007",
+            "display_name": "Massachusetts Institute of Technology",
+            "ror": "https://ror.org/042nb2s44",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I63966007"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1321305853",
+            "display_name": "National Bureau of Economic Research",
+            "ror": "https://ror.org/04grmx538",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1321305853"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Christian Catalini",
+        "raw_affiliation_strings": [
+          "National Bureau of Economic Research, 1050 Massachusetts Ave., Cambridge, MA 02138, United States",
+          "MIT Sloan School of Management, 30 Memorial Drive, Cambridge, MA 02142, United States"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "National Bureau of Economic Research, 1050 Massachusetts Ave., Cambridge, MA 02138, United States",
+            "institution_ids": [
+              "https://openalex.org/I1321305853"
+            ]
+          },
+          {
+            "raw_affiliation_string": "MIT Sloan School of Management, 30 Memorial Drive, Cambridge, MA 02142, United States",
+            "institution_ids": [
+              "https://openalex.org/I63966007"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 2,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5017285963"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I4210087915",
+      "https://openalex.org/I1283280774"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 0.46979702,
+    "has_fulltext": false,
+    "cited_by_count": 1,
+    "citation_normalized_percentile": {
+      "value": 0.67612342,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 94
+    },
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9984999895095825,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9984999895095825,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11163",
+        "display_name": "Organ Donation and Transplantation",
+        "score": 0.9301000237464905,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2739",
+          "display_name": "Public Health, Environmental and Occupational Health"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11995",
+        "display_name": "FinTech, Crowdfunding, Digital Finance",
+        "score": 0.9093000292778015,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1404",
+          "display_name": "Management Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/14",
+          "display_name": "Business, Management and Accounting"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/interoperability",
+        "display_name": "Interoperability",
+        "score": 0.8348253965377808
+      },
+      {
+        "id": "https://openalex.org/keywords/data-sharing",
+        "display_name": "Data sharing",
+        "score": 0.5286612510681152
+      },
+      {
+        "id": "https://openalex.org/keywords/health-care",
+        "display_name": "Health care",
+        "score": 0.4390294551849365
+      },
+      {
+        "id": "https://openalex.org/keywords/incentive",
+        "display_name": "Incentive",
+        "score": 0.43840572237968445
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.43461689352989197
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.42479854822158813
+      },
+      {
+        "id": "https://openalex.org/keywords/health-information-exchange",
+        "display_name": "Health information exchange",
+        "score": 0.4201590418815613
+      },
+      {
+        "id": "https://openalex.org/keywords/internet-privacy",
+        "display_name": "Internet privacy",
+        "score": 0.40578120946884155
+      },
+      {
+        "id": "https://openalex.org/keywords/knowledge-management",
+        "display_name": "Knowledge management",
+        "score": 0.39570075273513794
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.3523206114768982
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.21191886067390442
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.18727418780326843
+      },
+      {
+        "id": "https://openalex.org/keywords/political-science",
+        "display_name": "Political science",
+        "score": 0.09309157729148865
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C20136886",
+        "wikidata": "https://www.wikidata.org/wiki/Q749647",
+        "display_name": "Interoperability",
+        "level": 2,
+        "score": 0.8348253965377808
+      },
+      {
+        "id": "https://openalex.org/C2779965156",
+        "wikidata": "https://www.wikidata.org/wiki/Q5227350",
+        "display_name": "Data sharing",
+        "level": 3,
+        "score": 0.5286612510681152
+      },
+      {
+        "id": "https://openalex.org/C160735492",
+        "wikidata": "https://www.wikidata.org/wiki/Q31207",
+        "display_name": "Health care",
+        "level": 2,
+        "score": 0.4390294551849365
+      },
+      {
+        "id": "https://openalex.org/C29122968",
+        "wikidata": "https://www.wikidata.org/wiki/Q1414816",
+        "display_name": "Incentive",
+        "level": 2,
+        "score": 0.43840572237968445
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.43461689352989197
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.42479854822158813
+      },
+      {
+        "id": "https://openalex.org/C2778759051",
+        "wikidata": "https://www.wikidata.org/wiki/Q5691085",
+        "display_name": "Health information exchange",
+        "level": 4,
+        "score": 0.4201590418815613
+      },
+      {
+        "id": "https://openalex.org/C108827166",
+        "wikidata": "https://www.wikidata.org/wiki/Q175975",
+        "display_name": "Internet privacy",
+        "level": 1,
+        "score": 0.40578120946884155
+      },
+      {
+        "id": "https://openalex.org/C56739046",
+        "wikidata": "https://www.wikidata.org/wiki/Q192060",
+        "display_name": "Knowledge management",
+        "level": 1,
+        "score": 0.39570075273513794
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.3523206114768982
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.21191886067390442
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.18727418780326843
+      },
+      {
+        "id": "https://openalex.org/C17744445",
+        "wikidata": "https://www.wikidata.org/wiki/Q36442",
+        "display_name": "Political science",
+        "level": 0,
+        "score": 0.09309157729148865
+      },
+      {
+        "id": "https://openalex.org/C199539241",
+        "wikidata": "https://www.wikidata.org/wiki/Q7748",
+        "display_name": "Law",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C162324750",
+        "wikidata": "https://www.wikidata.org/wiki/Q8134",
+        "display_name": "Economics",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C204787440",
+        "wikidata": "https://www.wikidata.org/wiki/Q188504",
+        "display_name": "Alternative medicine",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C2982795734",
+        "wikidata": "https://www.wikidata.org/wiki/Q870895",
+        "display_name": "Health information",
+        "level": 3,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C175444787",
+        "wikidata": "https://www.wikidata.org/wiki/Q39072",
+        "display_name": "Microeconomics",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 2,
+    "locations": [
+      {
+        "id": "pmh:oai:dspace.mit.edu:1721.1/120464",
+        "is_oa": true,
+        "landing_page_url": "http://hdl.handle.net/1721.1/120464",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400425",
+          "display_name": "DSpace@MIT (Massachusetts Institute of Technology)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I63966007",
+          "host_organization_name": "Massachusetts Institute of Technology",
+          "host_organization_lineage": [
+            "https://openalex.org/I63966007"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by-nc",
+        "license_id": "https://openalex.org/licenses/cc-by-nc",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Elsevier",
+        "raw_type": "http://purl.org/eprint/type/JournalArticle"
+      },
+      {
+        "id": "mag:2946158639",
+        "is_oa": false,
+        "landing_page_url": null,
+        "pdf_url": null,
+        "source": null,
+        "license": null,
+        "license_id": null,
+        "version": null,
+        "is_accepted": false,
+        "is_published": null,
+        "raw_source_name": null,
+        "raw_type": null
+      }
+    ],
+    "best_oa_location": {
+      "id": "pmh:oai:dspace.mit.edu:1721.1/120464",
+      "is_oa": true,
+      "landing_page_url": "http://hdl.handle.net/1721.1/120464",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306400425",
+        "display_name": "DSpace@MIT (Massachusetts Institute of Technology)",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/I63966007",
+        "host_organization_name": "Massachusetts Institute of Technology",
+        "host_organization_lineage": [
+          "https://openalex.org/I63966007"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": "cc-by-nc",
+      "license_id": "https://openalex.org/licenses/cc-by-nc",
+      "version": "submittedVersion",
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": "Elsevier",
+      "raw_type": "http://purl.org/eprint/type/JournalArticle"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.41999998688697815,
+        "id": "https://metadata.un.org/sdg/17",
+        "display_name": "Partnerships for the goals"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [
+      "https://openalex.org/W3164576991",
+      "https://openalex.org/W2947820919",
+      "https://openalex.org/W2959818040",
+      "https://openalex.org/W3214557398",
+      "https://openalex.org/W3189673690",
+      "https://openalex.org/W3106880157",
+      "https://openalex.org/W35418381",
+      "https://openalex.org/W3167437416",
+      "https://openalex.org/W3011494897",
+      "https://openalex.org/W2994608255",
+      "https://openalex.org/W3168686779",
+      "https://openalex.org/W2999032637",
+      "https://openalex.org/W3159979367",
+      "https://openalex.org/W3085016046",
+      "https://openalex.org/W3212339084",
+      "https://openalex.org/W3099326337",
+      "https://openalex.org/W2925413847",
+      "https://openalex.org/W3193752600",
+      "https://openalex.org/W3103111609",
+      "https://openalex.org/W1891270131"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2020,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2025-11-06T04:12:42.849631",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2929438235",
+    "doi": "https://doi.org/10.3390/healthcare7020056",
+    "title": "Blockchain Technology in Healthcare: A Systematic Review",
+    "display_name": "Blockchain Technology in Healthcare: A Systematic Review",
+    "relevance_score": 125.36567,
+    "publication_year": 2019,
+    "publication_date": "2019-04-04",
+    "ids": {
+      "openalex": "https://openalex.org/W2929438235",
+      "doi": "https://doi.org/10.3390/healthcare7020056",
+      "mag": "2929438235",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/30987333"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.3390/healthcare7020056",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.3390/healthcare7020056",
+      "pdf_url": "https://www.mdpi.com/2227-9032/7/2/56/pdf?version=1554372452",
+      "source": {
+        "id": "https://openalex.org/S4210214101",
+        "display_name": "Healthcare",
+        "issn_l": "2227-9032",
+        "issn": [
+          "2227-9032"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310310987",
+        "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310310987"
+        ],
+        "host_organization_lineage_names": [
+          "Multidisciplinary Digital Publishing Institute"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Healthcare",
+      "raw_type": "journal-article"
+    },
+    "type": "review",
+    "indexed_in": [
+      "crossref",
+      "doaj",
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://www.mdpi.com/2227-9032/7/2/56/pdf?version=1554372452",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5016881604",
+          "display_name": "Cornelius C. Agbo",
+          "orcid": "https://orcid.org/0000-0002-3625-4729"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I39470171",
+            "display_name": "University of Ontario Institute of Technology",
+            "ror": "https://ror.org/016zre027",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Cornelius C. Agbo",
+        "raw_affiliation_strings": [
+          "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada",
+            "institution_ids": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5011840659",
+          "display_name": "Qusay H. Mahmoud",
+          "orcid": "https://orcid.org/0000-0003-0472-5757"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I39470171",
+            "display_name": "University of Ontario Institute of Technology",
+            "ror": "https://ror.org/016zre027",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Qusay H. Mahmoud",
+        "raw_affiliation_strings": [
+          "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada",
+            "institution_ids": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5052153651",
+          "display_name": "Johan Eklund",
+          "orcid": "https://orcid.org/0000-0001-7233-3136"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I39470171",
+            "display_name": "University of Ontario Institute of Technology",
+            "ror": "https://ror.org/016zre027",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "J. Mikael Eklund",
+        "raw_affiliation_strings": [
+          "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Electrical, Computer and Software Engineering, University of Ontario Institute of Technology, Oshawa, ON L1G 0C5, Canada",
+            "institution_ids": [
+              "https://openalex.org/I39470171"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 3,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5016881604"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I39470171"
+    ],
+    "apc_list": {
+      "value": 1800,
+      "currency": "CHF",
+      "value_usd": 1949
+    },
+    "apc_paid": {
+      "value": 1800,
+      "currency": "CHF",
+      "value_usd": 1949
+    },
+    "fwci": 167.08060735,
+    "has_fulltext": true,
+    "cited_by_count": 1042,
+    "citation_normalized_percentile": {
+      "value": 0.99989363,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 90,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "7",
+      "issue": "2",
+      "first_page": "56",
+      "last_page": "56"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9998999834060669,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9998999834060669,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10273",
+        "display_name": "IoT and Edge/Fog Computing",
+        "score": 0.9427000284194946,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.8596698045730591
+      },
+      {
+        "id": "https://openalex.org/keywords/pace",
+        "display_name": "Pace",
+        "score": 0.7036584615707397
+      },
+      {
+        "id": "https://openalex.org/keywords/systematic-review",
+        "display_name": "Systematic review",
+        "score": 0.6819882392883301
+      },
+      {
+        "id": "https://openalex.org/keywords/health-care",
+        "display_name": "Health care",
+        "score": 0.6560536026954651
+      },
+      {
+        "id": "https://openalex.org/keywords/protocol",
+        "display_name": "Protocol (science)",
+        "score": 0.6504150032997131
+      },
+      {
+        "id": "https://openalex.org/keywords/data-science",
+        "display_name": "Data science",
+        "score": 0.5830535888671875
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.5674687623977661
+      },
+      {
+        "id": "https://openalex.org/keywords/implementation",
+        "display_name": "Implementation",
+        "score": 0.5229657292366028
+      },
+      {
+        "id": "https://openalex.org/keywords/process",
+        "display_name": "Process (computing)",
+        "score": 0.5031353831291199
+      },
+      {
+        "id": "https://openalex.org/keywords/healthcare-industry",
+        "display_name": "Healthcare industry",
+        "score": 0.4332757592201233
+      },
+      {
+        "id": "https://openalex.org/keywords/informatics",
+        "display_name": "Informatics",
+        "score": 0.424032062292099
+      },
+      {
+        "id": "https://openalex.org/keywords/health-informatics",
+        "display_name": "Health informatics",
+        "score": 0.4125225245952606
+      },
+      {
+        "id": "https://openalex.org/keywords/knowledge-management",
+        "display_name": "Knowledge management",
+        "score": 0.34380674362182617
+      },
+      {
+        "id": "https://openalex.org/keywords/medline",
+        "display_name": "MEDLINE",
+        "score": 0.2692664861679077
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.2135968804359436
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.15003052353858948
+      },
+      {
+        "id": "https://openalex.org/keywords/engineering",
+        "display_name": "Engineering",
+        "score": 0.12254434823989868
+      },
+      {
+        "id": "https://openalex.org/keywords/alternative-medicine",
+        "display_name": "Alternative medicine",
+        "score": 0.1160849928855896
+      },
+      {
+        "id": "https://openalex.org/keywords/software-engineering",
+        "display_name": "Software engineering",
+        "score": 0.09874141216278076
+      },
+      {
+        "id": "https://openalex.org/keywords/political-science",
+        "display_name": "Political science",
+        "score": 0.09004375338554382
+      },
+      {
+        "id": "https://openalex.org/keywords/pathology",
+        "display_name": "Pathology",
+        "score": 0.08175137639045715
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.8596698045730591
+      },
+      {
+        "id": "https://openalex.org/C2777526511",
+        "wikidata": "https://www.wikidata.org/wiki/Q691543",
+        "display_name": "Pace",
+        "level": 2,
+        "score": 0.7036584615707397
+      },
+      {
+        "id": "https://openalex.org/C189708586",
+        "wikidata": "https://www.wikidata.org/wiki/Q1504425",
+        "display_name": "Systematic review",
+        "level": 3,
+        "score": 0.6819882392883301
+      },
+      {
+        "id": "https://openalex.org/C160735492",
+        "wikidata": "https://www.wikidata.org/wiki/Q31207",
+        "display_name": "Health care",
+        "level": 2,
+        "score": 0.6560536026954651
+      },
+      {
+        "id": "https://openalex.org/C2780385302",
+        "wikidata": "https://www.wikidata.org/wiki/Q367158",
+        "display_name": "Protocol (science)",
+        "level": 3,
+        "score": 0.6504150032997131
+      },
+      {
+        "id": "https://openalex.org/C2522767166",
+        "wikidata": "https://www.wikidata.org/wiki/Q2374463",
+        "display_name": "Data science",
+        "level": 1,
+        "score": 0.5830535888671875
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.5674687623977661
+      },
+      {
+        "id": "https://openalex.org/C26713055",
+        "wikidata": "https://www.wikidata.org/wiki/Q245962",
+        "display_name": "Implementation",
+        "level": 2,
+        "score": 0.5229657292366028
+      },
+      {
+        "id": "https://openalex.org/C98045186",
+        "wikidata": "https://www.wikidata.org/wiki/Q205663",
+        "display_name": "Process (computing)",
+        "level": 2,
+        "score": 0.5031353831291199
+      },
+      {
+        "id": "https://openalex.org/C2989086416",
+        "wikidata": "https://www.wikidata.org/wiki/Q15067276",
+        "display_name": "Healthcare industry",
+        "level": 3,
+        "score": 0.4332757592201233
+      },
+      {
+        "id": "https://openalex.org/C191630685",
+        "wikidata": "https://www.wikidata.org/wiki/Q4027615",
+        "display_name": "Informatics",
+        "level": 2,
+        "score": 0.424032062292099
+      },
+      {
+        "id": "https://openalex.org/C145642194",
+        "wikidata": "https://www.wikidata.org/wiki/Q870895",
+        "display_name": "Health informatics",
+        "level": 3,
+        "score": 0.4125225245952606
+      },
+      {
+        "id": "https://openalex.org/C56739046",
+        "wikidata": "https://www.wikidata.org/wiki/Q192060",
+        "display_name": "Knowledge management",
+        "level": 1,
+        "score": 0.34380674362182617
+      },
+      {
+        "id": "https://openalex.org/C2779473830",
+        "wikidata": "https://www.wikidata.org/wiki/Q1540899",
+        "display_name": "MEDLINE",
+        "level": 2,
+        "score": 0.2692664861679077
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.2135968804359436
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.15003052353858948
+      },
+      {
+        "id": "https://openalex.org/C127413603",
+        "wikidata": "https://www.wikidata.org/wiki/Q11023",
+        "display_name": "Engineering",
+        "level": 0,
+        "score": 0.12254434823989868
+      },
+      {
+        "id": "https://openalex.org/C204787440",
+        "wikidata": "https://www.wikidata.org/wiki/Q188504",
+        "display_name": "Alternative medicine",
+        "level": 2,
+        "score": 0.1160849928855896
+      },
+      {
+        "id": "https://openalex.org/C115903868",
+        "wikidata": "https://www.wikidata.org/wiki/Q80993",
+        "display_name": "Software engineering",
+        "level": 1,
+        "score": 0.09874141216278076
+      },
+      {
+        "id": "https://openalex.org/C17744445",
+        "wikidata": "https://www.wikidata.org/wiki/Q36442",
+        "display_name": "Political science",
+        "level": 0,
+        "score": 0.09004375338554382
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.08175137639045715
+      },
+      {
+        "id": "https://openalex.org/C205649164",
+        "wikidata": "https://www.wikidata.org/wiki/Q1071",
+        "display_name": "Geography",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C13280743",
+        "wikidata": "https://www.wikidata.org/wiki/Q131089",
+        "display_name": "Geodesy",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C199539241",
+        "wikidata": "https://www.wikidata.org/wiki/Q7748",
+        "display_name": "Law",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C119599485",
+        "wikidata": "https://www.wikidata.org/wiki/Q43035",
+        "display_name": "Electrical engineering",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 5,
+    "locations": [
+      {
+        "id": "doi:10.3390/healthcare7020056",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.3390/healthcare7020056",
+        "pdf_url": "https://www.mdpi.com/2227-9032/7/2/56/pdf?version=1554372452",
+        "source": {
+          "id": "https://openalex.org/S4210214101",
+          "display_name": "Healthcare",
+          "issn_l": "2227-9032",
+          "issn": [
+            "2227-9032"
+          ],
+          "is_oa": true,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310310987",
+          "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310310987"
+          ],
+          "host_organization_lineage_names": [
+            "Multidisciplinary Digital Publishing Institute"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Healthcare",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmid:30987333",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/30987333",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Healthcare (Basel, Switzerland)",
+        "raw_type": null
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:3e4ae5876d6a46faa044ac7c23406d32",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/3e4ae5876d6a46faa044ac7c23406d32",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Healthcare, Vol 7, Iss 2, p 56 (2019)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:mdpi.com:/2227-9032/7/2/56/",
+        "is_oa": true,
+        "landing_page_url": "http://dx.doi.org/10.3390/healthcare7020056",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400947",
+          "display_name": "MDPI (MDPI AG)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": true,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I4210097602",
+          "host_organization_name": "Multidisciplinary Digital Publishing Institute (Switzerland)",
+          "host_organization_lineage": [
+            "https://openalex.org/I4210097602"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Healthcare",
+        "raw_type": "Text"
+      },
+      {
+        "id": "pmh:oai:pubmedcentral.nih.gov:6627742",
+        "is_oa": true,
+        "landing_page_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/6627742",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764455111",
+          "display_name": "PubMed Central",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "other-oa",
+        "license_id": "https://openalex.org/licenses/other-oa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "Healthcare (Basel)",
+        "raw_type": "Text"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.3390/healthcare7020056",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.3390/healthcare7020056",
+      "pdf_url": "https://www.mdpi.com/2227-9032/7/2/56/pdf?version=1554372452",
+      "source": {
+        "id": "https://openalex.org/S4210214101",
+        "display_name": "Healthcare",
+        "issn_l": "2227-9032",
+        "issn": [
+          "2227-9032"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310310987",
+        "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310310987"
+        ],
+        "host_organization_lineage_names": [
+          "Multidisciplinary Digital Publishing Institute"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Healthcare",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.5799999833106995,
+        "id": "https://metadata.un.org/sdg/9",
+        "display_name": "Industry, innovation and infrastructure"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2929438235.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2929438235.grobid-xml"
+    },
+    "referenced_works_count": 89,
+    "referenced_works": [
+      "https://openalex.org/W4214443",
+      "https://openalex.org/W246286872",
+      "https://openalex.org/W1915479549",
+      "https://openalex.org/W1977742784",
+      "https://openalex.org/W2032860265",
+      "https://openalex.org/W2130205059",
+      "https://openalex.org/W2156098321",
+      "https://openalex.org/W2166881616",
+      "https://openalex.org/W2468996569",
+      "https://openalex.org/W2514994441",
+      "https://openalex.org/W2522448907",
+      "https://openalex.org/W2527800909",
+      "https://openalex.org/W2538325702",
+      "https://openalex.org/W2549211163",
+      "https://openalex.org/W2555782333",
+      "https://openalex.org/W2561097737",
+      "https://openalex.org/W2582723196",
+      "https://openalex.org/W2602679156",
+      "https://openalex.org/W2606002995",
+      "https://openalex.org/W2616934625",
+      "https://openalex.org/W2624098821",
+      "https://openalex.org/W2735656452",
+      "https://openalex.org/W2736904962",
+      "https://openalex.org/W2737252471",
+      "https://openalex.org/W2738959495",
+      "https://openalex.org/W2739275733",
+      "https://openalex.org/W2739319684",
+      "https://openalex.org/W2742329683",
+      "https://openalex.org/W2751179194",
+      "https://openalex.org/W2754931682",
+      "https://openalex.org/W2756138490",
+      "https://openalex.org/W2766920682",
+      "https://openalex.org/W2767307339",
+      "https://openalex.org/W2767972817",
+      "https://openalex.org/W2769552776",
+      "https://openalex.org/W2769789977",
+      "https://openalex.org/W2771305575",
+      "https://openalex.org/W2771396150",
+      "https://openalex.org/W2771665408",
+      "https://openalex.org/W2774782808",
+      "https://openalex.org/W2784153116",
+      "https://openalex.org/W2784208616",
+      "https://openalex.org/W2786151040",
+      "https://openalex.org/W2789950367",
+      "https://openalex.org/W2791935104",
+      "https://openalex.org/W2793333522",
+      "https://openalex.org/W2795085730",
+      "https://openalex.org/W2798320700",
+      "https://openalex.org/W2799581224",
+      "https://openalex.org/W2802653242",
+      "https://openalex.org/W2802745431",
+      "https://openalex.org/W2803762988",
+      "https://openalex.org/W2805383889",
+      "https://openalex.org/W2805677640",
+      "https://openalex.org/W2807050405",
+      "https://openalex.org/W2807743655",
+      "https://openalex.org/W2807965149",
+      "https://openalex.org/W2808136953",
+      "https://openalex.org/W2808579374",
+      "https://openalex.org/W2809092276",
+      "https://openalex.org/W2809143401",
+      "https://openalex.org/W2810381494",
+      "https://openalex.org/W2810476200",
+      "https://openalex.org/W2810536286",
+      "https://openalex.org/W2810711254",
+      "https://openalex.org/W2811112224",
+      "https://openalex.org/W2811474420",
+      "https://openalex.org/W2845081339",
+      "https://openalex.org/W2878975049",
+      "https://openalex.org/W2884623132",
+      "https://openalex.org/W2884830739",
+      "https://openalex.org/W2885815340",
+      "https://openalex.org/W2886180210",
+      "https://openalex.org/W2886332328",
+      "https://openalex.org/W2890702538",
+      "https://openalex.org/W2963993810",
+      "https://openalex.org/W2964119695",
+      "https://openalex.org/W3102661748",
+      "https://openalex.org/W3121747242",
+      "https://openalex.org/W4211068006",
+      "https://openalex.org/W4239439314",
+      "https://openalex.org/W4256534172",
+      "https://openalex.org/W4294215472",
+      "https://openalex.org/W4300127641",
+      "https://openalex.org/W4302558079",
+      "https://openalex.org/W6729546044",
+      "https://openalex.org/W6741706689",
+      "https://openalex.org/W6750139865",
+      "https://openalex.org/W6753286500"
+    ],
+    "related_works": [
+      "https://openalex.org/W3118718486",
+      "https://openalex.org/W2074095828",
+      "https://openalex.org/W2397677514",
+      "https://openalex.org/W2914293784",
+      "https://openalex.org/W2407382301",
+      "https://openalex.org/W1495820741",
+      "https://openalex.org/W4323056170",
+      "https://openalex.org/W2126732312",
+      "https://openalex.org/W2401910071",
+      "https://openalex.org/W2189429352"
+    ],
+    "abstract_inverted_index": {
+      "Since": [
+        0
+      ],
+      "blockchain": [
+        1,
+        24,
+        74,
+        139,
+        172,
+        205
+      ],
+      "was": [
+        2
+      ],
+      "introduced": [
+        3
+      ],
+      "through": [
+        4
+      ],
+      "Bitcoin,": [
+        5
+      ],
+      "research": [
+        6,
+        54,
+        69,
+        79,
+        195
+      ],
+      "has": [
+        7
+      ],
+      "been": [
+        8
+      ],
+      "ongoing": [
+        9,
+        68
+      ],
+      "to": [
+        10,
+        14,
+        27,
+        50,
+        109,
+        114,
+        153,
+        196
+      ],
+      "extend": [
+        11
+      ],
+      "its": [
+        12
+      ],
+      "applications": [
+        13,
+        173
+      ],
+      "non-financial": [
+        15
+      ],
+      "use": [
+        16,
+        133,
+        160
+      ],
+      "cases.": [
+        17,
+        161
+      ],
+      "Healthcare": [
+        18
+      ],
+      "is": [
+        19,
+        25,
+        35,
+        81,
+        107,
+        144,
+        189
+      ],
+      "one": [
+        20
+      ],
+      "industry": [
+        21
+      ],
+      "in": [
+        22,
+        32,
+        56,
+        70,
+        76,
+        101,
+        140,
+        168,
+        206
+      ],
+      "which": [
+        23,
+        102
+      ],
+      "expected": [
+        26
+      ],
+      "have": [
+        28,
+        130
+      ],
+      "significant": [
+        29
+      ],
+      "impacts.": [
+        30
+      ],
+      "Research": [
+        31
+      ],
+      "this": [
+        33,
+        57,
+        185
+      ],
+      "area": [
+        34
+      ],
+      "relatively": [
+        36
+      ],
+      "new": [
+        37
+      ],
+      "but": [
+        38
+      ],
+      "growing": [
+        39
+      ],
+      "rapidly;": [
+        40
+      ],
+      "so,": [
+        41
+      ],
+      "health": [
+        42
+      ],
+      "informatics": [
+        43
+      ],
+      "researchers": [
+        44
+      ],
+      "and": [
+        45,
+        91,
+        95,
+        117,
+        151,
+        178,
+        200
+      ],
+      "practitioners": [
+        46
+      ],
+      "are": [
+        47
+      ],
+      "always": [
+        48
+      ],
+      "struggling": [
+        49
+      ],
+      "keep": [
+        51
+      ],
+      "pace": [
+        52
+      ],
+      "with": [
+        53
+      ],
+      "progress": [
+        55
+      ],
+      "area.": [
+        58
+      ],
+      "This": [
+        59
+      ],
+      "paper": [
+        60
+      ],
+      "reports": [
+        61
+      ],
+      "on": [
+        62,
+        83
+      ],
+      "a": [
+        63,
+        96,
+        103,
+        126,
+        145
+      ],
+      "systematic": [
+        64,
+        97
+      ],
+      "review": [
+        65,
+        123,
+        163
+      ],
+      "of": [
+        66,
+        73,
+        128,
+        138,
+        147,
+        157,
+        171,
+        204
+      ],
+      "the": [
+        67,
+        71,
+        84,
+        136,
+        155,
+        166,
+        169,
+        179,
+        191,
+        202
+      ],
+      "application": [
+        72,
+        137
+      ],
+      "technology": [
+        75
+      ],
+      "healthcare.": [
+        77,
+        207
+      ],
+      "The": [
+        78,
+        122,
+        162
+      ],
+      "methodology": [
+        80
+      ],
+      "based": [
+        82
+      ],
+      "Preferred": [
+        85
+      ],
+      "Reporting": [
+        86
+      ],
+      "Items": [
+        87
+      ],
+      "for": [
+        88,
+        135,
+        174,
+        181,
+        193
+      ],
+      "Systematic": [
+        89
+      ],
+      "Reviews": [
+        90
+      ],
+      "Meta-Analysis": [
+        92
+      ],
+      "(PRISMA)": [
+        93
+      ],
+      "guidelines": [
+        94
+      ],
+      "mapping": [
+        98
+      ],
+      "study": [
+        99
+      ],
+      "process,": [
+        100
+      ],
+      "well-designed": [
+        104
+      ],
+      "search": [
+        105,
+        110
+      ],
+      "protocol": [
+        106
+      ],
+      "used": [
+        108
+      ],
+      "four": [
+        111
+      ],
+      "scientific": [
+        112
+      ],
+      "databases,": [
+        113
+      ],
+      "identify,": [
+        115
+      ],
+      "extract": [
+        116
+      ],
+      "analyze": [
+        118
+      ],
+      "all": [
+        119
+      ],
+      "relevant": [
+        120
+      ],
+      "publications.": [
+        121
+      ],
+      "shows": [
+        124
+      ],
+      "that": [
+        125
+      ],
+      "number": [
+        127
+      ],
+      "studies": [
+        129,
+        152
+      ],
+      "proposed": [
+        131,
+        159
+      ],
+      "different": [
+        132
+      ],
+      "cases": [
+        134
+      ],
+      "healthcare;": [
+        141
+      ],
+      "however,": [
+        142
+      ],
+      "there": [
+        143,
+        188
+      ],
+      "lack": [
+        146
+      ],
+      "adequate": [
+        148
+      ],
+      "prototype": [
+        149
+      ],
+      "implementations": [
+        150
+      ],
+      "characterize": [
+        154,
+        199
+      ],
+      "effectiveness": [
+        156
+      ],
+      "these": [
+        158
+      ],
+      "further": [
+        164
+      ],
+      "highlights": [
+        165
+      ],
+      "state-of-the-art": [
+        167
+      ],
+      "development": [
+        170
+      ],
+      "healthcare,": [
+        175
+      ],
+      "their": [
+        176
+      ],
+      "limitations": [
+        177
+      ],
+      "areas": [
+        180
+      ],
+      "future": [
+        182
+      ],
+      "research.": [
+        183
+      ],
+      "To": [
+        184
+      ],
+      "end,": [
+        186
+      ],
+      "therefore,": [
+        187
+      ],
+      "still": [
+        190
+      ],
+      "need": [
+        192
+      ],
+      "more": [
+        194
+      ],
+      "better": [
+        197
+      ],
+      "understand,": [
+        198
+      ],
+      "evaluate": [
+        201
+      ],
+      "utility": [
+        203
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 12
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 175
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 188
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 207
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 171
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 168
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 90
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 30
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2026-02-07T08:09:18.108334",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2979990733",
+    "doi": "https://doi.org/10.1109/access.2019.2946373",
+    "title": "Using Blockchain for Electronic Health Records",
+    "display_name": "Using Blockchain for Electronic Health Records",
+    "relevance_score": 109.80239,
+    "publication_year": 2019,
+    "publication_date": "2019-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2979990733",
+      "doi": "https://doi.org/10.1109/access.2019.2946373",
+      "mag": "2979990733"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/access.2019.2946373",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2946373",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08863359.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08863359.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5083389484",
+          "display_name": "Ayesha Shahnaz",
+          "orcid": "https://orcid.org/0000-0003-0279-9752"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I929597975",
+            "display_name": "National University of Sciences and Technology",
+            "ror": "https://ror.org/03w2j5y17",
+            "country_code": "PK",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I929597975"
+            ]
+          }
+        ],
+        "countries": [
+          "PK"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Ayesha Shahnaz",
+        "raw_affiliation_strings": [
+          "Computer Science Department, National University of Science and Technology (NUST), Islamabad, Pakistan"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Computer Science Department, National University of Science and Technology (NUST), Islamabad, Pakistan",
+            "institution_ids": [
+              "https://openalex.org/I929597975"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5050012170",
+          "display_name": "Usman Qamar",
+          "orcid": "https://orcid.org/0000-0003-2361-2061"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I929597975",
+            "display_name": "National University of Sciences and Technology",
+            "ror": "https://ror.org/03w2j5y17",
+            "country_code": "PK",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I929597975"
+            ]
+          }
+        ],
+        "countries": [
+          "PK"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Usman Qamar",
+        "raw_affiliation_strings": [
+          "Computer Science Department, National University of Science and Technology (NUST), Islamabad, Pakistan"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Computer Science Department, National University of Science and Technology (NUST), Islamabad, Pakistan",
+            "institution_ids": [
+              "https://openalex.org/I929597975"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5045204653",
+          "display_name": "Ayesha Khalid",
+          "orcid": "https://orcid.org/0000-0002-4815-6966"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Ayesha Khalid",
+        "raw_affiliation_strings": [
+          "The Centre for Secure Information Technologies (CSIT), ECIT Institute, Queen’s University of Belfast, Belfast, U.K"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "The Centre for Secure Information Technologies (CSIT), ECIT Institute, Queen’s University of Belfast, Belfast, U.K",
+            "institution_ids": []
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 3,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5083389484"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I929597975"
+    ],
+    "apc_list": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "apc_paid": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "fwci": 86.27037896,
+    "has_fulltext": true,
+    "cited_by_count": 562,
+    "citation_normalized_percentile": {
+      "value": 0.99935413,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 90,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "7",
+      "issue": null,
+      "first_page": "147782",
+      "last_page": "147795"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9998999834060669,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9998999834060669,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10273",
+        "display_name": "IoT and Edge/Fog Computing",
+        "score": 0.9868999719619751,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11614",
+        "display_name": "Cloud Data Security Solutions",
+        "score": 0.9463000297546387,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.9680209159851074
+      },
+      {
+        "id": "https://openalex.org/keywords/scalability",
+        "display_name": "Scalability",
+        "score": 0.7669633626937866
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.6897708773612976
+      },
+      {
+        "id": "https://openalex.org/keywords/confidentiality",
+        "display_name": "Confidentiality",
+        "score": 0.6492935419082642
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.6280674934387207
+      },
+      {
+        "id": "https://openalex.org/keywords/decentralization",
+        "display_name": "Decentralization",
+        "score": 0.6001451015472412
+      },
+      {
+        "id": "https://openalex.org/keywords/health-records",
+        "display_name": "Health records",
+        "score": 0.5514890551567078
+      },
+      {
+        "id": "https://openalex.org/keywords/health-care",
+        "display_name": "Health care",
+        "score": 0.3463972806930542
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.23547837138175964
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.9680209159851074
+      },
+      {
+        "id": "https://openalex.org/C48044578",
+        "wikidata": "https://www.wikidata.org/wiki/Q727490",
+        "display_name": "Scalability",
+        "level": 2,
+        "score": 0.7669633626937866
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6897708773612976
+      },
+      {
+        "id": "https://openalex.org/C71745522",
+        "wikidata": "https://www.wikidata.org/wiki/Q2476929",
+        "display_name": "Confidentiality",
+        "level": 2,
+        "score": 0.6492935419082642
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.6280674934387207
+      },
+      {
+        "id": "https://openalex.org/C136810230",
+        "wikidata": "https://www.wikidata.org/wiki/Q188961",
+        "display_name": "Decentralization",
+        "level": 2,
+        "score": 0.6001451015472412
+      },
+      {
+        "id": "https://openalex.org/C3019952477",
+        "wikidata": "https://www.wikidata.org/wiki/Q1324077",
+        "display_name": "Health records",
+        "level": 3,
+        "score": 0.5514890551567078
+      },
+      {
+        "id": "https://openalex.org/C160735492",
+        "wikidata": "https://www.wikidata.org/wiki/Q31207",
+        "display_name": "Health care",
+        "level": 2,
+        "score": 0.3463972806930542
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.23547837138175964
+      },
+      {
+        "id": "https://openalex.org/C50522688",
+        "wikidata": "https://www.wikidata.org/wiki/Q189833",
+        "display_name": "Economic growth",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C162324750",
+        "wikidata": "https://www.wikidata.org/wiki/Q8134",
+        "display_name": "Economics",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C199539241",
+        "wikidata": "https://www.wikidata.org/wiki/Q7748",
+        "display_name": "Law",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C17744445",
+        "wikidata": "https://www.wikidata.org/wiki/Q36442",
+        "display_name": "Political science",
+        "level": 0,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 3,
+    "locations": [
+      {
+        "id": "doi:10.1109/access.2019.2946373",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1109/access.2019.2946373",
+        "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08863359.pdf",
+        "source": {
+          "id": "https://openalex.org/S2485537415",
+          "display_name": "IEEE Access",
+          "issn_l": "2169-3536",
+          "issn": [
+            "2169-3536"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319808",
+          "host_organization_name": "Institute of Electrical and Electronics Engineers",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319808"
+          ],
+          "host_organization_lineage_names": [
+            "Institute of Electrical and Electronics Engineers"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "IEEE Access",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:pure.qub.ac.uk/portal:openaire/c48c96da-5201-4ed1-a5d7-f0951ba8b072",
+        "is_oa": true,
+        "landing_page_url": "https://pure.qub.ac.uk/en/publications/c48c96da-5201-4ed1-a5d7-f0951ba8b072",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306402319",
+          "display_name": "Research Portal (Queen's University Belfast)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I126231945",
+          "host_organization_name": "Queen's University Belfast",
+          "host_organization_lineage": [
+            "https://openalex.org/I126231945"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Shahnaz, A, Qamar, U & Khalid, A 2019, 'Using Blockchain for Electronic Health Records', IEEE Access, vol. 7, pp. 147782-147795. https://doi.org/10.1109/ACCESS.2019.2946373",
+        "raw_type": "info:eu-repo/semantics/publishedVersion"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:e178568f018a49aebe5a8929a9725d38",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/e178568f018a49aebe5a8929a9725d38",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, Vol 7, Pp 147782-147795 (2019)",
+        "raw_type": "article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1109/access.2019.2946373",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2946373",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08863359.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [],
+    "awards": [
+      {
+        "id": "https://openalex.org/G2241406505",
+        "display_name": null,
+        "funder_award_id": "EP/R007187/1",
+        "funder_id": "https://openalex.org/F4320334627",
+        "funder_display_name": "Engineering and Physical Sciences Research Council"
+      },
+      {
+        "id": "https://openalex.org/G5445011987",
+        "display_name": null,
+        "funder_award_id": "EP/K004379/1",
+        "funder_id": "https://openalex.org/F4320334627",
+        "funder_display_name": "Engineering and Physical Sciences Research Council"
+      },
+      {
+        "id": "https://openalex.org/G6577499357",
+        "display_name": null,
+        "funder_award_id": "EP/N508664/1",
+        "funder_id": "https://openalex.org/F4320334627",
+        "funder_display_name": "Engineering and Physical Sciences Research Council"
+      }
+    ],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320334627",
+        "display_name": "Engineering and Physical Sciences Research Council",
+        "ror": "https://ror.org/0439y7842"
+      }
+    ],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2979990733.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2979990733.grobid-xml"
+    },
+    "referenced_works_count": 35,
+    "referenced_works": [
+      "https://openalex.org/W1993675989",
+      "https://openalex.org/W2033115336",
+      "https://openalex.org/W2166074549",
+      "https://openalex.org/W2489584891",
+      "https://openalex.org/W2748711511",
+      "https://openalex.org/W2751179194",
+      "https://openalex.org/W2751559473",
+      "https://openalex.org/W2754529701",
+      "https://openalex.org/W2786087478",
+      "https://openalex.org/W2786474695",
+      "https://openalex.org/W2788841915",
+      "https://openalex.org/W2792367957",
+      "https://openalex.org/W2794419147",
+      "https://openalex.org/W2795079738",
+      "https://openalex.org/W2798711290",
+      "https://openalex.org/W2800111293",
+      "https://openalex.org/W2809092276",
+      "https://openalex.org/W2810476200",
+      "https://openalex.org/W2885430878",
+      "https://openalex.org/W2897525439",
+      "https://openalex.org/W2907251489",
+      "https://openalex.org/W2912441431",
+      "https://openalex.org/W2913457104",
+      "https://openalex.org/W2921620132",
+      "https://openalex.org/W2963993810",
+      "https://openalex.org/W2968192630",
+      "https://openalex.org/W2969137741",
+      "https://openalex.org/W2989566471",
+      "https://openalex.org/W3104720502",
+      "https://openalex.org/W3186206599",
+      "https://openalex.org/W4248175462",
+      "https://openalex.org/W4253610477",
+      "https://openalex.org/W6648661382",
+      "https://openalex.org/W6743663146",
+      "https://openalex.org/W6770292386"
+    ],
+    "related_works": [
+      "https://openalex.org/W4387497383",
+      "https://openalex.org/W3183948672",
+      "https://openalex.org/W3173606202",
+      "https://openalex.org/W3110381201",
+      "https://openalex.org/W2948807893",
+      "https://openalex.org/W2778153218",
+      "https://openalex.org/W2758277628",
+      "https://openalex.org/W1531601525",
+      "https://openalex.org/W4388131927",
+      "https://openalex.org/W126325116"
+    ],
+    "abstract_inverted_index": {
+      "Blockchain": [
+        0
+      ],
+      "have": [
+        1,
+        16
+      ],
+      "been": [
+        2,
+        17
+      ],
+      "an": [
+        3
+      ],
+      "interesting": [
+        4
+      ],
+      "research": [
+        5
+      ],
+      "area": [
+        6
+      ],
+      "for": [
+        7,
+        92,
+        101,
+        115,
+        131
+      ],
+      "a": [
+        8,
+        20,
+        79,
+        86,
+        172
+      ],
+      "long": [
+        9
+      ],
+      "time": [
+        10
+      ],
+      "and": [
+        11,
+        42,
+        57,
+        76,
+        117,
+        175
+      ],
+      "the": [
+        12,
+        26,
+        34,
+        45,
+        65,
+        73,
+        93,
+        132,
+        135,
+        143,
+        148,
+        159,
+        164,
+        168
+      ],
+      "benefits": [
+        13,
+        169
+      ],
+      "it": [
+        14
+      ],
+      "provides": [
+        15,
+        163
+      ],
+      "used": [
+        18,
+        70,
+        91
+      ],
+      "by": [
+        19,
+        126,
+        147
+      ],
+      "number": [
+        21
+      ],
+      "of": [
+        22,
+        81,
+        95,
+        105,
+        123,
+        134,
+        155,
+        158,
+        170
+      ],
+      "various": [
+        23
+      ],
+      "industries.": [
+        24
+      ],
+      "Similarly,": [
+        25
+      ],
+      "healthcare": [
+        27,
+        99
+      ],
+      "sector": [
+        28,
+        100
+      ],
+      "stands": [
+        29
+      ],
+      "to": [
+        30,
+        38,
+        71,
+        111,
+        119
+      ],
+      "benefit": [
+        31
+      ],
+      "immensely": [
+        32
+      ],
+      "from": [
+        33
+      ],
+      "blockchain": [
+        35,
+        66,
+        96,
+        113,
+        149
+      ],
+      "technology": [
+        36,
+        67,
+        97,
+        114,
+        150
+      ],
+      "due": [
+        37
+      ],
+      "security,": [
+        39,
+        55
+      ],
+      "privacy,": [
+        40
+      ],
+      "confidentiality": [
+        41
+      ],
+      "decentralization.": [
+        43
+      ],
+      "Nevertheless,": [
+        44
+      ],
+      "Electronic": [
+        46
+      ],
+      "Health": [
+        47
+      ],
+      "Record": [
+        48
+      ],
+      "(EHR)": [
+        49
+      ],
+      "systems": [
+        50,
+        75
+      ],
+      "face": [
+        51
+      ],
+      "problems": [
+        52
+      ],
+      "regarding": [
+        53
+      ],
+      "data": [
+        54
+      ],
+      "integrity": [
+        56
+      ],
+      "management.": [
+        58
+      ],
+      "In": [
+        59
+      ],
+      "this": [
+        60,
+        139
+      ],
+      "paper,": [
+        61
+      ],
+      "we": [
+        62
+      ],
+      "discuss": [
+        63
+      ],
+      "how": [
+        64
+      ],
+      "can": [
+        68
+      ],
+      "be": [
+        69,
+        78,
+        90
+      ],
+      "transform": [
+        72
+      ],
+      "EHR": [
+        74,
+        116,
+        165
+      ],
+      "could": [
+        77,
+        89
+      ],
+      "solution": [
+        80
+      ],
+      "these": [
+        82
+      ],
+      "issues.": [
+        83
+      ],
+      "We": [
+        84
+      ],
+      "present": [
+        85
+      ],
+      "framework": [
+        87,
+        108,
+        140,
+        162
+      ],
+      "that": [
+        88
+      ],
+      "implementation": [
+        94
+      ],
+      "in": [
+        98,
+        151
+      ],
+      "EHR.": [
+        102
+      ],
+      "The": [
+        103
+      ],
+      "aim": [
+        104
+      ],
+      "our": [
+        106
+      ],
+      "proposed": [
+        107,
+        136
+      ],
+      "is": [
+        109
+      ],
+      "firstly": [
+        110
+      ],
+      "implement": [
+        112
+      ],
+      "secondly": [
+        118
+      ],
+      "provide": [
+        120
+      ],
+      "secure": [
+        121,
+        174
+      ],
+      "storage": [
+        122,
+        157
+      ],
+      "electronic": [
+        124
+      ],
+      "records": [
+        125
+      ],
+      "defining": [
+        127
+      ],
+      "granular": [
+        128
+      ],
+      "access": [
+        129
+      ],
+      "rules": [
+        130
+      ],
+      "users": [
+        133
+      ],
+      "framework.": [
+        137
+      ],
+      "Moreover,": [
+        138
+      ],
+      "also": [
+        141
+      ],
+      "discusses": [
+        142
+      ],
+      "scalability": [
+        144
+      ],
+      "problem": [
+        145
+      ],
+      "faced": [
+        146
+      ],
+      "general": [
+        152
+      ],
+      "via": [
+        153
+      ],
+      "use": [
+        154
+      ],
+      "off-chain": [
+        156
+      ],
+      "records.": [
+        160
+      ],
+      "This": [
+        161
+      ],
+      "system": [
+        166
+      ],
+      "with": [
+        167
+      ],
+      "having": [
+        171
+      ],
+      "scalable,": [
+        173
+      ],
+      "integral": [
+        176
+      ],
+      "blockchain-based": [
+        177
+      ],
+      "solution.": [
+        178
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 6
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 63
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 113
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 141
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 121
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 81
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 34
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2026-02-06T03:54:58.731219",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2946008609",
+    "doi": "https://doi.org/10.1109/access.2019.2917555",
+    "title": "Blockchain for Secure EHRs Sharing of Mobile Cloud Based E-Health Systems",
+    "display_name": "Blockchain for Secure EHRs Sharing of Mobile Cloud Based E-Health Systems",
+    "relevance_score": 104.25049,
+    "publication_year": 2019,
+    "publication_date": "2019-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2946008609",
+      "doi": "https://doi.org/10.1109/access.2019.2917555",
+      "mag": "2946008609"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/access.2019.2917555",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2917555",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08717579.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08717579.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5076942188",
+          "display_name": "Dinh C. Nguyen",
+          "orcid": "https://orcid.org/0000-0002-8092-6756"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I149704539",
+            "display_name": "Deakin University",
+            "ror": "https://ror.org/02czsnj07",
+            "country_code": "AU",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I149704539"
+            ]
+          }
+        ],
+        "countries": [
+          "AU"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Dinh C. Nguyen",
+        "raw_affiliation_strings": [
+          "School of Engineering, Deakin University, Waurn Ponds, VIC, Australia"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Engineering, Deakin University, Waurn Ponds, VIC, Australia",
+            "institution_ids": [
+              "https://openalex.org/I149704539"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5037113249",
+          "display_name": "Pubudu N. Pathirana",
+          "orcid": "https://orcid.org/0000-0001-8014-7798"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I149704539",
+            "display_name": "Deakin University",
+            "ror": "https://ror.org/02czsnj07",
+            "country_code": "AU",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I149704539"
+            ]
+          }
+        ],
+        "countries": [
+          "AU"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Pubudu N. Pathirana",
+        "raw_affiliation_strings": [
+          "School of Engineering, Deakin University, Waurn Ponds, VIC, Australia"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Engineering, Deakin University, Waurn Ponds, VIC, Australia",
+            "institution_ids": [
+              "https://openalex.org/I149704539"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5075722123",
+          "display_name": "Ming Ding",
+          "orcid": "https://orcid.org/0000-0002-3690-0321"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1292875679",
+            "display_name": "Commonwealth Scientific and Industrial Research Organisation",
+            "ror": "https://ror.org/03qn8fb07",
+            "country_code": "AU",
+            "type": "funder",
+            "lineage": [
+              "https://openalex.org/I1292875679",
+              "https://openalex.org/I2801453606",
+              "https://openalex.org/I4387156119"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I42894916",
+            "display_name": "Data61",
+            "ror": "https://ror.org/03q397159",
+            "country_code": "AU",
+            "type": "other",
+            "lineage": [
+              "https://openalex.org/I1292875679",
+              "https://openalex.org/I2801453606",
+              "https://openalex.org/I42894916",
+              "https://openalex.org/I4387156119"
+            ]
+          }
+        ],
+        "countries": [
+          "AU"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Ming Ding",
+        "raw_affiliation_strings": [
+          "Data61, CSIRO, Kensington, WA, Australia"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Data61, CSIRO, Kensington, WA, Australia",
+            "institution_ids": [
+              "https://openalex.org/I42894916",
+              "https://openalex.org/I1292875679"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5031507494",
+          "display_name": "Aruna Seneviratne",
+          "orcid": "https://orcid.org/0000-0001-6894-7987"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I31746571",
+            "display_name": "UNSW Sydney",
+            "ror": "https://ror.org/03r8z3t63",
+            "country_code": "AU",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I31746571"
+            ]
+          }
+        ],
+        "countries": [
+          "AU"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Aruna Seneviratne",
+        "raw_affiliation_strings": [
+          "School of Electrical Engineering and Telecommunications, University of New South Wales (UNSW), Sydney, NSW, Australia"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Electrical Engineering and Telecommunications, University of New South Wales (UNSW), Sydney, NSW, Australia",
+            "institution_ids": [
+              "https://openalex.org/I31746571"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 4,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5076942188"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I149704539"
+    ],
+    "apc_list": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "apc_paid": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "fwci": 99.37474032,
+    "has_fulltext": true,
+    "cited_by_count": 554,
+    "citation_normalized_percentile": {
+      "value": 0.99955172,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 98,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "7",
+      "issue": null,
+      "first_page": "66792",
+      "last_page": "66806"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9997000098228455,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9997000098228455,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10273",
+        "display_name": "IoT and Edge/Fog Computing",
+        "score": 0.9968000054359436,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11614",
+        "display_name": "Cloud Data Security Solutions",
+        "score": 0.9937000274658203,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.7602353096008301
+      },
+      {
+        "id": "https://openalex.org/keywords/cloud-computing",
+        "display_name": "Cloud computing",
+        "score": 0.7014736533164978
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.5681666135787964
+      },
+      {
+        "id": "https://openalex.org/keywords/data-sharing",
+        "display_name": "Data sharing",
+        "score": 0.5333981513977051
+      },
+      {
+        "id": "https://openalex.org/keywords/mobile-device",
+        "display_name": "Mobile device",
+        "score": 0.46674424409866333
+      },
+      {
+        "id": "https://openalex.org/keywords/flexibility",
+        "display_name": "Flexibility (engineering)",
+        "score": 0.44718137383461
+      },
+      {
+        "id": "https://openalex.org/keywords/cloud-computing-security",
+        "display_name": "Cloud computing security",
+        "score": 0.44532716274261475
+      },
+      {
+        "id": "https://openalex.org/keywords/access-control",
+        "display_name": "Access control",
+        "score": 0.4229544997215271
+      },
+      {
+        "id": "https://openalex.org/keywords/mobile-cloud-computing",
+        "display_name": "Mobile cloud computing",
+        "score": 0.4149940013885498
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.19598105549812317
+      },
+      {
+        "id": "https://openalex.org/keywords/operating-system",
+        "display_name": "Operating system",
+        "score": 0.082529217004776
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7602353096008301
+      },
+      {
+        "id": "https://openalex.org/C79974875",
+        "wikidata": "https://www.wikidata.org/wiki/Q483639",
+        "display_name": "Cloud computing",
+        "level": 2,
+        "score": 0.7014736533164978
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.5681666135787964
+      },
+      {
+        "id": "https://openalex.org/C2779965156",
+        "wikidata": "https://www.wikidata.org/wiki/Q5227350",
+        "display_name": "Data sharing",
+        "level": 3,
+        "score": 0.5333981513977051
+      },
+      {
+        "id": "https://openalex.org/C186967261",
+        "wikidata": "https://www.wikidata.org/wiki/Q5082128",
+        "display_name": "Mobile device",
+        "level": 2,
+        "score": 0.46674424409866333
+      },
+      {
+        "id": "https://openalex.org/C2780598303",
+        "wikidata": "https://www.wikidata.org/wiki/Q65921492",
+        "display_name": "Flexibility (engineering)",
+        "level": 2,
+        "score": 0.44718137383461
+      },
+      {
+        "id": "https://openalex.org/C184842701",
+        "wikidata": "https://www.wikidata.org/wiki/Q370563",
+        "display_name": "Cloud computing security",
+        "level": 3,
+        "score": 0.44532716274261475
+      },
+      {
+        "id": "https://openalex.org/C527821871",
+        "wikidata": "https://www.wikidata.org/wiki/Q228502",
+        "display_name": "Access control",
+        "level": 2,
+        "score": 0.4229544997215271
+      },
+      {
+        "id": "https://openalex.org/C2779191767",
+        "wikidata": "https://www.wikidata.org/wiki/Q6887075",
+        "display_name": "Mobile cloud computing",
+        "level": 3,
+        "score": 0.4149940013885498
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.19598105549812317
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.082529217004776
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C105795698",
+        "wikidata": "https://www.wikidata.org/wiki/Q12483",
+        "display_name": "Statistics",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C204787440",
+        "wikidata": "https://www.wikidata.org/wiki/Q188504",
+        "display_name": "Alternative medicine",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C33923547",
+        "wikidata": "https://www.wikidata.org/wiki/Q395",
+        "display_name": "Mathematics",
+        "level": 0,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 3,
+    "locations": [
+      {
+        "id": "doi:10.1109/access.2019.2917555",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1109/access.2019.2917555",
+        "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08717579.pdf",
+        "source": {
+          "id": "https://openalex.org/S2485537415",
+          "display_name": "IEEE Access",
+          "issn_l": "2169-3536",
+          "issn": [
+            "2169-3536"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319808",
+          "host_organization_name": "Institute of Electrical and Electronics Engineers",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319808"
+          ],
+          "host_organization_lineage_names": [
+            "Institute of Electrical and Electronics Engineers"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "IEEE Access",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:3d90946cf22b4829a4345a19f5927210",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/3d90946cf22b4829a4345a19f5927210",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, Vol 7, Pp 66792-66806 (2019)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:unsworks.library.unsw.edu.au:1959.4/unsworks_62978",
+        "is_oa": true,
+        "landing_page_url": "http://hdl.handle.net/1959.4/unsworks_62978",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306401737",
+          "display_name": "UNSWorks (University of New South Wales, Sydney, Australia)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I40053085",
+          "host_organization_name": "Australian Defence Force Academy",
+          "host_organization_lineage": [
+            "https://openalex.org/I40053085"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by-nc-nd",
+        "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, 7, 66792-66806",
+        "raw_type": "http://purl.org/coar/resource_type/c_6501"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1109/access.2019.2917555",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2917555",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08717579.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.4099999964237213,
+        "id": "https://metadata.un.org/sdg/17",
+        "display_name": "Partnerships for the goals"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2946008609.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2946008609.grobid-xml"
+    },
+    "referenced_works_count": 36,
+    "referenced_works": [
+      "https://openalex.org/W1844512392",
+      "https://openalex.org/W1943579973",
+      "https://openalex.org/W2028639849",
+      "https://openalex.org/W2049245328",
+      "https://openalex.org/W2058084995",
+      "https://openalex.org/W2063930612",
+      "https://openalex.org/W2098727156",
+      "https://openalex.org/W2524372520",
+      "https://openalex.org/W2527818968",
+      "https://openalex.org/W2555782333",
+      "https://openalex.org/W2612711786",
+      "https://openalex.org/W2736904962",
+      "https://openalex.org/W2751179194",
+      "https://openalex.org/W2756138490",
+      "https://openalex.org/W2771665408",
+      "https://openalex.org/W2772453898",
+      "https://openalex.org/W2783232377",
+      "https://openalex.org/W2786151040",
+      "https://openalex.org/W2793346081",
+      "https://openalex.org/W2795085730",
+      "https://openalex.org/W2799366331",
+      "https://openalex.org/W2810011639",
+      "https://openalex.org/W2810476200",
+      "https://openalex.org/W2886332328",
+      "https://openalex.org/W2890650288",
+      "https://openalex.org/W2895879715",
+      "https://openalex.org/W2898082692",
+      "https://openalex.org/W2898930836",
+      "https://openalex.org/W2915539402",
+      "https://openalex.org/W2922250870",
+      "https://openalex.org/W2927349450",
+      "https://openalex.org/W2963983602",
+      "https://openalex.org/W3121747242",
+      "https://openalex.org/W3151748982",
+      "https://openalex.org/W4248175462",
+      "https://openalex.org/W6744077507"
+    ],
+    "related_works": [
+      "https://openalex.org/W3034529322",
+      "https://openalex.org/W2113597336",
+      "https://openalex.org/W2155505549",
+      "https://openalex.org/W2357479218",
+      "https://openalex.org/W1819546284",
+      "https://openalex.org/W2018648706",
+      "https://openalex.org/W2114232034",
+      "https://openalex.org/W4251064165",
+      "https://openalex.org/W2778315598",
+      "https://openalex.org/W2559010964"
+    ],
+    "abstract_inverted_index": {
+      "Recent": [
+        0
+      ],
+      "years": [
+        1
+      ],
+      "have": [
+        2
+      ],
+      "witnessed": [
+        3
+      ],
+      "a": [
+        4,
+        85,
+        93,
+        109,
+        116,
+        137,
+        144,
+        150
+      ],
+      "paradigm": [
+        5,
+        55
+      ],
+      "shift": [
+        6
+      ],
+      "in": [
+        7,
+        80,
+        143,
+        194
+      ],
+      "the": [
+        8,
+        81,
+        102,
+        191,
+        211
+      ],
+      "storage": [
+        9
+      ],
+      "of": [
+        10
+      ],
+      "Electronic": [
+        11
+      ],
+      "Health": [
+        12
+      ],
+      "Records": [
+        13
+      ],
+      "(EHRs)": [
+        14
+      ],
+      "on": [
+        15,
+        108,
+        149,
+        172
+      ],
+      "mobile": [
+        16,
+        20,
+        74,
+        82,
+        110,
+        151,
+        173
+      ],
+      "cloud": [
+        17,
+        25,
+        83,
+        111,
+        155
+      ],
+      "environments,": [
+        18
+      ],
+      "where": [
+        19
+      ],
+      "devices": [
+        21
+      ],
+      "are": [
+        22
+      ],
+      "integrated": [
+        23
+      ],
+      "with": [
+        24,
+        43,
+        153,
+        202
+      ],
+      "computing": [
+        26
+      ],
+      "to": [
+        27,
+        69,
+        124,
+        210
+      ],
+      "facilitate": [
+        28
+      ],
+      "medical": [
+        29,
+        133
+      ],
+      "data": [
+        30,
+        60,
+        146,
+        170,
+        206,
+        213
+      ],
+      "exchanges": [
+        31,
+        171
+      ],
+      "among": [
+        32,
+        73,
+        129
+      ],
+      "patients": [
+        33,
+        131
+      ],
+      "and": [
+        34,
+        49,
+        62,
+        101,
+        132,
+        186,
+        205
+      ],
+      "healthcare": [
+        35,
+        41
+      ],
+      "providers.": [
+        36,
+        134
+      ],
+      "This": [
+        37
+      ],
+      "advanced": [
+        38
+      ],
+      "model": [
+        39
+      ],
+      "enables": [
+        40
+      ],
+      "services": [
+        42
+      ],
+      "low": [
+        44
+      ],
+      "operational": [
+        45
+      ],
+      "cost,": [
+        46
+      ],
+      "high": [
+        47,
+        203
+      ],
+      "flexibility,": [
+        48
+      ],
+      "EHRs": [
+        50,
+        72,
+        95,
+        127
+      ],
+      "availability.": [
+        51
+      ],
+      "However,": [
+        52
+      ],
+      "this": [
+        53,
+        89
+      ],
+      "new": [
+        54
+      ],
+      "also": [
+        56,
+        189
+      ],
+      "raises": [
+        57
+      ],
+      "concerns": [
+        58
+      ],
+      "about": [
+        59
+      ],
+      "privacy": [
+        61,
+        207
+      ],
+      "network": [
+        63,
+        200
+      ],
+      "security": [
+        64,
+        187,
+        204
+      ],
+      "for": [
+        65,
+        168
+      ],
+      "e-health": [
+        66
+      ],
+      "systems.": [
+        67
+      ],
+      "How": [
+        68
+      ],
+      "reliably": [
+        70
+      ],
+      "share": [
+        71
+      ],
+      "users": [
+        75
+      ],
+      "while": [
+        76,
+        175
+      ],
+      "guaranteeing": [
+        77
+      ],
+      "high-security": [
+        78
+      ],
+      "levels": [
+        79
+      ],
+      "is": [
+        84
+      ],
+      "challenging": [
+        86
+      ],
+      "issue.": [
+        87
+      ],
+      "In": [
+        88
+      ],
+      "paper,": [
+        90
+      ],
+      "we": [
+        91,
+        114
+      ],
+      "propose": [
+        92
+      ],
+      "novel": [
+        94
+      ],
+      "sharing": [
+        96,
+        128,
+        147,
+        214
+      ],
+      "framework": [
+        97
+      ],
+      "that": [
+        98,
+        161
+      ],
+      "combines": [
+        99
+      ],
+      "blockchain": [
+        100,
+        142
+      ],
+      "decentralized": [
+        103
+      ],
+      "interplanetary": [
+        104
+      ],
+      "file": [
+        105
+      ],
+      "system": [
+        106,
+        184
+      ],
+      "(IPFS)": [
+        107
+      ],
+      "platform.": [
+        112
+      ],
+      "Particularly,": [
+        113
+      ],
+      "design": [
+        115
+      ],
+      "trustworthy": [
+        117
+      ],
+      "access": [
+        118,
+        196
+      ],
+      "control": [
+        119,
+        197
+      ],
+      "mechanism": [
+        120
+      ],
+      "using": [
+        121,
+        140
+      ],
+      "smart": [
+        122
+      ],
+      "contracts": [
+        123
+      ],
+      "achieve": [
+        125
+      ],
+      "secure": [
+        126
+      ],
+      "different": [
+        130
+      ],
+      "We": [
+        135
+      ],
+      "present": [
+        136
+      ],
+      "prototype": [
+        138
+      ],
+      "implementation": [
+        139
+      ],
+      "Ethereum": [
+        141
+      ],
+      "real": [
+        145
+      ],
+      "scenario": [
+        148
+      ],
+      "app": [
+        152
+      ],
+      "Amazon": [
+        154
+      ],
+      "computing.": [
+        156
+      ],
+      "The": [
+        157,
+        183
+      ],
+      "empirical": [
+        158
+      ],
+      "results": [
+        159
+      ],
+      "show": [
+        160
+      ],
+      "our": [
+        162
+      ],
+      "proposal": [
+        163
+      ],
+      "provides": [
+        164
+      ],
+      "an": [
+        165
+      ],
+      "effective": [
+        166
+      ],
+      "solution": [
+        167
+      ],
+      "reliable": [
+        169
+      ],
+      "clouds": [
+        174
+      ],
+      "preserving": [
+        176
+      ],
+      "sensitive": [
+        177
+      ],
+      "health": [
+        178
+      ],
+      "information": [
+        179
+      ],
+      "against": [
+        180
+      ],
+      "potential": [
+        181
+      ],
+      "threats.": [
+        182
+      ],
+      "evaluation": [
+        185
+      ],
+      "analysis": [
+        188
+      ],
+      "demonstrate": [
+        190
+      ],
+      "performance": [
+        192
+      ],
+      "improvements": [
+        193
+      ],
+      "lightweight": [
+        195
+      ],
+      "design,": [
+        198
+      ],
+      "minimum": [
+        199
+      ],
+      "latency": [
+        201
+      ],
+      "levels,": [
+        208
+      ],
+      "compared": [
+        209
+      ],
+      "existing": [
+        212
+      ],
+      "models.": [
+        215
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 4
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 66
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 100
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 111
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 110
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 108
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 49
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 6
+      }
+    ],
+    "updated_date": "2026-02-07T08:09:18.108334",
+    "created_date": "2025-10-10T00:00:00"
+  }
+]

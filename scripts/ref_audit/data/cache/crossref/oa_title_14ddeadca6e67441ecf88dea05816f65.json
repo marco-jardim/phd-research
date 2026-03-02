@@ -1,0 +1,4931 @@
+[
+  {
+    "id": "https://openalex.org/W2148453600",
+    "doi": "https://doi.org/10.2967/jnumed.109.064592",
+    "title": "Digital Imaging and Communications in Medicine (DICOM): A Practical Introduction and Survival Guide",
+    "display_name": "Digital Imaging and Communications in Medicine (DICOM): A Practical Introduction and Survival Guide",
+    "relevance_score": 873.9651,
+    "publication_year": 2009,
+    "publication_date": "2009-07-17",
+    "ids": {
+      "openalex": "https://openalex.org/W2148453600",
+      "doi": "https://doi.org/10.2967/jnumed.109.064592",
+      "mag": "2148453600"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.2967/jnumed.109.064592",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.2967/jnumed.109.064592",
+      "pdf_url": "https://jnm.snmjournals.org/content/jnumed/50/8/1384.full.pdf",
+      "source": {
+        "id": "https://openalex.org/S4210180780",
+        "display_name": "Journal of Nuclear Medicine",
+        "issn_l": "2159-662X",
+        "issn": [
+          "2159-662X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/P4310315767",
+        "host_organization_name": "Society of Nuclear Medicine and Molecular Imaging",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310315767"
+        ],
+        "host_organization_lineage_names": [
+          "Society of Nuclear Medicine and Molecular Imaging"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Nuclear Medicine",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "bronze",
+      "oa_url": "https://jnm.snmjournals.org/content/jnumed/50/8/1384.full.pdf",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5109570306",
+          "display_name": "Donald J. Peck",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I154057602",
+            "display_name": "Henry Ford Health System",
+            "ror": "https://ror.org/02kwnkm68",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I154057602"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Donald Peck",
+        "raw_affiliation_strings": [
+          "Ford Health System Detroit, Michigan"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Ford Health System Detroit, Michigan",
+            "institution_ids": [
+              "https://openalex.org/I154057602"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 1,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5109570306"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I154057602"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 7.54944415,
+    "has_fulltext": false,
+    "cited_by_count": 168,
+    "citation_normalized_percentile": {
+      "value": 0.9704004,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 95,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "50",
+      "issue": "8",
+      "first_page": "1384",
+      "last_page": "1384"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11361",
+      "display_name": "Digital Radiography and Breast Imaging",
+      "score": 0.7069000005722046,
+      "subfield": {
+        "id": "https://openalex.org/subfields/2740",
+        "display_name": "Pulmonary and Respiratory Medicine"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/27",
+        "display_name": "Medicine"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11361",
+        "display_name": "Digital Radiography and Breast Imaging",
+        "score": 0.7069000005722046,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2740",
+          "display_name": "Pulmonary and Respiratory Medicine"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/dicom",
+        "display_name": "DICOM",
+        "score": 0.9528433084487915
+      },
+      {
+        "id": "https://openalex.org/keywords/vendor",
+        "display_name": "Vendor",
+        "score": 0.7984659075737
+      },
+      {
+        "id": "https://openalex.org/keywords/workflow",
+        "display_name": "Workflow",
+        "score": 0.7511878609657288
+      },
+      {
+        "id": "https://openalex.org/keywords/medical-imaging",
+        "display_name": "Medical imaging",
+        "score": 0.5136255621910095
+      },
+      {
+        "id": "https://openalex.org/keywords/digital-imaging",
+        "display_name": "Digital imaging",
+        "score": 0.5035309195518494
+      },
+      {
+        "id": "https://openalex.org/keywords/medical-physics",
+        "display_name": "Medical physics",
+        "score": 0.44091635942459106
+      },
+      {
+        "id": "https://openalex.org/keywords/radiology-information-systems",
+        "display_name": "Radiology information systems",
+        "score": 0.42569756507873535
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.41433244943618774
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.4134797155857086
+      },
+      {
+        "id": "https://openalex.org/keywords/picture-archiving-and-communication-system",
+        "display_name": "Picture archiving and communication system",
+        "score": 0.4107138216495514
+      },
+      {
+        "id": "https://openalex.org/keywords/multimedia",
+        "display_name": "Multimedia",
+        "score": 0.35917890071868896
+      },
+      {
+        "id": "https://openalex.org/keywords/radiology",
+        "display_name": "Radiology",
+        "score": 0.17736992239952087
+      },
+      {
+        "id": "https://openalex.org/keywords/digital-image",
+        "display_name": "Digital image",
+        "score": 0.15089640021324158
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.11230549216270447
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.1029059886932373
+      },
+      {
+        "id": "https://openalex.org/keywords/image-processing",
+        "display_name": "Image processing",
+        "score": 0.09874343872070312
+      },
+      {
+        "id": "https://openalex.org/keywords/artificial-intelligence",
+        "display_name": "Artificial intelligence",
+        "score": 0.08899319171905518
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C77331912",
+        "wikidata": "https://www.wikidata.org/wiki/Q81095",
+        "display_name": "DICOM",
+        "level": 2,
+        "score": 0.9528433084487915
+      },
+      {
+        "id": "https://openalex.org/C2777338717",
+        "wikidata": "https://www.wikidata.org/wiki/Q1762621",
+        "display_name": "Vendor",
+        "level": 2,
+        "score": 0.7984659075737
+      },
+      {
+        "id": "https://openalex.org/C177212765",
+        "wikidata": "https://www.wikidata.org/wiki/Q627335",
+        "display_name": "Workflow",
+        "level": 2,
+        "score": 0.7511878609657288
+      },
+      {
+        "id": "https://openalex.org/C31601959",
+        "wikidata": "https://www.wikidata.org/wiki/Q931309",
+        "display_name": "Medical imaging",
+        "level": 2,
+        "score": 0.5136255621910095
+      },
+      {
+        "id": "https://openalex.org/C112416745",
+        "wikidata": "https://www.wikidata.org/wiki/Q974213",
+        "display_name": "Digital imaging",
+        "level": 5,
+        "score": 0.5035309195518494
+      },
+      {
+        "id": "https://openalex.org/C19527891",
+        "wikidata": "https://www.wikidata.org/wiki/Q1120908",
+        "display_name": "Medical physics",
+        "level": 1,
+        "score": 0.44091635942459106
+      },
+      {
+        "id": "https://openalex.org/C2989540662",
+        "wikidata": "https://www.wikidata.org/wiki/Q1418000",
+        "display_name": "Radiology information systems",
+        "level": 2,
+        "score": 0.42569756507873535
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.41433244943618774
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.4134797155857086
+      },
+      {
+        "id": "https://openalex.org/C10795825",
+        "wikidata": "https://www.wikidata.org/wiki/Q1061052",
+        "display_name": "Picture archiving and communication system",
+        "level": 2,
+        "score": 0.4107138216495514
+      },
+      {
+        "id": "https://openalex.org/C49774154",
+        "wikidata": "https://www.wikidata.org/wiki/Q131765",
+        "display_name": "Multimedia",
+        "level": 1,
+        "score": 0.35917890071868896
+      },
+      {
+        "id": "https://openalex.org/C126838900",
+        "wikidata": "https://www.wikidata.org/wiki/Q77604",
+        "display_name": "Radiology",
+        "level": 1,
+        "score": 0.17736992239952087
+      },
+      {
+        "id": "https://openalex.org/C42781572",
+        "wikidata": "https://www.wikidata.org/wiki/Q1250322",
+        "display_name": "Digital image",
+        "level": 4,
+        "score": 0.15089640021324158
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.11230549216270447
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.1029059886932373
+      },
+      {
+        "id": "https://openalex.org/C9417928",
+        "wikidata": "https://www.wikidata.org/wiki/Q1070689",
+        "display_name": "Image processing",
+        "level": 3,
+        "score": 0.09874343872070312
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.08899319171905518
+      },
+      {
+        "id": "https://openalex.org/C162853370",
+        "wikidata": "https://www.wikidata.org/wiki/Q39809",
+        "display_name": "Marketing",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C115961682",
+        "wikidata": "https://www.wikidata.org/wiki/Q860623",
+        "display_name": "Image (mathematics)",
+        "level": 2,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.2967/jnumed.109.064592",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.2967/jnumed.109.064592",
+        "pdf_url": "https://jnm.snmjournals.org/content/jnumed/50/8/1384.full.pdf",
+        "source": {
+          "id": "https://openalex.org/S4210180780",
+          "display_name": "Journal of Nuclear Medicine",
+          "issn_l": "2159-662X",
+          "issn": [
+            "2159-662X"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/P4310315767",
+          "host_organization_name": "Society of Nuclear Medicine and Molecular Imaging",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310315767"
+          ],
+          "host_organization_lineage_names": [
+            "Society of Nuclear Medicine and Molecular Imaging"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of Nuclear Medicine",
+        "raw_type": "journal-article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.2967/jnumed.109.064592",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.2967/jnumed.109.064592",
+      "pdf_url": "https://jnm.snmjournals.org/content/jnumed/50/8/1384.full.pdf",
+      "source": {
+        "id": "https://openalex.org/S4210180780",
+        "display_name": "Journal of Nuclear Medicine",
+        "issn_l": "2159-662X",
+        "issn": [
+          "2159-662X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/P4310315767",
+        "host_organization_name": "Society of Nuclear Medicine and Molecular Imaging",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310315767"
+        ],
+        "host_organization_lineage_names": [
+          "Society of Nuclear Medicine and Molecular Imaging"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Nuclear Medicine",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.49000000953674316,
+        "display_name": "Industry, innovation and infrastructure",
+        "id": "https://metadata.un.org/sdg/9"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2148453600.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2148453600.grobid-xml"
+    },
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [
+      "https://openalex.org/W2382085041",
+      "https://openalex.org/W2067360213",
+      "https://openalex.org/W4242941509",
+      "https://openalex.org/W2374180960",
+      "https://openalex.org/W2128816302",
+      "https://openalex.org/W2391282324",
+      "https://openalex.org/W2363065279",
+      "https://openalex.org/W2413996945",
+      "https://openalex.org/W2411237499",
+      "https://openalex.org/W2325818416"
+    ],
+    "abstract_inverted_index": {
+      "O.S.": [
+        0
+      ],
+      "Pianykh": [
+        1
+      ],
+      "Berlin,": [
+        2
+      ],
+      "Germany:": [
+        3
+      ],
+      "Springer-Verlag,": [
+        4
+      ],
+      "2008,": [
+        5
+      ],
+      "383": [
+        6
+      ],
+      "pages,": [
+        7
+      ],
+      "$119": [
+        8
+      ],
+      "The": [
+        9
+      ],
+      "goals": [
+        10
+      ],
+      "of": [
+        11,
+        34
+      ],
+      "DICOM": [
+        12
+      ],
+      "are": [
+        13
+      ],
+      "to": [
+        14
+      ],
+      "achieve": [
+        15
+      ],
+      "compatibility": [
+        16
+      ],
+      "and": [
+        17,
+        24
+      ],
+      "improve": [
+        18
+      ],
+      "workflow": [
+        19
+      ],
+      "efficiency": [
+        20
+      ],
+      "between": [
+        21
+      ],
+      "imaging": [
+        22,
+        37
+      ],
+      "systems": [
+        23,
+        27
+      ],
+      "other": [
+        25
+      ],
+      "information": [
+        26
+      ],
+      "in": [
+        28,
+        38
+      ],
+      "health": [
+        29
+      ],
+      "care.": [
+        30
+      ],
+      "Every": [
+        31
+      ],
+      "major": [
+        32
+      ],
+      "vendor": [
+        33
+      ],
+      "diagnostic": [
+        35
+      ],
+      "medical": [
+        36
+      ],
+      "the": [
+        39
+      ],
+      "world": [
+        40
+      ],
+      "has": [
+        41
+      ],
+      "incorporated": [
+        42
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 6
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 10
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 10
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 12
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 13
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 15
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 15
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 13
+      },
+      {
+        "year": 2016,
+        "cited_by_count": 12
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 8
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 13
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 11
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 17
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W4244656874",
+    "doi": "https://doi.org/10.1007/978-3-540-74571-6",
+    "title": "Digital Imaging and Communications in Medicine (DICOM)",
+    "display_name": "Digital Imaging and Communications in Medicine (DICOM)",
+    "relevance_score": 99.93766,
+    "publication_year": 2008,
+    "publication_date": "2008-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W4244656874",
+      "doi": "https://doi.org/10.1007/978-3-540-74571-6"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1007/978-3-540-74571-6",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.1007/978-3-540-74571-6",
+      "pdf_url": null,
+      "source": null,
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": null,
+      "raw_type": "book"
+    },
+    "type": "book",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5077239665",
+          "display_name": "Oleg S. Pianykh",
+          "orcid": "https://orcid.org/0000-0002-9107-5432"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1316535847",
+            "display_name": "Beth Israel Deaconess Medical Center",
+            "ror": "https://ror.org/04drvxt59",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1316535847"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I136199984",
+            "display_name": "Harvard University",
+            "ror": "https://ror.org/03vek6s52",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I136199984"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I2801337628",
+            "display_name": "Beth Israel Deaconess Hospital",
+            "ror": "https://ror.org/02cpjkp59",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I2801337628"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Pianykh, Oleg S",
+        "raw_affiliation_strings": [
+          "Department of Radiology, BIDMC, Harvard Medical School, Boston, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Radiology, BIDMC, Harvard Medical School, Boston, USA",
+            "institution_ids": [
+              "https://openalex.org/I2801337628",
+              "https://openalex.org/I1316535847",
+              "https://openalex.org/I136199984"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 1,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5077239665"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I1316535847",
+      "https://openalex.org/I136199984",
+      "https://openalex.org/I2801337628"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 4.68992247,
+    "has_fulltext": false,
+    "cited_by_count": 46,
+    "citation_normalized_percentile": {
+      "value": 0.95491803,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 98
+    },
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11361",
+      "display_name": "Digital Radiography and Breast Imaging",
+      "score": 0.5999000072479248,
+      "subfield": {
+        "id": "https://openalex.org/subfields/2740",
+        "display_name": "Pulmonary and Respiratory Medicine"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/27",
+        "display_name": "Medicine"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11361",
+        "display_name": "Digital Radiography and Breast Imaging",
+        "score": 0.5999000072479248,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2740",
+          "display_name": "Pulmonary and Respiratory Medicine"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T13123",
+        "display_name": "Advances in Oncology and Radiotherapy",
+        "score": 0.5281000137329102,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2741",
+          "display_name": "Radiology, Nuclear Medicine and Imaging"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11894",
+        "display_name": "Radiology practices and education",
+        "score": 0.5002999901771545,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2741",
+          "display_name": "Radiology, Nuclear Medicine and Imaging"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/dicom",
+        "display_name": "DICOM",
+        "score": 0.9345930814743042
+      },
+      {
+        "id": "https://openalex.org/keywords/digital-imaging",
+        "display_name": "Digital imaging",
+        "score": 0.5282427668571472
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.4288027882575989
+      },
+      {
+        "id": "https://openalex.org/keywords/medical-physics",
+        "display_name": "Medical physics",
+        "score": 0.4173603057861328
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-graphics",
+        "display_name": "Computer graphics (images)",
+        "score": 0.37327659130096436
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.36469268798828125
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-vision",
+        "display_name": "Computer vision",
+        "score": 0.19363966584205627
+      },
+      {
+        "id": "https://openalex.org/keywords/artificial-intelligence",
+        "display_name": "Artificial intelligence",
+        "score": 0.19101402163505554
+      },
+      {
+        "id": "https://openalex.org/keywords/digital-image",
+        "display_name": "Digital image",
+        "score": 0.18151867389678955
+      },
+      {
+        "id": "https://openalex.org/keywords/image-processing",
+        "display_name": "Image processing",
+        "score": 0.11486345529556274
+      },
+      {
+        "id": "https://openalex.org/keywords/image",
+        "display_name": "Image (mathematics)",
+        "score": 0.0781773030757904
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C77331912",
+        "wikidata": "https://www.wikidata.org/wiki/Q81095",
+        "display_name": "DICOM",
+        "level": 2,
+        "score": 0.9345930814743042
+      },
+      {
+        "id": "https://openalex.org/C112416745",
+        "wikidata": "https://www.wikidata.org/wiki/Q974213",
+        "display_name": "Digital imaging",
+        "level": 5,
+        "score": 0.5282427668571472
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.4288027882575989
+      },
+      {
+        "id": "https://openalex.org/C19527891",
+        "wikidata": "https://www.wikidata.org/wiki/Q1120908",
+        "display_name": "Medical physics",
+        "level": 1,
+        "score": 0.4173603057861328
+      },
+      {
+        "id": "https://openalex.org/C121684516",
+        "wikidata": "https://www.wikidata.org/wiki/Q7600677",
+        "display_name": "Computer graphics (images)",
+        "level": 1,
+        "score": 0.37327659130096436
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.36469268798828125
+      },
+      {
+        "id": "https://openalex.org/C31972630",
+        "wikidata": "https://www.wikidata.org/wiki/Q844240",
+        "display_name": "Computer vision",
+        "level": 1,
+        "score": 0.19363966584205627
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.19101402163505554
+      },
+      {
+        "id": "https://openalex.org/C42781572",
+        "wikidata": "https://www.wikidata.org/wiki/Q1250322",
+        "display_name": "Digital image",
+        "level": 4,
+        "score": 0.18151867389678955
+      },
+      {
+        "id": "https://openalex.org/C9417928",
+        "wikidata": "https://www.wikidata.org/wiki/Q1070689",
+        "display_name": "Image processing",
+        "level": 3,
+        "score": 0.11486345529556274
+      },
+      {
+        "id": "https://openalex.org/C115961682",
+        "wikidata": "https://www.wikidata.org/wiki/Q860623",
+        "display_name": "Image (mathematics)",
+        "level": 2,
+        "score": 0.0781773030757904
+      }
+    ],
+    "mesh": [],
+    "locations_count": 2,
+    "locations": [
+      {
+        "id": "doi:10.1007/978-3-540-74571-6",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.1007/978-3-540-74571-6",
+        "pdf_url": null,
+        "source": null,
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": null,
+        "raw_type": "book"
+      },
+      {
+        "id": "pmh:oai:dial.uclouvain.be:ebook:10911",
+        "is_oa": false,
+        "landing_page_url": "http://hdl.handle.net/2078/ebook:10911",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400166",
+          "display_name": "Digital Access to Libraries",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I2800384882",
+          "host_organization_name": "Harris County Public Library",
+          "host_organization_lineage": [
+            "https://openalex.org/I2800384882"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": ""
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 1,
+    "referenced_works": [
+      "https://openalex.org/W2189107669"
+    ],
+    "related_works": [
+      "https://openalex.org/W2043474860",
+      "https://openalex.org/W390992664",
+      "https://openalex.org/W2181440304",
+      "https://openalex.org/W4245824304",
+      "https://openalex.org/W1978139329",
+      "https://openalex.org/W2055186754",
+      "https://openalex.org/W2056786440",
+      "https://openalex.org/W2079372161",
+      "https://openalex.org/W2051584352",
+      "https://openalex.org/W2099038430"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 5
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 4
+      },
+      {
+        "year": 2016,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2022-05-12T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2473920602",
+    "doi": null,
+    "title": "Globus MEDICUS - federation of DICOM medical imaging devices into healthcare Grids.",
+    "display_name": "Globus MEDICUS - federation of DICOM medical imaging devices into healthcare Grids.",
+    "relevance_score": 98.02929,
+    "publication_year": 2007,
+    "publication_date": "2007-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2473920602",
+      "mag": "2473920602",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/17476069"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "pmid:17476069",
+      "is_oa": false,
+      "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/17476069",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306525036",
+        "display_name": "PubMed",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/I1299303238",
+        "host_organization_name": "National Institutes of Health",
+        "host_organization_lineage": [
+          "https://openalex.org/I1299303238"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Studies in health technology and informatics",
+      "raw_type": null
+    },
+    "type": "article",
+    "indexed_in": [
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5017189135",
+          "display_name": "Stephan G. Erberich",
+          "orcid": null
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": true,
+        "raw_author_name": "Stephan G Erberich",
+        "raw_affiliation_strings": [
+          "Department of Radiology, Childrens Hospital Los Angeles, Keck School of Medicine, University of Southern California (USC), CA, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Radiology, Childrens Hospital Los Angeles, Keck School of Medicine, University of Southern California (USC), CA, USA",
+            "institution_ids": []
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5080143974",
+          "display_name": "Jonathan C. Silverstein",
+          "orcid": "https://orcid.org/0000-0002-9252-6039"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Jonathan C Silverstein",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5070054866",
+          "display_name": "Ann Chervenak",
+          "orcid": null
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Ann Chervenak",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5089856608",
+          "display_name": "Robert Schuler",
+          "orcid": "https://orcid.org/0000-0002-8956-5707"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Robert Schuler",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5073659294",
+          "display_name": "Marvin D. Nelson",
+          "orcid": "https://orcid.org/0000-0002-8038-8046"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Marvin D Nelson",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5085298473",
+          "display_name": "Carl Kesselman",
+          "orcid": "https://orcid.org/0000-0003-0917-1562"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Carl Kesselman",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 6,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5017189135"
+    ],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 12.85334682,
+    "has_fulltext": false,
+    "cited_by_count": 59,
+    "citation_normalized_percentile": {
+      "value": 0.98797794,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 99
+    },
+    "biblio": {
+      "volume": "126",
+      "issue": null,
+      "first_page": "269",
+      "last_page": "78"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10715",
+      "display_name": "Distributed and Parallel Computing Systems",
+      "score": 0.9997000098228455,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1705",
+        "display_name": "Computer Networks and Communications"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10715",
+        "display_name": "Distributed and Parallel Computing Systems",
+        "score": 0.9997000098228455,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11986",
+        "display_name": "Scientific Computing and Data Management",
+        "score": 0.9871000051498413,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1802",
+          "display_name": "Information Systems and Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/18",
+          "display_name": "Decision Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/dicom",
+        "display_name": "DICOM",
+        "score": 0.9623660445213318
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.6691642999649048
+      },
+      {
+        "id": "https://openalex.org/keywords/workflow",
+        "display_name": "Workflow",
+        "score": 0.6003583669662476
+      },
+      {
+        "id": "https://openalex.org/keywords/picture-archiving-and-communication-system",
+        "display_name": "Picture archiving and communication system",
+        "score": 0.5604910850524902
+      },
+      {
+        "id": "https://openalex.org/keywords/interoperability",
+        "display_name": "Interoperability",
+        "score": 0.5307353138923645
+      },
+      {
+        "id": "https://openalex.org/keywords/grid-computing",
+        "display_name": "Grid computing",
+        "score": 0.4961133897304535
+      },
+      {
+        "id": "https://openalex.org/keywords/grid",
+        "display_name": "Grid",
+        "score": 0.44123587012290955
+      },
+      {
+        "id": "https://openalex.org/keywords/health-informatics",
+        "display_name": "Health informatics",
+        "score": 0.4291541278362274
+      },
+      {
+        "id": "https://openalex.org/keywords/multimedia",
+        "display_name": "Multimedia",
+        "score": 0.33622634410858154
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.32824909687042236
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.2855110764503479
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.22361639142036438
+      },
+      {
+        "id": "https://openalex.org/keywords/pathology",
+        "display_name": "Pathology",
+        "score": 0.0987682044506073
+      },
+      {
+        "id": "https://openalex.org/keywords/artificial-intelligence",
+        "display_name": "Artificial intelligence",
+        "score": 0.0985431969165802
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C77331912",
+        "wikidata": "https://www.wikidata.org/wiki/Q81095",
+        "display_name": "DICOM",
+        "level": 2,
+        "score": 0.9623660445213318
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6691642999649048
+      },
+      {
+        "id": "https://openalex.org/C177212765",
+        "wikidata": "https://www.wikidata.org/wiki/Q627335",
+        "display_name": "Workflow",
+        "level": 2,
+        "score": 0.6003583669662476
+      },
+      {
+        "id": "https://openalex.org/C10795825",
+        "wikidata": "https://www.wikidata.org/wiki/Q1061052",
+        "display_name": "Picture archiving and communication system",
+        "level": 2,
+        "score": 0.5604910850524902
+      },
+      {
+        "id": "https://openalex.org/C20136886",
+        "wikidata": "https://www.wikidata.org/wiki/Q749647",
+        "display_name": "Interoperability",
+        "level": 2,
+        "score": 0.5307353138923645
+      },
+      {
+        "id": "https://openalex.org/C70429105",
+        "wikidata": "https://www.wikidata.org/wiki/Q249999",
+        "display_name": "Grid computing",
+        "level": 3,
+        "score": 0.4961133897304535
+      },
+      {
+        "id": "https://openalex.org/C187691185",
+        "wikidata": "https://www.wikidata.org/wiki/Q2020720",
+        "display_name": "Grid",
+        "level": 2,
+        "score": 0.44123587012290955
+      },
+      {
+        "id": "https://openalex.org/C145642194",
+        "wikidata": "https://www.wikidata.org/wiki/Q870895",
+        "display_name": "Health informatics",
+        "level": 3,
+        "score": 0.4291541278362274
+      },
+      {
+        "id": "https://openalex.org/C49774154",
+        "wikidata": "https://www.wikidata.org/wiki/Q131765",
+        "display_name": "Multimedia",
+        "level": 1,
+        "score": 0.33622634410858154
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.32824909687042236
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.2855110764503479
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.22361639142036438
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.0987682044506073
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.0985431969165802
+      },
+      {
+        "id": "https://openalex.org/C33923547",
+        "wikidata": "https://www.wikidata.org/wiki/Q395",
+        "display_name": "Mathematics",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C2524010",
+        "wikidata": "https://www.wikidata.org/wiki/Q8087",
+        "display_name": "Geometry",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C138816342",
+        "wikidata": "https://www.wikidata.org/wiki/Q189603",
+        "display_name": "Public health",
+        "level": 2,
+        "score": 0.0
+      }
+    ],
+    "mesh": [
+      {
+        "descriptor_ui": "D003628",
+        "descriptor_name": "Database Management Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003628",
+        "descriptor_name": "Database Management Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003628",
+        "descriptor_name": "Database Management Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      }
+    ],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "pmid:17476069",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/17476069",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Studies in health technology and informatics",
+        "raw_type": null
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 8,
+    "referenced_works": [
+      "https://openalex.org/W1492522106",
+      "https://openalex.org/W1555993967",
+      "https://openalex.org/W1675433779",
+      "https://openalex.org/W2004085130",
+      "https://openalex.org/W2019659062",
+      "https://openalex.org/W2095014393",
+      "https://openalex.org/W2408233872",
+      "https://openalex.org/W2540611960"
+    ],
+    "related_works": [
+      "https://openalex.org/W755353066",
+      "https://openalex.org/W2138027514",
+      "https://openalex.org/W2150657407",
+      "https://openalex.org/W2003883767",
+      "https://openalex.org/W2017562820",
+      "https://openalex.org/W2067063312",
+      "https://openalex.org/W1838420695",
+      "https://openalex.org/W2280094671",
+      "https://openalex.org/W2029182497",
+      "https://openalex.org/W2085184227"
+    ],
+    "abstract_inverted_index": {
+      "The": [
+        0,
+        144,
+        250
+      ],
+      "Digital": [
+        1
+      ],
+      "Imaging": [
+        2,
+        148
+      ],
+      "and": [
+        3,
+        14,
+        25,
+        30,
+        39,
+        48,
+        63,
+        84,
+        91,
+        108,
+        131,
+        149,
+        185,
+        188,
+        217,
+        239,
+        244
+      ],
+      "Communications": [
+        4
+      ],
+      "in": [
+        5
+      ],
+      "Medicine": [
+        6
+      ],
+      "(DICOM)": [
+        7
+      ],
+      "standard": [
+        8
+      ],
+      "defines": [
+        9
+      ],
+      "Radiology": [
+        10
+      ],
+      "medical": [
+        11,
+        66,
+        89,
+        93,
+        136
+      ],
+      "device": [
+        12
+      ],
+      "interoperability": [
+        13
+      ],
+      "image": [
+        15,
+        20,
+        31,
+        64,
+        94,
+        137,
+        200,
+        213
+      ],
+      "data": [
+        16,
+        109,
+        222
+      ],
+      "exchange": [
+        17
+      ],
+      "between": [
+        18,
+        183
+      ],
+      "modalities,": [
+        19
+      ],
+      "databases": [
+        21
+      ],
+      "-": [
+        22,
+        29,
+        172
+      ],
+      "Picture": [
+        23
+      ],
+      "Archiving": [
+        24
+      ],
+      "Communication": [
+        26
+      ],
+      "Systems": [
+        27
+      ],
+      "(PACS)": [
+        28
+      ],
+      "review": [
+        32
+      ],
+      "end-points.": [
+        33
+      ],
+      "However": [
+        34
+      ],
+      "the": [
+        35,
+        46,
+        52,
+        58,
+        69,
+        113,
+        157,
+        173,
+        235,
+        240
+      ],
+      "scope": [
+        36
+      ],
+      "of": [
+        37,
+        51,
+        82,
+        227,
+        234
+      ],
+      "DICOM": [
+        38,
+        88,
+        130,
+        170,
+        174,
+        184,
+        192
+      ],
+      "PACS": [
+        40,
+        132
+      ],
+      "technology": [
+        41,
+        75
+      ],
+      "is": [
+        42
+      ],
+      "currently": [
+        43
+      ],
+      "limited": [
+        44
+      ],
+      "to": [
+        45,
+        56,
+        101,
+        128,
+        163,
+        193,
+        206
+      ],
+      "trusted": [
+        47
+      ],
+      "static": [
+        49
+      ],
+      "environment": [
+        50
+      ],
+      "hospital.": [
+        53
+      ],
+      "In": [
+        54
+      ],
+      "order": [
+        55
+      ],
+      "meet": [
+        57
+      ],
+      "demand": [
+        59
+      ],
+      "for": [
+        60,
+        87,
+        134,
+        151,
+        169,
+        211
+      ],
+      "ad-hoc": [
+        61
+      ],
+      "tele-radiology": [
+        62
+      ],
+      "guided": [
+        65
+      ],
+      "procedures": [
+        67
+      ],
+      "within": [
+        68,
+        139
+      ],
+      "global": [
+        70,
+        114,
+        141,
+        212
+      ],
+      "healthcare": [
+        71,
+        142
+      ],
+      "enterprise,": [
+        72
+      ],
+      "a": [
+        73,
+        140,
+        166
+      ],
+      "new": [
+        74,
+        167,
+        180
+      ],
+      "must": [
+        76
+      ],
+      "provide": [
+        77,
+        207
+      ],
+      "mobility,": [
+        78
+      ],
+      "security,": [
+        79
+      ],
+      "flexible": [
+        80
+      ],
+      "scale": [
+        81,
+        115
+      ],
+      "operations,": [
+        83
+      ],
+      "rapid": [
+        85
+      ],
+      "responsiveness": [
+        86
+      ],
+      "devices": [
+        90,
+        133,
+        171
+      ],
+      "subsequently": [
+        92
+      ],
+      "data.": [
+        95
+      ],
+      "Grid": [
+        96,
+        161,
+        175,
+        186,
+        196,
+        199,
+        221,
+        230
+      ],
+      "technology,": [
+        97
+      ],
+      "an": [
+        98,
+        126
+      ],
+      "informatics": [
+        99
+      ],
+      "approach": [
+        100,
+        127
+      ],
+      "securely": [
+        102
+      ],
+      "federate": [
+        103,
+        129
+      ],
+      "independently": [
+        104
+      ],
+      "operated": [
+        105
+      ],
+      "computing,": [
+        106
+      ],
+      "storage,": [
+        107
+      ],
+      "management": [
+        110
+      ],
+      "resources": [
+        111
+      ],
+      "at": [
+        112
+      ],
+      "over": [
+        116
+      ],
+      "public": [
+        117
+      ],
+      "networks,": [
+        118
+      ],
+      "meets": [
+        119
+      ],
+      "these": [
+        120
+      ],
+      "core": [
+        121
+      ],
+      "requirements.": [
+        122
+      ],
+      "Here": [
+        123
+      ],
+      "we": [
+        124
+      ],
+      "present": [
+        125
+      ],
+      "large-scale": [
+        135
+      ],
+      "workflows": [
+        138
+      ],
+      "enterprise.": [
+        143
+      ],
+      "Globus": [
+        145,
+        159,
+        194,
+        252
+      ],
+      "MEDICUS": [
+        146,
+        229
+      ],
+      "(Medical": [
+        147
+      ],
+      "Computing": [
+        150
+      ],
+      "Unified": [
+        152
+      ],
+      "Information": [
+        153
+      ],
+      "Sharing)": [
+        154
+      ],
+      "project": [
+        155
+      ],
+      "uses": [
+        156
+      ],
+      "standards-based": [
+        158
+      ],
+      "Toolkit": [
+        160
+      ],
+      "infrastructure": [
+        162
+      ],
+      "vertically": [
+        164
+      ],
+      "integrate": [
+        165
+      ],
+      "service": [
+        168,
+        181
+      ],
+      "Interface": [
+        176
+      ],
+      "Service": [
+        177
+      ],
+      "(DGIS).": [
+        178
+      ],
+      "This": [
+        179,
+        198
+      ],
+      "translates": [
+        182
+      ],
+      "operations": [
+        187
+      ],
+      "thus": [
+        189
+      ],
+      "transparently": [
+        190
+      ],
+      "extends": [
+        191
+      ],
+      "based": [
+        195
+      ],
+      "infrastructure.": [
+        197
+      ],
+      "workflow": [
+        201
+      ],
+      "paradigm": [
+        202
+      ],
+      "has": [
+        203
+      ],
+      "been": [
+        204
+      ],
+      "designed": [
+        205
+      ],
+      "not": [
+        208
+      ],
+      "only": [
+        209
+      ],
+      "solutions": [
+        210
+      ],
+      "communication,": [
+        214
+      ],
+      "but": [
+        215
+      ],
+      "fault-tolerance": [
+        216
+      ],
+      "disaster": [
+        218
+      ],
+      "recovery": [
+        219
+      ],
+      "using": [
+        220
+      ],
+      "replication": [
+        223
+      ],
+      "technology.": [
+        224
+      ],
+      "Actual": [
+        225
+      ],
+      "use-case": [
+        226
+      ],
+      "40": [
+        228
+      ],
+      "connected": [
+        231
+      ],
+      "international": [
+        232
+      ],
+      "hospitals": [
+        233
+      ],
+      "Childerns": [
+        236
+      ],
+      "Oncology": [
+        237
+      ],
+      "Group": [
+        238
+      ],
+      "Neuroblastoma": [
+        241
+      ],
+      "Cancer": [
+        242
+      ],
+      "Foundation": [
+        243
+      ],
+      "further": [
+        245
+      ],
+      "clinical": [
+        246
+      ],
+      "applications": [
+        247
+      ],
+      "are": [
+        248
+      ],
+      "discussed.": [
+        249
+      ],
+      "open-source": [
+        251
+      ],
+      "MEDICU": [
+        253
+      ],
+      "http://dev.globus.org/wiki/Incubator/MEDICUS.": [
+        254
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2019,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 6
+      }
+    ],
+    "updated_date": "2025-11-06T04:12:42.849631",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2083927153",
+    "doi": "https://doi.org/10.1007/s10278-013-9622-7",
+    "title": "The Cancer Imaging Archive (TCIA): Maintaining and Operating a Public Information Repository",
+    "display_name": "The Cancer Imaging Archive (TCIA): Maintaining and Operating a Public Information Repository",
+    "relevance_score": 97.47812,
+    "publication_year": 2013,
+    "publication_date": "2013-07-24",
+    "ids": {
+      "openalex": "https://openalex.org/W2083927153",
+      "doi": "https://doi.org/10.1007/s10278-013-9622-7",
+      "mag": "2083927153",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/23884657"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1007/s10278-013-9622-7",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1007/s10278-013-9622-7",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10278-013-9622-7.pdf",
+      "source": {
+        "id": "https://openalex.org/S62275304",
+        "display_name": "Journal of Digital Imaging",
+        "issn_l": "0897-1889",
+        "issn": [
+          "0897-1889",
+          "1618-727X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319900",
+        "host_organization_name": "Springer Science+Business Media",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319900",
+          "https://openalex.org/P4310319965"
+        ],
+        "host_organization_lineage_names": [
+          "Springer Science+Business Media",
+          "Springer Nature"
+        ],
+        "type": "journal"
+      },
+      "license": "other-oa",
+      "license_id": "https://openalex.org/licenses/other-oa",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Digital Imaging",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "datacite",
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "hybrid",
+      "oa_url": "https://link.springer.com/content/pdf/10.1007/s10278-013-9622-7.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5069259179",
+          "display_name": "Kenneth Clark",
+          "orcid": "https://orcid.org/0000-0001-7658-168X"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Kenneth Clark",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA, clarkk@mir.wustl.edu",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA, clarkk@mir.wustl.edu",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5061545190",
+          "display_name": "Bruce A. Vendt",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Bruce Vendt",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5027374679",
+          "display_name": "Kirk Smith",
+          "orcid": "https://orcid.org/0000-0002-8735-7576"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Kirk Smith",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5019607232",
+          "display_name": "John Freymann",
+          "orcid": "https://orcid.org/0000-0002-7211-0095"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210130649",
+            "display_name": "Frederick National Laboratory for Cancer Research",
+            "ror": "https://ror.org/03v6m3209",
+            "country_code": "US",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1299022934",
+              "https://openalex.org/I1299303238",
+              "https://openalex.org/I4210130649",
+              "https://openalex.org/I4210140884"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I880747138",
+            "display_name": "Science Applications International Corporation (United States)",
+            "ror": "https://ror.org/00zv91802",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I880747138"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "John Freymann",
+        "raw_affiliation_strings": [
+          "Clinical Research Directorate/CMRP, SAIC–Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, MD, 21702, USA",
+          "Clinical Research Directorate/CMRP, SAIC-Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Clinical Research Directorate/CMRP, SAIC–Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, MD, 21702, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210130649"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Clinical Research Directorate/CMRP, SAIC-Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, USA",
+            "institution_ids": [
+              "https://openalex.org/I880747138"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5009714920",
+          "display_name": "Justin Kirby",
+          "orcid": "https://orcid.org/0000-0003-3487-8922"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210130649",
+            "display_name": "Frederick National Laboratory for Cancer Research",
+            "ror": "https://ror.org/03v6m3209",
+            "country_code": "US",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1299022934",
+              "https://openalex.org/I1299303238",
+              "https://openalex.org/I4210130649",
+              "https://openalex.org/I4210140884"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I880747138",
+            "display_name": "Science Applications International Corporation (United States)",
+            "ror": "https://ror.org/00zv91802",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I880747138"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Justin Kirby",
+        "raw_affiliation_strings": [
+          "Clinical Research Directorate/CMRP, SAIC–Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, MD, 21702, USA",
+          "Clinical Research Directorate/CMRP, SAIC-Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Clinical Research Directorate/CMRP, SAIC–Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, MD, 21702, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210130649"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Clinical Research Directorate/CMRP, SAIC-Frederick, Inc., Frederick National Laboratory for Cancer Research, Frederick, USA",
+            "institution_ids": [
+              "https://openalex.org/I880747138"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5041696427",
+          "display_name": "Paul Koppel",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Paul Koppel",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5110855570",
+          "display_name": "Stephen Moore",
+          "orcid": "https://orcid.org/0009-0003-3635-795X"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Stephen Moore",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5068644755",
+          "display_name": "Stanley Phillips",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Stanley Phillips",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5111876014",
+          "display_name": "David R. Maffitt",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "David Maffitt",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5087903605",
+          "display_name": "Michael Pringle",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Michael Pringle",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5061078388",
+          "display_name": "Lawrence Tarbox",
+          "orcid": "https://orcid.org/0000-0002-2883-5558"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Lawrence Tarbox",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5063662396",
+          "display_name": "Fred Prior",
+          "orcid": "https://orcid.org/0000-0002-6314-5683"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210102181",
+            "display_name": "Mallinckrodt (United States)",
+            "ror": "https://ror.org/01akman82",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Fred Prior",
+        "raw_affiliation_strings": [
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+          "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, ERL 510 South Kingshighway Boulevard, St. Louis, MO, 63110, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mallinckrodt Institute of Radiology, Washington University School of Medicine, St Louis, USA",
+            "institution_ids": [
+              "https://openalex.org/I4210102181"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 12,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5069259179"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I4210102181"
+    ],
+    "apc_list": {
+      "value": 3190,
+      "currency": "EUR",
+      "value_usd": 4190
+    },
+    "apc_paid": {
+      "value": 3190,
+      "currency": "EUR",
+      "value_usd": 4190
+    },
+    "fwci": 26.15827256,
+    "has_fulltext": true,
+    "cited_by_count": 4445,
+    "citation_normalized_percentile": {
+      "value": 0.99678891,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "26",
+      "issue": "6",
+      "first_page": "1045",
+      "last_page": "1057"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11361",
+      "display_name": "Digital Radiography and Breast Imaging",
+      "score": 0.9896000027656555,
+      "subfield": {
+        "id": "https://openalex.org/subfields/2740",
+        "display_name": "Pulmonary and Respiratory Medicine"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/27",
+        "display_name": "Medicine"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11361",
+        "display_name": "Digital Radiography and Breast Imaging",
+        "score": 0.9896000027656555,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2740",
+          "display_name": "Pulmonary and Respiratory Medicine"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11986",
+        "display_name": "Scientific Computing and Data Management",
+        "score": 0.9840999841690063,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1802",
+          "display_name": "Information Systems and Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/18",
+          "display_name": "Decision Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10522",
+        "display_name": "Medical Imaging Techniques and Applications",
+        "score": 0.982200026512146,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2741",
+          "display_name": "Radiology, Nuclear Medicine and Imaging"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/publication",
+        "display_name": "Publication",
+        "score": 0.6168064475059509
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.4588296115398407
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.44410914182662964
+      },
+      {
+        "id": "https://openalex.org/keywords/data-science",
+        "display_name": "Data science",
+        "score": 0.35713082551956177
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.29464250802993774
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41458344",
+        "wikidata": "https://www.wikidata.org/wiki/Q732577",
+        "display_name": "Publication",
+        "level": 2,
+        "score": 0.6168064475059509
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.4588296115398407
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.44410914182662964
+      },
+      {
+        "id": "https://openalex.org/C2522767166",
+        "wikidata": "https://www.wikidata.org/wiki/Q2374463",
+        "display_name": "Data science",
+        "level": 1,
+        "score": 0.35713082551956177
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.29464250802993774
+      },
+      {
+        "id": "https://openalex.org/C112698675",
+        "wikidata": "https://www.wikidata.org/wiki/Q37038",
+        "display_name": "Advertising",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003952",
+        "descriptor_name": "Diagnostic Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005260",
+        "descriptor_name": "Female",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005260",
+        "descriptor_name": "Female",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005260",
+        "descriptor_name": "Female",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005260",
+        "descriptor_name": "Female",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005260",
+        "descriptor_name": "Female",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008297",
+        "descriptor_name": "Male",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008297",
+        "descriptor_name": "Male",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008297",
+        "descriptor_name": "Male",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008297",
+        "descriptor_name": "Male",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008297",
+        "descriptor_name": "Male",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008490",
+        "descriptor_name": "Medical Informatics",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009369",
+        "descriptor_name": "Neoplasms",
+        "qualifier_ui": "Q000175",
+        "qualifier_name": "diagnosis",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009369",
+        "descriptor_name": "Neoplasms",
+        "qualifier_ui": "Q000175",
+        "qualifier_name": "diagnosis",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009369",
+        "descriptor_name": "Neoplasms",
+        "qualifier_ui": "Q000175",
+        "qualifier_name": "diagnosis",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009369",
+        "descriptor_name": "Neoplasms",
+        "qualifier_ui": "Q000175",
+        "qualifier_name": "diagnosis",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009369",
+        "descriptor_name": "Neoplasms",
+        "qualifier_ui": "Q000175",
+        "qualifier_name": "diagnosis",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011786",
+        "descriptor_name": "Quality Control",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011786",
+        "descriptor_name": "Quality Control",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011786",
+        "descriptor_name": "Quality Control",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011786",
+        "descriptor_name": "Quality Control",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011786",
+        "descriptor_name": "Quality Control",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011873",
+        "descriptor_name": "Radiology Information Systems",
+        "qualifier_ui": "Q000458",
+        "qualifier_name": "organization & administration",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012984",
+        "descriptor_name": "Software",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012984",
+        "descriptor_name": "Software",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012984",
+        "descriptor_name": "Software",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012984",
+        "descriptor_name": "Software",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012984",
+        "descriptor_name": "Software",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D015397",
+        "descriptor_name": "Program Evaluation",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D015397",
+        "descriptor_name": "Program Evaluation",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D015397",
+        "descriptor_name": "Program Evaluation",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D015397",
+        "descriptor_name": "Program Evaluation",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D015397",
+        "descriptor_name": "Program Evaluation",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016247",
+        "descriptor_name": "Information Storage and Retrieval",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D016247",
+        "descriptor_name": "Information Storage and Retrieval",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D016247",
+        "descriptor_name": "Information Storage and Retrieval",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D016247",
+        "descriptor_name": "Information Storage and Retrieval",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D016247",
+        "descriptor_name": "Information Storage and Retrieval",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D054547",
+        "descriptor_name": "National Cancer Institute (U.S.)",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D054547",
+        "descriptor_name": "National Cancer Institute (U.S.)",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D054547",
+        "descriptor_name": "National Cancer Institute (U.S.)",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D054547",
+        "descriptor_name": "National Cancer Institute (U.S.)",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D054547",
+        "descriptor_name": "National Cancer Institute (U.S.)",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D064847",
+        "descriptor_name": "Multimodal Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D064847",
+        "descriptor_name": "Multimodal Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D064847",
+        "descriptor_name": "Multimodal Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D064847",
+        "descriptor_name": "Multimodal Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D064847",
+        "descriptor_name": "Multimodal Imaging",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      }
+    ],
+    "locations_count": 4,
+    "locations": [
+      {
+        "id": "doi:10.1007/s10278-013-9622-7",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1007/s10278-013-9622-7",
+        "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10278-013-9622-7.pdf",
+        "source": {
+          "id": "https://openalex.org/S62275304",
+          "display_name": "Journal of Digital Imaging",
+          "issn_l": "0897-1889",
+          "issn": [
+            "0897-1889",
+            "1618-727X"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319900",
+          "host_organization_name": "Springer Science+Business Media",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319900",
+            "https://openalex.org/P4310319965"
+          ],
+          "host_organization_lineage_names": [
+            "Springer Science+Business Media",
+            "Springer Nature"
+          ],
+          "type": "journal"
+        },
+        "license": "other-oa",
+        "license_id": "https://openalex.org/licenses/other-oa",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of Digital Imaging",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmid:23884657",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/23884657",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of digital imaging",
+        "raw_type": null
+      },
+      {
+        "id": "pmh:oai:pubmedcentral.nih.gov:3824915",
+        "is_oa": true,
+        "landing_page_url": "http://doi.org/10.1007/s10278-013-9622-7",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764455111",
+          "display_name": "PubMed Central",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": "Text"
+      },
+      {
+        "id": "doi:10.25504/fairsharing.jrfd8y",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.25504/fairsharing.jrfd8y",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S7407053452",
+          "display_name": "FAIRsharing.org",
+          "issn_l": null,
+          "issn": [],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": null,
+        "is_accepted": false,
+        "is_published": null,
+        "raw_source_name": null,
+        "raw_type": "dataset"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1007/s10278-013-9622-7",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1007/s10278-013-9622-7",
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10278-013-9622-7.pdf",
+      "source": {
+        "id": "https://openalex.org/S62275304",
+        "display_name": "Journal of Digital Imaging",
+        "issn_l": "0897-1889",
+        "issn": [
+          "0897-1889",
+          "1618-727X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319900",
+        "host_organization_name": "Springer Science+Business Media",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319900",
+          "https://openalex.org/P4310319965"
+        ],
+        "host_organization_lineage_names": [
+          "Springer Science+Business Media",
+          "Springer Nature"
+        ],
+        "type": "journal"
+      },
+      "license": "other-oa",
+      "license_id": "https://openalex.org/licenses/other-oa",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Digital Imaging",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.46000000834465027,
+        "display_name": "Partnerships for the goals",
+        "id": "https://metadata.un.org/sdg/17"
+      }
+    ],
+    "awards": [],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320306085",
+        "display_name": "U.S. Department of Health and Human Services",
+        "ror": "https://ror.org/033jnv181"
+      },
+      {
+        "id": "https://openalex.org/F4320308932",
+        "display_name": "Radiological Society of North America",
+        "ror": "https://ror.org/00rj4x019"
+      },
+      {
+        "id": "https://openalex.org/F4320332161",
+        "display_name": "National Institutes of Health",
+        "ror": "https://ror.org/01cwqze88"
+      },
+      {
+        "id": "https://openalex.org/F4320337351",
+        "display_name": "National Cancer Institute",
+        "ror": "https://ror.org/040gcmg81"
+      }
+    ],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2083927153.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2083927153.grobid-xml"
+    },
+    "referenced_works_count": 15,
+    "referenced_works": [
+      "https://openalex.org/W1982770575",
+      "https://openalex.org/W1994317146",
+      "https://openalex.org/W2011314100",
+      "https://openalex.org/W2020519533",
+      "https://openalex.org/W2030162084",
+      "https://openalex.org/W2032624029",
+      "https://openalex.org/W2043365501",
+      "https://openalex.org/W2049300079",
+      "https://openalex.org/W2083927153",
+      "https://openalex.org/W2091940856",
+      "https://openalex.org/W2132551870",
+      "https://openalex.org/W2166631541",
+      "https://openalex.org/W2264378898",
+      "https://openalex.org/W2860395243",
+      "https://openalex.org/W4248441758"
+    ],
+    "related_works": [
+      "https://openalex.org/W2899084033",
+      "https://openalex.org/W2748952813",
+      "https://openalex.org/W2390279801",
+      "https://openalex.org/W2358668433",
+      "https://openalex.org/W2376932109",
+      "https://openalex.org/W2381249057",
+      "https://openalex.org/W2382290278",
+      "https://openalex.org/W2350741829",
+      "https://openalex.org/W2130043461",
+      "https://openalex.org/W2347801125"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 35
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 569
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 729
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 701
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 635
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 572
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 440
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 330
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 212
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 115
+      },
+      {
+        "year": 2016,
+        "cited_by_count": 68
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 27
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 2
+      }
+    ],
+    "updated_date": "2026-02-07T08:09:18.108334",
+    "created_date": "2016-06-24T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W1999015138",
+    "doi": "https://doi.org/10.1016/j.echo.2013.04.001",
+    "title": "Focused Cardiac Ultrasound: Recommendations from the American Society of Echocardiography",
+    "display_name": "Focused Cardiac Ultrasound: Recommendations from the American Society of Echocardiography",
+    "relevance_score": 96.076195,
+    "publication_year": 2013,
+    "publication_date": "2013-05-25",
+    "ids": {
+      "openalex": "https://openalex.org/W1999015138",
+      "doi": "https://doi.org/10.1016/j.echo.2013.04.001",
+      "mag": "1999015138",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/23711341"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1016/j.echo.2013.04.001",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1016/j.echo.2013.04.001",
+      "pdf_url": "http://www.onlinejase.com/article/S0894731713002599/pdf",
+      "source": {
+        "id": "https://openalex.org/S185321339",
+        "display_name": "Journal of the American Society of Echocardiography",
+        "issn_l": "0894-7317",
+        "issn": [
+          "0894-7317",
+          "1097-6795"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320990",
+        "host_organization_name": "Elsevier BV",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320990"
+        ],
+        "host_organization_lineage_names": [
+          "Elsevier BV"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of the American Society of Echocardiography",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "bronze",
+      "oa_url": "http://www.onlinejase.com/article/S0894731713002599/pdf",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5012681318",
+          "display_name": "Kirk T. Spencer",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I40347166",
+            "display_name": "University of Chicago",
+            "ror": "https://ror.org/024mw5h28",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I40347166"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Kirk T. Spencer",
+        "raw_affiliation_strings": [
+          "University of Chicago, Chicago, Illinois, USA",
+          "#N#        #N#        University of Chicago, Chicago, Illinois, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of Chicago, Chicago, Illinois, USA",
+            "institution_ids": [
+              "https://openalex.org/I40347166"
+            ]
+          },
+          {
+            "raw_affiliation_string": "#N#        #N#        University of Chicago, Chicago, Illinois, USA",
+            "institution_ids": [
+              "https://openalex.org/I40347166"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5030772024",
+          "display_name": "Bruce J. Kimura",
+          "orcid": "https://orcid.org/0000-0002-7268-5542"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I2802091096",
+            "display_name": "Scripps Mercy Hospital",
+            "ror": "https://ror.org/04k4h9k07",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1311914864",
+              "https://openalex.org/I2802091096"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Bruce J. Kimura",
+        "raw_affiliation_strings": [
+          "Scripps Mercy Hospital, San Diego, California"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Scripps Mercy Hospital, San Diego, California",
+            "institution_ids": [
+              "https://openalex.org/I2802091096"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5035787204",
+          "display_name": "Claudia E. Korcarz",
+          "orcid": "https://orcid.org/0000-0001-9691-9027"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I135310074",
+            "display_name": "University of Wisconsin–Madison",
+            "ror": "https://ror.org/01y2jtd41",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I135310074"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Claudia E. Korcarz",
+        "raw_affiliation_strings": [
+          "University of Wisconsin , Madison, Wisconsin,"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of Wisconsin , Madison, Wisconsin,",
+            "institution_ids": [
+              "https://openalex.org/I135310074"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5025811215",
+          "display_name": "Patricia A. Pellikka",
+          "orcid": "https://orcid.org/0000-0001-6800-3521"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1330342723",
+            "display_name": "Mayo Clinic",
+            "ror": "https://ror.org/02qp3tb03",
+            "country_code": "US",
+            "type": "funder",
+            "lineage": [
+              "https://openalex.org/I1330342723"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Patricia A. Pellikka",
+        "raw_affiliation_strings": [
+          "Mayo Clinic Rochester Minnesota"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Mayo Clinic Rochester Minnesota",
+            "institution_ids": [
+              "https://openalex.org/I1330342723"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5033949749",
+          "display_name": "Peter S. Rahko",
+          "orcid": "https://orcid.org/0000-0001-7196-9319"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I135310074",
+            "display_name": "University of Wisconsin–Madison",
+            "ror": "https://ror.org/01y2jtd41",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I135310074"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Peter S. Rahko",
+        "raw_affiliation_strings": [
+          "University of Wisconsin , Madison, Wisconsin,"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of Wisconsin , Madison, Wisconsin,",
+            "institution_ids": [
+              "https://openalex.org/I135310074"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5040204150",
+          "display_name": "Robert J. Siegel",
+          "orcid": "https://orcid.org/0000-0002-1552-0928"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1282927834",
+            "display_name": "Cedars-Sinai Medical Center",
+            "ror": "https://ror.org/02pammg90",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1282927834"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Robert J. Siegel",
+        "raw_affiliation_strings": [
+          "Cedar Sinai Medical Center, Los Angeles, California"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Cedar Sinai Medical Center, Los Angeles, California",
+            "institution_ids": [
+              "https://openalex.org/I1282927834"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 6,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5012681318"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I40347166"
+    ],
+    "apc_list": {
+      "value": 3200,
+      "currency": "USD",
+      "value_usd": 3200
+    },
+    "apc_paid": null,
+    "fwci": 28.53673671,
+    "has_fulltext": true,
+    "cited_by_count": 558,
+    "citation_normalized_percentile": {
+      "value": 0.99838501,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 98,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "26",
+      "issue": "6",
+      "first_page": "567",
+      "last_page": "581"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11738",
+      "display_name": "Ultrasound in Clinical Applications",
+      "score": 0.9998000264167786,
+      "subfield": {
+        "id": "https://openalex.org/subfields/2706",
+        "display_name": "Critical Care and Intensive Care Medicine"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/27",
+        "display_name": "Medicine"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11738",
+        "display_name": "Ultrasound in Clinical Applications",
+        "score": 0.9998000264167786,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2706",
+          "display_name": "Critical Care and Intensive Care Medicine"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10372",
+        "display_name": "Cardiac Imaging and Diagnostics",
+        "score": 0.9972000122070312,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2741",
+          "display_name": "Radiology, Nuclear Medicine and Imaging"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10821",
+        "display_name": "Cardiovascular Function and Risk Factors",
+        "score": 0.9927999973297119,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2705",
+          "display_name": "Cardiology and Cardiovascular Medicine"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/27",
+          "display_name": "Medicine"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.9536783695220947
+      },
+      {
+        "id": "https://openalex.org/keywords/cardiology",
+        "display_name": "Cardiology",
+        "score": 0.5684998035430908
+      },
+      {
+        "id": "https://openalex.org/keywords/internal-medicine",
+        "display_name": "Internal medicine",
+        "score": 0.5094926953315735
+      },
+      {
+        "id": "https://openalex.org/keywords/ultrasound",
+        "display_name": "Ultrasound",
+        "score": 0.44938886165618896
+      },
+      {
+        "id": "https://openalex.org/keywords/radiology",
+        "display_name": "Radiology",
+        "score": 0.3727395236492157
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.9536783695220947
+      },
+      {
+        "id": "https://openalex.org/C164705383",
+        "wikidata": "https://www.wikidata.org/wiki/Q10379",
+        "display_name": "Cardiology",
+        "level": 1,
+        "score": 0.5684998035430908
+      },
+      {
+        "id": "https://openalex.org/C126322002",
+        "wikidata": "https://www.wikidata.org/wiki/Q11180",
+        "display_name": "Internal medicine",
+        "level": 1,
+        "score": 0.5094926953315735
+      },
+      {
+        "id": "https://openalex.org/C143753070",
+        "wikidata": "https://www.wikidata.org/wiki/Q162564",
+        "display_name": "Ultrasound",
+        "level": 2,
+        "score": 0.44938886165618896
+      },
+      {
+        "id": "https://openalex.org/C126838900",
+        "wikidata": "https://www.wikidata.org/wiki/Q77604",
+        "display_name": "Radiology",
+        "level": 1,
+        "score": 0.3727395236492157
+      }
+    ],
+    "mesh": [
+      {
+        "descriptor_ui": "D002309",
+        "descriptor_name": "Cardiology",
+        "qualifier_ui": "Q000193",
+        "qualifier_name": "education",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D002318",
+        "descriptor_name": "Cardiovascular Diseases",
+        "qualifier_ui": "Q000000981",
+        "qualifier_name": "diagnostic imaging",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D007090",
+        "descriptor_name": "Image Interpretation, Computer-Assisted",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D010808",
+        "descriptor_name": "Physical Examination",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D019095",
+        "descriptor_name": "Point-of-Care Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D002309",
+        "descriptor_name": "Cardiology",
+        "qualifier_ui": "Q000193",
+        "qualifier_name": "education",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D002318",
+        "descriptor_name": "Cardiovascular Diseases",
+        "qualifier_ui": "Q000000981",
+        "qualifier_name": "diagnostic imaging",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D007090",
+        "descriptor_name": "Image Interpretation, Computer-Assisted",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D010808",
+        "descriptor_name": "Physical Examination",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D019095",
+        "descriptor_name": "Point-of-Care Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D002309",
+        "descriptor_name": "Cardiology",
+        "qualifier_ui": "Q000193",
+        "qualifier_name": "education",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D002318",
+        "descriptor_name": "Cardiovascular Diseases",
+        "qualifier_ui": "Q000000981",
+        "qualifier_name": "diagnostic imaging",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000295",
+        "qualifier_name": "instrumentation",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000379",
+        "qualifier_name": "methods",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D004452",
+        "descriptor_name": "Echocardiography",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D006801",
+        "descriptor_name": "Humans",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D007090",
+        "descriptor_name": "Image Interpretation, Computer-Assisted",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D010808",
+        "descriptor_name": "Physical Examination",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D019095",
+        "descriptor_name": "Point-of-Care Systems",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      }
+    ],
+    "locations_count": 2,
+    "locations": [
+      {
+        "id": "doi:10.1016/j.echo.2013.04.001",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1016/j.echo.2013.04.001",
+        "pdf_url": "http://www.onlinejase.com/article/S0894731713002599/pdf",
+        "source": {
+          "id": "https://openalex.org/S185321339",
+          "display_name": "Journal of the American Society of Echocardiography",
+          "issn_l": "0894-7317",
+          "issn": [
+            "0894-7317",
+            "1097-6795"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310320990",
+          "host_organization_name": "Elsevier BV",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310320990"
+          ],
+          "host_organization_lineage_names": [
+            "Elsevier BV"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of the American Society of Echocardiography",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmid:23711341",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/23711341",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of the American Society of Echocardiography : official publication of the American Society of Echocardiography",
+        "raw_type": null
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1016/j.echo.2013.04.001",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1016/j.echo.2013.04.001",
+      "pdf_url": "http://www.onlinejase.com/article/S0894731713002599/pdf",
+      "source": {
+        "id": "https://openalex.org/S185321339",
+        "display_name": "Journal of the American Society of Echocardiography",
+        "issn_l": "0894-7317",
+        "issn": [
+          "0894-7317",
+          "1097-6795"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320990",
+        "host_organization_name": "Elsevier BV",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320990"
+        ],
+        "host_organization_lineage_names": [
+          "Elsevier BV"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of the American Society of Echocardiography",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.46000000834465027,
+        "display_name": "Quality Education",
+        "id": "https://metadata.un.org/sdg/4"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W1999015138.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W1999015138.grobid-xml"
+    },
+    "referenced_works_count": 117,
+    "referenced_works": [
+      "https://openalex.org/W159953378",
+      "https://openalex.org/W1483402655",
+      "https://openalex.org/W1489656972",
+      "https://openalex.org/W1505087336",
+      "https://openalex.org/W1507890331",
+      "https://openalex.org/W1540954219",
+      "https://openalex.org/W1887368851",
+      "https://openalex.org/W1931278875",
+      "https://openalex.org/W1961806692",
+      "https://openalex.org/W1964386807",
+      "https://openalex.org/W1964454984",
+      "https://openalex.org/W1965400455",
+      "https://openalex.org/W1968617674",
+      "https://openalex.org/W1969419117",
+      "https://openalex.org/W1977381863",
+      "https://openalex.org/W1980107287",
+      "https://openalex.org/W1990122322",
+      "https://openalex.org/W1990127199",
+      "https://openalex.org/W1990434547",
+      "https://openalex.org/W1993630998",
+      "https://openalex.org/W1995337198",
+      "https://openalex.org/W1996069561",
+      "https://openalex.org/W1997200849",
+      "https://openalex.org/W1997859168",
+      "https://openalex.org/W1998374020",
+      "https://openalex.org/W2003720746",
+      "https://openalex.org/W2005720118",
+      "https://openalex.org/W2006090984",
+      "https://openalex.org/W2006602308",
+      "https://openalex.org/W2008465156",
+      "https://openalex.org/W2011405410",
+      "https://openalex.org/W2013096499",
+      "https://openalex.org/W2019471807",
+      "https://openalex.org/W2019746519",
+      "https://openalex.org/W2022532599",
+      "https://openalex.org/W2022740079",
+      "https://openalex.org/W2022778398",
+      "https://openalex.org/W2024683898",
+      "https://openalex.org/W2025772398",
+      "https://openalex.org/W2025932193",
+      "https://openalex.org/W2026471911",
+      "https://openalex.org/W2034157021",
+      "https://openalex.org/W2035907418",
+      "https://openalex.org/W2036346792",
+      "https://openalex.org/W2036769935",
+      "https://openalex.org/W2041437149",
+      "https://openalex.org/W2042738227",
+      "https://openalex.org/W2043676721",
+      "https://openalex.org/W2049957479",
+      "https://openalex.org/W2059250372",
+      "https://openalex.org/W2062710309",
+      "https://openalex.org/W2063708404",
+      "https://openalex.org/W2064665791",
+      "https://openalex.org/W2067517352",
+      "https://openalex.org/W2067809137",
+      "https://openalex.org/W2067922675",
+      "https://openalex.org/W2068143676",
+      "https://openalex.org/W2068156489",
+      "https://openalex.org/W2072783765",
+      "https://openalex.org/W2076419031",
+      "https://openalex.org/W2077490178",
+      "https://openalex.org/W2078318635",
+      "https://openalex.org/W2086331928",
+      "https://openalex.org/W2089923812",
+      "https://openalex.org/W2091085388",
+      "https://openalex.org/W2093570039",
+      "https://openalex.org/W2093767335",
+      "https://openalex.org/W2094793628",
+      "https://openalex.org/W2096165628",
+      "https://openalex.org/W2100659246",
+      "https://openalex.org/W2101099004",
+      "https://openalex.org/W2104192334",
+      "https://openalex.org/W2105062479",
+      "https://openalex.org/W2106302253",
+      "https://openalex.org/W2106672135",
+      "https://openalex.org/W2106839593",
+      "https://openalex.org/W2109818299",
+      "https://openalex.org/W2113810479",
+      "https://openalex.org/W2113838395",
+      "https://openalex.org/W2118603965",
+      "https://openalex.org/W2118726127",
+      "https://openalex.org/W2119665063",
+      "https://openalex.org/W2120825416",
+      "https://openalex.org/W2121842052",
+      "https://openalex.org/W2123033747",
+      "https://openalex.org/W2123082111",
+      "https://openalex.org/W2123369374",
+      "https://openalex.org/W2124994494",
+      "https://openalex.org/W2127598895",
+      "https://openalex.org/W2128305667",
+      "https://openalex.org/W2132362199",
+      "https://openalex.org/W2135383863",
+      "https://openalex.org/W2136124835",
+      "https://openalex.org/W2142607636",
+      "https://openalex.org/W2143549208",
+      "https://openalex.org/W2145631279",
+      "https://openalex.org/W2148893298",
+      "https://openalex.org/W2149910872",
+      "https://openalex.org/W2155116623",
+      "https://openalex.org/W2156028252",
+      "https://openalex.org/W2159038375",
+      "https://openalex.org/W2159242907",
+      "https://openalex.org/W2161722987",
+      "https://openalex.org/W2162193360",
+      "https://openalex.org/W2164755540",
+      "https://openalex.org/W2166632859",
+      "https://openalex.org/W2170606235",
+      "https://openalex.org/W2183065534",
+      "https://openalex.org/W2183814072",
+      "https://openalex.org/W2187630416",
+      "https://openalex.org/W2219536360",
+      "https://openalex.org/W2354125512",
+      "https://openalex.org/W2738412997",
+      "https://openalex.org/W3022179669",
+      "https://openalex.org/W4211123306",
+      "https://openalex.org/W6678259779",
+      "https://openalex.org/W6683134715"
+    ],
+    "related_works": [
+      "https://openalex.org/W3183948672",
+      "https://openalex.org/W3173606202",
+      "https://openalex.org/W3110381201",
+      "https://openalex.org/W2948807893",
+      "https://openalex.org/W2778153218",
+      "https://openalex.org/W2748952813",
+      "https://openalex.org/W1531601525",
+      "https://openalex.org/W2029967375",
+      "https://openalex.org/W4200563007",
+      "https://openalex.org/W2357989941"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 23
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 32
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 34
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 39
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 53
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 54
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 63
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 64
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 56
+      },
+      {
+        "year": 2016,
+        "cited_by_count": 41
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 55
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 34
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 6
+      }
+    ],
+    "updated_date": "2026-01-13T01:12:25.745995",
+    "created_date": "2025-10-10T00:00:00"
+  }
+]

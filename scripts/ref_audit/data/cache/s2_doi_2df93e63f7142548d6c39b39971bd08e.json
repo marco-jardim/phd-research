@@ -1,0 +1,61 @@
+{
+  "paperId": "10b835100a0e8a9c65442339697a3b710ab10c45",
+  "externalIds": {
+    "PubMedCentral": "12667511",
+    "DOI": "10.1590/1980-549720250053",
+    "CorpusId": 283309517,
+    "PubMed": "41337538"
+  },
+  "title": "Record linkage in public health datasets: a practical experience in a fast in-process analytical database",
+  "year": 2025,
+  "citationCount": 0,
+  "openAccessPdf": {
+    "url": "",
+    "status": null,
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC12667511, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": "The accuracy of an algorithm with a mixed approach for linking the Mortality Information System and the Influenza Epidemiological Surveillance Information System records, implemented in DuckDB is presented, highlighting the potential of DuckDB as a high-performance analytical database for efficiently managing complex data integration tasks."
+  },
+  "journal": {
+    "name": "Revista Brasileira de Epidemiologia (Brazilian Journal of Epidemiology)",
+    "volume": "28"
+  },
+  "authors": [
+    {
+      "authorId": "2347088889",
+      "name": "W. Tassinari"
+    },
+    {
+      "authorId": "2376246700",
+      "name": "Caroline Dias Ferreira"
+    },
+    {
+      "authorId": "2394765620",
+      "name": "Eugênio Araújo Júnior"
+    },
+    {
+      "authorId": "80540226",
+      "name": "D. M. D. O. E. Cruz"
+    },
+    {
+      "authorId": "2382953570",
+      "name": "Gislani Mateus Oliveira Aguilar"
+    },
+    {
+      "authorId": "2313760497",
+      "name": "Oswaldo Gonçalves Cruz"
+    },
+    {
+      "authorId": "2313788220",
+      "name": "Valéria Saraceni"
+    },
+    {
+      "authorId": "2313808017",
+      "name": "A. Pacheco"
+    }
+  ],
+  "abstract": "ABSTRACT Objective: This study presents the accuracy of an algorithm with a mixed approach for linking the Mortality Information System (SIM) and the Influenza Epidemiological Surveillance Information System (SIVEP-Gripe) records, implemented in DuckDB. Methods: The proposed algorithm was compared with a previously validated algorithm, in different prevalence scenarios. We employed a hybrid deterministic-probabilistic approach, using similarity metrics such as Jaro and Jaro-Winkler. The study highlights important advantages, including superior processing speed and scalability, maintaining high values in terms of sensitivity, specificity and predictive values. Results: The DuckDB-based solution processed datasets significantly faster, with execution times up to one hundred times shorter, making it particularly suitable for large-scale, real-time applications. Conclusions: This study underscores the potential of DuckDB as a high-performance analytical database for efficiently managing complex data integration tasks and highlights its suitability for resource-limited environments in public health, where timely and accurate record linkage is often essential."
+}

@@ -1,0 +1,546 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        25
+      ]
+    ],
+    "date-time": "2025-11-25T20:36:56Z",
+    "timestamp": 1764103016617,
+    "version": "build-2065373602"
+  },
+  "reference-count": 36,
+  "publisher": "Elsevier BV",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            7,
+            1
+          ]
+        ],
+        "date-time": "2019-07-01T00:00:00Z",
+        "timestamp": 1561939200000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            7,
+            1
+          ]
+        ],
+        "date-time": "2019-07-01T00:00:00Z",
+        "timestamp": 1561939200000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/legal/tdmrep-license"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            7,
+            1
+          ]
+        ],
+        "date-time": "2020-07-01T00:00:00Z",
+        "timestamp": 1593561600000
+      },
+      "content-version": "vor",
+      "delay-in-days": 366,
+      "URL": "http://www.elsevier.com/open-access/userlicense/1.0/"
+    }
+  ],
+  "funder": [
+    {
+      "name": "UNSW Research Infrastructure Scheme"
+    },
+    {
+      "name": "UNSW Medicine"
+    },
+    {
+      "DOI": "10.13039/501100013331",
+      "name": "Ingham Institute for Applied Medical Research",
+      "doi-asserted-by": "crossref",
+      "id": [
+        {
+          "id": "10.13039/501100013331",
+          "id-type": "DOI",
+          "asserted-by": "crossref"
+        }
+      ]
+    },
+    {
+      "name": "South West Sydney Local Health District"
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "elsevier.com",
+      "sciencedirect.com"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "Journal of Biomedical Informatics"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2019,
+        7
+      ]
+    ]
+  },
+  "DOI": "10.1016/j.jbi.2019.103220",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2019,
+        5,
+        31
+      ]
+    ],
+    "date-time": "2019-05-31T02:43:29Z",
+    "timestamp": 1559270609000
+  },
+  "page": "103220",
+  "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 11,
+  "special_numbering": "C",
+  "title": [
+    "Statistical supervised meta-ensemble algorithm for medical record linkage"
+  ],
+  "prefix": "10.1016",
+  "volume": "95",
+  "author": [
+    {
+      "given": "Kha",
+      "family": "Vo",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-9912-2344",
+      "authenticated-orcid": false,
+      "given": "Jitendra",
+      "family": "Jonnagaddala",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-5989-3614",
+      "authenticated-orcid": false,
+      "given": "Siaw-Teng",
+      "family": "Liaw",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "78",
+  "reference": [
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0005",
+      "doi-asserted-by": "crossref",
+      "unstructured": "C. Conrad, N. Ali, V. Keelj, Q. Gao, ELM: an extended logic matching method on record linkage analysis of disparate databases for profiling data mining, in: 2016 IEEE 18th Conference on Business Informatics (CBI), vol. 01, 2016, p. 1–6.",
+      "DOI": "10.1109/CBI.2016.9"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0010",
+      "first-page": "5594",
+      "article-title": "NC-link: a new linkage method for efficient hierarchical clustering of large-scale data",
+      "volume": "5",
+      "author": "Jeon",
+      "year": "2017",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0015",
+      "doi-asserted-by": "crossref",
+      "unstructured": "H.-S. Kim, D. Lee, Harra: Fast iterative hashed record linkage for large-scale data collections, in: Proc. 13th Int. Conf. Extending Database Technol., 2010, pp. 525–536.",
+      "DOI": "10.1145/1739041.1739104"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0020",
+      "doi-asserted-by": "crossref",
+      "unstructured": "T. Sagi, A. Gal, O. Barkol, R. Bergman, A. Avram, Multi-source uncertain entity resolution at yad vashem: Transforming holocaust victim reports into people, in: Proc. Int. Conf. Manage. Data, 2016, pp. 807–819.",
+      "DOI": "10.1145/2882903.2903737"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0025",
+      "series-title": "Advances in Knowledge Discovery and Data Mining",
+      "first-page": "308",
+      "article-title": "Scaling record linkage to non-uniform distributed class sizes",
+      "author": "Rendle",
+      "year": "2008"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0030",
+      "doi-asserted-by": "crossref",
+      "unstructured": "E. Begoli, T. Dunning, C. Frasure, Real-time discovery services over large, heterogeneous and complex healthcare datasets using schema-less, column-oriented methods, in: 2016 IEEE Second International Conference on Big Data Computing Service and Applications (BigDataService), 2016, pp. 257–264.",
+      "DOI": "10.1109/BigDataService.2016.29"
+    },
+    {
+      "issue": "2",
+      "key": "10.1016/j.jbi.2019.103220_b0035",
+      "doi-asserted-by": "crossref",
+      "first-page": "252",
+      "DOI": "10.1136/amiajnl-2013-002034",
+      "article-title": "Efficient sequential and parallel algorithms for record linkage",
+      "volume": "21",
+      "author": "Mamun",
+      "year": "2014",
+      "journal-title": "J. Am. Med. Informat. Assoc."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0040",
+      "series-title": "ACM International Conference on Knowledge Discovery and Data Mining) SIGKDD'08",
+      "first-page": "1065",
+      "article-title": "Febrl - An open source data cleaning, deduplication and record linkage system with a graphical user interface (Demonstration Session",
+      "author": "Christen",
+      "year": "2008"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0045",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Christen, T. Churches, M. Hegland, Febrl - a parallel open source data linkage system, in: Lecture Notes in Artificial Intelligence (Subseries of Lecture Notes in Computer Science), vol. 3056, 2004, pp. 638–647.",
+      "DOI": "10.1007/978-3-540-24775-3_75"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0050",
+      "unstructured": "P. Jurczyk, J. Lu, L. Xiong, D. Cragan, J.A. Correa, FRIL: A tool for comparative record linkage, 2008, 2008: pp. 440–444."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0055",
+      "series-title": "Privacy in Statistical Databases",
+      "first-page": "253",
+      "article-title": "A comparison of blocking methods for record linkage",
+      "author": "Steorts",
+      "year": "2014"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0060",
+      "unstructured": "R. Baxter, P. Christen, For Epidemiology C. A Comparison of Fast Blocking Methods for Record Linkage, 2003."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0065",
+      "doi-asserted-by": "crossref",
+      "first-page": "9",
+      "DOI": "10.1186/1472-6947-2-9",
+      "article-title": "Preparation of name and address data for record linkage using hidden Markov models",
+      "volume": "2",
+      "author": "Churches",
+      "year": "2002",
+      "journal-title": "BMC Med. Inf. Decis. Making"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0070",
+      "first-page": "9812",
+      "article-title": "Genomic ancestry and ethnoracial self-classification based on 5,871 community-dwelling Brazilians (The Epigen Initiative)",
+      "volume": "5",
+      "author": "Lima-Costa",
+      "year": "2015",
+      "journal-title": "Nat. Sci. Reports"
+    },
+    {
+      "issue": "11",
+      "key": "10.1016/j.jbi.2019.103220_b0075",
+      "first-page": "1",
+      "article-title": "Effect of Brazil's Conditional Cash Transfer Programme on the new case detection rate of leprosy in children under 15 years old",
+      "volume": "8",
+      "author": "Freitas De Andrade",
+      "year": "2014",
+      "journal-title": "PLoS Negl.Trop. Dis."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0080",
+      "doi-asserted-by": "crossref",
+      "first-page": "137",
+      "DOI": "10.1016/j.is.2016.12.001",
+      "article-title": "Parallel meta-blocking for scaling entity resolution over big heterogeneous data",
+      "volume": "65",
+      "author": "Efthymiou",
+      "year": "2017",
+      "journal-title": "Inform. Syst."
+    },
+    {
+      "issue": "1",
+      "key": "10.1016/j.jbi.2019.103220_b0085",
+      "doi-asserted-by": "crossref",
+      "first-page": "41",
+      "DOI": "10.1186/1472-6947-9-41",
+      "article-title": "Privacy-preserving record linkage using Bloom filters",
+      "volume": "9",
+      "author": "Schnell",
+      "year": "2009",
+      "journal-title": "BMC Med. Inf. Decis. Making"
+    },
+    {
+      "year": "2012",
+      "series-title": "Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection (Data-Centric Systems and Applications)",
+      "author": "Christen",
+      "key": "10.1016/j.jbi.2019.103220_b0090"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0095",
+      "unstructured": "J. Turk, M. Stephens, Jellyfish: a python library for doing approximate and phonetic matching of strings. Availability: https://jellyfish.readthedocs.io/en/latest/."
+    },
+    {
+      "year": "2012",
+      "series-title": "Ensemble Methods: Foundations and Algorithms",
+      "author": "Zhou",
+      "key": "10.1016/j.jbi.2019.103220_b0100"
+    },
+    {
+      "issue": "1",
+      "key": "10.1016/j.jbi.2019.103220_b0105",
+      "doi-asserted-by": "crossref",
+      "first-page": "49",
+      "DOI": "10.1023/A:1018046112532",
+      "article-title": "Stacked regressions",
+      "volume": "24",
+      "author": "Breiman",
+      "year": "1996",
+      "journal-title": "Mach. Learn."
+    },
+    {
+      "issue": "2",
+      "key": "10.1016/j.jbi.2019.103220_b0110",
+      "doi-asserted-by": "crossref",
+      "first-page": "123",
+      "DOI": "10.1023/A:1018054314350",
+      "article-title": "Bagging predictors",
+      "volume": "24",
+      "author": "Breiman",
+      "year": "1996",
+      "journal-title": "Mach. Learn."
+    },
+    {
+      "issue": "3",
+      "key": "10.1016/j.jbi.2019.103220_b0115",
+      "doi-asserted-by": "crossref",
+      "first-page": "251",
+      "DOI": "10.1023/B:MACH.0000027783.34431.42",
+      "article-title": "Bagging equalizes influence",
+      "volume": "55",
+      "author": "Grandvalet",
+      "year": "2004",
+      "journal-title": "Mach. Learn."
+    },
+    {
+      "issue": "44",
+      "key": "10.1016/j.jbi.2019.103220_b0120",
+      "first-page": "776",
+      "article-title": "Linear Regression Analysis: Part 14 of a Series on Evaluation of Scientific Publications",
+      "volume": "107",
+      "author": "Schneider",
+      "year": "2010",
+      "journal-title": "Deutsches Ärzteblatt International"
+    },
+    {
+      "issue": "11",
+      "key": "10.1016/j.jbi.2019.103220_b0125",
+      "first-page": "820",
+      "article-title": "Data extraction from electronic health records - existing tools may be unreliable and potentially unsafe",
+      "volume": "42",
+      "author": "Liaw",
+      "year": "2013",
+      "journal-title": "Aust. Family Phys."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0130",
+      "unstructured": "Siaw-Teng Liaw, Gawaine Powell-Davies, Christopher Pearce, Helena Britt, Lisa McGlynn, Mark Fort Harris, Optimising the use of observational electronic health record data: Current issues, evolving opportunities, strategies and scope for collaboration [online]. Aust. Family Phys. 45(3), Mar 2016: 153-156. Availability: <https://search.informit.com.au/documentSummary;dn=926994450045520;res=IELHEA> ISSN: 0300-8495. [cited 05 Sep 18]."
+    },
+    {
+      "issue": "3",
+      "key": "10.1016/j.jbi.2019.103220_b0135",
+      "doi-asserted-by": "crossref",
+      "first-page": "273",
+      "DOI": "10.1023/A:1022627411411",
+      "article-title": "Support-vector networks",
+      "volume": "20",
+      "author": "Cortes",
+      "year": "1995",
+      "journal-title": "Mach. Learn."
+    },
+    {
+      "issue": "1/2",
+      "key": "10.1016/j.jbi.2019.103220_b0140",
+      "doi-asserted-by": "crossref",
+      "first-page": "167",
+      "DOI": "10.2307/2333860",
+      "article-title": "Estimation of the Probability of an Event as a Function of Several Independent Variables",
+      "volume": "54",
+      "author": "Walker",
+      "year": "1967",
+      "journal-title": "Biometrika"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0145",
+      "unstructured": "G. Cybenko, Approximation by Superpositions of a Sigmoidal Function, 1989 August 15, 2018."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0150",
+      "unstructured": "V. Nair, G.E. Hinton, Rectified Linear Units Improve Restricted Boltzmann Machines, in: Proceedings of the 27th International Conference on International Conference on Machine Learning. ICML'10. Omnipress, USA, 2010, pp. 807–814."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0155",
+      "series-title": "Quality and Complexity Measures for Data Linkage and Deduplication",
+      "first-page": "127",
+      "author": "Christen",
+      "year": "2007"
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0160",
+      "unstructured": "Kyle Boone, PLASSITICC astronomical classsification Competition 1st place solution, on Kaggle, 2019. Available at https://www.kaggle.com/c/vsb-power-line-fault-detection/discussion/87038#latest-504346."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0165",
+      "unstructured": "Xiao Zhuwang, AVITO demand prediction Competition 1st place solution, on Kaggle, 2018. Available at https://www.kaggle.com/c/avito-demand-prediction/discussion/59880#latest-450523."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0170",
+      "unstructured": "Gilberto Titericz, Santander value prediction Competition 1st place solution, on Kaggle, 2019. Available at https://www.kaggle.com/c/santander-value-prediction-challenge/discussion/63907#latest-380059."
+    },
+    {
+      "key": "10.1016/j.jbi.2019.103220_b0175",
+      "doi-asserted-by": "crossref",
+      "first-page": "108",
+      "DOI": "10.1186/s12911-017-0506-5",
+      "article-title": "Evaluation of record linkage of two large administrative databases in a middle income country: stillbirths and notifications of dengue during pregnancy in Brazil",
+      "volume": "17",
+      "author": "Paixao",
+      "year": "2017",
+      "journal-title": "BMC Med. Inform. Decis. Mak."
+    },
+    {
+      "issue": "2",
+      "key": "10.1016/j.jbi.2019.103220_b0180",
+      "doi-asserted-by": "crossref",
+      "first-page": "346",
+      "DOI": "10.1109/JBHI.2018.2796941",
+      "article-title": "On the accuracy and scalability of probabilistic data linkage over the Brazilian 114 million cohort",
+      "volume": "22",
+      "author": "Dantas Pita",
+      "year": "2018",
+      "journal-title": "IEEE J. Biomed. Health. Inf."
+    }
+  ],
+  "container-title": [
+    "Journal of Biomedical Informatics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S1532046419301388?httpAccept=text/xml",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S1532046419301388?httpAccept=text/plain",
+      "content-type": "text/plain",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        26
+      ]
+    ],
+    "date-time": "2025-10-26T22:39:47Z",
+    "timestamp": 1761518387000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://linkinghub.elsevier.com/retrieve/pii/S1532046419301388"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2019,
+        7
+      ]
+    ]
+  },
+  "references-count": 36,
+  "alternative-id": [
+    "S1532046419301388"
+  ],
+  "URL": "https://doi.org/10.1016/j.jbi.2019.103220",
+  "relation": {},
+  "ISSN": [
+    "1532-0464"
+  ],
+  "issn-type": [
+    {
+      "type": "print",
+      "value": "1532-0464"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2019,
+        7
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "Elsevier",
+      "name": "publisher",
+      "label": "This article is maintained by"
+    },
+    {
+      "value": "Statistical supervised meta-ensemble algorithm for medical record linkage",
+      "name": "articletitle",
+      "label": "Article Title"
+    },
+    {
+      "value": "Journal of Biomedical Informatics",
+      "name": "journaltitle",
+      "label": "Journal Title"
+    },
+    {
+      "value": "https://doi.org/10.1016/j.jbi.2019.103220",
+      "name": "articlelink",
+      "label": "CrossRef DOI link to publisher maintained version"
+    },
+    {
+      "value": "article",
+      "name": "content_type",
+      "label": "Content Type"
+    },
+    {
+      "value": "© 2019 Elsevier Inc.",
+      "name": "copyright",
+      "label": "Copyright"
+    }
+  ],
+  "article-number": "103220"
+}

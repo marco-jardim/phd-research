@@ -1,0 +1,902 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        1,
+        15
+      ]
+    ],
+    "date-time": "2026-01-15T12:22:57Z",
+    "timestamp": 1768479777811,
+    "version": "3.49.0"
+  },
+  "reference-count": 63,
+  "publisher": "MDPI AG",
+  "issue": "9",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2022,
+            9,
+            14
+          ]
+        ],
+        "date-time": "2022-09-14T00:00:00Z",
+        "timestamp": 1663113600000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "name": "São Paulo State Research Support Foundation (FAPESP)",
+      "award": [
+        "2022/03964-0"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "2022/03964-0"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "São Paulo State Research Support Foundation (FAPESP)",
+      "award": [
+        "405902/2021-2"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "405902/2021-2"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "National Council for Scientific and Technological Development (CNPq)",
+      "award": [
+        "2022/03964-0"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "2022/03964-0"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "National Council for Scientific and Technological Development (CNPq)",
+      "award": [
+        "405902/2021-2"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "405902/2021-2"
+          ]
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "TropicalMed"
+  ],
+  "abstract": "<jats:p>Background: We aimed to visualize and classify the time series of COVID-19, tuberculosis (TB) notification, and TB outcomes (cure, treatment abandonment, and death), verify the impact of the new coronavirus pandemic on these indices in Brazil, and verify the presence of spatial autocorrelation between COVID-19 and TB. Methods: This was an ecological time series study that considered TB and COVID-19 cases. Seasonal Trend Decomposition using Loess (STL) was used to trace the temporal trend, Prais–Winsten was used to classify the temporal trend, Interrupted Time Series (ITS) was used to verify the impact of COVID-19 on TB rates, and the Bivariate Moran Index (Global and Local) was used to verify the spatial autocorrelation of events. Results: Brazil and its macro-regions showed an increasing temporal trend for the notification of TB in the pre-pandemic period. Only the Northeast Region showed a decreasing temporal trend for cured cases. For treatment abandonment, all regions except for the Northeast showed an increasing temporal trend, and regarding death, Brazil and the Northeast Region showed an increasing temporal trend. With the ITS, COVID-19 caused a decline in TB notification rates and TB outcome rates. With the global spatial analysis, it was possible to identify the existence of spatial autocorrelation between the notification rate of COVID-19 and the TB notification rate and deaths. With the local analysis, it was possible to map the Brazilian municipalities and classify them according to the relationship between the rates of both diseases and space. Conclusions: COVID-19 influenced the follow-up of and adherence to TB treatment and intensified social vulnerability and, consequently, affected the notification of TB since the relationship between the disease and social determinants of health is already known. The restoration and strengthening of essential services for the prevention and detection of cases and treatment of TB in endemic environments such as Brazil have been oriented as a priority in the global health agenda.</jats:p>",
+  "DOI": "10.3390/tropicalmed7090247",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        15
+      ]
+    ],
+    "date-time": "2022-09-15T01:48:10Z",
+    "timestamp": 1663206490000
+  },
+  "page": "247",
+  "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 32,
+  "title": [
+    "Impact of COVID-19 on Tuberculosis Indicators in Brazil: A Time Series and Spatial Analysis Study"
+  ],
+  "prefix": "10.3390",
+  "volume": "7",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-4163-8719",
+      "authenticated-orcid": false,
+      "given": "Thaís Zamboni",
+      "family": "Berra",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Antônio Carlos Vieira",
+      "family": "Ramos",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Yan Mathias",
+      "family": "Alves",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-5378-6962",
+      "authenticated-orcid": false,
+      "given": "Reginaldo Bazon Vaz",
+      "family": "Tavares",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-2329-6268",
+      "authenticated-orcid": false,
+      "given": "Ariela Fehr",
+      "family": "Tartaro",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-3436-2654",
+      "authenticated-orcid": false,
+      "given": "Murilo César do",
+      "family": "Nascimento",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-7654-2402",
+      "authenticated-orcid": false,
+      "given": "Heriederson Sávio Dias",
+      "family": "Moura",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Felipe Mendes",
+      "family": "Delpino",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-4138-9393",
+      "authenticated-orcid": false,
+      "given": "Débora",
+      "family": "de Almeida Soares",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Ruan Víctor dos Santos",
+      "family": "Silva",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-8085-1945",
+      "authenticated-orcid": false,
+      "given": "Dulce",
+      "family": "Gomes",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Mathematics Department, University of Évora, 7000-671 Évora, Portugal"
+        }
+      ]
+    },
+    {
+      "given": "Aline Aparecida",
+      "family": "Monroe",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-4792-8714",
+      "authenticated-orcid": false,
+      "given": "Ricardo Alexandre",
+      "family": "Arcêncio",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Maternal-Infant and Public Health Nursing, Ribeirão Preto College of Nursing, University of São Paulo, Ribeirão Preto 14040-902, SP, Brazil"
+        }
+      ]
+    }
+  ],
+  "member": "1968",
+  "published-online": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        14
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref_1",
+      "unstructured": "World Health Organization (WHO) (2022, July 26). WHO Coronavirus (COVID-19) Dashboard. Available online: https://covid19.who.int/."
+    },
+    {
+      "key": "ref_2",
+      "first-page": "e00302134",
+      "article-title": "COVID-19 epidemic: Critical issues for public health management in Brazil",
+      "volume": "18",
+      "year": "2020",
+      "journal-title": "Trab. Educ. Saúde"
+    },
+    {
+      "key": "ref_3",
+      "doi-asserted-by": "crossref",
+      "first-page": "eAPE002115",
+      "DOI": "10.37689/acta-ape/2021AR02115",
+      "article-title": "Impacto da COVID-19 no controle e reorganização da atenção à tuberculose",
+      "volume": "34",
+      "author": "Hino",
+      "year": "2021",
+      "journal-title": "Acta Paul. Enferm."
+    },
+    {
+      "key": "ref_4",
+      "unstructured": "World Health Organization (WHO) (2015). Global Tuberculosis Report 2015, World Health Organization. Available online: https://apps.who.int/iris/bitstream/handle/10665/191102/9789241565059_eng.pdf?sequence=1&isAllowed=y."
+    },
+    {
+      "key": "ref_5",
+      "unstructured": "Johns Hopkins University of Medicine (2022, July 26). Baltimore (MD): The University; c2021. COVID-19 Dashboard by the Center for Systems Science and Engineering (CSSE). Available online: https://coronavirus.jhu.edu/map.html."
+    },
+    {
+      "key": "ref_6",
+      "doi-asserted-by": "crossref",
+      "first-page": "e00075720",
+      "DOI": "10.1590/0102-311x00075720",
+      "article-title": "Vulnerabilidade a formas graves de COVID-19: Uma análise intramunicipal na cidade do Rio de Janeiro, Brasil",
+      "volume": "6",
+      "author": "Santos",
+      "year": "2020",
+      "journal-title": "Cad. Saúde Pública"
+    },
+    {
+      "key": "ref_7",
+      "doi-asserted-by": "crossref",
+      "first-page": "603",
+      "DOI": "10.1016/S2213-2600(22)00092-3",
+      "article-title": "The intersecting pandemics of tuberculosis and COVID-19: Population-level and patient-level impact, clinical presentation, and corrective interventions",
+      "volume": "10",
+      "author": "Dheda",
+      "year": "2022",
+      "journal-title": "Lancet Respir. Med."
+    },
+    {
+      "key": "ref_8",
+      "unstructured": "BRASIL. Ministério da Saúde (2022, July 26). Secretaria de Vigilância em Saúde. Boletim Epidemiológico—Tuberculose 2021a, Available online: https://www.gov.br/saude/pt-br/media/pdf/2021/marco/24/boletim-tuberculose-2021_24.03."
+    },
+    {
+      "key": "ref_9",
+      "unstructured": "World Health Organization (WHO) (2021). Global Tuberculosis Report 2021, World Health Organization. Available online: https://www.who.int/publications/i/item/9789240037021."
+    },
+    {
+      "key": "ref_10",
+      "unstructured": "BRASIL. Ministério da Saúde. Secretaria de Vigilância em Saúde (2022, July 26). Boletim Epidemiológico n° 118—Boletim COE Coronavírus, Available online: https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/boletins/boletins-epidemiologicos/covid-19/2022/boletim-epidemiologico-no-118-boletim-coe-coronavirus.pdf/view."
+    },
+    {
+      "key": "ref_11",
+      "doi-asserted-by": "crossref",
+      "first-page": "2001398",
+      "DOI": "10.1183/13993003.01398-2020",
+      "article-title": "Active tuberculosis, sequelae and COVID-19 co-infection: First cohort of 49 cases",
+      "volume": "56",
+      "author": "Tadolini",
+      "year": "2020",
+      "journal-title": "Eur. Respir. J."
+    },
+    {
+      "key": "ref_12",
+      "doi-asserted-by": "crossref",
+      "first-page": "233",
+      "DOI": "10.1016/j.pulmoe.2020.05.002",
+      "article-title": "Tuberculosis, COVID-19 and migrants: Preliminary analysis of deaths occurring in 69 patients from two cohorts",
+      "volume": "26",
+      "author": "Motta",
+      "year": "2020",
+      "journal-title": "Pulmonology"
+    },
+    {
+      "key": "ref_13",
+      "first-page": "e20210044",
+      "article-title": "Tuberculose e COVID-19, o novo dueto maldito: Quais as diferenças entre Brasil e Europa?",
+      "volume": "47",
+      "author": "Silva",
+      "year": "2021",
+      "journal-title": "J. Bras. Pneumol."
+    },
+    {
+      "key": "ref_14",
+      "first-page": "V",
+      "article-title": "Tuberculosis in times of COVID-19: We cannot lose focus on the diagnosis",
+      "volume": "55",
+      "author": "Teixeira",
+      "year": "2022",
+      "journal-title": "Radiol. Bras."
+    },
+    {
+      "key": "ref_15",
+      "doi-asserted-by": "crossref",
+      "first-page": "2709",
+      "DOI": "10.3201/eid2611.203163",
+      "article-title": "Worldwide Effects of Coronavirus Disease Pandemic on Tuberculosis Services, January–April 2020",
+      "volume": "26",
+      "author": "Migliori",
+      "year": "2020",
+      "journal-title": "Emerg. Infect. Dis."
+    },
+    {
+      "key": "ref_16",
+      "doi-asserted-by": "crossref",
+      "first-page": "1220",
+      "DOI": "10.5588/ijtld.20.0661",
+      "article-title": "Impact of COVID-19 on TB diagnosis in Northeastern Brazil",
+      "volume": "24",
+      "author": "Coutinho",
+      "year": "2020",
+      "journal-title": "Int. J. Tuberc. Lung Dis."
+    },
+    {
+      "key": "ref_17",
+      "unstructured": "Rothman, K.J., Greenland, S., and Lash, T.L. (2009). Modern Epidemiology, Lippincott Williams & Wilkins. [3rd ed.]."
+    },
+    {
+      "key": "ref_18",
+      "unstructured": "Instituto Brasileiro de Geografia e Estatística (IBGE) (2022, July 26). Brasil em Síntese, Available online: https://brasilemsintese.ibge.gov.br/."
+    },
+    {
+      "key": "ref_19",
+      "unstructured": "Brasil. Ministério da Saúde. Secretaria de Vigilância em Saúde (2022, July 26). Departamento de Vigilância Epidemiológica. Tratamento Diretamente Observado (TDO) da Tuberculose na Atenção Básica: Protocolo de Enfermagem, Available online: https://bvsms.saude.gov.br/bvs/publicacoes/tratamento_diretamente_observado_tuberculose.pdf."
+    },
+    {
+      "key": "ref_20",
+      "doi-asserted-by": "crossref",
+      "first-page": "565",
+      "DOI": "10.5123/S1679-49742015000300024",
+      "article-title": "Uso da análise de séries temporais em estudos epidemiológicos",
+      "volume": "24",
+      "author": "Antunes",
+      "year": "2015",
+      "journal-title": "Epidemiol. Serv. Saúde"
+    },
+    {
+      "key": "ref_21",
+      "first-page": "3",
+      "article-title": "Seasonal-trend decomposition procedure based on LOESS",
+      "volume": "6",
+      "author": "Cleveland",
+      "year": "1990",
+      "journal-title": "J. Offic. Stat."
+    },
+    {
+      "key": "ref_22",
+      "doi-asserted-by": "crossref",
+      "first-page": "299",
+      "DOI": "10.1046/j.1365-2710.2002.00430.x",
+      "article-title": "Segmented regression analysis of interrupted time series studies in medication use research",
+      "volume": "27",
+      "author": "Wagner",
+      "year": "2002",
+      "journal-title": "J. Clin. Pharm. Ther."
+    },
+    {
+      "key": "ref_23",
+      "unstructured": "Fuks, S.D., Carvalho, M.S., and Câmara, G. (2002). Análise espacial de áreas. Análise Espacial de Dados Geográficos, Instituto Nacional de Pesquisas Espaciais—INPE."
+    },
+    {
+      "key": "ref_24",
+      "unstructured": "Hyndman, R., Athanasopoulos, G., Bergmeir, C., Caceres, G., Chhay, L., Kuroptev, K., O’Hara-Wild, M., Petropoulos, F., Razbash, S., and Wang, E. (2022, July 26). R Documentation—Package ‘Forecast’ Version 8.17.0. Available online: https://cran.r-project.org/web/packages/forecast/forecast.pdf."
+    },
+    {
+      "key": "ref_25",
+      "unstructured": "Moura, E.C., Silva, E.N., Sanchez, M.N., Cavalcante, F.V., Oliveira, L.G., Oliveira, A., Frio, G.S., and Santos, L.M.P. (2021). Timely availability of public data for health management: COVID-19 wave’s analysis. SciELO, Preprints."
+    },
+    {
+      "key": "ref_26",
+      "unstructured": "World Health Organization (WHO) (2020). Global Tuberculosis Report 2020, World Health Organization. Available online: https://www.who.int/publications/i/item/9789240013131."
+    },
+    {
+      "key": "ref_27",
+      "first-page": "e2020376",
+      "article-title": "COVID-19 in Brazil: Evolution of the epidemic up until epidemiological week 20 of 2020",
+      "volume": "29",
+      "author": "Cavalcante",
+      "year": "2020",
+      "journal-title": "Epidemiol. Serv. Saude"
+    },
+    {
+      "key": "ref_28",
+      "first-page": "e20220082",
+      "article-title": "Tuberculosis in Brazil: The impact of the COVID-19 pandemic",
+      "volume": "48",
+      "author": "Maia",
+      "year": "2022",
+      "journal-title": "J. Bras. Pneumol."
+    },
+    {
+      "key": "ref_29",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lakoh, S., Jiba, D.F., Baldeh, M., Adekanmbi, O., Barrie, U., Seisay, A.L., Deen, G.F., Salata, R.A., and Yendewa, G.A. (2021). Impact of COVID-19 on Tuberculosis Case Detection and Treatment Outcomes in Sierra Leone. Trop. Med. Infect. Dis., 6.",
+      "DOI": "10.3390/tropicalmed6030154"
+    },
+    {
+      "key": "ref_30",
+      "doi-asserted-by": "crossref",
+      "first-page": "721",
+      "DOI": "10.3855/jidc.13152",
+      "article-title": "Tuberculosis and COVID-19: An overlapping situation during pandemic",
+      "volume": "14",
+      "author": "Sili",
+      "year": "2020",
+      "journal-title": "J. Infect. Dev. Ctries"
+    },
+    {
+      "key": "ref_31",
+      "first-page": "e2021025",
+      "article-title": "Tuberculosis and COVID-19 Co-infection: An Updated Review",
+      "volume": "92",
+      "author": "Mishra",
+      "year": "2020",
+      "journal-title": "Acta Biomed."
+    },
+    {
+      "key": "ref_32",
+      "doi-asserted-by": "crossref",
+      "first-page": "536",
+      "DOI": "10.1016/S2213-2600(20)30151-X",
+      "article-title": "Tackling two pandemics: A plea on World Tuberculosis Day",
+      "volume": "8",
+      "author": "Wingfield",
+      "year": "2020",
+      "journal-title": "Lancet Respir. Med."
+    },
+    {
+      "key": "ref_33",
+      "doi-asserted-by": "crossref",
+      "first-page": "1061",
+      "DOI": "10.1007/s15010-021-01576-y",
+      "article-title": "Concurrent cavitary pulmonary tuberculosis and COVID-19 pneumonia with in vitro immune cell anergy",
+      "volume": "49",
+      "author": "Musso",
+      "year": "2021",
+      "journal-title": "Infection"
+    },
+    {
+      "key": "ref_34",
+      "doi-asserted-by": "crossref",
+      "first-page": "33",
+      "DOI": "10.1038/s41392-020-0148-4",
+      "article-title": "Lymphopenia predicts disease severity of COVID-19: A descriptive and predictive study",
+      "volume": "5",
+      "author": "Tan",
+      "year": "2020",
+      "journal-title": "Signal Transduct. Target. Ther."
+    },
+    {
+      "key": "ref_35",
+      "doi-asserted-by": "crossref",
+      "first-page": "eabd2071",
+      "DOI": "10.1126/sciimmunol.abd2071",
+      "article-title": "Phenotype and kinetics of SARS-CoV-2-specific T cells in COVID-19 patients with acute respiratory distress syndrome",
+      "volume": "5",
+      "author": "Weiskopf",
+      "year": "2020",
+      "journal-title": "Sci. Immunol."
+    },
+    {
+      "key": "ref_36",
+      "doi-asserted-by": "crossref",
+      "first-page": "707",
+      "DOI": "10.3201/eid1204.050264",
+      "article-title": "Pulmonary Tuberculosis and SARS, China",
+      "volume": "12",
+      "author": "Liu",
+      "year": "2006",
+      "journal-title": "Emerg. Infect. Dis."
+    },
+    {
+      "key": "ref_37",
+      "doi-asserted-by": "crossref",
+      "first-page": "e123",
+      "DOI": "10.1086/421396",
+      "article-title": "Severe acute respiratory syndrome and pulmonary tuberculosis",
+      "volume": "38",
+      "author": "Low",
+      "year": "2004",
+      "journal-title": "Clin. Infect. Dis."
+    },
+    {
+      "key": "ref_38",
+      "first-page": "5",
+      "article-title": "HIV infection functionally impairs mycobacterium tuberculosis-specific CD4 and CD8 T-Cell responses",
+      "volume": "93",
+      "author": "Amelio",
+      "year": "2009",
+      "journal-title": "J. Virol."
+    },
+    {
+      "key": "ref_39",
+      "doi-asserted-by": "crossref",
+      "first-page": "603",
+      "DOI": "10.1146/annurev-immunol-042617-053420",
+      "article-title": "The immune response to mycobacterium tuberculosis in HIV-1-coinfected persons",
+      "volume": "36",
+      "author": "Esmail",
+      "year": "2018",
+      "journal-title": "Annu. Rev. Immunol."
+    },
+    {
+      "key": "ref_40",
+      "doi-asserted-by": "crossref",
+      "first-page": "657006",
+      "DOI": "10.3389/fmed.2021.657006",
+      "article-title": "COVID-19 and Tuberculosis Coinfection: An Overview of Case Reports/Case Series and Meta-Analysis",
+      "volume": "8",
+      "author": "Song",
+      "year": "2021",
+      "journal-title": "Front. Med."
+    },
+    {
+      "key": "ref_41",
+      "unstructured": "BRASIL. Ministério da Saúde. Secretaria de Vigilância em Saúde (2022, July 26). Boletim Epidemiológico 22-Indicadores operacionais da tuberculose no Brasil e a COVID-19: Análise comparativa dos anos de 2019 e 2020, Available online: https://www.gov.br/saude/pt-br/centrais-de-conteudo/publicacoes/boletins/epidemiologicos/edicoes/2021/boletim_epidemiologico_svs_22-2.pdf."
+    },
+    {
+      "key": "ref_42",
+      "doi-asserted-by": "crossref",
+      "first-page": "1160",
+      "DOI": "10.7196/SAMJ.2020.v110i12.15126",
+      "article-title": "Opportunities from a new disease for an old threat: Extending COVID-19 efforts to address tuberculosis in South Africa",
+      "volume": "110",
+      "author": "Loveday",
+      "year": "2020",
+      "journal-title": "S. Afr. Med. J."
+    },
+    {
+      "key": "ref_43",
+      "unstructured": "United Nations Development Programme (2016). Human Development Report 2016. Human Development Report for Everyone, United Nations Development Programme."
+    },
+    {
+      "key": "ref_44",
+      "first-page": "e20200119",
+      "article-title": "Tuberculose no Brasil: Um país, múltiplas realidades",
+      "volume": "47",
+      "author": "Cortez",
+      "year": "2021",
+      "journal-title": "J. Bras. Pneumol."
+    },
+    {
+      "key": "ref_45",
+      "doi-asserted-by": "crossref",
+      "first-page": "918",
+      "DOI": "10.1590/S0124-00642009000600008",
+      "article-title": "A multilevel analysis of tuberculosis associated factors",
+      "volume": "11",
+      "author": "Leon",
+      "year": "2009",
+      "journal-title": "Rev. Salud. Publica (Bogota)"
+    },
+    {
+      "key": "ref_46",
+      "doi-asserted-by": "crossref",
+      "first-page": "63",
+      "DOI": "10.17267/2317-3378rec.v7i1.1579",
+      "article-title": "Abandono do tratamento da tuberculose: Uma revisão integrativa",
+      "volume": "7",
+      "author": "Ferreira",
+      "year": "2018",
+      "journal-title": "Rev. Enferm. Contemp."
+    },
+    {
+      "key": "ref_47",
+      "doi-asserted-by": "crossref",
+      "first-page": "2543",
+      "DOI": "10.1590/1413-81232021266.1.43952020",
+      "article-title": "Cobertura da Estratégia Saúde da Família no Brasil: O que nos mostram as Pesquisas Nacionais de Saúde 2013 e 2019",
+      "volume": "26",
+      "author": "Giovanella",
+      "year": "2021",
+      "journal-title": "Ciênc Saúde Colet"
+    },
+    {
+      "key": "ref_48",
+      "first-page": "e43082",
+      "article-title": "Análise dos casos notificados de tuberculose na região Centro-Oeste",
+      "volume": "36",
+      "author": "Silva",
+      "year": "2022",
+      "journal-title": "Ver. Baiana. Enferm."
+    },
+    {
+      "key": "ref_49",
+      "doi-asserted-by": "crossref",
+      "first-page": "81",
+      "DOI": "10.1590/0103-11042018s106",
+      "article-title": "Acesso e cobertura da Atenção Primária à Saúde para populações rurais e urbanas na região norte do Brasil",
+      "volume": "42",
+      "author": "Garnelo",
+      "year": "2018",
+      "journal-title": "Saúde Debate"
+    },
+    {
+      "key": "ref_50",
+      "doi-asserted-by": "crossref",
+      "first-page": "1225",
+      "DOI": "10.1590/1413-81232017224.27082016",
+      "article-title": "Regionalização em Saúde no Amazonas: Avanços e desafios",
+      "volume": "22",
+      "author": "Garnelo",
+      "year": "2017",
+      "journal-title": "Ciênc Saúde Colet"
+    },
+    {
+      "key": "ref_51",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Alves, L.S., Dos Santos, D.T., Arcoverde, M.A.M., Berra, T.Z., Arroyo, L.H., Ramos, A.C.V., de Assis, I.S., de Queiroz, A.A.R., Alonso, J.B., and Alves, J.D. (2019). Detection of risk clusters for deaths due to tuberculosis specifically in areas of southern Brazil where the disease was supposedly a non-problem. BMC Infect. Dis., 19.",
+      "DOI": "10.1186/s12879-019-4263-1"
+    },
+    {
+      "key": "ref_52",
+      "first-page": "1",
+      "article-title": "Tendência da mortalidade por tuberculose no Brasil (1990–2015): Análise por pontos de inflexão",
+      "volume": "45",
+      "author": "Souza",
+      "year": "2019",
+      "journal-title": "J. Bras. Pneumol."
+    },
+    {
+      "key": "ref_53",
+      "first-page": "58883",
+      "article-title": "Related factors, time trend and spatial association of abandonment of treatment for tuberculosis in Ribeirão Preto-SP",
+      "volume": "22",
+      "author": "Berra",
+      "year": "2020",
+      "journal-title": "Ver. Eletr. Enferm."
+    },
+    {
+      "key": "ref_54",
+      "doi-asserted-by": "crossref",
+      "first-page": "e007878",
+      "DOI": "10.1136/bmjgh-2021-007878",
+      "article-title": "COVID-19-Related Healthcare Impactver An Uncontrolled, Segmented Time-Series Analysis of Tuberculosis Diagnosis Services in Mozambique, 2017–2020",
+      "volume": "7",
+      "author": "Augusto",
+      "year": "2022",
+      "journal-title": "BMJ Glob. Health"
+    },
+    {
+      "key": "ref_55",
+      "doi-asserted-by": "crossref",
+      "first-page": "e49570",
+      "DOI": "10.12957/reuerj.2020.49570",
+      "article-title": "Epidemiology, public policies and COVID-19 pandemics in Brazil: What can we expver?",
+      "volume": "28",
+      "author": "Rafael",
+      "year": "2020",
+      "journal-title": "Rev. Enferm. UERJ"
+    },
+    {
+      "key": "ref_56",
+      "doi-asserted-by": "crossref",
+      "first-page": "516",
+      "DOI": "10.1093/tbm/ibaa055",
+      "article-title": "Addressing inequities in COVID-19 morbidity and mortality: Research and policy recommendations",
+      "volume": "10",
+      "author": "Wang",
+      "year": "2020",
+      "journal-title": "Trans. Behav. Med."
+    },
+    {
+      "key": "ref_57",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Di Gennaro, F., Gualano, G., Timelli, L., Vittozzi, P., Di Bari, V., Libertone, R., Cerva, C., Pinnarelli, L., Nisii, C., and Ianniello, S. (2021). Increase in Tuberculosis Diagnostic Delay during First Wave of the COVID-19 Pandemic: Data from an Italian Infectious Disease Referral Hospital. Antibiotics, 10.",
+      "DOI": "10.3390/antibiotics10030272"
+    },
+    {
+      "key": "ref_58",
+      "doi-asserted-by": "crossref",
+      "first-page": "100603",
+      "DOI": "10.1016/j.eclinm.2020.100603",
+      "article-title": "The potential impact of the COVID-19 pandemic on the tuberculosis epidemic a modelling analysis",
+      "volume": "28",
+      "author": "Cilloni",
+      "year": "2020",
+      "journal-title": "EClinicalMedicine"
+    },
+    {
+      "key": "ref_59",
+      "doi-asserted-by": "crossref",
+      "first-page": "2001718",
+      "DOI": "10.1183/13993003.01718-2020",
+      "article-title": "The potential impact of COVID-19-related disruption on tuberculosis burden",
+      "volume": "56",
+      "author": "McQuaid",
+      "year": "2020",
+      "journal-title": "Eur. Respir. J."
+    },
+    {
+      "key": "ref_60",
+      "first-page": "95",
+      "article-title": "Mitigating the impact of the COVID-19 pandemic on progress towards ending tuberculosis in the WHO South-East Asia Region WHO South East Asia",
+      "volume": "9",
+      "author": "Bhatia",
+      "year": "2020",
+      "journal-title": "J. Public Health"
+    },
+    {
+      "key": "ref_61",
+      "doi-asserted-by": "crossref",
+      "first-page": "64",
+      "DOI": "10.1093/ajcp/aqaa177",
+      "article-title": "Cancer Diagnostic Delay in Northern and Central Italy During the 2020 Lockdown Due to the Coronavirus Disease 2019 Pandemic",
+      "volume": "155",
+      "author": "Ferrara",
+      "year": "2021",
+      "journal-title": "Am. J. Clin. Pathol."
+    },
+    {
+      "key": "ref_62",
+      "doi-asserted-by": "crossref",
+      "first-page": "187",
+      "DOI": "10.1136/jclinpath-2020-206833",
+      "article-title": "Cancer diagnostic rates during the 2020 “lockdown,” due to COVID-19 pandemic, compared with the 2018–2019: An audit study from cellular pathology",
+      "volume": "74",
+      "author": "Carr",
+      "year": "2021",
+      "journal-title": "J. Clin. Pathol."
+    },
+    {
+      "key": "ref_63",
+      "doi-asserted-by": "crossref",
+      "first-page": "e5",
+      "DOI": "10.1016/j.clcc.2020.07.006",
+      "article-title": "Impact of COVID-19 Pandemic on Colorectal Cancer Screening Program",
+      "volume": "20",
+      "author": "Lucidi",
+      "year": "2021",
+      "journal-title": "Clin. Colorectal Cancer"
+    }
+  ],
+  "container-title": [
+    "Tropical Medicine and Infectious Disease"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.mdpi.com/2414-6366/7/9/247/pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        11
+      ]
+    ],
+    "date-time": "2025-10-11T00:31:12Z",
+    "timestamp": 1760142672000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.mdpi.com/2414-6366/7/9/247"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        14
+      ]
+    ]
+  },
+  "references-count": 63,
+  "journal-issue": {
+    "issue": "9",
+    "published-online": {
+      "date-parts": [
+        [
+          2022,
+          9
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "tropicalmed7090247"
+  ],
+  "URL": "https://doi.org/10.3390/tropicalmed7090247",
+  "relation": {},
+  "ISSN": [
+    "2414-6366"
+  ],
+  "issn-type": [
+    {
+      "value": "2414-6366",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2022,
+        9,
+        14
+      ]
+    ]
+  }
+}

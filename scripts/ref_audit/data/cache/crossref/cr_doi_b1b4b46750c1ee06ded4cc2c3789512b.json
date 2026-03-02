@@ -1,0 +1,270 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        1,
+        13
+      ]
+    ],
+    "date-time": "2026-01-13T06:03:32Z",
+    "timestamp": 1768284212825,
+    "version": "3.49.0"
+  },
+  "reference-count": 14,
+  "publisher": "FapUNIFESP (SciELO)",
+  "issue": "2",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Cad. Saúde Pública"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2000,
+        6
+      ]
+    ]
+  },
+  "abstract": "<jats:p>Apresenta-se um sistema de relacionamento de bases de dados fundamentado na técnica de relacionamento probabilístico de registros, desenvolvido na linguagem C++ com o ambiente de programação Borland C++ Builder versão 3.0. O sistema foi testado a partir de fontes de dados de diferentes tamanhos, tendo sido avaliado em tempo de processamento e sensibilidade para a identificação de pares verdadeiros. O tempo gasto com o processamento dos registros foi menor quando se empregou o programa do que ao ser realizado manualmente, em especial, quando envolveram bases de maior tamanho. As sensibilidades do processo manual e do processo automático foram equivalentes quando utilizaram bases com menor número de registros; entretanto, à medida que as bases aumentaram, percebeu-se tendência de diminuição na sensibilidade apenas no processo manual. Ainda que em fase inicial de desenvolvimento, o sistema apresentou boa performance tanto em velocidade quanto em sensibilidade. Embora a performance dos algoritmos utilizados tenha sido satisfatória, o objetivo é avaliar outras rotinas, buscando aprimorar o desempenho do sistema.</jats:p>",
+  "DOI": "10.1590/s0102-311x2000000200014",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2005,
+        4,
+        20
+      ]
+    ],
+    "date-time": "2005-04-20T17:31:46Z",
+    "timestamp": 1114018306000
+  },
+  "page": "439-447",
+  "source": "Crossref",
+  "is-referenced-by-count": 109,
+  "title": [
+    "Reclink: aplicativo para o relacionamento de bases de dados, implementando o método probabilistic record linkage"
+  ],
+  "prefix": "10.1590",
+  "volume": "16",
+  "author": [
+    {
+      "given": "Kenneth R. de",
+      "family": "Camargo Jr.",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Universidade do Estado do Rio de Janeiro,  Brasil"
+        }
+      ]
+    },
+    {
+      "given": "Cláudia M.",
+      "family": "Coeli",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal do Rio de Janeiro,  Brasil"
+        }
+      ]
+    }
+  ],
+  "member": "530",
+  "reference": [
+    {
+      "key": "ref1",
+      "series-title": "Borland C++ Builder 3 Developer's Guide",
+      "year": "1998"
+    },
+    {
+      "key": "ref2",
+      "series-title": "Visual dBase Version 5.6",
+      "year": "1998"
+    },
+    {
+      "key": "ref3",
+      "series-title": "DBFCHECK - Revisor de Campos Alfabéticos",
+      "author": "CAMARGO Jr. K. R.",
+      "year": "1997"
+    },
+    {
+      "key": "ref4",
+      "series-title": "Vigilância do Diabetes Mellitus em uma População Idosa: Aplicação da Metodologia de Captura-Recaptura",
+      "author": "COELI C. M.",
+      "year": "1998"
+    },
+    {
+      "key": "ref5",
+      "series-title": "Probabilistic Linkage of Records",
+      "author": "DEAN J. M.",
+      "year": "1996"
+    },
+    {
+      "key": "ref6",
+      "doi-asserted-by": "crossref",
+      "first-page": "1183",
+      "DOI": "10.1080/01621459.1969.10501049",
+      "article-title": "A theory for record linkage",
+      "volume": "64",
+      "author": "FELLEGI I. P.",
+      "year": "1969",
+      "journal-title": "Journal of the American Statistical Association",
+      "ISSN": "https://id.crossref.org/issn/0162-1459",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref7",
+      "series-title": "Linkage of the National Health Interview Survey with the National Death Index: Methodologic and Analytic Issues",
+      "author": "HORM J.",
+      "year": "1996"
+    },
+    {
+      "key": "ref8",
+      "doi-asserted-by": "crossref",
+      "first-page": "414",
+      "DOI": "10.1080/01621459.1989.10478785",
+      "article-title": "Advances in record-linkage methodology as applied to matching the 1985 Census of Tampa, Florida",
+      "volume": "84",
+      "author": "JARO M. A.",
+      "year": "1989",
+      "journal-title": "Journal of the American Statistical Association",
+      "ISSN": "https://id.crossref.org/issn/0162-1459",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "crossref",
+      "first-page": "954",
+      "DOI": "10.1126/science.130.3381.954",
+      "article-title": "Automatic linkage of vital records",
+      "volume": "130",
+      "author": "NEWCOMBE H. B.",
+      "year": "1959",
+      "journal-title": "Science",
+      "ISSN": "https://id.crossref.org/issn/0036-8075",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref10",
+      "series-title": "Teach yourself Borland C++ Builder 3 in 14 days",
+      "author": "REISDORPH K.",
+      "year": "1998"
+    },
+    {
+      "key": "ref11",
+      "doi-asserted-by": "crossref",
+      "first-page": "719",
+      "DOI": "10.1016/0021-9681(86)90155-4",
+      "article-title": "Probabilistic methods in matching census samples to the National Death Index",
+      "volume": "39",
+      "author": "ROGOT E.",
+      "year": "1986",
+      "journal-title": "Journal of Chronic Diseases",
+      "ISSN": "https://id.crossref.org/issn/0021-9681",
+      "issn-type": "print"
+    },
+    {
+      "key": "ref12",
+      "series-title": "Clinical Epidemiology",
+      "author": "SACKETT D.",
+      "year": "1985"
+    },
+    {
+      "key": "ref13",
+      "series-title": "Stata Reference Manual: Release 5",
+      "volume": "1-3",
+      "year": "1997"
+    },
+    {
+      "key": "ref14",
+      "doi-asserted-by": "crossref",
+      "first-page": "553",
+      "DOI": "10.1093/ije/19.3.553",
+      "article-title": "Development of a record linkage protocol for use in the Dutch Cancer Registry for epidemiological research",
+      "volume": "19",
+      "author": "VAN DEN BRABDT P. A.",
+      "year": "1990",
+      "journal-title": "International Journal of Epidemiology",
+      "ISSN": "https://id.crossref.org/issn/0300-5771",
+      "issn-type": "print"
+    }
+  ],
+  "container-title": [
+    "Cadernos de Saúde Pública"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://www.scielo.br/pdf/csp/v16n2/2093.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2017,
+        5,
+        24
+      ]
+    ],
+    "date-time": "2017-05-24T20:49:43Z",
+    "timestamp": 1495658983000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S0102-311X2000000200014&lng=pt&tlng=pt"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2000,
+        6
+      ]
+    ]
+  },
+  "references-count": 14,
+  "journal-issue": {
+    "issue": "2",
+    "published-print": {
+      "date-parts": [
+        [
+          2000,
+          6
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "S0102-311X2000000200014"
+  ],
+  "URL": "https://doi.org/10.1590/s0102-311x2000000200014",
+  "relation": {},
+  "ISSN": [
+    "0102-311X"
+  ],
+  "issn-type": [
+    {
+      "value": "0102-311X",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2000,
+        6
+      ]
+    ]
+  }
+}

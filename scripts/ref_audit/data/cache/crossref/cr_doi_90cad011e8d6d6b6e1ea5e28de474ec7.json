@@ -1,0 +1,354 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        5,
+        23
+      ]
+    ],
+    "date-time": "2025-05-23T05:23:56Z",
+    "timestamp": 1747977836379,
+    "version": "3.41.0"
+  },
+  "reference-count": 36,
+  "publisher": "Georg Thieme Verlag KG",
+  "issue": "02",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Methods Inf Med"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  },
+  "abstract": "<jats:title>Summary</jats:title><jats:p>Background: The process of merging data of different data sources is referred to as record linkage. A medical environment with increased preconditions on privacy protection demands the transformation of clear-text attributes like first name or date of birth into one-way encrypted pseudonyms. When performing an automated or privacy preserving record linkage there might be the need of a binary classification deciding whether two records should be classified as the same entity. The classification is the final of the four main phases of the record linkage process: Preprocessing, indexing, matching and classification. The choice of binary classification techniques in dependence of project specifications in particular data quality has not extensively been studied yet.</jats:p><jats:p>Objectives: The aim of this work is the introduction and evaluation of an automatable semi-supervised binary classification system applied within the field of record linkage capable of competing or even surpassing advanced automated techniques of the domain of unsupervised classification.</jats:p><jats:p>Methods: This work describes the rationale leading to the model and the final implementation of an automatable semi-supervised binary classification system and the comparison of its classification performance to an advanced active learning approach out of the domain of unsupervised learning. The performance of both systems has been measured on a broad variety of artificial test sets (n = 400), based on real patient data, with distinct and unique characteristics.</jats:p><jats:p>Results: While the classification performance for both methods measured as F-measure was relatively close on test sets with maximum defined data quality, 0.996 for semi-supervised classification, 0.993 for unsupervised classification, it incrementally diverged for test sets of worse data quality dropping to 0.964 for semi-supervised classification and 0.803 for unsupervised classification.</jats:p><jats:p>Conclusions: Aside from supplying a viable model for semi-supervised classification for automated probabilistic record linkage, the tests conducted on a large amount of test sets suggest that semi-supervised techniques might generally be capable of outperforming unsupervised techniques especially on data with lower levels of data quality.</jats:p>",
+  "DOI": "10.3414/me14-01-0087",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2015,
+        4,
+        20
+      ]
+    ],
+    "date-time": "2015-04-20T13:11:58Z",
+    "timestamp": 1429535518000
+  },
+  "page": "136-143",
+  "source": "Crossref",
+  "is-referenced-by-count": 2,
+  "title": [
+    "Evaluation of a Binary Semi-supervised Classification Technique for Probabilistic Record Linkage"
+  ],
+  "prefix": "10.3414",
+  "volume": "55",
+  "author": [
+    {
+      "given": "J.",
+      "family": "Stausberg",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "D.",
+      "family": "Nasseh",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "194",
+  "published-online": {
+    "date-parts": [
+      [
+        2018,
+        1,
+        8
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-1",
+      "DOI": "10.1186/2047-2501-2-3"
+    },
+    {
+      "unstructured": "Mansmann U, Stausberg J, Engel J, Heussner P, Birkner B, Maar C. Familien schützen und stärken - Umgang mit familiärem Darmkrebs. Gastroenterologe 2012; 161-162",
+      "key": "10.3414/ME14-01-0087-2"
+    },
+    {
+      "unstructured": "Durham E, Xue Y, Kantarcioglu M, Malin B. Private Medical Record Linkage with Approxi- mate Matching. AMIA Annu Symp Proc 2010. pp 182-186",
+      "key": "10.3414/ME14-01-0087-3"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-4",
+      "DOI": "10.1186/1472-6947-5-32"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Christen P. Data Matching: Concepts and Techniques for Record Linkage, Entity Resolution, and Duplicate Detection. Berlin Heidelberg: Springer; 2012",
+      "key": "10.3414/ME14-01-0087-5",
+      "DOI": "10.1007/978-3-642-31164-2"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-6",
+      "DOI": "10.1186/1472-6947-9-41"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-7",
+      "DOI": "10.1504/IJDMMM.2009.026076"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-8",
+      "DOI": "10.1080/19393550802492503"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-9",
+      "DOI": "10.1016/j.inffus.2011.04.004"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-10",
+      "DOI": "10.1080/01621459.1969.10501049"
+    },
+    {
+      "unstructured": "Meyer M. Kontrollnummern und Record Linkage. Das Manual der epidemiologischen Krebsregistrierung. Hentschel S, Katalinie A, editors. Zuckschwerdt; 2011. pp 57- 68",
+      "key": "10.3414/ME14-01-0087-11"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-12",
+      "DOI": "10.1145/362686.362692"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-13",
+      "DOI": "10.1093/ije/31.6.1246"
+    },
+    {
+      "key": "10.3414/ME14-01-0087-14",
+      "first-page": "922",
+      "volume": "192",
+      "author": "Nasseh",
+      "year": "2013",
+      "journal-title": "Stud Health Technol Inform"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Christen P. Automatic Record Linkage using Seeded Nearest Neighbour and Support Vector Machine Classification. KDD ’08 Proceedings of the 14th ACM SIGKDD international conference on Knowledge discovery and data mining. New York; 2008. pp 151-159",
+      "key": "10.3414/ME14-01-0087-15",
+      "DOI": "10.1145/1401890.1401913"
+    },
+    {
+      "unstructured": "Christen P. A Two-Step Classification Approach to Unsupervised Record Linkage. AusDM ’07: Proceedings of the sixth Australasian conference on Data mining and analytics; Australia. Australia: Australian Computer Society, Inc; 2007",
+      "key": "10.3414/ME14-01-0087-16"
+    },
+    {
+      "unstructured": "Goiser K, Christen P. Towards automated record linkage. AusDM ’06 Proceedings of the fifth Australasian conference on Data mining and analytics; Australia. Australia: Australian Computer Society, Inc; 2006. pp 23 -31",
+      "key": "10.3414/ME14-01-0087-17"
+    },
+    {
+      "unstructured": "Han J, Kamber M. Data Mining: concepts and techniques. 2nd edition. San Francisco: Morgan Kaufmann; 2006",
+      "key": "10.3414/ME14-01-0087-18"
+    },
+    {
+      "unstructured": "Breimann L, Freidman J, Olshen R, Stone C. Classification and regression trees. Chapman and Hall/CRC; 1984",
+      "key": "10.3414/ME14-01-0087-19"
+    },
+    {
+      "issue": "1",
+      "key": "10.3414/ME14-01-0087-20",
+      "first-page": "30",
+      "volume": "16",
+      "author": "Sibson",
+      "year": "1973",
+      "journal-title": "The Computer Journal (British Computer Society)"
+    },
+    {
+      "unstructured": "Chang CC, Lin CJ. LIBSVM: A library for support vector machines. Manual, Department of Computer Science, National Taiwan University; 2001",
+      "key": "10.3414/ME14-01-0087-21"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-22",
+      "DOI": "10.1016/j.cmpb.2012.08.003"
+    },
+    {
+      "doi-asserted-by": "publisher",
+      "key": "10.3414/ME14-01-0087-23",
+      "DOI": "10.3414/ME9238"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Elfeky MG, Verykios V, Elmagarmid AK. TAILOR: A record linkage toolbox. IEEE ICDE; 2002. pp 17-28",
+      "key": "10.3414/ME14-01-0087-24",
+      "DOI": "10.1109/ICDE.2002.994694"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Sarawagi S, Bhamidipaty A. Interactive deduplication using active learning. ACM KDD’02; 2002. pp 269-278",
+      "key": "10.3414/ME14-01-0087-25",
+      "DOI": "10.1145/775047.775087"
+    },
+    {
+      "unstructured": "Zhu X, Goldberg A. Introduction to Semi-supervised Learning. San Rafael, CA: Morgan & Claypool Publishers, San Rafael, CA, USA, 2009",
+      "key": "10.3414/ME14-01-0087-26"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Gilbert H, Handschuh H. Security Analysis of SHA-256 and Sisters. Selected Areas in Cryptography; 2003. pp 175 -193",
+      "key": "10.3414/ME14-01-0087-27",
+      "DOI": "10.1007/978-3-540-24654-1_13"
+    },
+    {
+      "unstructured": "Hinrichs H. Bundesweite Einführung eines einheitlichen Record Linkage Verfahrens in den Krebsregistern der Bundesländer nach dem KRG, Abschlussbericht, Projekt Deutsche Krebshilfe. Antragsnummer 70-2043-Ap I. OFFIS. Oldenburg; 1999",
+      "key": "10.3414/ME14-01-0087-28"
+    },
+    {
+      "issue": "2",
+      "key": "10.3414/ME14-01-0087-29",
+      "first-page": "123",
+      "volume": "24",
+      "author": "Breimann",
+      "year": "1996",
+      "journal-title": "Machine Learning"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Sarawagi S, Bhamidipaty A. Interactive deduplication using active learning. ACM KDD’02; 2002. pp 269 -278",
+      "key": "10.3414/ME14-01-0087-30",
+      "DOI": "10.1145/775047.775087"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Sanchez JS, Sotoca JM, Pla F. Efficient nearest neighbor classification with data reduction and fast search algorithms. IEEE International Conference on Systems, Man and Cybernetics, volume 5; 2004. pp 4757- 4762",
+      "key": "10.3414/ME14-01-0087-31",
+      "DOI": "10.1109/ICSMC.2004.1401283"
+    },
+    {
+      "issue": "3",
+      "key": "10.3414/ME14-01-0087-32",
+      "doi-asserted-by": "crossref",
+      "first-page": "271",
+      "DOI": "10.1055/s-0038-1634527",
+      "volume": "37",
+      "author": "Quantin",
+      "year": "1998",
+      "journal-title": "Methods Inf Med"
+    },
+    {
+      "unstructured": "Han J, Kamber M. Data Mining: concepts and techniques. 2nd edition. San Francisco: Morgan Kaufmann; 2006",
+      "key": "10.3414/ME14-01-0087-33"
+    },
+    {
+      "unstructured": "Winkler WE. Using the EM Algorithm for Weight Computation in the Fellegi-Sunter Model of Record Linkage. Proceedings of the Section on Survey Research Methods, American Statistical Association; 2000",
+      "key": "10.3414/ME14-01-0087-34"
+    },
+    {
+      "doi-asserted-by": "crossref",
+      "unstructured": "Christen P. Febrl - a freely available record linkage system with a graphical user interface. HDKM’08, CRPIT, vol. 80, 2008",
+      "key": "10.3414/ME14-01-0087-35",
+      "DOI": "10.1145/1401890.1402020"
+    },
+    {
+      "unstructured": "Silveira D, Artmann E. Accuracy of probabilistic record linkage applied to health databases: systematic review. Rev Saúde Pública 2009",
+      "key": "10.3414/ME14-01-0087-36"
+    }
+  ],
+  "container-title": [
+    "Methods of Information in Medicine"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "http://www.thieme-connect.de/products/ejournals/pdf/10.3414/ME14-01-0087.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        5,
+        22
+      ]
+    ],
+    "date-time": "2025-05-22T19:22:51Z",
+    "timestamp": 1747941771000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.thieme-connect.de/DOI/DOI?10.3414/ME14-01-0087"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  },
+  "references-count": 36,
+  "journal-issue": {
+    "issue": "02",
+    "published-online": {
+      "date-parts": [
+        [
+          2018,
+          1,
+          8
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2016
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.3414/me14-01-0087",
+  "relation": {},
+  "ISSN": [
+    "0026-1270",
+    "2511-705X"
+  ],
+  "issn-type": [
+    {
+      "type": "print",
+      "value": "0026-1270"
+    },
+    {
+      "type": "electronic",
+      "value": "2511-705X"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2016
+      ]
+    ]
+  }
+}
