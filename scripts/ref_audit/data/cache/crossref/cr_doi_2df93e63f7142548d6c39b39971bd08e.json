@@ -1,0 +1,434 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        21
+      ]
+    ],
+    "date-time": "2025-11-21T15:37:32Z",
+    "timestamp": 1763739452831,
+    "version": "3.45.0"
+  },
+  "reference-count": 19,
+  "publisher": "FapUNIFESP (SciELO)",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2025,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2025-01-01T00:00:00Z",
+        "timestamp": 1735689600000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2025,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2025-01-01T00:00:00Z",
+        "timestamp": 1735689600000
+      },
+      "content-version": "am",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2025,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2025-01-01T00:00:00Z",
+        "timestamp": 1735689600000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Rev. bras. epidemiol."
+  ],
+  "abstract": "<jats:p>ABSTRACT  Objective: This study presents the accuracy of an algorithm with a mixed approach for linking the Mortality Information System (SIM) and the Influenza Epidemiological Surveillance Information System (SIVEP-Gripe) records, implemented in DuckDB.  Methods: The proposed algorithm was compared with a previously validated algorithm, in different prevalence scenarios. We employed a hybrid deterministic-probabilistic approach, using similarity metrics such as Jaro and Jaro-Winkler. The study highlights important advantages, including superior processing speed and scalability, maintaining high values in terms of sensitivity, specificity and predictive values.  Results: The DuckDB-based solution processed datasets significantly faster, with execution times up to one hundred times shorter, making it particularly suitable for large-scale, real-time applications.  Conclusions: This study underscores the potential of DuckDB as a high-performance analytical database for efficiently managing complex data integration tasks and highlights its suitability for resource-limited environments in public health, where timely and accurate record linkage is often essential.</jats:p>",
+  "DOI": "10.1590/1980-549720250053",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        21
+      ]
+    ],
+    "date-time": "2025-11-21T15:03:45Z",
+    "timestamp": 1763737425000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Record linkage in public health datasets: a practical experience in a fast in-process analytical database"
+  ],
+  "prefix": "10.1590",
+  "volume": "28",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-3799-1261",
+      "authenticated-orcid": false,
+      "given": "Wagner",
+      "family": "Tassinari",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Universidade Federal Rural do Rio de Janeiro,  Brazil; Fundação Oswaldo Cruz,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-9631-8571",
+      "authenticated-orcid": false,
+      "given": "Caroline Dias",
+      "family": "Ferreira",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Secretaria Municipal de Saúde do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0009-0009-3740-1071",
+      "authenticated-orcid": false,
+      "given": "Eugênio",
+      "family": "Araújo Júnior",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Secretaria Municipal de Saúde do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-8325-6866",
+      "authenticated-orcid": false,
+      "given": "Débora Medeiros de Oliveira e",
+      "family": "Cruz",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Secretaria Municipal de Saúde do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-9103-9864",
+      "authenticated-orcid": false,
+      "given": "Gislani Mateus Oliveira",
+      "family": "Aguilar",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Secretaria Municipal de Saúde do Rio de Janeiro,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-3289-3195",
+      "authenticated-orcid": false,
+      "given": "Oswaldo Gonçalves",
+      "family": "Cruz",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Fundação Oswaldo Cruz,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-7360-6490",
+      "authenticated-orcid": false,
+      "given": "Valéria",
+      "family": "Saraceni",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Universidade Federal Rural do Rio de Janeiro,  Brazil; Fundação Oswaldo Cruz,  Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-3095-1774",
+      "authenticated-orcid": false,
+      "given": "Antônio",
+      "family": "Pacheco",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Fundação Oswaldo Cruz,  Brazil"
+        }
+      ]
+    }
+  ],
+  "member": "530",
+  "published-online": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "issue": "2",
+      "key": "ref1",
+      "doi-asserted-by": "crossref",
+      "first-page": "439",
+      "DOI": "10.1590/S0102-311X2000000200014",
+      "article-title": "RecLink: aplicativo para o relacionamento de bases de dados, implementando o método probabilistic record linkage",
+      "volume": "16",
+      "author": "Camargo Jr. KR",
+      "year": "2000",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "issue": "4",
+      "key": "ref2",
+      "first-page": "795",
+      "article-title": "Achievements and challenges for employing record linkage techniques in health research and evaluation in Brazil",
+      "volume": "24",
+      "author": "Coeli CM",
+      "year": "2015",
+      "journal-title": "Epidemiol Serv Saúde"
+    },
+    {
+      "key": "ref3",
+      "doi-asserted-by": "crossref",
+      "first-page": "18",
+      "DOI": "10.1016/j.jclinepi.2022.06.006",
+      "article-title": "Record linkage and big data—enhancing information and improving design",
+      "volume": "150",
+      "author": "Roos LL",
+      "year": "2022",
+      "journal-title": "J Clin Epidemiol"
+    },
+    {
+      "key": "ref4",
+      "series-title": "Linking data for health services research: a framework and instructional guide",
+      "author": "Dusetzina SB",
+      "year": "2014"
+    },
+    {
+      "issue": "328",
+      "key": "ref5",
+      "doi-asserted-by": "crossref",
+      "first-page": "1183",
+      "DOI": "10.1080/01621459.1969.10501049",
+      "article-title": "A theory for record linkage",
+      "volume": "64",
+      "author": "Fellegi IP",
+      "year": "1969",
+      "journal-title": "Journal of the American Statistical Association"
+    },
+    {
+      "key": "ref6",
+      "author": "Raasveldt M",
+      "year": "2019"
+    },
+    {
+      "key": "ref7",
+      "series-title": "Operations manual: overview [Internet]",
+      "year": "2025"
+    },
+    {
+      "issue": "11",
+      "key": "ref8",
+      "doi-asserted-by": "crossref",
+      "first-page": "1326",
+      "DOI": "10.1093/aje/kwn249",
+      "article-title": "Validation of a hierarchical deterministic record-linkage algorithm using data from 2 different cohorts of human immunodeficiency virus-infected persons and mortality databases in Brazil",
+      "volume": "168",
+      "author": "Pacheco AG",
+      "year": "2008",
+      "journal-title": "Am J Epidemiol"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "crossref",
+      "first-page": "45",
+      "DOI": "10.1016/j.ijmedinf.2018.03.005",
+      "article-title": "A comparison of accuracy and computational feasibility of two record linkage algorithms in retrieving vital status information from HIV/AIDS patients registered in Brazilian public databases",
+      "volume": "114",
+      "author": "de Paula AA",
+      "year": "2018",
+      "journal-title": "Int J Med Inform"
+    },
+    {
+      "key": "ref10",
+      "series-title": "Sistema de Informações sobre Mortalidade – SIM [Internet]",
+      "year": "2023"
+    },
+    {
+      "key": "ref11",
+      "series-title": "Sistema de Informação de Vigilância Epidemiológica da Gripe – SIVEP-Gripe",
+      "year": "2022"
+    },
+    {
+      "key": "ref12",
+      "series-title": "Data linkage protocols using a statistical linkage key",
+      "author": "Karmel R",
+      "year": "2005"
+    },
+    {
+      "issue": "406",
+      "key": "ref13",
+      "doi-asserted-by": "crossref",
+      "first-page": "414",
+      "DOI": "10.1080/01621459.1989.10478785",
+      "article-title": "Advances in record linkage methodology as applied to the 1985 census of Tampa Florida",
+      "volume": "84",
+      "author": "Jaro MA",
+      "year": "1989",
+      "journal-title": "J Am Stat Assoc"
+    },
+    {
+      "key": "ref14",
+      "article-title": "String comparator metrics and enhanced decision rules",
+      "author": "Winkler WE",
+      "year": "1990",
+      "journal-title": "in the Fellegi-Sunter model of record linkage"
+    },
+    {
+      "issue": "4",
+      "key": "ref15",
+      "first-page": "603",
+      "article-title": "Overview of record linkage and current research directions",
+      "volume": "25",
+      "author": "Winkler WE",
+      "year": "2006",
+      "journal-title": "Bureau Census"
+    },
+    {
+      "key": "ref16",
+      "series-title": "Statistical methods in diagnostic medicine",
+      "author": "Zhou XH",
+      "year": "2011"
+    },
+    {
+      "issue": "3",
+      "key": "ref17",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1590/s2237-96222022000300004",
+      "article-title": "Procedimentos para vinculação de dados da saúde: aplicações na vigilância em saúde",
+      "volume": "31",
+      "author": "Garcia KK",
+      "year": "2022",
+      "journal-title": "Epidemiol Serv Saúde"
+    },
+    {
+      "issue": "8",
+      "key": "ref18",
+      "article-title": "Epidemiological intelligence, investment in information technologies and new perspectives for the use of data in health surveillance",
+      "volume": "40",
+      "author": "Cruz DMO",
+      "year": "2024",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "ref19",
+      "first-page": "87",
+      "article-title": "Conselho Nacional de Saúde. Resolução nº 588, de 12 de julho de 2018",
+      "volume": "Seção 1",
+      "year": "2018",
+      "journal-title": "Institui a Política Nacional de Vigilância em Saúde. Diário Oficial da União [Internet]"
+    }
+  ],
+  "container-title": [
+    "Revista Brasileira de Epidemiologia"
+  ],
+  "original-title": [
+    "Vinculação de registros em dados de saúde pública: uma aplicação prática com banco de dados analítico de alta performance"
+  ],
+  "link": [
+    {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_pdf&pid=S1415-790X2025000100446&tlng=en",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        21
+      ]
+    ],
+    "date-time": "2025-11-21T15:03:47Z",
+    "timestamp": 1763737427000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S1415-790X2025000100446&tlng=en"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "references-count": 19,
+  "alternative-id": [
+    "S1415-790X2025000100446"
+  ],
+  "URL": "https://doi.org/10.1590/1980-549720250053",
+  "relation": {},
+  "ISSN": [
+    "1980-5497",
+    "1415-790X"
+  ],
+  "issn-type": [
+    {
+      "value": "1980-5497",
+      "type": "electronic"
+    },
+    {
+      "value": "1415-790X",
+      "type": "print"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "article-number": "e250053"
+}

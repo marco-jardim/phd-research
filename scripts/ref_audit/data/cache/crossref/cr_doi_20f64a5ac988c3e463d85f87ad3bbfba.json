@@ -1,0 +1,425 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        1
+      ]
+    ],
+    "date-time": "2025-11-01T21:47:16Z",
+    "timestamp": 1762033636904,
+    "version": "3.41.2"
+  },
+  "reference-count": 19,
+  "publisher": "Oxford University Press (OUP)",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            10,
+            21
+          ]
+        ],
+        "date-time": "2019-10-21T00:00:00Z",
+        "timestamp": 1571616000000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100000269",
+      "name": "Economic and Social Research Council",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "ES/L007517/1"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "ES/L007517/1"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100000269",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "name": "Farr Institute of Health Informatics Research",
+      "award": [
+        "London MR/ K006584/1"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "London MR/ K006584/1"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NIHR Great Ormond Street Hospital Biomedical Research Centre"
+    },
+    {
+      "DOI": "10.13039/100010269",
+      "name": "Wellcome Trust",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "103975/Z/14/Z"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "103975/Z/14/Z"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/100010269",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [],
+  "abstract": "<jats:title>Abstract</jats:title>\n               <jats:p>Linked data are increasingly being used for epidemiological research, to enhance primary research, and in planning, monitoring and evaluating public policy and services. Linkage error (missed links between records that relate to the same person or false links between unrelated records) can manifest in many ways: as missing data, measurement error and misclassification, unrepresentative sampling, or as a special combination of these that is specific to analysis of linked data: the merging and splitting of people that can occur when two hospital admission records are counted as one person admitted twice if linked and two people admitted once if not. Through these mechanisms, linkage error can ultimately lead to information bias and selection bias; so identifying relevant mechanisms is key in quantitative bias analysis. In this article we introduce five key concepts and a study classification system for identifying which mechanisms are relevant to any given analysis. We provide examples and discuss options for estimating parameters for bias analysis. This conceptual framework provides the ‘links’ between linkage error, information bias and selection bias, and lays the groundwork for quantitative bias analysis for linkage error.</jats:p>",
+  "DOI": "10.1093/ije/dyz203",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2019,
+        9,
+        13
+      ]
+    ],
+    "date-time": "2019-09-13T11:41:21Z",
+    "timestamp": 1568374881000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 12,
+  "title": [
+    "Reflections on modern methods: linkage error bias"
+  ],
+  "prefix": "10.1093",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-3674-3100",
+      "authenticated-orcid": false,
+      "given": "James C",
+      "family": "Doidge",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Intensive Care National Audit and Research Centre, London, UK"
+        },
+        {
+          "name": "UCL Great Ormond Street Institute of Child Health, University College London, London, UK"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-3418-2856",
+      "authenticated-orcid": false,
+      "given": "Katie L",
+      "family": "Harron",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "UCL Great Ormond Street Institute of Child Health, University College London, London, UK"
+        }
+      ]
+    }
+  ],
+  "member": "286",
+  "published-online": {
+    "date-parts": [
+      [
+        2019,
+        10,
+        21
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "2019102106191364200_dyz203-B1",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1007/978-0-387-87959-8",
+      "volume-title": "Applying Quantitative Bias Analysis to Epidemiologic Data",
+      "author": "Lash",
+      "year": "2009"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B2",
+      "doi-asserted-by": "crossref",
+      "first-page": "1969",
+      "DOI": "10.1093/ije/dyu149",
+      "article-title": "Good practices for quantitative bias analysis",
+      "volume": "43",
+      "author": "Lash",
+      "year": "2014",
+      "journal-title": "Int J Epidemiol"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B3",
+      "article-title": "Demystifying probabilistic linkage: common myths and misconceptions",
+      "volume": "3:410",
+      "author": "Doidge",
+      "year": "2018",
+      "journal-title": ". Int J Popul Data Sci"
+    },
+    {
+      "volume-title": "An Introduction to Data Linkage",
+      "year": "2016",
+      "author": "Harron",
+      "key": "2019102106191364200_dyz203-B4"
+    },
+    {
+      "volume-title": "Overview of Record Linkage and Current Research Directions",
+      "year": "2006",
+      "author": "Winkler",
+      "key": "2019102106191364200_dyz203-B5"
+    },
+    {
+      "volume-title": "Modern Epidemiology. 3rd edn",
+      "year": "2008",
+      "author": "Rothman",
+      "key": "2019102106191364200_dyz203-B6"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B7",
+      "doi-asserted-by": "crossref",
+      "first-page": "581",
+      "DOI": "10.1093/biomet/63.3.581",
+      "article-title": "Inference and missing data",
+      "volume": "63",
+      "author": "Rubin",
+      "year": "1976",
+      "journal-title": "Biometrika"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B8",
+      "doi-asserted-by": "crossref",
+      "first-page": "e103690.",
+      "DOI": "10.1371/journal.pone.0103690",
+      "article-title": "A new method for assessing how sensitivity and specificity of linkage studies affects estimation",
+      "volume": "9",
+      "author": "Moore",
+      "year": "2014",
+      "journal-title": "PLoS One"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B9",
+      "doi-asserted-by": "crossref",
+      "first-page": "e85278.",
+      "DOI": "10.1371/journal.pone.0085278",
+      "article-title": "Linkage, evaluation and analysis of national electronic healthcare data: application to providing enhanced blood-stream infection surveillance in paediatric intensive care",
+      "volume": "8",
+      "author": "Harron",
+      "year": "2013",
+      "journal-title": "PLoS One"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B10",
+      "doi-asserted-by": "crossref",
+      "first-page": "1072.",
+      "DOI": "10.1136/bmj.327.7423.1072",
+      "article-title": "Deep vein thrombosis and air travel: record linkage study",
+      "volume": "327",
+      "author": "Kelman",
+      "year": "2003",
+      "journal-title": "BMJ"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B11",
+      "doi-asserted-by": "crossref",
+      "first-page": "3481",
+      "DOI": "10.1002/sim.5508",
+      "article-title": "The analysis of record-linked data using multiple imputation with data value priors",
+      "volume": "31",
+      "author": "Goldstein",
+      "year": "2012",
+      "journal-title": "Stat Med"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B12",
+      "doi-asserted-by": "crossref",
+      "first-page": "333",
+      "DOI": "10.1111/stan.12172",
+      "article-title": "A weighting approach to making inference with probabilistically linked data",
+      "volume": "73",
+      "author": "Chipperfield",
+      "year": "2019",
+      "journal-title": "Stat Neerl"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B13",
+      "doi-asserted-by": "crossref",
+      "first-page": "589–97",
+      "DOI": "10.3233/SJI-170377",
+      "article-title": "When adjusting for the bias due to linkage errors: a sensitivity analysis",
+      "volume": "34",
+      "author": "Consiglio",
+      "year": "2018",
+      "journal-title": "Stat J IAOS"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B14",
+      "doi-asserted-by": "crossref",
+      "first-page": "1699",
+      "DOI": "10.1093/ije/dyx177",
+      "article-title": "A guide to evaluating linkage quality for the analysis of linked data",
+      "volume": "46",
+      "author": "Harron",
+      "year": "2017",
+      "journal-title": "Int J Epidemiol"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B15",
+      "doi-asserted-by": "crossref",
+      "first-page": "e0214050.",
+      "DOI": "10.1371/journal.pone.0214050",
+      "article-title": "Validating linkage of multiple population-based administrative databases in Brazil",
+      "volume": "14",
+      "author": "Paixão",
+      "year": "2019",
+      "journal-title": "PLoS One"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B16",
+      "doi-asserted-by": "crossref",
+      "first-page": "e0136179.",
+      "DOI": "10.1371/journal.pone.0136179",
+      "article-title": "Accuracy of probabilistic linkage using the enhanced matching system for public health and epidemiological studies",
+      "volume": "10",
+      "author": "Aldridge",
+      "year": "2015",
+      "journal-title": "PLoS One"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B17",
+      "doi-asserted-by": "crossref",
+      "first-page": "1162",
+      "DOI": "10.1111/1475-6773.12272",
+      "article-title": "Identifying possible false matches in anonymized hospital administrative data without patient identifiers",
+      "volume": "50",
+      "author": "Hagger-Johnson",
+      "year": "2015",
+      "journal-title": "Health Serv Res"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B18",
+      "doi-asserted-by": "crossref",
+      "first-page": "1246",
+      "DOI": "10.1093/ije/31.6.1246",
+      "article-title": "Probabilistic record linkage and a method to calculate the positive predictive value",
+      "volume": "31",
+      "author": "Blakely",
+      "year": "2002",
+      "journal-title": "Int J Epidemiol"
+    },
+    {
+      "key": "2019102106191364200_dyz203-B19",
+      "doi-asserted-by": "crossref",
+      "first-page": "e0164667",
+      "DOI": "10.1371/journal.pone.0164667",
+      "article-title": "Linking data for mothers and babies in de-identified electronic health data",
+      "volume": "11",
+      "author": "Harron",
+      "year": "2016",
+      "journal-title": "PLoS One"
+    }
+  ],
+  "container-title": [
+    "International Journal of Epidemiology"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "http://academic.oup.com/ije/advance-article-pdf/doi/10.1093/ije/dyz203/30250824/dyz203.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "syndication"
+    },
+    {
+      "URL": "http://academic.oup.com/ije/advance-article-pdf/doi/10.1093/ije/dyz203/30250824/dyz203.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2019,
+        10,
+        21
+      ]
+    ],
+    "date-time": "2019-10-21T10:19:42Z",
+    "timestamp": 1571653182000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://academic.oup.com/ije/advance-article/doi/10.1093/ije/dyz203/5601471"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2019,
+        10,
+        21
+      ]
+    ]
+  },
+  "references-count": 19,
+  "URL": "https://doi.org/10.1093/ije/dyz203",
+  "relation": {},
+  "ISSN": [
+    "0300-5771",
+    "1464-3685"
+  ],
+  "issn-type": [
+    {
+      "type": "print",
+      "value": "0300-5771"
+    },
+    {
+      "type": "electronic",
+      "value": "1464-3685"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2019,
+        10,
+        21
+      ]
+    ]
+  },
+  "article-number": "dyz203"
+}

@@ -1,0 +1,480 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        1
+      ]
+    ],
+    "date-time": "2026-02-01T08:37:36Z",
+    "timestamp": 1769935056912,
+    "version": "3.49.0"
+  },
+  "reference-count": 34,
+  "publisher": "Elsevier BV",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            12,
+            1
+          ]
+        ],
+        "date-time": "2020-12-01T00:00:00Z",
+        "timestamp": 1606780800000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2020,
+            12,
+            1
+          ]
+        ],
+        "date-time": "2020-12-01T00:00:00Z",
+        "timestamp": 1606780800000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://www.elsevier.com/legal/tdmrep-license"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100012166",
+      "name": "National Key Research and Development Program of China",
+      "doi-asserted-by": "publisher",
+      "id": [
+        {
+          "id": "10.13039/501100012166",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "elsevier.com",
+      "sciencedirect.com"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "Computers &amp; Security"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2020,
+        12
+      ]
+    ]
+  },
+  "DOI": "10.1016/j.cose.2020.102050",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2020,
+        9,
+        15
+      ]
+    ],
+    "date-time": "2020-09-15T02:38:59Z",
+    "timestamp": 1600137539000
+  },
+  "page": "102050",
+  "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 145,
+  "special_numbering": "C",
+  "title": [
+    "A zero-knowledge-proof-based digital identity management scheme in blockchain"
+  ],
+  "prefix": "10.1016",
+  "volume": "99",
+  "author": [
+    {
+      "given": "Xiaohui",
+      "family": "Yang",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Wenjie",
+      "family": "Li",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "78",
+  "reference": [
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0031",
+      "unstructured": "W3C. Decentralized identifiers (DIDs) v0.13 [Internet]. W3C community group final report. 2019 [cited 2019 Aug 30]. Available from: https://w3c-ccg.github.io/did-spec/"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0001",
+      "series-title": "Proceedings of the ACM Workshop on Blockchain, Cryptocurrencies and Contracts",
+      "first-page": "35",
+      "article-title": "SCPKI: a smart contract-based PKI and identity system",
+      "author": "Al-Bassam",
+      "year": "2017"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0002",
+      "unstructured": "Alpár, G., Hoepman, J.-.H., Siljee, J.. The identity crisis. security, privacy and usability issues in identity management. arXiv Prepr arXiv11010427. 2011;"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0003",
+      "series-title": "Proceedings of the Thirteenth EuroSys Conference",
+      "first-page": "30",
+      "article-title": "Hyperledger fabric: a distributed operating system for permissioned blockchains",
+      "author": "Androulaki",
+      "year": "2018"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0004",
+      "series-title": "Data Privacy Management, Cryptocurrencies and Blockchain Technology",
+      "first-page": "373",
+      "article-title": "Who am i? Secure identity registration on distributed ledgers.",
+      "author": "Azouvi",
+      "year": "2017"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0006",
+      "series-title": "23rd {USENIX} Security Symposium ({USENIX} Security 14)",
+      "first-page": "781",
+      "article-title": "Succinct non-interactive zero knowledge for a von Neumann architecture",
+      "author": "Ben-Sasson",
+      "year": "2014"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0005",
+      "first-page": "46",
+      "article-title": "Scalable, transparent, and post-quantum secure computational integrity",
+      "volume": "2018",
+      "author": "Ben-Sasson",
+      "year": "2018",
+      "journal-title": "IACR Cryptol. ePrint Arch."
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0027",
+      "unstructured": "Nakamoto, S. Bitcoin: a peer-to-peer electronic cash system [internet]. Manubot; 2019. Available from: https://git.dhimmel.com/bitcoin-whitepaper/"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0007",
+      "series-title": "OSDI",
+      "first-page": "173",
+      "article-title": "Practical byzantine fault tolerance",
+      "author": "Castro",
+      "year": "1999"
+    },
+    {
+      "issue": "9",
+      "key": "10.1016/j.cose.2020.102050_bib0009",
+      "first-page": "54",
+      "article-title": "Know your customers’ jobs to be done",
+      "volume": "94",
+      "author": "Christensen",
+      "year": "2016",
+      "journal-title": "Harv. Bus. Rev."
+    },
+    {
+      "issue": "4",
+      "key": "10.1016/j.cose.2020.102050_bib0010",
+      "doi-asserted-by": "crossref",
+      "first-page": "20",
+      "DOI": "10.1109/MSP.2018.3111247",
+      "article-title": "A first look at identity management schemes on the blockchain",
+      "volume": "16",
+      "author": "Dunphy",
+      "year": "2018",
+      "journal-title": "IEEE Secur. Priv."
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0011",
+      "series-title": "2018 IEEE International Conference on Internet of Things (iThings) and IEEE Green Computing and Communications (GreenCom) and IEEE Cyber, Physical and Social Computing (CPSCom) and IEEE Smart Data (SmartData)",
+      "first-page": "1084",
+      "article-title": "ZoKrates-scalable privacy-preserving off-chain computations",
+      "author": "Eberhardt",
+      "year": "2018"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0012",
+      "doi-asserted-by": "crossref",
+      "first-page": "116",
+      "DOI": "10.1016/j.procs.2018.01.019",
+      "article-title": "The all-pervasiveness of the blockchain technology",
+      "volume": "123",
+      "author": "Efanov",
+      "year": "2018",
+      "journal-title": "Procedia Comput. Sci."
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0014",
+      "series-title": "Proceedings of the 7th International Conference on Security of Information and Networks",
+      "first-page": "9",
+      "article-title": "Mathematical modelling of identity, identity management and other related topics",
+      "author": "Ferdous",
+      "year": "2014"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0013",
+      "doi-asserted-by": "crossref",
+      "first-page": "103059",
+      "DOI": "10.1109/ACCESS.2019.2931173",
+      "article-title": "In search of self-sovereign identity leveraging blockchain technology",
+      "volume": "7",
+      "author": "Ferdous",
+      "year": "2019",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0015",
+      "unstructured": "Gaetani, E., Aniello, L., Baldoni, R., Lombardi, F., Margheri, A., Sassone, V.. Blockchain-based database to ensure data integrity in cloud computing environments. 2017;"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0016",
+      "series-title": "25th {USENIX} Security Symposium ({USENIX} Security 16)",
+      "first-page": "1069",
+      "article-title": "Zkboo: Faster zero-knowledge for boolean circuits",
+      "author": "Giacomelli",
+      "year": "2016"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0017",
+      "series-title": "Annual International Cryptology Conference",
+      "article-title": "Snarky signatures : minimal signatures of knowledge from",
+      "author": "Groth",
+      "year": "2017"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0018",
+      "unstructured": "Hardjono, T., Pentland, A. Verifiable anonymous identities and access control in permissioned blockchains. arXiv Prepr arXiv190304584. 2019;"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0019",
+      "unstructured": "Ingram, D.. Facebook says data leak hits 87 million users, widening privacy scandal [internet]. Reuters. 2018 [cited 2019 Sep 3]. Available from: https://www.reuters.com/article/us-facebook-privacy/facebook-says-data-leak-hits-87-million-users-widening-privacy-scandal-idUSKCN1HB2CM"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0008",
+      "unstructured": "Konda, C., Michael Connor, D.W., Quentin Drouot, P.B.. Nightfall [internet]. EY global blockchain R&D. 2019. Available from: https://github.com/EYBlockchain/nightfall/blob/master/doc/whitepaper/nightfall-v1.pdf"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0021",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lesavre, L., Varin, P., Mell, P., Davidson, M., Shook, J.. A taxonomic approach to understanding emerging blockchain identity management systems. arXiv Prepr arXiv190800929. 2019;",
+      "DOI": "10.6028/NIST.CSWP.9"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0022",
+      "doi-asserted-by": "crossref",
+      "first-page": "28203",
+      "DOI": "10.1109/ACCESS.2018.2837650",
+      "article-title": "A new transitively closed undirected graph authentication scheme for blockchain-based identity management systems",
+      "volume": "6",
+      "author": "Lin",
+      "year": "2018",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0023",
+      "series-title": "2017 15th Annual Conference on Privacy, Security and Trust (PST)",
+      "first-page": "44",
+      "article-title": "An identity management system based on blockchain",
+      "author": "Liu",
+      "year": "2017"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0024",
+      "unstructured": "Lundkvist, C., Heck, R., Torstensson, J., Mitton, Z., Sena, M.. Uport: a platform for self-sovereign identity. URL: https://whitepaper.uport.me/uPort_whitepaper_DRAFT20170221.pdf. 2017."
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0025",
+      "series-title": "2017 IEEE International Conference on Systems, Man, and Cybernetics (SMC)",
+      "first-page": "2567",
+      "article-title": "A review on consensus algorithm of blockchain",
+      "author": "Mingxiao",
+      "year": "2017"
+    },
+    {
+      "issue": "8",
+      "key": "10.1016/j.cose.2020.102050_bib0026",
+      "doi-asserted-by": "crossref",
+      "first-page": "1",
+      "DOI": "10.1007/s42452-019-0989-z",
+      "article-title": "A survey on zero knowledge range proofs and applications",
+      "volume": "1",
+      "author": "Morais",
+      "year": "2019",
+      "journal-title": "SN Appl. Sci."
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0028",
+      "series-title": "International Conference on Business Process Management",
+      "first-page": "103",
+      "article-title": "Performance and scalability of private ethereum blockchains",
+      "author": "Schäffer",
+      "year": "2019"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0029",
+      "unstructured": "Sovrin. Sovrin: a protocol and token for self-sovereign identity and decentralized trust [internet]. Sovrin. 2018. Available from: https://sovrin.org/wp-content/uploads/2018/03/Sovrin-Protocol-and-Token-White-Paper.pdf"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0030",
+      "series-title": "2018 IEEE International Conference on Internet of Things (iThings) and IEEE Green Computing and Communications (GreenCom) and IEEE Cyber, Physical and Social Computing (CPSCom) and IEEE Smart Data (SmartData)",
+      "first-page": "1336",
+      "article-title": "Deployment of a blockchain-based self-sovereign identity",
+      "author": "Stokkink",
+      "year": "2018"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0020",
+      "unstructured": "Wei, J.. Huazhu hotels group investigates alleged info leak [Internet]. ChinaDaily. 2018 [cited 2019 Sep 4]. Available from: http://www.chinadaily.com.cn/a/201808/29/WS5b86473da310add14f38871b.html"
+    },
+    {
+      "issue": "2014",
+      "key": "10.1016/j.cose.2020.102050_bib0032",
+      "first-page": "1",
+      "article-title": "Ethereum: a secure decentralised generalised transaction ledger",
+      "volume": "151",
+      "author": "Wood",
+      "year": "2014",
+      "journal-title": "Ethereum Proj. Yellow Pap."
+    },
+    {
+      "issue": "12",
+      "key": "10.1016/j.cose.2020.102050_bib0033",
+      "doi-asserted-by": "crossref",
+      "first-page": "4215",
+      "DOI": "10.3390/s18124215",
+      "article-title": "Identity management systems for the internet of things: a survey towards blockchain solutions",
+      "volume": "18",
+      "author": "Zhu",
+      "year": "2018",
+      "journal-title": "Sensors"
+    },
+    {
+      "key": "10.1016/j.cose.2020.102050_bib0034",
+      "series-title": "2017 20th Conference of Open Innovations Association (FRUCT)",
+      "first-page": "534",
+      "article-title": "Ensuring data integrity using blockchain technology",
+      "author": "Zikratov",
+      "year": "2017"
+    }
+  ],
+  "container-title": [
+    "Computers &amp; Security"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S0167404820303230?httpAccept=text/xml",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://api.elsevier.com/content/article/PII:S0167404820303230?httpAccept=text/plain",
+      "content-type": "text/plain",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        9,
+        28
+      ]
+    ],
+    "date-time": "2025-09-28T19:09:30Z",
+    "timestamp": 1759086570000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://linkinghub.elsevier.com/retrieve/pii/S0167404820303230"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2020,
+        12
+      ]
+    ]
+  },
+  "references-count": 34,
+  "alternative-id": [
+    "S0167404820303230"
+  ],
+  "URL": "https://doi.org/10.1016/j.cose.2020.102050",
+  "relation": {},
+  "ISSN": [
+    "0167-4048"
+  ],
+  "issn-type": [
+    {
+      "value": "0167-4048",
+      "type": "print"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2020,
+        12
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "Elsevier",
+      "name": "publisher",
+      "label": "This article is maintained by"
+    },
+    {
+      "value": "A zero-knowledge-proof-based digital identity management scheme in blockchain",
+      "name": "articletitle",
+      "label": "Article Title"
+    },
+    {
+      "value": "Computers & Security",
+      "name": "journaltitle",
+      "label": "Journal Title"
+    },
+    {
+      "value": "https://doi.org/10.1016/j.cose.2020.102050",
+      "name": "articlelink",
+      "label": "CrossRef DOI link to publisher maintained version"
+    },
+    {
+      "value": "article",
+      "name": "content_type",
+      "label": "Content Type"
+    },
+    {
+      "value": "© 2020 Elsevier Ltd. All rights reserved.",
+      "name": "copyright",
+      "label": "Copyright"
+    }
+  ],
+  "article-number": "102050"
+}

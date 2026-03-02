@@ -1,0 +1,860 @@
+{
+  "Barreto2019The": {
+    "bib_key": "Barreto2019The",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the Minha Casa Minha Vida program and its association with leprosy incidence, which is relevant to the broader context of health data and identifiers, but does not directly address the completeness or quality of the Cartão Nacional de Saúde (CNS) as a primary key for data linkage.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on the association between a housing program and leprosy incidence, which does not relate to the analytical potential of data linkage for tuberculosis underreporting or data quality assessment mentioned in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      }
+    ],
+    "notes": []
+  },
+  "silva2012linkage": {
+    "bib_key": "silva2012linkage",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Oliveira2012uso": {
+    "bib_key": "Oliveira2012uso",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the underreporting of tuberculosis deaths and emphasizes the importance of linking databases to improve the quality of the TB surveillance system, directly supporting the claim about identifying unreported deaths in public health.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract explicitly discusses the underreporting of tuberculosis deaths and the analysis of data from the Mortality Information System (SIM) and the Reportable Disease Information System (Sinan), directly supporting the claim about identifying underreporting of tuberculosis.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the importance of accurately linking health records, specifically in the context of tuberculosis deaths, which aligns with the claim about the relevance of true pair loss in health record relationships affecting epidemiological study validity.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract clearly discusses the underreporting of TB deaths and the relationship between the SIM and Sinan databases, which directly supports the claim about identifying unreported TB deaths and highlighting significant underreporting.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the Reportable Disease Information System (Sinan) and its role in tuberculosis reporting, but it primarily focuses on underreporting of deaths rather than detailing the specific variables and patient data included in the Sinan-TB system as stated in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the relevance of tuberculosis in the context of health care quality and emphasizes the importance of data relationships, aligning well with the thesis's justification for using these data sources.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the analysis of underreporting of deaths from tuberculosis and emphasizes the importance of identifying true pairs to improve the quality of the TB surveillance system, directly supporting the thesis's focus on maximizing sensitivity to recover true pairs in studies of underreporting.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Sousa2011obitos": {
+    "bib_key": "Sousa2011obitos",
+    "score": "L3_PASS",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the identification of unreported tuberculosis deaths and hospitalizations, directly supporting the claim about the potential of record linkage in public health to identify unreported deaths.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract provides evidence of significant underreporting of tuberculosis deaths and hospitalizations, directly supporting the claim about the relationship between SIM and Sinan-TB for identifying unreported tuberculosis deaths.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the issue of underreporting in tuberculosis deaths and hospitalizations, which directly supports the claim regarding the importance of identifying true pairs to avoid underestimation of adverse outcomes in health system performance evaluation.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Bartholomay2014improved": {
+    "bib_key": "Bartholomay2014improved",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Rocha2015causes": {
+    "bib_key": "Rocha2015causes",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Oliveira2016accuracy": {
+    "bib_key": "Oliveira2016accuracy",
+    "score": "L3_PASS",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract clearly states that the deterministic method has lower sensitivity due to issues like missing values and low similarity measures, which aligns with the thesis claim about the limitations of deterministic methods in identifying true pairs.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract clearly states that the deterministic method had lower sensitivity due to issues like missing values and low similarity measures, which aligns with the claim about its reduced capacity to recover pairs in the presence of incomplete or erroneous identification fields.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the experience and methodologies used in record linkage, which aligns with the claim about the institutional experience in linking health databases in Brazil.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the relevance of tuberculosis (TB) records and the methods used for record linkage, aligning with the thesis's emphasis on the importance of TB as a marker for healthcare quality.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Santos2018factors": {
+    "bib_key": "Santos2018factors",
+    "score": "L3_PASS",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract provides evidence of a study that identified underreporting of tuberculosis, directly supporting the claim made in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the TB Notification System (Sinan TB) as a data source for estimating underreporting of tuberculosis cases, which directly supports the claim about the system's role in registering tuberculosis cases in Brazil.",
+        "claim_type": "SUPPORT_FACT"
+      }
+    ],
+    "notes": []
+  },
+  "Camargo2000reclink": {
+    "bib_key": "Camargo2000reclink",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses a system for database linkage, which aligns with the claim about the need to relate records from different health information systems due to their fragmentation.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses a system for database linkage but does not mention the absence of a unique identifier for linking records, which is the specific claim made in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract describes a system for probabilistic record linkage, which aligns with the claim that OpenRecLink is a widely used tool for probabilistic linkage in health databases.",
+        "claim_type": "TOOL"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a probabilistic record linkage system and its performance, which is relevant to the claim about similarity scores, but it does not explicitly mention the concept of similarity scores or their role in determining thresholds for classification.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses a system for database linkage, which aligns with the claim about the necessity of record linkage for integrating fragmented health data in Brazil.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses a system for database linkage using probabilistic record linkage techniques, which directly supports the claim about the need for computational methods to classify records as true pairs, non-pairs, or doubtful pairs.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the use of a probabilistic record linkage system that improves processing speed and maintains sensitivity, directly supporting the claim about the application of probabilistic methods in epidemiological studies.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a probabilistic record linkage system and its performance, but does not explicitly address the empirical or convenience-based definition of classification thresholds mentioned in the claim.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the development and testing of a database linkage system, which aligns with the claim of the laboratory's extensive experience in health data linkage in Brazil.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract describes the OpenRecLink program as a system for probabilistic record linkage, which directly supports its use in generating candidate pairs for analysis in the thesis.",
+        "claim_type": "TOOL"
+      }
+    ],
+    "notes": []
+  },
+  "Coeli2002blocking": {
+    "bib_key": "Coeli2002blocking",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on hospital admissions among asthmatic children and does not provide any information or evidence related to advancements in text field comparison metrics, blocking strategies, or machine learning approaches as mentioned in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not mention any concepts related to the blocking strategies or record linkage processes, which are essential for defining the claim made in the thesis.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on hospital admissions among asthmatic children and does not address the issue of record linkage or the proportion of true pairs in candidate record comparisons, which is central to the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on hospital admissions and care for asthmatic children, which does not provide any evidence or support for the probabilistic record linkage methods mentioned in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not mention probabilistic linkage protocols or the empirical definition of classification thresholds, which are central to the claim made in the thesis.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The cited paper discusses the organization of health care services and their impact on hospital admissions for asthma children, which aligns with the background claim about the experience and capabilities of the IESC in managing health data and methodologies.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not mention anything related to 'blocking steps' or the classification of candidate pairs, which are essential to the definition provided in the thesis sentence.",
+        "claim_type": "DEFINE"
+      }
+    ],
+    "notes": []
+  },
+  "Fellegi1969theory": {
+    "bib_key": "Fellegi1969theory",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a record linkage study, which aligns with the thesis's mention of record linkage in epidemiological studies, but it does not explicitly support the specific claims about longitudinal follow-up, identification of underreporting, or performance indicators.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses a study on congenital anomalies and breech presentation, which does not provide evidence or support for the claim regarding the formalization of a probabilistic record linkage method by Fellegi and Sunter.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not mention or define the concept of probabilistic linkage or the weighted similarity scores as described in the thesis sentence.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses congenital anomalies and breech presentation, which does not relate to the probabilistic methods or parameters (m-probability and u-probability) mentioned in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses congenital anomalies and breech presentation, which is unrelated to the classification of similarity scores into categories of matches, non-matches, and gray areas as described in the thesis.",
+        "claim_type": "DATA_SOURCE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses congenital anomalies and breech presentation, which is unrelated to the classification thresholds and the concept of the 'gray area' in the decision model proposed by Fellegi and Sunter.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses congenital anomalies and breech presentation, which is unrelated to the classification thresholds and 'gray area' concept described in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not mention or define the concept of 'thresholds' for classification, which is central to the claim made in the thesis sentence.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on the association between breech presentation and congenital anomalies, and does not provide any evidence or methods related to record linkage or the classification of health data records as true pairs, non-pairs, or doubtful pairs.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper focuses on the association between breech presentation and congenital anomalies, which does not provide evidence or support for the probabilistic record linkage method discussed in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Newcombe1959automatic": {
+    "bib_key": "Newcombe1959automatic",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_INCONCLUSIVE",
+        "confidence": "LOW",
+        "justification": "The abstract of the cited paper is empty, providing no information to evaluate whether it supports the claim regarding the use of record linkage in epidemiological studies.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper is empty, providing no evidence to support the claim regarding the formalization of the method by Fellegi and Sunter.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Christen2012book": {
+    "bib_key": "Christen2012book",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract indicates that the book addresses data matching, which is relevant to record linkage, but does not provide specific evidence or methods related to the claim about techniques used in record linkage.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide specific evidence or details regarding the incorporation of machine learning approaches for automated classification of candidate pairs, which is the focus of the claim.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract indicates that the book addresses data matching aspects, which is relevant to the claim about indirect methods of linking data, but it does not provide specific evidence or details supporting the claim about the challenges and errors associated with these methods.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract indicates that the book addresses data quality and data matching, which aligns with the limitations of manual review mentioned in the thesis sentence.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide specific evidence or details regarding the advantages and limitations of different data matching strategies, which is necessary to support the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide specific evidence or details regarding the deterministic relationship or criteria for matching records as described in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract indicates that the cited paper addresses data matching, which is relevant to the process of classifying pairs into categories based on similarity scores as described in the thesis sentence.",
+        "claim_type": "DATA_SOURCE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not mention the specific concept of classification thresholds or their limitations in data matching, which are central to the claim made in the thesis.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide specific evidence or details regarding the use of machine learning techniques for candidate pair classification in record linkage, which is the focus of the thesis claim.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract mentions data matching, which is relevant to the claim about class imbalance in record linkage, but it does not specifically address the severity of class imbalance or provide quantitative details as stated in the thesis sentence.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide any specific evidence or details regarding the decision model proposed by Fellegi and Sunter or the concept of the 'gray area' in classification, which is essential for supporting the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide specific evidence or support for the claim regarding the impact of incomplete fields, spelling errors, or homonyms on the gray area in data matching.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract indicates that the book addresses data quality and data matching, which aligns with the limitations of manual review mentioned in the thesis sentence.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide any evidence or specific information regarding the proportion of true pairs to total candidates in the context of record linkage, which is essential for supporting the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract indicates that the book addresses data quality and data matching, which is relevant to the discussion of cut-off points and their impact on false positives, but does not explicitly support the specific claim about low cut-off points leading to false positives.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses data matching, which is relevant to the claim about the necessity of record linkage for integrating fragmented health data systems in Brazil.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide specific evidence or support for the claim regarding the challenges and costs associated with clerical review in data linkage processes.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract indicates that the cited paper addresses recent research advances and open challenges in data matching, which is relevant to the claim about the application of machine learning techniques, but it does not specifically support the methodological aspects mentioned in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract indicates a focus on data quality and matching, which is relevant to the claim about the challenges of manual review in data processes, but does not explicitly address the artisanal and non-reproducible nature of manual reviews as stated in the thesis sentence.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract indicates that the cited paper addresses data matching, which is relevant to the discussion of class imbalance in the context of data quality.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Viacava2012avaliacao": {
+    "bib_key": "Viacava2012avaliacao",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the evaluation of health service performance and the improvement of indicators, which aligns with the thesis's claim about evaluating health systems, but it does not specifically address the identification of unreported tuberculosis deaths or the improvement of data quality.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the evaluation of health service performance, which aligns with the need for timely and reproducible data in health decision-making during health crises, as stated in the thesis sentence.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Chawla2002smote": {
+    "bib_key": "Chawla2002smote",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract explicitly mentions the use of the SMOTE algorithm for improving the dataset in the context of constructing an early warning model, directly supporting the claim regarding the minority class oversampling strategy.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the use of the SMOTE algorithm in constructing a predictive model, which is relevant to the claim about class balancing strategies, but it does not explicitly evaluate or compare multiple strategies as stated in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract mentions the use of the SMOTE algorithm in constructing an early warning model, which aligns with the thesis's focus on class balancing techniques, but it does not provide specific evidence for the combination of methods or classifiers mentioned in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "He2009imbalanced": {
+    "bib_key": "He2009imbalanced",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses class imbalance and mentions the use of SMOTE to address it, which relates to the claim about severe class imbalance in large datasets, but does not explicitly define or quantify the imbalance ratio mentioned in the thesis.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract mentions the use of the Synthetic Minority Over-sampling Technique (SMOTE) to address class imbalance, which is relevant to the claim about challenges in classification algorithms due to imbalanced datasets, but it does not explicitly discuss the bias towards the majority class or the implications for model accuracy in identifying true pairs.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract explicitly mentions the use of the Synthetic Minority Over-sampling Technique (SMOTE) to address class imbalance, which directly supports the claim regarding combined techniques like SMOTE-Tomek that integrate oversampling with noise removal.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide evidence or discussion regarding the choice of appropriate balancing strategies or the lack of consensus in the literature, which is central to the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not address the specific issue of class imbalance in record linkage or the fraction of true pairs in mortality and notification data, which is the focus of the claim.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses class imbalance and the use of SMOTE to address it, which is relevant to the claim about severe class imbalance, but does not specifically address the context of the dataset or the specific proportions mentioned in the thesis.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the use of machine learning models and mentions addressing class imbalance, which aligns with the claim about AUC-PR being informative in scenarios of severe class imbalance.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Breiman2001rf": {
+    "bib_key": "Breiman2001rf",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the use of random forests to analyze complex composite endpoints, which aligns with the claim about machine learning techniques capturing complex patterns, but it does not explicitly mention the incorporation of a larger number of predictor variables or interactions as stated in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the use of random forests in the context of composite endpoints in medical research, but it does not provide evidence or support for the specific claim regarding the construction of decision trees from random samples of training data and variable selection as described in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Chen2016xgboost": {
+    "bib_key": "Chen2016xgboost",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the effectiveness of tree boosting and mentions its scalability and efficiency, which aligns with the general capabilities of machine learning methods to incorporate more predictors, but it does not explicitly address the incorporation of derived variables or interactions as stated in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract mentions that XGBoost is widely used and achieves state-of-the-art results, but it does not explicitly confirm the specific features such as L1 and L2 regularization, handling of missing values, or parallelization mentioned in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper describes XGBoost as a highly effective machine learning method, which aligns with the thesis's mention of using XGBoost as a classifier for maximizing precision.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "WHO2024tb": {
+    "bib_key": "WHO2024tb",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Brasil2024tb": {
+    "bib_key": "Brasil2024tb",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Jaro1989advances": {
+    "bib_key": "Jaro1989advances",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide specific evidence or details regarding the incorporation of machine learning approaches for automated classification of candidate pairs, which is the focus of the claim.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide specific evidence or details regarding the metrics of textual similarity, such as Jaro's distance or Winkler's extension, which are central to the claim made in the thesis.",
+        "claim_type": "SUPPORT_FACT"
+      }
+    ],
+    "notes": []
+  },
+  "Winkler1990string": {
+    "bib_key": "Winkler1990string",
+    "score": "L3_NA",
+    "abstract_available": false,
+    "evaluations": [],
+    "notes": [
+      "No abstract found via PubMed or Semantic Scholar."
+    ]
+  },
+  "Paim2011brazilian": {
+    "bib_key": "Paim2011brazilian",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the historical development and components of the Brazilian health system, including the establishment of the Unified Health System (SUS), which aligns with the thesis sentence about the SUS's role in organizing health services in Brazil.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the Brazilian health system and its reforms, which provides topical relevance to the Sistema de Informação sobre Mortalidade (SIM) as a data source, but does not specifically mention the SIM or its components.",
+        "claim_type": "DATA_SOURCE"
+      }
+    ],
+    "notes": []
+  },
+  "Macinko2015family": {
+    "bib_key": "Macinko2015family",
+    "score": "L3_PASS",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses Brazil's national health system and its approach to primary care, which aligns with the claim about the robust Systems of Information in Health (SIS) supporting health care activities.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Hastie2009elements": {
+    "bib_key": "Hastie2009elements",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract of the cited paper discusses statistical learning methods, which may imply the ability to capture complex patterns, but does not explicitly support the specific claim regarding non-linear patterns and comparison variables.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract of the cited paper does not explicitly support the specific claim about logistic regression as a generalized linear model estimating binary event probabilities, but it is relevant to the broader context of statistical learning and methods discussed in the paper.",
+        "claim_type": "SUPPORT_FACT"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract does not provide any specific evidence or details about the sequential nature of Gradient Boosting methods or their mechanism of correcting residual errors, which is essential to support the claim.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses the concepts of Support Vector Machines and their ability to find optimal separating hyperplanes, which aligns with the thesis sentence's description of SVMs.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide specific evidence or details regarding the Multilayer Perceptron or its learning process through backpropagation, which is necessary to support the claim made in the thesis.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper does not provide specific evidence or support for the claim regarding the use of machine learning algorithms as a post-processing layer to improve accuracy in record linkage.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The cited paper provides foundational knowledge on statistical learning methods, which supports the background claim regarding the evaluation of various machine learning classifiers and their performance metrics.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The cited paper is a foundational text in statistical learning and machine learning, which supports the claim that precision is a recognized metric in the literature of record linkage and machine learning.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  },
+  "Enamorado2019fastlink": {
+    "bib_key": "Enamorado2019fastlink",
+    "score": "L3_WARN_PARTIAL",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a scalable algorithm for probabilistic record linkage, which aligns with the claim about advancements in methodologies, but it does not explicitly mention machine learning approaches or automated classification of candidate pairs.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a probabilistic record linkage methodology that addresses issues relevant to merging data sets, which aligns with the use of machine learning for automating decision-making in record linkage, but it does not explicitly mention machine learning techniques or their application in classification as stated in the thesis sentence.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses a probabilistic record linkage methodology that addresses issues relevant to the claim about machine learning applications in record linkage, but it does not specifically mention the use of supervised classifiers or the context of Brazilian literature.",
+        "claim_type": "SUPPORT_METHOD"
+      }
+    ],
+    "notes": []
+  },
+  "Hand2018fmeasure": {
+    "bib_key": "Hand2018fmeasure",
+    "score": "L3_FAIL_UNSUPPORTED",
+    "abstract_available": true,
+    "evaluations": [
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the importance of precision and recall in the context of the F-measure but does not explicitly define or elaborate on the prioritization of pairs or non-pairs as described in the thesis sentence.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the importance of precision and recall in the context of the F-measure but does not explicitly define or elaborate on the prioritization of pairs or non-pairs as stated in the thesis sentence.",
+        "claim_type": "DEFINE"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the F-measure's conceptual weaknesses, which is relevant to the claim about using different evaluation metrics, but does not explicitly support the claim regarding the appropriateness of AUC-PR for imbalanced classes.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_WARN_PARTIAL",
+        "confidence": "MEDIUM",
+        "justification": "The abstract discusses the F-measure's conceptual weaknesses, which is relevant to the performance metrics mentioned in the thesis, but does not directly support the specific claim about the use of these metrics in evaluating classifiers.",
+        "claim_type": "BACKGROUND"
+      },
+      {
+        "score": "L3_FAIL_UNSUPPORTED",
+        "confidence": "HIGH",
+        "justification": "The abstract of the cited paper discusses the conceptual weaknesses of the F-measure but does not provide evidence or support for the effectiveness of the strategy mentioned in the thesis for constructing reliable analytical sets.",
+        "claim_type": "SUPPORT_METHOD"
+      },
+      {
+        "score": "L3_PASS",
+        "confidence": "HIGH",
+        "justification": "The abstract discusses the F-measure, which is directly related to the evaluation metrics mentioned in the thesis sentence, thereby supporting the claim about recognized metrics in the literature.",
+        "claim_type": "BACKGROUND"
+      }
+    ],
+    "notes": []
+  }
+}

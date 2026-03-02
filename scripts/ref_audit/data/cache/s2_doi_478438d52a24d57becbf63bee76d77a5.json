@@ -1,0 +1,49 @@
+{
+  "paperId": "52443559a2cb431e6fd8924eed85c9993c09fc0c",
+  "externalIds": {
+    "PubMedCentral": "11606631",
+    "DOI": "10.23889/ijpds.v9i1.2389",
+    "CorpusId": 275017848,
+    "PubMed": "39620124"
+  },
+  "title": "Generating synthetic identifiers to support development and evaluation of data linkage methods",
+  "year": 2024,
+  "citationCount": 2,
+  "openAccessPdf": {
+    "url": "https://doi.org/10.23889/ijpds.v9i1.2389",
+    "status": "GOLD",
+    "license": "CCBYNCND",
+    "disclaimer": "Notice: Paper or abstract available at https://pmc.ncbi.nlm.nih.gov/articles/PMC11606631, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": "A framework for generating synthetic identifier datasets to support development and evaluation of data linkage methods is developed and it is shown that replicating dependencies between attribute values, values of identifiers, and their patterns and distribution structure enables generation of realistic synthetic data that can be used for robust evaluation of linkage methods."
+  },
+  "journal": {
+    "name": "International Journal of Population Data Science",
+    "volume": "9"
+  },
+  "authors": [
+    {
+      "authorId": "2241864531",
+      "name": "Joseph Lam"
+    },
+    {
+      "authorId": "2309396106",
+      "name": "Andy Boyd"
+    },
+    {
+      "authorId": "2272425668",
+      "name": "Robin Linacre"
+    },
+    {
+      "authorId": "2241909000",
+      "name": "Ruth Blackburn"
+    },
+    {
+      "authorId": "2248580444",
+      "name": "K. Harron"
+    }
+  ],
+  "abstract": "Abstract Introduction Careful development and evaluation of data linkage methods is limited by researcher access to personal identifiers. One solution is to generate synthetic identifiers, which do not pose equivalent privacy concerns, but can form a ‘gold-standard’ linkage algorithm training dataset. Such data could help inform choices about appropriate linkage strategies in different settings. Objectives We aimed to develop and demonstrate a framework for generating synthetic identifier datasets to support development and evaluation of data linkage methods. We evaluated whether replicating associations between attributes and identifiers improved the utility of the synthetic data for assessing linkage error. Methods We determined the steps required to generate synthetic identifiers that replicate the properties of real-world data collection. We then generated synthetic versions of a large UK cohort study (the Avon Longitudinal Study of Parents and Children; ALSPAC), according to the quality and completeness of identifiers recorded over several waves of the cohort. We evaluated the utility of the synthetic identifier data in terms of assessing linkage quality (false matches and missed matches). Results Comparing data from two collection points in ALSPAC, we found within-person disagreement in identifiers (differences in recording due to both natural change and non-valid entries) in 18% of surnames and 12% of forenames. Rates of disagreement varied by maternal age and ethnic group. Synthetic data provided accurate estimates of linkage quality metrics compared with the original data (within 0.13-0.55% for missed matches and 0.00-0.04% for false matches). Incorporating associations between identifier errors and maternal age/ethnicity improved synthetic data utility. Conclusions We show that replicating dependencies between attribute values (e.g. ethnicity), values of identifiers (e.g. name), identifier disagreements (e.g. missing values, errors or changes over time), and their patterns and distribution structure enables generation of realistic synthetic data that can be used for robust evaluation of linkage methods."
+}

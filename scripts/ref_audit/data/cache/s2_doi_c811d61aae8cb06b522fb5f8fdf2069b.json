@@ -1,0 +1,54 @@
+{
+  "paperId": "4e04b8985855b7a0ef1f7a38a57e8931f4d3bfd6",
+  "externalIds": {
+    "MAG": "2989569290",
+    "DOI": "10.1590/0102-311x00074318",
+    "CorpusId": 213231814,
+    "PubMed": "31800783"
+  },
+  "title": "[Use of database linkage and scripting rules to upgrade variables in the Sinan-TB database].",
+  "year": 2019,
+  "citationCount": 8,
+  "openAccessPdf": {
+    "url": "http://www.scielo.br/pdf/csp/v35n12/1678-4464-csp-35-12-e00074318.pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1590/0102-311x00074318?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1590/0102-311x00074318, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": null
+  },
+  "journal": {
+    "name": "Cadernos de saude publica",
+    "pages": "\n          e00074318\n        ",
+    "volume": "35 12"
+  },
+  "authors": [
+    {
+      "authorId": "143834692",
+      "name": "Marli Souza Rocha"
+    },
+    {
+      "authorId": "123867581",
+      "name": "Gisele P. Oliveira"
+    },
+    {
+      "authorId": "123709962",
+      "name": "Luis Carlos Guillen"
+    },
+    {
+      "authorId": "8254337",
+      "name": "Cláudia Medina Coeli"
+    },
+    {
+      "authorId": "2057882267",
+      "name": "V. Saraceni"
+    },
+    {
+      "authorId": "66369769",
+      "name": "Rejane Sobrino Pinheiro"
+    }
+  ],
+  "abstract": "Brazil's Information System on Diseases of Notification (Sinan) is the main tool used by tuberculosis (TB) control programs to assess control measures and TB incidence. This requires data from the system that are reliable and accurate, among other features. The study thus aimed to upgrade the entry variables, condition at closure, HIV testing, AIDS-related illness, and diabetes. Linkage was performed between the Sinan-TB database, the Mortality Information System (SIM), and the single AIDS database for the city of Rio de Janeiro, Brazil. Criteria for upgrading the variables were based on technical materials on TB and the Sinan database and were implemented in a script in Structured Query Language (SQL). There was a 115% increase in treatment dropout due to the decrease in transfers, records without closure, and patients closed due to cure in less than 150 days. There was a 2.4% increase in records with diseases associated with diabetes in the affirmative category after using data from the SIM. For the variables HIV testing and AIDS-associated illness, the increases were 5.3% and 8.7%, respectively, when the information in the AIDS database was considered. In conclusion, upgrading the Sinan-TB database through integration with other information systems improved the data's quality for decision-making on TB control."
+}

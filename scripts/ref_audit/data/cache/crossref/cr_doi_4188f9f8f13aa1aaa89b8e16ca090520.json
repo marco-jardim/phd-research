@@ -1,0 +1,354 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        7
+      ]
+    ],
+    "date-time": "2026-02-07T09:20:52Z",
+    "timestamp": 1770456052649,
+    "version": "3.49.0"
+  },
+  "reference-count": 36,
+  "publisher": "JMIR Publications Inc.",
+  "issue": "11",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "J Med Internet Res"
+  ],
+  "abstract": "<jats:sec>\n                    <jats:title>Background</jats:title>\n                    <jats:p>In the era of big data, artificial intelligence (AI), and the Internet of Things (IoT), digital data have become essential for our everyday functioning and in health care services. The sensitive nature of health care data presents several crucial issues such as privacy, security, interoperability, and reliability that must be addressed in any health care data management system. However, most of the current health care systems are still facing major obstacles and are lacking in some of these areas. This is where decentralized, secure, and scalable databases, most notably blockchains, play critical roles in addressing these requirements without compromising security, thereby attracting considerable interest within the health care community. A blockchain can be maintained and widely distributed using a large network of nodes, mostly computers, each of which stores a full replica of the data. A blockchain protocol is a set of predefined rules or procedures that govern how the nodes interact with the network, view, verify, and add data to the ledger.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Objective</jats:title>\n                    <jats:p>In this article, we aim to explore blockchain technology, its framework, current applications, and integration with other innovations, as well as opportunities in diverse areas of health care and clinical research, in addition to clarifying its future impact on the health care ecosystem. We also elucidate 2 case studies to instantiate the potential role of blockchains in health care.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Methods</jats:title>\n                    <jats:p>To identify related existing work, terms based on Medical Subject Headings were used. We included studies focusing mainly on health care and clinical research and developed a functional framework for implementation and testing with data. The literature sources for this systematic review were PubMed, Medline, and the Cochrane library, in addition to a preliminary search of IEEE Xplore.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Results</jats:title>\n                    <jats:p>The included studies demonstrated multiple framework designs and various implementations in health care including chronic disease diagnosis, management, monitoring, and evaluation. We found that blockchains exhibit many promising applications in clinical trial management such as smart-contract application, participant-controlled data access, trustless protocols, and data validity. Electronic health records (EHRs), patient-centered interoperability, remote patient monitoring, and clinical trial data management were found to be major areas for blockchain usage, which can become a key catalyst for health care innovations.</jats:p>\n                  </jats:sec>\n                  <jats:sec>\n                    <jats:title>Conclusions</jats:title>\n                    <jats:p>The potential benefits of blockchains are limitless; however, concrete data on long-term clinical outcomes based on blockchains powered and supplemented by AI and IoT are yet to be obtained. Nonetheless, implementing blockchains as a novel way to integrate EHRs nationwide and manage common clinical problems in an algorithmic fashion has the potential for improving patient outcomes, health care experiences, as well as the overall health and well-being of individuals.</jats:p>\n                  </jats:sec>",
+  "DOI": "10.2196/19846",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2021,
+        4,
+        3
+      ]
+    ],
+    "date-time": "2021-04-03T11:36:31Z",
+    "timestamp": 1617449791000
+  },
+  "page": "e19846",
+  "source": "Crossref",
+  "is-referenced-by-count": 71,
+  "title": [
+    "Blockchain Integration With Digital Technology and the Future of Health Care Ecosystems: Systematic Review"
+  ],
+  "prefix": "10.2196",
+  "volume": "23",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0003-3523-7406",
+      "authenticated-orcid": false,
+      "given": "Hanaa",
+      "family": "Fatoum",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-6411-0872",
+      "authenticated-orcid": false,
+      "given": "Sam",
+      "family": "Hanna",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-2305-6755",
+      "authenticated-orcid": false,
+      "given": "John D",
+      "family": "Halamka",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-0296-5212",
+      "authenticated-orcid": false,
+      "given": "Douglas C",
+      "family": "Sicker",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-2799-276X",
+      "authenticated-orcid": false,
+      "given": "Peter",
+      "family": "Spangenberg",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-8914-7927",
+      "authenticated-orcid": false,
+      "given": "Shahrukh K",
+      "family": "Hashmi",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "1010",
+  "published-online": {
+    "date-parts": [
+      [
+        2021,
+        11,
+        2
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref1",
+      "unstructured": "NakamotoSBitcoin: a peer-to-peer electronic cash systemDecentralized Business Review20082020-03-03http://bitcoin.org/bitcoin.pdf"
+    },
+    {
+      "key": "ref2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/02763869.2017.1332261"
+    },
+    {
+      "key": "ref3",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10916-019-1430-2"
+    },
+    {
+      "key": "ref4",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/13592"
+    },
+    {
+      "key": "ref5",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/13583"
+    },
+    {
+      "key": "ref6",
+      "unstructured": "ZhuangYSheetsLShaeZTsaiJJPShyuCApplying blockchain technology for health information exchange and persistent monitoring for clinical trialsAMIA Annu Symp Proc2018AMIA Annual SymposiumNovember 3-7, 2018San Jose, CA, United States11671175"
+    },
+    {
+      "key": "ref7",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/13601"
+    },
+    {
+      "key": "ref8",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/11949"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/s20051389"
+    },
+    {
+      "key": "ref10",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10916-018-0982-x"
+    },
+    {
+      "key": "ref11",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/jamia/ocx068"
+    },
+    {
+      "key": "ref12",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/jamia/ocaa023"
+    },
+    {
+      "key": "ref13",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3233/THC-151102"
+    },
+    {
+      "key": "ref14",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/s12911-018-0724-5"
+    },
+    {
+      "key": "ref15",
+      "unstructured": "ThamIPersonal info of 1.5m SingHealth patients, including PM Lee, stolen in Singapore's worst cyber attackThe Straits Times20182018-07-20https://www.straitstimes.com/singapore/personal-info-of-15m-singhealth-patients-including-pm-lee-stolen-in-singapores-most"
+    },
+    {
+      "key": "ref16",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.scs.2020.102018"
+    },
+    {
+      "key": "ref17",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/s12911-020-01275-y"
+    },
+    {
+      "key": "ref18",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/s1353-4858(18)30006-0"
+    },
+    {
+      "key": "ref19",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/1476-072X-13-10"
+    },
+    {
+      "key": "ref20",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/s16111840"
+    },
+    {
+      "key": "ref21",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/s19020351"
+    },
+    {
+      "key": "ref22",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4258/hir.2016.22.3.156"
+    },
+    {
+      "issue": "3",
+      "key": "ref23",
+      "first-page": "15017",
+      "volume": "20",
+      "author": "Chen, HS",
+      "year": "2019",
+      "journal-title": "Biomed J Sci Tech Res"
+    },
+    {
+      "key": "ref24",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/s12942-018-0144-x"
+    },
+    {
+      "key": "ref25",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5213/inj.1836144.072"
+    },
+    {
+      "key": "ref26",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10916-016-0644-9"
+    },
+    {
+      "key": "ref27",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/s12938-020-00825-9"
+    },
+    {
+      "key": "ref28",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3934/publichealth.2019.3.326"
+    },
+    {
+      "key": "ref29",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.dsx.2020.04.041"
+    },
+    {
+      "key": "ref30",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/s18082575"
+    },
+    {
+      "key": "ref31",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/s19020326"
+    },
+    {
+      "key": "ref32",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3233/SHTI190374"
+    },
+    {
+      "key": "ref33",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/JTEHM.2018.2822302"
+    },
+    {
+      "key": "ref34",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.cell.2020.01.021"
+    },
+    {
+      "key": "ref35",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/bigdata.2018.8622598"
+    },
+    {
+      "key": "ref36",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/electronics9050773"
+    }
+  ],
+  "container-title": [
+    "Journal of Medical Internet Research"
+  ],
+  "original-title": [],
+  "language": "en",
+  "deposited": {
+    "date-parts": [
+      [
+        2021,
+        11,
+        2
+      ]
+    ],
+    "date-time": "2021-11-02T13:03:17Z",
+    "timestamp": 1635858197000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.jmir.org/2021/11/e19846"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2021,
+        11,
+        2
+      ]
+    ]
+  },
+  "references-count": 36,
+  "journal-issue": {
+    "issue": "11",
+    "published-online": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.2196/19846",
+  "relation": {},
+  "ISSN": [
+    "1438-8871"
+  ],
+  "issn-type": [
+    {
+      "value": "1438-8871",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2021,
+        11,
+        2
+      ]
+    ]
+  }
+}

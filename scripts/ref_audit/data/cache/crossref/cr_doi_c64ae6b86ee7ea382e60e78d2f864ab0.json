@@ -1,0 +1,237 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        11,
+        23
+      ]
+    ],
+    "date-time": "2025-11-23T03:27:49Z",
+    "timestamp": 1763868469644,
+    "version": "3.45.0"
+  },
+  "reference-count": 0,
+  "publisher": "Swansea University",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            3
+          ]
+        ],
+        "date-time": "2025-03-03T00:00:00Z",
+        "timestamp": 1740960000000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IJPDS"
+  ],
+  "abstract": "<jats:p>IntroductionThe absence of a unique patient identifier in the Brazilian hospital administrative database prevents the identification of hospital episodes with multiple hospitalisations of the same patient.\nObjectivesThis study aims to evaluate the information gain by using a computer routine to identify acute Obstetrics hospital episodes and its impact on assessing marks of case severity.\nMethodsThe data source was a de-identified Brazilian hospital administrative database from 2017 to 2020, including hospitalisations records of women of reproductive age (10 to 49 years old) for treating acute conditions (N=16,087,490). We processed this database by combining C++ and Python routines to create a hospital episodes database. From the latter, we selected obstetrics hospital episodes from 2018 to 2019 (N = 4,926,877). We compared selected characteristics of the hospital episodes according to their type (multiple vs single records per episode), testing for differences using effect size measures. We compared relative differences in case severity marks when using the hospital episode as the unit of analysis to that of isolated hospitalisations (N = 5,018,350).\nResultsCompared to single-record episodes, multiple-records episodes had longer length of stay, higher amount reimbursed, and lower proportion of discharge alive. When comparing isolated hospitalisations to hospital episodes analysis, we observed an increase in all case severity indicators, especially for hospital deaths, with an increment of 13.15%. The computer routine decreased the hospital admissions with a reason for hospital discharge that did not indicate the outcome (hospital stay or inter-hospital transfer) from 2.29% to 0.73%.\nConclusionsThe deterministic matching computer routine proved valuable for identifying records that refer to the same hospital episode, which improved the assessment of severe cases.</jats:p>",
+  "DOI": "10.23889/ijpds.v10i1.2467",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2025,
+        3,
+        3
+      ]
+    ],
+    "date-time": "2025-03-03T08:53:28Z",
+    "timestamp": 1740992008000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 1,
+  "title": [
+    "Using a deterministic matching computer routine to identify hospital episodes in a Brazilian de-identified administrative database for the analysis of obstetrics hospitalisations"
+  ],
+  "prefix": "10.23889",
+  "volume": "10",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0003-1757-3940",
+      "authenticated-orcid": false,
+      "given": "Claudia",
+      "family": "Medina Coeli",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-5722-8127",
+      "authenticated-orcid": false,
+      "given": "Rosa Maria",
+      "family": "Soares Madeira Domingues",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-0223-0438",
+      "authenticated-orcid": false,
+      "given": "Lana",
+      "family": "Meijinhos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0009-0001-5184-9499",
+      "authenticated-orcid": false,
+      "given": "Daniela",
+      "family": "Medina Coeli Bastos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Rejane",
+      "family": "Sobrino Pinheiro",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-7360-6490",
+      "authenticated-orcid": false,
+      "given": "Valeria",
+      "family": "Saraceni",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-1386-7001",
+      "authenticated-orcid": false,
+      "given": "Marcos Augusto",
+      "family": "Bastos Dias",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-0541-4686",
+      "authenticated-orcid": false,
+      "given": "Natália",
+      "family": "Santana Paiva",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-3606-5853",
+      "authenticated-orcid": false,
+      "given": "Kenneth",
+      "family": "Camargo Jr",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "9980",
+  "published-online": {
+    "date-parts": [
+      [
+        2025,
+        3,
+        3
+      ]
+    ]
+  },
+  "container-title": [
+    "International Journal of Population Data Science"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://ijpds.org/article/download/2467/6181",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2467/6182",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2467/6183",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2467/6181",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        3,
+        3
+      ]
+    ],
+    "date-time": "2025-03-03T08:53:29Z",
+    "timestamp": 1740992009000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ijpds.org/article/view/2467"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2025,
+        3,
+        3
+      ]
+    ]
+  },
+  "references-count": 0,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2025,
+          1,
+          23
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.23889/ijpds.v10i1.2467",
+  "relation": {},
+  "ISSN": [
+    "2399-4908"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "2399-4908"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2025,
+        3,
+        3
+      ]
+    ]
+  }
+}

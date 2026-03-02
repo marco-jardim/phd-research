@@ -1,0 +1,1301 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        8
+      ]
+    ],
+    "date-time": "2026-02-08T06:21:24Z",
+    "timestamp": 1770531684964,
+    "version": "3.49.0"
+  },
+  "reference-count": 211,
+  "publisher": "American Association for the Advancement of Science (AAAS)",
+  "issue": "12",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Sci. Adv."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2022,
+        3,
+        25
+      ]
+    ]
+  },
+  "abstract": "<jats:p>Whether the goal is to estimate the number of people that live in a congressional district, to estimate the number of individuals that have died in an armed conflict, or to disambiguate individual authors using bibliographic data, all these applications have a common theme—integrating information from multiple sources. Before such questions can be answered, databases must be cleaned and integrated in a systematic and accurate way, commonly known as structured entity resolution (record linkage or deduplication). Here, we review motivational applications and seminal papers that have led to the growth of this area. We review modern probabilistic and Bayesian methods in statistics, computer science, machine learning, database management, economics, political science, and other disciplines that are used throughout industry and academia in applications such as human rights, official statistics, medicine, and citation networks, among others. Last, we discuss current research topics of practical importance.</jats:p>",
+  "DOI": "10.1126/sciadv.abi8021",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2022,
+        3,
+        25
+      ]
+    ],
+    "date-time": "2022-03-25T17:58:19Z",
+    "timestamp": 1648231099000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 52,
+  "title": [
+    "(Almost) all of entity resolution"
+  ],
+  "prefix": "10.1126",
+  "volume": "8",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0001-6009-5206",
+      "authenticated-orcid": true,
+      "given": "Olivier",
+      "family": "Binette",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Department of Statistical Science, Duke University, Durham, NC, USA."
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-0114-8181",
+      "authenticated-orcid": true,
+      "given": "Rebecca C.",
+      "family": "Steorts",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Statistical Science, Computer Science, Biostatistics and Bioinformatics, the Rhodes Information Initiative at Duke (iiD) and the Social Science Research Institute (SSRI), Duke University, Durham, NC, USA."
+        },
+        {
+          "name": "Principal Mathematical Statistician, United States Census Bureau, Washington, DC, USA."
+        }
+      ]
+    }
+  ],
+  "member": "221",
+  "reference": [
+    {
+      "key": "e_1_3_2_2_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Doan A. Halevy Z. Ives Principles of Data Integration (Morgan Kaufmann Publishers 2012).",
+      "DOI": "10.1016/B978-0-12-416044-6.00019-3"
+    },
+    {
+      "key": "e_1_3_2_3_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2007.250581"
+    },
+    {
+      "key": "e_1_3_2_4_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "F. Naumann M. Herschel An Introduction to Duplicate Detection (Morgan & Claypool Publishers 2010).",
+      "DOI": "10.1007/978-3-031-01835-0"
+    },
+    {
+      "key": "e_1_3_2_5_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2367502.2367564"
+    },
+    {
+      "key": "e_1_3_2_6_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Christen Data Matching: Concepts and Techniques for Record Linkage Entity Resolution and Duplicate Detection (Data-Centric Systems and Applications Springer-Verlag 2012).",
+      "DOI": "10.1007/978-3-642-31164-2"
+    },
+    {
+      "key": "e_1_3_2_7_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3418896"
+    },
+    {
+      "key": "e_1_3_2_8_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "I. F. Ilyas X. Chu Data Cleaning (Association for Computing Machinery 2019).",
+      "DOI": "10.1145/3310205"
+    },
+    {
+      "key": "e_1_3_2_9_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "G. Papadakis E. Ioannou E. Thanos T. Palpanas The Four Generations of Entity Resolution (Morgan & Claypool Publishers 2021).",
+      "DOI": "10.1007/978-3-031-01878-7"
+    },
+    {
+      "key": "e_1_3_2_10_2",
+      "unstructured": "T. Herzog F. Scheuren W. Winkler Data Quality and Record Linkage Techniques (Springer 2007)."
+    },
+    {
+      "key": "e_1_3_2_11_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/wics.1317"
+    },
+    {
+      "key": "e_1_3_2_12_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Jurek-Loughrey P. Deepak in Semi-Supervised and Unsupervised Approaches to Record Pairs Classification in Multi-Source Data Linkage (Springer 2019) pp. 55–78.",
+      "DOI": "10.1007/978-3-030-01872-6_3"
+    },
+    {
+      "key": "e_1_3_2_13_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/ijerph17186937"
+    },
+    {
+      "key": "e_1_3_2_14_2",
+      "unstructured": "B. S. McVeigh B. T. Spahn J. S. Murray Scaling Bayesian probabilistic record linkage with post-hoc blocking: An application to the california great registers. arXiv:1905.05337 [stat.ME] (14 May 2019)."
+    },
+    {
+      "key": "e_1_3_2_15_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1017/S0003055418000783"
+    },
+    {
+      "key": "e_1_3_2_16_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/0021-9681(86)90155-4"
+    },
+    {
+      "key": "e_1_3_2_17_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jclinepi.2006.11.021"
+    },
+    {
+      "key": "e_1_3_2_18_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/sim.4780140510"
+    },
+    {
+      "key": "e_1_3_2_19_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.2012.726889"
+    },
+    {
+      "key": "e_1_3_2_20_2",
+      "unstructured": "M. Shan K. Thomas R. Gutman A Bayesian multi-layered record linkage procedure to analyze functional status of medicare patients with traumatic brain injury. arXiv:2005.08549 [stat.ME] (18 May 2020)."
+    },
+    {
+      "key": "e_1_3_2_21_2",
+      "unstructured": "E. Farley R. Gutman A Bayesian approach to linking data without unique identifiers. arXiv:2012.00601 [stat.CO] (1 December 2020)."
+    },
+    {
+      "key": "e_1_3_2_22_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1989.10478785"
+    },
+    {
+      "key": "e_1_3_2_23_2",
+      "unstructured": "W. E. Winkler Y. Thibaudeau An Application of the Fellegi-Sunter Model of Record Linkage to the 1990 US Decennial Census (U.S. Census Bureau 1990) pp. 1–22."
+    },
+    {
+      "key": "e_1_3_2_24_2",
+      "first-page": "185",
+      "article-title": "On Bayesian record linkage",
+      "volume": "4",
+      "author": "Fortini M.",
+      "year": "2001",
+      "unstructured": "M. Fortini, B. Liseo, A. Nuccitelli, M. Scanu, On Bayesian record linkage. Res. Official Stat. 4, 185–198 (2001).",
+      "journal-title": "Res. Official Stat."
+    },
+    {
+      "key": "e_1_3_2_25_2",
+      "unstructured": "A. Chevrette “G-link: A probabilistic record linkage system” (Technical Report Statistics Canada 2011)."
+    },
+    {
+      "key": "e_1_3_2_26_2",
+      "unstructured": "A. Dasylva R.-C. Titus C. Thibault Overcoverage in the 2011 Canadian census in Proceedings of Statistics Canada Symposium (Statistics Canada 2014)."
+    },
+    {
+      "key": "e_1_3_2_27_2",
+      "unstructured": "A. Dasylva Pairwise estimating equations for the primary analysis of linked data in Proceedings of Statistics Canada Symposium (Statistics Canada 2018)."
+    },
+    {
+      "key": "e_1_3_2_28_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/00031305.2013.821093"
+    },
+    {
+      "key": "e_1_3_2_29_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.1740-9713.2015.00811.x"
+    },
+    {
+      "key": "e_1_3_2_30_2",
+      "unstructured": "P. Sadosky A. Shrivastava M. Price R. C. Steorts Blocking methods applied to casualty records from the Syrian conflict. arXiv:1510.07714 [stat.AP] (26 October 2015)."
+    },
+    {
+      "key": "e_1_3_2_31_2",
+      "first-page": "2404",
+      "article-title": "Detecting duplicates in a homicide registry using a Bayesian partitioning approach",
+      "volume": "8",
+      "author": "Sadinle M.",
+      "year": "2014",
+      "unstructured": "M. Sadinle, Detecting duplicates in a homicide registry using a Bayesian partitioning approach. Annal. Appl. Stat. 8, 2404–2434 (2014).",
+      "journal-title": "Annal. Appl. Stat."
+    },
+    {
+      "key": "e_1_3_2_32_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.2016.1148612"
+    },
+    {
+      "key": "e_1_3_2_33_2",
+      "first-page": "1013",
+      "article-title": "Bayesian propagation of record linkage uncertainty into population size estimation of human rights violations",
+      "volume": "12",
+      "author": "Sadinle M.",
+      "year": "2018",
+      "unstructured": "M. Sadinle, Bayesian propagation of record linkage uncertainty into population size estimation of human rights violations. Annal. Appl. Stat. 12, 1013–1038 (2018).",
+      "journal-title": "Annal. Appl. Stat."
+    },
+    {
+      "key": "e_1_3_2_34_2",
+      "unstructured": "R. Lai A. D’amour A. Yu Y. Sun L. Fleming Disambiguation and Co-Authorship Networks of the US Patent Inventor Database (1975–2010) (Harvard Institute for Quantitative Social Science 2011) vol. 2138."
+    },
+    {
+      "key": "e_1_3_2_35_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "G. Louppe H. T. Al-Natsheh M. Susik E. J. Maguire Ethnicity sensitive author disambiguation using semi-supervised learning in Proceedings of the International Conference on Knowledge Engineering and the Semantic Web (Springer 2016) pp. 272–287.",
+      "DOI": "10.1007/978-3-319-45880-9_21"
+    },
+    {
+      "key": "e_1_3_2_36_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Y. Zhang F. Zhang P. Yao J. Tang Name disambiguation in aminer: Clustering maintenance and human in the loop in Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining (Association for Computing Machinery 2018) pp. 1002–1011.",
+      "DOI": "10.1145/3219819.3219859"
+    },
+    {
+      "key": "e_1_3_2_37_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Subramanian D. King D. Downey S. Feldman S2AND: A benchmark and evaluation system for author name disambiguation. arXiv:2103.07534 [cs.DL] (12 March 2021).",
+      "DOI": "10.1109/JCDL52503.2021.00029"
+    },
+    {
+      "key": "e_1_3_2_38_2",
+      "unstructured": "X. Liu D. Yin X. Zhang K. Su K. Wu H. Yang J. Tan OAG-BERT: Pre-train heterogeneous entity-augmented academic language models. arXiv:2103.02410 [cs.CL] (3 March 2021)."
+    },
+    {
+      "key": "e_1_3_2_39_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "X. H. Tai Record linkage and matching problems in forensics in Proceedings of the IEEE International Conference on Data Mining Workshops (IEEE 2018) pp. 510–517.",
+      "DOI": "10.1109/ICDMW.2018.00081"
+    },
+    {
+      "key": "e_1_3_2_40_2",
+      "unstructured": "X. H. Tai W. F. Eddy Automatically matching topographical measurements of cartridge cases using a record linkage framework. arXiv:2003.00060 [stat.AP] (28 February 2020)."
+    },
+    {
+      "key": "e_1_3_2_41_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/1687627.1687674"
+    },
+    {
+      "key": "e_1_3_2_42_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "R. Singh V. Meduri A. Elmagarmid S. Madden P. Papotti J.-A. Quiane-Riuz A. Solar-Lezama N. Tang Generating concise entity matching rules in Proceedings of the 2017 ACM International Conference on Management of Data (Association for Computing Machinery 2017) pp. 1635–1638.",
+      "DOI": "10.1145/3035918.3058739"
+    },
+    {
+      "key": "e_1_3_2_43_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Mudgal H. Li T. Rekatsinas A. Doan Y. Park G. Krishnan R. Deep E. Arcaute V. Raghavendra Deep learning for entity matching: A design space exploration in Proceedings of the 2018 International Conference on Management of Data (Association for Computing Machinery 2018) pp. 19–34.",
+      "DOI": "10.1145/3183713.3196926"
+    },
+    {
+      "key": "e_1_3_2_44_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2350229.2350263"
+    },
+    {
+      "key": "e_1_3_2_45_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "C. Gokhale S. Das A. Doan J. F. Naughton N. Rampalli J. Shavlik X. Zhu Corleone: Hands-off Crowdsourcing for Entity Matching (Association for Computing Machinery 2014) pp. 601–612.",
+      "DOI": "10.1145/2588555.2588576"
+    },
+    {
+      "key": "e_1_3_2_46_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2947618.2947624"
+    },
+    {
+      "key": "e_1_3_2_47_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2105/AJPH.36.12.1412"
+    },
+    {
+      "key": "e_1_3_2_48_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s11113-013-9278-5"
+    },
+    {
+      "key": "e_1_3_2_49_2",
+      "unstructured": "N. G. Marchant R. C. Steorts A. Kaplan B. I. P. Rubinstein D. N. Elazar d-blink: Distributed end-to-end Bayesian entity resolution. arXiv:1909.06039 [stat.CO] (13 September 2019)."
+    },
+    {
+      "key": "e_1_3_2_50_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1353/hrq.0.0019"
+    },
+    {
+      "key": "e_1_3_2_51_2",
+      "unstructured": "P. Ball The Salvadoran human rights commission: Data processing data representation and generating analytical reports in Making the Case: Investigating Large Scale Human Rights Violations Using Information Systems and Data Analysis P. Ball H. F. Spirer L. Spirer Eds. (American Association for the Advancement of Science 2000) pp. 15–24."
+    },
+    {
+      "key": "e_1_3_2_52_2",
+      "unstructured": "M. Price J. Klingner A. Qtiesh P. Ball Full updated statistical analysis of documentation of killing in the Syrian Arab Repulic in Report by the Human Rights Data Analysis Group to the United Nations Office of the High Commissioner for Human Rights (OHCHR) (Office of the UN High Commissioner for Human Rights 2013)."
+    },
+    {
+      "key": "e_1_3_2_53_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1353/sais.2014.0010"
+    },
+    {
+      "key": "e_1_3_2_54_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4054/DemRes.2019.41.27"
+    },
+    {
+      "key": "e_1_3_2_55_2",
+      "first-page": "1039",
+      "article-title": "Unique entity estimation with application to the Syrian conflict",
+      "volume": "12",
+      "author": "Chen B.",
+      "year": "2018",
+      "unstructured": "B. Chen, A. Shrivastava, R. C. Steorts, Unique entity estimation with application to the Syrian conflict. Annal. Appl. Stat. 12, 1039–1067 (2018).",
+      "journal-title": "Annal. Appl. Stat."
+    },
+    {
+      "key": "e_1_3_2_56_2",
+      "unstructured": "J. Ax Georgia lawsuit is latest blow in U.S. fight over voting rights (2018) [posted 12 October 2018; retrieved 17 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_57_2",
+      "unstructured": "B. Nadler Voting rights become a flashpoint in georgia governor’s race (2018) [posted 9 October 2018; retrieved 17 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_58_2",
+      "unstructured": "T. Enamorado Georgia’s ‘exact match’ law could potentially harm many eligible voters (2018) [posted 20 October 2018; retrieved 17 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_59_2",
+      "unstructured": "Georgia Coalition For the Peoples’ Agenda Inc. et al. v. Kemp Complaint for injunctive and declaratory relief (2018)."
+    },
+    {
+      "key": "e_1_3_2_60_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.respol.2014.01.012"
+    },
+    {
+      "key": "e_1_3_2_61_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s11192-017-2363-5"
+    },
+    {
+      "key": "e_1_3_2_62_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "X. L. Dong D. Srivastava Big Data Integration (Morgan and Claypool Publishers 2015).",
+      "DOI": "10.1007/978-3-031-01853-4"
+    },
+    {
+      "key": "e_1_3_2_63_2",
+      "first-page": "707",
+      "article-title": "Binary codes capable of correcting deletions, insertions, and reversals",
+      "volume": "10",
+      "author": "Levenshtein V. I.",
+      "year": "1966",
+      "unstructured": "V. I. Levenshtein, Binary codes capable of correcting deletions, insertions, and reversals. Soviet Phys. Doklady 10, 707–710 (1966).",
+      "journal-title": "Soviet Phys. Doklady"
+    },
+    {
+      "key": "e_1_3_2_64_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TPAMI.2007.1078"
+    },
+    {
+      "key": "e_1_3_2_65_2",
+      "unstructured": "W. E. Winkler String comparator metrics and enhanced decision rules in the Fellegi-Sunter model of record linkage in Proceedings of the Section on Survey Research American Statistical Association (American Statistical Association 1990) pp. 354–359."
+    },
+    {
+      "key": "e_1_3_2_66_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/375360.375365"
+    },
+    {
+      "key": "e_1_3_2_67_2",
+      "unstructured": "W. W. Cohen P. Ravikumar S. E. Fienberg A comparison of string distance metrics for name-matching tasks in Proceedings of the 2003 International Conference on Information Integration on the Web (AAAI Press 2003) pp. 73–78."
+    },
+    {
+      "key": "e_1_3_2_68_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2021017.2021020"
+    },
+    {
+      "key": "e_1_3_2_69_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "C. R. Rivero D. Ruiz Selecting suitable configurations for automated link discovery in Proceedings of the ACM Symposium on Applied Computing (Association for Computing Machinery 2020) pp. 907–914.",
+      "DOI": "10.1145/3341105.3373882"
+    },
+    {
+      "key": "e_1_3_2_70_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/34.682181"
+    },
+    {
+      "key": "e_1_3_2_71_2",
+      "unstructured": "H. Galhardas D. Florescu D. Shasha E. Simon C. Saita “Declarative data cleaning: Language model and algorithms ” thesis INRIA (2001)."
+    },
+    {
+      "key": "e_1_3_2_72_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Bilenko R. J. Mooney Adaptive duplicate detection using learnable string similarity measures in Proceedings of the Ninth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2003) pp. 39–48.",
+      "DOI": "10.1145/956750.956759"
+    },
+    {
+      "key": "e_1_3_2_73_2",
+      "unstructured": "A. McCallum K. Bellare F. Pereira A conditional random field for discriminatively-trained finite-state string edit distance. arXiv:1207.1406 [cs.LG] (4 July 2012)."
+    },
+    {
+      "key": "e_1_3_2_74_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3233/SW-150210"
+    },
+    {
+      "key": "e_1_3_2_75_2",
+      "unstructured": "N. Andrews J. Eisner M. Dredze Name phylogeny: A generative model of string variation in Proceedings of the 2012 Joint Conference on Empirical Methods in Natural Language Processing and Computational Natural Language Learning (Association for Computational Linguistics 2012) pp. 344–355."
+    },
+    {
+      "key": "e_1_3_2_76_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/352595.352598"
+    },
+    {
+      "key": "e_1_3_2_77_2",
+      "first-page": "1",
+      "article-title": "Rapid execution of weighted edit distances",
+      "volume": "1111",
+      "author": "Soru T.",
+      "year": "2013",
+      "unstructured": "T. Soru, A. C. N. Ngomo, Rapid execution of weighted edit distances. Proc. Ontol. Matching Workshop 1111, 1–12 (2013).",
+      "journal-title": "Proc. Ontol. Matching Workshop"
+    },
+    {
+      "key": "e_1_3_2_78_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "H. Zhang Q. Zhang Embedjoin: Efficient edit similarity joins via embeddings in Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2017) pp. 585–594.",
+      "DOI": "10.1145/3097983.3098003"
+    },
+    {
+      "key": "e_1_3_2_79_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/1920841.1920992"
+    },
+    {
+      "key": "e_1_3_2_80_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s00778-016-0449-y"
+    },
+    {
+      "key": "e_1_3_2_81_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2017.2756932"
+    },
+    {
+      "key": "e_1_3_2_82_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3377455"
+    },
+    {
+      "key": "e_1_3_2_83_2",
+      "unstructured": "A. E. Monge C. P. Elkan An efficient domain-independent algorithm for detecting approximately duplicate database records in Proceedings of the SIGMOD 1997 Workshop on Research Issues on Sata Mining and Knowledge Discovery (DMKD 1997) pp. 23–29."
+    },
+    {
+      "key": "e_1_3_2_84_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/1687627.1687771"
+    },
+    {
+      "key": "e_1_3_2_85_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Saeedi E. Peukert E. Rahm in Comparative Evaluation of Distributed Clustering Schemes for Multi-source Entity Resolution (Springer International Publishing 2017) pp. 278–293.",
+      "DOI": "10.1007/978-3-319-66917-5_19"
+    },
+    {
+      "key": "e_1_3_2_86_2",
+      "unstructured": "A. Heidari G. Michalopoulos S. Kushagra I. F. Ilyas T. Rekatsinas Record fusion: A learning approach. arXiv:2006.10208 [cs.LG] (18 June 2020)."
+    },
+    {
+      "key": "e_1_3_2_87_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s00778-008-0098-x"
+    },
+    {
+      "key": "e_1_3_2_88_2",
+      "unstructured": "S. B. Dusetzina S. Tyree A.M. Meyer A. Meyer L. Green W.R. Carpenter Linking Data for Health Services Research: A Framework and Instructional Guide (Agency for Healthcare Research and Quality 2014)."
+    },
+    {
+      "key": "e_1_3_2_89_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/sim.1147"
+    },
+    {
+      "key": "e_1_3_2_90_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/1460458208088855"
+    },
+    {
+      "key": "e_1_3_2_91_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jclinepi.2010.05.008"
+    },
+    {
+      "key": "e_1_3_2_92_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/15917"
+    },
+    {
+      "key": "e_1_3_2_93_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "R. C. Steorts S. L. Ventura M. Sadinle S. E. Fienberg A comparison of blocking methods for record linkage in Privacy in Statistical Databases J. Domingo-Ferrer Ed. (Springer 2014) pp. 253–268.",
+      "DOI": "10.1007/978-3-319-11257-2_20"
+    },
+    {
+      "key": "e_1_3_2_94_2",
+      "first-page": "3",
+      "article-title": "Probabilistic record linkage and deduplication after indexing, blocking, and filtering",
+      "volume": "7",
+      "author": "Murray J. S.",
+      "year": "2016",
+      "unstructured": "J. S. Murray, Probabilistic record linkage and deduplication after indexing, blocking, and filtering. J. Privacy Confidential. 7, 3–24 (2016).",
+      "journal-title": "J. Privacy Confidential."
+    },
+    {
+      "key": "e_1_3_2_95_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1126/science.130.3381.954"
+    },
+    {
+      "key": "e_1_3_2_96_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1969.10501049"
+    },
+    {
+      "key": "e_1_3_2_97_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "R. Wu S. Chaba S. Sawlani X. Chu S. Thirumuruganathan ZeroER: Entity resolution using zero labeled examples in Proceedings of the 2020 ACM SIGMOD International Conference on Management of Data (Association for Computing Machinery 2020) pp. 1149–1164.",
+      "DOI": "10.1145/3318464.3389743"
+    },
+    {
+      "key": "e_1_3_2_98_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/19485565.1962.9987498"
+    },
+    {
+      "key": "e_1_3_2_99_2",
+      "first-page": "109",
+      "article-title": "The study of mutation and selection in human populations",
+      "volume": "57",
+      "author": "Newcombe H. B.",
+      "year": "1965",
+      "unstructured": "H. B. Newcombe, The study of mutation and selection in human populations. Eugen. Rev. 57, 109–125 (1965).",
+      "journal-title": "Eugen. Rev."
+    },
+    {
+      "key": "e_1_3_2_100_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1097/00006254-196508000-00032"
+    },
+    {
+      "key": "e_1_3_2_101_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2307/1527541"
+    },
+    {
+      "key": "e_1_3_2_102_2",
+      "unstructured": "W. E. Winkler Using the EM algorithm for weight computation in the Fellegi-Sunter model of record linkage in Proceedings of the Section on Survey Research Methods (American Statistical Association 1988) pp. 667–671."
+    },
+    {
+      "key": "e_1_3_2_103_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1198/016214501750332956"
+    },
+    {
+      "key": "e_1_3_2_104_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1055/s-0038-1635704"
+    },
+    {
+      "key": "e_1_3_2_105_2",
+      "article-title": "The discrimination power of dependency structures in record linkage",
+      "volume": "19",
+      "author": "Thibaudeau Y.",
+      "year": "1993",
+      "unstructured": "Y. Thibaudeau, The discrimination power of dependency structures in record linkage. Survey Methodol. 19, (1993).",
+      "journal-title": "Survey Methodol."
+    },
+    {
+      "key": "e_1_3_2_106_2",
+      "unstructured": "J. Armstrong J. Mayda Estimation of record linkage models using dependent data in Proceedings of the Section on Survey Research Methodology (American Statistical Association 1992) pp. 853–858."
+    },
+    {
+      "key": "e_1_3_2_107_2",
+      "unstructured": "W. E. Winkler Comparative analysis of record linkage decision rules in Proceedings of the Section on Survey Research Methods (American Statistical Association 1992) pp. 829–834."
+    },
+    {
+      "key": "e_1_3_2_108_2",
+      "unstructured": "W. E. Winkler Improved decision rules in the Fellegi-Sunter model of record linkage in Proceedings of the Section on Survey Research Methods (American Statistical Association 1993) pp. 274–279."
+    },
+    {
+      "key": "e_1_3_2_109_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.1995.10476563"
+    },
+    {
+      "key": "e_1_3_2_110_2",
+      "unstructured": "T. R. Belin A proposed improvement in computer matching techniques in Statistics of Income and Related Administrative Record Research (International Revenue Service 1990) pp. 167–172."
+    },
+    {
+      "key": "e_1_3_2_111_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1007692713085"
+    },
+    {
+      "key": "e_1_3_2_112_2",
+      "unstructured": "W. E. Winkler Machine learning information retrieval and record linkage in Proceedings of the Section on Survey Research Methods (American Statistical Association 2000) pp. 20–29."
+    },
+    {
+      "key": "e_1_3_2_113_2",
+      "unstructured": "W. E. Winkler “Methods for record linkage and Bayesian networks” (Technical Report Statistical Research Division U.S. Census Bureau 2002)."
+    },
+    {
+      "key": "e_1_3_2_114_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1198/016214504000001277"
+    },
+    {
+      "key": "e_1_3_2_115_2",
+      "unstructured": "J. P. H. Wortman “Record linkage methods with applications to causal inference and election voting data ” thesis Duke University (2019)."
+    },
+    {
+      "key": "e_1_3_2_116_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "O. Chapelle S. Bernhard A. Zien Semi-Supervised Learning (The MIT Press 2006).",
+      "DOI": "10.7551/mitpress/9780262033589.001.0001"
+    },
+    {
+      "key": "e_1_3_2_117_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "T. Enamorado Active Learning for Probabilistic Record Linkage (Princeton University 2019).",
+      "DOI": "10.2139/ssrn.3257638"
+    },
+    {
+      "key": "e_1_3_2_118_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Sarawagi A. Bhamidipaty Interactive deduplication using active learning in Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2002) pp. 269–278.",
+      "DOI": "10.1145/775047.775087"
+    },
+    {
+      "key": "e_1_3_2_119_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "K. Bellare S. Iyengar A. G. Parameswaran V. Rastogi Active sampling for entity matching in Proceedings of the 18th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (2012) pp. 1131–1139.",
+      "DOI": "10.1145/2339530.2339707"
+    },
+    {
+      "key": "e_1_3_2_120_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Q. Wang D. Vatsalan P. Christen Efficient interactive training selection for large-scale entity resolution in Advances in Knowledge Discovery and Data Mining (Springer 2015) pp. 562–573.",
+      "DOI": "10.1007/978-3-319-18032-8_44"
+    },
+    {
+      "key": "e_1_3_2_121_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Christen D. Vatsalan Q. Wang Efficient entity resolution with adaptive and interactive training data selection in Proceedings of the IEEE International Conference on Data Mining (IEEE 2015) pp. 727–732.",
+      "DOI": "10.1109/ICDM.2015.63"
+    },
+    {
+      "key": "e_1_3_2_122_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2876473.2876474"
+    },
+    {
+      "key": "e_1_3_2_123_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Kejriwal D. P. Miranker Semi-supervised instance matching using boosted classifiers in Proceedings of the European Semantic Web Conference (Springer 2015) pp. 388–402.",
+      "DOI": "10.1007/978-3-319-18818-8_24"
+    },
+    {
+      "key": "e_1_3_2_124_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2732977.2732982"
+    },
+    {
+      "key": "e_1_3_2_125_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "K. Frisoli B. LeRoy R. Nugent A novel record linkage interface that incorporates group structure to rapidly collect richer labels in Proceedings of the IEEE International Conference on Data Science and Advanced Analytics (IEEE 2019) pp. 580–589.",
+      "DOI": "10.1109/DSAA.2019.00073"
+    },
+    {
+      "key": "e_1_3_2_126_2",
+      "unstructured": "M. Trajtenberg G. Shiff “Identification and mobility of Israeli patenting inventors” (Technical Report Pinhas Sapir Center for Development 2008)."
+    },
+    {
+      "key": "e_1_3_2_127_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Azoulay J. S. G. Zivin B. N. Sampat The diffusion of scientific knowledge across time and space: Evidence from professional transitions for the superstars of medicine The Rate and Direction of Inventive Activity Revisited J. Lerner S. Stern Eds. (University of Chicago Press 2012).",
+      "DOI": "10.3386/w16683"
+    },
+    {
+      "key": "e_1_3_2_128_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1257/jel.20191526"
+    },
+    {
+      "key": "e_1_3_2_129_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/asi.20105"
+    },
+    {
+      "key": "e_1_3_2_130_2",
+      "unstructured": "P. Christen A two-step classification approach to unsupervised record linkage in Proceedings of the Sixth Australasian Conference on Data Mining and Analytics (2007) pp. 111–119."
+    },
+    {
+      "key": "e_1_3_2_131_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Christen Automatic record linkage using seeded nearest neighbour and support vector machine classification in Proceedings of the 14th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2008) pp. 151–159.",
+      "DOI": "10.1145/1401890.1401913"
+    },
+    {
+      "key": "e_1_3_2_132_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.procs.2016.09.306"
+    },
+    {
+      "key": "e_1_3_2_133_2",
+      "unstructured": "M. Ebraheem S. Thirumuruganathan S. Joty M. Ouzzani N. Tang DeepER–Deep entity resolution arXiv:1710.00597 [cs.DB] (2 October 2017)."
+    },
+    {
+      "key": "e_1_3_2_134_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/3236187.3236198"
+    },
+    {
+      "key": "e_1_3_2_135_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "N. Kooli R. Allesiardo E. Pigneul Deep learning based approach for entity resolution in databases in Intelligent Information and Database Systems (Springer International Publishing 2018) pp. 3–12.",
+      "DOI": "10.1007/978-3-319-75420-8_1"
+    },
+    {
+      "key": "e_1_3_2_136_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "J. Kasai K. Qian S. Gurajada Y. Li L. Popa Low-resource deep entity resolution with transfer and active learning in Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (Association for Computational Linguistic 2020) pp. 5851–5861.",
+      "DOI": "10.18653/v1/P19-1586"
+    },
+    {
+      "key": "e_1_3_2_137_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3442200"
+    },
+    {
+      "key": "e_1_3_2_138_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "B. Li W. Wang Y. Sun L. Zhang M. A. Ali Y. Wang GraphER: Token-centric entity resolution with graph convolutional neural networks in Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI 2020) pp. 8172–8179.",
+      "DOI": "10.1609/aaai.v34i05.6330"
+    },
+    {
+      "key": "e_1_3_2_139_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/3431816"
+    },
+    {
+      "key": "e_1_3_2_140_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/3421424.3421431"
+    },
+    {
+      "key": "e_1_3_2_141_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "T. Hastie R. Tibshirani J. Friedman The Elements of Statistical Learning: Data Mining Inference and Prediction (Springer 2001).",
+      "DOI": "10.1007/978-0-387-21606-5"
+    },
+    {
+      "key": "e_1_3_2_142_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.respol.2014.12.010"
+    },
+    {
+      "key": "e_1_3_2_143_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1056/NEJMsa067417"
+    },
+    {
+      "key": "e_1_3_2_144_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1287/orsc.1070.0289"
+    },
+    {
+      "key": "e_1_3_2_145_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Arasu M. Götz R. Kaushik On active learning of record matching packages in Proceedings of the 2010 ACM SIGMOD International Conference on Management of data (Association for Computing Machinery 2010) pp. 783–794.",
+      "DOI": "10.1145/1807167.1807252"
+    },
+    {
+      "key": "e_1_3_2_146_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "W. W. Cohen J. Richman Learning to match and cluster large high-dimensional data sets for data integration in Proceedings of the Eighth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2002) pp. 475–480.",
+      "DOI": "10.1145/775047.775116"
+    },
+    {
+      "key": "e_1_3_2_147_2",
+      "first-page": "1553",
+      "article-title": "A hierarchical Bayesian approach to record linkage and population size problems",
+      "volume": "5",
+      "author": "Tancredi A.",
+      "year": "2011",
+      "unstructured": "A. Tancredi, B. Liseo, A hierarchical Bayesian approach to record linkage and population size problems. Annal. Appl. Stat. 5, 1553–1585 (2011).",
+      "journal-title": "Annal. Appl. Stat."
+    },
+    {
+      "key": "e_1_3_2_148_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. L. Ventura R. Nugent E. R. Fuchs Hierarchical linkage clustering with distributions of distances for large scale record linkage in Privacy in Statistical Databases J. Domingo-Ferrer Ed. (Springer 2014) pp. 283–298.",
+      "DOI": "10.1007/978-3-319-11257-2_22"
+    },
+    {
+      "key": "e_1_3_2_149_2",
+      "first-page": "922",
+      "article-title": "SMERED: A Bayesian approach to graphical record linkage and de-duplication",
+      "volume": "33",
+      "author": "Steorts R. C.",
+      "year": "2014",
+      "unstructured": "R. C. Steorts, R. Hall, S. E. Fienberg, SMERED: A Bayesian approach to graphical record linkage and de-duplication. J. Mach. Learn. Res. 33, 922–930 (2014).",
+      "journal-title": "J. Mach. Learn. Res."
+    },
+    {
+      "key": "e_1_3_2_150_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/15-BA965SI"
+    },
+    {
+      "key": "e_1_3_2_151_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "E. Rahm The case for holistic data integration in Advances in Databases and Information Systems (Springer International Publishing 2016) pp. 11–27.",
+      "DOI": "10.1007/978-3-319-44039-2_2"
+    },
+    {
+      "key": "e_1_3_2_152_2",
+      "unstructured": "G. Zanella B. Betancourt H. Wallach J. Miller A. Zaidi R. C. Steorts Flexible models for microclustering with application to entity resolution in Proceedings of the 30th International Conference on Neural Information Processing Systems (2016) pp. 1425–1433."
+    },
+    {
+      "key": "e_1_3_2_153_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "N. Monath A. Kobren A. Krishnamurthy M. R. Glass A. McCallum Scalable hierarchical clustering with tree grafing in Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2019) pp. 1438–1448.",
+      "DOI": "10.1145/3292500.3330929"
+    },
+    {
+      "key": "e_1_3_2_154_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/01621459.2015.1105807"
+    },
+    {
+      "key": "e_1_3_2_155_2",
+      "unstructured": "J. Han M. Kamber J. Pei Data Mining: Concepts and Techniques (Morgan Kaufmann Publishers 2011)."
+    },
+    {
+      "key": "e_1_3_2_156_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. A. Hernández S. J. Stolfo The merge/purge problem for large databases in Proceedings of the 1995 ACM SIGMOD International Conference on Management of Data (Association for Computing Machinery 1995) pp. 127–138.",
+      "DOI": "10.1145/568271.223807"
+    },
+    {
+      "key": "e_1_3_2_157_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1009761603038"
+    },
+    {
+      "key": "e_1_3_2_158_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/B:MACH.0000033116.57574.95"
+    },
+    {
+      "key": "e_1_3_2_159_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "V. Filkov S. Skiena Integrating microarray data by consensus clustering in Proceedings of the International Conference on Tools with Artificial Intelligence (ICTAI 2003) pp. 418–426.",
+      "DOI": "10.1109/TAI.2003.1250220"
+    },
+    {
+      "key": "e_1_3_2_160_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jcss.2004.10.012"
+    },
+    {
+      "key": "e_1_3_2_161_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1411509.1411513"
+    },
+    {
+      "key": "e_1_3_2_162_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1217299.1217303"
+    },
+    {
+      "key": "e_1_3_2_163_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BF02289588"
+    },
+    {
+      "key": "e_1_3_2_164_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "I. Bhattacharya L. Getoor A latent dirichlet model for unsupervised entity resolution in Proceedings of the Sixth SIAM International Conference on Data Mining (Society for Industrial and Applied Mathematics 2006) pp. 47–58.",
+      "DOI": "10.1137/1.9781611972764.5"
+    },
+    {
+      "key": "e_1_3_2_165_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2307/2982975"
+    },
+    {
+      "key": "e_1_3_2_166_2",
+      "first-page": "993",
+      "article-title": "Latent Dirichlet allocation",
+      "volume": "3",
+      "author": "Blei D. M.",
+      "year": "2003",
+      "unstructured": "D. M. Blei, A. Y. Ng, M. I. Jordan, Latent Dirichlet allocation. J. Mach. Learn. Res. 3, 993–1022 (2003).",
+      "journal-title": "J. Mach. Learn. Res."
+    },
+    {
+      "key": "e_1_3_2_167_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/aos/1176342871"
+    },
+    {
+      "key": "e_1_3_2_168_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/03610919408813196"
+    },
+    {
+      "key": "e_1_3_2_169_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. N. MacEachern Computational methods for mixture of Dirichlet process models in Practical Nonparametric and Semiparametric Bayesian Statistics (Springer 1998) pp. 23–43.",
+      "DOI": "10.1007/978-1-4612-1732-9_2"
+    },
+    {
+      "key": "e_1_3_2_170_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BF01205234"
+    },
+    {
+      "key": "e_1_3_2_171_2",
+      "first-page": "855",
+      "article-title": "The two-parameter Poisson-Dirichlet distribution derived from a stable subordinator",
+      "volume": "25",
+      "author": "Pitman J.",
+      "year": "1997",
+      "unstructured": "J. Pitman, M. Yor, The two-parameter Poisson-Dirichlet distribution derived from a stable subordinator. Annal. Probability 25, 855–900 (1997).",
+      "journal-title": "Annal. Probability"
+    },
+    {
+      "key": "e_1_3_2_172_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1112/jlms/s2-18.2.374"
+    },
+    {
+      "key": "e_1_3_2_173_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1214/13-BA823"
+    },
+    {
+      "key": "e_1_3_2_174_2",
+      "unstructured": "R. C. Steorts M. Barnes W. Neiswanger Performance bounds for graphical record linkage in Proceedings of the 20th International Conference on Artificial Intelligence and Statistics (2017) vol. 54 pp. 298–306."
+    },
+    {
+      "key": "e_1_3_2_175_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/biomet/asy003"
+    },
+    {
+      "key": "e_1_3_2_176_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1456650.1456651"
+    },
+    {
+      "key": "e_1_3_2_177_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Cohen Y. Sagiv An incremental algorithm for computing ranked full disjunctions in Proceedings of the Twenty-Fourth ACM SIGMOD-SIGACT-SIGART Symposium on Principles of Database Systems (Association for Computing Machinery 2005) pp. 98–107.",
+      "DOI": "10.1145/1065167.1065180"
+    },
+    {
+      "key": "e_1_3_2_178_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "L. L. Yan M. T. Ozsu Conflict tolerant queries in aurora in Proceedings Fourth IFCIS International Conference on Cooperative Information Systems (IEEE 1999) pp. 279–290.",
+      "DOI": "10.1109/COOPIS.1999.792177"
+    },
+    {
+      "key": "e_1_3_2_179_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Bohannon W. Fan M. Flaster R. Rastogi A cost-based model and effective heuristic for repairing constraints by value modification in Proceedings of the 2005 ACM SIGMOD International Conference on Management of Data (Association for Computing Machinery 2005) pp. 143–154.",
+      "DOI": "10.1145/1066157.1066175"
+    },
+    {
+      "key": "e_1_3_2_180_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Culotta M. Wick R. Hall M. Marzilli A. McCallum Canonicalization of database records using adaptive similarity measures in Proceedings of the 13th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2007) pp. 201–209.",
+      "DOI": "10.1145/1281192.1281217"
+    },
+    {
+      "key": "e_1_3_2_181_2",
+      "first-page": "664",
+      "article-title": "A unified framework for de-duplication and population size estimation (invited discussion)",
+      "volume": "15",
+      "author": "Murray J.",
+      "year": "2020",
+      "unstructured": "J. Murray, A unified framework for de-duplication and population size estimation (invited discussion). Bayesian Anal. 15, 664–669 (2020).",
+      "journal-title": "Bayesian Anal."
+    },
+    {
+      "key": "e_1_3_2_182_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "J. Lane V. Stodden S. Bender H. Nissenbaum Privacy Big Data and the Public Good: Frameworks for Engagement (Cambridge Univ. Press 2014).",
+      "DOI": "10.1017/CBO9781107590205"
+    },
+    {
+      "key": "e_1_3_2_183_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Narayanan V. Shmatikov Robust de-anonymization of large sparse datasets in Proceedings of the IEEE Symposium on Security and Privacy (IEEE 2008) pp. 111–125.",
+      "DOI": "10.1109/SP.2008.33"
+    },
+    {
+      "key": "e_1_3_2_184_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1142/S0218488502001648"
+    },
+    {
+      "key": "e_1_3_2_185_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "S. Fienberg A. Slavković in Data Privacy and Confidentiality (International Encyclopedia of Statistical Science Springer-Verlag 2011) pp. 342–345.",
+      "DOI": "10.1007/978-3-642-04898-2_202"
+    },
+    {
+      "key": "e_1_3_2_186_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "A. Hundepool J. Domingo-Ferrer L. Franconi S. Giessing E. S. Nordholt K. Spicer P. P. de Wolf Statistical Disclosure Control (John Wiley & Sons 2012).",
+      "DOI": "10.1002/9781118348239"
+    },
+    {
+      "key": "e_1_3_2_187_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "C. Dwork F. McSherry K. Nissim A. Smith Calibrating noise to sensitivity in private data analysis in Theory of Cryptography Conference S. Halevi T. Rabin Eds. (Springer 2006) pp. 265–284.",
+      "DOI": "10.1007/11681878_14"
+    },
+    {
+      "key": "e_1_3_2_188_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "R. Hall S. E. Fienberg Privacy-preserving record linkage in Proceedings of the 2010 International Conference on Privacy in Statistical Databases (Springer 2010) pp. 269–283.",
+      "DOI": "10.1007/978-3-642-15838-4_24"
+    },
+    {
+      "key": "e_1_3_2_189_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.is.2012.11.005"
+    },
+    {
+      "key": "e_1_3_2_190_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "D. Vatsalan Z. Sehili P. Christen E. Rahm Privacy-preserving record linkage for big data: Current approaches and research challenges in Handbook of Big Data Technologies A. Y. Zomaya S. Sakr Eds. (Springer International Publishing 2017) pp. 851–895.",
+      "DOI": "10.1007/978-3-319-49340-4_25"
+    },
+    {
+      "key": "e_1_3_2_191_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s00778-006-0008-z"
+    },
+    {
+      "key": "e_1_3_2_192_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s00778-010-0214-6"
+    },
+    {
+      "key": "e_1_3_2_193_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TDSC.2013.22"
+    },
+    {
+      "key": "e_1_3_2_194_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2019.2906610"
+    },
+    {
+      "key": "e_1_3_2_195_2",
+      "unstructured": "M. Wilke E. Rahm Towards multi-modal entity resolution for product matching in Proceedings of the 32nd GI-Workshop on Foundations of Databases ( Grundlagen von Datenbanken ) (GVDB 2021)."
+    },
+    {
+      "key": "e_1_3_2_196_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.datak.2009.10.003"
+    },
+    {
+      "key": "e_1_3_2_197_2",
+      "unstructured": "F. Gregg D. Eder Dedupe (2015); https://github.com/dedupeio/dedupe [retrieved 29 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_198_2",
+      "unstructured": "J. de Bruin recordlinkage 0.14 (2019); https://pypi.org/project/recordlinkage/ [released 1 December 2019; retrieved 29 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_199_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "P. Christen Febrl—An open source data cleaning deduplication and record linkage system with a graphical user interface in Proceedings of the 14th ACM International Conference on Knowledge Discovery and Data Mining (Association for Computing Machinery 2008) pp. 1065–1068.",
+      "DOI": "10.1145/1401890.1402020"
+    },
+    {
+      "key": "e_1_3_2_200_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Y. Govind P. Konda P. Suganthan P. Martinkus P. Nagarajan H. Li A. Soundararajan S. Mudgal J. R. Ballard Entity matching meets data science: A progress report from the magellan project in Proceedings of the 2019 International Conference on Management of Data (Association for Computing Machinery 2019) pp. 389–403.",
+      "DOI": "10.1145/3299869.3314042"
+    },
+    {
+      "key": "e_1_3_2_201_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/2994509.2994535"
+    },
+    {
+      "key": "e_1_3_2_202_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.32614/RJ-2010-017"
+    },
+    {
+      "key": "e_1_3_2_203_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "M. Friedrichs C. Webster B. Marsh J. Dice S. Lee fedmatch: Fast flexible and user-friendly record linkage methods (2021). R package version 2.0.3.",
+      "DOI": "10.32614/CRAN.package.fedmatch"
+    },
+    {
+      "key": "e_1_3_2_204_2",
+      "unstructured": "R. Linacre S. Lindsay splink: Probabilistic record linkage and deduplication at scale; https://github.com/moj-analytical-services/splink (2021)."
+    },
+    {
+      "key": "e_1_3_2_205_2",
+      "unstructured": "L. Gagliardelli G. Simonini D. Beneventano S. Bergamaschi Sparker: Scaling entity resolution in spark in EDBT 2019: 22nd International Conference on Extending Database Technology (PRT 2019)."
+    },
+    {
+      "key": "e_1_3_2_206_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.14778/3229863.3236232"
+    },
+    {
+      "key": "e_1_3_2_207_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "K.-N. Tran D. Vatsalan P. Christen Geco: An online personal data generator and corruptor in Proceedings of the 22nd ACM International Conference on Information & Knowledge Management (Association for Computing Machinery 2013) pp. 2473–2476.",
+      "DOI": "10.1145/2505515.2508207"
+    },
+    {
+      "key": "e_1_3_2_208_2",
+      "unstructured": "M. Bilenko R. Mooney Riddle: Repository of information on duplicate detection record linkage and identity uncertainty (2006); www.cs.utexas.edu/users/ml/riddle/ [retrieved 29 July 2020]."
+    },
+    {
+      "key": "e_1_3_2_209_2",
+      "unstructured": "B. Spahn “Before the American voter ” thesis Stanford University (2019)."
+    },
+    {
+      "key": "e_1_3_2_210_2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2011.13"
+    },
+    {
+      "key": "e_1_3_2_211_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "V. I. Torvik N. R. Smalheiser Author-ity 2009—Pubmed author name disambiguated dataset (2009).",
+      "DOI": "10.1002/aris.2009.1440430113"
+    },
+    {
+      "key": "e_1_3_2_212_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "J. Martin Montull Inspire: Managing metadata in a global digital library for high-energy physics in Research Conference on Metadata and Semantic Research (Springer 2011) pp. 269–274.",
+      "DOI": "10.1007/978-3-642-24731-6_28"
+    }
+  ],
+  "container-title": [
+    "Science Advances"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.science.org/doi/pdf/10.1126/sciadv.abi8021",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2024,
+        9,
+        21
+      ]
+    ],
+    "date-time": "2024-09-21T01:06:50Z",
+    "timestamp": 1726880810000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.science.org/doi/10.1126/sciadv.abi8021"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2022,
+        3,
+        25
+      ]
+    ]
+  },
+  "references-count": 211,
+  "journal-issue": {
+    "issue": "12",
+    "published-print": {
+      "date-parts": [
+        [
+          2022,
+          3,
+          25
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "10.1126/sciadv.abi8021"
+  ],
+  "URL": "https://doi.org/10.1126/sciadv.abi8021",
+  "relation": {},
+  "ISSN": [
+    "2375-2548"
+  ],
+  "issn-type": [
+    {
+      "value": "2375-2548",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2022,
+        3,
+        25
+      ]
+    ]
+  },
+  "article-number": "eabi8021"
+}

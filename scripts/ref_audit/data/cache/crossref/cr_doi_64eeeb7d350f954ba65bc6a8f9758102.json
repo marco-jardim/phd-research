@@ -1,0 +1,221 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        7
+      ]
+    ],
+    "date-time": "2026-02-07T09:04:08Z",
+    "timestamp": 1770455048209,
+    "version": "3.49.0"
+  },
+  "reference-count": 0,
+  "publisher": "Swansea University",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2018,
+            11,
+            14
+          ]
+        ],
+        "date-time": "2018-11-14T00:00:00Z",
+        "timestamp": 1542153600000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IJPDS"
+  ],
+  "abstract": "<jats:p>IntroductionIn Brazil, the National Health System (SUS) provides healthcare to the public. The system hasmultiple administrative databases; the major databases record hospital (SIH) and outpatient (SIA)procedures. Epidemiological information is collected for all populations in subsystems, such as mor-tality (SIM), live births (SINASC) and diseases of compulsory declaration (SINAN). Each subsystemhas its own information system, which is able to provide information about consultations, clinicalinformation and medicines dispensed. However, these systems are not linked, thereby preventingindividual-centred analysis.\r\nObjectiveTo describe the methods and results of parameter setting that are needed to execute the probabilisticdeduplication of large administrative and epidemiological databases in Brazil and to create a NationalHealth Database Centred on the individual.\r\nMethodsThis paper shows the results of a record linkage model to integrate data from SIH, SIA, SIM, andSINAN, which have different formats and attributes between them and over time. These data consistof 1.3 billion records from 2000-2015. Probabilistic and deterministic record linkages were used todeduplicate these data. The Kappa statistic and clerical review were used to ensure the quality ofthe linkage. The graph algorithm and depth-first search were used to generate the identifiers.\r\nResultsThe deterministic deduplication process resulted in a database with 403,113,527 possible uniqueindividuals. After the probabilistic deduplication process of the former database was performed,159,703,805 unique individuals were identified. This result had an estimated a false positive errorrate of 3.3%, and the false negative error was estimated at 12.3%.\r\nConclusionsThe National Health Database centred on the individual was generated and will allow researchersto use real-world evidence to conduct clinical, epidemiological, economic and other studies. Thisdatabase represents a significant cohort, spanning 15 years of historical data and preserving patientprivacy. The success of the process described will allow repeating and appending the data for futureyears and enable important studies to promote SUS efficiency and provide better treatments forpatients.\r\nKeywordsData linkage, record linkage, Brazilian health database, SUS deduplication</jats:p>",
+  "DOI": "10.23889/ijpds.v3i1.446",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2018,
+        11,
+        14
+      ]
+    ],
+    "date-time": "2018-11-14T16:23:35Z",
+    "timestamp": 1542212615000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 23,
+  "title": [
+    "Building the National Database of Health Centred on the Individual: Administrative and Epidemiological Record Linkage - Brazil, 2000-2015"
+  ],
+  "prefix": "10.23889",
+  "volume": "3",
+  "author": [
+    {
+      "given": "Augusto Afonso Guerra",
+      "family": "Junior",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Ramon Gonçalves",
+      "family": "Pereira",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Eli Iola",
+      "family": "Gurgel",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Mariangela",
+      "family": "Cherchiglia",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Leonardo Vinicius",
+      "family": "Dias",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Juliano",
+      "family": "Ávila",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Núbia",
+      "family": "Santos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Afonso",
+      "family": "Reis",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Francisco Assis",
+      "family": "Acurcio",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Wagner Meira",
+      "family": "Junior",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "9980",
+  "published-online": {
+    "date-parts": [
+      [
+        2018,
+        11,
+        14
+      ]
+    ]
+  },
+  "container-title": [
+    "International Journal of Population Data Science"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://ijpds.org/article/download/446/1020",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/446/2069",
+      "content-type": "application/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/446/1020",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2020,
+        11,
+        26
+      ]
+    ],
+    "date-time": "2020-11-26T17:43:45Z",
+    "timestamp": 1606412625000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ijpds.org/article/view/446"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2018,
+        11,
+        14
+      ]
+    ]
+  },
+  "references-count": 0,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2018,
+          1,
+          10
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.23889/ijpds.v3i1.446",
+  "relation": {},
+  "ISSN": [
+    "2399-4908"
+  ],
+  "issn-type": [
+    {
+      "value": "2399-4908",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2018,
+        11,
+        14
+      ]
+    ]
+  }
+}

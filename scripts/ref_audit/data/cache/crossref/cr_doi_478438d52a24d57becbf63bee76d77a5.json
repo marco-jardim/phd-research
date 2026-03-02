@@ -1,0 +1,199 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        5,
+        14
+      ]
+    ],
+    "date-time": "2025-05-14T08:00:49Z",
+    "timestamp": 1747209649641,
+    "version": "3.40.5"
+  },
+  "reference-count": 0,
+  "publisher": "Swansea University",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            1
+          ]
+        ],
+        "date-time": "2024-07-01T00:00:00Z",
+        "timestamp": 1719792000000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "http://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IJPDS"
+  ],
+  "abstract": "<jats:p>IntroductionCareful development and evaluation of data linkage methods is limited by researcher access to personal identifiers. One solution is to generate synthetic identifiers, which do not pose equivalent privacy concerns, but can form a 'gold-standard' linkage algorithm training dataset. Such data could help inform choices about appropriate linkage strategies in different settings.\nObjectivesWe aimed to develop and demonstrate a framework for generating synthetic identifier datasets to support development and evaluation of data linkage methods. We evaluated whether replicating associations between attributes and identifiers improved the utility of the synthetic data for assessing linkage error.\nMethodsWe determined the steps required to generate synthetic identifiers that replicate the properties of real-world data collection. We then generated synthetic versions of a large UK cohort study (the Avon Longitudinal Study of Parents and Children; ALSPAC), according to the quality and completeness of identifiers recorded over several waves of the cohort. We evaluated the utility of the synthetic identifier data in terms of assessing linkage quality (false matches and missed matches).\nResultsComparing data from two collection points in ALSPAC, we found within-person disagreement in identifiers (differences in recording due to both natural change and non-valid entries) in 18% of surnames and 12% of forenames. Rates of disagreement varied by maternal age and ethnic group. Synthetic data provided accurate estimates of linkage quality metrics compared with the original data (within 0.13-0.55% for missed matches and 0.00-0.04% for false matches). Incorporating associations between identifier errors and maternal age/ethnicity improved synthetic data utility.\nConclusionsWe show that replicating dependencies between attribute values (e.g. ethnicity), values of identifiers (e.g. name), identifier disagreements (e.g. missing values, errors or changes over time), and their patterns and distribution structure enables generation of realistic synthetic data that can be used for robust evaluation of linkage methods.</jats:p>",
+  "DOI": "10.23889/ijpds.v9i1.2389",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        1
+      ]
+    ],
+    "date-time": "2024-07-01T12:51:49Z",
+    "timestamp": 1719838309000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Generating synthetic identifiers to support development and evaluation of data linkage methods"
+  ],
+  "prefix": "10.23889",
+  "volume": "9",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0003-1888-4660",
+      "authenticated-orcid": false,
+      "given": "Joseph",
+      "family": "Lam",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Andy",
+      "family": "Boyd",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Robin",
+      "family": "Linacre",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Ruth",
+      "family": "Blackburn",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Katie",
+      "family": "Harron",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "9980",
+  "published-online": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        1
+      ]
+    ]
+  },
+  "container-title": [
+    "International Journal of Population Data Science"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://ijpds.org/article/download/2389/5175",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2389/5176",
+      "content-type": "text/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2389/5177",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/2389/5175",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        1
+      ]
+    ],
+    "date-time": "2024-07-01T12:51:49Z",
+    "timestamp": 1719838309000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ijpds.org/article/view/2389"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        1
+      ]
+    ]
+  },
+  "references-count": 0,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          1,
+          9
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.23889/ijpds.v9i1.2389",
+  "relation": {},
+  "ISSN": [
+    "2399-4908"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "2399-4908"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        1
+      ]
+    ]
+  }
+}

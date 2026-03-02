@@ -1,0 +1,4381 @@
+[
+  {
+    "id": "https://openalex.org/W2113164419",
+    "doi": "https://doi.org/10.1197/jamia.m1888",
+    "title": "HL7 Clinical Document Architecture, Release 2",
+    "display_name": "HL7 Clinical Document Architecture, Release 2",
+    "relevance_score": 6120.4336,
+    "publication_year": 2005,
+    "publication_date": "2005-10-13",
+    "ids": {
+      "openalex": "https://openalex.org/W2113164419",
+      "doi": "https://doi.org/10.1197/jamia.m1888",
+      "mag": "2113164419",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/16221939"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1197/jamia.m1888",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1197/jamia.m1888",
+      "pdf_url": "https://academic.oup.com/jamia/article-pdf/13/1/30/2343683/13-1-30.pdf",
+      "source": {
+        "id": "https://openalex.org/S129839026",
+        "display_name": "Journal of the American Medical Informatics Association",
+        "issn_l": "1067-5027",
+        "issn": [
+          "1067-5027",
+          "1527-974X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310311648",
+        "host_organization_name": "Oxford University Press",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310311648",
+          "https://openalex.org/P4310311647"
+        ],
+        "host_organization_lineage_names": [
+          "Oxford University Press",
+          "University of Oxford"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of the American Medical Informatics Association",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "bronze",
+      "oa_url": "https://academic.oup.com/jamia/article-pdf/13/1/30/2343683/13-1-30.pdf",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5050505202",
+          "display_name": "Robert H. Dolin",
+          "orcid": "https://orcid.org/0000-0002-6235-6964"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "R. H. Dolin",
+        "raw_affiliation_strings": [
+          "Kaiser Permanente, Pasadena, CA, USA. robert.h.dolin@kp.org",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Mayo Clinic, Rochester, MN (CB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Consultant, Laguna Beach, CA (SB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Kaiser Permanente, Pasadena, CA, USA. robert.h.dolin@kp.org",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5048182612",
+          "display_name": "Liora Alschuler",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "L. Alschuler",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Consultant, Laguna Beach, CA (SB)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Mayo Clinic, Rochester, MN (CB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5038310964",
+          "display_name": "S. Boyer",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "S. Boyer",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Mayo Clinic, Rochester, MN (CB)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "Consultant, Laguna Beach, CA (SB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5006891127",
+          "display_name": "Calvin E Beebe",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "C. Beebe",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Consultant, Laguna Beach, CA (SB)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Mayo Clinic, Rochester, MN (CB)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5058294680",
+          "display_name": "Fred M. Behlen",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "F. M. Behlen",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "Consultant, Laguna Beach, CA (SB)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Mayo Clinic, Rochester, MN (CB)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5061469123",
+          "display_name": "Paul V. Biron",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "P. V. Biron",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Consultant, Laguna Beach, CA (SB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+          "Mayo Clinic, Rochester, MN (CB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5081668763",
+          "display_name": "Amnon Shabo",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210167297",
+            "display_name": "IBM Research - Haifa",
+            "ror": "https://ror.org/05rw9t746",
+            "country_code": "IL",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I1341412227",
+              "https://openalex.org/I4210114115",
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210091423",
+            "display_name": "Laitek (United States)",
+            "ror": "https://ror.org/00crrhx33",
+            "country_code": "US",
+            "type": "company",
+            "lineage": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I1343052199",
+            "display_name": "Kaiser Permanente",
+            "ror": "https://ror.org/00t60zh31",
+            "country_code": "US",
+            "type": "nonprofit",
+            "lineage": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "id": "https://openalex.org/I4210125099",
+            "display_name": "Mayo Clinic in Arizona",
+            "ror": "https://ror.org/03jp40720",
+            "country_code": "US",
+            "type": "healthcare",
+            "lineage": [
+              "https://openalex.org/I1330342723",
+              "https://openalex.org/I4210125099"
+            ]
+          }
+        ],
+        "countries": [
+          "IL",
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "A. Shabo (Shvo)",
+        "raw_affiliation_strings": [
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Consultant, Laguna Beach, CA (SB)",
+          "Mayo Clinic, Rochester, MN (CB)",
+          "LAI Technology, Homewood, IL (FMB)",
+          "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+          "Alschuler Associates, LLC, East Thetford, VT (LA)",
+          "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB); Alschuler Associates, LLC, East Thetford, VT (LA); Consultant, Laguna Beach, CA (SB); Mayo Clinic, Rochester, MN (CB); LAI Technology, Homewood, IL (FMB); Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Consultant, Laguna Beach, CA (SB)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Mayo Clinic, Rochester, MN (CB)",
+            "institution_ids": [
+              "https://openalex.org/I4210125099"
+            ]
+          },
+          {
+            "raw_affiliation_string": "LAI Technology, Homewood, IL (FMB)",
+            "institution_ids": [
+              "https://openalex.org/I4210091423"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Amnon Shabo (Shvo), IBM Haifa Research Lab, Haifa, Israel (AS)",
+            "institution_ids": [
+              "https://openalex.org/I4210167297"
+            ]
+          },
+          {
+            "raw_affiliation_string": "Alschuler Associates, LLC, East Thetford, VT (LA)",
+            "institution_ids": []
+          },
+          {
+            "raw_affiliation_string": "Affiliations of the authors: Kaiser Permanente, Pasadena, CA (RHD, PVB)",
+            "institution_ids": [
+              "https://openalex.org/I1343052199"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 2,
+    "institutions_distinct_count": 7,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5050505202"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I4210091423",
+      "https://openalex.org/I4210125099",
+      "https://openalex.org/I1343052199",
+      "https://openalex.org/I4210167297"
+    ],
+    "apc_list": {
+      "value": 3967,
+      "currency": "USD",
+      "value_usd": 3967
+    },
+    "apc_paid": null,
+    "fwci": 14.94263167,
+    "has_fulltext": false,
+    "cited_by_count": 757,
+    "citation_normalized_percentile": {
+      "value": 0.99418805,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 99,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "13",
+      "issue": "1",
+      "first_page": "30",
+      "last_page": "39"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11710",
+      "display_name": "Biomedical Text Mining and Ontologies",
+      "score": 0.9979000091552734,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1312",
+        "display_name": "Molecular Biology"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/13",
+        "display_name": "Biochemistry, Genetics and Molecular Biology"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/1",
+        "display_name": "Life Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11710",
+        "display_name": "Biomedical Text Mining and Ontologies",
+        "score": 0.9979000091552734,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1312",
+          "display_name": "Molecular Biology"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/13",
+          "display_name": "Biochemistry, Genetics and Molecular Biology"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/1",
+          "display_name": "Life Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10350",
+        "display_name": "Electronic Health Records Systems",
+        "score": 0.9861999750137329,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10215",
+        "display_name": "Semantic Web and Ontologies",
+        "score": 0.9854000210762024,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.7994909286499023
+      },
+      {
+        "id": "https://openalex.org/keywords/markup-language",
+        "display_name": "Markup language",
+        "score": 0.6108382344245911
+      },
+      {
+        "id": "https://openalex.org/keywords/xml",
+        "display_name": "XML",
+        "score": 0.6011427044868469
+      },
+      {
+        "id": "https://openalex.org/keywords/document-type-definition",
+        "display_name": "Document type definition",
+        "score": 0.589555025100708
+      },
+      {
+        "id": "https://openalex.org/keywords/interoperability",
+        "display_name": "Interoperability",
+        "score": 0.5154829621315002
+      },
+      {
+        "id": "https://openalex.org/keywords/sgml",
+        "display_name": "SGML",
+        "score": 0.47811856865882874
+      },
+      {
+        "id": "https://openalex.org/keywords/terminology",
+        "display_name": "Terminology",
+        "score": 0.46210038661956787
+      },
+      {
+        "id": "https://openalex.org/keywords/xhtml",
+        "display_name": "XHTML",
+        "score": 0.46009984612464905
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.4559517502784729
+      },
+      {
+        "id": "https://openalex.org/keywords/information-retrieval",
+        "display_name": "Information retrieval",
+        "score": 0.44000065326690674
+      },
+      {
+        "id": "https://openalex.org/keywords/header",
+        "display_name": "Header",
+        "score": 0.43439286947250366
+      },
+      {
+        "id": "https://openalex.org/keywords/document-structure-description",
+        "display_name": "Document Structure Description",
+        "score": 0.39997047185897827
+      },
+      {
+        "id": "https://openalex.org/keywords/linguistics",
+        "display_name": "Linguistics",
+        "score": 0.20094940066337585
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7994909286499023
+      },
+      {
+        "id": "https://openalex.org/C45874996",
+        "wikidata": "https://www.wikidata.org/wiki/Q37045",
+        "display_name": "Markup language",
+        "level": 3,
+        "score": 0.6108382344245911
+      },
+      {
+        "id": "https://openalex.org/C8797682",
+        "wikidata": "https://www.wikidata.org/wiki/Q2115",
+        "display_name": "XML",
+        "level": 2,
+        "score": 0.6011427044868469
+      },
+      {
+        "id": "https://openalex.org/C84314905",
+        "wikidata": "https://www.wikidata.org/wiki/Q212327",
+        "display_name": "Document type definition",
+        "level": 4,
+        "score": 0.589555025100708
+      },
+      {
+        "id": "https://openalex.org/C20136886",
+        "wikidata": "https://www.wikidata.org/wiki/Q749647",
+        "display_name": "Interoperability",
+        "level": 2,
+        "score": 0.5154829621315002
+      },
+      {
+        "id": "https://openalex.org/C62701983",
+        "wikidata": "https://www.wikidata.org/wiki/Q207819",
+        "display_name": "SGML",
+        "level": 4,
+        "score": 0.47811856865882874
+      },
+      {
+        "id": "https://openalex.org/C547195049",
+        "wikidata": "https://www.wikidata.org/wiki/Q1725664",
+        "display_name": "Terminology",
+        "level": 2,
+        "score": 0.46210038661956787
+      },
+      {
+        "id": "https://openalex.org/C189139006",
+        "wikidata": "https://www.wikidata.org/wiki/Q166074",
+        "display_name": "XHTML",
+        "level": 4,
+        "score": 0.46009984612464905
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.4559517502784729
+      },
+      {
+        "id": "https://openalex.org/C23123220",
+        "wikidata": "https://www.wikidata.org/wiki/Q816826",
+        "display_name": "Information retrieval",
+        "level": 1,
+        "score": 0.44000065326690674
+      },
+      {
+        "id": "https://openalex.org/C48105269",
+        "wikidata": "https://www.wikidata.org/wiki/Q1141160",
+        "display_name": "Header",
+        "level": 2,
+        "score": 0.43439286947250366
+      },
+      {
+        "id": "https://openalex.org/C68699486",
+        "wikidata": "https://www.wikidata.org/wiki/Q265904",
+        "display_name": "Document Structure Description",
+        "level": 3,
+        "score": 0.39997047185897827
+      },
+      {
+        "id": "https://openalex.org/C41895202",
+        "wikidata": "https://www.wikidata.org/wiki/Q8162",
+        "display_name": "Linguistics",
+        "level": 1,
+        "score": 0.20094940066337585
+      },
+      {
+        "id": "https://openalex.org/C138885662",
+        "wikidata": "https://www.wikidata.org/wiki/Q5891",
+        "display_name": "Philosophy",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C31258907",
+        "wikidata": "https://www.wikidata.org/wiki/Q1301371",
+        "display_name": "Computer network",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011381",
+        "descriptor_name": "Programming Languages",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011381",
+        "descriptor_name": "Programming Languages",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011381",
+        "descriptor_name": "Programming Languages",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011381",
+        "descriptor_name": "Programming Languages",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D011381",
+        "descriptor_name": "Programming Languages",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": true
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D009626",
+        "descriptor_name": "Terminology as Topic",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      }
+    ],
+    "locations_count": 3,
+    "locations": [
+      {
+        "id": "doi:10.1197/jamia.m1888",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1197/jamia.m1888",
+        "pdf_url": "https://academic.oup.com/jamia/article-pdf/13/1/30/2343683/13-1-30.pdf",
+        "source": {
+          "id": "https://openalex.org/S129839026",
+          "display_name": "Journal of the American Medical Informatics Association",
+          "issn_l": "1067-5027",
+          "issn": [
+            "1067-5027",
+            "1527-974X"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310311648",
+          "host_organization_name": "Oxford University Press",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310311648",
+            "https://openalex.org/P4310311647"
+          ],
+          "host_organization_lineage_names": [
+            "Oxford University Press",
+            "University of Oxford"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of the American Medical Informatics Association",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmid:16221939",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/16221939",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of the American Medical Informatics Association : JAMIA",
+        "raw_type": null
+      },
+      {
+        "id": "pmh:oai:europepmc.org:378653",
+        "is_oa": false,
+        "landing_page_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/1380194",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400806",
+          "display_name": "Europe PMC (PubMed Central)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1303153112",
+          "host_organization_name": "European Bioinformatics Institute",
+          "host_organization_lineage": [
+            "https://openalex.org/I1303153112"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": null,
+        "raw_type": "Text"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1197/jamia.m1888",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1197/jamia.m1888",
+      "pdf_url": "https://academic.oup.com/jamia/article-pdf/13/1/30/2343683/13-1-30.pdf",
+      "source": {
+        "id": "https://openalex.org/S129839026",
+        "display_name": "Journal of the American Medical Informatics Association",
+        "issn_l": "1067-5027",
+        "issn": [
+          "1067-5027",
+          "1527-974X"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310311648",
+        "host_organization_name": "Oxford University Press",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310311648",
+          "https://openalex.org/P4310311647"
+        ],
+        "host_organization_lineage_names": [
+          "Oxford University Press",
+          "University of Oxford"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of the American Medical Informatics Association",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.4399999976158142,
+        "id": "https://metadata.un.org/sdg/17",
+        "display_name": "Partnerships for the goals"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": true,
+      "grobid_xml": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2113164419.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2113164419.grobid-xml"
+    },
+    "referenced_works_count": 26,
+    "referenced_works": [
+      "https://openalex.org/W70112027",
+      "https://openalex.org/W84078560",
+      "https://openalex.org/W98682895",
+      "https://openalex.org/W202643521",
+      "https://openalex.org/W1534442584",
+      "https://openalex.org/W1612751656",
+      "https://openalex.org/W1889441024",
+      "https://openalex.org/W1898396773",
+      "https://openalex.org/W1965014786",
+      "https://openalex.org/W2039606826",
+      "https://openalex.org/W2069726734",
+      "https://openalex.org/W2131051411",
+      "https://openalex.org/W2135696570",
+      "https://openalex.org/W2147086157",
+      "https://openalex.org/W2147870804",
+      "https://openalex.org/W2404907740",
+      "https://openalex.org/W2410442435",
+      "https://openalex.org/W2412389806",
+      "https://openalex.org/W2414251848",
+      "https://openalex.org/W2414370927",
+      "https://openalex.org/W2417079427",
+      "https://openalex.org/W2438556836",
+      "https://openalex.org/W2555756618",
+      "https://openalex.org/W2610165156",
+      "https://openalex.org/W2626313283",
+      "https://openalex.org/W2791634749"
+    ],
+    "related_works": [
+      "https://openalex.org/W12825674",
+      "https://openalex.org/W2768131452",
+      "https://openalex.org/W2044641582",
+      "https://openalex.org/W4297684908",
+      "https://openalex.org/W1831550526",
+      "https://openalex.org/W4232022739",
+      "https://openalex.org/W2099020626",
+      "https://openalex.org/W78230010",
+      "https://openalex.org/W1585629682",
+      "https://openalex.org/W4244715874"
+    ],
+    "abstract_inverted_index": {
+      "Clinical": [
+        0
+      ],
+      "Document": [
+        1
+      ],
+      "Architecture,": [
+        2
+      ],
+      "Release": [
+        3,
+        35
+      ],
+      "One": [
+        4
+      ],
+      "(CDA": [
+        5,
+        37
+      ],
+      "R1),": [
+        6
+      ],
+      "became": [
+        7,
+        39
+      ],
+      "an": [
+        8,
+        40
+      ],
+      "American": [
+        9
+      ],
+      "National": [
+        10
+      ],
+      "Standards": [
+        11
+      ],
+      "Institute": [
+        12
+      ],
+      "(ANSI)-approved": [
+        13
+      ],
+      "HL7": [
+        14,
+        42
+      ],
+      "Standard": [
+        15,
+        43
+      ],
+      "in": [
+        16,
+        44,
+        69,
+        146
+      ],
+      "November": [
+        17
+      ],
+      "2000,": [
+        18
+      ],
+      "representing": [
+        19
+      ],
+      "the": [
+        20,
+        25,
+        49,
+        55,
+        61,
+        70,
+        86,
+        103,
+        139,
+        159,
+        172,
+        199,
+        220
+      ],
+      "first": [
+        21
+      ],
+      "specification": [
+        22
+      ],
+      "derived": [
+        23
+      ],
+      "from": [
+        24,
+        158
+      ],
+      "Health": [
+        26
+      ],
+      "Level": [
+        27
+      ],
+      "7": [
+        28
+      ],
+      "(HL7)": [
+        29
+      ],
+      "Reference": [
+        30
+      ],
+      "Information": [
+        31
+      ],
+      "Model": [
+        32
+      ],
+      "(RIM).": [
+        33
+      ],
+      "CDA,": [
+        34
+      ],
+      "Two": [
+        36
+      ],
+      "R2),": [
+        38
+      ],
+      "ANSI-approved": [
+        41
+      ],
+      "May": [
+        45
+      ],
+      "2005": [
+        46
+      ],
+      "and": [
+        47,
+        88,
+        113,
+        123,
+        134,
+        151,
+        183,
+        192,
+        232
+      ],
+      "is": [
+        48,
+        57,
+        79,
+        110,
+        168,
+        240
+      ],
+      "subject": [
+        50
+      ],
+      "of": [
+        51,
+        72,
+        75,
+        90,
+        105,
+        175
+      ],
+      "this": [
+        52
+      ],
+      "article,": [
+        53
+      ],
+      "where": [
+        54
+      ],
+      "focus": [
+        56
+      ],
+      "primarily": [
+        58
+      ],
+      "on": [
+        59
+      ],
+      "how": [
+        60
+      ],
+      "standard": [
+        62,
+        83
+      ],
+      "has": [
+        63
+      ],
+      "evolved": [
+        64
+      ],
+      "since": [
+        65
+      ],
+      "CDA": [
+        66,
+        78,
+        108,
+        142,
+        165,
+        202,
+        221
+      ],
+      "R1,": [
+        67
+      ],
+      "particularly": [
+        68
+      ],
+      "area": [
+        71
+      ],
+      "semantic": [
+        73,
+        251
+      ],
+      "representation": [
+        74,
+        174
+      ],
+      "clinical": [
+        76,
+        92,
+        176
+      ],
+      "events.": [
+        77
+      ],
+      "a": [
+        80,
+        91,
+        96,
+        111,
+        132,
+        196,
+        205,
+        211,
+        216,
+        226,
+        229,
+        247
+      ],
+      "document": [
+        81,
+        93,
+        109,
+        218,
+        227
+      ],
+      "markup": [
+        82
+      ],
+      "that": [
+        84,
+        117,
+        187
+      ],
+      "specifies": [
+        85
+      ],
+      "structure": [
+        87
+      ],
+      "semantics": [
+        89
+      ],
+      "(such": [
+        94,
+        178
+      ],
+      "as": [
+        95,
+        179
+      ],
+      "discharge": [
+        97
+      ],
+      "summary": [
+        98
+      ],
+      "or": [
+        99,
+        223
+      ],
+      "progress": [
+        100
+      ],
+      "note)": [
+        101
+      ],
+      "for": [
+        102,
+        208,
+        213,
+        224,
+        249
+      ],
+      "purpose": [
+        104
+      ],
+      "exchange.": [
+        106
+      ],
+      "A": [
+        107
+      ],
+      "defined": [
+        112
+      ],
+      "complete": [
+        114
+      ],
+      "information": [
+        115
+      ],
+      "object": [
+        116
+      ],
+      "can": [
+        118,
+        128,
+        135,
+        189
+      ],
+      "include": [
+        119
+      ],
+      "text,": [
+        120
+      ],
+      "images,": [
+        121
+      ],
+      "sounds,": [
+        122
+      ],
+      "other": [
+        124,
+        200
+      ],
+      "multimedia": [
+        125
+      ],
+      "content.": [
+        126,
+        237
+      ],
+      "It": [
+        127
+      ],
+      "be": [
+        129,
+        190
+      ],
+      "transferred": [
+        130
+      ],
+      "within": [
+        131
+      ],
+      "message": [
+        133
+      ],
+      "exist": [
+        136
+      ],
+      "independently,": [
+        137
+      ],
+      "outside": [
+        138
+      ],
+      "transferring": [
+        140
+      ],
+      "message.": [
+        141
+      ],
+      "documents": [
+        143
+      ],
+      "are": [
+        144
+      ],
+      "encoded": [
+        145
+      ],
+      "Extensible": [
+        147
+      ],
+      "Markup": [
+        148
+      ],
+      "Language": [
+        149
+      ],
+      "(XML),": [
+        150
+      ],
+      "they": [
+        152,
+        188
+      ],
+      "derive": [
+        153
+      ],
+      "their": [
+        154
+      ],
+      "machine": [
+        155
+      ],
+      "processable": [
+        156
+      ],
+      "meaning": [
+        157
+      ],
+      "RIM,": [
+        160
+      ],
+      "coupled": [
+        161
+      ],
+      "with": [
+        162,
+        219,
+        228
+      ],
+      "terminology.": [
+        163
+      ],
+      "The": [
+        164,
+        238
+      ],
+      "R2": [
+        166,
+        203
+      ],
+      "model": [
+        167
+      ],
+      "richly": [
+        169
+      ],
+      "expressive,": [
+        170
+      ],
+      "enabling": [
+        171
+      ],
+      "formal": [
+        173
+      ],
+      "statements": [
+        177
+      ],
+      "observations,": [
+        180
+      ],
+      "medication": [
+        181
+      ],
+      "administrations,": [
+        182
+      ],
+      "adverse": [
+        184
+      ],
+      "events)": [
+        185
+      ],
+      "such": [
+        186
+      ],
+      "interpreted": [
+        191
+      ],
+      "acted": [
+        193
+      ],
+      "upon": [
+        194
+      ],
+      "by": [
+        195
+      ],
+      "computer.": [
+        197
+      ],
+      "On": [
+        198
+      ],
+      "hand,": [
+        201
+      ],
+      "offers": [
+        204
+      ],
+      "low": [
+        206
+      ],
+      "bar": [
+        207
+      ],
+      "adoption,": [
+        209,
+        244
+      ],
+      "providing": [
+        210,
+        246
+      ],
+      "mechanism": [
+        212,
+        248
+      ],
+      "simply": [
+        214
+      ],
+      "wrapping": [
+        215
+      ],
+      "non-XML": [
+        217
+      ],
+      "header": [
+        222,
+        231
+      ],
+      "creating": [
+        225
+      ],
+      "structured": [
+        230
+      ],
+      "sections": [
+        233
+      ],
+      "containing": [
+        234
+      ],
+      "only": [
+        235
+      ],
+      "narrative": [
+        236
+      ],
+      "intent": [
+        239
+      ],
+      "to": [
+        241
+      ],
+      "facilitate": [
+        242
+      ],
+      "widespread": [
+        243
+      ],
+      "while": [
+        245
+      ],
+      "incremental": [
+        250
+      ],
+      "interoperability.": [
+        252
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 14
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 11
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 21
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 25
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 20
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 33
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 14
+      },
+      {
+        "year": 2018,
+        "cited_by_count": 27
+      },
+      {
+        "year": 2017,
+        "cited_by_count": 29
+      },
+      {
+        "year": 2016,
+        "cited_by_count": 41
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 70
+      },
+      {
+        "year": 2014,
+        "cited_by_count": 62
+      },
+      {
+        "year": 2013,
+        "cited_by_count": 69
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 51
+      }
+    ],
+    "updated_date": "2026-01-13T01:12:25.745995",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W4241868439",
+    "doi": "https://doi.org/10.3403/30234359u",
+    "title": "Data Exchange Standards. HL7 Clinical Document Architecture, Release 2",
+    "display_name": "Data Exchange Standards. HL7 Clinical Document Architecture, Release 2",
+    "relevance_score": 369.96313,
+    "publication_year": 2010,
+    "publication_date": "2010-08-31",
+    "ids": {
+      "openalex": "https://openalex.org/W4241868439",
+      "doi": "https://doi.org/10.3403/30234359u"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.3403/30234359u",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.3403/30234359u",
+      "pdf_url": null,
+      "source": null,
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": null,
+      "raw_type": "standard"
+    },
+    "type": "standard",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 0,
+    "corresponding_author_ids": [],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": null,
+    "has_fulltext": false,
+    "cited_by_count": 1,
+    "citation_normalized_percentile": null,
+    "cited_by_percentile_year": null,
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10350",
+      "display_name": "Electronic Health Records Systems",
+      "score": 0.8980000019073486,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3605",
+        "display_name": "Health Information Management"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/36",
+        "display_name": "Health Professions"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10350",
+        "display_name": "Electronic Health Records Systems",
+        "score": 0.8980000019073486,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11710",
+        "display_name": "Biomedical Text Mining and Ontologies",
+        "score": 0.8795999884605408,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1312",
+          "display_name": "Molecular Biology"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/13",
+          "display_name": "Biochemistry, Genetics and Molecular Biology"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/1",
+          "display_name": "Life Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T14400",
+        "display_name": "Medical Coding and Health Information",
+        "score": 0.8413000106811523,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/architecture",
+        "display_name": "Architecture",
+        "score": 0.5899085402488708
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.5323871374130249
+      },
+      {
+        "id": "https://openalex.org/keywords/information-retrieval",
+        "display_name": "Information retrieval",
+        "score": 0.41929149627685547
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.3215055763721466
+      },
+      {
+        "id": "https://openalex.org/keywords/geography",
+        "display_name": "Geography",
+        "score": 0.2172340452671051
+      },
+      {
+        "id": "https://openalex.org/keywords/archaeology",
+        "display_name": "Archaeology",
+        "score": 0.0780964195728302
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C123657996",
+        "wikidata": "https://www.wikidata.org/wiki/Q12271",
+        "display_name": "Architecture",
+        "level": 2,
+        "score": 0.5899085402488708
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.5323871374130249
+      },
+      {
+        "id": "https://openalex.org/C23123220",
+        "wikidata": "https://www.wikidata.org/wiki/Q816826",
+        "display_name": "Information retrieval",
+        "level": 1,
+        "score": 0.41929149627685547
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.3215055763721466
+      },
+      {
+        "id": "https://openalex.org/C205649164",
+        "wikidata": "https://www.wikidata.org/wiki/Q1071",
+        "display_name": "Geography",
+        "level": 0,
+        "score": 0.2172340452671051
+      },
+      {
+        "id": "https://openalex.org/C166957645",
+        "wikidata": "https://www.wikidata.org/wiki/Q23498",
+        "display_name": "Archaeology",
+        "level": 1,
+        "score": 0.0780964195728302
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.3403/30234359u",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.3403/30234359u",
+        "pdf_url": null,
+        "source": null,
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": null,
+        "raw_type": "standard"
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [
+      "https://openalex.org/W2899084033",
+      "https://openalex.org/W2748952813",
+      "https://openalex.org/W2390279801",
+      "https://openalex.org/W2358668433",
+      "https://openalex.org/W2376932109",
+      "https://openalex.org/W2001405890",
+      "https://openalex.org/W2382290278",
+      "https://openalex.org/W2350741829",
+      "https://openalex.org/W2130043461",
+      "https://openalex.org/W2530322880"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [
+      {
+        "year": 2017,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2167447313",
+    "doi": "https://doi.org/10.1109/cic.2005.1588117",
+    "title": "New standards for cardiology report and data communication: an experience with HL7 CDA release 2 and EbXML",
+    "display_name": "New standards for cardiology report and data communication: an experience with HL7 CDA release 2 and EbXML",
+    "relevance_score": 109.1712,
+    "publication_year": 2005,
+    "publication_date": "2005-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2167447313",
+      "doi": "https://doi.org/10.1109/cic.2005.1588117",
+      "mag": "2167447313"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/cic.2005.1588117",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.1109/cic.2005.1588117",
+      "pdf_url": null,
+      "source": null,
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Computers in Cardiology, 2005",
+      "raw_type": "proceedings-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5045128842",
+          "display_name": "P. Marcheschi",
+          "orcid": "https://orcid.org/0000-0001-6682-705X"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210106076",
+            "display_name": "Istituto di Fisiologia Clinica",
+            "ror": "https://ror.org/01kdj2848",
+            "country_code": "IT",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I4210106076",
+              "https://openalex.org/I4210155236"
+            ]
+          }
+        ],
+        "countries": [
+          "IT"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "P. Marcheschi",
+        "raw_affiliation_strings": [
+          "Institute of Clinical Physiology, CNR of Pisa, Italy"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Institute of Clinical Physiology, CNR of Pisa, Italy",
+            "institution_ids": [
+              "https://openalex.org/I4210106076"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5111859511",
+          "display_name": "A. Mazzarisi",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210106076",
+            "display_name": "Istituto di Fisiologia Clinica",
+            "ror": "https://ror.org/01kdj2848",
+            "country_code": "IT",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I4210106076",
+              "https://openalex.org/I4210155236"
+            ]
+          }
+        ],
+        "countries": [
+          "IT"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "A. Mazzarisi",
+        "raw_affiliation_strings": [
+          "Institute of Clinical Physiology, CNR of Pisa, Italy"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Institute of Clinical Physiology, CNR of Pisa, Italy",
+            "institution_ids": [
+              "https://openalex.org/I4210106076"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5033385412",
+          "display_name": "Stefano Dalmiani",
+          "orcid": "https://orcid.org/0000-0002-2010-9164"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210106076",
+            "display_name": "Istituto di Fisiologia Clinica",
+            "ror": "https://ror.org/01kdj2848",
+            "country_code": "IT",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I4210106076",
+              "https://openalex.org/I4210155236"
+            ]
+          }
+        ],
+        "countries": [
+          "IT"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "S. Dalmiani",
+        "raw_affiliation_strings": [
+          "Institute of Clinical Physiology, CNR of Pisa, Italy"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Institute of Clinical Physiology, CNR of Pisa, Italy",
+            "institution_ids": [
+              "https://openalex.org/I4210106076"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5011446598",
+          "display_name": "A. Benassi",
+          "orcid": "https://orcid.org/0000-0003-0547-2915"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210106076",
+            "display_name": "Istituto di Fisiologia Clinica",
+            "ror": "https://ror.org/01kdj2848",
+            "country_code": "IT",
+            "type": "facility",
+            "lineage": [
+              "https://openalex.org/I4210106076",
+              "https://openalex.org/I4210155236"
+            ]
+          }
+        ],
+        "countries": [
+          "IT"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "A. Benassi",
+        "raw_affiliation_strings": [
+          "Institute of Clinical Physiology, CNR of Pisa, Italy"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Institute of Clinical Physiology, CNR of Pisa, Italy",
+            "institution_ids": [
+              "https://openalex.org/I4210106076"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 4,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5045128842"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I4210106076"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 1.75041339,
+    "has_fulltext": false,
+    "cited_by_count": 10,
+    "citation_normalized_percentile": {
+      "value": 0.84238898,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 94
+    },
+    "biblio": {
+      "volume": "8",
+      "issue": null,
+      "first_page": "383",
+      "last_page": "386"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T13523",
+      "display_name": "Mathematics, Computing, and Information Processing",
+      "score": 0.9864000082015991,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1703",
+        "display_name": "Computational Theory and Mathematics"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T13523",
+        "display_name": "Mathematics, Computing, and Information Processing",
+        "score": 0.9864000082015991,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1703",
+          "display_name": "Computational Theory and Mathematics"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10317",
+        "display_name": "Advanced Database Systems and Queries",
+        "score": 0.9406999945640564,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1705",
+          "display_name": "Computer Networks and Communications"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10215",
+        "display_name": "Semantic Web and Ontologies",
+        "score": 0.9395999908447266,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/xml",
+        "display_name": "XML",
+        "score": 0.7330101132392883
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.6902371644973755
+      },
+      {
+        "id": "https://openalex.org/keywords/dicom",
+        "display_name": "DICOM",
+        "score": 0.6545472145080566
+      },
+      {
+        "id": "https://openalex.org/keywords/soap",
+        "display_name": "SOAP",
+        "score": 0.6440055966377258
+      },
+      {
+        "id": "https://openalex.org/keywords/web-service",
+        "display_name": "Web service",
+        "score": 0.4890623986721039
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.47368717193603516
+      },
+      {
+        "id": "https://openalex.org/keywords/service",
+        "display_name": "Service (business)",
+        "score": 0.4288312792778015
+      },
+      {
+        "id": "https://openalex.org/keywords/service-oriented-architecture",
+        "display_name": "Service-oriented architecture",
+        "score": 0.42214423418045044
+      },
+      {
+        "id": "https://openalex.org/keywords/devices-profile-for-web-services",
+        "display_name": "Devices Profile for Web Services",
+        "score": 0.41509750485420227
+      },
+      {
+        "id": "https://openalex.org/keywords/software-engineering",
+        "display_name": "Software engineering",
+        "score": 0.3807290494441986
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.33664020895957947
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.10786181688308716
+      },
+      {
+        "id": "https://openalex.org/keywords/web-application-security",
+        "display_name": "Web application security",
+        "score": 0.1025053858757019
+      },
+      {
+        "id": "https://openalex.org/keywords/operating-system",
+        "display_name": "Operating system",
+        "score": 0.08967232704162598
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C8797682",
+        "wikidata": "https://www.wikidata.org/wiki/Q2115",
+        "display_name": "XML",
+        "level": 2,
+        "score": 0.7330101132392883
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6902371644973755
+      },
+      {
+        "id": "https://openalex.org/C77331912",
+        "wikidata": "https://www.wikidata.org/wiki/Q81095",
+        "display_name": "DICOM",
+        "level": 2,
+        "score": 0.6545472145080566
+      },
+      {
+        "id": "https://openalex.org/C17881449",
+        "wikidata": "https://www.wikidata.org/wiki/Q189620",
+        "display_name": "SOAP",
+        "level": 2,
+        "score": 0.6440055966377258
+      },
+      {
+        "id": "https://openalex.org/C35578498",
+        "wikidata": "https://www.wikidata.org/wiki/Q193424",
+        "display_name": "Web service",
+        "level": 2,
+        "score": 0.4890623986721039
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.47368717193603516
+      },
+      {
+        "id": "https://openalex.org/C2780378061",
+        "wikidata": "https://www.wikidata.org/wiki/Q25351891",
+        "display_name": "Service (business)",
+        "level": 2,
+        "score": 0.4288312792778015
+      },
+      {
+        "id": "https://openalex.org/C57041688",
+        "wikidata": "https://www.wikidata.org/wiki/Q220644",
+        "display_name": "Service-oriented architecture",
+        "level": 3,
+        "score": 0.42214423418045044
+      },
+      {
+        "id": "https://openalex.org/C183979223",
+        "wikidata": "https://www.wikidata.org/wiki/Q1206782",
+        "display_name": "Devices Profile for Web Services",
+        "level": 5,
+        "score": 0.41509750485420227
+      },
+      {
+        "id": "https://openalex.org/C115903868",
+        "wikidata": "https://www.wikidata.org/wiki/Q80993",
+        "display_name": "Software engineering",
+        "level": 1,
+        "score": 0.3807290494441986
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.33664020895957947
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.10786181688308716
+      },
+      {
+        "id": "https://openalex.org/C59241245",
+        "wikidata": "https://www.wikidata.org/wiki/Q4781497",
+        "display_name": "Web application security",
+        "level": 4,
+        "score": 0.1025053858757019
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.08967232704162598
+      },
+      {
+        "id": "https://openalex.org/C79373723",
+        "wikidata": "https://www.wikidata.org/wiki/Q386275",
+        "display_name": "Web development",
+        "level": 3,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C162853370",
+        "wikidata": "https://www.wikidata.org/wiki/Q39809",
+        "display_name": "Marketing",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.1109/cic.2005.1588117",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.1109/cic.2005.1588117",
+        "pdf_url": null,
+        "source": null,
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Computers in Cardiology, 2005",
+        "raw_type": "proceedings-article"
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [
+      {
+        "score": 0.6700000166893005,
+        "id": "https://metadata.un.org/sdg/9",
+        "display_name": "Industry, innovation and infrastructure"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 2,
+    "referenced_works": [
+      "https://openalex.org/W1644882639",
+      "https://openalex.org/W2069726734"
+    ],
+    "related_works": [
+      "https://openalex.org/W2371332745",
+      "https://openalex.org/W2400131657",
+      "https://openalex.org/W2377642117",
+      "https://openalex.org/W841372248",
+      "https://openalex.org/W2357076788",
+      "https://openalex.org/W2361932324",
+      "https://openalex.org/W2246426672",
+      "https://openalex.org/W2490848162",
+      "https://openalex.org/W4268596",
+      "https://openalex.org/W2391424449"
+    ],
+    "abstract_inverted_index": {
+      "The": [
+        0,
+        53,
+        70
+      ],
+      "diffusion": [
+        1
+      ],
+      "of": [
+        2,
+        17,
+        49,
+        55,
+        109
+      ],
+      "health": [
+        3
+      ],
+      "standards,": [
+        4
+      ],
+      "connected": [
+        5
+      ],
+      "to": [
+        6,
+        13,
+        37,
+        43,
+        59,
+        112
+      ],
+      "technological": [
+        7
+      ],
+      "infrastructure,": [
+        8
+      ],
+      "finally": [
+        9
+      ],
+      "opens": [
+        10
+      ],
+      "the": [
+        11,
+        45,
+        50,
+        84,
+        117,
+        121,
+        125,
+        140
+      ],
+      "road": [
+        12
+      ],
+      "a": [
+        14
+      ],
+      "new": [
+        15
+      ],
+      "way": [
+        16
+      ],
+      "interconnecting": [
+        18
+      ],
+      "and": [
+        19,
+        33,
+        67,
+        83,
+        100,
+        124
+      ],
+      "integrating": [
+        20
+      ],
+      "different": [
+        21
+      ],
+      "clinical": [
+        22
+      ],
+      "solutions.": [
+        23
+      ],
+      "New": [
+        24
+      ],
+      "standards": [
+        25,
+        92
+      ],
+      "coming": [
+        26
+      ],
+      "from": [
+        27,
+        116,
+        120
+      ],
+      "established": [
+        28
+      ],
+      "Organizations": [
+        29
+      ],
+      "such": [
+        30
+      ],
+      "as": [
+        31
+      ],
+      "HL7": [
+        32,
+        73
+      ],
+      "DICOM,": [
+        34
+      ],
+      "are": [
+        35
+      ],
+      "going": [
+        36
+      ],
+      "be": [
+        38,
+        94,
+        113
+      ],
+      "integrated": [
+        39
+      ],
+      "with": [
+        40,
+        98
+      ],
+      "Communication": [
+        41
+      ],
+      "Organization": [
+        42
+      ],
+      "build": [
+        44
+      ],
+      "Health": [
+        46
+      ],
+      "environment": [
+        47,
+        137
+      ],
+      "Info-structure": [
+        48
+      ],
+      "next": [
+        51
+      ],
+      "decade.": [
+        52
+      ],
+      "purpose": [
+        54
+      ],
+      "this": [
+        56,
+        62
+      ],
+      "work": [
+        57
+      ],
+      "is": [
+        58,
+        63,
+        130
+      ],
+      "show": [
+        60
+      ],
+      "how": [
+        61
+      ],
+      "possible,": [
+        64
+      ],
+      "using": [
+        65
+      ],
+      "simple": [
+        66
+      ],
+      "affordable": [
+        68
+      ],
+      "methods:": [
+        69
+      ],
+      "recently": [
+        71
+      ],
+      "approved": [
+        72,
+        86
+      ],
+      "Clinical": [
+        74
+      ],
+      "Document": [
+        75
+      ],
+      "Architecture": [
+        76
+      ],
+      "Release": [
+        77
+      ],
+      "2": [
+        78
+      ],
+      "standard": [
+        79
+      ],
+      "for": [
+        80,
+        134
+      ],
+      "message": [
+        81
+      ],
+      "packaging": [
+        82
+      ],
+      "newly": [
+        85
+      ],
+      "ebXML": [
+        87,
+        141
+      ],
+      "3.0": [
+        88
+      ],
+      "specifications.": [
+        89
+      ],
+      "These": [
+        90
+      ],
+      "promising": [
+        91
+      ],
+      "can": [
+        93
+      ],
+      "used": [
+        95
+      ],
+      "in": [
+        96
+      ],
+      "conjunction": [
+        97
+      ],
+      "Web-Services": [
+        99
+      ],
+      "Web": [
+        101
+      ],
+      "Service": [
+        102
+      ],
+      "Description": [
+        103
+      ],
+      "Language": [
+        104
+      ],
+      "(WSDL)": [
+        105
+      ],
+      "technology.": [
+        106
+      ],
+      "This": [
+        107
+      ],
+      "type": [
+        108
+      ],
+      "solution": [
+        110
+      ],
+      "allows": [
+        111
+      ],
+      "totally": [
+        114
+      ],
+      "independent": [
+        115
+      ],
+      "development": [
+        118
+      ],
+      "platform,": [
+        119
+      ],
+      "programming": [
+        122
+      ],
+      "language": [
+        123
+      ],
+      "operating": [
+        126
+      ],
+      "system": [
+        127
+      ],
+      "used.": [
+        128
+      ],
+      "EbXML": [
+        129
+      ],
+      "an": [
+        131
+      ],
+      "XML": [
+        132
+      ],
+      "framework": [
+        133
+      ],
+      "business-to-business": [
+        135
+      ],
+      "(B2B)": [
+        136
+      ],
+      "developed": [
+        138
+      ],
+      "by": [
+        139
+      ],
+      "Initiative": [
+        142
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2016,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2015,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W4245213367",
+    "doi": "https://doi.org/10.3403/30234359",
+    "title": "Data Exchange Standards. HL7 Clinical Document Architecture, Release 2",
+    "display_name": "Data Exchange Standards. HL7 Clinical Document Architecture, Release 2",
+    "relevance_score": 93.16814,
+    "publication_year": 2010,
+    "publication_date": "2010-08-31",
+    "ids": {
+      "openalex": "https://openalex.org/W4245213367",
+      "doi": "https://doi.org/10.3403/30234359"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.3403/30234359",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.3403/30234359",
+      "pdf_url": null,
+      "source": null,
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": null,
+      "raw_type": "standard"
+    },
+    "type": "standard",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 0,
+    "corresponding_author_ids": [],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": null,
+    "has_fulltext": false,
+    "cited_by_count": 0,
+    "citation_normalized_percentile": null,
+    "cited_by_percentile_year": null,
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10350",
+      "display_name": "Electronic Health Records Systems",
+      "score": 0.3984000086784363,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3605",
+        "display_name": "Health Information Management"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/36",
+        "display_name": "Health Professions"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/4",
+        "display_name": "Health Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10350",
+        "display_name": "Electronic Health Records Systems",
+        "score": 0.3984000086784363,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/cd-rom",
+        "display_name": "CD-ROM",
+        "score": 0.7662398815155029
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.5177992582321167
+      },
+      {
+        "id": "https://openalex.org/keywords/architecture",
+        "display_name": "Architecture",
+        "score": 0.4746587574481964
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.39872968196868896
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.33154886960983276
+      },
+      {
+        "id": "https://openalex.org/keywords/operating-system",
+        "display_name": "Operating system",
+        "score": 0.2698042392730713
+      },
+      {
+        "id": "https://openalex.org/keywords/history",
+        "display_name": "History",
+        "score": 0.11043620109558105
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C193596192",
+        "wikidata": "https://www.wikidata.org/wiki/Q7982",
+        "display_name": "CD-ROM",
+        "level": 2,
+        "score": 0.7662398815155029
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.5177992582321167
+      },
+      {
+        "id": "https://openalex.org/C123657996",
+        "wikidata": "https://www.wikidata.org/wiki/Q12271",
+        "display_name": "Architecture",
+        "level": 2,
+        "score": 0.4746587574481964
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.39872968196868896
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.33154886960983276
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.2698042392730713
+      },
+      {
+        "id": "https://openalex.org/C95457728",
+        "wikidata": "https://www.wikidata.org/wiki/Q309",
+        "display_name": "History",
+        "level": 0,
+        "score": 0.11043620109558105
+      },
+      {
+        "id": "https://openalex.org/C166957645",
+        "wikidata": "https://www.wikidata.org/wiki/Q23498",
+        "display_name": "Archaeology",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.3403/30234359",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.3403/30234359",
+        "pdf_url": null,
+        "source": null,
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": null,
+        "raw_type": "standard"
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [
+      "https://openalex.org/W2899084033",
+      "https://openalex.org/W2748952813",
+      "https://openalex.org/W2513148726",
+      "https://openalex.org/W2411229050",
+      "https://openalex.org/W4247354936",
+      "https://openalex.org/W410879735",
+      "https://openalex.org/W649938459",
+      "https://openalex.org/W265088981",
+      "https://openalex.org/W2480153363",
+      "https://openalex.org/W619644507"
+    ],
+    "abstract_inverted_index": null,
+    "counts_by_year": [],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2022-05-12T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2415560141",
+    "doi": null,
+    "title": "Model-driven CDA Clinical Document Development Framework.",
+    "display_name": "Model-driven CDA Clinical Document Development Framework.",
+    "relevance_score": 91.20613,
+    "publication_year": 2007,
+    "publication_date": "2007-10-11",
+    "ids": {
+      "openalex": "https://openalex.org/W2415560141",
+      "mag": "2415560141",
+      "pmid": "https://pubmed.ncbi.nlm.nih.gov/18694129"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "pmid:18694129",
+      "is_oa": false,
+      "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/18694129",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4306525036",
+        "display_name": "PubMed",
+        "issn_l": null,
+        "issn": null,
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": false,
+        "host_organization": "https://openalex.org/I1299303238",
+        "host_organization_name": "National Institutes of Health",
+        "host_organization_lineage": [
+          "https://openalex.org/I1299303238"
+        ],
+        "host_organization_lineage_names": [],
+        "type": "repository"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "AMIA ... Annual Symposium proceedings. AMIA Symposium",
+      "raw_type": null
+    },
+    "type": "article",
+    "indexed_in": [
+      "pubmed"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5100642253",
+          "display_name": "Jingdong Li",
+          "orcid": "https://orcid.org/0000-0003-2335-6280"
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": true,
+        "raw_author_name": "Jingdong Li",
+        "raw_affiliation_strings": [
+          "Department of Veterans Affairs, Salt Lake City, Utah, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Veterans Affairs, Salt Lake City, Utah, USA",
+            "institution_ids": []
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5113985009",
+          "display_name": "Michael Lincoln",
+          "orcid": null
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": false,
+        "raw_author_name": "Michael J Lincoln",
+        "raw_affiliation_strings": [],
+        "affiliations": []
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 2,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5100642253"
+    ],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 1.16366925,
+    "has_fulltext": false,
+    "cited_by_count": 4,
+    "citation_normalized_percentile": {
+      "value": 0.83816179,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": null,
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": "1031",
+      "last_page": "1031"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10215",
+      "display_name": "Semantic Web and Ontologies",
+      "score": 0.9684000015258789,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1702",
+        "display_name": "Artificial Intelligence"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10215",
+        "display_name": "Semantic Web and Ontologies",
+        "score": 0.9684000015258789,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10703",
+        "display_name": "Business Process Modeling and Analysis",
+        "score": 0.9620000123977661,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1404",
+          "display_name": "Management Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/14",
+          "display_name": "Business, Management and Accounting"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10350",
+        "display_name": "Electronic Health Records Systems",
+        "score": 0.951200008392334,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3605",
+          "display_name": "Health Information Management"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/36",
+          "display_name": "Health Professions"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/4",
+          "display_name": "Health Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/xml",
+        "display_name": "XML",
+        "score": 0.7802563905715942
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.7545875310897827
+      },
+      {
+        "id": "https://openalex.org/keywords/semantics",
+        "display_name": "Semantics (computer science)",
+        "score": 0.561724841594696
+      },
+      {
+        "id": "https://openalex.org/keywords/document-structure-description",
+        "display_name": "Document Structure Description",
+        "score": 0.5458394289016724
+      },
+      {
+        "id": "https://openalex.org/keywords/template",
+        "display_name": "Template",
+        "score": 0.5044082403182983
+      },
+      {
+        "id": "https://openalex.org/keywords/interface",
+        "display_name": "Interface (matter)",
+        "score": 0.48781660199165344
+      },
+      {
+        "id": "https://openalex.org/keywords/veterans-affairs",
+        "display_name": "Veterans Affairs",
+        "score": 0.4813686013221741
+      },
+      {
+        "id": "https://openalex.org/keywords/information-retrieval",
+        "display_name": "Information retrieval",
+        "score": 0.47994592785835266
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.36130380630493164
+      },
+      {
+        "id": "https://openalex.org/keywords/programming-language",
+        "display_name": "Programming language",
+        "score": 0.35932159423828125
+      },
+      {
+        "id": "https://openalex.org/keywords/software-engineering",
+        "display_name": "Software engineering",
+        "score": 0.34658557176589966
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.2859497666358948
+      },
+      {
+        "id": "https://openalex.org/keywords/medicine",
+        "display_name": "Medicine",
+        "score": 0.11075684428215027
+      },
+      {
+        "id": "https://openalex.org/keywords/operating-system",
+        "display_name": "Operating system",
+        "score": 0.08413457870483398
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C8797682",
+        "wikidata": "https://www.wikidata.org/wiki/Q2115",
+        "display_name": "XML",
+        "level": 2,
+        "score": 0.7802563905715942
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7545875310897827
+      },
+      {
+        "id": "https://openalex.org/C184337299",
+        "wikidata": "https://www.wikidata.org/wiki/Q1437428",
+        "display_name": "Semantics (computer science)",
+        "level": 2,
+        "score": 0.561724841594696
+      },
+      {
+        "id": "https://openalex.org/C68699486",
+        "wikidata": "https://www.wikidata.org/wiki/Q265904",
+        "display_name": "Document Structure Description",
+        "level": 3,
+        "score": 0.5458394289016724
+      },
+      {
+        "id": "https://openalex.org/C82714645",
+        "wikidata": "https://www.wikidata.org/wiki/Q438331",
+        "display_name": "Template",
+        "level": 2,
+        "score": 0.5044082403182983
+      },
+      {
+        "id": "https://openalex.org/C113843644",
+        "wikidata": "https://www.wikidata.org/wiki/Q901882",
+        "display_name": "Interface (matter)",
+        "level": 4,
+        "score": 0.48781660199165344
+      },
+      {
+        "id": "https://openalex.org/C2775969662",
+        "wikidata": "https://www.wikidata.org/wiki/Q7923600",
+        "display_name": "Veterans Affairs",
+        "level": 2,
+        "score": 0.4813686013221741
+      },
+      {
+        "id": "https://openalex.org/C23123220",
+        "wikidata": "https://www.wikidata.org/wiki/Q816826",
+        "display_name": "Information retrieval",
+        "level": 1,
+        "score": 0.47994592785835266
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.36130380630493164
+      },
+      {
+        "id": "https://openalex.org/C199360897",
+        "wikidata": "https://www.wikidata.org/wiki/Q9143",
+        "display_name": "Programming language",
+        "level": 1,
+        "score": 0.35932159423828125
+      },
+      {
+        "id": "https://openalex.org/C115903868",
+        "wikidata": "https://www.wikidata.org/wiki/Q80993",
+        "display_name": "Software engineering",
+        "level": 1,
+        "score": 0.34658557176589966
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.2859497666358948
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.11075684428215027
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.08413457870483398
+      },
+      {
+        "id": "https://openalex.org/C129307140",
+        "wikidata": "https://www.wikidata.org/wiki/Q6795880",
+        "display_name": "Maximum bubble pressure method",
+        "level": 3,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C157915830",
+        "wikidata": "https://www.wikidata.org/wiki/Q2928001",
+        "display_name": "Bubble",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C126322002",
+        "wikidata": "https://www.wikidata.org/wiki/Q11180",
+        "display_name": "Internal medicine",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014493",
+        "descriptor_name": "United States Department of Veterans Affairs",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014493",
+        "descriptor_name": "United States Department of Veterans Affairs",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D003195",
+        "descriptor_name": "Computer Communication Networks",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D005568",
+        "descriptor_name": "Forms and Records Control",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D008498",
+        "descriptor_name": "Medical Record Linkage",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D016347",
+        "descriptor_name": "Medical Records Systems, Computerized",
+        "qualifier_ui": "Q000592",
+        "qualifier_name": "standards",
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D012660",
+        "descriptor_name": "Semantics",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014481",
+        "descriptor_name": "United States",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      },
+      {
+        "descriptor_ui": "D014493",
+        "descriptor_name": "United States Department of Veterans Affairs",
+        "qualifier_ui": null,
+        "qualifier_name": null,
+        "is_major_topic": false
+      }
+    ],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "pmid:18694129",
+        "is_oa": false,
+        "landing_page_url": "https://pubmed.ncbi.nlm.nih.gov/18694129",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306525036",
+          "display_name": "PubMed",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I1299303238",
+          "host_organization_name": "National Institutes of Health",
+          "host_organization_lineage": [
+            "https://openalex.org/I1299303238"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "AMIA ... Annual Symposium proceedings. AMIA Symposium",
+        "raw_type": null
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [
+      {
+        "score": 0.46000000834465027,
+        "id": "https://metadata.un.org/sdg/17",
+        "display_name": "Partnerships for the goals"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [
+      "https://openalex.org/W2136685971",
+      "https://openalex.org/W2113164419",
+      "https://openalex.org/W185868144",
+      "https://openalex.org/W2082628268",
+      "https://openalex.org/W2602932525",
+      "https://openalex.org/W1772790162",
+      "https://openalex.org/W190751761",
+      "https://openalex.org/W2410586345",
+      "https://openalex.org/W2349592675",
+      "https://openalex.org/W1483865972",
+      "https://openalex.org/W2245982415",
+      "https://openalex.org/W2399747819",
+      "https://openalex.org/W2765417201",
+      "https://openalex.org/W2101877225",
+      "https://openalex.org/W2048172232",
+      "https://openalex.org/W2354302843",
+      "https://openalex.org/W1507779760",
+      "https://openalex.org/W2119280445",
+      "https://openalex.org/W2088247044",
+      "https://openalex.org/W2064857356"
+    ],
+    "abstract_inverted_index": {
+      "The": [
+        0,
+        58
+      ],
+      "Health": [
+        1
+      ],
+      "Level": [
+        2
+      ],
+      "7": [
+        3
+      ],
+      "(HL7)": [
+        4
+      ],
+      "Clinical": [
+        5
+      ],
+      "Document": [
+        6
+      ],
+      "Architecture,": [
+        7
+      ],
+      "Release": [
+        8
+      ],
+      "2": [
+        9
+      ],
+      "(CDA": [
+        10
+      ],
+      "R2)": [
+        11
+      ],
+      "standardizes": [
+        12
+      ],
+      "the": [
+        13
+      ],
+      "structure": [
+        14
+      ],
+      "and": [
+        15,
+        37,
+        50
+      ],
+      "semantics": [
+        16
+      ],
+      "of": [
+        17,
+        46,
+        66
+      ],
+      "clinical": [
+        18,
+        55
+      ],
+      "documents": [
+        19
+      ],
+      "in": [
+        20
+      ],
+      "order": [
+        21
+      ],
+      "to": [
+        22,
+        30
+      ],
+      "permit": [
+        23
+      ],
+      "interchange.": [
+        24
+      ],
+      "We": [
+        25
+      ],
+      "have": [
+        26
+      ],
+      "applied": [
+        27
+      ],
+      "this": [
+        28
+      ],
+      "standard": [
+        29
+      ],
+      "generate": [
+        31
+      ],
+      "a": [
+        32,
+        39
+      ],
+      "platform": [
+        33
+      ],
+      "independent": [
+        34
+      ],
+      "CDA": [
+        35
+      ],
+      "model": [
+        36,
+        43
+      ],
+      "write": [
+        38
+      ],
+      "toolset": [
+        40
+      ],
+      "that": [
+        41
+      ],
+      "permits": [
+        42
+      ],
+      "specialization,": [
+        44
+      ],
+      "generation": [
+        45
+      ],
+      "XML": [
+        47
+      ],
+      "implementation": [
+        48
+      ],
+      "artifacts,": [
+        49
+      ],
+      "provides": [
+        51
+      ],
+      "an": [
+        52
+      ],
+      "interface": [
+        53
+      ],
+      "for": [
+        54
+      ],
+      "data": [
+        56
+      ],
+      "managers.": [
+        57
+      ],
+      "resulting": [
+        59
+      ],
+      "work": [
+        60
+      ],
+      "was": [
+        61
+      ],
+      "tested": [
+        62
+      ],
+      "using": [
+        63
+      ],
+      "US": [
+        64
+      ],
+      "Department": [
+        65
+      ],
+      "Veterans": [
+        67
+      ],
+      "Affairs": [
+        68
+      ],
+      "Operative": [
+        69
+      ],
+      "Note": [
+        70
+      ],
+      "templates.": [
+        71
+      ]
+    },
+    "counts_by_year": [],
+    "updated_date": "2025-11-06T04:12:42.849631",
+    "created_date": "2025-10-10T00:00:00"
+  }
+]

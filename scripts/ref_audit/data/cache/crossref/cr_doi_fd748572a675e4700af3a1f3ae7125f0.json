@@ -1,0 +1,883 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        1,
+        5
+      ]
+    ],
+    "date-time": "2026-01-05T11:09:52Z",
+    "timestamp": 1767611392354,
+    "version": "build-2065373602"
+  },
+  "reference-count": 73,
+  "publisher": "MDPI AG",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2023,
+            12,
+            29
+          ]
+        ],
+        "date-time": "2023-12-29T00:00:00Z",
+        "timestamp": 1703808000000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100001807",
+      "name": "CNPq",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "2018/23062-5",
+        "Edital PDPA 2020"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "2018/23062-5",
+            "Edital PDPA 2020"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100001807",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "name": "Niterói City Hall/FEC/UFF",
+      "award": [
+        "2018/23062-5",
+        "Edital PDPA 2020"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "2018/23062-5",
+            "Edital PDPA 2020"
+          ]
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Information"
+  ],
+  "abstract": "<jats:p>The COVID-19 pandemic has highlighted the necessity for agile health services that enable reliable and secure information exchange, but achieving proper, private, and secure sharing of EMRs remains a challenge due to diverse data formats and fragmented records across multiple data silos, resulting in hindered coordination between healthcare teams, potential medical errors, and delays in patient care. While centralized EMR systems pose privacy risks and data format diversity complicates interoperability, blockchain technology offers a promising solution by providing decentralized storage, ensuring data integrity, enhancing access control, eliminating intermediaries, and increasing efficiency in healthcare. By focusing on a Brazilian case study, this paper explores the significance of EMR standards, security challenges, and blockchain-based approaches to promote interoperability and secure data sharing in the healthcare industry.</jats:p>",
+  "DOI": "10.3390/info15010020",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2023,
+        12,
+        29
+      ]
+    ],
+    "date-time": "2023-12-29T09:15:11Z",
+    "timestamp": 1703841311000
+  },
+  "page": "20",
+  "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 17,
+  "title": [
+    "Storage Standards and Solutions, Data Storage, Sharing, and Structuring in Digital Health: A Brazilian Case Study"
+  ],
+  "prefix": "10.3390",
+  "volume": "15",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-2034-6899",
+      "authenticated-orcid": false,
+      "given": "Nicollas Rodrigues de",
+      "family": "Oliveira",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Yago de Rezende dos",
+      "family": "Santos",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Ana Carolina Rocha",
+      "family": "Mendes",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    },
+    {
+      "given": "Guilherme Nunes Nasseh",
+      "family": "Barbosa",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-5739-5590",
+      "authenticated-orcid": false,
+      "given": "Marcela Tuler de",
+      "family": "Oliveira",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Engineering Systems and Services, Delft University of Technology (TU Delft), 2600 AA Delft, The Netherlands"
+        }
+      ]
+    },
+    {
+      "given": "Rafael",
+      "family": "Valle",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Rede Nacional de Ensino e Pesquisa (RNP), Rio de Janeiro 22290-906, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-0361-5903",
+      "authenticated-orcid": false,
+      "given": "Dianne Scherly Varela",
+      "family": "Medeiros",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-1279-7366",
+      "authenticated-orcid": false,
+      "given": "Diogo M. F.",
+      "family": "Mattos",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "LabGen/MídiaCom, PPGEET/TCE/IC/UFF, Universidade Federal Fluminense (UFF), Niterói 24220-900, Brazil"
+        }
+      ]
+    }
+  ],
+  "member": "1968",
+  "published-online": {
+    "date-parts": [
+      [
+        2023,
+        12,
+        29
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref_1",
+      "doi-asserted-by": "crossref",
+      "first-page": "i2139",
+      "DOI": "10.1136/bmj.i2139",
+      "article-title": "Medical error—The third leading cause of death in the US",
+      "volume": "353",
+      "author": "Makary",
+      "year": "2016",
+      "journal-title": "BMJ"
+    },
+    {
+      "key": "ref_2",
+      "first-page": "650",
+      "article-title": "Secure and trustable electronic medical records sharing using blockchain",
+      "volume": "Volume 2017",
+      "author": "Dubovitskaya",
+      "year": "2017",
+      "journal-title": "AMIA Annual Symposium Proceedings"
+    },
+    {
+      "key": "ref_3",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Stoeger, K., and Schmidhuber, M. (2020). The use of data from electronic health records in times of a pandemic—A legal and ethical assessment. J. Law Biosci., 7.",
+      "DOI": "10.1093/jlb/lsaa041"
+    },
+    {
+      "key": "ref_4",
+      "doi-asserted-by": "crossref",
+      "first-page": "100354",
+      "DOI": "10.1016/j.smhl.2022.100354",
+      "article-title": "Securing electronic health records against insider-threats: A supervised machine learning approach",
+      "volume": "26",
+      "author": "Hurst",
+      "year": "2022",
+      "journal-title": "Smart Health"
+    },
+    {
+      "key": "ref_5",
+      "unstructured": "Cetic.br (2020). Pesquisa Sobre o uso das Tecnologias de Informação e Comunicação nos Estabelecimentos de Saúde Brasileiros: TIC Saúde 2019, Núcleo de Informação e Coordenação do Ponto BR (NIC.br)."
+    },
+    {
+      "key": "ref_6",
+      "doi-asserted-by": "crossref",
+      "first-page": "1293",
+      "DOI": "10.1590/1413-81232020254.28922019",
+      "article-title": "Electronic Medical Records in the American Health System: Challenges and lessons learned",
+      "volume": "25",
+      "author": "Janett",
+      "year": "2020",
+      "journal-title": "Cienc. Saude Coletiva"
+    },
+    {
+      "key": "ref_7",
+      "first-page": "102407",
+      "article-title": "Blockchain-based electronic healthcare record system for healthcare 4.0 applications",
+      "volume": "50",
+      "author": "Tanwar",
+      "year": "2020",
+      "journal-title": "J. Inf. Secur. Appl."
+    },
+    {
+      "key": "ref_8",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Mettler, M. (2016, January 14–17). Blockchain technology in healthcare: The revolution starts here. Proceedings of the 2016 IEEE 18th International Conference on e-Health Networking, Applications and Services (Healthcom), Munich, Germany.",
+      "DOI": "10.1109/HealthCom.2016.7749510"
+    },
+    {
+      "key": "ref_9",
+      "doi-asserted-by": "crossref",
+      "first-page": "2292",
+      "DOI": "10.1109/ACCESS.2016.2566339",
+      "article-title": "Blockchains and smart contracts for the internet of things",
+      "volume": "4",
+      "author": "Christidis",
+      "year": "2016",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_10",
+      "doi-asserted-by": "crossref",
+      "first-page": "22",
+      "DOI": "10.22215/timreview/1111",
+      "article-title": "Hitching healthcare to the chain: An introduction to blockchain technology in the healthcare sector",
+      "volume": "7",
+      "author": "Engelhardt",
+      "year": "2017",
+      "journal-title": "Technol. Innov. Manag. Rev."
+    },
+    {
+      "key": "ref_11",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Siyal, A.A., Junejo, A.Z., Zawish, M., Ahmed, K., Khalil, A., and Soursou, G. (2019). Applications of blockchain technology in medicine and healthcare: Challenges and future perspectives. Cryptography, 3.",
+      "DOI": "10.3390/cryptography3010003"
+    },
+    {
+      "key": "ref_12",
+      "doi-asserted-by": "crossref",
+      "first-page": "83",
+      "DOI": "10.1109/MCE.2021.3140048",
+      "article-title": "Blockchain-based medical certificate generation and verification for IoT-based healthcare systems",
+      "volume": "12",
+      "author": "Namasudra",
+      "year": "2022",
+      "journal-title": "IEEE Consum. Electron. Mag."
+    },
+    {
+      "key": "ref_13",
+      "unstructured": "Health Level Seven International (2015). HL7 Implementation Guide for CDA® Release 2: Consolidated CDA Templates for Clinical Notes (US Realm) Draft Standard for Trial Use Release 2.1, Health Level Seven International. Technical Report."
+    },
+    {
+      "key": "ref_14",
+      "unstructured": "DICOM Standards Committee (2023, September 24). DICOM PS3.1 2023b. Technical Report; 2023. Available online: https://dicom.nema.org/medical/dicom/2023b/output/pdf/part01_changes.pdf."
+    },
+    {
+      "key": "ref_15",
+      "unstructured": "Savage, R. (2014). HL7 Version 2.5.1, Implementation Guide for Immunization Messaging, Technical Report; Centers for Disease Control and Prevention."
+    },
+    {
+      "key": "ref_16",
+      "doi-asserted-by": "crossref",
+      "first-page": "101",
+      "DOI": "10.1007/s10278-011-9387-9",
+      "article-title": "A Parallel Method to Improve Medical Image Transmission",
+      "volume": "25",
+      "author": "Maani",
+      "year": "2011",
+      "journal-title": "J. Digit. Imaging"
+    },
+    {
+      "key": "ref_17",
+      "unstructured": "Massad, E., Marin, H.d.F., and Azevedo Neto, R.S.d. (2003). O Prontuário Eletrônico do Paciente na Assistência, Informação e Conhecimento Médico, USP."
+    },
+    {
+      "key": "ref_18",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Harrison, J.E., Weber, S., Jakob, R., and Chute, C.G. (2021). ICD-11: An international classification of diseases for the twenty-first century. BMC Med. Inform. Decis. Mak., 21.",
+      "DOI": "10.1186/s12911-021-01534-6"
+    },
+    {
+      "key": "ref_19",
+      "unstructured": "World Health Organization (2022). International Classification of Diseases, Eleventh Revision ICD-11, Technical Report; World Health Organization."
+    },
+    {
+      "key": "ref_20",
+      "unstructured": "Mattos, D.M., Medeiros, D.S., Fernandes, N.C., de Oliveira, M.T., Carrara, G.R., Soares, A.A., Magalhães, L.C.S., Passos, D., Carrano, R.C., and Moraes, I.M. (2023, September 24). Blockchain para Segurança em redes Elétricas Inteligentes: Aplicações, Tendências e Desafios. Available online: https://research.tudelft.nl/en/publications/blockchain-para-seguran%C3%A7a-em-redes-el%C3%A9tricas-inteligentes-aplica%C3%A7."
+    },
+    {
+      "key": "ref_21",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Xu, X., Weber, I., Staples, M., Zhu, L., Bosch, J., Bass, L., Pautasso, C., and Rimba, P. (2017, January 3–7). A taxonomy of blockchain-based systems for architecture design. Proceedings of the 2017 IEEE International Conference on Software Architecture (ICSA), Gothenburg, Sweden.",
+      "DOI": "10.1109/ICSA.2017.33"
+    },
+    {
+      "key": "ref_22",
+      "unstructured": "Pustokhin, D.A., Pustokhina, I.V., and Shankar, K. (2021). Applications of Blockchain in Healthcare, Springer."
+    },
+    {
+      "key": "ref_23",
+      "unstructured": "Nakamoto, S. (2008). Bitcoin: A peer-to-peer electronic cash system. Decentralized Bus. Rev., 21260. Available online: https://bitcoin.org/bitcoin.pdf."
+    },
+    {
+      "key": "ref_24",
+      "doi-asserted-by": "crossref",
+      "first-page": "2084",
+      "DOI": "10.1109/COMST.2016.2535718",
+      "article-title": "Bitcoin and beyond: A technical survey on decentralized digital currencies",
+      "volume": "18",
+      "author": "Tschorsch",
+      "year": "2016",
+      "journal-title": "IEEE Commun. Surv. Tutor."
+    },
+    {
+      "key": "ref_25",
+      "first-page": "1:1",
+      "article-title": "Blockchain Consensus Protocols in the Wild (Keynote Talk)",
+      "volume": "Volume 91",
+      "author": "Richa",
+      "year": "2017",
+      "journal-title": "Proceedings of the 31st International Symposium on Distributed Computing (DISC 2017)"
+    },
+    {
+      "key": "ref_26",
+      "doi-asserted-by": "crossref",
+      "first-page": "163",
+      "DOI": "10.1007/s12243-020-00751-w",
+      "article-title": "Consistency, availability, and partition tolerance in blockchain: A survey on the consensus mechanism over peer-to-peer networking",
+      "volume": "75",
+      "author": "Carrara",
+      "year": "2020",
+      "journal-title": "Ann. Telecommun."
+    },
+    {
+      "key": "ref_27",
+      "doi-asserted-by": "crossref",
+      "first-page": "825",
+      "DOI": "10.1016/j.tibtech.2020.02.010",
+      "article-title": "Cybersecurity in Science and Medicine: Threats and Challenges",
+      "volume": "38",
+      "author": "Luh",
+      "year": "2020",
+      "journal-title": "Trends Biotechnol."
+    },
+    {
+      "key": "ref_28",
+      "doi-asserted-by": "crossref",
+      "first-page": "9603",
+      "DOI": "10.1109/JIOT.2020.3013710",
+      "article-title": "Adversarial Examples—Security Threats to COVID-19 Deep Learning Systems in Medical IoT Devices",
+      "volume": "8",
+      "author": "Rahman",
+      "year": "2021",
+      "journal-title": "IEEE Internet Things J."
+    },
+    {
+      "key": "ref_29",
+      "doi-asserted-by": "crossref",
+      "first-page": "617",
+      "DOI": "10.1109/JBHI.2022.3174823",
+      "article-title": "Federated Learning-Based Secure Electronic Health Record Sharing Scheme in Medical Informatics",
+      "volume": "27",
+      "author": "Salim",
+      "year": "2023",
+      "journal-title": "IEEE J. Biomed. Health Inform."
+    },
+    {
+      "key": "ref_30",
+      "doi-asserted-by": "crossref",
+      "first-page": "19",
+      "DOI": "10.1109/MSP.2013.78",
+      "article-title": "Electronic medical records: Confidentiality, care, and epidemiology",
+      "volume": "11",
+      "author": "Lesk",
+      "year": "2013",
+      "journal-title": "IEEE Secur. Priv."
+    },
+    {
+      "key": "ref_31",
+      "doi-asserted-by": "crossref",
+      "first-page": "34",
+      "DOI": "10.1109/MSP.2013.80",
+      "article-title": "Identity management–in privacy we trust: Bridging the trust gap in ehealth environments",
+      "volume": "11",
+      "author": "Tormo",
+      "year": "2013",
+      "journal-title": "IEEE Secur. Priv."
+    },
+    {
+      "key": "ref_32",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Zhang, X., and Poslad, S. (2018, January 20–24). Blockchain support for flexible queries with granular access control to electronic medical records EMR. Proceedings of the 2018 IEEE International Conference on Communications (ICC), Kansas City, MO, USA.",
+      "DOI": "10.1109/ICC.2018.8422883"
+    },
+    {
+      "key": "ref_33",
+      "doi-asserted-by": "crossref",
+      "first-page": "218",
+      "DOI": "10.1007/s10916-016-0574-6",
+      "article-title": "Healthcare data gateways: Found healthcare intelligence on blockchain with novel privacy risk control",
+      "volume": "40",
+      "author": "Yue",
+      "year": "2016",
+      "journal-title": "J. Med. Syst."
+    },
+    {
+      "key": "ref_34",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Jacquemard, T., Doherty, C.P., and Fitzsimons, M.B. (2020). Examination and diagnosis of electronic patient records and their associated ethics: A scoping literature review. BMC Med. Ethics, 21.",
+      "DOI": "10.1186/s12910-020-00514-1"
+    },
+    {
+      "key": "ref_35",
+      "doi-asserted-by": "crossref",
+      "first-page": "e26",
+      "DOI": "10.1016/j.ijmedinf.2010.10.001",
+      "article-title": "Aspects of privacy for electronic health records",
+      "volume": "80",
+      "author": "Haas",
+      "year": "2011",
+      "journal-title": "Int. J. Med. Inform."
+    },
+    {
+      "key": "ref_36",
+      "doi-asserted-by": "crossref",
+      "first-page": "119271",
+      "DOI": "10.1016/j.eswa.2022.119271",
+      "article-title": "AC-ABAC: Attribute-based access control for electronic medical records during acute care",
+      "volume": "213",
+      "author": "Verginadis",
+      "year": "2023",
+      "journal-title": "Expert Syst. Appl."
+    },
+    {
+      "key": "ref_37",
+      "first-page": "131",
+      "article-title": "Emergency role-based access control E-RBAC and analysis of model specifications with alloy",
+      "volume": "45",
+      "author": "Nazerian",
+      "year": "2019",
+      "journal-title": "J. Inf. Secur. Appl."
+    },
+    {
+      "key": "ref_38",
+      "doi-asserted-by": "crossref",
+      "first-page": "9114",
+      "DOI": "10.1109/ACCESS.2018.2800288",
+      "article-title": "Privacy-Preserving Attribute-Based Access Control Model for XML-Based Electronic Health Record System",
+      "volume": "6",
+      "author": "Seol",
+      "year": "2018",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_39",
+      "doi-asserted-by": "crossref",
+      "first-page": "1028",
+      "DOI": "10.1016/j.jbi.2008.03.014",
+      "article-title": "Situation-based access control: Privacy management via modeling of patient data access scenarios",
+      "volume": "41",
+      "author": "Peleg",
+      "year": "2008",
+      "journal-title": "J. Biomed. Inform."
+    },
+    {
+      "key": "ref_40",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Abomhara, M., Yang, H., and Køien, G.M. (2016, January 4–7). Access control model for cooperative healthcare environments: Modeling and verification. Proceedings of the 2016 IEEE International Conference on Healthcare Informatics (ICHI), Chicago, IL, USA.",
+      "DOI": "10.1109/ICHI.2016.10"
+    },
+    {
+      "key": "ref_41",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Abomhara, M., and Ben Lazrag, M. (2016, January 14–17). UML/OCL-based modeling of work-based access control policies for collaborative healthcare systems. Proceedings of the 2016 IEEE 18th International Conference on e-Health Networking, Applications and Services (Healthcom), Munich, Germany.",
+      "DOI": "10.1109/HealthCom.2016.7749461"
+    },
+    {
+      "key": "ref_42",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Byun, J.W., Bertino, E., and Li, N. (2005, January 8–10). Purpose Based Access Control of Complex Data for Privacy Protection. Proceedings of the Tenth ACM Symposium on Access Control Models and Technologies, New York, NY, USA. SACMAT ’05.",
+      "DOI": "10.1145/1063979.1063998"
+    },
+    {
+      "key": "ref_43",
+      "doi-asserted-by": "crossref",
+      "first-page": "103408",
+      "DOI": "10.1016/j.csi.2019.103408",
+      "article-title": "Towards a GDPR compliant way to secure European cross border Healthcare Industry 4.0",
+      "volume": "69",
+      "author": "Larrucea",
+      "year": "2020",
+      "journal-title": "Comput. Stand. Interfaces"
+    },
+    {
+      "key": "ref_44",
+      "unstructured": "Albeyatt, A. (2018). MedicalChain White Paper 2.1. Technical report, MedChain White Paper 2.1."
+    },
+    {
+      "key": "ref_45",
+      "unstructured": "Sandgaard, J., and Wishstar, S. (2023, September 24). MedChain White Paper 2.1. Technical Report, MedChain White Paper 2.1. Available online: https://medicalchain.com/Medicalchain-Whitepaper-EN.pdf."
+    },
+    {
+      "key": "ref_46",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Al Omar, A., Rahman, M.S., Basu, A., and Kiyomoto, S. (2017, January 12–15). MediBChain: A blockchain based privacy preserving platform for healthcare data. Proceedings of the Security, Privacy, and Anonymity in Computation, Communication, and Storage: SpaCCS 2017 International Workshops, Guangzhou, China. Proceedings 10.",
+      "DOI": "10.1007/978-3-319-72395-2_49"
+    },
+    {
+      "key": "ref_47",
+      "unstructured": "Anderson, J. (2023, September 24). Securing, Standardizing, and Simplifying Electronic Health Record Audit Logs through Permissioned Blockchain Technology. Available online: https://digitalcommons.dartmouth.edu/senior_theses/135/."
+    },
+    {
+      "key": "ref_48",
+      "unstructured": "Rebello, G., Camilo, G., Silva, L., Souza, L., Guimarães, L., Alchieri, E., Greve, F., and Duarte, O. (2023, September 24). Correntes de Blocos: Algoritmos de Consenso e Implementação na Plataforma Hyperledger Fabric. Available online: https://dl.acm.org/doi/abs/10.1145/3544538.3544653."
+    },
+    {
+      "key": "ref_49",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Agrawal, D., Minocha, S., Namasudra, S., and Gandomi, A.H. (2022). A robust drug recall supply chain management system using hyperledger blockchain ecosystem. Comput. Biol. Med., 140.",
+      "DOI": "10.1016/j.compbiomed.2021.105100"
+    },
+    {
+      "key": "ref_50",
+      "doi-asserted-by": "crossref",
+      "first-page": "136",
+      "DOI": "10.1007/s10916-018-0993-7",
+      "article-title": "MedBlock: Efficient and secure medical data sharing via blockchain",
+      "volume": "42",
+      "author": "Fan",
+      "year": "2018",
+      "journal-title": "J. Med. Syst."
+    },
+    {
+      "key": "ref_51",
+      "doi-asserted-by": "crossref",
+      "first-page": "267",
+      "DOI": "10.1016/j.csbj.2018.07.004",
+      "article-title": "FHIRChain: Applying blockchain to securely and scalably share clinical data",
+      "volume": "16",
+      "author": "Zhang",
+      "year": "2018",
+      "journal-title": "Comput. Struct. Biotechnol. J."
+    },
+    {
+      "key": "ref_52",
+      "doi-asserted-by": "crossref",
+      "first-page": "283",
+      "DOI": "10.1016/j.scs.2018.02.014",
+      "article-title": "Ancile: Privacy-preserving framework for access control and interoperability of electronic health records using blockchain technology",
+      "volume": "39",
+      "author": "Dagher",
+      "year": "2018",
+      "journal-title": "Sustain. Cities Soc."
+    },
+    {
+      "key": "ref_53",
+      "doi-asserted-by": "crossref",
+      "unstructured": "de Oliveira, M.T., Reis, L.H., Carrano, R.C., Seixas, F.L., Saade, D.C., Albuquerque, C.V., Fernandes, N.C., Olabarriaga, S.D., Medeiros, D.S., and Mattos, D.M. (2019, January 20–24). Towards a blockchain-based secure electronic medical record for healthcare applications. Proceedings of the ICC 2019-2019 IEEE International Conference on Communications (ICC), Shanghai, China.",
+      "DOI": "10.1109/ICC.2019.8761307"
+    },
+    {
+      "key": "ref_54",
+      "doi-asserted-by": "crossref",
+      "first-page": "1617",
+      "DOI": "10.1007/s11280-021-00874-7",
+      "article-title": "Distributed attribute-based access control system using permissioned blockchain",
+      "volume": "24",
+      "author": "Rouhani",
+      "year": "2021",
+      "journal-title": "World Wide Web"
+    },
+    {
+      "key": "ref_55",
+      "doi-asserted-by": "crossref",
+      "first-page": "93",
+      "DOI": "10.1016/j.cose.2019.03.016",
+      "article-title": "A blockchain based approach for the definition of auditable access control systems",
+      "volume": "84",
+      "author": "Maesa",
+      "year": "2019",
+      "journal-title": "Comput. Secur."
+    },
+    {
+      "key": "ref_56",
+      "doi-asserted-by": "crossref",
+      "first-page": "489",
+      "DOI": "10.1007/s10207-021-00565-4",
+      "article-title": "Accountable privacy preserving attribute-based access control for cloud services enforced using blockchain",
+      "volume": "21",
+      "author": "Ghorbel",
+      "year": "2021",
+      "journal-title": "Int. J. Inf. Secur."
+    },
+    {
+      "key": "ref_57",
+      "doi-asserted-by": "crossref",
+      "first-page": "11676",
+      "DOI": "10.1109/ACCESS.2018.2801266",
+      "article-title": "Secure attribute-based signature scheme with multiple authorities for blockchain in electronic health records systems",
+      "volume": "6",
+      "author": "Guo",
+      "year": "2018",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_58",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Dang, L., Dong, M., Ota, K., Wu, J., Li, J., and Li, G. (2018, January 20–24). Resource-efficient secure data sharing for information centric e-health system using fog computing. Proceedings of the 2018 IEEE International Conference on Communications (ICC), Kansas City, MO, USA.",
+      "DOI": "10.1109/ICC.2018.8422844"
+    },
+    {
+      "key": "ref_59",
+      "doi-asserted-by": "crossref",
+      "first-page": "164595",
+      "DOI": "10.1109/ACCESS.2019.2952942",
+      "article-title": "MedChain: A design of blockchain-based system for medical records access and permissions management",
+      "volume": "7",
+      "author": "Daraghmi",
+      "year": "2019",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_60",
+      "unstructured": "Santos, S.d.L.V.d., Zara, A.L.d.S.A., Lucena, F.N.d., Ribeiro-Rotta, R.F., Braga, R.D., Amaral, R.G., Pedrosa, S.M., and Kudo, T.N. (2022). Rede Nacional de Dados em Saúde: O que Precisamos Saber?, Cegraf UFG."
+    },
+    {
+      "key": "ref_61",
+      "unstructured": "Tribunal de Contas da União (TCU) (2020). Levantamento de Aplicações Blockchain: Aplicações Blockchain no Setor Pública do Brasil (Apêndice 1), Sumário executivo; Tribunal de Contas da União (TCU)."
+    },
+    {
+      "key": "ref_62",
+      "doi-asserted-by": "crossref",
+      "first-page": "1398",
+      "DOI": "10.1177/1460458218769699",
+      "article-title": "A framework for secure and decentralized sharing of medical imaging data via blockchain consensus",
+      "volume": "25",
+      "author": "Patel",
+      "year": "2019",
+      "journal-title": "Health Inform. J."
+    },
+    {
+      "key": "ref_63",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Azaria, A., Ekblaw, A., Vieira, T., and Lippman, A. (2016, January 22–24). MedRec: Using blockchain for medical data access and permission management. Proceedings of the 2016 2nd International Conference on Open and Big Data (OBD), Vienna, Austria.",
+      "DOI": "10.1109/OBD.2016.11"
+    },
+    {
+      "key": "ref_64",
+      "doi-asserted-by": "crossref",
+      "first-page": "167930",
+      "DOI": "10.1109/ACCESS.2019.2953729",
+      "article-title": "A comparative analysis of distributed ledger technology platforms",
+      "volume": "7",
+      "author": "Chowdhury",
+      "year": "2019",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_65",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Lo, S.K., Xu, X., Chiam, Y.K., and Lu, Q. (2017, January 5–8). Evaluating suitability of applying blockchain. Proceedings of the 2017 22nd International Conference on Engineering of Complex Computer Systems (ICECCS), Fukuoka, Japan.",
+      "DOI": "10.1109/ICECCS.2017.26"
+    },
+    {
+      "key": "ref_66",
+      "first-page": "27",
+      "article-title": "A Survey of Blockchain-Based Strategies for Healthcare",
+      "volume": "53",
+      "author": "Krishnamachari",
+      "year": "2020",
+      "journal-title": "ACM Comput. Surv."
+    },
+    {
+      "key": "ref_67",
+      "doi-asserted-by": "crossref",
+      "first-page": "14155",
+      "DOI": "10.1109/ACCESS.2020.2965147",
+      "article-title": "Survey: Sharding in blockchains",
+      "volume": "8",
+      "author": "Yu",
+      "year": "2020",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_68",
+      "unstructured": "Kaur, G., and Gandhi, C. (2020). Handbook of Research on Blockchain Technology, Elsevier."
+    },
+    {
+      "key": "ref_69",
+      "doi-asserted-by": "crossref",
+      "first-page": "11475",
+      "DOI": "10.1007/s00521-020-05519-w",
+      "article-title": "Blockchain for Healthcare Data Management: Opportunities, Challenges, and Future Recommendations",
+      "volume": "34",
+      "author": "Yaqoob",
+      "year": "2022",
+      "journal-title": "Neural Comput. Appl."
+    },
+    {
+      "key": "ref_70",
+      "first-page": "196",
+      "article-title": "iDASH: Integrating data for analysis, anonymization, and sharing",
+      "volume": "19",
+      "author": "Bafna",
+      "year": "2011",
+      "journal-title": "J. Am. Med. Inform. Assoc."
+    },
+    {
+      "key": "ref_71",
+      "doi-asserted-by": "crossref",
+      "first-page": "2484",
+      "DOI": "10.5712/rbmfc15(42)2484",
+      "article-title": "Telemedicina rural e COVID-19: Ampliando o acesso onde a distância já era regra",
+      "volume": "15",
+      "year": "2020",
+      "journal-title": "Revista Brasileira Medicina Família Comunidade"
+    },
+    {
+      "key": "ref_72",
+      "doi-asserted-by": "crossref",
+      "first-page": "e1364",
+      "DOI": "10.1016/S2214-109X(20)30362-4",
+      "article-title": "Opportunities and challenges for telehealth within, and beyond, a pandemic",
+      "volume": "8",
+      "author": "Blandford",
+      "year": "2020",
+      "journal-title": "Lancet Glob. Health"
+    },
+    {
+      "key": "ref_73",
+      "doi-asserted-by": "crossref",
+      "first-page": "595704",
+      "DOI": "10.3389/fdgth.2021.595704",
+      "article-title": "Personalized Health Care and Public Health in the Digital Age",
+      "volume": "3",
+      "author": "Roberts",
+      "year": "2021",
+      "journal-title": "Front. Digit. Health"
+    }
+  ],
+  "container-title": [
+    "Information"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.mdpi.com/2078-2489/15/1/20/pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        10
+      ]
+    ],
+    "date-time": "2025-10-10T21:44:13Z",
+    "timestamp": 1760132653000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.mdpi.com/2078-2489/15/1/20"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2023,
+        12,
+        29
+      ]
+    ]
+  },
+  "references-count": 73,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          1
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "info15010020"
+  ],
+  "URL": "https://doi.org/10.3390/info15010020",
+  "relation": {},
+  "ISSN": [
+    "2078-2489"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "2078-2489"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2023,
+        12,
+        29
+      ]
+    ]
+  }
+}

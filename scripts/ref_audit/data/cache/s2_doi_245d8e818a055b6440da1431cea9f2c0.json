@@ -1,0 +1,41 @@
+{
+  "paperId": "c244832c163c52c7d266c6fa452349302cf13d6a",
+  "externalIds": {
+    "MAG": "2908287046",
+    "DOI": "10.1017/S0003055418000783",
+    "CorpusId": 149856338
+  },
+  "title": "Using a Probabilistic Model to Assist Merging of Large-Scale Administrative Records",
+  "year": 2018,
+  "citationCount": 187,
+  "openAccessPdf": {
+    "url": "",
+    "status": "CLOSED",
+    "license": null,
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1017/S0003055418000783?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1017/S0003055418000783, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": "A fast and scalable algorithm is developed to implement a canonical model of probabilistic record linkage that has many advantages over deterministic methods frequently used by social scientists."
+  },
+  "journal": {
+    "name": "American Political Science Review",
+    "pages": "353 - 371",
+    "volume": "113"
+  },
+  "authors": [
+    {
+      "authorId": "114001538",
+      "name": "Ted Enamorado"
+    },
+    {
+      "authorId": "113923706",
+      "name": "Benjamin Fifield"
+    },
+    {
+      "authorId": "2321387300",
+      "name": "Kosuke Imai"
+    }
+  ],
+  "abstract": "Since most social science research relies on multiple data sources, merging data sets is an essential part of researchers’ workflow. Unfortunately, a unique identifier that unambiguously links records is often unavailable, and data may contain missing and inaccurate information. These problems are severe especially when merging large-scale administrative records. We develop a fast and scalable algorithm to implement a canonical model of probabilistic record linkage that has many advantages over deterministic methods frequently used by social scientists. The proposed methodology efficiently handles millions of observations while accounting for missing data and measurement error, incorporating auxiliary information, and adjusting for uncertainty about merging in post-merge analyses. We conduct comprehensive simulation studies to evaluate the performance of our algorithm in realistic scenarios. We also apply our methodology to merging campaign contribution records, survey data, and nationwide voter files. An open-source software package is available for implementing the proposed methodology."
+}

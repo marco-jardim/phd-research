@@ -1,0 +1,37 @@
+{
+  "paperId": "3c0f38ecb451c3a76d6cf76623e37f35d90e1345",
+  "externalIds": {
+    "MAG": "2158016453",
+    "DOI": "10.1590/S0102-311X2000000200014",
+    "CorpusId": 73052455
+  },
+  "title": "Reclink: aplicativo para o relacionamento de bases de dados, implementando o método probabilistic record linkage",
+  "year": 2000,
+  "citationCount": 208,
+  "openAccessPdf": {
+    "url": "https://www.scielo.br/j/csp/a/LjRvngwd9gWhCs7wp85nrfb/?lang=pt&format=pdf",
+    "status": "GOLD",
+    "license": "CCBY",
+    "disclaimer": "Notice: Paper or abstract available at https://api.unpaywall.org/v2/10.1590/S0102-311X2000000200014?email=<INSERT_YOUR_EMAIL> or https://doi.org/10.1590/S0102-311X2000000200014, which is subject to the license by the author or copyright owner provided with this content. Please go to the source to verify the license and copyright information for your use."
+  },
+  "tldr": {
+    "model": "tldr@v2.0.0",
+    "text": "This paper presents a system for database linkage based on the probabilistic record linkage technique, developed in the C++ language with the Borland C++ Builder version 3.0 programming environment, and evaluated both in terms of processing time and sensitivity."
+  },
+  "journal": {
+    "name": "Cadernos De Saude Publica",
+    "pages": "439-447",
+    "volume": "16"
+  },
+  "authors": [
+    {
+      "authorId": "116531948",
+      "name": "Kenneth Rochelde Camargo"
+    },
+    {
+      "authorId": "8254337",
+      "name": "Cláudia Medina Coeli"
+    }
+  ],
+  "abstract": "This paper presents a system for database linkage based on the probabilistic record linkage technique, developed in the C++ language with the Borland C++ Builder version 3.0 programming environment. The system was tested in the linkage of data sources of different sizes, evaluated both in terms of processing time and sensitivity for identifying true record pairs. Significantly less time was spent in record processing when the program was used, as compared to manual processing, especially in situations where larger databases were used. Manual and automatic processes had equivalent sensitivities in situations where we used databases with fewer records. However, as the number of records grew we noticed a clear reduction in the sensitivity of the manual process, but not in the automatic one. Although in its initial stage of development, the system performed well in terms of both processing speed and sensitivity. Although overall performance of algorithms was satisfactory, we intend to evaluate other routines in the attempt to improve the system's performance."
+}

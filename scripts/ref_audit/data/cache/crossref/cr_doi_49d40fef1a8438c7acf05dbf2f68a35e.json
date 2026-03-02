@@ -1,0 +1,732 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        1,
+        5
+      ]
+    ],
+    "date-time": "2026-01-05T15:18:03Z",
+    "timestamp": 1767626283720,
+    "version": "3.37.3"
+  },
+  "reference-count": 91,
+  "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2022,
+            1,
+            1
+          ]
+        ],
+        "date-time": "2022-01-01T00:00:00Z",
+        "timestamp": 1640995200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/legalcode"
+    }
+  ],
+  "funder": [
+    {
+      "DOI": "10.13039/501100003725",
+      "name": "National Research Foundation of Korea through the Korean Government",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "NRF-2020R1A2B5B02002478"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "NRF-2020R1A2B5B02002478"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100003725",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IEEE Access"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2022
+      ]
+    ]
+  },
+  "DOI": "10.1109/access.2022.3223676",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2022,
+        11,
+        21
+      ]
+    ],
+    "date-time": "2022-11-21T21:11:43Z",
+    "timestamp": 1669065103000
+  },
+  "page": "126161-126179",
+  "source": "Crossref",
+  "is-referenced-by-count": 14,
+  "title": [
+    "Semantic Architecture for Interoperability in Distributed Healthcare Systems"
+  ],
+  "prefix": "10.1109",
+  "volume": "10",
+  "author": [
+    {
+      "given": "Ebtsam",
+      "family": "Adel",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Department of Information Systems, Faculty of Computers and Information, Mansoura University, Mansoura, Egypt"
+        }
+      ]
+    },
+    {
+      "given": "Shaker",
+      "family": "El-Sappagh",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Faculty of Computer Science and Engineering, Galala University, Suez, Egypt"
+        }
+      ]
+    },
+    {
+      "given": "Sherif",
+      "family": "Barakat",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Information Systems, Faculty of Computers and Information, Mansoura University, Mansoura, Egypt"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-9559-4352",
+      "authenticated-orcid": false,
+      "given": "Kyung Sup",
+      "family": "Kwak",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Information and Communication Engineering, Inha University, Incheon, South Korea"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-2504-6051",
+      "authenticated-orcid": false,
+      "given": "Mohammed",
+      "family": "Elmogy",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Information Technology, Faculty of Computers and Information, Mansoura University, Mansoura, Egypt"
+        }
+      ]
+    }
+  ],
+  "member": "263",
+  "reference": [
+    {
+      "key": "ref73",
+      "first-page": "150",
+      "article-title": "Semi-automatically building ontologies from relational databases",
+      "volume": "1",
+      "author": "yang",
+      "year": "2010",
+      "journal-title": "Proc 3rd Int Conf Comput Sci Inf Technol"
+    },
+    {
+      "key": "ref72",
+      "first-page": "170",
+      "article-title": "RDB2ONT: A tool for generating OWL ontologies from relational database systems",
+      "author": "trinh",
+      "year": "2006",
+      "journal-title": "Proc Adv Int Conf Telecommun Int Conf Internet Web Appl Services (AICT-ICIW)"
+    },
+    {
+      "key": "ref71",
+      "article-title": "Use of OWL and SWRL for semantic relational database translation",
+      "author": "fisher",
+      "year": "2008",
+      "journal-title": "Proc OWLED (Spring)"
+    },
+    {
+      "journal-title": "DataMaster",
+      "year": "2021",
+      "author": "nyulas",
+      "key": "ref70"
+    },
+    {
+      "journal-title": "Protege",
+      "year": "2022",
+      "key": "ref76"
+    },
+    {
+      "journal-title": "OWLVIz",
+      "year": "2021",
+      "author": "horridge",
+      "key": "ref77"
+    },
+    {
+      "journal-title": "Archetype Management System (ARCHMS)",
+      "year": "2021",
+      "author": "garcia",
+      "key": "ref74"
+    },
+    {
+      "journal-title": "LinkEHR Interoperability Platform",
+      "year": "2021",
+      "key": "ref39"
+    },
+    {
+      "journal-title": "Poseacle Converter",
+      "year": "2022",
+      "author": "tortosa",
+      "key": "ref75"
+    },
+    {
+      "journal-title": "Archetype Editor",
+      "year": "2021",
+      "key": "ref38"
+    },
+    {
+      "journal-title": "OntoGraf",
+      "year": "2021",
+      "author": "falconer",
+      "key": "ref78"
+    },
+    {
+      "key": "ref79",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10817-014-9305-1"
+    },
+    {
+      "key": "ref33",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/OBD.2016.18"
+    },
+    {
+      "key": "ref32",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/DEXA.2009.68"
+    },
+    {
+      "key": "ref31",
+      "article-title": "Automatic generation of OWL ontology from XML data source",
+      "author": "yahia",
+      "year": "2012",
+      "journal-title": "arXiv 1206 0570"
+    },
+    {
+      "key": "ref30",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1017/S0269888911000208"
+    },
+    {
+      "journal-title": "OpenEHR ADL Workbench (AWB) User Guide",
+      "year": "2022",
+      "key": "ref37"
+    },
+    {
+      "journal-title": "Clinical Knowledge Manager",
+      "year": "2021",
+      "key": "ref36"
+    },
+    {
+      "key": "ref35",
+      "first-page": "1",
+      "article-title": "Archetypes: Constraint-based domain models for future-proof information systems",
+      "volume": "105",
+      "author": "beale",
+      "year": "2002",
+      "journal-title": "Proc OOPSLA Workshop Behav Semantics"
+    },
+    {
+      "key": "ref34",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-319-30370-3"
+    },
+    {
+      "key": "ref60",
+      "article-title": "Ontology-based model for interoperability between openEHR and HL7 health applications",
+      "author": "righi",
+      "year": "2019",
+      "journal-title": "Health Informatics and Medical Systems"
+    },
+    {
+      "key": "ref62",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ACCESS.2020.3009783"
+    },
+    {
+      "key": "ref61",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICRITO48877.2020.9197823"
+    },
+    {
+      "key": "ref63",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/WETICE53228.2021.00041"
+    },
+    {
+      "key": "ref28",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10462-011-9251-9"
+    },
+    {
+      "key": "ref64",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/info13020052"
+    },
+    {
+      "key": "ref27",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICCES48960.2019.9068117"
+    },
+    {
+      "key": "ref65",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/app12094322"
+    },
+    {
+      "key": "ref66",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/s13054-018-2171-1"
+    },
+    {
+      "key": "ref29",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5121/ijwest.2016.7403"
+    },
+    {
+      "key": "ref67",
+      "first-page": "450",
+      "article-title": "Prompt: Algorithm and tool for automated ontology merging and alignment",
+      "author": "noy",
+      "year": "2000",
+      "journal-title": "Proc 17th Nat Conf Artif Intell (AAAI)"
+    },
+    {
+      "key": "ref68",
+      "first-page": "3671",
+      "author": "severo",
+      "year": "2014",
+      "journal-title": "VOAR A Visual and Integrated Ontology Alignment Environment"
+    },
+    {
+      "key": "ref69",
+      "first-page": "30",
+      "article-title": "Ontology of integration and integration of ontologies",
+      "volume": "49",
+      "author": "lenzerini la calvanese",
+      "year": "2001",
+      "journal-title": "Description Logics"
+    },
+    {
+      "key": "ref2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-1-4614-8557-5"
+    },
+    {
+      "key": "ref1",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/S1386-5056(98)00129-4"
+    },
+    {
+      "journal-title": "Database Management Systems",
+      "year": "2000",
+      "author": "ramakrishnan",
+      "key": "ref20"
+    },
+    {
+      "key": "ref22",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1136/bmj.323.7313.625"
+    },
+    {
+      "key": "ref21",
+      "first-page": "85",
+      "article-title": "The use of XML in healthcare information management",
+      "volume": "14",
+      "author": "seals",
+      "year": "2000",
+      "journal-title": "J Healthcare Inform Manage"
+    },
+    {
+      "key": "ref24",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.knosys.2016.05.016"
+    },
+    {
+      "key": "ref23",
+      "first-page": "353",
+      "article-title": "A unified fuzzy ontology for distributed electronic health record semantic interoperability",
+      "author": "barakat adel",
+      "year": "2019",
+      "journal-title": "In U-Healthcare Monitoring Systems"
+    },
+    {
+      "journal-title": "Semantic interoperability for health network deliverable 4 5 Design guides and roadmap",
+      "year": "2015",
+      "author": "schulz",
+      "key": "ref26"
+    },
+    {
+      "key": "ref25",
+      "first-page": "182",
+      "article-title": "Understanding semantic web and ontologies: Theory and applications",
+      "volume": "2",
+      "author": "taye",
+      "year": "2010",
+      "journal-title": "J Comput"
+    },
+    {
+      "key": "ref50",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3390/app10186328"
+    },
+    {
+      "key": "ref51",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ACCESS.2020.3022763"
+    },
+    {
+      "key": "ref91",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1136/amiajnl-2013-001915"
+    },
+    {
+      "key": "ref90",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.23919/FRUCT.2019.8711950"
+    },
+    {
+      "key": "ref59",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/JBHI.2018.2836138"
+    },
+    {
+      "key": "ref58",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-319-96292-4_33"
+    },
+    {
+      "key": "ref57",
+      "first-page": "29",
+      "article-title": "Semantic interoperability of clinical data",
+      "volume": "10649",
+      "author": "santo",
+      "year": "2017",
+      "journal-title": "Proc Int Conf Data Integr Life Sci"
+    },
+    {
+      "key": "ref56",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.artmed.2004.11.005"
+    },
+    {
+      "key": "ref55",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.7551/mitpress/9780262527811.001.0001"
+    },
+    {
+      "key": "ref54",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1038/nbt1346"
+    },
+    {
+      "key": "ref53",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.procs.2020.08.037"
+    },
+    {
+      "key": "ref52",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/3-540-70894-4_3"
+    },
+    {
+      "key": "ref10",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1023757304542"
+    },
+    {
+      "journal-title": "Health Level Seven International (HL7)",
+      "year": "2020",
+      "key": "ref11"
+    },
+    {
+      "key": "ref40",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.4258/hir.2013.19.4.286"
+    },
+    {
+      "year": "2021",
+      "key": "ref12"
+    },
+    {
+      "journal-title": "Openehr Open Industry Specifications Models and Software for e-Health",
+      "year": "2021",
+      "key": "ref13"
+    },
+    {
+      "journal-title": "Observational Health Data Sciences and Informatics",
+      "year": "2022",
+      "key": "ref14"
+    },
+    {
+      "journal-title": "Requirements Engineering A Good Practice Guide",
+      "year": "1997",
+      "author": "sommerville",
+      "key": "ref15"
+    },
+    {
+      "journal-title": "DL Query",
+      "year": "2021",
+      "author": "drummond",
+      "key": "ref82"
+    },
+    {
+      "journal-title": "Semantic Interoperability for Better Health and Safer Healthcare",
+      "year": "2009",
+      "author": "rector",
+      "key": "ref16"
+    },
+    {
+      "key": "ref81",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.websem.2007.03.004"
+    },
+    {
+      "journal-title": "E-health Standards and Interoperability",
+      "year": "2012",
+      "author": "denardis",
+      "key": "ref17"
+    },
+    {
+      "key": "ref84",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/DeSE.2017.9"
+    },
+    {
+      "key": "ref18",
+      "first-page": "366",
+      "article-title": "Electronic health record definition, scope and context. ISO",
+      "volume": "215",
+      "author": "schloeffel",
+      "year": "2003",
+      "journal-title": "Proc TC"
+    },
+    {
+      "key": "ref83",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TITB.2011.2180917"
+    },
+    {
+      "key": "ref19",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/database/bav121"
+    },
+    {
+      "key": "ref80",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/11814771_26"
+    },
+    {
+      "key": "ref89",
+      "first-page": "189",
+      "article-title": "Integration of heterogeneous data sources in an ontological knowledge base",
+      "volume": "31",
+      "author": "kryza",
+      "year": "2014",
+      "journal-title": "Inform Comput"
+    },
+    {
+      "journal-title": "Electronic Health Records",
+      "year": "2016",
+      "key": "ref4"
+    },
+    {
+      "key": "ref3",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1377/hlthaff.2016.1651"
+    },
+    {
+      "key": "ref6",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1080/1206212X.2017.1418237"
+    },
+    {
+      "key": "ref5",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2007.08.011"
+    },
+    {
+      "key": "ref85",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1497308.1497318"
+    },
+    {
+      "journal-title": "Integrating the Healthcare Enterprise IHE",
+      "year": "2021",
+      "key": "ref8"
+    },
+    {
+      "key": "ref86",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2011.05.006"
+    },
+    {
+      "journal-title": "Digital Imaging and Communications in Medicine",
+      "year": "2021",
+      "key": "ref7"
+    },
+    {
+      "key": "ref49",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/MIS.2004.1265889"
+    },
+    {
+      "key": "ref87",
+      "first-page": "624",
+      "article-title": "Semantic-based data integration model applied to heterogeneous medical information system",
+      "author": "shi",
+      "year": "2010",
+      "journal-title": "Proc 2nd Int Conf Comput Autom Eng (ICCAE)"
+    },
+    {
+      "key": "ref88",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10916-011-9797-8"
+    },
+    {
+      "journal-title": "CDISC (Clinical Data Interchange Standards Consortium)",
+      "year": "2021",
+      "key": "ref9"
+    },
+    {
+      "key": "ref46",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.eswa.2014.06.033"
+    },
+    {
+      "key": "ref45",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-540-92673-3_0"
+    },
+    {
+      "journal-title": "The Description Logic Handbook Theory Implementation and Applications",
+      "year": "2010",
+      "author": "mcguinness",
+      "key": "ref48"
+    },
+    {
+      "journal-title": "OWL Web Ontology Language Overview",
+      "year": "2014",
+      "author": "mcguinness",
+      "key": "ref47"
+    },
+    {
+      "key": "ref42",
+      "first-page": "1",
+      "author": "beale",
+      "year": "2008",
+      "journal-title": "Architecture Overview"
+    },
+    {
+      "journal-title": "SNOMED International Leading Healthcare Terminology World Wide",
+      "year": "2021",
+      "key": "ref41"
+    },
+    {
+      "journal-title": "Learning SPARQL Querying and Updating with SPARQL 1 1",
+      "year": "2013",
+      "author": "ducharme",
+      "key": "ref44"
+    },
+    {
+      "key": "ref43",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2011.11.004"
+    }
+  ],
+  "container-title": [
+    "IEEE Access"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://xplorestaging.ieee.org/ielx7/6287639/9668973/09956805.pdf?arnumber=9956805",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2022,
+        12,
+        26
+      ]
+    ],
+    "date-time": "2022-12-26T19:32:53Z",
+    "timestamp": 1672083173000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ieeexplore.ieee.org/document/9956805/"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2022
+      ]
+    ]
+  },
+  "references-count": 91,
+  "URL": "https://doi.org/10.1109/access.2022.3223676",
+  "relation": {},
+  "ISSN": [
+    "2169-3536"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "2169-3536"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2022
+      ]
+    ]
+  }
+}

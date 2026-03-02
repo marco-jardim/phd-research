@@ -1,0 +1,571 @@
+[
+  {
+    "indexed": {
+      "date-parts": [
+        [
+          2025,
+          11,
+          19
+        ]
+      ],
+      "date-time": "2025-11-19T22:54:44Z",
+      "timestamp": 1763592884907,
+      "version": "3.45.0"
+    },
+    "description": "Supplemental Information for 10.1021/acs.jcim.1c01467",
+    "reference-count": 0,
+    "publisher": "American Chemical Society (ACS)",
+    "content-domain": {
+      "domain": [],
+      "crossmark-restriction": false
+    },
+    "DOI": "10.1021/acs.jcim.1c01467.s001",
+    "type": "component",
+    "created": {
+      "date-parts": [
+        [
+          2022,
+          3,
+          10
+        ]
+      ],
+      "date-time": "2022-03-10T07:45:10Z",
+      "timestamp": 1646898310000
+    },
+    "source": "Crossref",
+    "is-referenced-by-count": 1,
+    "title": [
+      "Unified Deep Learning Model for Multitask Reaction Predictions with Explanation"
+    ],
+    "prefix": "10.1021",
+    "member": "316",
+    "deposited": {
+      "date-parts": [
+        [
+          2022,
+          3,
+          28
+        ]
+      ],
+      "date-time": "2022-03-28T03:41:38Z",
+      "timestamp": 1648438898000
+    },
+    "score": 27.66733,
+    "resource": {
+      "primary": {
+        "URL": "https://pubs.acs.org/doi/suppl/10.1021/acs.jcim.1c01467/suppl_file/ci1c01467_si_001.pdf"
+      }
+    },
+    "issued": {
+      "date-parts": [
+        [
+          null
+        ]
+      ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.1021/acs.jcim.1c01467.s001"
+  },
+  {
+    "institution": [
+      {
+        "name": "Toronto Metropolitan University"
+      }
+    ],
+    "indexed": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          4
+        ]
+      ],
+      "date-time": "2024-03-04T02:14:13Z",
+      "timestamp": 1709518453098
+    },
+    "posted": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "reference-count": 0,
+    "publisher": "Ryerson University Library and Archives",
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              5,
+              3
+            ]
+          ],
+          "date-time": "2023-05-03T00:00:00Z",
+          "timestamp": 1683072000000
+        },
+        "content-version": "unspecified",
+        "delay-in-days": 0,
+        "URL": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "content-domain": {
+      "domain": [],
+      "crossmark-restriction": false
+    },
+    "abstract": "<jats:p>&lt;p&gt;COVID-19, due to its accelerated spread has brought in the need to use assistive tools for faster diagnosis in addition to typical lab swab testing. Chest X-Rays for COVID cases tend to show changes in the lungs such as ground glass opacities and peripheral consolidations which can be detected by deep neural networks. However, traditional convolutional networks use point estimate for predictions, lacking in capture of uncertainty, which makes them less reliable for adoption. There have been several works so far in predicting COVID positive cases with chest X-Rays. However, not much has been explored on quantifying the uncertainty of these predictions, interpreting uncertainty, and decomposing this to model or data uncertainty. To address these needs, we develop a visualization framework to address interpretability of uncertainty and its components, with uncertainty in predictions computed with a Bayesian Convolutional Neural Network. This framework aims to understand the contribution of individual features in the Chest-X-Ray images to predictive uncertainty. Providing this as an assistive tool can help the radiologist understand why the model came up with a prediction and whether the regions of interest captured by the model for the specific prediction are of significance in diagnosis. We demonstrate the usefulness of the tool in chest x-ray interpretation through several test cases from a benchmark dataset.&lt;/p&gt;</jats:p>",
+    "DOI": "10.32920/22734407",
+    "type": "posted-content",
+    "created": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ],
+      "date-time": "2023-05-03T15:59:05Z",
+      "timestamp": 1683129545000
+    },
+    "source": "Crossref",
+    "is-referenced-by-count": 0,
+    "title": [
+      "Interpreting Uncertainty in Model Predictions for Covid-19 Diagnosis"
+    ],
+    "prefix": "10.32920",
+    "author": [
+      {
+        "given": "Gayathiri",
+        "family": "Murugamoorthy",
+        "sequence": "first",
+        "affiliation": []
+      },
+      {
+        "given": "Naimul",
+        "family": "Khan",
+        "sequence": "first",
+        "affiliation": []
+      }
+    ],
+    "member": "18300",
+    "deposited": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ],
+      "date-time": "2023-05-03T15:59:05Z",
+      "timestamp": 1683129545000
+    },
+    "score": 26.428108,
+    "resource": {
+      "primary": {
+        "URL": "https://rshare.library.torontomu.ca/articles/journal_contribution/Interpreting_Uncertainty_in_Model_Predictions_for_Covid-19_Diagnosis/22734407"
+      }
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.32920/22734407",
+    "relation": {
+      "is-preprint-of": [
+        {
+          "id-type": "doi",
+          "id": "10.1109/EMBC46164.2021.9630945",
+          "asserted-by": "subject"
+        }
+      ]
+    },
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "subtype": "other"
+  },
+  {
+    "institution": [
+      {
+        "name": "Toronto Metropolitan University"
+      }
+    ],
+    "indexed": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          4
+        ]
+      ],
+      "date-time": "2024-03-04T02:14:13Z",
+      "timestamp": 1709518453946
+    },
+    "posted": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "reference-count": 0,
+    "publisher": "Ryerson University Library and Archives",
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              5,
+              3
+            ]
+          ],
+          "date-time": "2023-05-03T00:00:00Z",
+          "timestamp": 1683072000000
+        },
+        "content-version": "unspecified",
+        "delay-in-days": 0,
+        "URL": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    ],
+    "content-domain": {
+      "domain": [],
+      "crossmark-restriction": false
+    },
+    "abstract": "<jats:p>&lt;p&gt;COVID-19, due to its accelerated spread has brought in the need to use assistive tools for faster diagnosis in addition to typical lab swab testing. Chest X-Rays for COVID cases tend to show changes in the lungs such as ground glass opacities and peripheral consolidations which can be detected by deep neural networks. However, traditional convolutional networks use point estimate for predictions, lacking in capture of uncertainty, which makes them less reliable for adoption. There have been several works so far in predicting COVID positive cases with chest X-Rays. However, not much has been explored on quantifying the uncertainty of these predictions, interpreting uncertainty, and decomposing this to model or data uncertainty. To address these needs, we develop a visualization framework to address interpretability of uncertainty and its components, with uncertainty in predictions computed with a Bayesian Convolutional Neural Network. This framework aims to understand the contribution of individual features in the Chest-X-Ray images to predictive uncertainty. Providing this as an assistive tool can help the radiologist understand why the model came up with a prediction and whether the regions of interest captured by the model for the specific prediction are of significance in diagnosis. We demonstrate the usefulness of the tool in chest x-ray interpretation through several test cases from a benchmark dataset.&lt;/p&gt;</jats:p>",
+    "DOI": "10.32920/22734407.v1",
+    "type": "posted-content",
+    "created": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ],
+      "date-time": "2023-05-03T15:59:05Z",
+      "timestamp": 1683129545000
+    },
+    "source": "Crossref",
+    "is-referenced-by-count": 0,
+    "title": [
+      "Interpreting Uncertainty in Model Predictions for Covid-19 Diagnosis"
+    ],
+    "prefix": "10.32920",
+    "author": [
+      {
+        "given": "Gayathiri",
+        "family": "Murugamoorthy",
+        "sequence": "first",
+        "affiliation": []
+      },
+      {
+        "given": "Naimul",
+        "family": "Khan",
+        "sequence": "first",
+        "affiliation": []
+      }
+    ],
+    "member": "18300",
+    "deposited": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ],
+      "date-time": "2023-05-03T15:59:05Z",
+      "timestamp": 1683129545000
+    },
+    "score": 26.40697,
+    "resource": {
+      "primary": {
+        "URL": "https://rshare.library.torontomu.ca/articles/journal_contribution/Interpreting_Uncertainty_in_Model_Predictions_for_Covid-19_Diagnosis/22734407/1"
+      }
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.32920/22734407.v1",
+    "relation": {
+      "is-preprint-of": [
+        {
+          "id-type": "doi",
+          "id": "10.1109/EMBC46164.2021.9630945",
+          "asserted-by": "subject"
+        }
+      ]
+    },
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          5,
+          3
+        ]
+      ]
+    },
+    "subtype": "other"
+  },
+  {
+    "institution": [
+      {
+        "name": "Toronto Metropolitan University"
+      }
+    ],
+    "indexed": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          20
+        ]
+      ],
+      "date-time": "2024-03-20T00:18:38Z",
+      "timestamp": 1710893918038
+    },
+    "posted": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "reference-count": 0,
+    "publisher": "Ryerson University Library and Archives",
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              8,
+              29
+            ]
+          ],
+          "date-time": "2023-08-29T00:00:00Z",
+          "timestamp": 1693267200000
+        },
+        "content-version": "unspecified",
+        "delay-in-days": 0,
+        "URL": "http://rightsstatements.org/vocab/InC/1.0/"
+      }
+    ],
+    "content-domain": {
+      "domain": [],
+      "crossmark-restriction": false
+    },
+    "abstract": "<jats:p>&lt;p&gt;COVID-19, due to its accelerated spread has brought in the need to use assistive tools for faster diagnosis in addition to RT-PCR. Chest X-Rays for COVID cases tends to show changes in the lungs such as ground glass opacities and peripheral consolidations which can be detected by deep neural networks. However their point estimate nature and lack of capture of uncertainty in the prediction makes it less reliable for healthcare adoption. There have been several works in the interpretability of point estimate deep neural networks. However very limited work has been found oninterpretinguncertaintyin a COVID prediction and decomposing this to model or data uncertainty. To mitigate this we compute uncertainty in predictions with a Bayesian Convolutional Neural Network and develop a visualization framework to address interpretability. This framework aims to understand the contribution of individual features in the Chest-X-Ray images to predictive uncertainty. Providing this as an assistive tool can help the radiologist understand why the model came up with a prediction and whether the regions of interest captured by the model for the specific prediction are of significance in diagnosis. &lt;/p&gt;</jats:p>",
+    "DOI": "10.32920/24050724.v1",
+    "type": "posted-content",
+    "created": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ],
+      "date-time": "2023-08-29T16:08:12Z",
+      "timestamp": 1693325292000
+    },
+    "source": "Crossref",
+    "is-referenced-by-count": 0,
+    "title": [
+      "Interpreting Uncertainty in Model Predictions in Bayesian Neural Networks for COVID-19 Diagnosis"
+    ],
+    "prefix": "10.32920",
+    "author": [
+      {
+        "given": "Gayathiri",
+        "family": "Murugamoorthy",
+        "sequence": "first",
+        "affiliation": []
+      }
+    ],
+    "member": "18300",
+    "deposited": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          19
+        ]
+      ],
+      "date-time": "2024-03-19T19:02:29Z",
+      "timestamp": 1710874949000
+    },
+    "score": 25.658876,
+    "resource": {
+      "primary": {
+        "URL": "https://rshare.library.torontomu.ca/articles/thesis/Interpreting_Uncertainty_in_Model_Predictions_in_Bayesian_Neural_Networks_for_COVID-19_Diagnosis/24050724/1"
+      }
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.32920/24050724.v1",
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "subtype": "dissertation"
+  },
+  {
+    "institution": [
+      {
+        "name": "Toronto Metropolitan University"
+      }
+    ],
+    "indexed": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          20
+        ]
+      ],
+      "date-time": "2024-03-20T00:19:22Z",
+      "timestamp": 1710893962730
+    },
+    "posted": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "reference-count": 0,
+    "publisher": "Ryerson University Library and Archives",
+    "license": [
+      {
+        "start": {
+          "date-parts": [
+            [
+              2023,
+              8,
+              29
+            ]
+          ],
+          "date-time": "2023-08-29T00:00:00Z",
+          "timestamp": 1693267200000
+        },
+        "content-version": "unspecified",
+        "delay-in-days": 0,
+        "URL": "http://rightsstatements.org/vocab/InC/1.0/"
+      }
+    ],
+    "content-domain": {
+      "domain": [],
+      "crossmark-restriction": false
+    },
+    "abstract": "<jats:p>&lt;p&gt;COVID-19, due to its accelerated spread has brought in the need to use assistive tools for faster diagnosis in addition to RT-PCR. Chest X-Rays for COVID cases tends to show changes in the lungs such as ground glass opacities and peripheral consolidations which can be detected by deep neural networks. However their point estimate nature and lack of capture of uncertainty in the prediction makes it less reliable for healthcare adoption. There have been several works in the interpretability of point estimate deep neural networks. However very limited work has been found oninterpretinguncertaintyin a COVID prediction and decomposing this to model or data uncertainty. To mitigate this we compute uncertainty in predictions with a Bayesian Convolutional Neural Network and develop a visualization framework to address interpretability. This framework aims to understand the contribution of individual features in the Chest-X-Ray images to predictive uncertainty. Providing this as an assistive tool can help the radiologist understand why the model came up with a prediction and whether the regions of interest captured by the model for the specific prediction are of significance in diagnosis. &lt;/p&gt;</jats:p>",
+    "DOI": "10.32920/24050724",
+    "type": "posted-content",
+    "created": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ],
+      "date-time": "2023-08-29T16:08:21Z",
+      "timestamp": 1693325301000
+    },
+    "source": "Crossref",
+    "is-referenced-by-count": 0,
+    "title": [
+      "Interpreting Uncertainty in Model Predictions in Bayesian Neural Networks for COVID-19 Diagnosis"
+    ],
+    "prefix": "10.32920",
+    "author": [
+      {
+        "given": "Gayathiri",
+        "family": "Murugamoorthy",
+        "sequence": "first",
+        "affiliation": []
+      }
+    ],
+    "member": "18300",
+    "deposited": {
+      "date-parts": [
+        [
+          2024,
+          3,
+          19
+        ]
+      ],
+      "date-time": "2024-03-19T19:02:30Z",
+      "timestamp": 1710874950000
+    },
+    "score": 25.656527,
+    "resource": {
+      "primary": {
+        "URL": "https://rshare.library.torontomu.ca/articles/thesis/Interpreting_Uncertainty_in_Model_Predictions_in_Bayesian_Neural_Networks_for_COVID-19_Diagnosis/24050724"
+      }
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "references-count": 0,
+    "URL": "https://doi.org/10.32920/24050724",
+    "published": {
+      "date-parts": [
+        [
+          2023,
+          8,
+          29
+        ]
+      ]
+    },
+    "subtype": "dissertation"
+  }
+]

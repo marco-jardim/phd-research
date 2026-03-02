@@ -1,0 +1,463 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        3
+      ]
+    ],
+    "date-time": "2026-02-03T17:16:32Z",
+    "timestamp": 1770138992060,
+    "version": "3.49.0"
+  },
+  "reference-count": 34,
+  "publisher": "MDPI AG",
+  "issue": "2",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2019,
+            1,
+            15
+          ]
+        ],
+        "date-time": "2019-01-15T00:00:00Z",
+        "timestamp": 1547510400000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Sensors"
+  ],
+  "abstract": "<jats:p>Medical care has become one of the most indispensable parts of human lives, leading to a dramatic increase in medical big data. To streamline the diagnosis and treatment process, healthcare professionals are now adopting Internet of Things (IoT)-based wearable technology. Recent years have witnessed billions of sensors, devices, and vehicles being connected through the Internet. One such technology—remote patient monitoring—is common nowadays for the treatment and care of patients. However, these technologies also pose grave privacy risks and security concerns about the data transfer and the logging of data transactions. These security and privacy problems of medical data could result from a delay in treatment progress, even endangering the patient’s life. We propose the use of a blockchain to provide secure management and analysis of healthcare big data. However, blockchains are computationally expensive, demand high bandwidth and extra computational power, and are therefore not completely suitable for most resource-constrained IoT devices meant for smart cities. In this work, we try to resolve the above-mentioned issues of using blockchain with IoT devices. We propose a novel framework of modified blockchain models suitable for IoT devices that rely on their distributed nature and other additional privacy and security properties of the network. These additional privacy and security properties in our model are based on advanced cryptographic primitives. The solutions given here make IoT application data and transactions more secure and anonymous over a blockchain-based network.</jats:p>",
+  "DOI": "10.3390/s19020326",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        16
+      ]
+    ],
+    "date-time": "2019-01-16T03:09:13Z",
+    "timestamp": 1547608153000
+  },
+  "page": "326",
+  "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 722,
+  "title": [
+    "A Decentralized Privacy-Preserving Healthcare Blockchain for IoT"
+  ],
+  "prefix": "10.3390",
+  "volume": "19",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0001-8010-6275",
+      "authenticated-orcid": false,
+      "given": "Ashutosh Dhar",
+      "family": "Dwivedi",
+      "sequence": "first",
+      "affiliation": [
+        {
+          "name": "Institute of Computer Science, Polish Academy of Sciences, 01-248 Warsaw, Poland"
+        },
+        {
+          "name": "Department of Mathematics and Computer Science, Brandon University, Brandon, MB R7A 6A9, Canada"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0001-9851-4103",
+      "authenticated-orcid": false,
+      "given": "Gautam",
+      "family": "Srivastava",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Mathematics and Computer Science, Brandon University, Brandon, MB R7A 6A9, Canada"
+        },
+        {
+          "name": "Research Center for Interneural Computing, China Medical University, Taichung 40402, Taiwan"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0003-2173-1999",
+      "authenticated-orcid": false,
+      "given": "Shalini",
+      "family": "Dhar",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Electronics and Communication, University of Allahabad, Allahabad 211002, India"
+        }
+      ]
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-9997-5830",
+      "authenticated-orcid": false,
+      "given": "Rajani",
+      "family": "Singh",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Institute of Computer Science, Polish Academy of Sciences, 01-248 Warsaw, Poland"
+        },
+        {
+          "name": "Faculty of Mathematics, Informatics and Mechanics, University of Warsaw, 02-097 Warsaw, Poland"
+        }
+      ]
+    }
+  ],
+  "member": "1968",
+  "published-online": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        15
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref_1",
+      "unstructured": "Nakamoto, S. (2008). Bitcoin: A Peer-to-Peer Electronic Cash System, BN Publishing."
+    },
+    {
+      "key": "ref_2",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Malina, L., Hajny, J., Dzurenda, P., and Ricci, S. (2018, January 26–28). Lightweight Ring Signatures for Decentralized Privacy-preserving Transactions. Proceedings of the 15th International Joint Conference on e-Business and Telecommunications, Porto, Portugal.",
+      "DOI": "10.5220/0006890505260531"
+    },
+    {
+      "key": "ref_3",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Mettler, M. (2016, January 14–17). Blockchain technology in healthcare: The revolution starts here. Proceedings of the 2016 IEEE 18th International Conference on e-Health Networking, Applications and Services (Healthcom), Munich, Germany.",
+      "DOI": "10.1109/HealthCom.2016.7749510"
+    },
+    {
+      "key": "ref_4",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Dorri, A., Kanhere, S.S., Jurdak, R., and Gauravaram, P. (2017, January 13–17). Blockchain for IoT security and privacy: The case study of a smart home. Proceedings of the 2017 IEEE International Conference on Pervasive Computing and Communications Workshops (PerCom Workshops), Kona, HI, USA.",
+      "DOI": "10.1109/PERCOMW.2017.7917634"
+    },
+    {
+      "key": "ref_5",
+      "doi-asserted-by": "crossref",
+      "first-page": "9239",
+      "DOI": "10.1109/ACCESS.2016.2645904",
+      "article-title": "A Secure System For Pervasive Social Network-Based Healthcare",
+      "volume": "4",
+      "author": "Zhang",
+      "year": "2016",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_6",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Zhu, X., and Badr, Y. (2018). Identity Management Systems for the Internet of Things: A Survey Towards Blockchain Solutions. Sensors, 18.",
+      "DOI": "10.3390/s18124215"
+    },
+    {
+      "key": "ref_7",
+      "doi-asserted-by": "crossref",
+      "first-page": "218",
+      "DOI": "10.1007/s10916-016-0574-6",
+      "article-title": "Healthcare Data Gateways: Found Healthcare Intelligence on Blockchain with Novel Privacy Risk Control",
+      "volume": "40",
+      "author": "Yue",
+      "year": "2016",
+      "journal-title": "J. Med. Syst."
+    },
+    {
+      "key": "ref_8",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Panarello, A., Tapas, N., Merlino, G., Longo, F., and Puliafito, A. (2018). Blockchain and IoT Integration: A Systematic Survey. Sensors, 18.",
+      "DOI": "10.3390/s18082575"
+    },
+    {
+      "key": "ref_9",
+      "unstructured": "Saeed, K., and Homenda, W. (2018). PHANTOM Protocol as the New Crypto-Democracy. Computer Information Systems and Industrial Management, Springer International Publishing."
+    },
+    {
+      "key": "ref_10",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Srivastava, G., Dwivedi, A.D., and Singh, R. (2018, January 26–28). Crypto-democracy: A Decentralized Voting Scheme using Blockchain Technology. Proceedings of the 15th International Joint Conference on e-Business and Telecommunications, Porto, Portugal.",
+      "DOI": "10.5220/0006881906740679"
+    },
+    {
+      "key": "ref_11",
+      "unstructured": "Kő, A., and Francesconi, E. (2014). Social Signature: Signing by Tweeting. Electronic Government and the Information Systems Perspective, Springer International Publishing."
+    },
+    {
+      "key": "ref_12",
+      "first-page": "185",
+      "article-title": "A privacy-preserving e-participation framework allowing citizen opinion analysis",
+      "volume": "11",
+      "author": "Buccafurri",
+      "year": "2015",
+      "journal-title": "Electron. Gov. Int. J."
+    },
+    {
+      "key": "ref_13",
+      "doi-asserted-by": "crossref",
+      "first-page": "2292",
+      "DOI": "10.1109/ACCESS.2016.2566339",
+      "article-title": "Blockchains and Smart Contracts for the Internet of Things",
+      "volume": "4",
+      "author": "Christidis",
+      "year": "2016",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_14",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Qu, C., Tao, M., and Yuan, R. (2018). A Hypergraph-Based Blockchain Model and Application in Internet of Things-Enabled Smart Homes. Sensors, 18.",
+      "DOI": "10.3390/s18092784"
+    },
+    {
+      "key": "ref_15",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Irving, G., and Holden, J. (2016). How blockchain-timestamped protocols could improve the trustworthiness of medical science. F1000Research, 5.",
+      "DOI": "10.12688/f1000research.8114.2"
+    },
+    {
+      "key": "ref_16",
+      "doi-asserted-by": "crossref",
+      "unstructured": "He, W., Liu, X., Nguyen, H., Nahrstedt, K., and Abdelzaher, T. (2007, January 6–12). PDA: Privacy-Preserving Data Aggregation in Wireless Sensor Networks. Proceedings of the IEEE INFOCOM 2007—26th IEEE International Conference on Computer Communications, Anchorage, AK, USA.",
+      "DOI": "10.1109/INFCOM.2007.237"
+    },
+    {
+      "key": "ref_17",
+      "doi-asserted-by": "crossref",
+      "first-page": "1501",
+      "DOI": "10.1016/j.adhoc.2009.04.009",
+      "article-title": "Privacy preservation in wireless sensor networks: A state-of-the-art survey",
+      "volume": "7",
+      "author": "Li",
+      "year": "2009",
+      "journal-title": "Ad Hoc Netw."
+    },
+    {
+      "key": "ref_18",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Jajodia, S., and Zhou, J. (2010). Securing Personal Health Records in Cloud Computing: Patient-Centric and Fine-Grained Data Access Control in Multi-owner Settings. Security and Privacy in Communication Networks, Springer Berlin Heidelberg.",
+      "DOI": "10.1007/978-3-642-16161-2"
+    },
+    {
+      "key": "ref_19",
+      "doi-asserted-by": "crossref",
+      "first-page": "283",
+      "DOI": "10.1136/bmj.322.7281.283",
+      "article-title": "Public standards and patients’ control: how to keep electronic medical records accessible but private",
+      "volume": "322",
+      "author": "Mandl",
+      "year": "2001",
+      "journal-title": "BMJ"
+    },
+    {
+      "key": "ref_20",
+      "doi-asserted-by": "crossref",
+      "first-page": "27",
+      "DOI": "10.1109/TNSM.2018.2799000",
+      "article-title": "Big Data Analysis-Based Secure Cluster Management for Optimized Control Plane in Software-Defined Networks",
+      "volume": "15",
+      "author": "Wu",
+      "year": "2018",
+      "journal-title": "IEEE Trans. Netw. Serv. Manag."
+    },
+    {
+      "key": "ref_21",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Wu, J., Dong, M., Ota, K., Li, J., and Guan, Z. (2018). FCSS: Fog Computing based Content-Aware Filtering for Security Services in Information Centric Social Networks. IEEE Trans. Emerg. Top. Comput.",
+      "DOI": "10.1109/TETC.2017.2747158"
+    },
+    {
+      "key": "ref_22",
+      "doi-asserted-by": "crossref",
+      "first-page": "601",
+      "DOI": "10.1109/JIOT.2017.2686451",
+      "article-title": "A Secure Mechanism for Big Data Collection in Large Scale Internet of Vehicle",
+      "volume": "4",
+      "author": "Guo",
+      "year": "2017",
+      "journal-title": "IEEE Internet Things J."
+    },
+    {
+      "key": "ref_23",
+      "doi-asserted-by": "crossref",
+      "first-page": "416",
+      "DOI": "10.1109/ACCESS.2016.2517321",
+      "article-title": "A Hierarchical Security Framework for Defending Against Sophisticated Attacks on Wireless Sensor Networks in Smart Cities",
+      "volume": "4",
+      "author": "Wu",
+      "year": "2016",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "ref_24",
+      "first-page": "147",
+      "article-title": "Finding Differential Paths in ARX Ciphers through Nested Monte-Carlo Search",
+      "volume": "64",
+      "author": "Dwivedi",
+      "year": "2018",
+      "journal-title": "Int. J. Electron. Telecommun."
+    },
+    {
+      "key": "ref_25",
+      "doi-asserted-by": "crossref",
+      "first-page": "5",
+      "DOI": "10.1016/j.ipl.2018.03.010",
+      "article-title": "Differential-linear and related key cryptanalysis of round-reduced scream",
+      "volume": "136",
+      "author": "Dwivedi",
+      "year": "2018",
+      "journal-title": "Inf. Process. Lett."
+    },
+    {
+      "key": "ref_26",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Dwivedi, A.D., and Srivastava, G. (2018). Differential Cryptanalysis of Round-Reduced LEA. IEEE Access.",
+      "DOI": "10.1109/ACCESS.2018.2881130"
+    },
+    {
+      "key": "ref_27",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Dhar Dwivedi, A., Morawiecki, P., and Wójtowicz, S. (2017, January 24–26). Differential and Rotational Cryptanalysis of Round-reduced MORUS. Proceedings of the 14th International Joint Conference on e-Business and Telecommunications, Madrid, Spain.",
+      "DOI": "10.5220/0006411502750284"
+    },
+    {
+      "key": "ref_28",
+      "unstructured": "Dwivedi, A.D., and Morawiecki, P. (2019, January 09). Differential Cryptanalysis in ARX Ciphers, Application to SPECK. Available online: https://eprint.iacr.org/2018/899."
+    },
+    {
+      "key": "ref_29",
+      "unstructured": "Dwivedi, A.D., Morawiecki, P., and Wójtowicz, S. (2017, January 24–26). Differential-linear and Impossible Differential Cryptanalysis of Round-reduced Scream. Proceedings of the 14th International Joint Conference on e-Business and Telecommunications, Madrid, Spain."
+    },
+    {
+      "key": "ref_30",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Dwivedi, A.D., Klouček, M., Morawiecki, P., Nikolić, I., Pieprzyk, J., and Wójtowicz, S. (2017, January 24–26). SAT-based Cryptanalysis of Authenticated Ciphers from the CAESAR Competition. Proceedings of the 14th International Joint Conference on e-Business and Telecommunications, Madrid, Spain.",
+      "DOI": "10.5220/0006387302370246"
+    },
+    {
+      "key": "ref_31",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Josang, A., and Haller, J. (2007, January 10–13). Dirichlet Reputation Systems. Proceedings of the Second International Conference on Availability, Reliability and Security (ARES’07), Vienna, Austria.",
+      "DOI": "10.1109/ARES.2007.71"
+    },
+    {
+      "key": "ref_32",
+      "doi-asserted-by": "crossref",
+      "first-page": "55",
+      "DOI": "10.1145/964723.383064",
+      "article-title": "Enabling Conferencing Applications on the Internet Using an Overlay Muilticast Architecture",
+      "volume": "31",
+      "author": "Chu",
+      "year": "2001",
+      "journal-title": "SIGCOMM Comput. Commun. Rev."
+    },
+    {
+      "key": "ref_33",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Beaulieu, R., Treatman-Clark, S., Shors, D., Weeks, B., Smith, J., and Wingers, L. (2015, January 8–12). The SIMON and SPECK lightweight block ciphers. Proceedings of the 2015 52nd ACM/EDAC/IEEE Design Automation Conference (DAC), San Francisco, CA, USA.",
+      "DOI": "10.1145/2744769.2747946"
+    },
+    {
+      "key": "ref_34",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Boyd, C. (2001). How to Leak a Secret. Advances in Cryptology—ASIACRYPT 2001, Springer Berlin Heidelberg.",
+      "DOI": "10.1007/3-540-45682-1"
+    }
+  ],
+  "container-title": [
+    "Sensors"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://www.mdpi.com/1424-8220/19/2/326/pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        11
+      ]
+    ],
+    "date-time": "2025-10-11T12:26:10Z",
+    "timestamp": 1760185570000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.mdpi.com/1424-8220/19/2/326"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        15
+      ]
+    ]
+  },
+  "references-count": 34,
+  "journal-issue": {
+    "issue": "2",
+    "published-online": {
+      "date-parts": [
+        [
+          2019,
+          1
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "s19020326"
+  ],
+  "URL": "https://doi.org/10.3390/s19020326",
+  "relation": {},
+  "ISSN": [
+    "1424-8220"
+  ],
+  "issn-type": [
+    {
+      "value": "1424-8220",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2019,
+        1,
+        15
+      ]
+    ]
+  }
+}

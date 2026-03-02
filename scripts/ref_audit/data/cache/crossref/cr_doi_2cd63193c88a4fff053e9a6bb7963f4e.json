@@ -1,0 +1,367 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        5
+      ]
+    ],
+    "date-time": "2026-02-05T12:34:33Z",
+    "timestamp": 1770294873414,
+    "version": "3.49.0"
+  },
+  "reference-count": 23,
+  "publisher": "JMIR Publications Inc.",
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "JMIR Med Inform"
+  ],
+  "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:sec sec-type=\"background\">\n                    <jats:title>Background</jats:title>\n                    <jats:p>Data linkage in pharmacoepidemiological research is commonly employed to ascertain exposures and outcomes or to obtain additional information on confounding variables. However, to protect patient confidentiality, unique patient identifiers are not provided, which makes data linkage across multiple sources challenging. The Saudi Real-World Evidence Network (SRWEN) aggregates electronic health records from various hospitals, which may require robust linkage techniques.</jats:p>\n                  </jats:sec>\n                  <jats:sec sec-type=\"objective\">\n                    <jats:title>Objective</jats:title>\n                    <jats:p>We aimed to evaluate and compare the performance of deterministic, probabilistic, and machine learning (ML) approaches for linking deidentified data of patients with multiple sclerosis (MS) from the SRWEN and Ministry of National Guard Health Affairs electronic health record systems.</jats:p>\n                  </jats:sec>\n                  <jats:sec sec-type=\"methods\">\n                    <jats:title>Methods</jats:title>\n                    <jats:p>\n                      A simulation-based validation framework was applied before linking real-world data sources. Deterministic linkage was based on predefined rules, whereas probabilistic linkage was based on a similarity score–based matching. For ML, both similarity score–based and classification approaches were applied using neural networks, logistic regression, and random forest models. The performance of each approach was assessed using confusion matrices, focusing on sensitivity, positive predictive value,\n                      <jats:italic>F</jats:italic>\n                      <jats:sub>1</jats:sub>\n                      score, and computational efficiency.\n                    </jats:p>\n                  </jats:sec>\n                  <jats:sec sec-type=\"results\">\n                    <jats:title>Results</jats:title>\n                    <jats:p>\n                      The study included linked data of 2247 patients with MS from 2016 to 2023. The deterministic approach resulted in an average\n                      <jats:italic>F</jats:italic>\n                      <jats:sub>1</jats:sub>\n                      score of 97.2% in the simulation and demonstrated varying match rates in real-world linkage: 1046/2247 (46.6%) to 1946/2247 (86.6%). This linkage was computationally efficient, with run times of &lt;1 second per rule. The probabilistic approach provided an average\n                      <jats:italic>F</jats:italic>\n                      <jats:sub>1</jats:sub>\n                      score of 93.9% in the simulation, with real-world match rates ranging from 1472/2247 (65.5%) to 2144/2247 (95.4%) and processing times ranging from approximately 0.1 to 5 seconds per rule. ML approaches achieved high performance (\n                      <jats:italic>F</jats:italic>\n                      <jats:sub>1</jats:sub>\n                      score reached 99.8%) but were computationally expensive. Processing times ranged from approximately 13 to 16,936 seconds for the classification-based approaches and from approximately 13 to 7467 seconds for the similarity score–based approaches. Real-world match rates from ML models were highly variable depending on the method used; the similarity score–based approach identified 789/2247 (35.1%) matched pairs, whereas the classification-based approach identified 2014/2247 (89.6%).\n                    </jats:p>\n                  </jats:sec>\n                  <jats:sec sec-type=\"conclusions\">\n                    <jats:title>Conclusions</jats:title>\n                    <jats:p>Probabilistic linkage offers high linkage capacity by recovering matches missed by deterministic methods and proved to be both flexible and efficient, particularly in real-world scenarios where unique identifiers are lacking. This method achieved a great balance between recall and precision, enabling better integration of various data sources that could be useful in MS research.</jats:p>\n                  </jats:sec>",
+  "DOI": "10.2196/79869",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        4
+      ]
+    ],
+    "date-time": "2026-02-04T22:21:00Z",
+    "timestamp": 1770243660000
+  },
+  "page": "e79869-e79869",
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Linking Electronic Health Records for Multiple Sclerosis Research: Comparative Study of Deterministic, Probabilistic, and Machine Learning Linkage Methods"
+  ],
+  "prefix": "10.2196",
+  "volume": "14",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0002-6246-0841",
+      "authenticated-orcid": false,
+      "given": "Ohoud",
+      "family": "Almadani",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-2816-6526",
+      "authenticated-orcid": false,
+      "given": "Yasser",
+      "family": "Albogami",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "ORCID": "https://orcid.org/0000-0002-9422-7390",
+      "authenticated-orcid": false,
+      "given": "Adel",
+      "family": "Alrwisan",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "1010",
+  "published-online": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        4
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "issue": "15",
+      "key": "R1",
+      "doi-asserted-by": "publisher",
+      "first-page": "1345",
+      "DOI": "10.1056/NEJMp2113319",
+      "article-title": "Methods of public health research — strengthening causal inference from observational data",
+      "volume": "385",
+      "author": "Hernán",
+      "journal-title": "N Engl J Med"
+    },
+    {
+      "key": "R2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.3389/fmed.2021.669509",
+      "article-title": "Integrating real-world evidence in the regulatory decision-making process: a systematic analysis of experiences in the US, EU, and China using a logic model",
+      "volume": "8",
+      "author": "Li",
+      "journal-title": "Front Med (Lausanne)"
+    },
+    {
+      "issue": "4",
+      "key": "R3",
+      "doi-asserted-by": "publisher",
+      "first-page": "843",
+      "DOI": "10.1002/cpt.1658",
+      "article-title": "Examining the use of real-world evidence in the regulatory process",
+      "volume": "107",
+      "author": "Beaulieu-Jones",
+      "journal-title": "Clin Pharmacol Ther"
+    },
+    {
+      "issue": "10",
+      "key": "R4",
+      "doi-asserted-by": "publisher",
+      "first-page": "517",
+      "DOI": "10.2183/pjab.98.026",
+      "article-title": "Clinical epidemiology and pharmacoepidemiology studies with real-world databases",
+      "volume": "98",
+      "author": "Yoshida",
+      "journal-title": "Proc Jpn Acad Ser B Phys Biol Sci"
+    },
+    {
+      "issue": "2-3",
+      "key": "R5",
+      "doi-asserted-by": "publisher",
+      "first-page": "117",
+      "DOI": "10.1177/1833358319847120",
+      "article-title": "Utilisation of hospital information systems for medical research in Saudi Arabia: a mixed-method exploration of the views of healthcare and IT professionals involved in hospital database management systems",
+      "volume": "49",
+      "author": "Samra",
+      "journal-title": "Health Inf Manag"
+    },
+    {
+      "issue": "10",
+      "key": "R6",
+      "doi-asserted-by": "publisher",
+      "first-page": "1303",
+      "DOI": "10.1002/pds.5025",
+      "article-title": "Real-world data in Saudi Arabia: current situation and challenges for regulatory decision-making",
+      "volume": "29",
+      "author": "Alnofal",
+      "journal-title": "Pharmacoepidemiol Drug Saf"
+    },
+    {
+      "issue": "3",
+      "key": "R7",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1136/bmjopen-2022-065468",
+      "article-title": "Recording type 2 diabetes mellitus in a standardised central Saudi database: a retrospective validation study",
+      "volume": "13",
+      "author": "Althunian",
+      "journal-title": "BMJ Open"
+    },
+    {
+      "issue": "2",
+      "key": "R8",
+      "doi-asserted-by": "publisher",
+      "first-page": "102470",
+      "DOI": "10.1016/j.jksus.2022.102470",
+      "article-title": "Adoption of electronic health records in Saudi Arabia hospitals: knowledge and usage",
+      "volume": "35",
+      "author": "Alharbi",
+      "journal-title": "J King Saud Univ Sci"
+    },
+    {
+      "key": "R9",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2019.103253",
+      "article-title": "Facilitating phenotype transfer using a common data model",
+      "volume": "96",
+      "author": "Hripcsak",
+      "journal-title": "J Biomed Inform"
+    },
+    {
+      "key": "R10",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2016.10.016",
+      "article-title": "Evaluating common data models for use with a longitudinal community registry",
+      "volume": "64",
+      "author": "Garza",
+      "journal-title": "J Biomed Inform"
+    },
+    {
+      "issue": "3",
+      "key": "R11",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/jamiaopen/ooab001",
+      "article-title": "Transforming and evaluating electronic health record disease phenotyping algorithms using the OMOP common data model: a case study in heart failure",
+      "volume": "4",
+      "author": "Papez",
+      "journal-title": "JAMIA Open"
+    },
+    {
+      "key": "R12",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jclinepi.2021.04.015",
+      "article-title": "Probabilistic linkage without personal information successfully linked national clinical datasets",
+      "volume": "136",
+      "author": "Blake",
+      "journal-title": "J Clin Epidemiol"
+    },
+    {
+      "issue": "2",
+      "key": "R13",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.2196/15917",
+      "article-title": "Comparing methods for record linkage for public health action: matching algorithm validation study",
+      "volume": "6",
+      "author": "Avoundjian",
+      "journal-title": "JMIR Public Health Surveill"
+    },
+    {
+      "issue": "4",
+      "key": "R14",
+      "first-page": "174",
+      "volume": "43",
+      "author": "Ruppert",
+      "journal-title": "J Registry Manag"
+    },
+    {
+      "issue": "1",
+      "key": "R15",
+      "doi-asserted-by": "publisher",
+      "first-page": "82",
+      "DOI": "10.1055/s-0040-1722220",
+      "article-title": "Validating the matching of patients in the linkage of a large hospital system’s EHR with state and national death databases",
+      "volume": "12",
+      "author": "Conway",
+      "journal-title": "Appl Clin Inform"
+    },
+    {
+      "key": "R16",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.ijmedinf.2024.105387",
+      "article-title": "Using machine learning to link electronic health records in cancer registries: on the tradeoff between linkage quality and manual effort",
+      "volume": "185",
+      "author": "Röchner",
+      "journal-title": "Int J Med Inform"
+    },
+    {
+      "issue": "3",
+      "key": "R17",
+      "doi-asserted-by": "publisher",
+      "first-page": "160",
+      "DOI": "10.4103/sjhs.sjhs_163_21",
+      "article-title": "Multiple sclerosis in Saudi Arabia: a literature review",
+      "volume": "10",
+      "author": "Al-Saeed",
+      "journal-title": "Saudi J Health Sci"
+    },
+    {
+      "issue": "8",
+      "key": "R18",
+      "doi-asserted-by": "publisher",
+      "first-page": "1409",
+      "DOI": "10.1093/jamia/ocac068",
+      "article-title": "Evaluation of real-world referential and probabilistic patient matching to advance patient identification strategy",
+      "volume": "29",
+      "author": "Grannis",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "key": "R19",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.jbi.2015.05.012",
+      "article-title": "When to conduct probabilistic linkage vs. deterministic linkage? A simulation study",
+      "volume": "56",
+      "author": "Zhu",
+      "journal-title": "J Biomed Inform"
+    },
+    {
+      "key": "R20",
+      "unstructured": "van der Laan J . Record linkage using machine learning. 2024. URL: https://htmlpreview.github.io/?https://github.com/djvanderlaan/reclin2/blob/master/inst/doc/record_linkage_using_machine_learning.html [Accessed 21-01-2026]"
+    },
+    {
+      "issue": "10",
+      "key": "R21",
+      "doi-asserted-by": "publisher",
+      "first-page": "1485",
+      "DOI": "10.1002/sim.1147",
+      "article-title": "An empirical comparison of record linkage procedures",
+      "volume": "21",
+      "author": "Gomatam",
+      "journal-title": "Stat Med"
+    },
+    {
+      "issue": "5",
+      "key": "R22",
+      "doi-asserted-by": "publisher",
+      "first-page": "565",
+      "DOI": "10.1016/j.jclinepi.2010.05.008",
+      "article-title": "Results from simulated data sets: probabilistic record linkage outperforms deterministic record linkage",
+      "volume": "64",
+      "author": "Tromp",
+      "journal-title": "J Clin Epidemiol"
+    },
+    {
+      "issue": "1",
+      "key": "R23",
+      "doi-asserted-by": "publisher",
+      "first-page": "97",
+      "DOI": "10.1136/amiajnl-2013-001744",
+      "article-title": "A benchmark comparison of deterministic and probabilistic methods for defining manual review datasets in duplicate records reconciliation",
+      "volume": "21",
+      "author": "Joffe",
+      "journal-title": "J Am Med Inform Assoc"
+    }
+  ],
+  "container-title": [
+    "JMIR Medical Informatics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "deposited": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        4
+      ]
+    ],
+    "date-time": "2026-02-04T22:21:01Z",
+    "timestamp": 1770243661000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://medinform.jmir.org/2026/1/e79869"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        4
+      ]
+    ]
+  },
+  "references-count": 23,
+  "URL": "https://doi.org/10.2196/79869",
+  "relation": {},
+  "ISSN": [
+    "2291-9694"
+  ],
+  "issn-type": [
+    {
+      "value": "2291-9694",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        4
+      ]
+    ]
+  },
+  "article-number": "v14i15e79869"
+}

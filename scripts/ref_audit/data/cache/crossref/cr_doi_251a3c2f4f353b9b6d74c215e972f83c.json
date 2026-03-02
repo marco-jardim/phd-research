@@ -1,0 +1,222 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2022,
+        4,
+        3
+      ]
+    ],
+    "date-time": "2022-04-03T12:30:55Z",
+    "timestamp": 1648989055294
+  },
+  "reference-count": 0,
+  "publisher": "Swansea University",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2017,
+            4,
+            18
+          ]
+        ],
+        "date-time": "2017-04-18T00:00:00Z",
+        "timestamp": 1492473600000
+      },
+      "content-version": "unspecified",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by-nc-nd/4.0"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IJPDS"
+  ],
+  "abstract": "<jats:p>ABSTRACTObjectivesOur objectives were unify and deduplicate databases’ of patients registration information coming from Information Systems of SUS in Brazil: Hospital, Outpatient, Births, Notifications and Mortalities, between the years 2008-2015, to get an individualize data and plot patients’ lines of care during the period, enabling pharmacoeconomic and epidemiological studies that parameterize effectiveness and efficiency of public policies and embedded technologies.&#x0D;\nMethodsSemantic analysis of data was performed to describe and understand different meanings of different fields existing in the studied bases. In addition, there were four main procedures, executed with database operations tools and PLSQL programming language: cleaning and standardization of databases(document’s numbers was checked in the brazilian national people’s database, with a string approximator algorithm to decide if the document’s number belonged or no the register); registration information extraction, deterministic and probabilistic deduplication thereof. The procedures were first performed on each database separately and after the unification of the records, was held again a deterministic deduplication. Except the probabilistic deduplication which was performed only on the final deterministic deduplicated's database.&#x0D;\nPerformed procedures allowed a decision-making to chose fields used in data model for the unified database creation. Nine database's representative fields related to patients were selected: patient's name; patient mother’s name; sex; birth date; state; city; zip code; cpf and cns(brazilian documents).&#x0D;\nResultsInitially, the unified registration database resulted in 705.599.785 records, after deterministic deduplication there was a reduction culminating in 198.400.762 records. This reduction is explained because these databases are not fully integrated. Moreover, there is not always agreement between systems’ semantics and in some cases changes occur in the data format over the period within the same system. After probabilistic deduplication, the number of unique records decreased to 124.545.186 which is explained by non-linked pairs by deterministic process. This result is guaranteed with a estimate error of at most 3.3% of false positive and at most 12.3% of false negative pairs.&#x0D;\nConclusionThe results show that data deduplication is necessary and should be carried out thoroughly. Where the databases had limited patients’ registration information, the technique enabled to capture, in more complete basis, additional information. Futhermore, it allowed to identify and assist in the understanding of positive and negative aspects within systems and trace clinical condition of patients, enabling pharmacoeconomic and epidemiological studies that define effectiveness and efficiency of public policies and embedded technologies. As future work, is important ensure the univocity of records and link this database with past period.</jats:p>",
+  "DOI": "10.23889/ijpds.v1i1.225",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2017,
+        4,
+        20
+      ]
+    ],
+    "date-time": "2017-04-20T08:05:43Z",
+    "timestamp": 1492675543000
+  },
+  "source": "Crossref",
+  "is-referenced-by-count": 1,
+  "title": [
+    "Unified health database creation: 125 million brazilian cohort from information systems of hospital, outpatient, births, notifications and mortalities"
+  ],
+  "prefix": "10.23889",
+  "volume": "1",
+  "author": [
+    {
+      "given": "Ramon",
+      "family": "Pereira",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Leonardo",
+      "family": "Dias",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Juliano",
+      "family": "Ávila",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Núbia",
+      "family": "Santos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Eli Iola",
+      "family": "Gurgel",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Mariangela Leal",
+      "family": "Cherchiglia",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Francisco",
+      "family": "AcÚrcio",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Afonso",
+      "family": "Reis",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Wagner",
+      "family": "Meira",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Augusto Afonso",
+      "family": "Guerra",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "9980",
+  "published-online": {
+    "date-parts": [
+      [
+        2017,
+        4,
+        18
+      ]
+    ]
+  },
+  "container-title": [
+    "International Journal of Population Data Science"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://ijpds.org/article/download/225/207",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/225/1245",
+      "content-type": "application/xml",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://ijpds.org/article/download/225/207",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2020,
+        11,
+        26
+      ]
+    ],
+    "date-time": "2020-11-26T22:45:11Z",
+    "timestamp": 1606430711000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://ijpds.org/article/view/225"
+    }
+  },
+  "subtitle": [
+    "IJPDS (2017) Issue 1, Vol 1:205 Proceedings of the IPDLN Conference (August 2016)"
+  ],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2017,
+        4,
+        18
+      ]
+    ]
+  },
+  "references-count": 0,
+  "journal-issue": {
+    "issue": "1",
+    "published-online": {
+      "date-parts": [
+        [
+          2017,
+          4,
+          19
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.23889/ijpds.v1i1.225",
+  "relation": {},
+  "ISSN": [
+    "2399-4908"
+  ],
+  "issn-type": [
+    {
+      "value": "2399-4908",
+      "type": "electronic"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2017,
+        4,
+        18
+      ]
+    ]
+  }
+}

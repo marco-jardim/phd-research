@@ -1,0 +1,658 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        10,
+        16
+      ]
+    ],
+    "date-time": "2025-10-16T10:09:34Z",
+    "timestamp": 1760609374163,
+    "version": "3.37.3"
+  },
+  "reference-count": 34,
+  "publisher": "Springer Science and Business Media LLC",
+  "issue": "1",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            15
+          ]
+        ],
+        "date-time": "2021-06-15T00:00:00Z",
+        "timestamp": 1623715200000
+      },
+      "content-version": "tdm",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0"
+    },
+    {
+      "start": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            15
+          ]
+        ],
+        "date-time": "2021-06-15T00:00:00Z",
+        "timestamp": 1623715200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0"
+    }
+  ],
+  "funder": [
+    {
+      "name": "DFID/MRC/Welcome Trust/ESRC Health Systems Research Initiative",
+      "award": [
+        "MR/P014593/1"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "MR/P014593/1"
+          ]
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100003593",
+      "name": "Conselho Nacional de Desenvolvimento Científico e Tecnológico",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "303295/2019-8"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "303295/2019-8"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100003593",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    },
+    {
+      "DOI": "10.13039/501100004586",
+      "name": "Fundação Carlos Chagas Filho de Amparo à Pesquisa do Estado do Rio de Janeiro",
+      "doi-asserted-by": "publisher",
+      "award": [
+        "E-26/200.003/2019"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "E-26/200.003/2019"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/501100004586",
+          "id-type": "DOI",
+          "asserted-by": "publisher"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "link.springer.com"
+    ],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "BMC Med Inform Decis Mak"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2021,
+        12
+      ]
+    ]
+  },
+  "abstract": "<jats:title>Abstract</jats:title><jats:sec>\n                <jats:title>Background</jats:title>\n                <jats:p>Linking Brazilian databases demands the development of algorithms and processes to deal with various challenges including the large size of the databases, the low number and poor quality of personal identifiers available to be compared (national security number not mandatory), and some characteristics of Brazilian names that make the linkage process prone to errors. This study aims to describe and evaluate the quality of the processes used to create an individual-linked database for data-intensive research on the impacts on health indicators of the expansion of primary care in Rio de Janeiro City, Brazil.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Methods</jats:title>\n                <jats:p>We created an individual-level dataset linking social benefits recipients, primary health care, hospital admission and mortality data. The databases were pre-processed, and we adopted a multiple approach strategy combining deterministic and probabilistic record linkage techniques, and an extensive clerical review of the potential matches. Relying on manual review as the gold standard, we estimated the false match (false-positive) proportion of each approach (deterministic, probabilistic, clerical review) and the missed match proportion (false-negative) of the clerical review approach. To assess the sensitivity (recall) to identifying social benefits recipients’ deaths, we used their vital status registered on the primary care database as the gold standard.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Results</jats:title>\n                <jats:p>In all linkage processes, the deterministic approach identified most of the matches. However, the proportion of matches identified in each approach varied. The false match proportion was around 1% or less in almost all approaches. The missed match proportion in the clerical review approach of all linkage processes were under 3%. We estimated a recall of 93.6% (95% CI 92.8–94.3) for the linkage between social benefits recipients and mortality data.</jats:p>\n              </jats:sec><jats:sec>\n                <jats:title>Conclusion</jats:title>\n                <jats:p>The adoption of a linkage strategy combining pre-processing routines, deterministic, and probabilistic strategies, as well as an extensive clerical review approach minimized linkage errors in the context of suboptimal data quality.</jats:p>\n              </jats:sec>",
+  "DOI": "10.1186/s12911-021-01550-6",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2021,
+        6,
+        15
+      ]
+    ],
+    "date-time": "2021-06-15T06:02:32Z",
+    "timestamp": 1623736952000
+  },
+  "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 12,
+  "title": [
+    "Record linkage under suboptimal conditions for data-intensive evaluation of primary care in Rio de Janeiro, Brazil"
+  ],
+  "prefix": "10.1186",
+  "volume": "21",
+  "author": [
+    {
+      "ORCID": "https://orcid.org/0000-0003-1757-3940",
+      "authenticated-orcid": false,
+      "given": "Claudia Medina",
+      "family": "Coeli",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Valeria",
+      "family": "Saraceni",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "suffix": "Jr.",
+      "given": "Paulo Mota",
+      "family": "Medeiros",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Helena Pereira",
+      "family": "da Silva Santos",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Luis Carlos Torres",
+      "family": "Guillen",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Luís Guilherme Santos Buteri",
+      "family": "Alves",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Thomas",
+      "family": "Hone",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Christopher",
+      "family": "Millett",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Anete",
+      "family": "Trajman",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Betina",
+      "family": "Durovni",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "297",
+  "published-online": {
+    "date-parts": [
+      [
+        2021,
+        6,
+        15
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "1550_CR1",
+      "unstructured": "Brasil, Datasus. Informações de Saúde (TABNET). http://datasus.saude.gov.br/informacoes-de-saude/tabnet. Accessed 22 Nov 2019."
+    },
+    {
+      "key": "1550_CR2",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5123/S1679-49742015000400023",
+      "author": "CM Coeli",
+      "year": "2015",
+      "unstructured": "Coeli CM, Pinheiro RS, Camargo KRD Jr, et al. Achievements and challenges for employing record linkage techniques in health research and evaluation in Brazil. Epidemiol e Serviços Saúde. 2015. https://doi.org/10.5123/S1679-49742015000400023.",
+      "journal-title": "Epidemiol e Serviços Saúde"
+    },
+    {
+      "key": "1550_CR3",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1590/S0034-89102003000100014",
+      "author": "CM Coeli",
+      "year": "2003",
+      "unstructured": "Coeli CM, Blais R, Costa MD, de Almeida LM. Probabilistic linkage in household survey on hospital care usage. Rev Saude Publica. 2003. https://doi.org/10.1590/S0034-89102003000100014.",
+      "journal-title": "Rev Saude Publica"
+    },
+    {
+      "key": "1550_CR4",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1590/S0102-311X2010000700022",
+      "author": "MGP Fonseca",
+      "year": "2010",
+      "unstructured": "Fonseca MGP, Coeli CM, Lucena FDFDA, Veloso VG, Carvalho MS. Accuracy of a probabilistic record linkage strategy applied to identify deaths among cases reported to the Brazilian AIDS surveillance database. Cad Saúde Pública. 2010. https://doi.org/10.1590/S0102-311X2010000700022.",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "key": "1550_CR5",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/2505515.2508207",
+      "author": "V Trentin",
+      "year": "2018",
+      "unstructured": "Trentin V, Bastos V, Costa M, Camargo K, Sobrino R, Guillen LC, et al. Synthetic data generator for testing record linkage routines in Brazil. Int J Popul Data Sci. 2018. https://doi.org/10.1145/2505515.2508207.",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "key": "1550_CR6",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.23889/ijpds.v3i1.446",
+      "author": "AAG Junior",
+      "year": "2018",
+      "unstructured": "Junior AAG, Pereira RG, Gurgel EI, Cherchiglia M, Dias LV, Ávila J, et al. Building the national database of health centred on the individual: administrative and epidemiological record linkage-Brazil, 2000–2015. Int J Popul Data Sci. 2018. https://doi.org/10.23889/ijpds.v3i1.446.",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "key": "1550_CR7",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.23889/ijpds.v4i2.1140",
+      "author": "BDA Almeida",
+      "year": "2019",
+      "unstructured": "Almeida BDA, Barreto ML, Ichihara MY, Barreto ME, Cabral L, Fiaccone R, et al. The center for data and knowledge integration for health (CIDACS). Int J Popul Data Sci. 2019. https://doi.org/10.23889/ijpds.v4i2.1140.",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "key": "1550_CR8",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.23889/ijpds.v4i1.586",
+      "author": "M Aitken",
+      "year": "2019",
+      "unstructured": "Aitken M, Tully MP, Porteous C, Denegri S, Cunningham-Burley S, Banner N, et al. Consensus statement on public involvement and engagement with data-intensive health research. Int J Popul Data Sci. 2019. https://doi.org/10.23889/ijpds.v4i1.586.",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "key": "1550_CR9",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1590/1413-81232015215.01022016",
+      "author": "D Soranz",
+      "year": "2016",
+      "unstructured": "Soranz D, Pinto LF, Penna GO. Eixos e a Reforma dos Cuidados em Atenção Primária em Saúde (RCAPS) na cidade do Rio de Janeiro. Brasil Ciênc Saúde Coletiva. 2016. https://doi.org/10.1590/1413-81232015215.01022016.",
+      "journal-title": "Brasil Ciênc Saúde Coletiva"
+    },
+    {
+      "key": "1550_CR10",
+      "volume-title": "Primary care: concept, evaluation, and policy",
+      "author": "B Starfield",
+      "year": "1992",
+      "unstructured": "Starfield B. Primary care: concept, evaluation, and policy. New York: Oxford University Press; 1992."
+    },
+    {
+      "key": "1550_CR11",
+      "unstructured": "Brasil. Secretaria Nacional de Renda de Cidadania. Ministério do Desenvolvimento Social. Manual de Gestão do Cadastro Único para Programas Sociais do Governo Federal. Ministério do Desenvolvimento Social; 2017. https://www.mds.gov.br/webarquivos/publicacao/cadastro_unico/Manual_Gestao_Cad_Unico.pdf . Accessed 28 May 2019."
+    },
+    {
+      "key": "1550_CR12",
+      "unstructured": "Brasil. Presidência da República. DECRETO No 6.135, DE 26 DE JUNHO DE 2007. Dispõe sobre o Cadastro Único para Programas Sociais do Governo Federal e dá outras providências. Brasil; 2017. http://www.planalto.gov.br/ccivil_03/_ato2007-2010/2007/decreto/d6135.htm. Accessed 28 May 2019."
+    },
+    {
+      "key": "1550_CR13",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1590/1413-81232017223.33142016",
+      "author": "D Soranz",
+      "year": "2017",
+      "unstructured": "Soranz D, Pinto LF, Camacho LAB. Análise dos atributos dos cuidados primários em saúde utilizando os prontuários eletrônicos na cidade do Rio de Janeiro. Ciênc Saúde Coletiva. 2017. https://doi.org/10.1590/1413-81232017223.33142016.",
+      "journal-title": "Ciênc Saúde Coletiva"
+    },
+    {
+      "key": "1550_CR14",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1177/1460458219882273",
+      "author": "FRL Lopes",
+      "year": "2019",
+      "unstructured": "Lopes FRL, Monteiro KS, Santos S. How data provided by the Brazilian information system of primary care have been used by researchers. Health Inform J. 2019. https://doi.org/10.1177/1460458219882273.",
+      "journal-title": "Health Inform J"
+    },
+    {
+      "key": "1550_CR15",
+      "unstructured": "Brazil, Ministério da Saúde, Pan American Health Organization, Fundação Oswaldo Cruz. A experiência brasileira em sistemas de informação em saúde. Brasília, DF: Editora MS; 2009."
+    },
+    {
+      "key": "1550_CR16",
+      "unstructured": "Beginning PHP and PostgreSQL 8. Apress; 2006. http://link.springer.com/10.1007/978-1-4302-0136-6. Accessed 31 Dec 2019."
+    },
+    {
+      "key": "1550_CR17",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1590/0102-311X00041214",
+      "author": "KR Camargo Jr",
+      "year": "2015",
+      "unstructured": "Camargo KR Jr, Coeli CM. Going open source: some lessons learned from the development of OpenRecLink. Cad Saúde Pública. 2015. https://doi.org/10.1590/0102-311X00041214.",
+      "journal-title": "Cad Saúde Pública"
+    },
+    {
+      "issue": "8",
+      "key": "1550_CR18",
+      "first-page": "707",
+      "volume": "10",
+      "author": "VI Levenshtein",
+      "year": "1966",
+      "unstructured": "Levenshtein VI. Binary codes capable of correcting deletions, insertions, and reversals. Cybern Control Theory. 1966;10(8):707–10.",
+      "journal-title": "Cybern Control Theory"
+    },
+    {
+      "key": "1550_CR19",
+      "unstructured": "Winkler W.E. Using the EM algorithm for weight computation in the Fellegi-Sunter model of record linkage. U.S. Bureau of the Census, Statistical Research Report Series, No. RR2000/05. U.S. Bureau of the Census, Washington, D.C; 2000. https://courses.cs.washington.edu/courses/cse590q/04au/papers/WinklerEM.pdf. Accessed 14 Dec 2020."
+    },
+    {
+      "key": "1550_CR20",
+      "unstructured": "Nomes no Brasil. Instituto Brasileiro de Geografia e Estatística IBGE. https://censo2010.ibge.gov.br/nomes/#/search. Accessed 14 DEC 2020."
+    },
+    {
+      "issue": "2",
+      "key": "1550_CR21",
+      "doi-asserted-by": "publisher",
+      "first-page": "185",
+      "DOI": "10.1590/S1415-790X2002000200006",
+      "volume": "5",
+      "author": "CM Coeli",
+      "year": "2002",
+      "unstructured": "Coeli CM, Camargo K Jr. Avaliação de diferentes estratégias de blocagem no relacionamento probabilístico de registros. Rev Bras Epidemiol. 2002;5(2):185–96. https://doi.org/10.1590/S1415-790X2002000200006.",
+      "journal-title": "Rev Bras Epidemiol"
+    },
+    {
+      "key": "1550_CR22",
+      "unstructured": "Dusetzina SB, Tyree S, Meyer A-M, Meyer A, Green L, Carpenter WR. Linking data for health services research: a framework and instructional guide. Rockville (MD): Agency for Healthcare Research and Quality (US); 2014 accessed in 2020 Mar 29. (AHRQ Methods for Effective Health Care). http://www.ncbi.nlm.nih.gov/books/NBK253313/. Accessed 14 Dec 2020."
+    },
+    {
+      "key": "1550_CR23",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.23889/ijpds.v3i1.410",
+      "author": "JC Doidge",
+      "year": "2018",
+      "unstructured": "Doidge JC, Harron K. Demystifying probabilistic linkage. Int J Popul Data Sci. 2018. https://doi.org/10.23889/ijpds.v3i1.410.",
+      "journal-title": "Int J Popul Data Sci"
+    },
+    {
+      "volume-title": "Methodological developments in data linkage",
+      "year": "2016",
+      "key": "1550_CR24",
+      "unstructured": "Harron K, Goldstein H, Dibben C, editors. Methodological developments in data linkage. Chichester: Wiley; 2016."
+    },
+    {
+      "key": "1550_CR25",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5123/s1679-49742019000200014",
+      "author": "RRG Lino",
+      "year": "2019",
+      "unstructured": "Lino RRG, Fonseca SC, Kale PL, Flores PVG, Pinheiro RS, Coeli CM. Tendência da incompletude das estatísticas vitais no período neonatal, estado do Rio de Janeiro, 1999–2014. Epidemiol e Serviços Saúde. 2019. https://doi.org/10.5123/s1679-49742019000200014.",
+      "journal-title": "Epidemiol e Serviços Saúde"
+    },
+    {
+      "key": "1550_CR26",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-642-31164-2",
+      "volume-title": "Data matching concepts and techniques for record linkage, entity resolution, and duplicate detection",
+      "author": "P Christen",
+      "year": "2012",
+      "unstructured": "Christen P. Data matching concepts and techniques for record linkage, entity resolution, and duplicate detection. Berlin: Springer; 2012. https://doi.org/10.1007/978-3-642-31164-2."
+    },
+    {
+      "key": "1550_CR27",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1186/1472-6947-13-64",
+      "author": "SM Randall",
+      "year": "2013",
+      "unstructured": "Randall SM, Ferrante AM, Boyd JH, Semmens JB. The effect of data cleaning on record linkage quality. BMC Med Inform Decis Mak. 2013. https://doi.org/10.1186/1472-6947-13-64.",
+      "journal-title": "BMC Med Inform Decis Mak"
+    },
+    {
+      "key": "1550_CR28",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1093/jamia/ocy191",
+      "author": "SJ Grannis",
+      "year": "2019",
+      "unstructured": "Grannis SJ, Xu H, Vest JR, Kasthurirathne S, Bo N, Moscovitch B, et al. Evaluating the effect of data standardization and validation on patient matching accuracy. J Am Med Inform Assoc. 2019. https://doi.org/10.1093/jamia/ocy191.",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "key": "1550_CR29",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/(sici)1097-0258(19971215)16:23%3C2633::aid-sim702%3E3.0.co;2-1",
+      "author": "H Brenner",
+      "year": "1997",
+      "unstructured": "Brenner H, Schmidtmann I, Stegmaier C. Effects of record linkage errors on registry-based follow-up studies. Stat Med. 1997. https://doi.org/10.1002/(sici)1097-0258(19971215)16:23%3C2633::aid-sim702%3E3.0.co;2-1.",
+      "journal-title": "Stat Med"
+    },
+    {
+      "key": "1550_CR30",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1371/journal.pone.0103690",
+      "author": "CL Moore",
+      "year": "2014",
+      "unstructured": "Moore CL, Amin J, Gidding HF, Law MG. A new method for assessing how sensitivity and specificity of linkage studies affects estimation. PLoS ONE. 2014. https://doi.org/10.1371/journal.pone.0103690.",
+      "journal-title": "PLoS ONE"
+    },
+    {
+      "key": "1550_CR31",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-0-387-87959-8",
+      "volume-title": "Applying quantitative bias analysis to epidemiologic data",
+      "author": "TL Lash",
+      "year": "2009",
+      "unstructured": "Lash TL, Fox MP, Fink AK. Applying quantitative bias analysis to epidemiologic data. 1st ed. Berlin: Springer; 2009.",
+      "edition": "1"
+    },
+    {
+      "issue": "10",
+      "key": "1550_CR32",
+      "doi-asserted-by": "publisher",
+      "first-page": "e1003357",
+      "DOI": "10.1371/journal.pmed.1003357",
+      "volume": "17",
+      "author": "T Hone",
+      "year": "2020",
+      "unstructured": "Hone T, Saraceni V, Medina Coeli C, Trajman A, Rasella D, Millett C, et al. Primary healthcare expansion and mortality in Brazil’s urban poor: a cohort analysis of 1.2 million adults. PLoS Med. 2020;17(10):e1003357. https://doi.org/10.1371/journal.pmed.1003357.",
+      "journal-title": "PLoS Med"
+    },
+    {
+      "issue": "12",
+      "key": "1550_CR33",
+      "doi-asserted-by": "publisher",
+      "first-page": "1302",
+      "DOI": "10.2105/ajph.74.12.1302",
+      "volume": "74",
+      "author": "HB Newcombe",
+      "year": "1984",
+      "unstructured": "Newcombe HB. Strategy and art in automated death searches. Am J Public Health. 1984;74(12):1302–3. https://doi.org/10.2105/ajph.74.12.1302.",
+      "journal-title": "Am J Public Health"
+    },
+    {
+      "issue": "1",
+      "key": "1550_CR34",
+      "doi-asserted-by": "publisher",
+      "first-page": "129",
+      "DOI": "10.1007/s10994-013-5421-0",
+      "volume": "95",
+      "author": "L Antonie",
+      "year": "2014",
+      "unstructured": "Antonie L, Inwood K, Lizotte DJ, Andrew RJ. Tracking people over time in 19th century Canada for longitudinal analysis. Mach Learn. 2014;95(1):129–46. https://doi.org/10.1007/s10994-013-5421-0.",
+      "journal-title": "Mach Learn"
+    }
+  ],
+  "container-title": [
+    "BMC Medical Informatics and Decision Making"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "https://link.springer.com/content/pdf/10.1186/s12911-021-01550-6.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://link.springer.com/article/10.1186/s12911-021-01550-6/fulltext.html",
+      "content-type": "text/html",
+      "content-version": "vor",
+      "intended-application": "text-mining"
+    },
+    {
+      "URL": "https://link.springer.com/content/pdf/10.1186/s12911-021-01550-6.pdf",
+      "content-type": "application/pdf",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2021,
+        6,
+        15
+      ]
+    ],
+    "date-time": "2021-06-15T06:02:54Z",
+    "timestamp": 1623736974000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-021-01550-6"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2021,
+        6,
+        15
+      ]
+    ]
+  },
+  "references-count": 34,
+  "journal-issue": {
+    "issue": "1",
+    "published-print": {
+      "date-parts": [
+        [
+          2021,
+          12
+        ]
+      ]
+    }
+  },
+  "alternative-id": [
+    "1550"
+  ],
+  "URL": "https://doi.org/10.1186/s12911-021-01550-6",
+  "relation": {},
+  "ISSN": [
+    "1472-6947"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "1472-6947"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2021,
+        6,
+        15
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "15 July 2020",
+      "order": 1,
+      "name": "received",
+      "label": "Received",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "value": "3 June 2021",
+      "order": 2,
+      "name": "accepted",
+      "label": "Accepted",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "value": "15 June 2021",
+      "order": 3,
+      "name": "first_online",
+      "label": "First Online",
+      "group": {
+        "name": "ArticleHistory",
+        "label": "Article History"
+      }
+    },
+    {
+      "order": 1,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Declarations"
+      }
+    },
+    {
+      "value": "Approval for this study was obtained from the Brazilian National Commission for Ethics in Research (Comissão Nacional de Ética em Pesquisa (CONEP))—number 2.689.528—in 26th August 2017. That was enough to grant access to all databases under the Municipal Health Secretariat, authorized by both the Secretary and the Under Secretary of Primary Care. Access to CadU was requested by the Under Secretary of Primary Care to the Municipal Social Services and Human Rights Secretariat, which authorized access. The Under Secretary and two technicians signed the Confidentiality Term.",
+      "order": 2,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Ethics approval and consent to participate"
+      }
+    },
+    {
+      "value": "Not applicable.",
+      "order": 3,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Consent for publication"
+      }
+    },
+    {
+      "value": "BD was Undersecretary of Health Promotion, Surveillance, and Primary Care at the Secretaria Municipal de Saúde, Rio de Janeiro when this project was conceived. VS was Coordinator of Health Situation Analysis in the Health Surveillance Department, at the Secretaria Municipal de Saúde, Rio de Janeiro. All other authors declare they have no conflict of interest.",
+      "order": 4,
+      "name": "Ethics",
+      "group": {
+        "name": "EthicsHeading",
+        "label": "Competing interests"
+      }
+    }
+  ],
+  "article-number": "190"
+}

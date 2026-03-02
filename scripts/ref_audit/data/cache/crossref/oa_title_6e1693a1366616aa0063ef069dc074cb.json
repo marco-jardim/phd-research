@@ -1,0 +1,6989 @@
+[
+  {
+    "id": "https://openalex.org/W2987069389",
+    "doi": "https://doi.org/10.1109/access.2019.2950872",
+    "title": "Privacy-Preserving Solutions for Blockchain: Review and Challenges",
+    "display_name": "Privacy-Preserving Solutions for Blockchain: Review and Challenges",
+    "relevance_score": 369.01166,
+    "publication_year": 2019,
+    "publication_date": "2019-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W2987069389",
+      "doi": "https://doi.org/10.1109/access.2019.2950872",
+      "mag": "2987069389"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/access.2019.2950872",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2950872",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08888155.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08888155.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5059477756",
+          "display_name": "Jorge Bernal Bernabé",
+          "orcid": "https://orcid.org/0000-0002-7538-4788"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I80180929",
+            "display_name": "Universidad de Murcia",
+            "ror": "https://ror.org/03p3aeb86",
+            "country_code": "ES",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ],
+        "countries": [
+          "ES"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Jorge Bernal Bernabe",
+        "raw_affiliation_strings": [
+          "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain",
+            "institution_ids": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5101938581",
+          "display_name": "José Luis Cánovas",
+          "orcid": "https://orcid.org/0000-0003-2231-3289"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I80180929",
+            "display_name": "Universidad de Murcia",
+            "ror": "https://ror.org/03p3aeb86",
+            "country_code": "ES",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ],
+        "countries": [
+          "ES"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Jose Luis Canovas",
+        "raw_affiliation_strings": [
+          "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain",
+            "institution_ids": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5052866036",
+          "display_name": "José L. Hernández-Ramos",
+          "orcid": "https://orcid.org/0000-0001-7697-116X"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210118689",
+            "display_name": "Joint Research Centre",
+            "ror": "https://ror.org/02qezmz13",
+            "country_code": "IT",
+            "type": "government",
+            "lineage": [
+              "https://openalex.org/I1320481043",
+              "https://openalex.org/I2800387288",
+              "https://openalex.org/I4210118689",
+              "https://openalex.org/I4210161702"
+            ]
+          }
+        ],
+        "countries": [
+          "IT"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Jose L. Hernandez-Ramos",
+        "raw_affiliation_strings": [
+          "Joint Research Centre, European Commission, Ispra, Italy"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Joint Research Centre, European Commission, Ispra, Italy",
+            "institution_ids": [
+              "https://openalex.org/I4210118689"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5063020613",
+          "display_name": "Rafael Torres Moreno",
+          "orcid": "https://orcid.org/0000-0002-2851-5706"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I80180929",
+            "display_name": "Universidad de Murcia",
+            "ror": "https://ror.org/03p3aeb86",
+            "country_code": "ES",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ],
+        "countries": [
+          "ES"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Rafael Torres Moreno",
+        "raw_affiliation_strings": [
+          "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain",
+            "institution_ids": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5054299062",
+          "display_name": "Antonio Skármeta",
+          "orcid": "https://orcid.org/0000-0002-5525-1259"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I80180929",
+            "display_name": "Universidad de Murcia",
+            "ror": "https://ror.org/03p3aeb86",
+            "country_code": "ES",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ],
+        "countries": [
+          "ES"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Antonio Skarmeta",
+        "raw_affiliation_strings": [
+          "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Communication Engineering, University of Murcia, Murcia, Spain",
+            "institution_ids": [
+              "https://openalex.org/I80180929"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 2,
+    "institutions_distinct_count": 5,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5059477756"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I80180929"
+    ],
+    "apc_list": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "apc_paid": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "fwci": 56.7855659,
+    "has_fulltext": true,
+    "cited_by_count": 396,
+    "citation_normalized_percentile": {
+      "value": 0.9985715,
+      "is_in_top_1_percent": true,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 94,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "7",
+      "issue": null,
+      "first_page": "164908",
+      "last_page": "164940"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 1.0,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 1.0,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10764",
+        "display_name": "Privacy-Preserving Technologies in Data",
+        "score": 0.989300012588501,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10237",
+        "display_name": "Cryptography and Data Security",
+        "score": 0.9714000225067139,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.8201419115066528
+      },
+      {
+        "id": "https://openalex.org/keywords/cryptocurrency",
+        "display_name": "Cryptocurrency",
+        "score": 0.6926756501197815
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.6891025304794312
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.6885101199150085
+      },
+      {
+        "id": "https://openalex.org/keywords/database-transaction",
+        "display_name": "Database transaction",
+        "score": 0.5856837630271912
+      },
+      {
+        "id": "https://openalex.org/keywords/internet-privacy",
+        "display_name": "Internet privacy",
+        "score": 0.5548553466796875
+      },
+      {
+        "id": "https://openalex.org/keywords/scalability",
+        "display_name": "Scalability",
+        "score": 0.5502191781997681
+      },
+      {
+        "id": "https://openalex.org/keywords/information-privacy",
+        "display_name": "Information privacy",
+        "score": 0.5477660298347473
+      },
+      {
+        "id": "https://openalex.org/keywords/verifiable-secret-sharing",
+        "display_name": "Verifiable secret sharing",
+        "score": 0.5256998538970947
+      },
+      {
+        "id": "https://openalex.org/keywords/smart-contract",
+        "display_name": "Smart contract",
+        "score": 0.43583258986473083
+      },
+      {
+        "id": "https://openalex.org/keywords/ehealth",
+        "display_name": "eHealth",
+        "score": 0.42794832587242126
+      },
+      {
+        "id": "https://openalex.org/keywords/data-sharing",
+        "display_name": "Data sharing",
+        "score": 0.4158168435096741
+      },
+      {
+        "id": "https://openalex.org/keywords/law",
+        "display_name": "Law",
+        "score": 0.08077958226203918
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.0769365131855011
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.8201419115066528
+      },
+      {
+        "id": "https://openalex.org/C180706569",
+        "wikidata": "https://www.wikidata.org/wiki/Q13479982",
+        "display_name": "Cryptocurrency",
+        "level": 2,
+        "score": 0.6926756501197815
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.6891025304794312
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6885101199150085
+      },
+      {
+        "id": "https://openalex.org/C75949130",
+        "wikidata": "https://www.wikidata.org/wiki/Q848010",
+        "display_name": "Database transaction",
+        "level": 2,
+        "score": 0.5856837630271912
+      },
+      {
+        "id": "https://openalex.org/C108827166",
+        "wikidata": "https://www.wikidata.org/wiki/Q175975",
+        "display_name": "Internet privacy",
+        "level": 1,
+        "score": 0.5548553466796875
+      },
+      {
+        "id": "https://openalex.org/C48044578",
+        "wikidata": "https://www.wikidata.org/wiki/Q727490",
+        "display_name": "Scalability",
+        "level": 2,
+        "score": 0.5502191781997681
+      },
+      {
+        "id": "https://openalex.org/C123201435",
+        "wikidata": "https://www.wikidata.org/wiki/Q456632",
+        "display_name": "Information privacy",
+        "level": 2,
+        "score": 0.5477660298347473
+      },
+      {
+        "id": "https://openalex.org/C85847156",
+        "wikidata": "https://www.wikidata.org/wiki/Q59015987",
+        "display_name": "Verifiable secret sharing",
+        "level": 3,
+        "score": 0.5256998538970947
+      },
+      {
+        "id": "https://openalex.org/C2779950589",
+        "wikidata": "https://www.wikidata.org/wiki/Q7544035",
+        "display_name": "Smart contract",
+        "level": 3,
+        "score": 0.43583258986473083
+      },
+      {
+        "id": "https://openalex.org/C202645933",
+        "wikidata": "https://www.wikidata.org/wiki/Q4930",
+        "display_name": "eHealth",
+        "level": 3,
+        "score": 0.42794832587242126
+      },
+      {
+        "id": "https://openalex.org/C2779965156",
+        "wikidata": "https://www.wikidata.org/wiki/Q5227350",
+        "display_name": "Data sharing",
+        "level": 3,
+        "score": 0.4158168435096741
+      },
+      {
+        "id": "https://openalex.org/C199539241",
+        "wikidata": "https://www.wikidata.org/wiki/Q7748",
+        "display_name": "Law",
+        "level": 1,
+        "score": 0.08077958226203918
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.0769365131855011
+      },
+      {
+        "id": "https://openalex.org/C160735492",
+        "wikidata": "https://www.wikidata.org/wiki/Q31207",
+        "display_name": "Health care",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C142724271",
+        "wikidata": "https://www.wikidata.org/wiki/Q7208",
+        "display_name": "Pathology",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C204787440",
+        "wikidata": "https://www.wikidata.org/wiki/Q188504",
+        "display_name": "Alternative medicine",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C71924100",
+        "wikidata": "https://www.wikidata.org/wiki/Q11190",
+        "display_name": "Medicine",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C199360897",
+        "wikidata": "https://www.wikidata.org/wiki/Q9143",
+        "display_name": "Programming language",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C177264268",
+        "wikidata": "https://www.wikidata.org/wiki/Q1514741",
+        "display_name": "Set (abstract data type)",
+        "level": 2,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C17744445",
+        "wikidata": "https://www.wikidata.org/wiki/Q36442",
+        "display_name": "Political science",
+        "level": 0,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 3,
+    "locations": [
+      {
+        "id": "doi:10.1109/access.2019.2950872",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1109/access.2019.2950872",
+        "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08888155.pdf",
+        "source": {
+          "id": "https://openalex.org/S2485537415",
+          "display_name": "IEEE Access",
+          "issn_l": "2169-3536",
+          "issn": [
+            "2169-3536"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319808",
+          "host_organization_name": "Institute of Electrical and Electronics Engineers",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319808"
+          ],
+          "host_organization_lineage_names": [
+            "Institute of Electrical and Electronics Engineers"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "IEEE Access",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:95a013c5e9cd445eb98bcbc60f40b53c",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/95a013c5e9cd445eb98bcbc60f40b53c",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, Vol 7, Pp 164908-164940 (2019)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:publications.jrc.ec.europa.eu:111111111/58334",
+        "is_oa": false,
+        "landing_page_url": "https://publications.jrc.ec.europa.eu/repository/handle/JRC111879",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306401126",
+          "display_name": "Joint Research Centre (European Commission)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I2800387288",
+          "host_organization_name": "European Commission",
+          "host_organization_lineage": [
+            "https://openalex.org/I2800387288"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": "Articles in periodicals and books"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1109/access.2019.2950872",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2019.2950872",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08888155.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [],
+    "awards": [
+      {
+        "id": "https://openalex.org/G1586544838",
+        "display_name": null,
+        "funder_award_id": "INCIBEI-2015-27363",
+        "funder_id": "https://openalex.org/F4320327970",
+        "funder_display_name": "Instituto Nacional de Ciberseguridad"
+      },
+      {
+        "id": "https://openalex.org/G6389633261",
+        "display_name": null,
+        "funder_award_id": "780139",
+        "funder_id": "https://openalex.org/F4320332999",
+        "funder_display_name": "Horizon 2020 Framework Programme"
+      }
+    ],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320327970",
+        "display_name": "Instituto Nacional de Ciberseguridad",
+        "ror": null
+      },
+      {
+        "id": "https://openalex.org/F4320332999",
+        "display_name": "Horizon 2020 Framework Programme",
+        "ror": "https://ror.org/00k4n6c32"
+      }
+    ],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W2987069389.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W2987069389.grobid-xml"
+    },
+    "referenced_works_count": 247,
+    "referenced_works": [
+      "https://openalex.org/W69553326",
+      "https://openalex.org/W150223756",
+      "https://openalex.org/W154851090",
+      "https://openalex.org/W179922057",
+      "https://openalex.org/W287184503",
+      "https://openalex.org/W316935178",
+      "https://openalex.org/W629406306",
+      "https://openalex.org/W1454642304",
+      "https://openalex.org/W1510275011",
+      "https://openalex.org/W1528853875",
+      "https://openalex.org/W1533905858",
+      "https://openalex.org/W1559136758",
+      "https://openalex.org/W1573653933",
+      "https://openalex.org/W1589034595",
+      "https://openalex.org/W1589846406",
+      "https://openalex.org/W1601001795",
+      "https://openalex.org/W1605600432",
+      "https://openalex.org/W1638799436",
+      "https://openalex.org/W1655958391",
+      "https://openalex.org/W1675339804",
+      "https://openalex.org/W1695856642",
+      "https://openalex.org/W1712588751",
+      "https://openalex.org/W1820095901",
+      "https://openalex.org/W1844512392",
+      "https://openalex.org/W1868454693",
+      "https://openalex.org/W1870146437",
+      "https://openalex.org/W1879677957",
+      "https://openalex.org/W1885156594",
+      "https://openalex.org/W1970606468",
+      "https://openalex.org/W1974997379",
+      "https://openalex.org/W1975245149",
+      "https://openalex.org/W1978649650",
+      "https://openalex.org/W1988699025",
+      "https://openalex.org/W1993920884",
+      "https://openalex.org/W1995488889",
+      "https://openalex.org/W2005725110",
+      "https://openalex.org/W2013686672",
+      "https://openalex.org/W2018746447",
+      "https://openalex.org/W2027595342",
+      "https://openalex.org/W2031533839",
+      "https://openalex.org/W2033820870",
+      "https://openalex.org/W2038096741",
+      "https://openalex.org/W2039669983",
+      "https://openalex.org/W2043007983",
+      "https://openalex.org/W2054702684",
+      "https://openalex.org/W2067047774",
+      "https://openalex.org/W2072266282",
+      "https://openalex.org/W2087811006",
+      "https://openalex.org/W2096178490",
+      "https://openalex.org/W2103299932",
+      "https://openalex.org/W2103647628",
+      "https://openalex.org/W2108072891",
+      "https://openalex.org/W2114428623",
+      "https://openalex.org/W2127612127",
+      "https://openalex.org/W2129483619",
+      "https://openalex.org/W2138001464",
+      "https://openalex.org/W2141420453",
+      "https://openalex.org/W2144238522",
+      "https://openalex.org/W2151433956",
+      "https://openalex.org/W2151460988",
+      "https://openalex.org/W2164572080",
+      "https://openalex.org/W2165210192",
+      "https://openalex.org/W2171337840",
+      "https://openalex.org/W2176225732",
+      "https://openalex.org/W2182035090",
+      "https://openalex.org/W2182496678",
+      "https://openalex.org/W2214897964",
+      "https://openalex.org/W2231944250",
+      "https://openalex.org/W2253140477",
+      "https://openalex.org/W2256663742",
+      "https://openalex.org/W2278335717",
+      "https://openalex.org/W2314037005",
+      "https://openalex.org/W2397423248",
+      "https://openalex.org/W2397857137",
+      "https://openalex.org/W2398937501",
+      "https://openalex.org/W2399067453",
+      "https://openalex.org/W2402534533",
+      "https://openalex.org/W2402551606",
+      "https://openalex.org/W2405518766",
+      "https://openalex.org/W2486460265",
+      "https://openalex.org/W2486646985",
+      "https://openalex.org/W2513577354",
+      "https://openalex.org/W2514994441",
+      "https://openalex.org/W2515615886",
+      "https://openalex.org/W2517744317",
+      "https://openalex.org/W2520116135",
+      "https://openalex.org/W2531399364",
+      "https://openalex.org/W2540350913",
+      "https://openalex.org/W2544267735",
+      "https://openalex.org/W2561905839",
+      "https://openalex.org/W2561948748",
+      "https://openalex.org/W2565287832",
+      "https://openalex.org/W2583031215",
+      "https://openalex.org/W2587173351",
+      "https://openalex.org/W2591756426",
+      "https://openalex.org/W2592077777",
+      "https://openalex.org/W2598801365",
+      "https://openalex.org/W2601926089",
+      "https://openalex.org/W2604789199",
+      "https://openalex.org/W2604844934",
+      "https://openalex.org/W2605157201",
+      "https://openalex.org/W2606467208",
+      "https://openalex.org/W2611626082",
+      "https://openalex.org/W2613280320",
+      "https://openalex.org/W2613376966",
+      "https://openalex.org/W2613637871",
+      "https://openalex.org/W2616497172",
+      "https://openalex.org/W2619968118",
+      "https://openalex.org/W2619984247",
+      "https://openalex.org/W2620090200",
+      "https://openalex.org/W2624307925",
+      "https://openalex.org/W2624953603",
+      "https://openalex.org/W2626851879",
+      "https://openalex.org/W2730380569",
+      "https://openalex.org/W2731079083",
+      "https://openalex.org/W2732894263",
+      "https://openalex.org/W2734116279",
+      "https://openalex.org/W2739229037",
+      "https://openalex.org/W2739487772",
+      "https://openalex.org/W2743496573",
+      "https://openalex.org/W2743870702",
+      "https://openalex.org/W2746343748",
+      "https://openalex.org/W2746553616",
+      "https://openalex.org/W2748692995",
+      "https://openalex.org/W2752737474",
+      "https://openalex.org/W2754529701",
+      "https://openalex.org/W2756207517",
+      "https://openalex.org/W2762598207",
+      "https://openalex.org/W2765157778",
+      "https://openalex.org/W2765206040",
+      "https://openalex.org/W2765986519",
+      "https://openalex.org/W2766461774",
+      "https://openalex.org/W2766522683",
+      "https://openalex.org/W2766800499",
+      "https://openalex.org/W2768696376",
+      "https://openalex.org/W2770272410",
+      "https://openalex.org/W2771396150",
+      "https://openalex.org/W2777447168",
+      "https://openalex.org/W2782010461",
+      "https://openalex.org/W2782232489",
+      "https://openalex.org/W2786393483",
+      "https://openalex.org/W2787178336",
+      "https://openalex.org/W2787789774",
+      "https://openalex.org/W2790414559",
+      "https://openalex.org/W2791935104",
+      "https://openalex.org/W2793346081",
+      "https://openalex.org/W2793423901",
+      "https://openalex.org/W2794213779",
+      "https://openalex.org/W2794771961",
+      "https://openalex.org/W2794982701",
+      "https://openalex.org/W2795085730",
+      "https://openalex.org/W2796694130",
+      "https://openalex.org/W2798386039",
+      "https://openalex.org/W2803371618",
+      "https://openalex.org/W2807260071",
+      "https://openalex.org/W2807792246",
+      "https://openalex.org/W2883585522",
+      "https://openalex.org/W2885542306",
+      "https://openalex.org/W2886332328",
+      "https://openalex.org/W2889471266",
+      "https://openalex.org/W2890702538",
+      "https://openalex.org/W2891063150",
+      "https://openalex.org/W2897450989",
+      "https://openalex.org/W2897751645",
+      "https://openalex.org/W2900580116",
+      "https://openalex.org/W2900854509",
+      "https://openalex.org/W2900874091",
+      "https://openalex.org/W2904351506",
+      "https://openalex.org/W2907683311",
+      "https://openalex.org/W2908737503",
+      "https://openalex.org/W2911424200",
+      "https://openalex.org/W2911825405",
+      "https://openalex.org/W2913968857",
+      "https://openalex.org/W2920877282",
+      "https://openalex.org/W2940095387",
+      "https://openalex.org/W2945763718",
+      "https://openalex.org/W2947690458",
+      "https://openalex.org/W2951044220",
+      "https://openalex.org/W2952841026",
+      "https://openalex.org/W2953611374",
+      "https://openalex.org/W2962829586",
+      "https://openalex.org/W2962894484",
+      "https://openalex.org/W2963176735",
+      "https://openalex.org/W2963264685",
+      "https://openalex.org/W2963310960",
+      "https://openalex.org/W2963509939",
+      "https://openalex.org/W2963736162",
+      "https://openalex.org/W2963764727",
+      "https://openalex.org/W2963876734",
+      "https://openalex.org/W2963993810",
+      "https://openalex.org/W2964062734",
+      "https://openalex.org/W2970097841",
+      "https://openalex.org/W2971085027",
+      "https://openalex.org/W2980381981",
+      "https://openalex.org/W2997168915",
+      "https://openalex.org/W3006420926",
+      "https://openalex.org/W3031720222",
+      "https://openalex.org/W3101098008",
+      "https://openalex.org/W3101547271",
+      "https://openalex.org/W3102661748",
+      "https://openalex.org/W3103421870",
+      "https://openalex.org/W3105099041",
+      "https://openalex.org/W3105573581",
+      "https://openalex.org/W3121747242",
+      "https://openalex.org/W3123012225",
+      "https://openalex.org/W3144265223",
+      "https://openalex.org/W4205092462",
+      "https://openalex.org/W4205228770",
+      "https://openalex.org/W4238256444",
+      "https://openalex.org/W4248175462",
+      "https://openalex.org/W4249025681",
+      "https://openalex.org/W4255535209",
+      "https://openalex.org/W4285119182",
+      "https://openalex.org/W4285719527",
+      "https://openalex.org/W4289744349",
+      "https://openalex.org/W4300127641",
+      "https://openalex.org/W4300508572",
+      "https://openalex.org/W4300879373",
+      "https://openalex.org/W4302284512",
+      "https://openalex.org/W6606067566",
+      "https://openalex.org/W6606249588",
+      "https://openalex.org/W6630667832",
+      "https://openalex.org/W6631499728",
+      "https://openalex.org/W6634266159",
+      "https://openalex.org/W6635298198",
+      "https://openalex.org/W6639610839",
+      "https://openalex.org/W6689688209",
+      "https://openalex.org/W6695009093",
+      "https://openalex.org/W6712237015",
+      "https://openalex.org/W6712602684",
+      "https://openalex.org/W6712816875",
+      "https://openalex.org/W6728998805",
+      "https://openalex.org/W6730445334",
+      "https://openalex.org/W6741498619",
+      "https://openalex.org/W6741866029",
+      "https://openalex.org/W6745430391",
+      "https://openalex.org/W6746873430",
+      "https://openalex.org/W6747967849",
+      "https://openalex.org/W6750252640",
+      "https://openalex.org/W6754350707",
+      "https://openalex.org/W6757313959",
+      "https://openalex.org/W6765007523",
+      "https://openalex.org/W6772350985",
+      "https://openalex.org/W6779307057",
+      "https://openalex.org/W6786007248",
+      "https://openalex.org/W6838675628",
+      "https://openalex.org/W6845275177"
+    ],
+    "related_works": [
+      "https://openalex.org/W4366411693",
+      "https://openalex.org/W3211641817",
+      "https://openalex.org/W3164717803",
+      "https://openalex.org/W4389915954",
+      "https://openalex.org/W3123387860",
+      "https://openalex.org/W4291291739",
+      "https://openalex.org/W2915579847",
+      "https://openalex.org/W3110645133",
+      "https://openalex.org/W3009009008",
+      "https://openalex.org/W4281767292"
+    ],
+    "abstract_inverted_index": {
+      "Blockchains": [
+        0
+      ],
+      "offer": [
+        1
+      ],
+      "a": [
+        2,
+        16,
+        104,
+        115
+      ],
+      "decentralized,": [
+        3
+      ],
+      "immutable": [
+        4
+      ],
+      "and": [
+        5,
+        37,
+        78,
+        86,
+        129,
+        144,
+        154,
+        159,
+        167,
+        171,
+        185
+      ],
+      "verifiable": [
+        6
+      ],
+      "ledger": [
+        7
+      ],
+      "that": [
+        8
+      ],
+      "can": [
+        9
+      ],
+      "record": [
+        10
+      ],
+      "transactions": [
+        11,
+        96
+      ],
+      "of": [
+        12,
+        89,
+        97,
+        118,
+        122
+      ],
+      "digital": [
+        13,
+        95
+      ],
+      "assets,": [
+        14
+      ],
+      "provoking": [
+        15
+      ],
+      "radical": [
+        17
+      ],
+      "change": [
+        18
+      ],
+      "in": [
+        19,
+        100,
+        131,
+        141,
+        152,
+        169
+      ],
+      "several": [
+        20
+      ],
+      "innovative": [
+        21
+      ],
+      "scenarios,": [
+        22
+      ],
+      "such": [
+        23,
+        41
+      ],
+      "as": [
+        24,
+        42,
+        133,
+        135,
+        161,
+        163
+      ],
+      "Smartcities,": [
+        25
+      ],
+      "eHealth": [
+        26
+      ],
+      "or": [
+        27,
+        52
+      ],
+      "eAdministration.": [
+        28
+      ],
+      "However,": [
+        29
+      ],
+      "blockchains": [
+        30
+      ],
+      "are": [
+        31,
+        71,
+        177
+      ],
+      "subject": [
+        32
+      ],
+      "to": [
+        33,
+        73,
+        83
+      ],
+      "different": [
+        34
+      ],
+      "scalability,": [
+        35
+      ],
+      "security": [
+        36
+      ],
+      "potential": [
+        38
+      ],
+      "privacy": [
+        39,
+        55,
+        139,
+        150
+      ],
+      "issues,": [
+        40
+      ],
+      "transaction": [
+        43
+      ],
+      "linkability,": [
+        44
+      ],
+      "crypto-keys": [
+        45
+      ],
+      "management": [
+        46
+      ],
+      "(e.g.": [
+        47,
+        57
+      ],
+      "recovery),": [
+        48
+      ],
+      "on-chain": [
+        49
+      ],
+      "data": [
+        50,
+        92
+      ],
+      "privacy,": [
+        51
+      ],
+      "compliance": [
+        53
+      ],
+      "with": [
+        54,
+        75,
+        81
+      ],
+      "regulations": [
+        56
+      ],
+      "GDPR).": [
+        58
+      ],
+      "In": [
+        59,
+        109
+      ],
+      "this": [
+        60,
+        110,
+        112,
+        142
+      ],
+      "regard,": [
+        61
+      ],
+      "novel": [
+        62
+      ],
+      "privacy-preserving": [
+        63,
+        126,
+        164
+      ],
+      "solutions": [
+        64,
+        128,
+        168
+      ],
+      "for": [
+        65
+      ],
+      "blockchain": [
+        66,
+        175
+      ],
+      "based": [
+        67
+      ],
+      "on": [
+        68,
+        125
+      ],
+      "crypto-privacy": [
+        69
+      ],
+      "techniques": [
+        70,
+        151
+      ],
+      "emerging": [
+        72
+      ],
+      "deal": [
+        74
+      ],
+      "those": [
+        76
+      ],
+      "challenges": [
+        77,
+        140
+      ],
+      "empowering": [
+        79
+      ],
+      "users": [
+        80
+      ],
+      "mechanisms": [
+        82,
+        130
+      ],
+      "become": [
+        84
+      ],
+      "anonymous": [
+        85
+      ],
+      "take": [
+        87
+      ],
+      "control": [
+        88
+      ],
+      "their": [
+        90,
+        94
+      ],
+      "personal": [
+        91
+      ],
+      "during": [
+        93
+      ],
+      "any": [
+        98
+      ],
+      "kind": [
+        99
+      ],
+      "the": [
+        101,
+        119,
+        123,
+        136
+      ],
+      "ledger,": [
+        102
+      ],
+      "following": [
+        103
+      ],
+      "Self-Sovereign": [
+        105
+      ],
+      "Identity": [
+        106
+      ],
+      "(SSI)": [
+        107
+      ],
+      "model.": [
+        108
+      ],
+      "sense,": [
+        111
+      ],
+      "paper": [
+        113
+      ],
+      "performs": [
+        114
+      ],
+      "systematic": [
+        116
+      ],
+      "review": [
+        117
+      ],
+      "current": [
+        120
+      ],
+      "state": [
+        121
+      ],
+      "art": [
+        124
+      ],
+      "research": [
+        127,
+        165
+      ],
+      "blockchain,": [
+        132
+      ],
+      "well": [
+        134,
+        162
+      ],
+      "main": [
+        137
+      ],
+      "associated": [
+        138
+      ],
+      "promising": [
+        143
+      ],
+      "disrupting": [
+        145
+      ],
+      "technology.": [
+        146
+      ],
+      "The": [
+        147
+      ],
+      "survey": [
+        148
+      ],
+      "covers": [
+        149
+      ],
+      "public": [
+        153
+      ],
+      "permissionless": [
+        155
+      ],
+      "blockchains,": [
+        156
+      ],
+      "e.g.": [
+        157
+      ],
+      "Bitcoin": [
+        158
+      ],
+      "Ethereum,": [
+        160
+      ],
+      "proposals": [
+        166
+      ],
+      "permissioned": [
+        170
+      ],
+      "private": [
+        172
+      ],
+      "blockchains.": [
+        173
+      ],
+      "Diverse": [
+        174
+      ],
+      "scenarios": [
+        176
+      ],
+      "analyzed,": [
+        178
+      ],
+      "encompassing,": [
+        179
+      ],
+      "eAdministration,": [
+        180
+      ],
+      "eHealth,": [
+        181
+      ],
+      "cryptocurrencies,": [
+        182
+      ],
+      "Smart": [
+        183
+      ],
+      "cities,": [
+        184
+      ],
+      "Cooperative": [
+        186
+      ],
+      "ITS.": [
+        187
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 78
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 72
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 88
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 71
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 62
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 21
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 2
+      }
+    ],
+    "updated_date": "2026-02-05T00:54:17.221276",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W3038333533",
+    "doi": "https://doi.org/10.1109/access.2020.3005509",
+    "title": "GDPR Compliance Verification in Internet of Things",
+    "display_name": "GDPR Compliance Verification in Internet of Things",
+    "relevance_score": 156.4621,
+    "publication_year": 2020,
+    "publication_date": "2020-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W3038333533",
+      "doi": "https://doi.org/10.1109/access.2020.3005509",
+      "mag": "3038333533"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/access.2020.3005509",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2020.3005509",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/09127459.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/09127459.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5101437018",
+          "display_name": "Masoud Barati",
+          "orcid": "https://orcid.org/0000-0002-8907-0384"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I79510175",
+            "display_name": "Cardiff University",
+            "ror": "https://ror.org/03kk7td41",
+            "country_code": "GB",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ],
+        "countries": [
+          "GB"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Masoud Barati",
+        "raw_affiliation_strings": [
+          "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+          "School of Computer Science & Informatics, Cardiff University, Cardiff, UK"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Computer Science & Informatics, Cardiff University, Cardiff, UK",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5021973291",
+          "display_name": "Omer Rana",
+          "orcid": "https://orcid.org/0000-0003-3597-2646"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I79510175",
+            "display_name": "Cardiff University",
+            "ror": "https://ror.org/03kk7td41",
+            "country_code": "GB",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ],
+        "countries": [
+          "GB"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Omer Rana",
+        "raw_affiliation_strings": [
+          "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+          "School of Computer Science & Informatics, Cardiff University, Cardiff, UK"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Computer Science & Informatics, Cardiff University, Cardiff, UK",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5087094312",
+          "display_name": "Ioan Petri",
+          "orcid": "https://orcid.org/0000-0002-1625-8247"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I79510175",
+            "display_name": "Cardiff University",
+            "ror": "https://ror.org/03kk7td41",
+            "country_code": "GB",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ],
+        "countries": [
+          "GB"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Ioan Petri",
+        "raw_affiliation_strings": [
+          "School of Engineering, Cardiff University, Cardiff, U.K",
+          "School of Engineering, Cardiff University, Cardiff, UK"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Engineering, Cardiff University, Cardiff, U.K",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Engineering, Cardiff University, Cardiff, UK",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5042246090",
+          "display_name": "George Theodorakopoulos",
+          "orcid": "https://orcid.org/0000-0003-2701-7809"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I79510175",
+            "display_name": "Cardiff University",
+            "ror": "https://ror.org/03kk7td41",
+            "country_code": "GB",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ],
+        "countries": [
+          "GB"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "George Theodorakopoulos",
+        "raw_affiliation_strings": [
+          "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+          "School of Computer Science & Informatics, Cardiff University, Cardiff, UK"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Computer Science and Informatics, Cardiff University, Cardiff, U.K",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Computer Science & Informatics, Cardiff University, Cardiff, UK",
+            "institution_ids": [
+              "https://openalex.org/I79510175"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 4,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5101437018"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I79510175"
+    ],
+    "apc_list": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "apc_paid": {
+      "value": 1850,
+      "currency": "USD",
+      "value_usd": 1850
+    },
+    "fwci": 8.77528288,
+    "has_fulltext": true,
+    "cited_by_count": 57,
+    "citation_normalized_percentile": {
+      "value": 0.97620542,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "8",
+      "issue": null,
+      "first_page": "119697",
+      "last_page": "119709"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9983000159263611,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9983000159263611,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10388",
+        "display_name": "Advanced Steganography and Watermarking Techniques",
+        "score": 0.984000027179718,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1707",
+          "display_name": "Computer Vision and Pattern Recognition"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11614",
+        "display_name": "Cloud Data Security Solutions",
+        "score": 0.9790999889373779,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.7932847738265991
+      },
+      {
+        "id": "https://openalex.org/keywords/general-data-protection-regulation",
+        "display_name": "General Data Protection Regulation",
+        "score": 0.7462538480758667
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.6347686052322388
+      },
+      {
+        "id": "https://openalex.org/keywords/scalability",
+        "display_name": "Scalability",
+        "score": 0.589505672454834
+      },
+      {
+        "id": "https://openalex.org/keywords/cloud-computing",
+        "display_name": "Cloud computing",
+        "score": 0.5684565305709839
+      },
+      {
+        "id": "https://openalex.org/keywords/information-privacy",
+        "display_name": "Information privacy",
+        "score": 0.48945677280426025
+      },
+      {
+        "id": "https://openalex.org/keywords/the-internet",
+        "display_name": "The Internet",
+        "score": 0.47731074690818787
+      },
+      {
+        "id": "https://openalex.org/keywords/data-protection-act-1998",
+        "display_name": "Data Protection Act 1998",
+        "score": 0.3657236695289612
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.22999107837677002
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.22665521502494812
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7932847738265991
+      },
+      {
+        "id": "https://openalex.org/C3090818",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172506",
+        "display_name": "General Data Protection Regulation",
+        "level": 3,
+        "score": 0.7462538480758667
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.6347686052322388
+      },
+      {
+        "id": "https://openalex.org/C48044578",
+        "wikidata": "https://www.wikidata.org/wiki/Q727490",
+        "display_name": "Scalability",
+        "level": 2,
+        "score": 0.589505672454834
+      },
+      {
+        "id": "https://openalex.org/C79974875",
+        "wikidata": "https://www.wikidata.org/wiki/Q483639",
+        "display_name": "Cloud computing",
+        "level": 2,
+        "score": 0.5684565305709839
+      },
+      {
+        "id": "https://openalex.org/C123201435",
+        "wikidata": "https://www.wikidata.org/wiki/Q456632",
+        "display_name": "Information privacy",
+        "level": 2,
+        "score": 0.48945677280426025
+      },
+      {
+        "id": "https://openalex.org/C110875604",
+        "wikidata": "https://www.wikidata.org/wiki/Q75",
+        "display_name": "The Internet",
+        "level": 2,
+        "score": 0.47731074690818787
+      },
+      {
+        "id": "https://openalex.org/C69360830",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172237",
+        "display_name": "Data Protection Act 1998",
+        "level": 2,
+        "score": 0.3657236695289612
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.22999107837677002
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.22665521502494812
+      },
+      {
+        "id": "https://openalex.org/C111919701",
+        "wikidata": "https://www.wikidata.org/wiki/Q9135",
+        "display_name": "Operating system",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 5,
+    "locations": [
+      {
+        "id": "doi:10.1109/access.2020.3005509",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1109/access.2020.3005509",
+        "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/09127459.pdf",
+        "source": {
+          "id": "https://openalex.org/S2485537415",
+          "display_name": "IEEE Access",
+          "issn_l": "2169-3536",
+          "issn": [
+            "2169-3536"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319808",
+          "host_organization_name": "Institute of Electrical and Electronics Engineers",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319808"
+          ],
+          "host_organization_lineage_names": [
+            "Institute of Electrical and Electronics Engineers"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "IEEE Access",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:napier-surface.worktribe.com:2767147",
+        "is_oa": true,
+        "landing_page_url": "https://napier-surface.worktribe.com/2767147/1/GDPR%20Compliance%20Verification%20In%20Internet%20Of%20Things",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400544",
+          "display_name": "Research Output (Edinburgh Napier University)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/I251738",
+          "host_organization_name": "Edinburgh Napier University",
+          "host_organization_lineage": [
+            "https://openalex.org/I251738"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "other-oa",
+        "license_id": "https://openalex.org/licenses/other-oa",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "",
+        "raw_type": "Journal Article"
+      },
+      {
+        "id": "pmh:oai:https://orca.cardiff.ac.uk:132909",
+        "is_oa": true,
+        "landing_page_url": null,
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4210213960",
+          "display_name": "New Trends in Mathematical Science",
+          "issn_l": "2147-5520",
+          "issn": [
+            "2147-5520"
+          ],
+          "is_oa": true,
+          "is_in_doaj": false,
+          "is_core": false,
+          "host_organization": "https://openalex.org/P4310318350",
+          "host_organization_name": "BİSKA Bilisim Company",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310318350"
+          ],
+          "host_organization_lineage_names": [
+            "BİSKA Bilisim Company"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "acceptedVersion",
+        "is_accepted": true,
+        "is_published": false,
+        "raw_source_name": null,
+        "raw_type": "PeerReviewed"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:5a305edca8df43069856c9ab24ee4f08",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/5a305edca8df43069856c9ab24ee4f08",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S112646816",
+          "display_name": "SHILAP Revista de lepidopterología",
+          "issn_l": "0300-5267",
+          "issn": [
+            "0300-5267",
+            "2340-4078"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": false,
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, Vol 8, Pp 119697-119709 (2020)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:repository@napier.ac.uk:2767147",
+        "is_oa": true,
+        "landing_page_url": "http://researchrepository.napier.ac.uk/Output/2767147",
+        "pdf_url": null,
+        "source": null,
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": "Journal Article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1109/access.2020.3005509",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2020.3005509",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8948470/09127459.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "display_name": "Decent work and economic growth",
+        "score": 0.4099999964237213,
+        "id": "https://metadata.un.org/sdg/8"
+      }
+    ],
+    "awards": [
+      {
+        "id": "https://openalex.org/G4909894241",
+        "display_name": "PACE: Privacy-aware Cloud Ecosystems",
+        "funder_award_id": "EP/R033439/1",
+        "funder_id": "https://openalex.org/F4320334627",
+        "funder_display_name": "Engineering and Physical Sciences Research Council"
+      },
+      {
+        "id": "https://openalex.org/G6864186609",
+        "display_name": null,
+        "funder_award_id": "EP/R033439/1",
+        "funder_id": "https://openalex.org/F4320334627",
+        "funder_display_name": "Engineering and Physical Sciences Research Council"
+      }
+    ],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320322484",
+        "display_name": "Princess Nourah Bint Abdulrahman University",
+        "ror": "https://ror.org/05b0cyh02"
+      },
+      {
+        "id": "https://openalex.org/F4320334627",
+        "display_name": "Engineering and Physical Sciences Research Council",
+        "ror": "https://ror.org/0439y7842"
+      }
+    ],
+    "has_content": {
+      "grobid_xml": true,
+      "pdf": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W3038333533.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W3038333533.grobid-xml"
+    },
+    "referenced_works_count": 44,
+    "referenced_works": [
+      "https://openalex.org/W1480811131",
+      "https://openalex.org/W2157254118",
+      "https://openalex.org/W2611626082",
+      "https://openalex.org/W2612798110",
+      "https://openalex.org/W2614320769",
+      "https://openalex.org/W2754529701",
+      "https://openalex.org/W2756122944",
+      "https://openalex.org/W2788306563",
+      "https://openalex.org/W2793989571",
+      "https://openalex.org/W2810652557",
+      "https://openalex.org/W2885426220",
+      "https://openalex.org/W2888687026",
+      "https://openalex.org/W2897323328",
+      "https://openalex.org/W2902224053",
+      "https://openalex.org/W2903241093",
+      "https://openalex.org/W2904822718",
+      "https://openalex.org/W2908176466",
+      "https://openalex.org/W2908737503",
+      "https://openalex.org/W2910815950",
+      "https://openalex.org/W2918245750",
+      "https://openalex.org/W2919985578",
+      "https://openalex.org/W2933346047",
+      "https://openalex.org/W2940932661",
+      "https://openalex.org/W2947690458",
+      "https://openalex.org/W2947837428",
+      "https://openalex.org/W2948044122",
+      "https://openalex.org/W2949726555",
+      "https://openalex.org/W2963716342",
+      "https://openalex.org/W2967399871",
+      "https://openalex.org/W2969808119",
+      "https://openalex.org/W2970256012",
+      "https://openalex.org/W2980494508",
+      "https://openalex.org/W2981856777",
+      "https://openalex.org/W2988339161",
+      "https://openalex.org/W2989842267",
+      "https://openalex.org/W2995871203",
+      "https://openalex.org/W3001572325",
+      "https://openalex.org/W3001760383",
+      "https://openalex.org/W3003609934",
+      "https://openalex.org/W3101098008",
+      "https://openalex.org/W3125356411",
+      "https://openalex.org/W3151748982",
+      "https://openalex.org/W6754525796",
+      "https://openalex.org/W6793285265"
+    ],
+    "related_works": [
+      "https://openalex.org/W2917102635",
+      "https://openalex.org/W3023256691",
+      "https://openalex.org/W2789497412",
+      "https://openalex.org/W2883729192",
+      "https://openalex.org/W2910484607",
+      "https://openalex.org/W2794700933",
+      "https://openalex.org/W2901967497",
+      "https://openalex.org/W3171079982",
+      "https://openalex.org/W3156135475",
+      "https://openalex.org/W2799236100"
+    ],
+    "abstract_inverted_index": {
+      "Data": [
+        0,
+        21
+      ],
+      "privacy": [
+        1,
+        103,
+        138
+      ],
+      "in": [
+        2,
+        186
+      ],
+      "Internet": [
+        3
+      ],
+      "of": [
+        4,
+        12,
+        17,
+        61,
+        74,
+        81,
+        140,
+        148,
+        177,
+        198
+      ],
+      "Things": [
+        5
+      ],
+      "(IoT)": [
+        6
+      ],
+      "applications": [
+        7,
+        142
+      ],
+      "remains": [
+        8
+      ],
+      "a": [
+        9,
+        62,
+        71,
+        93,
+        170,
+        202
+      ],
+      "major": [
+        10
+      ],
+      "concern": [
+        11
+      ],
+      "regulation": [
+        13
+      ],
+      "bodies.": [
+        14
+      ],
+      "The": [
+        15,
+        137
+      ],
+      "introduction": [
+        16
+      ],
+      "the": [
+        18,
+        59,
+        96,
+        105,
+        124,
+        193
+      ],
+      "European": [
+        19
+      ],
+      "General": [
+        20
+      ],
+      "Protection": [
+        22
+      ],
+      "Regulation": [
+        23
+      ],
+      "(GDPR)": [
+        24
+      ],
+      "enables": [
+        25
+      ],
+      "users": [
+        26,
+        39
+      ],
+      "to": [
+        27,
+        92,
+        110,
+        145,
+        161,
+        173
+      ],
+      "control": [
+        28
+      ],
+      "how": [
+        29
+      ],
+      "their": [
+        30,
+        48
+      ],
+      "data": [
+        31,
+        42,
+        50,
+        158
+      ],
+      "is": [
+        32,
+        44,
+        99,
+        127
+      ],
+      "accessed": [
+        33
+      ],
+      "and": [
+        34,
+        64,
+        195
+      ],
+      "processed,": [
+        35
+      ],
+      "requiring": [
+        36
+      ],
+      "consent": [
+        37
+      ],
+      "from": [
+        38
+      ],
+      "before": [
+        40
+      ],
+      "any": [
+        41
+      ],
+      "manipulation": [
+        43
+      ],
+      "carried": [
+        45,
+        83,
+        115,
+        179
+      ],
+      "out": [
+        46,
+        84,
+        180
+      ],
+      "on": [
+        47,
+        183
+      ],
+      "(personal)": [
+        49
+      ],
+      "by": [
+        51,
+        85,
+        117,
+        181
+      ],
+      "smart": [
+        52,
+        135,
+        165
+      ],
+      "devices": [
+        53,
+        182
+      ],
+      "or": [
+        54
+      ],
+      "cloud-hosted": [
+        55
+      ],
+      "services.": [
+        56
+      ],
+      "Blockchains": [
+        57
+      ],
+      "provide": [
+        58
+      ],
+      "benefits": [
+        60
+      ],
+      "distributed": [
+        63
+      ],
+      "immutable": [
+        65
+      ],
+      "ledger": [
+        66
+      ],
+      "recording": [
+        67
+      ],
+      "digital": [
+        68
+      ],
+      "transactions": [
+        69
+      ],
+      "across": [
+        70
+      ],
+      "global": [
+        72
+      ],
+      "network": [
+        73
+      ],
+      "peer": [
+        75
+      ],
+      "nodes.": [
+        76
+      ],
+      "Blockchain": [
+        77,
+        106,
+        203
+      ],
+      "support": [
+        78,
+        174
+      ],
+      "for": [
+        79,
+        129,
+        134
+      ],
+      "tracking": [
+        80
+      ],
+      "operations": [
+        82,
+        178
+      ],
+      "an": [
+        86
+      ],
+      "IoT-based": [
+        87
+      ],
+      "system": [
+        88
+      ],
+      "provides": [
+        89
+      ],
+      "greater": [
+        90
+      ],
+      "confidence": [
+        91
+      ],
+      "user": [
+        94,
+        102,
+        156,
+        184
+      ],
+      "that": [
+        95
+      ],
+      "IoT": [
+        97
+      ],
+      "device": [
+        98,
+        149
+      ],
+      "not": [
+        100
+      ],
+      "infringing": [
+        101
+      ],
+      "(as": [
+        104
+      ],
+      "can": [
+        107
+      ],
+      "be": [
+        108
+      ],
+      "audited": [
+        109
+      ],
+      "verify": [
+        111
+      ],
+      "which": [
+        112,
+        118
+      ],
+      "operation": [
+        113
+      ],
+      "was": [
+        114
+      ],
+      "out,": [
+        116
+      ],
+      "actor).": [
+        119
+      ],
+      "A": [
+        120
+      ],
+      "formal": [
+        121
+      ],
+      "model": [
+        122
+      ],
+      "(following": [
+        123
+      ],
+      "privacy-by-design": [
+        125
+      ],
+      "approach)": [
+        126
+      ],
+      "proposed": [
+        128,
+        168
+      ],
+      "supporting": [
+        130
+      ],
+      "GDPR": [
+        131,
+        146,
+        189
+      ],
+      "compliance": [
+        132
+      ],
+      "checking": [
+        133
+      ],
+      "devices.": [
+        136
+      ],
+      "requirements": [
+        139
+      ],
+      "such": [
+        141
+      ],
+      "are": [
+        143,
+        167
+      ],
+      "related": [
+        144
+      ],
+      "obligations": [
+        147
+      ],
+      "(and": [
+        150
+      ],
+      "software": [
+        151
+      ],
+      "systems)": [
+        152
+      ],
+      "operators": [
+        153
+      ],
+      "(such": [
+        154
+      ],
+      "as": [
+        155,
+        169
+      ],
+      "consent,": [
+        157
+      ],
+      "protection,": [
+        159
+      ],
+      "right": [
+        160
+      ],
+      "forget": [
+        162
+      ],
+      "etc).": [
+        163
+      ],
+      "Three": [
+        164
+      ],
+      "contracts": [
+        166
+      ],
+      "practical": [
+        171
+      ],
+      "solution": [
+        172
+      ],
+      "automated": [
+        175
+      ],
+      "verification": [
+        176
+      ],
+      "data,": [
+        185
+      ],
+      "accordance": [
+        187
+      ],
+      "with": [
+        188
+      ],
+      "rules.": [
+        190
+      ],
+      "We": [
+        191
+      ],
+      "evaluate": [
+        192
+      ],
+      "performance": [
+        194
+      ],
+      "scalability": [
+        196
+      ],
+      "costs": [
+        197
+      ],
+      "our": [
+        199
+      ],
+      "approach": [
+        200
+      ],
+      "using": [
+        201
+      ],
+      "test": [
+        204
+      ],
+      "network.": [
+        205
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 12
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 13
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 16
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 8
+      },
+      {
+        "year": 2012,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2026-02-05T00:54:17.221276",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W2911357324",
+    "doi": "https://doi.org/10.1108/rmj-12-2018-0045",
+    "title": "“The margin between the edge of the world and infinite possibility”",
+    "display_name": "“The margin between the edge of the world and infinite possibility”",
+    "relevance_score": 119.461586,
+    "publication_year": 2019,
+    "publication_date": "2019-02-13",
+    "ids": {
+      "openalex": "https://openalex.org/W2911357324",
+      "doi": "https://doi.org/10.1108/rmj-12-2018-0045",
+      "mag": "2911357324"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1108/rmj-12-2018-0045",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.1108/rmj-12-2018-0045",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S181586246",
+        "display_name": "Records Management Journal",
+        "issn_l": "0956-5698",
+        "issn": [
+          "0956-5698",
+          "1758-7689"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319811",
+        "host_organization_name": "Emerald Publishing Limited",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319811"
+        ],
+        "host_organization_lineage_names": [
+          "Emerald Publishing Limited"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Records Management Journal",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5027534319",
+          "display_name": "Darra Hofman",
+          "orcid": "https://orcid.org/0000-0002-1772-6268"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I141945490",
+            "display_name": "University of British Columbia",
+            "ror": "https://ror.org/03rmrcq20",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Darra Hofman",
+        "raw_affiliation_strings": [
+          "University of British Columbia, Vancouver, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of British Columbia, Vancouver, Canada",
+            "institution_ids": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5023856062",
+          "display_name": "Victoria L. Lemieux",
+          "orcid": "https://orcid.org/0000-0003-1339-6289"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I141945490",
+            "display_name": "University of British Columbia",
+            "ror": "https://ror.org/03rmrcq20",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Victoria Louise Lemieux",
+        "raw_affiliation_strings": [
+          "University of British Columbia, Vancouver, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of British Columbia, Vancouver, Canada",
+            "institution_ids": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5060172014",
+          "display_name": "Alysha Joo",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I141945490",
+            "display_name": "University of British Columbia",
+            "ror": "https://ror.org/03rmrcq20",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Alysha Joo",
+        "raw_affiliation_strings": [
+          "University of British Columbia, Vancouver, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of British Columbia, Vancouver, Canada",
+            "institution_ids": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5013500178",
+          "display_name": "Danielle Alves Batista",
+          "orcid": "https://orcid.org/0000-0003-1257-1962"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I141945490",
+            "display_name": "University of British Columbia",
+            "ror": "https://ror.org/03rmrcq20",
+            "country_code": "CA",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ],
+        "countries": [
+          "CA"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Danielle Alves Batista",
+        "raw_affiliation_strings": [
+          "University of British Columbia, Vancouver, Canada"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "University of British Columbia, Vancouver, Canada",
+            "institution_ids": [
+              "https://openalex.org/I141945490"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 4,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5027534319"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I141945490"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 14.32926044,
+    "has_fulltext": false,
+    "cited_by_count": 41,
+    "citation_normalized_percentile": {
+      "value": 0.98496987,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 96,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "29",
+      "issue": "1/2",
+      "first_page": "240",
+      "last_page": "257"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T11045",
+      "display_name": "Privacy, Security, and Data Protection",
+      "score": 0.9995999932289124,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T11045",
+        "display_name": "Privacy, Security, and Data Protection",
+        "score": 0.9995999932289124,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10764",
+        "display_name": "Privacy-Preserving Technologies in Data",
+        "score": 0.9984999895095825,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9944000244140625,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.8317996263504028
+      },
+      {
+        "id": "https://openalex.org/keywords/immutability",
+        "display_name": "Immutability",
+        "score": 0.6982667446136475
+      },
+      {
+        "id": "https://openalex.org/keywords/scope",
+        "display_name": "Scope (computer science)",
+        "score": 0.5901231169700623
+      },
+      {
+        "id": "https://openalex.org/keywords/general-data-protection-regulation",
+        "display_name": "General Data Protection Regulation",
+        "score": 0.559186577796936
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.4831801950931549
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.48077768087387085
+      },
+      {
+        "id": "https://openalex.org/keywords/cryptocurrency",
+        "display_name": "Cryptocurrency",
+        "score": 0.4660645127296448
+      },
+      {
+        "id": "https://openalex.org/keywords/data-protection-act-1998",
+        "display_name": "Data Protection Act 1998",
+        "score": 0.42462751269340515
+      },
+      {
+        "id": "https://openalex.org/keywords/knowledge-management",
+        "display_name": "Knowledge management",
+        "score": 0.34732499718666077
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.33728519082069397
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.8317996263504028
+      },
+      {
+        "id": "https://openalex.org/C2776126399",
+        "wikidata": "https://www.wikidata.org/wiki/Q3942906",
+        "display_name": "Immutability",
+        "level": 3,
+        "score": 0.6982667446136475
+      },
+      {
+        "id": "https://openalex.org/C2778012447",
+        "wikidata": "https://www.wikidata.org/wiki/Q1034415",
+        "display_name": "Scope (computer science)",
+        "level": 2,
+        "score": 0.5901231169700623
+      },
+      {
+        "id": "https://openalex.org/C3090818",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172506",
+        "display_name": "General Data Protection Regulation",
+        "level": 3,
+        "score": 0.559186577796936
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.4831801950931549
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.48077768087387085
+      },
+      {
+        "id": "https://openalex.org/C180706569",
+        "wikidata": "https://www.wikidata.org/wiki/Q13479982",
+        "display_name": "Cryptocurrency",
+        "level": 2,
+        "score": 0.4660645127296448
+      },
+      {
+        "id": "https://openalex.org/C69360830",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172237",
+        "display_name": "Data Protection Act 1998",
+        "level": 2,
+        "score": 0.42462751269340515
+      },
+      {
+        "id": "https://openalex.org/C56739046",
+        "wikidata": "https://www.wikidata.org/wiki/Q192060",
+        "display_name": "Knowledge management",
+        "level": 1,
+        "score": 0.34732499718666077
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.33728519082069397
+      },
+      {
+        "id": "https://openalex.org/C199360897",
+        "wikidata": "https://www.wikidata.org/wiki/Q9143",
+        "display_name": "Programming language",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.1108/rmj-12-2018-0045",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.1108/rmj-12-2018-0045",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S181586246",
+          "display_name": "Records Management Journal",
+          "issn_l": "0956-5698",
+          "issn": [
+            "0956-5698",
+            "1758-7689"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319811",
+          "host_organization_name": "Emerald Publishing Limited",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319811"
+          ],
+          "host_organization_lineage_names": [
+            "Emerald Publishing Limited"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Records Management Journal",
+        "raw_type": "journal-article"
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [
+      {
+        "display_name": "Decent work and economic growth",
+        "score": 0.550000011920929,
+        "id": "https://metadata.un.org/sdg/8"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 19,
+    "referenced_works": [
+      "https://openalex.org/W1507053462",
+      "https://openalex.org/W1541333198",
+      "https://openalex.org/W2120647424",
+      "https://openalex.org/W2135504732",
+      "https://openalex.org/W2167887900",
+      "https://openalex.org/W2256848223",
+      "https://openalex.org/W2322778738",
+      "https://openalex.org/W2477116659",
+      "https://openalex.org/W2531564265",
+      "https://openalex.org/W2540464157",
+      "https://openalex.org/W2613285989",
+      "https://openalex.org/W2767441573",
+      "https://openalex.org/W2779584076",
+      "https://openalex.org/W2796967936",
+      "https://openalex.org/W2850975884",
+      "https://openalex.org/W2898909200",
+      "https://openalex.org/W3125057561",
+      "https://openalex.org/W3127794978",
+      "https://openalex.org/W4241013405"
+    ],
+    "related_works": [
+      "https://openalex.org/W4303984095",
+      "https://openalex.org/W3130746757",
+      "https://openalex.org/W4380683080",
+      "https://openalex.org/W2917102635",
+      "https://openalex.org/W3023256691",
+      "https://openalex.org/W2789497412",
+      "https://openalex.org/W2883729192",
+      "https://openalex.org/W2910484607",
+      "https://openalex.org/W2794700933",
+      "https://openalex.org/W2901967497"
+    ],
+    "abstract_inverted_index": {
+      "Purpose": [
+        0
+      ],
+      "This": [
+        1,
+        40,
+        133,
+        225,
+        511
+      ],
+      "paper": [
+        2,
+        41
+      ],
+      "aims": [
+        3
+      ],
+      "to": [
+        4,
+        14,
+        63,
+        74,
+        86,
+        123,
+        180,
+        237,
+        251,
+        258,
+        315,
+        346,
+        359,
+        391,
+        416,
+        422,
+        433,
+        439,
+        469,
+        481,
+        526
+      ],
+      "explore": [
+        5
+      ],
+      "a": [
+        6,
+        113,
+        188,
+        191,
+        308,
+        316,
+        331
+      ],
+      "paradoxical": [
+        7
+      ],
+      "situation,": [
+        8
+      ],
+      "asking": [
+        9
+      ],
+      "whether": [
+        10
+      ],
+      "it": [
+        11,
+        296
+      ],
+      "is": [
+        12,
+        84,
+        190,
+        290,
+        330,
+        474
+      ],
+      "possible": [
+        13
+      ],
+      "reconcile": [
+        15
+      ],
+      "the": [
+        16,
+        23,
+        26,
+        47,
+        87,
+        91,
+        94,
+        98,
+        141,
+        156,
+        199,
+        253,
+        270,
+        291,
+        302,
+        305,
+        322,
+        363,
+        374,
+        379,
+        387,
+        398,
+        425,
+        430,
+        450,
+        482,
+        538
+      ],
+      "immutable": [
+        17
+      ],
+      "ledger": [
+        18
+      ],
+      "known": [
+        19
+      ],
+      "as": [
+        20,
+        169,
+        171,
+        277,
+        298,
+        443,
+        533
+      ],
+      "blockchain": [
+        21,
+        56,
+        71,
+        115,
+        124,
+        146,
+        164,
+        189,
+        196,
+        232,
+        256,
+        274,
+        444,
+        470,
+        487
+      ],
+      "with": [
+        22,
+        52,
+        81,
+        216,
+        240,
+        397,
+        424,
+        506
+      ],
+      "requirements": [
+        24,
+        160
+      ],
+      "of": [
+        25,
+        100,
+        108,
+        140,
+        145,
+        184,
+        195,
+        201,
+        204,
+        214,
+        230,
+        255,
+        269,
+        273,
+        325,
+        362,
+        378,
+        386,
+        453,
+        464,
+        486,
+        518
+      ],
+      "General": [
+        27
+      ],
+      "Data": [
+        28
+      ],
+      "Protection": [
+        29
+      ],
+      "Regulations": [
+        30
+      ],
+      "(GDPR),": [
+        31
+      ],
+      "and": [
+        32,
+        36,
+        50,
+        97,
+        143,
+        161,
+        167,
+        178,
+        262,
+        279,
+        294,
+        304,
+        327,
+        349,
+        421,
+        484,
+        500,
+        509,
+        523,
+        531
+      ],
+      "more": [
+        33,
+        319,
+        334
+      ],
+      "broadly": [
+        34
+      ],
+      "privacy": [
+        35
+      ],
+      "data": [
+        37,
+        82,
+        292,
+        356,
+        394
+      ],
+      "protection.": [
+        38
+      ],
+      "Design/methodology/approach": [
+        39
+      ],
+      "combines": [
+        42
+      ],
+      "doctrinal": [
+        43
+      ],
+      "legal": [
+        44
+      ],
+      "research": [
+        45,
+        320,
+        512
+      ],
+      "examining": [
+        46,
+        55
+      ],
+      "GDPR’s": [
+        48
+      ],
+      "application": [
+        49,
+        438
+      ],
+      "scope": [
+        51,
+        377
+      ],
+      "case": [
+        53
+      ],
+      "studies": [
+        54
+      ],
+      "solutions": [
+        57,
+        72,
+        125,
+        147,
+        174,
+        233,
+        473,
+        488
+      ],
+      "from": [
+        58,
+        198
+      ],
+      "an": [
+        59,
+        137,
+        299,
+        404,
+        446
+      ],
+      "archival": [
+        60,
+        101,
+        119,
+        524
+      ],
+      "theoretic": [
+        61
+      ],
+      "perspective": [
+        62,
+        200
+      ],
+      "answer": [
+        64
+      ],
+      "several": [
+        65
+      ],
+      "questions,": [
+        66
+      ],
+      "including:": [
+        67
+      ],
+      "What": [
+        68,
+        89
+      ],
+      "risks": [
+        69
+      ],
+      "are": [
+        70,
+        90,
+        282,
+        535
+      ],
+      "said": [
+        73
+      ],
+      "impose": [
+        75
+      ],
+      "(or": [
+        76
+      ],
+      "mitigate)": [
+        77
+      ],
+      "for": [
+        78,
+        148,
+        248,
+        318,
+        333,
+        368,
+        489
+      ],
+      "organizations": [
+        79,
+        211,
+        249,
+        348,
+        409
+      ],
+      "dealing": [
+        80
+      ],
+      "that": [
+        83,
+        127
+      ],
+      "subject": [
+        85
+      ],
+      "GDPR?": [
+        88
+      ],
+      "relationships": [
+        92
+      ],
+      "between": [
+        93,
+        158,
+        301
+      ],
+      "GDPR": [
+        95,
+        130,
+        149,
+        159,
+        217,
+        431,
+        466,
+        540
+      ],
+      "principles": [
+        96,
+        99,
+        109,
+        120
+      ],
+      "theory?": [
+        102
+      ],
+      "How": [
+        103,
+        117
+      ],
+      "can": [
+        104,
+        118,
+        339
+      ],
+      "these": [
+        105
+      ],
+      "two": [
+        106
+      ],
+      "sets": [
+        107
+      ],
+      "be": [
+        110,
+        121,
+        176,
+        223,
+        235,
+        360,
+        434
+      ],
+      "aligned": [
+        111
+      ],
+      "within": [
+        112
+      ],
+      "particular": [
+        114
+      ],
+      "solution?": [
+        116
+      ],
+      "applied": [
+        122
+      ],
+      "so": [
+        126
+      ],
+      "they": [
+        128
+      ],
+      "support": [
+        129,
+        181
+      ],
+      "compliance?": [
+        131
+      ],
+      "Findings": [
+        132
+      ],
+      "work": [
+        134,
+        226,
+        503,
+        519
+      ],
+      "will": [
+        135,
+        154,
+        227,
+        357,
+        389,
+        467,
+        513
+      ],
+      "offer": [
+        136
+      ],
+      "initial": [
+        138
+      ],
+      "exploration": [
+        139
+      ],
+      "strengths": [
+        142,
+        254
+      ],
+      "weaknesses": [
+        144
+      ],
+      "compliant": [
+        150
+      ],
+      "information": [
+        151,
+        185,
+        221,
+        335,
+        369,
+        457,
+        471,
+        529
+      ],
+      "governance.": [
+        152
+      ],
+      "It": [
+        153,
+        478,
+        491
+      ],
+      "present": [
+        155
+      ],
+      "disjunctures": [
+        157
+      ],
+      "some": [
+        162
+      ],
+      "current": [
+        163
+      ],
+      "solution": [
+        165
+      ],
+      "designs": [
+        166
+      ],
+      "implementations,": [
+        168
+      ],
+      "well": [
+        170,
+        284,
+        288,
+        497
+      ],
+      "discussing": [
+        172
+      ],
+      "how": [
+        173,
+        231,
+        295,
+        465,
+        496
+      ],
+      "may": [
+        175
+      ],
+      "designed": [
+        177,
+        236
+      ],
+      "implemented": [
+        179
+      ],
+      "compliance.": [
+        182
+      ],
+      "Immutability": [
+        183
+      ],
+      "recorded": [
+        186
+      ],
+      "on": [
+        187,
+        342
+      ],
+      "differentiating": [
+        192
+      ],
+      "positive": [
+        193
+      ],
+      "feature": [
+        194
+      ],
+      "technology": [
+        197,
+        257,
+        401
+      ],
+      "trusted": [
+        202
+      ],
+      "exchanges": [
+        203
+      ],
+      "value": [
+        205
+      ],
+      "(e.g.": [
+        206
+      ],
+      "cryptocurrencies)": [
+        207
+      ],
+      "but": [
+        208
+      ],
+      "potentially": [
+        209
+      ],
+      "places": [
+        210
+      ],
+      "at": [
+        212
+      ],
+      "risk": [
+        213
+      ],
+      "non-compliance": [
+        215
+      ],
+      "if": [
+        218
+      ],
+      "personally": [
+        219
+      ],
+      "identifiable": [
+        220
+      ],
+      "cannot": [
+        222
+      ],
+      "removed.": [
+        224
+      ],
+      "aid": [
+        228
+      ],
+      "understanding": [
+        229,
+        436
+      ],
+      "should": [
+        234
+      ],
+      "ensure": [
+        238
+      ],
+      "compliance": [
+        239,
+        396,
+        454,
+        532
+      ],
+      "GDPR,": [
+        241,
+        380
+      ],
+      "which": [
+        242
+      ],
+      "could": [
+        243,
+        402
+      ],
+      "have": [
+        244,
+        390,
+        410
+      ],
+      "significant": [
+        245,
+        516
+      ],
+      "practical": [
+        246
+      ],
+      "implications": [
+        247,
+        353,
+        428
+      ],
+      "looking": [
+        250
+      ],
+      "leverage": [
+        252
+      ],
+      "meet": [
+        259,
+        417
+      ],
+      "their": [
+        260,
+        347
+      ],
+      "needs": [
+        261,
+        420
+      ],
+      "strategic": [
+        263
+      ],
+      "goals.": [
+        264
+      ],
+      "Research": [
+        265
+      ],
+      "limitations/implications": [
+        266
+      ],
+      "Some": [
+        267
+      ],
+      "aspects": [
+        268
+      ],
+      "social": [
+        271,
+        303
+      ],
+      "layer": [
+        272,
+        324
+      ],
+      "solutions,": [
+        275
+      ],
+      "such": [
+        276,
+        442
+      ],
+      "law": [
+        278,
+        522
+      ],
+      "business": [
+        280
+      ],
+      "procedures,": [
+        281
+      ],
+      "also": [
+        283,
+        492
+      ],
+      "understood.": [
+        285
+      ],
+      "Much": [
+        286
+      ],
+      "less": [
+        287
+      ],
+      "understood": [
+        289
+      ],
+      "layer,": [
+        293,
+        344
+      ],
+      "serves": [
+        297
+      ],
+      "interface": [
+        300
+      ],
+      "technical": [
+        306
+      ],
+      "in": [
+        307,
+        395,
+        407,
+        455,
+        520
+      ],
+      "sociotechnical": [
+        309
+      ],
+      "system": [
+        310
+      ],
+      "like": [
+        311
+      ],
+      "blockchain.": [
+        312
+      ],
+      "In": [
+        313
+      ],
+      "addition": [
+        314
+      ],
+      "need": [
+        317,
+        332
+      ],
+      "about": [
+        321
+      ],
+      "data/records": [
+        323
+      ],
+      "blockchains": [
+        326
+      ],
+      "compliance,": [
+        328
+      ],
+      "there": [
+        329
+      ],
+      "governance": [
+        336,
+        370,
+        458,
+        472,
+        530
+      ],
+      "professionals": [
+        337
+      ],
+      "who": [
+        338
+      ],
+      "provide": [
+        340
+      ],
+      "input": [
+        341
+      ],
+      "this": [
+        343
+      ],
+      "both": [
+        345,
+        521
+      ],
+      "other": [
+        350
+      ],
+      "stakeholders.": [
+        351
+      ],
+      "Practical": [
+        352
+      ],
+      "Managing": [
+        354
+      ],
+      "personal": [
+        355,
+        393
+      ],
+      "continue": [
+        358
+      ],
+      "one": [
+        361
+      ],
+      "most": [
+        364
+      ],
+      "challenging,": [
+        365
+      ],
+      "fraught": [
+        366
+      ],
+      "issues": [
+        367
+      ],
+      "moving": [
+        371
+      ],
+      "forward;": [
+        372
+      ],
+      "given": [
+        373
+      ],
+      "fairly": [
+        375
+      ],
+      "broad": [
+        376
+      ],
+      "many": [
+        381
+      ],
+      "organizations,": [
+        382
+      ],
+      "including": [
+        383
+      ],
+      "those": [
+        384
+      ],
+      "outside": [
+        385
+      ],
+      "EU,": [
+        388
+      ],
+      "manage": [
+        392
+      ],
+      "GDPR.": [
+        399,
+        426
+      ],
+      "Blockchain": [
+        400
+      ],
+      "play": [
+        403
+      ],
+      "important": [
+        405,
+        447
+      ],
+      "role": [
+        406
+      ],
+      "ensuring": [
+        408
+      ],
+      "easily": [
+        411
+      ],
+      "auditable,": [
+        412
+      ],
+      "tamper-resistant,": [
+        413
+      ],
+      "tamper-evident": [
+        414
+      ],
+      "records": [
+        415
+      ],
+      "broader": [
+        418,
+        451
+      ],
+      "organizational": [
+        419
+      ],
+      "comply": [
+        423
+      ],
+      "Social": [
+        427
+      ],
+      "Because": [
+        429
+      ],
+      "professes": [
+        432
+      ],
+      "technology-neutral,": [
+        435
+      ],
+      "its": [
+        437
+      ],
+      "novel": [
+        440,
+        507
+      ],
+      "technologies": [
+        441,
+        508
+      ],
+      "provides": [
+        445,
+        493
+      ],
+      "window": [
+        448
+      ],
+      "into": [
+        449,
+        495,
+        537
+      ],
+      "context": [
+        452
+      ],
+      "evolving": [
+        456
+      ],
+      "spaces.": [
+        459
+      ],
+      "Originality/value": [
+        460
+      ],
+      "The": [
+        461
+      ],
+      "specific": [
+        462
+      ],
+      "question": [
+        463
+      ],
+      "apply": [
+        468
+      ],
+      "almost": [
+        475
+      ],
+      "entirely": [
+        476
+      ],
+      "novel.": [
+        477
+      ],
+      "has": [
+        479
+      ],
+      "significance": [
+        480
+      ],
+      "design": [
+        483
+      ],
+      "implementation": [
+        485
+      ],
+      "recordkeeping.": [
+        490
+      ],
+      "insight": [
+        494
+      ],
+      "“technology-neutral”": [
+        498
+      ],
+      "laws": [
+        499
+      ],
+      "regulations": [
+        501
+      ],
+      "actually": [
+        502
+      ],
+      "when": [
+        504
+      ],
+      "confronted": [
+        505
+      ],
+      "applications.": [
+        510
+      ],
+      "build": [
+        514
+      ],
+      "upon": [
+        515
+      ],
+      "bodies": [
+        517
+      ],
+      "science": [
+        525
+      ],
+      "further": [
+        527
+      ],
+      "understand": [
+        528
+      ],
+      "we": [
+        534
+      ],
+      "shifting": [
+        536
+      ],
+      "new": [
+        539
+      ],
+      "world.": [
+        541
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 8
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 5
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 10
+      },
+      {
+        "year": 2020,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2019,
+        "cited_by_count": 4
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W3109607994",
+    "doi": "https://doi.org/10.1108/dprg-04-2020-0050",
+    "title": "Designing privacy-friendly data repositories: a framework for a blockchain that follows the GDPR",
+    "display_name": "Designing privacy-friendly data repositories: a framework for a blockchain that follows the GDPR",
+    "relevance_score": 104.291374,
+    "publication_year": 2020,
+    "publication_date": "2020-11-26",
+    "ids": {
+      "openalex": "https://openalex.org/W3109607994",
+      "doi": "https://doi.org/10.1108/dprg-04-2020-0050",
+      "mag": "3109607994"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1108/dprg-04-2020-0050",
+      "is_oa": false,
+      "landing_page_url": "https://doi.org/10.1108/dprg-04-2020-0050",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4210238510",
+        "display_name": "Digital Policy Regulation and Governance",
+        "issn_l": "2398-5038",
+        "issn": [
+          "2398-5038",
+          "2398-5046"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310319811",
+        "host_organization_name": "Emerald Publishing Limited",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319811"
+        ],
+        "host_organization_lineage_names": [
+          "Emerald Publishing Limited"
+        ],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Digital Policy, Regulation and Governance",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": false,
+      "oa_status": "closed",
+      "oa_url": null,
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5043415739",
+          "display_name": "Muhammad Al-Abdullah",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I93320256",
+            "display_name": "University of Tampa",
+            "ror": "https://ror.org/007h1g065",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I93320256"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Muhammad Al-Abdullah",
+        "raw_affiliation_strings": [
+          "Department of Information and Technology Management, The University of Tampa, Tampa, Florida, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Technology Management, The University of Tampa, Tampa, Florida, USA",
+            "institution_ids": [
+              "https://openalex.org/I93320256"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5075965221",
+          "display_name": "Izzat Alsmadi",
+          "orcid": "https://orcid.org/0000-0001-7832-5081"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I1335518801",
+            "display_name": "Texas A&M University – San Antonio",
+            "ror": "https://ror.org/0084njv03",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I1335518801"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Izzat Alsmadi",
+        "raw_affiliation_strings": [
+          "Department of Computer and Cybersecurity, Texas A&M University – San Antonio, San Antonio, Texas, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Computer and Cybersecurity, Texas A&M University – San Antonio, San Antonio, Texas, USA",
+            "institution_ids": [
+              "https://openalex.org/I1335518801"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5053906190",
+          "display_name": "Ruwaida AlAbdullah",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4210114766",
+            "display_name": "Muscat College",
+            "ror": "https://ror.org/01zhpv322",
+            "country_code": "OM",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I4210114766"
+            ]
+          }
+        ],
+        "countries": [
+          "OM"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Ruwaida AlAbdullah",
+        "raw_affiliation_strings": [
+          "Computer and Informatics Department, Mazoon University College, Muscat, Oman"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Computer and Informatics Department, Mazoon University College, Muscat, Oman",
+            "institution_ids": [
+              "https://openalex.org/I4210114766"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5002023934",
+          "display_name": "Bernie Farkas",
+          "orcid": "https://orcid.org/0000-0003-0056-8539"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I93320256",
+            "display_name": "University of Tampa",
+            "ror": "https://ror.org/007h1g065",
+            "country_code": "US",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I93320256"
+            ]
+          }
+        ],
+        "countries": [
+          "US"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Bernie Farkas",
+        "raw_affiliation_strings": [
+          "Department of Information and Technology Management, The University of Tampa, Tampa, Florida, USA"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Department of Information and Technology Management, The University of Tampa, Tampa, Florida, USA",
+            "institution_ids": [
+              "https://openalex.org/I93320256"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 2,
+    "institutions_distinct_count": 4,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5043415739"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I93320256"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 3.11381005,
+    "has_fulltext": false,
+    "cited_by_count": 30,
+    "citation_normalized_percentile": {
+      "value": 0.92908701,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 99
+    },
+    "biblio": {
+      "volume": "22",
+      "issue": "5/6",
+      "first_page": "389",
+      "last_page": "411"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9998000264167786,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9998000264167786,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11045",
+        "display_name": "Privacy, Security, and Data Protection",
+        "score": 0.9994999766349792,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10764",
+        "display_name": "Privacy-Preserving Technologies in Data",
+        "score": 0.9975000023841858,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.8093792796134949
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.6360929012298584
+      },
+      {
+        "id": "https://openalex.org/keywords/general-data-protection-regulation",
+        "display_name": "General Data Protection Regulation",
+        "score": 0.6039587259292603
+      },
+      {
+        "id": "https://openalex.org/keywords/european-union",
+        "display_name": "European union",
+        "score": 0.4738258123397827
+      },
+      {
+        "id": "https://openalex.org/keywords/design-science",
+        "display_name": "Design science",
+        "score": 0.45821139216423035
+      },
+      {
+        "id": "https://openalex.org/keywords/information-privacy",
+        "display_name": "Information privacy",
+        "score": 0.4326157569885254
+      },
+      {
+        "id": "https://openalex.org/keywords/data-science",
+        "display_name": "Data science",
+        "score": 0.40903496742248535
+      },
+      {
+        "id": "https://openalex.org/keywords/knowledge-management",
+        "display_name": "Knowledge management",
+        "score": 0.33237940073013306
+      },
+      {
+        "id": "https://openalex.org/keywords/world-wide-web",
+        "display_name": "World Wide Web",
+        "score": 0.32165080308914185
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.29690542817115784
+      },
+      {
+        "id": "https://openalex.org/keywords/data-protection-act-1998",
+        "display_name": "Data Protection Act 1998",
+        "score": 0.2786793112754822
+      },
+      {
+        "id": "https://openalex.org/keywords/business",
+        "display_name": "Business",
+        "score": 0.19927772879600525
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.8093792796134949
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6360929012298584
+      },
+      {
+        "id": "https://openalex.org/C3090818",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172506",
+        "display_name": "General Data Protection Regulation",
+        "level": 3,
+        "score": 0.6039587259292603
+      },
+      {
+        "id": "https://openalex.org/C2910001868",
+        "wikidata": "https://www.wikidata.org/wiki/Q458",
+        "display_name": "European union",
+        "level": 2,
+        "score": 0.4738258123397827
+      },
+      {
+        "id": "https://openalex.org/C2780103759",
+        "wikidata": "https://www.wikidata.org/wiki/Q5264375",
+        "display_name": "Design science",
+        "level": 2,
+        "score": 0.45821139216423035
+      },
+      {
+        "id": "https://openalex.org/C123201435",
+        "wikidata": "https://www.wikidata.org/wiki/Q456632",
+        "display_name": "Information privacy",
+        "level": 2,
+        "score": 0.4326157569885254
+      },
+      {
+        "id": "https://openalex.org/C2522767166",
+        "wikidata": "https://www.wikidata.org/wiki/Q2374463",
+        "display_name": "Data science",
+        "level": 1,
+        "score": 0.40903496742248535
+      },
+      {
+        "id": "https://openalex.org/C56739046",
+        "wikidata": "https://www.wikidata.org/wiki/Q192060",
+        "display_name": "Knowledge management",
+        "level": 1,
+        "score": 0.33237940073013306
+      },
+      {
+        "id": "https://openalex.org/C136764020",
+        "wikidata": "https://www.wikidata.org/wiki/Q466",
+        "display_name": "World Wide Web",
+        "level": 1,
+        "score": 0.32165080308914185
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.29690542817115784
+      },
+      {
+        "id": "https://openalex.org/C69360830",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172237",
+        "display_name": "Data Protection Act 1998",
+        "level": 2,
+        "score": 0.2786793112754822
+      },
+      {
+        "id": "https://openalex.org/C144133560",
+        "wikidata": "https://www.wikidata.org/wiki/Q4830453",
+        "display_name": "Business",
+        "level": 0,
+        "score": 0.19927772879600525
+      },
+      {
+        "id": "https://openalex.org/C105639569",
+        "wikidata": "https://www.wikidata.org/wiki/Q582577",
+        "display_name": "Economic policy",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.1108/dprg-04-2020-0050",
+        "is_oa": false,
+        "landing_page_url": "https://doi.org/10.1108/dprg-04-2020-0050",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4210238510",
+          "display_name": "Digital Policy Regulation and Governance",
+          "issn_l": "2398-5038",
+          "issn": [
+            "2398-5038",
+            "2398-5046"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310319811",
+          "host_organization_name": "Emerald Publishing Limited",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319811"
+          ],
+          "host_organization_lineage_names": [
+            "Emerald Publishing Limited"
+          ],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Digital Policy, Regulation and Governance",
+        "raw_type": "journal-article"
+      }
+    ],
+    "best_oa_location": null,
+    "sustainable_development_goals": [
+      {
+        "display_name": "Decent work and economic growth",
+        "score": 0.41999998688697815,
+        "id": "https://metadata.un.org/sdg/8"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 42,
+    "referenced_works": [
+      "https://openalex.org/W1198309811",
+      "https://openalex.org/W1497199863",
+      "https://openalex.org/W2004462823",
+      "https://openalex.org/W2085106103",
+      "https://openalex.org/W2124975206",
+      "https://openalex.org/W2166323020",
+      "https://openalex.org/W2177758023",
+      "https://openalex.org/W2246062919",
+      "https://openalex.org/W2327198637",
+      "https://openalex.org/W2335755599",
+      "https://openalex.org/W2460676686",
+      "https://openalex.org/W2479405203",
+      "https://openalex.org/W2524095874",
+      "https://openalex.org/W2534519866",
+      "https://openalex.org/W2566795219",
+      "https://openalex.org/W2597862821",
+      "https://openalex.org/W2604516070",
+      "https://openalex.org/W2724185994",
+      "https://openalex.org/W2747951657",
+      "https://openalex.org/W2748775568",
+      "https://openalex.org/W2751559473",
+      "https://openalex.org/W2754529701",
+      "https://openalex.org/W2772179906",
+      "https://openalex.org/W2773019468",
+      "https://openalex.org/W2775571794",
+      "https://openalex.org/W2786885474",
+      "https://openalex.org/W2792413566",
+      "https://openalex.org/W2807864574",
+      "https://openalex.org/W2883647493",
+      "https://openalex.org/W2887540132",
+      "https://openalex.org/W2902638435",
+      "https://openalex.org/W2909320689",
+      "https://openalex.org/W2950226614",
+      "https://openalex.org/W2956083231",
+      "https://openalex.org/W2963460091",
+      "https://openalex.org/W2971539266",
+      "https://openalex.org/W2973045439",
+      "https://openalex.org/W3122687487",
+      "https://openalex.org/W3153612890",
+      "https://openalex.org/W4211068006",
+      "https://openalex.org/W4230575913",
+      "https://openalex.org/W4398200328"
+    ],
+    "related_works": [
+      "https://openalex.org/W4210406818",
+      "https://openalex.org/W4306779889",
+      "https://openalex.org/W3048554917",
+      "https://openalex.org/W2968025557",
+      "https://openalex.org/W4286432608",
+      "https://openalex.org/W3000007896",
+      "https://openalex.org/W3156135475",
+      "https://openalex.org/W4226141377",
+      "https://openalex.org/W2799236100",
+      "https://openalex.org/W3214713579"
+    ],
+    "abstract_inverted_index": {
+      "Purpose": [
+        0
+      ],
+      "The": [
+        1,
+        83,
+        132,
+        152,
+        186,
+        205,
+        222,
+        241,
+        266,
+        328,
+        355
+      ],
+      "paper": [
+        2,
+        68,
+        84,
+        187,
+        267,
+        356,
+        464
+      ],
+      "posits": [
+        3,
+        188,
+        357,
+        465
+      ],
+      "that": [
+        4,
+        36,
+        61,
+        78,
+        191,
+        199,
+        271,
+        273,
+        360,
+        401,
+        449,
+        468,
+        475
+      ],
+      "a": [
+        5,
+        27,
+        34,
+        39,
+        52,
+        72,
+        76,
+        126,
+        135,
+        189,
+        197,
+        232,
+        269,
+        289,
+        302,
+        309,
+        314,
+        333,
+        358,
+        383,
+        397,
+        407,
+        433,
+        466,
+        470
+      ],
+      "solution": [
+        6,
+        291
+      ],
+      "for": [
+        7,
+        14,
+        74,
+        117,
+        157,
+        195,
+        279,
+        305,
+        316,
+        367,
+        483
+      ],
+      "businesses": [
+        8,
+        418,
+        431,
+        484
+      ],
+      "to": [
+        9,
+        19,
+        26,
+        70,
+        148,
+        202,
+        295,
+        332,
+        343,
+        372,
+        391,
+        435,
+        459,
+        472,
+        485
+      ],
+      "use": [
+        10,
+        280,
+        346,
+        414
+      ],
+      "privacy-friendly": [
+        11
+      ],
+      "data": [
+        12,
+        17,
+        30,
+        40,
+        54,
+        310,
+        317,
+        416,
+        424,
+        488
+      ],
+      "repositories": [
+        13
+      ],
+      "its": [
+        15,
+        235,
+        439
+      ],
+      "customers’": [
+        16,
+        239,
+        487,
+        492
+      ],
+      "is": [
+        18,
+        33,
+        58,
+        64,
+        96,
+        243,
+        330,
+        341,
+        446
+      ],
+      "change": [
+        20
+      ],
+      "from": [
+        21,
+        141
+      ],
+      "the": [
+        22,
+        43,
+        80,
+        86,
+        114,
+        120,
+        143,
+        165,
+        174,
+        177,
+        181,
+        209,
+        215,
+        225,
+        250,
+        287,
+        293,
+        345,
+        348,
+        362,
+        374,
+        411,
+        420,
+        450,
+        477,
+        491
+      ],
+      "traditional": [
+        23
+      ],
+      "centralized": [
+        24,
+        53
+      ],
+      "repository": [
+        25
+      ],
+      "trusted,": [
+        28
+      ],
+      "decentralized": [
+        29,
+        217,
+        451
+      ],
+      "repository.": [
+        31,
+        41
+      ],
+      "Blockchain": [
+        32
+      ],
+      "technology": [
+        35,
+        63,
+        275,
+        455
+      ],
+      "provides": [
+        37,
+        192,
+        268,
+        292,
+        313
+      ],
+      "such": [
+        38,
+        393
+      ],
+      "However,": [
+        42,
+        444
+      ],
+      "European": [
+        44
+      ],
+      "Union’s": [
+        45
+      ],
+      "General": [
+        46
+      ],
+      "Data": [
+        47
+      ],
+      "Protection": [
+        48
+      ],
+      "Regulation": [
+        49
+      ],
+      "(GDPR)": [
+        50
+      ],
+      "assumed": [
+        51,
+        448
+      ],
+      "repository,": [
+        55
+      ],
+      "and": [
+        56,
+        88,
+        104,
+        110,
+        123,
+        128,
+        234,
+        255,
+        262,
+        297,
+        319,
+        322,
+        364,
+        389,
+        395,
+        404,
+        419
+      ],
+      "it": [
+        57,
+        445
+      ],
+      "commonly": [
+        59,
+        447
+      ],
+      "argued": [
+        60
+      ],
+      "blockchain": [
+        62,
+        77,
+        198,
+        274,
+        454,
+        471
+      ],
+      "not": [
+        65
+      ],
+      "usable.": [
+        66
+      ],
+      "This": [
+        67,
+        463
+      ],
+      "aims": [
+        69
+      ],
+      "posit": [
+        71
+      ],
+      "framework": [
+        73,
+        190,
+        206,
+        223,
+        270,
+        349,
+        359,
+        375,
+        467
+      ],
+      "adopting": [
+        75
+      ],
+      "follows": [
+        79,
+        200,
+        476
+      ],
+      "GDPR.": [
+        81
+      ],
+      "Design/methodology/approach": [
+        82
+      ],
+      "uses": [
+        85
+      ],
+      "Levy": [
+        87
+      ],
+      "Ellis’": [
+        89
+      ],
+      "narrative": [
+        90
+      ],
+      "review": [
+        91
+      ],
+      "of": [
+        92,
+        137,
+        170,
+        211,
+        219,
+        248,
+        347,
+        406,
+        415,
+        423,
+        453
+      ],
+      "literature": [
+        93
+      ],
+      "methodology,": [
+        94
+      ],
+      "which": [
+        95,
+        142,
+        159
+      ],
+      "based": [
+        97
+      ],
+      "on": [
+        98,
+        335
+      ],
+      "constructivist": [
+        99
+      ],
+      "theory": [
+        100
+      ],
+      "posited": [
+        101,
+        183
+      ],
+      "by": [
+        102,
+        172,
+        228,
+        417
+      ],
+      "Lincoln": [
+        103
+      ],
+      "Guba.": [
+        105
+      ],
+      "Using": [
+        106,
+        164
+      ],
+      "five": [
+        107
+      ],
+      "information": [
+        108
+      ],
+      "systems": [
+        109
+      ],
+      "computer": [
+        111,
+        167
+      ],
+      "science": [
+        112,
+        168
+      ],
+      "databases,": [
+        113
+      ],
+      "researchers": [
+        115,
+        144,
+        153,
+        175
+      ],
+      "searched": [
+        116
+      ],
+      "studies": [
+        118
+      ],
+      "using": [
+        119,
+        125,
+        214,
+        286
+      ],
+      "keywords": [
+        121
+      ],
+      "GDPR": [
+        122,
+        201,
+        212,
+        282,
+        368
+      ],
+      "blockchain,": [
+        124
+      ],
+      "forward": [
+        127
+      ],
+      "backward": [
+        129
+      ],
+      "search": [
+        130,
+        133
+      ],
+      "technique.": [
+        131
+      ],
+      "identified": [
+        134
+      ],
+      "corpus": [
+        136,
+        156
+      ],
+      "416": [
+        138
+      ],
+      "candidate": [
+        139
+      ],
+      "studies,": [
+        140
+      ],
+      "applied": [
+        145,
+        458
+      ],
+      "pre-established": [
+        146
+      ],
+      "criteria": [
+        147
+      ],
+      "select": [
+        149
+      ],
+      "39": [
+        150
+      ],
+      "studies.": [
+        151
+      ],
+      "mined": [
+        154
+      ],
+      "this": [
+        155,
+        460
+      ],
+      "concepts,": [
+        158
+      ],
+      "they": [
+        160
+      ],
+      "clustered": [
+        161,
+        178
+      ],
+      "into": [
+        162,
+        180
+      ],
+      "themes.": [
+        163
+      ],
+      "accepted": [
+        166
+      ],
+      "practice": [
+        169
+      ],
+      "privacy": [
+        171,
+        299,
+        311,
+        323,
+        378,
+        384,
+        398,
+        425
+      ],
+      "design,": [
+        173
+      ],
+      "combined": [
+        176
+      ],
+      "themes": [
+        179
+      ],
+      "paper’s": [
+        182
+      ],
+      "framework.": [
+        184
+      ],
+      "Findings": [
+        185
+      ],
+      "architectural": [
+        193
+      ],
+      "tactics": [
+        194,
+        365,
+        390
+      ],
+      "designing": [
+        196
+      ],
+      "enhance": [
+        203
+      ],
+      "privacy.": [
+        204
+      ],
+      "explicitly": [
+        207
+      ],
+      "addresses": [
+        208,
+        224
+      ],
+      "challenges": [
+        210
+      ],
+      "compliance": [
+        213
+      ],
+      "unimagined": [
+        216
+      ],
+      "storage": [
+        218
+      ],
+      "personal": [
+        220
+      ],
+      "data.": [
+        221,
+        240,
+        443
+      ],
+      "blockchain–GDPR": [
+        226,
+        336
+      ],
+      "tension": [
+        227
+      ],
+      "establishing": [
+        229
+      ],
+      "trust": [
+        230,
+        242,
+        437
+      ],
+      "between": [
+        231
+      ],
+      "business": [
+        233,
+        461
+      ],
+      "customers": [
+        236,
+        440
+      ],
+      "vis-à-vis": [
+        237
+      ],
+      "storing": [
+        238
+      ],
+      "established": [
+        244
+      ],
+      "through": [
+        245
+      ],
+      "blockchain’s": [
+        246
+      ],
+      "capability": [
+        247
+      ],
+      "providing": [
+        249,
+        480
+      ],
+      "customer": [
+        251
+      ],
+      "with": [
+        252,
+        376,
+        432,
+        438
+      ],
+      "private": [
+        253
+      ],
+      "keys": [
+        254
+      ],
+      "control": [
+        256
+      ],
+      "over": [
+        257
+      ],
+      "their": [
+        258
+      ],
+      "data,": [
+        259
+      ],
+      "e.g.": [
+        260
+      ],
+      "processing": [
+        261,
+        306,
+        318
+      ],
+      "access.": [
+        263
+      ],
+      "Research": [
+        264
+      ],
+      "limitations/implications": [
+        265
+      ],
+      "demonstrates": [
+        272,
+        301
+      ],
+      "can": [
+        276
+      ],
+      "be": [
+        277,
+        457,
+        473
+      ],
+      "designed": [
+        278,
+        474
+      ],
+      "in": [
+        281,
+        350
+      ],
+      "compliant": [
+        283
+      ],
+      "solutions.": [
+        284
+      ],
+      "In": [
+        285
+      ],
+      "framework,": [
+        288
+      ],
+      "blockchain-based": [
+        290
+      ],
+      "ability": [
+        294
+      ],
+      "audit": [
+        296
+      ],
+      "monitor": [
+        298
+      ],
+      "measures,": [
+        300
+      ],
+      "legal": [
+        303
+      ],
+      "justification": [
+        304
+      ],
+      "activities,": [
+        307
+      ],
+      "incorporates": [
+        308
+      ],
+      "policy,": [
+        312
+      ],
+      "map": [
+        315
+      ],
+      "ensures": [
+        320
+      ],
+      "security": [
+        321
+      ],
+      "awareness": [
+        324
+      ],
+      "among": [
+        325
+      ],
+      "all": [
+        326
+      ],
+      "actors.": [
+        327
+      ],
+      "research": [
+        329,
+        340
+      ],
+      "limited": [
+        331
+      ],
+      "focus": [
+        334
+      ],
+      "compliance;": [
+        337
+      ],
+      "however,": [
+        338
+      ],
+      "future": [
+        339
+      ],
+      "needed": [
+        342
+      ],
+      "investigate": [
+        344
+      ],
+      "specific": [
+        351
+      ],
+      "domains.": [
+        352
+      ],
+      "Practical": [
+        353
+      ],
+      "implications": [
+        354
+      ],
+      "identifies": [
+        361
+      ],
+      "strategies": [
+        363,
+        388
+      ],
+      "necessary": [
+        366
+      ],
+      "compliance.": [
+        369
+      ],
+      "Practitioners": [
+        370
+      ],
+      "need": [
+        371
+      ],
+      "compliment": [
+        373
+      ],
+      "rigorous": [
+        377
+      ],
+      "risk": [
+        379,
+        385
+      ],
+      "management,": [
+        380
+      ],
+      "i.e.": [
+        381
+      ],
+      "conducting": [
+        382
+      ],
+      "analysis,": [
+        386
+      ],
+      "identifying": [
+        387
+      ],
+      "address": [
+        392
+      ],
+      "risks": [
+        394
+      ],
+      "preparing": [
+        396
+      ],
+      "impact": [
+        399
+      ],
+      "assessment": [
+        400
+      ],
+      "enhances": [
+        402
+      ],
+      "accountability": [
+        403
+      ],
+      "transparency": [
+        405
+      ],
+      "blockchain.": [
+        408
+      ],
+      "Originality/value": [
+        409
+      ],
+      "With": [
+        410
+      ],
+      "increasingly": [
+        412
+      ],
+      "strategic": [
+        413
+      ],
+      "contravening": [
+        421
+      ],
+      "growth": [
+        422
+      ],
+      "regulation,": [
+        426
+      ],
+      "alternative": [
+        427,
+        482
+      ],
+      "technologies": [
+        428
+      ],
+      "could": [
+        429
+      ],
+      "provide": [
+        430
+      ],
+      "means": [
+        434
+      ],
+      "nurture": [
+        436
+      ],
+      "regarding": [
+        441
+      ],
+      "collected": [
+        442
+      ],
+      "approach": [
+        452
+      ],
+      "cannot": [
+        456
+      ],
+      "need.": [
+        462
+      ],
+      "enables": [
+        469
+      ],
+      "GDPR;": [
+        478
+      ],
+      "thereby,": [
+        479
+      ],
+      "an": [
+        481
+      ],
+      "collect": [
+        486
+      ],
+      "while": [
+        489
+      ],
+      "ensuring": [
+        490
+      ],
+      "trust.": [
+        493
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 8
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 11
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2025-11-06T03:46:38.306776",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W3185919790",
+    "doi": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+    "title": "Blockchain and GDPR – A Study on Compatibility Issues of the Distributed Ledger Technology with GDPR Data Processing",
+    "display_name": "Blockchain and GDPR – A Study on Compatibility Issues of the Distributed Ledger Technology with GDPR Data Processing",
+    "relevance_score": 92.19837,
+    "publication_year": 2021,
+    "publication_date": "2021-07-01",
+    "ids": {
+      "openalex": "https://openalex.org/W3185919790",
+      "doi": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+      "mag": "3185919790"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1088/1742-6596/1964/4/042005",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4210187594",
+        "display_name": "Journal of Physics Conference Series",
+        "issn_l": "1742-6588",
+        "issn": [
+          "1742-6588",
+          "1742-6596"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320083",
+        "host_organization_name": "IOP Publishing",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320083",
+          "https://openalex.org/P4310311669"
+        ],
+        "host_organization_lineage_names": [
+          "IOP Publishing",
+          "Institute of Physics"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Physics: Conference Series",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "diamond",
+      "oa_url": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5063302212",
+          "display_name": "Mani Karthik Suhas Suripeddi",
+          "orcid": null
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I244572783",
+            "display_name": "Symbiosis International University",
+            "ror": "https://ror.org/005r2ww51",
+            "country_code": "IN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I244572783"
+            ]
+          }
+        ],
+        "countries": [
+          "IN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Mani Karthik Suhas Suripeddi",
+        "raw_affiliation_strings": [
+          "Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Mahaarashtra, India"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Mahaarashtra, India",
+            "institution_ids": [
+              "https://openalex.org/I244572783"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5067097434",
+          "display_name": "Pradnya Purandare",
+          "orcid": "https://orcid.org/0000-0003-4229-6092"
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I244572783",
+            "display_name": "Symbiosis International University",
+            "ror": "https://ror.org/005r2ww51",
+            "country_code": "IN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I244572783"
+            ]
+          }
+        ],
+        "countries": [
+          "IN"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Pradnya Purandare",
+        "raw_affiliation_strings": [
+          "Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Mahaarashtra, India"
+        ],
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Symbiosis Centre for Information Technology, Symbiosis International (Deemed University), Pune, Mahaarashtra, India",
+            "institution_ids": [
+              "https://openalex.org/I244572783"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 2,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5067097434"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I244572783"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 3.20243149,
+    "has_fulltext": false,
+    "cited_by_count": 18,
+    "citation_normalized_percentile": {
+      "value": 0.92402801,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 99
+    },
+    "biblio": {
+      "volume": "1964",
+      "issue": "4",
+      "first_page": "042005",
+      "last_page": "042005"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10270",
+      "display_name": "Blockchain Technology Applications and Security",
+      "score": 0.9998000264167786,
+      "subfield": {
+        "id": "https://openalex.org/subfields/1710",
+        "display_name": "Information Systems"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/17",
+        "display_name": "Computer Science"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/3",
+        "display_name": "Physical Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10270",
+        "display_name": "Blockchain Technology Applications and Security",
+        "score": 0.9998000264167786,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1710",
+          "display_name": "Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11995",
+        "display_name": "FinTech, Crowdfunding, Digital Finance",
+        "score": 0.983299970626831,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1404",
+          "display_name": "Management Information Systems"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/14",
+          "display_name": "Business, Management and Accounting"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T10764",
+        "display_name": "Privacy-Preserving Technologies in Data",
+        "score": 0.9740999937057495,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/blockchain",
+        "display_name": "Blockchain",
+        "score": 0.8892714381217957
+      },
+      {
+        "id": "https://openalex.org/keywords/distributed-ledger",
+        "display_name": "Distributed ledger",
+        "score": 0.6718592047691345
+      },
+      {
+        "id": "https://openalex.org/keywords/database-transaction",
+        "display_name": "Database transaction",
+        "score": 0.6387646198272705
+      },
+      {
+        "id": "https://openalex.org/keywords/general-data-protection-regulation",
+        "display_name": "General Data Protection Regulation",
+        "score": 0.596855640411377
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-science",
+        "display_name": "Computer science",
+        "score": 0.5642684698104858
+      },
+      {
+        "id": "https://openalex.org/keywords/computer-security",
+        "display_name": "Computer security",
+        "score": 0.4921345114707947
+      },
+      {
+        "id": "https://openalex.org/keywords/compatibility",
+        "display_name": "Compatibility (geochemistry)",
+        "score": 0.44069725275039673
+      },
+      {
+        "id": "https://openalex.org/keywords/information-privacy",
+        "display_name": "Information privacy",
+        "score": 0.431438684463501
+      },
+      {
+        "id": "https://openalex.org/keywords/data-protection-act-1998",
+        "display_name": "Data Protection Act 1998",
+        "score": 0.43139705061912537
+      },
+      {
+        "id": "https://openalex.org/keywords/internet-privacy",
+        "display_name": "Internet privacy",
+        "score": 0.4243164658546448
+      },
+      {
+        "id": "https://openalex.org/keywords/engineering",
+        "display_name": "Engineering",
+        "score": 0.1358412504196167
+      },
+      {
+        "id": "https://openalex.org/keywords/database",
+        "display_name": "Database",
+        "score": 0.12212306261062622
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C2779687700",
+        "wikidata": "https://www.wikidata.org/wiki/Q20514253",
+        "display_name": "Blockchain",
+        "level": 2,
+        "score": 0.8892714381217957
+      },
+      {
+        "id": "https://openalex.org/C2777541363",
+        "wikidata": "https://www.wikidata.org/wiki/Q25110971",
+        "display_name": "Distributed ledger",
+        "level": 3,
+        "score": 0.6718592047691345
+      },
+      {
+        "id": "https://openalex.org/C75949130",
+        "wikidata": "https://www.wikidata.org/wiki/Q848010",
+        "display_name": "Database transaction",
+        "level": 2,
+        "score": 0.6387646198272705
+      },
+      {
+        "id": "https://openalex.org/C3090818",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172506",
+        "display_name": "General Data Protection Regulation",
+        "level": 3,
+        "score": 0.596855640411377
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.5642684698104858
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.4921345114707947
+      },
+      {
+        "id": "https://openalex.org/C2778648169",
+        "wikidata": "https://www.wikidata.org/wiki/Q967768",
+        "display_name": "Compatibility (geochemistry)",
+        "level": 2,
+        "score": 0.44069725275039673
+      },
+      {
+        "id": "https://openalex.org/C123201435",
+        "wikidata": "https://www.wikidata.org/wiki/Q456632",
+        "display_name": "Information privacy",
+        "level": 2,
+        "score": 0.431438684463501
+      },
+      {
+        "id": "https://openalex.org/C69360830",
+        "wikidata": "https://www.wikidata.org/wiki/Q1172237",
+        "display_name": "Data Protection Act 1998",
+        "level": 2,
+        "score": 0.43139705061912537
+      },
+      {
+        "id": "https://openalex.org/C108827166",
+        "wikidata": "https://www.wikidata.org/wiki/Q175975",
+        "display_name": "Internet privacy",
+        "level": 1,
+        "score": 0.4243164658546448
+      },
+      {
+        "id": "https://openalex.org/C127413603",
+        "wikidata": "https://www.wikidata.org/wiki/Q11023",
+        "display_name": "Engineering",
+        "level": 0,
+        "score": 0.1358412504196167
+      },
+      {
+        "id": "https://openalex.org/C77088390",
+        "wikidata": "https://www.wikidata.org/wiki/Q8513",
+        "display_name": "Database",
+        "level": 1,
+        "score": 0.12212306261062622
+      },
+      {
+        "id": "https://openalex.org/C42360764",
+        "wikidata": "https://www.wikidata.org/wiki/Q83588",
+        "display_name": "Chemical engineering",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.1088/1742-6596/1964/4/042005",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4210187594",
+          "display_name": "Journal of Physics Conference Series",
+          "issn_l": "1742-6588",
+          "issn": [
+            "1742-6588",
+            "1742-6596"
+          ],
+          "is_oa": true,
+          "is_in_doaj": false,
+          "is_core": true,
+          "host_organization": "https://openalex.org/P4310320083",
+          "host_organization_name": "IOP Publishing",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310320083",
+            "https://openalex.org/P4310311669"
+          ],
+          "host_organization_lineage_names": [
+            "IOP Publishing",
+            "Institute of Physics"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "Journal of Physics: Conference Series",
+        "raw_type": "journal-article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1088/1742-6596/1964/4/042005",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1088/1742-6596/1964/4/042005",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S4210187594",
+        "display_name": "Journal of Physics Conference Series",
+        "issn_l": "1742-6588",
+        "issn": [
+          "1742-6588",
+          "1742-6596"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4310320083",
+        "host_organization_name": "IOP Publishing",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310320083",
+          "https://openalex.org/P4310311669"
+        ],
+        "host_organization_lineage_names": [
+          "IOP Publishing",
+          "Institute of Physics"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Journal of Physics: Conference Series",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "display_name": "Decent work and economic growth",
+        "score": 0.5400000214576721,
+        "id": "https://metadata.un.org/sdg/8"
+      }
+    ],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "grobid_xml": false,
+      "pdf": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 28,
+    "referenced_works": [
+      "https://openalex.org/W1559136758",
+      "https://openalex.org/W2563669324",
+      "https://openalex.org/W2588585573",
+      "https://openalex.org/W2790670692",
+      "https://openalex.org/W2794170508",
+      "https://openalex.org/W2796465757",
+      "https://openalex.org/W2807455604",
+      "https://openalex.org/W2911363558",
+      "https://openalex.org/W2916008479",
+      "https://openalex.org/W2921980263",
+      "https://openalex.org/W2927981208",
+      "https://openalex.org/W2963519394",
+      "https://openalex.org/W2968495477",
+      "https://openalex.org/W2982324999",
+      "https://openalex.org/W2997808343",
+      "https://openalex.org/W3000368217",
+      "https://openalex.org/W3007495176",
+      "https://openalex.org/W3122687487",
+      "https://openalex.org/W3162999783",
+      "https://openalex.org/W4289674249",
+      "https://openalex.org/W6633543543",
+      "https://openalex.org/W6758580551",
+      "https://openalex.org/W6759311309",
+      "https://openalex.org/W6760763243",
+      "https://openalex.org/W6764649931",
+      "https://openalex.org/W6769581290",
+      "https://openalex.org/W6773721102",
+      "https://openalex.org/W6795238603"
+    ],
+    "related_works": [
+      "https://openalex.org/W4253897078",
+      "https://openalex.org/W4283163498",
+      "https://openalex.org/W3164536060",
+      "https://openalex.org/W3160375675",
+      "https://openalex.org/W4221010187",
+      "https://openalex.org/W4283257700",
+      "https://openalex.org/W4320037181",
+      "https://openalex.org/W2817173004",
+      "https://openalex.org/W2741986576",
+      "https://openalex.org/W4360999634"
+    ],
+    "abstract_inverted_index": {
+      "Abstract": [
+        0
+      ],
+      "This": [
+        1,
+        13,
+        78,
+        121
+      ],
+      "research": [
+        2,
+        79,
+        88
+      ],
+      "work": [
+        3
+      ],
+      "aims": [
+        4
+      ],
+      "to": [
+        5,
+        22,
+        39,
+        59,
+        89,
+        177,
+        182,
+        186
+      ],
+      "investigate": [
+        6,
+        90
+      ],
+      "Blockchain": [
+        7,
+        26
+      ],
+      "technology": [
+        8,
+        66,
+        146
+      ],
+      "and": [
+        9,
+        93,
+        103,
+        130
+      ],
+      "GDPR": [
+        10,
+        49,
+        98,
+        116,
+        162,
+        178
+      ],
+      "compliance": [
+        11,
+        99
+      ],
+      "studies.": [
+        12
+      ],
+      "will": [
+        14
+      ],
+      "analyze": [
+        15
+      ],
+      "the": [
+        16,
+        31,
+        64,
+        91,
+        95,
+        105,
+        126,
+        161,
+        191
+      ],
+      "data": [
+        17,
+        61,
+        131,
+        151,
+        163,
+        170,
+        173,
+        196
+      ],
+      "privacy": [
+        18,
+        132
+      ],
+      "perspective": [
+        19
+      ],
+      "with": [
+        20,
+        100,
+        141
+      ],
+      "respect": [
+        21
+      ],
+      "distributed": [
+        23,
+        144
+      ],
+      "ledger": [
+        24,
+        145
+      ],
+      "technology.": [
+        25
+      ],
+      "has": [
+        27,
+        179
+      ],
+      "become": [
+        28
+      ],
+      "one": [
+        29
+      ],
+      "of": [
+        30,
+        67,
+        97,
+        119,
+        193
+      ],
+      "most": [
+        32
+      ],
+      "frequently": [
+        33
+      ],
+      "discussed": [
+        34
+      ],
+      "technologies": [
+        35,
+        102
+      ],
+      "for": [
+        36,
+        41,
+        55
+      ],
+      "its": [
+        37
+      ],
+      "ability": [
+        38
+      ],
+      "allow": [
+        40
+      ],
+      "peer-to-peer": [
+        42
+      ],
+      "transactions": [
+        43
+      ],
+      "without": [
+        44,
+        74
+      ],
+      "a": [
+        45,
+        71,
+        81,
+        143,
+        180
+      ],
+      "centralized": [
+        46
+      ],
+      "intermediary.": [
+        47
+      ],
+      "The": [
+        48
+      ],
+      "was": [
+        50
+      ],
+      "implemented": [
+        51
+      ],
+      "in": [
+        52,
+        117,
+        148
+      ],
+      "May": [
+        53
+      ],
+      "2018": [
+        54
+      ],
+      "EU": [
+        56
+      ],
+      "member": [
+        57
+      ],
+      "states": [
+        58
+      ],
+      "maintain": [
+        60
+      ],
+      "privacy.": [
+        62,
+        120
+      ],
+      "DLT,": [
+        63
+      ],
+      "underlying": [
+        65
+      ],
+      "blockchain": [
+        68,
+        101,
+        113
+      ],
+      "as": [
+        69
+      ],
+      "is": [
+        70,
+        159,
+        175
+      ],
+      "decentralized": [
+        72
+      ],
+      "system": [
+        73,
+        147
+      ],
+      "any": [
+        75,
+        198
+      ],
+      "monetary": [
+        76
+      ],
+      "authority.": [
+        77
+      ],
+      "conducted": [
+        80,
+        87
+      ],
+      "thorough": [
+        82
+      ],
+      "literature": [
+        83,
+        123
+      ],
+      "review": [
+        84,
+        124
+      ],
+      "on": [
+        85,
+        134
+      ],
+      "prior": [
+        86
+      ],
+      "problems": [
+        92,
+        136
+      ],
+      "determine": [
+        94
+      ],
+      "gaps": [
+        96
+      ],
+      "discuss": [
+        104
+      ],
+      "technical,": [
+        106
+      ],
+      "use-case": [
+        107
+      ],
+      "designs": [
+        108
+      ],
+      "or": [
+        109,
+        152,
+        157,
+        189
+      ],
+      "solutions": [
+        110
+      ],
+      "that": [
+        111,
+        137
+      ],
+      "make": [
+        112
+      ],
+      "more": [
+        114
+      ],
+      "compliant": [
+        115,
+        176
+      ],
+      "terms": [
+        118
+      ],
+      "systematic": [
+        122
+      ],
+      "addresses": [
+        125
+      ],
+      "gaps,": [
+        127
+      ],
+      "feasibility,": [
+        128
+      ],
+      "efficiency,": [
+        129
+      ],
+      "issues": [
+        133
+      ],
+      "compatibility": [
+        135
+      ],
+      "are": [
+        138
+      ],
+      "primarily": [
+        139
+      ],
+      "concerned": [
+        140
+      ],
+      "how": [
+        142
+      ],
+      "which": [
+        149,
+        174
+      ],
+      "recorded": [
+        150
+      ],
+      "transaction": [
+        153
+      ],
+      "cannot": [
+        154
+      ],
+      "be": [
+        155
+      ],
+      "changed": [
+        156
+      ],
+      "erased": [
+        158
+      ],
+      "challenging": [
+        160
+      ],
+      "subject": [
+        164
+      ],
+      "access": [
+        165
+      ],
+      "rights": [
+        166
+      ],
+      "(DSAR),": [
+        167
+      ],
+      "where": [
+        168
+      ],
+      "every": [
+        169
+      ],
+      "subject’s": [
+        171
+      ],
+      "personal": [
+        172,
+        195
+      ],
+      "right": [
+        181
+      ],
+      "exercise": [
+        183
+      ],
+      "their": [
+        184
+      ],
+      "Rights": [
+        185
+      ],
+      "rectify,": [
+        187
+      ],
+      "delete": [
+        188
+      ],
+      "limit": [
+        190
+      ],
+      "processing": [
+        192
+      ],
+      "your": [
+        194
+      ],
+      "at": [
+        197
+      ],
+      "time": [
+        199
+      ],
+      "if": [
+        200
+      ],
+      "necessary.": [
+        201
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2025,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 6
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 2
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2026-02-06T03:54:58.731219",
+    "created_date": "2025-10-10T00:00:00"
+  }
+]

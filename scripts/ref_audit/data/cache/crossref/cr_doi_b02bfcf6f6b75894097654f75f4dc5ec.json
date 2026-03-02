@@ -1,0 +1,410 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        7,
+        30
+      ]
+    ],
+    "date-time": "2025-07-30T15:50:08Z",
+    "timestamp": 1753890608941,
+    "version": "3.41.2"
+  },
+  "reference-count": 22,
+  "publisher": "Frontiers Media SA",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            23
+          ]
+        ],
+        "date-time": "2025-04-23T00:00:00Z",
+        "timestamp": 1745366400000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "content-domain": {
+    "domain": [
+      "frontiersin.org"
+    ],
+    "crossmark-restriction": true
+  },
+  "short-container-title": [
+    "Front. Big Data"
+  ],
+  "abstract": "<jats:p>Effective record linkage in big data, particularly in imbalanced datasets, is a critical yet highly challenging task due to the inherent complexity involved. This article utilizes an oversampling-undersampling strategy to address linkage imbalances, enabling more accurate and efficient record linkage within large-scale datasets. It tries to increase the instances of the minority class and decrease the dominance of the majority classes to try to reach a more balanced dataset that can be used for training and testing. Sensitivity testing was carried out by varying the training-test ratio and degree of imbalance.</jats:p>",
+  "DOI": "10.3389/fdata.2025.1542483",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2025,
+        4,
+        23
+      ]
+    ],
+    "date-time": "2025-04-23T05:21:48Z",
+    "timestamp": 1745385708000
+  },
+  "update-policy": "https://doi.org/10.3389/crossmark-policy",
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "An oversampling-undersampling strategy for large-scale data linkage"
+  ],
+  "prefix": "10.3389",
+  "volume": "8",
+  "author": [
+    {
+      "given": "Hossein",
+      "family": "Hassani",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "Mohammad Reza",
+      "family": "Entezarian",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Sara",
+      "family": "Zaeimzadeh",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Leila",
+      "family": "Marvian",
+      "sequence": "additional",
+      "affiliation": []
+    },
+    {
+      "given": "Nadejda",
+      "family": "Komendantova",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "1965",
+  "published-online": {
+    "date-parts": [
+      [
+        2025,
+        4,
+        23
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "B1",
+      "doi-asserted-by": "publisher",
+      "first-page": "7940",
+      "DOI": "10.1109/ACCESS.2016.2619719",
+      "article-title": "Comparing oversampling techniques to handle the class imbalance problem: a customer churn prediction case study",
+      "volume": "4",
+      "author": "Amin",
+      "year": "2016",
+      "journal-title": "IEEE Access"
+    },
+    {
+      "key": "B2",
+      "doi-asserted-by": "publisher",
+      "first-page": "7097",
+      "DOI": "10.3390/su15097097",
+      "article-title": "Adversarial approaches to tackle imbalanced data in machine learning",
+      "volume": "15",
+      "author": "Ayoub",
+      "year": "2023",
+      "journal-title": "Sustainability"
+    },
+    {
+      "key": "B3",
+      "doi-asserted-by": "publisher",
+      "first-page": "47",
+      "DOI": "10.3390/mti2030047",
+      "article-title": "Deep learning and medical diagnosis: a review of literature",
+      "volume": "2",
+      "author": "Bakator",
+      "year": "2018",
+      "journal-title": "Multimodal Technol. Interact"
+    },
+    {
+      "key": "B4",
+      "doi-asserted-by": "publisher",
+      "first-page": "15",
+      "DOI": "10.3390/e26010015",
+      "article-title": "Binary classification with imbalanced data",
+      "volume": "26",
+      "author": "Chiang",
+      "year": "2024",
+      "journal-title": "Entropy"
+    },
+    {
+      "key": "B5",
+      "doi-asserted-by": "publisher",
+      "first-page": "2256",
+      "DOI": "10.3390/land11122256",
+      "article-title": "Evaluating water and carbon retention in a low-order, designed river corridor",
+      "volume": "11",
+      "author": "Cockburn",
+      "year": "2022",
+      "journal-title": "Land"
+    },
+    {
+      "key": "B6",
+      "doi-asserted-by": "publisher",
+      "first-page": "2674",
+      "DOI": "10.3390/electronics12122674",
+      "article-title": "Optimizing neural networks for imbalanced data",
+      "volume": "12",
+      "author": "de Zarzá",
+      "year": "2023",
+      "journal-title": "Electronics"
+    },
+    {
+      "key": "B7",
+      "doi-asserted-by": "publisher",
+      "first-page": "27",
+      "DOI": "10.1016/j.neucom.2020.08.064",
+      "article-title": "Learning from class-imbalance and heterogeneous data for 30-day hospital readmission",
+      "volume": "420",
+      "author": "Du",
+      "year": "2021",
+      "journal-title": "Neurocomputing"
+    },
+    {
+      "key": "B8",
+      "doi-asserted-by": "publisher",
+      "first-page": "3417",
+      "DOI": "10.3390/cancers16193417",
+      "article-title": "Learning from imbalanced data: integration of advanced resampling techniques and machine learning models for enhanced cancer diagnosis and prognosis",
+      "volume": "16",
+      "author": "Gurcan",
+      "year": "2024",
+      "journal-title": "Cancers"
+    },
+    {
+      "key": "B9",
+      "doi-asserted-by": "publisher",
+      "first-page": "3476",
+      "DOI": "10.3390/math12223476",
+      "article-title": "Comprehensive evaluation method of privacy-preserving record linkage technology based on the modified criteria importance through intercriteria correlation method",
+      "volume": "12",
+      "author": "Han",
+      "year": "",
+      "journal-title": "Mathematics"
+    },
+    {
+      "key": "B10",
+      "doi-asserted-by": "publisher",
+      "first-page": "2337",
+      "DOI": "10.3390/math12152337",
+      "article-title": "Enhanced multi-party privacy-preserving record linkage using trusted execution environments",
+      "volume": "12",
+      "author": "Han",
+      "year": "",
+      "journal-title": "Mathematics"
+    },
+    {
+      "key": "B11",
+      "doi-asserted-by": "publisher",
+      "first-page": "1854",
+      "DOI": "10.3390/math12121854",
+      "article-title": "Parallel multi-party privacy-preserving record linkage method based on a consortium blockchain",
+      "volume": "12",
+      "author": "Han",
+      "year": "",
+      "journal-title": "Mathematics"
+    },
+    {
+      "key": "B12",
+      "doi-asserted-by": "crossref",
+      "unstructured": "Hassani\n              H.\n            \n            \n              Mashhad\n              L. M.\n            \n          \n          Pre Process Record Linkage: Preprocessing Record Linkage. Version 1.0.1. CRAN\n          \n          2023",
+      "DOI": "10.32614/CRAN.package.PreProcessRecordLinkage"
+    },
+    {
+      "key": "B13",
+      "doi-asserted-by": "publisher",
+      "first-page": "1916",
+      "DOI": "10.3390/children9121916",
+      "article-title": "Improving cohort-hospital matching accuracy through standardization and validation of participant identifiable information",
+      "volume": "9",
+      "author": "Hu",
+      "year": "2022",
+      "journal-title": "Children"
+    },
+    {
+      "key": "B14",
+      "doi-asserted-by": "publisher",
+      "first-page": "27",
+      "DOI": "10.1186/s40537-019-0192-5",
+      "article-title": "Survey on deep learning with class imbalance",
+      "volume": "6",
+      "author": "Johnson",
+      "year": "2019",
+      "journal-title": "J. Big Data"
+    },
+    {
+      "key": "B15",
+      "doi-asserted-by": "publisher",
+      "first-page": "8546",
+      "DOI": "10.3390/app11188546",
+      "article-title": "Selecting the suitable resampling strategy for imbalanced data classification regarding dataset properties. an approach based on association models",
+      "volume": "11",
+      "author": "Kraiem",
+      "year": "2021",
+      "journal-title": "Appl. Sci"
+    },
+    {
+      "key": "B16",
+      "doi-asserted-by": "publisher",
+      "first-page": "42",
+      "DOI": "10.1186/s40537-018-0151-6",
+      "article-title": "A survey on addressing high-class imbalance in big data",
+      "volume": "5",
+      "author": "Leevy",
+      "year": "2018",
+      "journal-title": "J. Big Data"
+    },
+    {
+      "key": "B17",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.5220/0010316501480153",
+      "article-title": "“Machine learning algorithms for predicting chronic obstructive pulmonary disease from gene expression data with class imbalance,”",
+      "author": "Mahmudah",
+      "year": "2021",
+      "journal-title": "Proceedings of the 14th International Joint Conference on Biomedical Engineering Systems and Technologies—BIOINFORMATICS, Online, 11–13 February"
+    },
+    {
+      "key": "B18",
+      "doi-asserted-by": "publisher",
+      "first-page": "427",
+      "DOI": "10.1016/j.neunet.2007.12.031",
+      "article-title": "Training neural network classifiers for medical decision making: the effects of imbalanced datasets on classification performance",
+      "volume": "21",
+      "author": "Mazurowski",
+      "year": "2008",
+      "journal-title": "Neural Netw"
+    },
+    {
+      "key": "B19",
+      "doi-asserted-by": "publisher",
+      "first-page": "38",
+      "DOI": "10.1145/3439950",
+      "article-title": "Deep learning for anomaly detection: a review",
+      "volume": "54",
+      "author": "Pang",
+      "year": "2021",
+      "journal-title": "ACM Comput. Surv"
+    },
+    {
+      "key": "B20",
+      "doi-asserted-by": "publisher",
+      "first-page": "973",
+      "DOI": "10.1109/TFUZZ.2014.2336263",
+      "article-title": "A compact evolutionary interval-valued fuzzy rule-based classification system for the modelling and prediction of real-world financial application with imbalanced data",
+      "volume": "23",
+      "author": "Sanz",
+      "year": "2015",
+      "journal-title": "IEEE Trans. Fuzzy Syst"
+    },
+    {
+      "key": "B21",
+      "doi-asserted-by": "publisher",
+      "first-page": "1709",
+      "DOI": "10.3390/math12111709",
+      "article-title": "Imbalanced data classification based on improved random-SMOTE and feature standard deviation",
+      "volume": "12",
+      "author": "Zhang",
+      "year": "2024",
+      "journal-title": "Mathematics"
+    },
+    {
+      "key": "B22",
+      "doi-asserted-by": "publisher",
+      "first-page": "9071",
+      "DOI": "10.3390/app14199071",
+      "article-title": "Imbalanced data parameter optimization of convolutional neural networks based on analysis of variance",
+      "volume": "14",
+      "author": "Zou",
+      "year": "2024",
+      "journal-title": "Appl. Sci"
+    }
+  ],
+  "container-title": [
+    "Frontiers in Big Data"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "https://www.frontiersin.org/articles/10.3389/fdata.2025.1542483/full",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2025,
+        4,
+        23
+      ]
+    ],
+    "date-time": "2025-04-23T05:21:49Z",
+    "timestamp": 1745385709000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "https://www.frontiersin.org/articles/10.3389/fdata.2025.1542483/full"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2025,
+        4,
+        23
+      ]
+    ]
+  },
+  "references-count": 22,
+  "alternative-id": [
+    "10.3389/fdata.2025.1542483"
+  ],
+  "URL": "https://doi.org/10.3389/fdata.2025.1542483",
+  "relation": {},
+  "ISSN": [
+    "2624-909X"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "2624-909X"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2025,
+        4,
+        23
+      ]
+    ]
+  },
+  "article-number": "1542483"
+}

@@ -1,0 +1,538 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2025,
+        2,
+        21
+      ]
+    ],
+    "date-time": "2025-02-21T17:06:49Z",
+    "timestamp": 1740157609744,
+    "version": "3.37.3"
+  },
+  "reference-count": 28,
+  "publisher": "Georg Thieme Verlag KG",
+  "issue": "03",
+  "funder": [
+    {
+      "DOI": "10.13039/100006093",
+      "name": "Patient-Centered Outcomes Research Institute",
+      "doi-asserted-by": "crossref",
+      "award": [
+        "ME-2017C1-6425"
+      ],
+      "award-info": [
+        {
+          "award-number": [
+            "ME-2017C1-6425"
+          ]
+        }
+      ],
+      "id": [
+        {
+          "id": "10.13039/100006093",
+          "id-type": "DOI",
+          "asserted-by": "crossref"
+        }
+      ]
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "Appl Clin Inform"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2024,
+        5
+      ]
+    ]
+  },
+  "abstract": "<jats:title>Abstract</jats:title><jats:p>\n          Objectives Patient data are fragmented across multiple repositories, yielding suboptimal and costly care. Record linkage algorithms are widely accepted solutions for improving completeness of patient records. However, studies often fail to fully describe their linkage techniques. Further, while many frameworks evaluate record linkage methods, few focus on producing gold standard datasets. This highlights a need to assess these frameworks and their real-world performance. We use real-world datasets and expand upon previous frameworks to evaluate a consistent approach to the manual review of gold standard datasets and measure its impact on algorithm performance.</jats:p><jats:p>\n          Methods We applied the framework, which includes elements for data description, reviewer training and adjudication, and software and reviewer descriptions, to four datasets. Record pairs were formed and between 15,000 and 16,500 records were randomly sampled from these pairs. After training, two reviewers determined match status for each record pair. If reviewers disagreed, a third reviewer was used for final adjudication.</jats:p><jats:p>\n          Results Between the four datasets, the percent discordant rate ranged from 1.8 to 13.6%. While reviewers' discordance rate typically ranged between 1 and 5%, one exhibited a 59% discordance rate, showing the importance of the third reviewer. The original analysis was compared with three sensitivity analyses. The original analysis most often exhibited the highest predictive values compared with the sensitivity analyses.</jats:p><jats:p>\n          Conclusion Reviewers vary in their assessment of a gold standard, which can lead to variances in estimates for matching performance. Our analysis demonstrates how a multireviewer process can be applied to create gold standards, identify reviewer discrepancies, and evaluate algorithm performance.</jats:p>",
+  "DOI": "10.1055/a-2291-1391",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2024,
+        3,
+        21
+      ]
+    ],
+    "date-time": "2024-03-21T00:25:11Z",
+    "timestamp": 1710980711000
+  },
+  "page": "620-628",
+  "source": "Crossref",
+  "is-referenced-by-count": 0,
+  "title": [
+    "Manual Evaluation of Record Linkage Algorithm Performance in Four Real-World Datasets"
+  ],
+  "prefix": "10.1055",
+  "volume": "15",
+  "author": [
+    {
+      "given": "Agrayan K.",
+      "family": "Gupta",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Indiana University School of Medicine, Indianapolis, Indiana, United States"
+        }
+      ]
+    },
+    {
+      "given": "Huiping",
+      "family": "Xu",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Biostatistics, Indiana University School of Medicine, Indianapolis, Indiana, United States"
+        }
+      ]
+    },
+    {
+      "given": "Xiaochun",
+      "family": "Li",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Department of Biostatistics, Indiana University School of Medicine, Indianapolis, Indiana, United States"
+        }
+      ]
+    },
+    {
+      "given": "Joshua R.",
+      "family": "Vest",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Center for Biomedical Informatics, Regenstrief Institute, Indianapolis, Indiana, United States"
+        },
+        {
+          "name": "Department of Health Policy and Management, Indiana University Richard M. Fairbanks School of Public Health, Indianapolis, Indiana, United States"
+        }
+      ]
+    },
+    {
+      "given": "Shaun J.",
+      "family": "Grannis",
+      "sequence": "additional",
+      "affiliation": [
+        {
+          "name": "Indiana University School of Medicine, Indianapolis, Indiana, United States"
+        },
+        {
+          "name": "Center for Biomedical Informatics, Regenstrief Institute, Indianapolis, Indiana, United States"
+        }
+      ]
+    }
+  ],
+  "member": "194",
+  "published-online": {
+    "date-parts": [
+      [
+        2024,
+        7,
+        31
+      ]
+    ]
+  },
+  "reference": [
+    {
+      "key": "ref1",
+      "first-page": "409",
+      "article-title": "All health care is not local: an evaluation of the distribution of emergency department care delivered in Indiana",
+      "volume": "2011",
+      "author": "J T Finnell",
+      "year": "2011",
+      "journal-title": "AMIA Ann Symp Proc"
+    },
+    {
+      "issue": "57",
+      "key": "ref3",
+      "doi-asserted-by": "crossref",
+      "first-page": "57cm29",
+      "DOI": "10.1126/scitranslmed.3001456",
+      "article-title": "Achieving a nationwide learning health system",
+      "volume": "2",
+      "author": "C P Friedman",
+      "year": "2010",
+      "journal-title": "Sci Transl Med"
+    },
+    {
+      "issue": "08",
+      "key": "ref4",
+      "first-page": "68",
+      "article-title": "Do you know who's who in your EHR?",
+      "volume": "63",
+      "author": "B H Just",
+      "year": "2009",
+      "journal-title": "Healthc Financ Manage"
+    },
+    {
+      "volume-title": "Summary of CHIME Survey on Patient Data-Matching",
+      "year": "2012",
+      "author": "College of Healthcare Information Management Executives",
+      "key": "ref5"
+    },
+    {
+      "key": "ref6",
+      "first-page": "527",
+      "article-title": "Potential value of health information exchange for people with epilepsy: crossover patterns and missing clinical data",
+      "volume": "2013",
+      "author": "Z M Grinspan",
+      "year": "2013",
+      "journal-title": "AMIA Annu Symp Proc"
+    },
+    {
+      "issue": "02",
+      "key": "ref7",
+      "doi-asserted-by": "crossref",
+      "first-page": "99",
+      "DOI": "10.1089/pop.2016.0021",
+      "article-title": "Patients' use of multiple hospitals in a major US city: implications for population management",
+      "volume": "20",
+      "author": "L M Kern",
+      "year": "2017",
+      "journal-title": "Popul Health Manag"
+    },
+    {
+      "key": "ref9",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.7249/RB9393",
+      "volume-title": "Identity crisis? Approaches to patient identification in a National Health Information Network",
+      "author": "R Hillestad",
+      "year": "2008"
+    },
+    {
+      "issue": "04",
+      "key": "ref10",
+      "doi-asserted-by": "crossref",
+      "first-page": "865",
+      "DOI": "10.1055/a-1910-4154",
+      "article-title": "Real-world matching performance of deidentified record-linking tokens",
+      "volume": "13",
+      "author": "E V Bernstam",
+      "year": "2022",
+      "journal-title": "Appl Clin Inform"
+    },
+    {
+      "issue": "05",
+      "key": "ref11",
+      "doi-asserted-by": "crossref",
+      "first-page": "725",
+      "DOI": "10.1055/s-0040-1718374",
+      "article-title": "Accuracy of an electronic health record patient linkage module evaluated between neighboring academic health care centers",
+      "volume": "11",
+      "author": "M K Ross",
+      "year": "2020",
+      "journal-title": "Appl Clin Inform"
+    },
+    {
+      "issue": "01",
+      "key": "ref14",
+      "doi-asserted-by": "crossref",
+      "first-page": "191",
+      "DOI": "10.1093/pubmed/fdx037",
+      "article-title": "GUILD: GUidance for Information about Linking Data sets",
+      "volume": "40",
+      "author": "R Gilbert",
+      "year": "2018",
+      "journal-title": "J Public Health (Oxf)"
+    },
+    {
+      "issue": "01",
+      "key": "ref15",
+      "doi-asserted-by": "crossref",
+      "first-page": "9",
+      "DOI": "10.1002/pds.4924",
+      "article-title": "Data linkage in pharmacoepidemiology: a call for rigorous evaluation and reporting",
+      "volume": "29",
+      "author": "N L Pratt",
+      "year": "2020",
+      "journal-title": "Pharmacoepidemiol Drug Saf"
+    },
+    {
+      "issue": "05",
+      "key": "ref17",
+      "doi-asserted-by": "crossref",
+      "first-page": "1699",
+      "DOI": "10.1093/ije/dyx177",
+      "article-title": "A guide to evaluating linkage quality for the analysis of linked data",
+      "volume": "46",
+      "author": "K L Harron",
+      "year": "2017",
+      "journal-title": "Int J Epidemiol"
+    },
+    {
+      "key": "ref18",
+      "first-page": "305",
+      "article-title": "Analysis of identifier performance using a deterministic linkage algorithm",
+      "author": "S J Grannis",
+      "year": "2002",
+      "journal-title": "Proc AMIA Symp"
+    },
+    {
+      "issue": "01",
+      "key": "ref19",
+      "doi-asserted-by": "crossref",
+      "first-page": "97",
+      "DOI": "10.1136/amiajnl-2013-001744",
+      "article-title": "A benchmark comparison of deterministic and probabilistic methods for defining manual review datasets in duplicate records reconciliation",
+      "volume": "21",
+      "author": "E Joffe",
+      "year": "2014",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "issue": "01",
+      "key": "ref20",
+      "doi-asserted-by": "crossref",
+      "first-page": "5",
+      "DOI": "10.1177/1460458208088855",
+      "article-title": "Record linkage software in the public domain: a comparison of Link Plus, The Link King, and a ‘basic’ deterministic algorithm",
+      "volume": "14",
+      "author": "K M Campbell",
+      "year": "2008",
+      "journal-title": "Health Informatics J"
+    },
+    {
+      "issue": "02",
+      "key": "ref21",
+      "doi-asserted-by": "crossref",
+      "first-page": "89",
+      "DOI": "10.1111/j.1752-7325.2012.00343.x",
+      "article-title": "Accuracy of record linkage software in merging dental administrative data sets",
+      "volume": "73",
+      "author": "H Beil",
+      "year": "2013",
+      "journal-title": "J Public Health Dent"
+    },
+    {
+      "issue": "01",
+      "key": "ref22",
+      "doi-asserted-by": "crossref",
+      "first-page": "129",
+      "DOI": "10.1007/s10994-013-5421-0",
+      "article-title": "Tracking people over time in 19th century Canada for longitudinal analysis",
+      "volume": "95",
+      "author": "L Antonie",
+      "year": "2014",
+      "journal-title": "Mach Learn"
+    },
+    {
+      "issue": "12",
+      "key": "ref23",
+      "doi-asserted-by": "crossref",
+      "first-page": "2105",
+      "DOI": "10.1093/jamia/ocac175",
+      "article-title": "A framework for a consistent and reproducible evaluation of manual review for patient matching algorithms",
+      "volume": "29",
+      "author": "A K Gupta",
+      "year": "2022",
+      "journal-title": "J Am Med Inform Assoc"
+    },
+    {
+      "issue": "05",
+      "key": "ref25",
+      "doi-asserted-by": "crossref",
+      "first-page": "1214",
+      "DOI": "10.1377/hlthaff.24.5.1214",
+      "article-title": "The Indiana Network for Patient Care: a working local health information infrastructure. An example of a working infrastructure collaboration that links data from five health systems and hundreds of millions of entries",
+      "volume": "24",
+      "author": "C J McDonald",
+      "year": "2005",
+      "journal-title": "Health Aff (Millwood)"
+    },
+    {
+      "issue": "01",
+      "key": "ref26",
+      "doi-asserted-by": "crossref",
+      "first-page": "82",
+      "DOI": "10.1055/s-0040-1722220",
+      "article-title": "Validating the matching of patients in the linkage of a large hospital system's EHR with state and national death databases",
+      "volume": "12",
+      "author": "R BN Conway",
+      "year": "2021",
+      "journal-title": "Appl Clin Inform"
+    },
+    {
+      "volume-title": "A Comparison of Blocking Methods for Record Linkage",
+      "year": "2014",
+      "key": "ref27"
+    },
+    {
+      "issue": "04",
+      "key": "ref28",
+      "first-page": "174",
+      "article-title": "Linkage of Indiana State Cancer Registry and Indiana Network for Patient Care data",
+      "volume": "43",
+      "author": "L P Ruppert",
+      "year": "2016",
+      "journal-title": "J Registry Manag"
+    },
+    {
+      "issue": "328",
+      "key": "ref31",
+      "doi-asserted-by": "crossref",
+      "first-page": "1183",
+      "DOI": "10.1080/01621459.1969.10501049",
+      "article-title": "A theory for record linkage",
+      "volume": "64",
+      "author": "I P Fellegi",
+      "year": "1969",
+      "journal-title": "J Am Stat Assoc"
+    },
+    {
+      "volume-title": "Studies in Success: Duplicate Records Compromise EHR Investment",
+      "year": "2015",
+      "key": "ref32"
+    },
+    {
+      "issue": "03",
+      "key": "ref34",
+      "doi-asserted-by": "crossref",
+      "first-page": "553",
+      "DOI": "10.1055/s-0038-1667000",
+      "article-title": "Simple workflow changes enable effective patient identity matching in poison control",
+      "volume": "9",
+      "author": "M R Cummins",
+      "year": "2018",
+      "journal-title": "Appl Clin Inform"
+    },
+    {
+      "key": "ref35",
+      "doi-asserted-by": "crossref",
+      "DOI": "10.1007/978-3-540-44918-8",
+      "volume-title": "Quality Measures in Data Mining",
+      "author": "F Guillet",
+      "year": "2007"
+    },
+    {
+      "issue": "05",
+      "key": "ref36",
+      "doi-asserted-by": "crossref",
+      "first-page": "752",
+      "DOI": "10.1016/j.amepre.2016.07.004",
+      "article-title": "Measuring preventive care delivery: comparing rates across three data sources",
+      "volume": "51",
+      "author": "S R Bailey",
+      "year": "2016",
+      "journal-title": "Am J Prev Med"
+    },
+    {
+      "issue": "19",
+      "key": "ref37",
+      "doi-asserted-by": "crossref",
+      "first-page": "2024",
+      "DOI": "10.1056/NEJMsa054479",
+      "article-title": "Claims, errors, and compensation payments in medical malpractice litigation",
+      "volume": "354",
+      "author": "D M Studdert",
+      "year": "2006",
+      "journal-title": "N Engl J Med"
+    }
+  ],
+  "container-title": [
+    "Applied Clinical Informatics"
+  ],
+  "original-title": [],
+  "language": "en",
+  "link": [
+    {
+      "URL": "http://www.thieme-connect.de/products/ejournals/pdf/10.1055/a-2291-1391.pdf",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2024,
+        11,
+        5
+      ]
+    ],
+    "date-time": "2024-11-05T12:44:54Z",
+    "timestamp": 1730810694000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://www.thieme-connect.de/DOI/DOI?10.1055/a-2291-1391"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2024,
+        3,
+        20
+      ]
+    ]
+  },
+  "references-count": 28,
+  "journal-issue": {
+    "issue": "03",
+    "published-online": {
+      "date-parts": [
+        [
+          2024,
+          5,
+          29
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2024,
+          5
+        ]
+      ]
+    }
+  },
+  "URL": "https://doi.org/10.1055/a-2291-1391",
+  "archive": [
+    "Portico",
+    "CLOCKSS"
+  ],
+  "relation": {},
+  "ISSN": [
+    "1869-0327"
+  ],
+  "issn-type": [
+    {
+      "type": "electronic",
+      "value": "1869-0327"
+    }
+  ],
+  "subject": [],
+  "published-other": {
+    "date-parts": [
+      [
+        2024,
+        3,
+        20
+      ]
+    ]
+  },
+  "published": {
+    "date-parts": [
+      [
+        2024,
+        3,
+        20
+      ]
+    ]
+  }
+}

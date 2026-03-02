@@ -1,0 +1,1144 @@
+{
+  "indexed": {
+    "date-parts": [
+      [
+        2026,
+        2,
+        7
+      ]
+    ],
+    "date-time": "2026-02-07T15:32:56Z",
+    "timestamp": 1770478376760,
+    "version": "3.49.0"
+  },
+  "reference-count": 145,
+  "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+  "issue": "9",
+  "license": [
+    {
+      "start": {
+        "date-parts": [
+          [
+            2009,
+            9,
+            1
+          ]
+        ],
+        "date-time": "2009-09-01T00:00:00Z",
+        "timestamp": 1251763200000
+      },
+      "content-version": "vor",
+      "delay-in-days": 0,
+      "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+    }
+  ],
+  "content-domain": {
+    "domain": [],
+    "crossmark-restriction": false
+  },
+  "short-container-title": [
+    "IEEE Trans. Knowl. Data Eng."
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2009,
+        9
+      ]
+    ]
+  },
+  "DOI": "10.1109/tkde.2008.239",
+  "type": "journal-article",
+  "created": {
+    "date-parts": [
+      [
+        2009,
+        7,
+        1
+      ]
+    ],
+    "date-time": "2009-07-01T14:14:14Z",
+    "timestamp": 1246457654000
+  },
+  "page": "1263-1284",
+  "source": "Crossref",
+  "is-referenced-by-count": 7289,
+  "title": [
+    "Learning from Imbalanced Data"
+  ],
+  "prefix": "10.1109",
+  "volume": "21",
+  "author": [
+    {
+      "family": "Haibo He",
+      "sequence": "first",
+      "affiliation": []
+    },
+    {
+      "given": "E.A.",
+      "family": "Garcia",
+      "sequence": "additional",
+      "affiliation": []
+    }
+  ],
+  "member": "263",
+  "reference": [
+    {
+      "key": "ref39",
+      "article-title": "C4.5, Class Imbalance, and Cost Sensitivity: Why Under Sampling Beats Over-Sampling",
+      "author": "drummond",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref38",
+      "first-page": "409",
+      "article-title": "Boosted Classification Trees and Class Probability/Quantile Estimation",
+      "volume": "8",
+      "author": "mease",
+      "year": "2007",
+      "journal-title": "J Machine Learning Research"
+    },
+    {
+      "key": "ref33",
+      "article-title": "C4.5 and Imbalanced Data Sets: Investigating the Effect of Sampling Method, Probabilistic Estimate, and Decision Tree Structure",
+      "author": "chawla",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref32",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2007.190720"
+    },
+    {
+      "key": "ref31",
+      "first-page": "51",
+      "article-title": "Learning from Imbalanced Data: Rank Metrics and Extra Tasks",
+      "author": "caruana",
+      "year": "2000",
+      "journal-title": "Proc Am Assoc for Artificial Intelligence (AAAI) Conf"
+    },
+    {
+      "key": "ref30",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/34.75512"
+    },
+    {
+      "key": "ref37",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1111/j.0824-7935.2004.t01-1-00228.x"
+    },
+    {
+      "key": "ref36",
+      "doi-asserted-by": "crossref",
+      "first-page": "63",
+      "DOI": "10.1007/3-540-48229-6_9",
+      "article-title": "Improving Identification of Difficult Small Classes by Balancing Class Distribution",
+      "author": "laurikkala",
+      "year": "2001",
+      "journal-title": "Proc Conf AI in Medicine in Europe Artificial Intelligence Medicine"
+    },
+    {
+      "key": "ref35",
+      "article-title": "The Effect of Class Distribution on Classifier Learning: An Empirical Study",
+      "author": "weiss",
+      "year": "2001"
+    },
+    {
+      "key": "ref34",
+      "author": "mitchell",
+      "year": "1997",
+      "journal-title": "Machine Learning"
+    },
+    {
+      "key": "ref28",
+      "article-title": "Class Imbalances: Are We Focusing on the Right Issue?",
+      "author": "japkowicz",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref27",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007737"
+    },
+    {
+      "key": "ref29",
+      "first-page": "312",
+      "article-title": "Class Imbalances versus Class Overlapping: An Analysis of a Learning System Behavior",
+      "author": "prati",
+      "year": "2004",
+      "journal-title": "Proc Mexican Conf Artif Intell"
+    },
+    {
+      "key": "ref20",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007734"
+    },
+    {
+      "key": "ref22",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007735"
+    },
+    {
+      "key": "ref21",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/0-387-25465-X_35"
+    },
+    {
+      "key": "ref24",
+      "doi-asserted-by": "crossref",
+      "first-page": "315",
+      "DOI": "10.1613/jair.1199",
+      "article-title": "Learning When Training Data Are Costly: The Effect of Class Distribution on Tree Induction",
+      "volume": "19",
+      "author": "weiss",
+      "year": "2003",
+      "journal-title": "J Artificial Intelligence Research"
+    },
+    {
+      "key": "ref23",
+      "doi-asserted-by": "crossref",
+      "first-page": "429",
+      "DOI": "10.3233/IDA-2002-6504",
+      "article-title": "The Class Imbalance Problem: A Systematic Study",
+      "volume": "6",
+      "author": "japkowicz",
+      "year": "2002",
+      "journal-title": "Intelligent Data Analysis"
+    },
+    {
+      "key": "ref26",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BF00116251"
+    },
+    {
+      "key": "ref101",
+      "first-page": "1579",
+      "article-title": "Fast Kernel Classifiers with Online and Active Learning",
+      "volume": "6",
+      "year": "2005",
+      "journal-title": "J Machine Learning Research"
+    },
+    {
+      "key": "ref25",
+      "first-page": "813",
+      "article-title": "Concept Learning and the Problem of Small Disjuncts",
+      "author": "holte",
+      "year": "1989",
+      "journal-title": "Proc Int&#x2019;l Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref100",
+      "article-title": "Machine Learning from Imbalanced Data Sets 101",
+      "author": "provost",
+      "year": "2000",
+      "journal-title": "Proc Learning from Imbalanced Data Sets Papers from the Am Assoc for Artificial Intelligence Workshop"
+    },
+    {
+      "key": "ref50",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2002.1000348"
+    },
+    {
+      "key": "ref51",
+      "article-title": "Learning When Data Sets Are Imbalanced and When Costs Are Unequal and Unknown",
+      "author": "maloof",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref59",
+      "first-page": "97",
+      "article-title": "AdaCost: Misclassification Cost-Sensitive Boosting",
+      "author": "fan",
+      "year": "1999",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref58",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.patcog.2007.04.009"
+    },
+    {
+      "key": "ref57",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1006/jcss.1997.1504"
+    },
+    {
+      "key": "ref56",
+      "first-page": "148",
+      "article-title": "Experiments with a New Boosting Algorithm",
+      "author": "freund",
+      "year": "1996",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref55",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICDM.2003.1250950"
+    },
+    {
+      "key": "ref54",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/312129.312220"
+    },
+    {
+      "key": "ref53",
+      "first-page": "970",
+      "article-title": "The Influence of Class Imbalance on Cost-Sensitive Learning: An Empirical Study",
+      "author": "liu",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Data Mining"
+    },
+    {
+      "key": "ref52",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1089827.1089836"
+    },
+    {
+      "key": "ref40",
+      "first-page": "965",
+      "article-title": "Exploratory Under Sampling for Class Imbalance Learning",
+      "author": "liu",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Data Mining"
+    },
+    {
+      "key": "ref4",
+      "first-page": "358",
+      "article-title": "A Ranked Subspace Learning Method for Gene Expression Data Classification",
+      "author": "he",
+      "year": "2007",
+      "journal-title": "Proc Int&#x2019;l Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref3",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007733"
+    },
+    {
+      "key": "ref6",
+      "article-title": "Imbalanced Clustering for Microarray Time-Series",
+      "author": "pearson",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref5",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1007452223027"
+    },
+    {
+      "key": "ref8",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1014052.1014056"
+    },
+    {
+      "key": "ref49",
+      "first-page": "973",
+      "article-title": "The Foundations of Cost-Sensitive Learning",
+      "author": "elkan",
+      "year": "2001",
+      "journal-title": "Proc Int Joint Artif Intell Conf"
+    },
+    {
+      "key": "ref7",
+      "first-page": "592",
+      "article-title": "Boosting for Learning Multiple Classes with Imbalanced Class Distribution",
+      "author": "sun",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Data Mining"
+    },
+    {
+      "key": "ref9",
+      "first-page": "1770",
+      "article-title": "Efficient Classification of Multi-Label and Imbalanced Data Using Min-Max Modular Classifiers",
+      "author": "chen",
+      "year": "2006",
+      "journal-title": "Proc World Congress on Computation Intelligence&#x2014;Int&#x2019;l Joint Conf Neural Networks"
+    },
+    {
+      "key": "ref46",
+      "doi-asserted-by": "crossref",
+      "first-page": "769",
+      "DOI": "10.1109/TSMC.1976.4309452",
+      "article-title": "Two Modifications of CNN",
+      "volume": "6",
+      "author": "tomek",
+      "year": "1976",
+      "journal-title": "IEEE Trans System Man Cybernetics"
+    },
+    {
+      "key": "ref45",
+      "first-page": "1322",
+      "article-title": "ADASYN: Adaptive Synthetic Sampling Approach for Imbalanced Learning",
+      "author": "he",
+      "year": "2008",
+      "journal-title": "Proc Int&#x2019;l J Conf Neural Networks"
+    },
+    {
+      "key": "ref48",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-540-24677-0_111"
+    },
+    {
+      "key": "ref47",
+      "first-page": "107",
+      "article-title": "SMOTEBoost: Improving Prediction of the Minority Class in Boosting",
+      "author": "chawla",
+      "year": "2003",
+      "journal-title": "Proc Seventh European Conf Principles and Practice of Knowledge Discovery in Databases"
+    },
+    {
+      "key": "ref42",
+      "first-page": "179",
+      "article-title": "Addressing the Curse of Imbalanced Training Sets: One-Sided Selection",
+      "author": "kubat",
+      "year": "1997",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref41",
+      "article-title": "KNN Approach to Unbalanced Data Distributions: A Case Study Involving Information Extraction",
+      "author": "zhang",
+      "year": "2003",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning (ICML &#x2019;2003) Workshop Learning from Imbalanced Data Sets"
+    },
+    {
+      "key": "ref44",
+      "first-page": "878",
+      "article-title": "Borderline-SMOTE: A New Over-Sampling Method in Imbalanced Data Sets Learning",
+      "author": "han",
+      "year": "2005",
+      "journal-title": "Proc Int&#x2019;l Conf Intelligent Computing"
+    },
+    {
+      "key": "ref43",
+      "article-title": "Imbalanced Data Set Learning with Synthetic Samples",
+      "author": "wang",
+      "year": "2004",
+      "journal-title": "Proc IRIS Machine Learning Workshop"
+    },
+    {
+      "key": "ref127",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICPR.2006.941"
+    },
+    {
+      "key": "ref126",
+      "first-page": "868",
+      "article-title": "Discriminative Training of Markov Logic Networks",
+      "author": "singla",
+      "year": "2005",
+      "journal-title": "Proc Int&#x2019;l Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref125",
+      "first-page": "677",
+      "article-title": "View Learning for Statistical Relational Learning: With an Application to Mammography",
+      "author": "davis",
+      "year": "2005",
+      "journal-title": "Proc Int Joint Artif Intell Conf"
+    },
+    {
+      "key": "ref124",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.artmed.2004.07.016"
+    },
+    {
+      "key": "ref73",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-1-4757-2440-0"
+    },
+    {
+      "key": "ref72",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/72.788642"
+    },
+    {
+      "key": "ref71",
+      "first-page": "185",
+      "article-title": "Fast Training of Support Vector Machines Using Sequential Minimal Optimization",
+      "author": "platt",
+      "year": "1999",
+      "journal-title": "Advances in Kernel Methods Support Vector Learning"
+    },
+    {
+      "key": "ref129",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1089827.1089843"
+    },
+    {
+      "key": "ref70",
+      "doi-asserted-by": "crossref",
+      "first-page": "68",
+      "DOI": "10.1007/3-540-45665-1_6",
+      "article-title": "Support Vector Machines with Embedded Reject Option",
+      "author": "fumera",
+      "year": "2002",
+      "journal-title": "Proc Int'l Workshop Pattern Recognition with Support Vector Machines"
+    },
+    {
+      "key": "ref128",
+      "doi-asserted-by": "crossref",
+      "first-page": "95",
+      "DOI": "10.1007/s10994-006-8199-5",
+      "article-title": "Cost Curves: An Improved Method for Visualizing Classifier Performance",
+      "volume": "65",
+      "author": "holte",
+      "year": "2006",
+      "journal-title": "Machine Learning"
+    },
+    {
+      "key": "ref76",
+      "article-title": "Class-Boundary Alignment for Imbalanced Data Set Learning",
+      "author": "wu",
+      "year": "2003",
+      "journal-title": "Proc Int&#x2019;l Conf Data Mining (ICDM &#x2019;03) Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref77",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/11552499_86"
+    },
+    {
+      "key": "ref130",
+      "first-page": "198",
+      "article-title": "Explicitly Representing Expected Cost: An Alternative to ROC Representation",
+      "author": "holte",
+      "year": "2000",
+      "journal-title": "Proc Int'l Conf Knowledge Discovery and Data Mining"
+    },
+    {
+      "key": "ref74",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007739"
+    },
+    {
+      "key": "ref75",
+      "doi-asserted-by": "crossref",
+      "first-page": "39",
+      "DOI": "10.1007/978-3-540-30115-8_7",
+      "article-title": "Applying Support Vector Machines to Imbalanced Data Sets",
+      "volume": "3201",
+      "author": "akbani",
+      "year": "2004",
+      "journal-title": "Lecture Notes in Computer Science"
+    },
+    {
+      "key": "ref133",
+      "year": "2009",
+      "journal-title": "NIST Scientific and Technical Databases"
+    },
+    {
+      "key": "ref134",
+      "doi-asserted-by": "crossref",
+      "first-page": "1727",
+      "DOI": "10.1109/TNN.2008.2001774",
+      "article-title": "IMORL: Incremental Multiple Objects Recognition Localization",
+      "volume": "19",
+      "author": "he",
+      "year": "2008",
+      "journal-title": "IEEE Trans Neural Networks"
+    },
+    {
+      "key": "ref78",
+      "doi-asserted-by": "crossref",
+      "first-page": "837",
+      "DOI": "10.1007/11893028_93",
+      "article-title": "EUS SVMs: Ensemble of Under sampled SVMs for Data Imbalance Problems",
+      "volume": "4232",
+      "author": "kang",
+      "year": "2006",
+      "journal-title": "Lecture Notes in Computer Science"
+    },
+    {
+      "key": "ref131",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1010920819831"
+    },
+    {
+      "key": "ref79",
+      "first-page": "107",
+      "article-title": "Boosting Prediction Accuracy on Imbalanced Data Sets with SVM Ensembles",
+      "volume": "3918",
+      "author": "liu",
+      "year": "2006",
+      "journal-title": "Lecture Notes in Artificial Intelligence"
+    },
+    {
+      "key": "ref132",
+      "year": "2009",
+      "journal-title": "UC Irvine Machine Learning Repository"
+    },
+    {
+      "key": "ref136",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/279943.279962"
+    },
+    {
+      "key": "ref135",
+      "article-title": "Semi-Supervised Learning Literature Survey",
+      "author": "zhu",
+      "year": "2007"
+    },
+    {
+      "key": "ref138",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ACVMOT.2005.107"
+    },
+    {
+      "key": "ref137",
+      "article-title": "The Role of Unlabeled Data in Supervised Learning",
+      "author": "mitchell",
+      "year": "1999",
+      "journal-title": "Proc Int Colloquium on Cognitive Science"
+    },
+    {
+      "key": "ref60",
+      "first-page": "983",
+      "article-title": "A Comparative Study of Cost-Sensitive Boosting Algorithms",
+      "author": "ting",
+      "year": "2000",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref139",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICME.2006.262823"
+    },
+    {
+      "key": "ref62",
+      "author": "breiman",
+      "year": "1984",
+      "journal-title": "Classification and Regression Trees"
+    },
+    {
+      "key": "ref61",
+      "first-page": "835",
+      "article-title": "Learning to Detect Rooftops in Aerial Images",
+      "author": "maloof",
+      "year": "1997",
+      "journal-title": "Proc Image Understanding Workshop"
+    },
+    {
+      "key": "ref63",
+      "first-page": "239",
+      "article-title": "Exploiting the Cost (In)Sensitivity of Decision Tree Splitting Criteria",
+      "author": "drummond",
+      "year": "2000",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref64",
+      "author": "haykin",
+      "year": "1999",
+      "journal-title": "Neural Networks A Comprehensive Foundation"
+    },
+    {
+      "key": "ref65",
+      "first-page": "445",
+      "article-title": "Cost-Sensitive Learning with Neural Networks",
+      "author": "kukar",
+      "year": "1998",
+      "journal-title": "Proc European Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref140",
+      "first-page": "368",
+      "article-title": "Semi-Supervised Support Vector Machines",
+      "author": "bennett",
+      "year": "1998",
+      "journal-title": "Proc Conf Neural Information Processing Systems"
+    },
+    {
+      "key": "ref66",
+      "first-page": "105",
+      "article-title": "Beyond Independence: Conditions for the Optimality of the Simple Bayesian Classifier",
+      "author": "domingos",
+      "year": "1996",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref141",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1148170.1148253"
+    },
+    {
+      "key": "ref67",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/BFb0095060"
+    },
+    {
+      "key": "ref142",
+      "first-page": "19",
+      "article-title": "Learning from Labeled and Unlabeled Data Using Graph Mincuts",
+      "author": "blum",
+      "year": "2001",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref68",
+      "article-title": "Bias Plus Variance Decomposition for Zero-One Loss Functions",
+      "author": "kohavi",
+      "year": "1996",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref143",
+      "first-page": "1633",
+      "article-title": "Semi-Supervised Learning on Directed Graphs",
+      "author": "zhou",
+      "year": "2004",
+      "journal-title": "Proc Conf Neural Information Processing Systems"
+    },
+    {
+      "key": "ref69",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/S0304-3975(02)00179-2"
+    },
+    {
+      "key": "ref2",
+      "article-title": "Workshop Learning from Imbalanced Data Sets II",
+      "author": "chawla",
+      "year": "2003",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref144",
+      "first-page": "764",
+      "article-title": "A Hybrid Generative/Discriminative Approach to Semi-Supervised Classifier Design",
+      "author": "fujino",
+      "year": "2005",
+      "journal-title": "Proc Int&#x2019;l Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref1",
+      "article-title": "Learning from Imbalanced Data Sets",
+      "author": "japkowicz",
+      "year": "2000",
+      "journal-title": "Proc Am Assoc for Artificial Intelligence (AAAI) Workshop"
+    },
+    {
+      "key": "ref145",
+      "first-page": "571",
+      "article-title": "A Mixture of Experts Classifier with Learning Based on Both Labeled and Unlabelled Data",
+      "author": "miller",
+      "year": "1996",
+      "journal-title": "Proc Ann Conf Neural Information Processing Systems"
+    },
+    {
+      "key": "ref109",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1023/A:1007660820062"
+    },
+    {
+      "key": "ref95",
+      "first-page": "1108",
+      "article-title": "Hybrid Kernel Machine Ensemble for Imbalanced Data Sets",
+      "author": "li",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Pattern Recognition"
+    },
+    {
+      "key": "ref108",
+      "first-page": "434",
+      "article-title": "Parameter Optimization of Kernel-Based One-Class Classifier on Imbalance Text Learning",
+      "volume": "4099",
+      "author": "zhuang",
+      "year": "2006",
+      "journal-title": "Lecture Notes in Artificial Intelligence"
+    },
+    {
+      "key": "ref94",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICMLC.2007.4370740"
+    },
+    {
+      "key": "ref107",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/11893257_3"
+    },
+    {
+      "key": "ref93",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICPR.2004.1333848"
+    },
+    {
+      "key": "ref106",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/11766247_46"
+    },
+    {
+      "key": "ref92",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1180639.1180729"
+    },
+    {
+      "key": "ref105",
+      "first-page": "139",
+      "article-title": "One-Class SVMs for Document Classification",
+      "volume": "2",
+      "author": "manevitz",
+      "year": "2001",
+      "journal-title": "J Machine Learning Research"
+    },
+    {
+      "key": "ref91",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/s10994-005-0463-6"
+    },
+    {
+      "key": "ref104",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1162/089976601750264965"
+    },
+    {
+      "key": "ref90",
+      "first-page": "1704",
+      "article-title": "Total Margin Based Adaptive Fuzzy Support Vector Machines for Multiview Face Recognition",
+      "author": "liu",
+      "year": "2005",
+      "journal-title": "Proc Int Conf Systems Man and Cybernetics"
+    },
+    {
+      "key": "ref103",
+      "doi-asserted-by": "crossref",
+      "first-page": "266",
+      "DOI": "10.1007/978-3-540-78671-9_23",
+      "article-title": "GP Classification under Imbalanced Data Sets: Active Sub-Sampling AUC Approximation",
+      "volume": "4971",
+      "author": "doucette",
+      "year": "2008",
+      "journal-title": "Lecture Notes in Computer Science"
+    },
+    {
+      "key": "ref102",
+      "first-page": "783",
+      "article-title": "Active Learning for Word Sense Disambiguation with Methods for Addressing the Class Imbalance Problem",
+      "author": "zhu",
+      "year": "2007",
+      "journal-title": "Proc Joint Conf Empirical Methods in Natural Language Processing and Computational Natural Language Learning"
+    },
+    {
+      "key": "ref111",
+      "first-page": "10",
+      "article-title": "Learning from Imbalanced Data Sets: A Comparison of Various Strategies",
+      "author": "japkowicz",
+      "year": "2000",
+      "journal-title": "Proc Am Assoc for Artificial Intelligence (AAAI) Workshop Learning from Imbalanced Data Sets"
+    },
+    {
+      "key": "ref112",
+      "first-page": "518",
+      "article-title": "A Novelty Detection Approach to Classification",
+      "author": "japkowicz",
+      "year": "1995",
+      "journal-title": "Proc Joint Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref110",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.neucom.2006.05.013"
+    },
+    {
+      "key": "ref98",
+      "first-page": "127",
+      "article-title": "Learning on the Border: Active Learning in Imbalanced Data Classification",
+      "author": "ertekin",
+      "year": "2007",
+      "journal-title": "Proc ACM Conf Information and Knowledge Management"
+    },
+    {
+      "key": "ref99",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1277741.1277927"
+    },
+    {
+      "key": "ref96",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICNC.2007.287"
+    },
+    {
+      "key": "ref97",
+      "article-title": "Invited Talk: Sampling Approaches to Learning from Imbalanced Data Sets: Active Learning, Cost Sensitive Learning and Deyond",
+      "author": "abe",
+      "year": "2003",
+      "journal-title": "Proc Int'l Conf Machine Learning Workshop Learning from Imbalanced Data Sets II"
+    },
+    {
+      "key": "ref10",
+      "first-page": "567",
+      "article-title": "On Multi-Class Cost-Sensitive Learning",
+      "author": "zhou",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Artificial Intelligence"
+    },
+    {
+      "key": "ref11",
+      "doi-asserted-by": "crossref",
+      "first-page": "63",
+      "DOI": "10.1109/TKDE.2006.17",
+      "article-title": "Training Cost-Sensitive Neural Networks with Methods Addressing the Class Imbalance Problem",
+      "volume": "18",
+      "author": "liu",
+      "year": "2006",
+      "journal-title": "IEEE Trans Knowledge and Data Eng"
+    },
+    {
+      "key": "ref12",
+      "first-page": "206",
+      "article-title": "Multi-Class Protein Fold Classification Using a New Ensemble Machine Learning Approach",
+      "volume": "14",
+      "author": "tan",
+      "year": "2003",
+      "journal-title": "Genome Informatics"
+    },
+    {
+      "key": "ref13",
+      "doi-asserted-by": "crossref",
+      "first-page": "321",
+      "DOI": "10.1613/jair.953",
+      "article-title": "SMOTE: Synthetic Minority Over-Sampling Technique",
+      "volume": "16",
+      "author": "chawla",
+      "year": "2002",
+      "journal-title": "J Artificial Intelligence Research"
+    },
+    {
+      "key": "ref14",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1007730.1007736"
+    },
+    {
+      "key": "ref15",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1142/S0218001493000698"
+    },
+    {
+      "key": "ref82",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.artmed.2005.02.003"
+    },
+    {
+      "key": "ref118",
+      "first-page": "445",
+      "article-title": "The Case against Accuracy Estimation for Comparing Induction Algorithms",
+      "author": "provost",
+      "year": "1998",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    },
+    {
+      "key": "ref16",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1147234.1147236"
+    },
+    {
+      "key": "ref81",
+      "first-page": "457",
+      "article-title": "Granular SVM with Repetitive Undersampling for Highly Imbalanced Protein Homology Prediction",
+      "author": "tang",
+      "year": "2006",
+      "journal-title": "Proc Int&#x2019;l Conf Granular Computing"
+    },
+    {
+      "key": "ref117",
+      "first-page": "43",
+      "article-title": "Analysis and Visualization of Classifier Performance: Comparison under Imprecise Class and Cost Distributions",
+      "author": "provost",
+      "year": "1997",
+      "journal-title": "Proc Int'l Conf Knowledge Discovery and Data Mining"
+    },
+    {
+      "key": "ref17",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/5254.809570"
+    },
+    {
+      "key": "ref84",
+      "first-page": "290",
+      "article-title": "Granular SVM-RFE Feature Selection Algorithm for Reliable Cancer-Related Gene Subsets Extraction on Microarray Gene Expression Data",
+      "author": "tang",
+      "year": "2005",
+      "journal-title": "Proc 2nd IEEE Bioinformatics Bioeng Symp"
+    },
+    {
+      "key": "ref18",
+      "doi-asserted-by": "crossref",
+      "first-page": "50",
+      "DOI": "10.1145/1007730.1007738",
+      "article-title": "Minority Report in Fraud Detection: Classification of Skewed Data",
+      "volume": "6",
+      "author": "clifton",
+      "year": "2004",
+      "journal-title": "ACM SIGKDD Explorations Newsletter"
+    },
+    {
+      "key": "ref83",
+      "doi-asserted-by": "crossref",
+      "first-page": "138",
+      "DOI": "10.1109/FUZZY.2005.1452382",
+      "article-title": "Granular Support Vector Machines Using Linear Decision Hyperplanes for Fast Medical Binary Classification",
+      "author": "tang",
+      "year": "2005",
+      "journal-title": "Proc Int&#x2019;l Conf Fuzzy Systems"
+    },
+    {
+      "key": "ref119",
+      "article-title": "ROC Graphs: Notes and Practical Considerations for Data Mining Researchers",
+      "author": "fawcett",
+      "year": "2003"
+    },
+    {
+      "key": "ref19",
+      "first-page": "164",
+      "article-title": "Toward Scalable Learning with Non-Uniform Class and Cost Distributions",
+      "author": "chan",
+      "year": "1998",
+      "journal-title": "Proc Int'l Conf Knowledge Discovery and Data Mining"
+    },
+    {
+      "key": "ref114",
+      "author": "taguchi",
+      "year": "2001",
+      "journal-title": "The Mahalanobis-Taguchi System"
+    },
+    {
+      "key": "ref113",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2007.190623"
+    },
+    {
+      "key": "ref80",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1007/978-3-540-68123-6_4"
+    },
+    {
+      "key": "ref116",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICDM.2001.989527"
+    },
+    {
+      "key": "ref115",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1002/9780470172247"
+    },
+    {
+      "key": "ref89",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TNN.2006.883013"
+    },
+    {
+      "key": "ref120",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1016/j.patrec.2005.10.010"
+    },
+    {
+      "key": "ref121",
+      "article-title": "Well-Trained Pets: Improving Probability Estimation Trees",
+      "author": "provost",
+      "year": "2000"
+    },
+    {
+      "key": "ref122",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/ICDM.2001.989510"
+    },
+    {
+      "key": "ref123",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1145/1143844.1143874"
+    },
+    {
+      "key": "ref85",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TNN.2006.882812"
+    },
+    {
+      "key": "ref86",
+      "first-page": "265",
+      "article-title": "Aligning Boundary in Kernel Space for Learning Imbalanced Data Set",
+      "author": "wu",
+      "year": "2004",
+      "journal-title": "Proc Int&#x2019;l Conf Data Mining"
+    },
+    {
+      "key": "ref87",
+      "doi-asserted-by": "publisher",
+      "DOI": "10.1109/TKDE.2005.95"
+    },
+    {
+      "key": "ref88",
+      "first-page": "816",
+      "article-title": "Adaptive Feature-Space Conformal Transformation for Imbalanced-Data Learning",
+      "author": "wu",
+      "year": "2003",
+      "journal-title": "Proc Int&#x2019;l Conf Machine Learning"
+    }
+  ],
+  "container-title": [
+    "IEEE Transactions on Knowledge and Data Engineering"
+  ],
+  "original-title": [],
+  "link": [
+    {
+      "URL": "http://xplorestaging.ieee.org/ielx5/69/5173046/05128907.pdf?arnumber=5128907",
+      "content-type": "unspecified",
+      "content-version": "vor",
+      "intended-application": "similarity-checking"
+    }
+  ],
+  "deposited": {
+    "date-parts": [
+      [
+        2022,
+        1,
+        12
+      ]
+    ],
+    "date-time": "2022-01-12T16:34:33Z",
+    "timestamp": 1642005273000
+  },
+  "score": 1,
+  "resource": {
+    "primary": {
+      "URL": "http://ieeexplore.ieee.org/document/5128907/"
+    }
+  },
+  "subtitle": [],
+  "short-title": [],
+  "issued": {
+    "date-parts": [
+      [
+        2009,
+        9
+      ]
+    ]
+  },
+  "references-count": 145,
+  "journal-issue": {
+    "issue": "9"
+  },
+  "URL": "https://doi.org/10.1109/tkde.2008.239",
+  "relation": {},
+  "ISSN": [
+    "1041-4347"
+  ],
+  "issn-type": [
+    {
+      "value": "1041-4347",
+      "type": "print"
+    }
+  ],
+  "subject": [],
+  "published": {
+    "date-parts": [
+      [
+        2009,
+        9
+      ]
+    ]
+  }
+}
