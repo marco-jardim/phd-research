@@ -230,6 +230,36 @@ A interpretação conjunta desses resultados aponta para um padrão coerente: as
 Quando um subgrupo concentra maior prevalência de correspondências reais (como ocorre no quartil Q4 de concordância de nome ou na origem tuberculosa), o VPP eleva-se mecanicamente, mesmo que a TVP permaneça homogênea.
 A quase ausência de rejeições na TVP sustenta essa leitura, indicando que o classificador detecta pares verdadeiros com probabilidade similar independentemente do subgrupo, porém a proporção de falsos positivos varia conforme a composição do estrato avaliado.
 
+\section{Impacto epidemiológico e custo operacional}
+\label{sec:cap5-impacto-epidemiologico}
+
+As Tabelas~\ref{tab:impacto-epidemiologico} e \ref{tab:perfil-recuperados} e as Figuras~\ref{fig:epi-deteccao} a \ref{fig:epi-custo} apresentam o impacto epidemiológico e o custo operacional do pós-processamento supervisionado em relação ao limiar ingênuo $\geq 8$ do escore do \textit{linkage} probabilístico.
+
+\input{tables/tab_impacto_epidemiologico.tex}
+
+\input{tables/tab_perfil_recuperados.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_deteccao.pgf}
+\caption{Pares verdadeiros detectados e perdidos por método de classificação.}
+\label{fig:epi-deteccao}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_revisoes.pgf}
+\caption{Volume total de pares encaminhados para revisão manual por método.}
+\label{fig:epi-revisoes}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_custo.pgf}
+\caption{Custo operacional: número de revisões manuais por par verdadeiro recuperado.}
+\label{fig:epi-custo}
+\end{figure}
+
 \section{Síntese e recomendações operacionais}
 \label{sec:cap5-sintese}
 
@@ -238,6 +268,6 @@ Em conjunto, os resultados convergem para três achados centrais. Primeiro, deci
 A recomendação operacional decorrente é a adoção de dois \textit{pipelines} complementares: (i) um \textit{pipeline} orientado à vigilância, com configuração ML-only ou Hybrid-OR e limiares permissivos, para priorizar a detecção do maior número de óbitos associados à tuberculose; e (ii) um \textit{pipeline} orientado à investigação, com configurações Hybrid-AND ou consenso e limiares restritivos, para minimizar revisões desnecessárias em contextos de recursos limitados. A análise interpretável via SHAP reforça a importância de campos frequentemente negligenciados (nome da mãe) na resolução da zona cinzenta e destaca a necessidade de políticas de qualidade de dados nas bases de saúde como pré-condição para a eficácia do pós-processamento.
 
 Somam-se a esses achados três extensões complementares. A primeira é a comparação com classificadores de aprendizado profundo (Seção~\ref{sec:qw1-deep-learning}), que confirmou a superioridade empírica do XGBoost sobre alternativas neurais, incluindo o TabNet, cujo $F_1$ no \textit{holdout} ($0{,}610$) ficou substancialmente abaixo do obtido por \textit{gradient boosting} ($0{,}920$). A segunda é a revisão assistida por LLM (Seção~\ref{sec:cap5-qw2-llm}), que demonstrou o potencial desses modelos como revisores na camada de decisão residual, com desempenho mais expressivo no modo confirmação ($F_1 = 0{,}933$) do que no modo vigilância ($F_1 = 0{,}791$), padrão coerente com a prevalência distinta de pares verdadeiros em cada estrato. A terceira é a análise de equidade (Seção~\ref{sec:cap5-qw3-fairness}), na qual a taxa de verdadeiros positivos se manteve homogênea entre subgrupos, enquanto as disparidades de valor preditivo positivo refletiram diferenças de prevalência subjacentes, e não viés discriminatório do modelo.
-A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada no Capítulo~\ref{cap:discussao}.
+A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada nas Considerações Finais (Capítulo~\ref{cap:discussao}).
 
 \end{chapter}
