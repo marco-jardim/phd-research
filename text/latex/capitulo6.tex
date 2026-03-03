@@ -72,7 +72,7 @@ O resultado mais restritivo (regras com limiar alto) produz precisão próxima d
 \section{Estudo de ablação e fronteira de Pareto}
 \label{sec:cap5-ablacao-pareto}
 
-Para isolar a contribuição de cada componente do \textit{framework}, foi conduzido um estudo de ablação (\textit{ablation study}) abrangente com 70 configurações, organizadas em nove categorias de decisão: limiar ingênuo por escore, regras apenas, aprendizado de máquina apenas (ML-only), híbridos do tipo AND (interseção), híbridos do tipo OR (união), cascatas ML$\rightarrow$Regras e Regras$\rightarrow$ML, consenso entre modelos e consenso combinado com regras. A Tabela~\ref{tab:ablation-best-category} consolida a melhor configuração por categoria e a Tabela~\ref{tab:ablation-top10} lista as dez melhores segundo $F_1$.
+Para isolar a contribuição de cada componente do \textit{framework}, foi conduzido um estudo de ablação (\textit{ablation study}) abrangente com 70 configurações, organizadas em nove categorias de decisão: limiar ingênuo por escore, regras apenas, aprendizado de máquina apenas (ML-only), híbridos do tipo AND (interseção), híbridos do tipo OR (união), cascatas ML$\rightarrow$Regras e Regras$\rightarrow$ML, consenso entre modelos e consenso combinado com regras. As regras determinísticas utilizadas consistem em um escore composto por sete critérios aditivos derivados dos subescores do comparador (cf.\ Seção~\ref{sec:comparador-registros}): concordância quase perfeita do nome ($\geq 0{,}95$, +3{,}0 pontos), data de nascimento exata (+3{,}0), concordância forte do nome da mãe ($\geq 0{,}70$, +2{,}0), município idêntico (+1{,}5), endereço concordante (+1{,}0), nota final do comparador $\geq 9$ (+2{,}0) e nota final $\geq 8$ (+1{,}0); o escore de regras de cada par é a soma dos pontos atribuídos. A Tabela~\ref{tab:ablation-best-category} consolida a melhor configuração por categoria e a Tabela~\ref{tab:ablation-top10} lista as dez melhores segundo $F_1$.
 
 \input{tables/tab_ablation_best_category.tex}
 
@@ -114,7 +114,7 @@ A robustez (\textit{robustness}) das principais configurações foi avaliada por
 \begin{figure}[!ht]
 \centering
 \resizebox{0.96\textwidth}{!}{\input{fig_doc/cv_boxplots_v2.pgf}}
-\caption{Distribuição do F1 por configuração na validação cruzada (5-\textit{fold}).}
+\caption{Distribuição do $F_1$ por configuração na validação cruzada (5-\textit{fold}). Caixas representam mediana e intervalo interquartil (IIQ); bigodes estendem-se até 1{,}5~$\times$~IIQ; pontos individuais correspondem ao $F_1$ de cada partição.}
 \label{fig:cv-boxplots}
 \end{figure}
 
@@ -130,7 +130,7 @@ Para avaliar a dependência dos resultados em relação ao tratamento do desbala
 \begin{figure}[!ht]
 \centering
 \resizebox{0.92\textwidth}{!}{\input{fig_doc/imbalance_sensitivity.pgf}}
-\caption{Sensibilidade do desempenho (F1) do classificador a diferentes estratégias de reamostragem para desbalanceamento.}
+\caption{Sensibilidade do desempenho ($F_1$) do classificador a diferentes estratégias de reamostragem para desbalanceamento. Barras representam o $F_1$ médio das 5 partições da validação cruzada; bigodes indicam $\pm$\,1 desvio-padrão.}
 \label{fig:imbalance-sensitivity}
 \end{figure}
 
@@ -158,7 +158,7 @@ A comparação da importância SHAP entre o XGBoost e a Floresta Aleatória reve
 \begin{figure}[!ht]
 \centering
 \resizebox{0.92\textwidth}{!}{\input{fig_doc/feature_importance_heatmap.pgf}}
-\caption{Importância dos atributos por faixa de escore, com destaque para mudanças de relevância na zona cinzenta.}
+\caption{Importância dos atributos por faixa de escore, com destaque para mudanças de relevância na zona cinzenta. \texttt{score\_recall} é o escore agregado ponderado da estratégia de máxima sensibilidade (cf.\ Seção~\ref{sec:estrategia-recall}), calculado como combinação linear dos subescores do comparador com pesos proporcionais à relevância discriminante de cada campo (nome: 3{,}0; data de nascimento: 2{,}5; nome da mãe: 1{,}5; município: 1{,}0; endereço: 0{,}5).}
 \label{fig:feature-importance-heatmap}
 \end{figure}
 
