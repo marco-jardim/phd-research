@@ -42,12 +42,12 @@ A construção do vetor de atributos (29 subescores, escore agregado, passo de b
 \section{Análise comparativa de técnicas (NB01)}
 \label{sec:cap5-nb01}
 
-No cenário de análise comparativa, sete modelos foram avaliados com limiar de decisão (\textit{threshold}) padrão de 0,5, de forma a estabelecer um panorama inicial de desempenho sob desbalanceamento severo. A Figura~\ref{fig:nb01-model-comparison} sintetiza os resultados em precisão, sensibilidade e $F_1$.
+No cenário NB01, sigla utilizada para designar o \textit{Notebook} 01 da etapa de análise comparativa inicial\footnote{Disponível em: \url{https://github.com/marco-jardim/phd-research/blob/main/notebooks/01_analise_comparativa_tecnicas.ipynb} \cite{Jardim2026phdrepo}.}, sete modelos foram avaliados com limiar de decisão de 0,5 aplicado à probabilidade predita de um par candidato pertencer à classe de par verdadeiro. Assim, pares com probabilidade estimada $\geq 0{,}5$ foram classificados como positivos. Esse limiar foi adotado como referência metodológica inicial para comparação padronizada entre modelos sob desbalanceamento severo, enquanto os limiares operacionais foram ajustados empiricamente nas estratégias subsequentes de sensibilidade e precisão (Seções~\ref{sec:cap5-nb02} e~\ref{sec:cap5-nb03}). A Figura~\ref{fig:nb01-model-comparison} sintetiza os resultados em precisão, sensibilidade e $F_1$.
 
 \begin{figure}[!ht]
 \centering
 \resizebox{\textwidth}{!}{\input{fig_doc/nb01_model_comparison.pgf}}
-\caption{Comparação de desempenho (precisão, sensibilidade e F1) entre modelos no cenário NB01, com limiar de decisão padrão.}
+\caption{Comparação de desempenho (precisão, sensibilidade e F1) entre modelos no cenário NB01, com limiar de 0,5 aplicado à probabilidade predita de pareamento verdadeiro.}
 \label{fig:nb01-model-comparison}
 \end{figure}
 
@@ -56,14 +56,14 @@ A combinação Random Forest com reamostragem SMOTE (RF+SMOTE) e o Gradient Boos
 \section{Estratégia de maximização da sensibilidade (NB02)}
 \label{sec:cap5-nb02}
 
-No cenário de maximização da sensibilidade (cf.\ Seção~\ref{sec:estrategia-recall}), o objetivo foi reduzir ao máximo a perda de pares verdadeiros, aceitando maior carga de revisão manual. Entre as configurações testadas, o modelo Gradient Boosting com SMOTE e pesos de classe atingiu sensibilidade de 0,932 com precisão de 0,885, demonstrando que a engenharia de atributos complementar ao escore agregado permite obter sensibilidade elevada sem degradação extrema da precisão.
+No cenário de maximização da sensibilidade\footnote{Disponível em: \url{https://github.com/marco-jardim/phd-research/blob/main/notebooks/02_estrategia_maximo_recall.ipynb} \cite{Jardim2026phdrepo}.} (cf.\ Seção~\ref{sec:estrategia-recall}), o objetivo foi reduzir ao máximo a perda de pares verdadeiros, aceitando maior carga de revisão manual. Entre as configurações testadas, o modelo Gradient Boosting com SMOTE e pesos de classe atingiu sensibilidade de 0,932 com precisão de 0,885, demonstrando que a engenharia de atributos complementar ao escore agregado permite obter sensibilidade elevada sem degradação extrema da precisão.
 
 Configurações extremamente permissivas (\textit{ensemble} com limiar baixo) atingem sensibilidade próxima de 1,0, porém impõem custos operacionais desproporcionais, reforçando a necessidade de selecionar o ponto operacional com base em restrições reais de capacidade de revisão.
 
 \section{Estratégia de maximização da precisão (NB03)}
 \label{sec:cap5-nb03}
 
-No cenário de maximização da precisão (\textit{precision}), o propósito foi gerar listas de candidatos de alta confiança para investigação, minimizando falsos positivos. Foram comparadas três abordagens: (i) regras determinísticas baseadas em concordância forte de atributos-chave (nome perfeito, data de nascimento exata, nome da mãe concordante), (ii) consenso por unanimidade entre modelos de aprendizado de máquina e (iii) um classificador híbrido que combina a probabilidade estimada pelo modelo supervisionado com a pontuação de regras determinísticas.
+No cenário de maximização da precisão\footnote{Disponível em: \url{https://github.com/marco-jardim/phd-research/blob/main/notebooks/03_estrategia_maxima_precisao.ipynb} \cite{Jardim2026phdrepo}.} (\textit{precision}), o propósito foi gerar listas de candidatos de alta confiança para investigação, minimizando falsos positivos. Foram comparadas três abordagens: (i) regras determinísticas baseadas em concordância forte de atributos-chave (nome perfeito, data de nascimento exata, nome da mãe concordante), (ii) consenso por unanimidade entre modelos de aprendizado de máquina e (iii) um classificador híbrido que combina a probabilidade estimada pelo modelo supervisionado com a pontuação de regras determinísticas.
 
 O resultado mais restritivo (regras com limiar alto) produz precisão próxima de 1,0, porém com sensibilidade limitada, aceitável apenas em contextos de auditoria ou validação amostral. O consenso entre múltiplos modelos eleva a sensibilidade mantendo precisão alta, ao exigir concordância majoritária em vez de unanimidade. A configuração híbrida permite parametrizar o equilíbrio precisão/sensibilidade por meio de dois limiares independentes (probabilidade do classificador e escore das regras), conferindo ao operador controle explícito sobre o ponto operacional. Essa flexibilidade motivou a formalização do \textit{framework} híbrido e o estudo de ablação a seguir, cujo objetivo é quantificar a contribuição marginal de cada componente.
 
