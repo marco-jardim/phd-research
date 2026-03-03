@@ -1,4 +1,4 @@
-\begin{chapter}{Discussão}
+\begin{chapter}{Considerações Finais}
 \label{cap:discussao}
 
 Os achados apresentados no Capítulo \ref{cap:resultados} são discutidos a seguir, à luz da literatura sobre \textit{linkage} probabilístico, aprendizado de máquina em saúde e vigilância da tuberculose no Brasil. A discussão organiza-se em sete eixos: impacto epidemiológico da recuperação de óbitos na zona cinzenta; racionalidade operacional dos dois \textit{pipelines} propostos; comparação entre famílias de classificadores; alcance e limites da revisão por modelo de linguagem; equidade do classificador entre subgrupos populacionais; contribuição do \textit{framework} em relação ao uso isolado de classificadores; e limitações do estudo e possibilidades de generalização.
@@ -10,34 +10,9 @@ A subestimação de óbitos por tuberculose constitui problema recorrente nos si
 
 Os resultados obtidos neste estudo quantificam esse impacto com precisão operacional. A configuração RF+SMOTE (limiar 0,5) recuperou 24 óbitos adicionais em relação ao limiar ingênuo $\geq 8$ do escore agregado, o que representa incremento de 55,8\% na detecção de pares verdadeiros no conjunto de teste (Tabela \ref{tab:impacto-epidemiologico}). Esses valores podem ser interpretados como estimativa conservadora, na medida em que a comparação subsequente entre famílias de classificadores identificou o XGBoost como alternativa com desempenho equivalente ou marginalmente superior (Seção~\ref{sec:qw1-deep-learning}). Esse ganho não é marginal: cada óbito não vinculado ao registro de notificação impede a correção do desfecho na ficha do Sinan, comprometendo o cálculo de indicadores como a taxa de mortalidade entre casos notificados e a proporção de encerramentos por óbito \cite{Lima2020tbquality, Oliveira2019early}.
 
-\input{tables/tab_impacto_epidemiologico.tex}
+O custo operacional reforça a vantagem do pós-processamento supervisionado. A razão de revisões por par verdadeiro recuperado situou-se em aproximadamente 1,0 para RF+SMOTE, contra 1,6 para o limiar ingênuo $\geq 8$, indicando que o modelo de aprendizado de máquina concentra a revisão manual em candidatos com maior probabilidade de serem pares verdadeiros (Tabela \ref{tab:impacto-epidemiologico}, Figuras \ref{fig:epi-deteccao} a \ref{fig:epi-custo}). Essa eficiência é particularmente relevante em contextos municipais, onde a capacidade de revisão clerical é limitada e o custo de oportunidade de cada registro avaliado erroneamente é alto \cite{Coeli2021suboptimal}.
 
-O custo operacional reforça a vantagem do pós-processamento supervisionado. A razão de revisões por par verdadeiro recuperado situou-se em aproximadamente 1,0 para RF+SMOTE, contra 1,6 para o limiar ingênuo $\geq 8$, indicando que o modelo de aprendizado de máquina concentra a revisão manual em candidatos com maior probabilidade de serem pares verdadeiros. Essa eficiência é particularmente relevante em contextos municipais, onde a capacidade de revisão clerical é limitada e o custo de oportunidade de cada registro avaliado erroneamente é alto \cite{Coeli2021suboptimal}.
-
-A distribuição dos óbitos recuperados por faixa do escore do \textit{linkage} probabilístico (Tabela \ref{tab:perfil-recuperados}) confirma que o ganho se concentra na zona cinzenta (escores 5 a 8), região que abriga aproximadamente 47\% dos pares verdadeiros do conjunto de teste. Limiares fixos aplicados ao escore do \textit{linkage} probabilístico falham precisamente nessa faixa, onde a heterogeneidade de erros de digitação, abreviações e variações nominais torna a evidência de similaridade insuficiente para decisão automatizada. A capacidade do classificador de explorar padrões multivariados nos 29 subescores de similaridade permite discriminar pares que seriam indistinguíveis por um único ponto de corte, resultado consistente com achados de Paixão et al. \citeyearpar{Paixao2017linkageevaluation} sobre a superioridade de abordagens combinadas em bases administrativas brasileiras.
-
-\input{tables/tab_perfil_recuperados.tex}
-
-\begin{figure}[!ht]
-\centering
-\input{fig_doc/epi_deteccao.pgf}
-\caption{Pares verdadeiros detectados e perdidos por método de classificação.}
-\label{fig:epi-deteccao}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-\input{fig_doc/epi_revisoes.pgf}
-\caption{Volume total de pares encaminhados para revisão manual por método.}
-\label{fig:epi-revisoes}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-\input{fig_doc/epi_custo.pgf}
-\caption{Custo operacional: número de revisões manuais por par verdadeiro recuperado.}
-\label{fig:epi-custo}
-\end{figure}
+A distribuição dos óbitos recuperados por faixa do escore do \textit{linkage} probabilístico (Tabela \ref{tab:perfil-recuperados}) confirma que o ganho se concentra na zona cinzenta (escores do \textit{linkage} probabilístico de 5 a 8), região que abriga aproximadamente 47\% dos pares verdadeiros do conjunto de teste. Limiares fixos aplicados ao escore do \textit{linkage} probabilístico falham precisamente nessa faixa, onde a heterogeneidade de erros de digitação, abreviações e variações nominais torna a evidência de similaridade insuficiente para decisão automatizada. A capacidade do classificador de explorar padrões multivariados nos 29 subescores de similaridade permite discriminar pares que seriam indistinguíveis por um único ponto de corte, resultado consistente com achados de Paixão et al. \citeyearpar{Paixao2017linkageevaluation} sobre a superioridade de abordagens combinadas em bases administrativas brasileiras.
 
 \section{Dois \textit{pipelines} e escolha de ponto operacional}
 \label{sec:cap6-dois-pipelines}
@@ -99,7 +74,9 @@ A correção de Benjamini-Hochberg \cite{Benjamini1995fdr} controlou a taxa de f
 \section{Contribuição do \textit{framework} em relação ao uso isolado de classificadores}
 \label{sec:cap6-contribuicao-framework}
 
-A distinção entre o \textit{framework} proposto neste trabalho e a aplicação isolada de um classificador, como a Floresta Aleatória (\textit{Random Forest}), é substantiva. A execução direta de um único modelo com hiperparâmetros padrão produz apenas um ponto de operação no espaço precisão--sensibilidade, sem oferecer instrumentos para ajustar o comportamento do sistema ao contexto de uso. O \textit{framework} desenvolvido nesta tese organiza cinco componentes integrados, cuja articulação amplia a capacidade analítica e operacional do processo de vinculação.
+A aplicação de técnicas de aprendizado de máquina ao \textit{linkage} de bases de dados tem sido explorada sob diferentes perspectivas na literatura. Classificadores supervisionados, como Floresta Aleatória e máquinas de vetores de suporte, foram empregados para substituir limiares fixos na classificação de pares candidatos, com ganhos documentados de acurácia em bases administrativas de saúde \cite{Christen2012book, Paixao2017linkageevaluation}. Extensões bayesianas do modelo de Fellegi e Sunter incorporaram informação \textit{a priori} sobre a distribuição de erros para estimar probabilidades posteriores de vínculo \cite{Fellegi1969theory, Enamorado2019fastlink}. Mais recentemente, arquiteturas de aprendizado profundo para \textit{entity matching}, como DeepMatcher e DITTO, alcançaram desempenho competitivo em bases de dados comerciais e bibliográficas, embora sua aplicação a registros de saúde com campos padronizados permaneça limitada \cite{Mudgal2018deepmatcher, Li2020ditto}. Avaliações comparativas em contextos de \textit{linkage} probabilístico confirmaram que o pós-processamento supervisionado reduz tanto falsos positivos quanto falsos negativos em relação a limiares fixos, sobretudo na zona cinzenta \cite{Doidge2018demystifying, DuVall2010extending}. Não obstante, a maioria dessas aplicações avalia um único classificador em um único ponto operacional, sem exploração sistemática do espaço de configurações nem protocolo reprodutível para a seleção do compromisso precisão--sensibilidade mais adequado ao contexto de uso.
+
+A distinção entre o \textit{framework} proposto neste trabalho e a aplicação isolada de um classificador, como a Floresta Aleatória (\textit{Random Forest}), é, portanto, substantiva. A execução direta de um único modelo com hiperparâmetros padrão produz apenas um ponto de operação no espaço precisão--sensibilidade, sem oferecer instrumentos para ajustar o comportamento do sistema ao contexto de uso. O \textit{framework} desenvolvido nesta tese organiza cinco componentes integrados, cuja articulação amplia a capacidade analítica e operacional do processo de vinculação.
 
 Em vez de depender apenas da \textit{nota final} agregada, o protocolo opera sobre uma representação granular dos pares (29 subescores do Comparador de Registros \cite{Jardim2024comparador, Lucena2013algoritmos}) e sobre atributos derivados por engenharia de atributos, conforme descrito na Seção~\ref{sec:engenharia-atributos}. Essa combinação amplia a detecção de concordâncias parciais entre campos e melhora a discriminação na zona cinzenta, sobretudo quando os registros apresentam padrões heterogêneos de qualidade.
 
