@@ -1,0 +1,36 @@
+\begin{table}[htbp]
+\centering
+\caption{Desempenho dos modelos na estratégia de máxima precisão (NB03).
+         Conjunto de teste com 74 pares verdadeiros dentre 18.509 pares candidatos.
+         Resultados ordenados por precisão decrescente.}
+\label{tab:nb03-precision}
+\renewcommand{\arraystretch}{1.15}
+\small
+\begin{tabular}{@{}llcccc@{}}
+\toprule
+\textbf{Modelo} & \textbf{Limiar} & \textbf{Precisão} & \textbf{Sensibilidade} & \boldmath$F_1$ & \textbf{N} \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Abordagens compostas}} \\[2pt]
+Regras de negócio          & $\ell = 8$                         & \textbf{1,000} & 0,486 & 0,655 & 36 \\
+Consenso (unanimidade)     & $p \geq 0{,}7$\textsuperscript{a}  & 0,985          & 0,878 & 0,929 & 66 \\
+Híbrido ML + Regras        & ML${\geq}$0,6; R${\geq}$6          & 0,927          & 0,851 & 0,887 & 68 \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Modelos individuais com limiar elevado}} \\[2pt]
+LightGBM                   & 0,9 & 0,920 & 0,932 & 0,926 & 75 \\
+RF Calibrado               & 0,9 & 0,916 & 0,878 & 0,897 & 71 \\
+XGBoost                    & 0,9 & 0,901 & 0,986 & 0,942 & 81 \\
+Stacking                   & 0,8 & 0,809 & 0,973 & 0,883 & 89 \\
+\midrule
+\multicolumn{6}{@{}l}{\textit{Efeito da variação de limiar (LightGBM)}} \\[2pt]
+LightGBM                   & 0,8 & 0,909 & 0,946 & 0,927 & 77 \\
+LightGBM                   & 0,7 & 0,899 & 0,959 & 0,928 & 79 \\
+LightGBM                   & 0,6 & 0,866 & 0,959 & 0,910 & 82 \\
+\bottomrule
+\end{tabular}
+
+\vspace{4pt}
+\footnotesize
+\textsuperscript{a}~Limiar 0,7 aplicado a cada um dos quatro modelos base (XGBoost, LightGBM, Random Forest, Gradient Boosting); classificação positiva exige concordância unânime.
+N~=~número de pares classificados como positivos no conjunto de teste.
+AUC-PR (área sob a curva precisão\,--\,sensibilidade, independente de limiar): XGBoost~0,988; LightGBM~0,985; Consenso~0,986; Stacking~0,979; RF Calibrado~0,959; Regras~0,825.
+\end{table}
