@@ -84,7 +84,7 @@ As taxas de erro observadas foram inferiores a 1\%, sustentando o uso das âncor
 \subsection{Regras de guarda determinísticas}
 \label{sec:cap8-regras-guarda}
 
-As regras de guarda incorporam conhecimento epidemiológico e restrições de consistência que se sobrepõem ao classificador probabilístico em casos críticos.
+As regras de guarda incorporam conhecimento epidemiológico e restrições de consistência que se sobrepõem ao classificador probabilístico em casos críticos.\footnote{Os limiares numéricos das regras de guarda (intervalo temporal, notas de corte para vínculo e não-vínculo automáticos, nota mínima e diferença de anos para o filtro de homonímia) são parâmetros configuráveis via arquivo YAML, permitindo adaptação a diferentes contextos epidemiológicos sem alteração do código-fonte.}
 
 \begin{itemize}
 \item \textbf{Filtro temporal}: pares com data de óbito precedendo a data de diagnóstico em mais de 180 dias são forçados para não-vínculo; no recorte municipal (Sinan-TB 2013--2022, SIM 2019--2022), essa regra não removeu vínculos verdadeiros no conjunto avaliado. Reconhece-se, contudo, que notificações Sinan-TB registradas após o óbito (por exemplo, em casos de diagnóstico \textit{post mortem}) poderiam ser indevidamente excluídas por este filtro; essa restrição é discutida como limitação na Seção~\ref{sec:cap8-discussao}
