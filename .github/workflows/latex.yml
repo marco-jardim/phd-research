@@ -1,0 +1,58 @@
+name: Compilar tese (LaTeX)
+
+on:
+  push:
+    branches: [main, pos-qualificacao]
+    paths: ['text/latex/**', '.github/workflows/latex.yml']
+  pull_request:
+    branches: [main]
+    paths: ['text/latex/**', '.github/workflows/latex.yml']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: texlive/texlive:latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compilar
+        working-directory: text/latex
+        shell: bash
+        run: |
+          set -euo pipefail
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
+          bibtex tese
+          if [ -f tese.nlo ]; then makeindex tese.nlo -s nomencl.ist -o tese.nls; fi
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
+          pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
+
+      - name: Verificar log
+        working-directory: text/latex
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -E "^! |LaTeX Error" tese.log; then
+            echo "[ERRO] O log contém erros de LaTeX."
+            exit 1
+          fi
+          if grep -E "Citation .* undefined|Reference .* undefined" tese.log; then
+            echo "[ERRO] Há citações ou referências indefinidas."
+            exit 1
+          fi
+          grep -E 'Output written on tese\.pdf \([0-9]+ pages?' tese.log
+          boxes=$(grep -Ec 'Overfull|Underfull' tese.log || true)
+          echo "[INFO] Overfull/Underfull: $boxes"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tese-pdf
+          path: text/latex/tese.pdf
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tese-log
+          path: text/latex/tese.log
