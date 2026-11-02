@@ -110,15 +110,21 @@ def main() -> None:
             lm, ln = (1 - p) * cfp, p * cfn
             lrv = cllm + (1 - p) * e_fp * cfp + p * e_fn * cfn
             evr = np.minimum(lm, ln) - lrv
-            act = np.where(lm <= ln, "M", "N")
-            act = np.where((act == "M") & (p < t_match), "R", act)
-            act = np.where((act == "N") & (p > t_non), "R", act)
-            act = np.where(evr > 0, "R", act)
-            idx = np.where(act == "R")[0]
-            if len(idx) > budget:
-                keep = idx[np.argsort(-evr[idx])[:budget]]
-                drop = np.setdiff1d(idx, keep)
-                act[drop] = np.where(lm[drop] <= ln[drop], "M", "N")
+            base = np.where(lm <= ln, "M", "N")
+            # Mesma ordem de alocação de PolicyEngineV3.triage (gzcmd/gzcmd_v3_policy_engine.py):
+            # primeiro os pedidos disparados pelos tetos automáticos, depois os de EVR > 0,
+            # cada grupo ordenado por EVR decrescente, até esgotar o orçamento.
+            cap_mask = ((base == "M") & (p < t_match)) | ((base == "N") & (p > t_non))
+            selected = np.zeros(len(p), dtype=bool)
+            remaining = budget
+            for mask in (cap_mask, evr > 0):
+                eligible = np.where(mask & ~selected)[0]
+                if remaining <= 0 or len(eligible) == 0:
+                    continue
+                chosen = eligible[np.argsort(-evr[eligible], kind="stable")[:remaining]]
+                selected[chosen] = True
+                remaining -= len(chosen)
+            act = np.where(selected, "R", base)
             is_r = act == "R"
             fn_auto = int(((act == "N") & (yg == 1)).sum()); fp_auto = int(((act == "M") & (yg == 0)).sum())
             perda = fn_auto * cfn + fp_auto * cfp + is_r.sum() * cllm
