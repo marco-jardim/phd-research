@@ -66,20 +66,29 @@ def main() -> None:
     tab = pd.DataFrame(rows)
     r_plus, r_minus = tab.loc[0, "taxa_pos"], tab.loc[1, "taxa_pos"]
 
-    w_anc, res = fit_anchor_platt(s, a_plus, a_minus, r_plus, r_minus)
+    # Três cenários de calibração da nota final:
+    #  (1) supervisionado: Platt com todos os rótulos;
+    #  (2) âncoras com prevalências medidas: os rótulos fixam apenas r+ e r- (duas constantes);
+    #  (3) âncoras com alvos a priori (sem rótulos): r+ = 0,99 e r- = 0,001, mais a variante r- = 0,0001.
     lr = LogisticRegression(C=1e6, max_iter=1000).fit(s.reshape(-1, 1), y)
-    w_sup = (float(lr.coef_[0, 0]), float(lr.intercept_[0]))
+    cenarios = {
+        "supervisionado": np.array([float(lr.coef_[0, 0]), float(lr.intercept_[0])]),
+        "ancoras_medidas": fit_anchor_platt(s, a_plus, a_minus, r_plus, r_minus)[0],
+        "ancoras_apriori_0.99_0.001": fit_anchor_platt(s, a_plus, a_minus, 0.99, 0.001)[0],
+        "ancoras_apriori_0.99_0.0001": fit_anchor_platt(s, a_plus, a_minus, 0.99, 0.0001)[0],
+    }
+    w_anc, w_sup = cenarios["ancoras_medidas"], cenarios["supervisionado"]
+    res = type("R", (), {"success": True})()
 
     faixas = []
     for a, b in BANDS:
         m = (s >= a) & (s < b)
-        faixas.append({"faixa": f"[{a},{b})", "n": int(m.sum()), "pos": int(y[m].sum()),
-                       "obs_pct": round(100 * y[m].mean(), 2),
-                       "p_ancoras_pct": round(100 * expit(w_anc[0] * s[m] + w_anc[1]).mean(), 2),
-                       "p_superv_pct": round(100 * expit(w_sup[0] * s[m] + w_sup[1]).mean(), 2)})
+        row = {"faixa": f"[{a},{b})", "n": int(m.sum()), "pos": int(y[m].sum()), "obs_pct": round(100 * y[m].mean(), 2)}
+        for k, w in cenarios.items():
+            row[f"p_{k}_pct"] = round(100 * expit(w[0] * s[m] + w[1]).mean(), 2)
+        faixas.append(row)
     g = (s >= T_MINUS) & (s < T_PLUS)
-    brier = {"ancoras": brier_score_loss(y[g], expit(w_anc[0] * s[g] + w_anc[1])),
-             "supervisionado": brier_score_loss(y[g], expit(w_sup[0] * s[g] + w_sup[1]))}
+    brier = {k: brier_score_loss(y[g], expit(w[0] * s[g] + w[1])) for k, w in cenarios.items()}
 
     out = ROOT / "data"
     tab.to_csv(out / "ancoras_validacao.csv", index=False)
