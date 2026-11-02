@@ -62,24 +62,11 @@ Com a estimativa de probabilidade de vínculo $p_{cal}$ produzida pela sigmoide,
 \subsection{Validação empírica dos conjuntos âncora}
 \label{sec:cap8-validacao-ancoras}
 
-A Tabela \ref{tab:cap8-ancoras} resume a confrontação dos conjuntos âncora com o padrão-ouro, evidenciando pureza superior a 99\% em ambos os extremos de escore.
+A Tabela \ref{tab:cap8-ancoras} resume a confrontação dos conjuntos âncora com o padrão-ouro, calculada sobre o extrato sem identificadores utilizado em toda a tese ($N = 61.696$ pares candidatos, 247 vínculos verdadeiros), com os mesmos limiares de escore adotados pelas regras de guarda da cascata (Seção~\ref{sec:cap8-exp1}). O conjunto $A^+$ é pequeno, com 95 pares e pureza de 97,9\%; o conjunto $A^-$ concentra 39.981 pares, dos quais apenas três são vínculos verdadeiros. Os alvos de calibração derivados dessas taxas são $r^+ = 0{,}979$ e $r^- = 0{,}0001$.
 
-\begin{table}[!ht]
-\centering
-\caption{Validação dos conjuntos âncora contra o padrão-ouro.}
-\label{tab:cap8-ancoras}
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-Conjunto & Critério & $N$ & Acertos & Erros & Precisão (\%) \\
-\hline
-$A^+$ (âncoras positivas) & $s\geq 9{,}0$ & 520 & 516 & 4 & 99,2 \\
-\hline
-$A^-$ (âncoras negativas) & $s<5{,}0$ & 3.840 & 3.833 & 7 & 99,8 \\
-\hline
-\end{tabular}
-\end{table}
+\input{tables/tab_cap8_ancoras.tex}
 
-As taxas de erro observadas foram inferiores a 1\%, sustentando o uso das âncoras como pseudo-\textit{labels} operacionais para calibração periódica.
+A pureza observada sustenta o uso das âncoras como pseudo-\textit{labels} operacionais, mas a validação da calibração resultante exige comparação com rótulos. Ajustando-se a sigmoide pelas duas restrições de média, sem uso dos rótulos, e comparando-a com a calibração supervisionada da nota final (\textit{Platt scaling} sobre os 247 vínculos), a taxa observada de vínculos nas faixas [5,6), [6,7), [7,8) e [8,9) foi de 0,1\%, 0,9\%, 4,0\% e 33,3\%, contra estimativas por âncoras de 0,2\%, 1,7\%, 13,0\% e 63,3\%, e supervisionadas de 0,1\%, 0,8\%, 5,3\% e 34,3\%. O escore de Brier na área cinza foi de 0,0072 para a calibração por âncoras e 0,0062 para a supervisionada. A calibração por âncoras aproxima-se, portanto, da supervisionada nas faixas de baixo escore, mas superestima a probabilidade de vínculo nas faixas [7,9), de modo que constitui substituto operacional na ausência de rótulos, não equivalente. Os valores foram gerados pelo \textit{script} \texttt{scripts/validar\_ancoras.py} do repositório da tese \cite{Jardim2026phdrepo}.
 
 \subsection{Regras de guarda determinísticas}
 \label{sec:cap8-regras-guarda}

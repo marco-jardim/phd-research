@@ -11,8 +11,8 @@ p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
 No entanto, em cenários de vigilância onde não se dispõe de dados rotulados (\textit{labels}) em tempo de execução para treinar essa calibração (o problema \textit{unsupervised}), propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}). Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
 
 \begin{enumerate}
-\item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$ e identidade perfeita de nomes e mães), assumindo-se uma probabilidade média alvo $r^+ \approx 1$.
-\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s \le \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^- \approx 0$.
+\item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$), assumindo-se uma probabilidade média alvo $r^+$ próxima de 1. Na base desta tese, $A^+$ contém 95 pares com pureza observada de 97,9\%, de onde $r^+ = 0{,}979$ (Tabela~\ref{tab:cap8-ancoras}).
+\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s < \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^-$ próxima de 0. Na base desta tese, $A^-$ contém 39.981 pares com três vínculos verdadeiros, de onde $r^- = 0{,}0001$.
 \end{enumerate}
 
 Os alvos devem satisfazer $0<r^-<r^+<1$, pois uma sigmoide com parâmetros finitos não atinge os valores 0 e 1. Busca-se ajustar os parâmetros $\alpha$ e $\beta$ pelo sistema que iguala a média predita nos conjuntos âncora às taxas-alvo assumidas:
