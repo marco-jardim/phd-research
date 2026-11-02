@@ -1,0 +1,22 @@
+% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)
+\begin{table}[!ht]
+\centering
+\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Simulação sem regras de guarda; custos, tetos, orçamento e taxas de erro do revisor conforme a configuração do \textit{framework}. Perda realizada com revisor perfeito e com as taxas de erro configuradas.}
+\label{tab:cap8-ancoras-decisao}
+\footnotesize
+\begin{tabular}{|l|l|r|r|r|r|r|}
+\hline
+Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\
+\hline
+Vigilância & Supervisionada (Platt, 247 rótulos) & 1.590 & 69 & 0 & 3.848 & 4.817 \\
+Vigilância & Âncoras, prevalências medidas & 2.000 & 55 & 18 & 3.430 & 4.659 \\
+Vigilância & Âncoras a priori ($0{,}99$ / $0{,}001$) & 2.000 & 50 & 639 & 9.390 & 10.653 \\
+Vigilância & Âncoras a priori ($0{,}99$ / $0{,}0001$) & 2.000 & 55 & 44 & 3.690 & 4.915 \\
+\hline
+Confirmação & Supervisionada (Platt, 247 rótulos) & 210 & 107 & 0 & 2.192 & 2.777 \\
+Confirmação & Âncoras, prevalências medidas & 647 & 91 & 0 & 1.982 & 4.276 \\
+Confirmação & Âncoras a priori ($0{,}99$ / $0{,}001$) & 1.000 & 77 & 0 & 1.790 & 5.463 \\
+Confirmação & Âncoras a priori ($0{,}99$ / $0{,}0001$) & 1.000 & 77 & 0 & 1.790 & 5.463 \\
+\hline
+\end{tabular}
+\end{table}

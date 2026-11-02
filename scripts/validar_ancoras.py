@@ -31,6 +31,11 @@ T_PLUS, T_MINUS = 9.0, 5.0
 BANDS = [(5, 6), (6, 7), (7, 8), (8, 9)]
 
 
+def fmt(n: int) -> str:
+    """Milhar com ponto, conforme a tese."""
+    return f"{n:,}".replace(",", ".")
+
+
 def fit_anchor_platt(s: np.ndarray, a_plus: np.ndarray, a_minus: np.ndarray, r_plus: float, r_minus: float):
     """Ajusta sigmoid(alpha*s+beta) igualando as médias em A+ e A- aos alvos (resíduos em logit)."""
 
@@ -90,12 +95,63 @@ def main() -> None:
     g = (s >= T_MINUS) & (s < T_PLUS)
     brier = {k: brier_score_loss(y[g], expit(w[0] * s[g] + w[1])) for k, w in cenarios.items()}
 
+    # Simulação simplificada da política de decisão por custo esperado da tese na área cinza
+    # (sem regras de guarda nem restrições de consistência), para isolar o efeito da calibração.
+    # Custos, tetos automáticos, orçamento e taxas de erro do revisor por faixa vêm de
+    # gzcmd_v3_config.yaml (decision_policy.modes, llm_review.reliability.error_rates_by_band).
+    modes = {"vigilancia": (10.0, 50.0, 0.25, 0.85, 0.15, 2000), "confirmacao": (100.0, 20.0, 0.25, 0.95, 0.10, 1000)}
+    sg, yg = s[g], y[g]
+    e_fp = np.where(sg < 6, 0.08, np.where(sg < 7, 0.06, np.where(sg < 8, 0.04, 0.02)))
+    e_fn = np.where(sg < 6, 0.12, np.where(sg < 7, 0.10, np.where(sg < 8, 0.08, 0.06)))
+    decisao = []
+    for mode, (cfp, cfn, cllm, t_match, t_non, budget) in modes.items():
+        for k, w in cenarios.items():
+            p = expit(w[0] * sg + w[1])
+            lm, ln = (1 - p) * cfp, p * cfn
+            lrv = cllm + (1 - p) * e_fp * cfp + p * e_fn * cfn
+            evr = np.minimum(lm, ln) - lrv
+            act = np.where(lm <= ln, "M", "N")
+            act = np.where((act == "M") & (p < t_match), "R", act)
+            act = np.where((act == "N") & (p > t_non), "R", act)
+            act = np.where(evr > 0, "R", act)
+            idx = np.where(act == "R")[0]
+            if len(idx) > budget:
+                keep = idx[np.argsort(-evr[idx])[:budget]]
+                drop = np.setdiff1d(idx, keep)
+                act[drop] = np.where(lm[drop] <= ln[drop], "M", "N")
+            is_r = act == "R"
+            fn_auto = int(((act == "N") & (yg == 1)).sum()); fp_auto = int(((act == "M") & (yg == 0)).sum())
+            perda = fn_auto * cfn + fp_auto * cfp + is_r.sum() * cllm
+            perda_rev = perda + ((is_r & (yg == 1)) * e_fn * cfn).sum() + ((is_r & (yg == 0)) * e_fp * cfp).sum()
+            decisao.append({"modo": mode, "calibracao": k, "revisao": int(is_r.sum()), "auto_match": int((act == "M").sum()),
+                            "auto_nonmatch": int((act == "N").sum()), "fn_auto": fn_auto, "fp_auto": fp_auto,
+                            "perda_revisor_perfeito": round(perda, 1), "perda_revisor_config": round(perda_rev, 1)})
+    dec = pd.DataFrame(decisao)
+
     out = ROOT / "data"
     tab.to_csv(out / "ancoras_validacao.csv", index=False)
     pd.DataFrame(faixas).to_csv(out / "ancoras_calibracao_faixas.csv", index=False)
+    dec.to_csv(out / "ancoras_decisao_simulada.csv", index=False)
 
-    def fmt(n: int) -> str:
-        return f"{n:,}".replace(",", ".")
+    nomes = {"supervisionado": "Supervisionada (Platt, 247 rótulos)",
+             "ancoras_medidas": "Âncoras, prevalências medidas",
+             "ancoras_apriori_0.99_0.001": "Âncoras a priori ($0{,}99$ / $0{,}001$)",
+             "ancoras_apriori_0.99_0.0001": "Âncoras a priori ($0{,}99$ / $0{,}0001$)"}
+    tex2 = [
+        "% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)",
+        r"\begin{table}[!ht]", r"\centering",
+        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Simulação sem regras de guarda; custos, tetos, orçamento e taxas de erro do revisor conforme a configuração do \textit{framework}. Perda realizada com revisor perfeito e com as taxas de erro configuradas.}",
+        r"\label{tab:cap8-ancoras-decisao}", r"\footnotesize", r"\begin{tabular}{|l|l|r|r|r|r|r|}", r"\hline",
+        r"Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\", r"\hline",
+    ]
+    for mode in modes:
+        for k in cenarios:
+            r = dec[(dec.modo == mode) & (dec.calibracao == k)].iloc[0]
+            tex2.append(f"{'Vigilância' if mode == 'vigilancia' else 'Confirmação'} & {nomes[k]} & {fmt(int(r.revisao))} & {int(r.fn_auto)} & {int(r.fp_auto)} & {fmt(int(round(r.perda_revisor_perfeito)))} & {fmt(int(round(r.perda_revisor_config)))} \\\\")
+        tex2.append(r"\hline")
+    tex2 += [r"\end{tabular}", r"\end{table}"]
+    (ROOT / "text" / "latex" / "tables" / "tab_cap8_ancoras_decisao.tex").write_text("\n".join(tex2) + "\n", encoding="utf-8")
+    print(dec.to_string(index=False))
 
     tex = [
         "% Gerado por scripts/validar_ancoras.py sobre data/COMPARADORSEMIDENT.csv",
