@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Dez melhores configurações por F1 — estudo de ablação.}
+\caption{Dez configurações do estudo de ablação em ordenação exploratória por F1 nos respectivos testes.}
 \label{tab:ablation-top10}
 \small
 \begin{tabular}{clccc}
@@ -20,5 +20,5 @@
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: A abla\c{c}\~ao original utilizou RF+SMOTE e GB como classificadores-base. Os resultados com XGBoost foram obtidos sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, \textit{split}=0,3).
+\par\small Nota: As linhas 1 a 3 provêm dos acréscimos com XGBoost pelo fluxo Modal; as linhas 4 a 10 provêm da ablação original, cujo consenso utiliza RF, RF+SMOTE e GB. A tabela apresenta um recorte de configurações, não as dez primeiras de todas as linhas do artefato ampliado. A ordenação por $F_1$ foi obtida após avaliação de grades de limiares nos respectivos testes internos, sem conjunto intermediário de validação para essa escolha; não constitui seleção validada nem avaliação independente dos limiares. A coincidência de proporção de teste (30\%) e semente (42) não comprova identidade das linhas. Os resultados com XGBoost aqui apresentados não são os do teste interno QW1.
 \end{table}
