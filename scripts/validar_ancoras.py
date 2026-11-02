@@ -17,6 +17,7 @@ Saídas:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -27,6 +28,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss
 
 ROOT = Path(__file__).resolve().parents[1]
+# Motor de decisão da tese (cópia local usada nos experimentos) e pacote publicado.
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT.parent / "gzcmd-record-linkage" / "src"))
+from gzcmd.gzcmd_v3_policy_engine import Budget, Costs, LLMError, PolicyEngineV3  # noqa: E402
+from gzcmd_record_linkage.calibration import fit_anchor_platt as pkg_fit_anchor_platt  # noqa: E402
 T_PLUS, T_MINUS = 9.0, 5.0
 BANDS = [(5, 6), (6, 7), (7, 8), (8, 9)]
 
@@ -75,15 +81,24 @@ def main() -> None:
     #  (1) supervisionado: Platt com todos os rótulos;
     #  (2) âncoras com prevalências medidas: os rótulos fixam apenas r+ e r- (duas constantes);
     #  (3) âncoras com alvos a priori (sem rótulos): r+ = 0,99 e r- = 0,001, mais a variante r- = 0,0001.
+    # O ajuste por âncoras usa gzcmd_record_linkage.calibration.fit_anchor_platt (pacote da tese);
+    # a implementação local fit_anchor_platt acima é mantida apenas como conferência.
     lr = LogisticRegression(C=1e6, max_iter=1000).fit(s.reshape(-1, 1), y)
+    nota = pd.Series(s)
+
+    def pkg_fit(rp: float, rn: float) -> np.ndarray:
+        m = pkg_fit_anchor_platt(nota, s_plus=T_PLUS, s_minus=T_MINUS, r_plus=rp, r_minus=rn)
+        return np.array([m.slope, m.intercept])
+
     cenarios = {
         "supervisionado": np.array([float(lr.coef_[0, 0]), float(lr.intercept_[0])]),
-        "ancoras_medidas": fit_anchor_platt(s, a_plus, a_minus, r_plus, r_minus)[0],
-        "ancoras_apriori_0.99_0.001": fit_anchor_platt(s, a_plus, a_minus, 0.99, 0.001)[0],
-        "ancoras_apriori_0.99_0.0001": fit_anchor_platt(s, a_plus, a_minus, 0.99, 0.0001)[0],
+        "ancoras_medidas": pkg_fit(r_plus, r_minus),
+        "ancoras_apriori_0.99_0.001": pkg_fit(0.99, 0.001),
+        "ancoras_apriori_0.99_0.0001": pkg_fit(0.99, 0.0001),
     }
     w_anc, w_sup = cenarios["ancoras_medidas"], cenarios["supervisionado"]
-    res = type("R", (), {"success": True})()
+    w_local, res = fit_anchor_platt(s, a_plus, a_minus, r_plus, r_minus)
+    print(f"conferência: pacote alpha,beta={w_anc.round(4)} | local={w_local.round(4)}")
 
     faixas = []
     for a, b in BANDS:
@@ -95,36 +110,25 @@ def main() -> None:
     g = (s >= T_MINUS) & (s < T_PLUS)
     brier = {k: brier_score_loss(y[g], expit(w[0] * s[g] + w[1])) for k, w in cenarios.items()}
 
-    # Simulação simplificada da política de decisão por custo esperado da tese na área cinza
-    # (sem regras de guarda nem restrições de consistência), para isolar o efeito da calibração.
-    # Custos, tetos automáticos, orçamento e taxas de erro do revisor por faixa vêm de
-    # gzcmd_v3_config.yaml (decision_policy.modes, llm_review.reliability.error_rates_by_band).
+    # Política de decisão por custo esperado na área cinza, executada pelo próprio motor do
+    # framework (gzcmd/gzcmd_v3_policy_engine.py: PolicyEngineV3.triage), sem regras de guarda
+    # nem restrições de consistência, para isolar o efeito da calibração. Custos, tetos
+    # automáticos, orçamento e taxas de erro do revisor por faixa vêm de gzcmd_v3_config.yaml
+    # (decision_policy.modes, llm_review.reliability.error_rates_by_band).
     modes = {"vigilancia": (10.0, 50.0, 0.25, 0.85, 0.15, 2000), "confirmacao": (100.0, 20.0, 0.25, 0.95, 0.10, 1000)}
+    err_by_band = {"grey_low": LLMError(0.08, 0.12), "grey_mid": LLMError(0.06, 0.10),
+                   "grey_high": LLMError(0.04, 0.08), "near_high": LLMError(0.02, 0.06)}
     sg, yg = s[g], y[g]
-    e_fp = np.where(sg < 6, 0.08, np.where(sg < 7, 0.06, np.where(sg < 8, 0.04, 0.02)))
-    e_fn = np.where(sg < 6, 0.12, np.where(sg < 7, 0.10, np.where(sg < 8, 0.08, 0.06)))
+    band = np.where(sg < 6, "grey_low", np.where(sg < 7, "grey_mid", np.where(sg < 8, "grey_high", "near_high")))
+    e_fp = np.array([err_by_band[b].e_fp for b in band]); e_fn = np.array([err_by_band[b].e_fn for b in band])
     decisao = []
     for mode, (cfp, cfn, cllm, t_match, t_non, budget) in modes.items():
         for k, w in cenarios.items():
             p = expit(w[0] * sg + w[1])
-            lm, ln = (1 - p) * cfp, p * cfn
-            lrv = cllm + (1 - p) * e_fp * cfp + p * e_fn * cfn
-            evr = np.minimum(lm, ln) - lrv
-            base = np.where(lm <= ln, "M", "N")
-            # Mesma ordem de alocação de PolicyEngineV3.triage (gzcmd/gzcmd_v3_policy_engine.py):
-            # primeiro os pedidos disparados pelos tetos automáticos, depois os de EVR > 0,
-            # cada grupo ordenado por EVR decrescente, até esgotar o orçamento.
-            cap_mask = ((base == "M") & (p < t_match)) | ((base == "N") & (p > t_non))
-            selected = np.zeros(len(p), dtype=bool)
-            remaining = budget
-            for mask in (cap_mask, evr > 0):
-                eligible = np.where(mask & ~selected)[0]
-                if remaining <= 0 or len(eligible) == 0:
-                    continue
-                chosen = eligible[np.argsort(-evr[eligible], kind="stable")[:remaining]]
-                selected[chosen] = True
-                remaining -= len(chosen)
-            act = np.where(selected, "R", base)
+            engine = PolicyEngineV3(Costs(cfp, cfn, cllm), err_by_band, Budget(llm_max=budget),
+                                    min_auto_match=t_match, max_auto_nonmatch=t_non)
+            out = engine.triage(pd.DataFrame({"p_cal": p, "band": band}))
+            act = out["action"].map({"MATCH": "M", "NONMATCH": "N", "LLM_REVIEW": "R"}).to_numpy()
             is_r = act == "R"
             fn_auto = int(((act == "N") & (yg == 1)).sum()); fp_auto = int(((act == "M") & (yg == 0)).sum())
             perda = fn_auto * cfn + fp_auto * cfp + is_r.sum() * cllm
@@ -146,7 +150,7 @@ def main() -> None:
     tex2 = [
         "% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)",
         r"\begin{table}[!ht]", r"\centering",
-        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Simulação sem regras de guarda; custos, tetos, orçamento e taxas de erro do revisor conforme a configuração do \textit{framework}. Perda realizada com revisor perfeito e com as taxas de erro configuradas.}",
+        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e taxas de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as taxas de erro configuradas.}",
         r"\label{tab:cap8-ancoras-decisao}", r"\footnotesize", r"\begin{tabular}{|l|l|r|r|r|r|r|}", r"\hline",
         r"Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\", r"\hline",
     ]
