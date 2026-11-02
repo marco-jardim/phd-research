@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Melhor configura\c{c}\~ao por categoria de classifica\c{c}\~ao --- compara\c{c}\~ao RF+SMOTE vs.\ XGBoost (estudo de abla\c{c}\~ao).}
+\caption{Configurações selecionadas por categoria de classificação no estudo de ablação, com resultados de origens experimentais distintas.}
 \label{tab:ablation-best-category}
 \footnotesize
 \begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{3.2cm}c>{\raggedright\arraybackslash}p{3.2cm}c}
@@ -21,5 +21,5 @@ Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & Majority (th=0.5) AND Rules
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: Todos os modelos foram avaliados sob as mesmas condi\c{c}\~oes experimentais (\textit{holdout} set, seed=42, \textit{split}=0,3). O escore de regras \'e a soma de sete crit\'erios determin\'isticos aditivos aplicados sobre os subescores do comparador: nome quase perfeito ($\geq$0,95; +3,0), data de nascimento exata (+3,0), nome da m\~ae forte ($\geq$0,70; +2,0), munic\'ipio id\^entico (+1,5), endere\c{c}o concordante (+1,0), nota final $\geq$9 (+2,0) e nota final $\geq$8 (+1,0). Categorias h\'ibridas e de cascata combinam a probabilidade do classificador com esse escore; o consenso utiliza vota\c{c}\~ao majorit\'aria entre 3 modelos (XGBoost, RF+SMOTE e GB). $^{*}$~Nenhum par verdadeiro no \textit{holdout} possui escore de regras $\geq 7$ (m\'aximo observado: 6{,}5), de modo que qualquer cascata com limiar de regras $\geq 7$ produz zero positivos (TP=0; FN=74). $^{\dagger}$~Apenas 6 dos 74 pares verdadeiros atingem escore de regras $\geq 6$, resultando em alta precis\~ao e baixa cobertura (TP=6; FN=68; revoca\c{c}\~ao=0{,}081).
+\par\small Nota: As configurações da coluna Random Forest provêm da ablação original; as configurações com XGBoost foram acrescentadas pelo fluxo Modal e não correspondem ao teste interno QW1. Os valores de limiar ingênuo e somente regras, repetidos nas duas colunas, são referências da ablação original, não novas avaliações no fluxo Modal. As execuções utilizam testes internos de 30\% e semente 42, mas a identidade das linhas entre as partições não foi verificada. As implementações de regras diferem em critérios e pesos; os consensos originais utilizam RF, RF+SMOTE e GB, enquanto os acrescentados utilizam XGBoost, RF+SMOTE e GB. A seleção pelo maior $F_1$ nos testes é exploratória, não avaliação independente da escolha dos limiares. $^{*}$~No escore de regras do fluxo Modal, nenhum dos 74 pares verdadeiros do teste atinge $\geq 7$ (máximo observado: 6{,}5), resultando em TP=0 e FN=74 nas cascatas assinaladas. $^{\dagger}$~Nesse mesmo fluxo, apenas 6 positivos atingem escore de regras $\geq 6$, resultando em TP=6, FN=68 e sensibilidade de 0{,}081. Essas restrições não se estendem às regras da ablação original.
 \end{table}
