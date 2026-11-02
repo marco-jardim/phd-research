@@ -5,15 +5,16 @@ on:
     branches: [main, pos-qualificacao]
     paths: ['text/latex/**', '.github/workflows/latex.yml']
   pull_request:
-    branches: [main]
+    branches: [main, pos-qualificacao]
     paths: ['text/latex/**', '.github/workflows/latex.yml']
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: texlive/texlive:latest
+    container: texlive/texlive:latest # TODO: fixar tag da imagem
     timeout-minutes: 20
+    env: { max_print_line: "10000", error_line: "254", half_error_line: "238" }
 
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +25,9 @@ jobs:
         run: |
           set -euo pipefail
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
-          bibtex tese
+          bibtex tese > bibtex.out 2>&1 || true
+          cat bibtex.out
+          if grep -Eiq "^error|I couldn't open|I found no" bibtex.out; then echo "[ERRO] bibtex"; exit 1; fi
           if [ -f tese.nlo ]; then makeindex tese.nlo -s nomencl.ist -o tese.nls; fi
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
           pdflatex -interaction=nonstopmode -halt-on-error -file-line-error tese.tex
@@ -34,14 +37,15 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if grep -E "^! |LaTeX Error" tese.log; then
+          if grep -E "LaTeX Error" tese.log; then
             echo "[ERRO] O log contém erros de LaTeX."
             exit 1
           fi
-          if grep -E "Citation .* undefined|Reference .* undefined" tese.log; then
-            echo "[ERRO] Há citações ou referências indefinidas."
+          if grep -E "Citation .* undefined|Reference .* undefined|There were undefined references|multiply defined|There were multiply-defined labels" tese.log; then
+            echo "[ERRO] Há citações/referências indefinidas ou rótulos duplicados."
             exit 1
           fi
+          grep -E 'Rerun to get' tese.log | sed 's/^/[INFO] /' || true
           grep -E 'Output written on tese\.pdf \([0-9]+ pages?' tese.log
           boxes=$(grep -Ec 'Overfull|Underfull' tese.log || true)
           echo "[INFO] Overfull/Underfull: $boxes"
