@@ -8,6 +8,7 @@ REM    scripts\build_pdf.bat --quick    (apenas 1x pdflatex, sem bib/index)
 REM    scripts\build_pdf.bat --clean    (remove arquivos auxiliares)
 REM ==========================================================================
 
+REM AVISO: este .bat trava quando invocado sem console interativo; use scripts\build_pdf.ps1 (mesma sequencia do CI).
 setlocal enabledelayedexpansion
 
 REM --- Paths -----------------------------------------------------------------
