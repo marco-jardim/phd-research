@@ -1,0 +1,23 @@
+% Fontes: data/exp2_tres_revisores_{vigilancia,confirmacao}.csv (scripts/comparar_revisores_exp2.py),
+% a partir de data/sprint3b/exp2_llm_sync_vigilancia.json (Kimi K2.5, 12/02/2026),
+% data/sprint3b/opencode_go/ (DeepSeek V4.1 Flash), data/sprint3b/anthropic/ (Claude Haiku 5.5)
+% e data/sprint3b/opencode_go_kimi/ (Kimi K3, parcial), todos cruzados com PAR do extrato.
+\begin{table}[!ht]
+\centering
+\caption{Revisão assistida por modelos de linguagem independentes, contra o padrão-ouro, por modo operacional. Mesmo lote de pares, mesmo dossiê e mesmo protocolo (dois agentes e árbitro). Sensibilidade calculada entre os pares resolvidos; a última coluna considera os inconclusivos como encaminhados ao revisor humano.}
+\label{tab:cap8-revisores}
+\footnotesize
+\begin{tabular}{|l|l|r|r|r|r|r|r|r|r|}
+\hline
+Modo & Revisor & VP & FP & FN & VN & Inconcl.\ (vínc.) & Precisão & Sensib. & Sensib.\ c/\ inconcl. \\
+\hline
+\multirow{3}{*}{Vigilância} & Kimi K2.5 & 79 & 6 & 19 & 1.265 & 41 (6) & 92,9\% & 80,6\% & 81,7\% \\
+ & DeepSeek V4.1 Flash & 49 & 3 & 42 & 1.256 & 60 (13) & 94,2\% & 53,8\% & 59,6\% \\
+ & Claude Haiku 5.5 & 35 & 0 & 10 & 1.103 & 262 (59) & 100,0\% & 77,8\% & 90,4\% \\
+\hline
+\multirow{3}{*}{Confirmação} & DeepSeek V4.1 Flash & 69 & 2 & 8 & 287 & 69 (24) & 97,2\% & 89,6\% & 92,1\% \\
+ & Claude Haiku 5.5 & 55 & 1 & 5 & 203 & 171 (41) & 98,2\% & 91,7\% & 95,0\% \\
+ & Kimi K3 (parcial, $n = 343$) & 57 & 3 & 16 & 248 & 19 (14) & 95,0\% & 78,1\% & 81,6\% \\
+\hline
+\end{tabular}
+\end{table}
