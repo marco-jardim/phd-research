@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 
@@ -10,6 +9,7 @@ import yaml
 
 from gzcmd.artifacts import preserve_m3v3_artifacts
 from gzcmd.config import load_config
+from gzcmd.provenance import sha256_file_normalized
 from gzcmd.reliability import load_band_rates, reference_rates_model
 from gzcmd.runner import build_engine_from_config
 from scripts.funil_gzcmd_v2 import export_v31_batch, HAIKU_V3, HAIKU_V4, artifact_paths, load_responses
@@ -79,5 +79,5 @@ def test_reference_artifacts_have_v4_without_model_outputs() -> None:
         assert available and len(responses) == n
         path = artifact_paths(mode, HAIKU_V4)[0]
         source = next(s for s in rates["sources"] if s["model"] == "claude-haiku-5-5" and s["mode"] == mode)
-        assert source["sha256"] == hashlib.sha256(path.read_bytes()).hexdigest()
+        assert source["sha256"] == sha256_file_normalized(path)
         assert json.loads(path.read_text(encoding="utf-8"))["prompt_version"] == "v4"
