@@ -1,0 +1,62 @@
+\begin{chapter}{Equidade das decisões}\label{cap:estudo5}
+
+O quinto objetivo específico consiste em avaliar o desempenho das decisões por subgrupo, quanto à paridade de sensibilidade e de valor preditivo positivo, explicitando a incompatibilidade geral desses critérios sob prevalências desiguais, distinguindo subgrupos demográficos de subgrupos operacionais, como o quartil de concordância do nome e a origem do registro, e registrando a ausência da variável raça/cor nas bases utilizadas.
+
+\section{Método}\label{sec:e5-metodo}
+
+Para investigar se o desempenho do classificador varia de forma sistematicamente desigual entre subgrupos demográficos e epidemiológicos representados na base de pares candidatos, realizou-se uma análise de equidade inspirada no \textit{framework} de \textit{equalized odds} \cite{Hardt2016equality}. Adotou-se, como critério operacional, a paridade simultânea da taxa de verdadeiros positivos (TVP) e do valor preditivo positivo (VPP), combinação que captura tanto a capacidade de identificar pares verdadeiros quanto a proporção de predições positivas corretas em cada estrato \cite{Barocas2019fairml}.
+
+Cinco dimensões de estratificação foram definidas a partir de atributos disponíveis na base de pares. (a)~Quartis de concordância do campo nome, calculados sobre o sub-escore \texttt{NOME qtd frag iguais}, que representa a proporção de fragmentos idênticos entre os nomes dos dois registros, dividida pela média do total de fragmentos de ambos (cf.\ Seção~\ref{sec:comparador-registros}); essa variável foi adotada como \textit{proxy} da complexidade onomástica do par, uma vez que nomes com poucos fragmentos em comum tendem a ser mais difíceis de classificar e podem revelar viés diferencial do modelo. (b)~Origem do par (controle \textit{versus} TB-origem), distinguindo pares cujo registro SIM tem tuberculose como causa de óbito daqueles em que a TB figura apenas no Sinan-TB. (c)~Faixa etária em cinco categorias (0--17, 18--39, 40--59, 60--79, 80+ anos), correspondentes aos estratos epidemiológicos empregados na análise da carga de TB no Brasil \cite{Brasil2024tb}, que capturam diferenças no perfil de notificação e na completude dos campos de identificação entre crianças, adultos jovens, adultos, idosos e longevos. (d)~Sexo (feminino \textit{versus} masculino). (e)~Município de residência, representado pelo código IBGE do campo \texttt{CODMUNRES}; cabe notar que, na presente base, mais de 99\% dos registros provêm de um único município (Rio de Janeiro), de modo que essa dimensão avalia essencialmente o contraste entre o município-sede e os demais da região metropolitana, limitando a generalização de eventuais diferenças geográficas.
+
+Para cada dimensão, a TVP e o VPP foram estimados separadamente por grupo (e.g., por faixa etária), acompanhados de intervalos de confiança de Wilson. A comparação entre estratos foi conduzida par a par: para cada combinação de dois grupos dentro da mesma dimensão (e.g., faixa 0--17 \textit{versus} 18--39, faixa 0--17 \textit{versus} 40--59, e assim por diante), construiu-se uma tabela de contingência $2 \times 2$ cruzando o grupo de pertencimento com o resultado da classificação (acerto ou erro). Quando todas as frequências esperadas dessa tabela eram iguais ou superiores a cinco, empregou-se o teste qui-quadrado de Pearson; nos demais casos, o teste exato de Fisher \cite{Agresti2007}. Para controlar a inflação da taxa de falsas descobertas decorrente das múltiplas comparações, aplicou-se a correção de Benjamini-Hochberg ao nível $\alpha = 0{,}05$ sobre o conjunto completo de testes \cite{Benjamini1995fdr}. A magnitude da eventual disparidade entre dois grupos foi quantificada por dois indicadores complementares: a razão de chances (\textit{odds ratio}) de classificação correta, que expressa quantas vezes a chance de acerto em um grupo excede a do outro, e a diferença absoluta de taxas (TVP ou VPP entre os dois estratos), que fornece a distância em pontos percentuais entre os desempenhos.
+
+As predições binárias avaliadas resultam do corte da nota final do CdR em $\geq 6{,}0$, aplicado aos 61.696 potenciais pares, e não de um classificador de aprendizado de máquina; esse corte produziu 7.452 preditos positivos (6.881 no grupo controle e 571 no de origem tuberculosa; Tabela~\ref{tab:qw3-group-metrics}).
+
+% PENDENTE (E4.5): (i) a análise (data/qw3/qw3_manifest.json: score_col "nota final", threshold 6,0, prediction_mode score_threshold) avalia o corte da nota e não um classificador; o capítulo ainda usa "classificador" em vários trechos, e cabe reconciliar a terminologia ou refazer a análise sobre o estimador do Capítulo estudo2/estudo3; (ii) separar subgrupos demográficos de operacionais; (iii) citar Kleinberg2016inherent (chave ausente no .bib) para a incompatibilidade entre paridades.
+
+\section{Resultados}\label{sec:e5-resultados}
+
+\subsection{Análise de equidade por subgrupos demográficos e de similaridade}\label{sec:e5-resultados-equidade}
+
+O \textit{framework} de equidade, incluindo o critério adotado, as dimensões de estratificação e os testes estatísticos empregados, é descrito na Seção~\ref{sec:e5-metodo}.
+
+\input{tables/tab_qw3_group_metrics.tex}
+
+A Tabela~\ref{tab:qw3-group-metrics} apresenta as métricas por subgrupo.
+A TVP manteve-se estável na maioria das comparações, com rejeição da hipótese nula em apenas um par: faixa etária 18--39 \textit{versus} 40--59 ($p_{\text{FDR}} = 0{,}039$; TVP de $0{,}851$ e $0{,}958$, respectivamente), configurando disparidade limítrofe cuja relevância prática depende do tamanho do denominador (87 e 95 positivos verdadeiros).
+Essa relativa homogeneidade da TVP indica que a capacidade do classificador de detectar pares verdadeiros não varia de forma sistemática entre os subgrupos avaliados.
+
+O cenário do VPP revelou-se distinto.
+Onze dos doze testes com rejeição da hipótese nula ($p_{\text{FDR}} < 0{,}05$) recaíram sobre o VPP, distribuídos em quatro das cinco dimensões avaliadas (Tabela~\ref{tab:qw3-fairness-rejections}).
+Na dimensão de concordância do nome, o VPP do quarto quartil (Q4: $0{,}134$) superou o dos quartis inferiores (Q1--Q3: $< 0{,}004$) por ampla margem, refletindo o fato de que pares com alta similaridade de nome concentram a quase totalidade dos verdadeiros positivos.
+Na dimensão origem do registro, registros de origem tuberculosa apresentaram VPP de $0{,}170$, contra $0{,}019$ do grupo controle (razão de chances $= 0{,}094$; $p_{\text{FDR}} < 10^{-88}$), evidenciando que o classificador opera com precisão substancialmente maior no estrato mais relevante para a vigilância.
+Na dimensão sexo, o VPP feminino ($0{,}049$) superou o masculino ($0{,}026$) com significância estatística ($p_{\text{FDR}} < 10^{-4}$; RC~$= 1{,}92$), embora a magnitude absoluta da diferença seja modesta.
+Na faixa etária, o grupo 0--17 anos exibiu VPP de $0{,}800$, contrastando com valores entre $0{,}017$ e $0{,}042$ nas demais faixas; todavia, o denominador reduzido desse grupo (cinco predições positivas) limita a generalização do achado.
+
+\input{tables/tab_qw3_fairness_rejections.tex}
+
+A interpretação conjunta desses resultados aponta para um padrão coerente: as disparidades de VPP decorrem predominantemente da distribuição desigual de pares verdadeiros entre subgrupos, e não de viés intrínseco do classificador na atribuição de escores.
+Quando um subgrupo concentra maior prevalência de correspondências reais (como ocorre no quartil Q4 de concordância de nome ou na origem tuberculosa), o VPP eleva-se mecanicamente, mesmo que a TVP permaneça homogênea.
+A quase ausência de rejeições na TVP sustenta essa leitura, indicando que o classificador detecta pares verdadeiros com probabilidade similar independentemente do subgrupo, porém a proporção de falsos positivos varia conforme a composição do estrato avaliado.
+
+\section{Discussão}\label{sec:e5-discussao}
+
+\subsection{Equidade do classificador: implicações para a vigilância e limites da análise}\label{sec:e5-discussao-equidade}
+
+A análise de equidade (Seção~\ref{sec:e5-resultados-equidade}) revelou padrão consistente: a taxa de verdadeiros positivos do classificador não variou de forma estatisticamente significativa entre a maioria dos subgrupos avaliados, ao passo que o valor preditivo positivo apresentou disparidades sistemáticas em quatro das cinco dimensões testadas.
+A dissociação entre TVP homogênea e VPP heterogêneo possui interpretação direta no contexto de \textit{linkage} probabilístico com prevalência baixa de correspondências verdadeiras \cite{Chouldechova2017fair}: quando a prevalência de pares verdadeiros varia entre subgrupos, o VPP flutua mesmo que a sensibilidade do classificador permaneça constante, porque a proporção de falsos positivos no denominador domina o cálculo em estratos de baixa prevalência.
+
+Essa constatação tem implicação prática para a vigilância epidemiológica da tuberculose. A concentração de verdadeiros positivos no quartil Q4 de concordância de nome e na origem tuberculosa reflete a estrutura subjacente dos dados, na qual pares com alta similaridade de nome e registros provenientes do sistema de notificação de tuberculose apresentam probabilidade intrinsecamente maior de corresponder ao mesmo indivíduo.
+O classificador, ao reproduzir essa estrutura, não apresentou indicativos de viés adicional nas dimensões avaliadas e captura a associação genuína entre concordância campo a campo e status de correspondência \cite{Fellegi1969theory,Christen2012book}.
+
+A única rejeição envolvendo TVP (faixa etária 18--39 \textit{versus} 40--59, com $p_{\text{FDR}} = 0{,}039$) situa-se no limiar de significância e pode decorrer de diferenças na qualidade de preenchimento dos campos de identificação entre faixas etárias, hipótese que não pôde ser testada diretamente com os dados disponíveis.
+A disparidade de VPP entre sexos (feminino: $0{,}049$; masculino: $0{,}026$; RC~$= 1{,}92$) merece atenção em estudos futuros, particularmente na investigação de possíveis diferenças na completude dos campos de nome entre homens e mulheres nos sistemas de informação em saúde.
+
+A análise também apresenta limitações. A dimensão UF produziu grupo único elegível (RJ), impedindo comparações geográficas que seriam relevantes em país de dimensões continentais.
+A faixa etária 0--17 anos, embora com VPP excepcionalmente alto ($0{,}800$), contou com apenas cinco predições positivas, tornando a estimativa instável.
+A ausência de variáveis de raça/cor e de geolocalização fina no conjunto de dados utilizado restringe a cobertura da análise de equidade a dimensões disponíveis nos subescores de similaridade, excluindo eixos de estratificação reconhecidamente associados a disparidades em saúde no Brasil \cite{Mehrabi2021fairness}.
+A correção de Benjamini-Hochberg \cite{Benjamini1995fdr} controlou a taxa de falsas descobertas no conjunto dos 36 testes, porém a multiplicidade de dimensões e a heterogeneidade de tamanhos amostrais entre grupos exigem cautela na generalização dos achados para bases de dados com composição demográfica distinta.
+
+Os estudos empíricos terminam com a análise de equidade; a síntese dos achados por objetivo, as contribuições, as limitações e as perspectivas estão no Capítulo~\ref{cap:conclusao}.
+
+\end{chapter}

@@ -4,8 +4,8 @@ import re
 from pathlib import Path
 
 tex_dir = Path(r"D:\git\phd-research\text\latex")
-files = sorted(tex_dir.glob("capitulo*.tex")) + [
-    tex_dir / "reserva_cap6.tex",
+files = sorted(tex_dir.glob("capitulo*.tex")) + sorted(tex_dir.glob("estudo*.tex")) + [
+    tex_dir / "conclusao.tex",
     tex_dir / "tese.tex",
 ]
 
