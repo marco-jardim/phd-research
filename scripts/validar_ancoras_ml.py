@@ -23,14 +23,13 @@ from sklearn.metrics import average_precision_score, brier_score_loss, log_loss,
 from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGE = ROOT.parent / "gzcmd-record-linkage" / "src" / "gzcmd_record_linkage"
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(PACKAGE.parent))
 from gzcmd.ml_oof import N_SPLITS, SEED, _classifier, numeric_features, pair_ids  # noqa: E402
 from gzcmd.config import load_config
 from gzcmd.gzcmd_v3_policy_engine import Budget, Costs, LLMError, PolicyEngineV3  # noqa: E402
+# gzcmd-record-linkage >= 0.3.0 (dependencia declarada no pyproject; instalada pela tag v0.3.0)
 from gzcmd_record_linkage.calibration import (  # noqa: E402
-    PlattModel, _logit_mean_and_gradient, fit_anchor_platt,
+    PlattModel, fit_anchor_platt, logit_mean_and_gradient as _logit_mean_and_gradient,
 )
 
 NAMES = {"platt_nota": "Platt (nota)", "ancoras_ml": "Âncoras (margem ML)",

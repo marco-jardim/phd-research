@@ -8,9 +8,9 @@ na área cinza 5 <= s < 9.
 
 Uso:
     python scripts/validar_ancoras.py [--csv data/COMPARADORSEMIDENT.csv]
-Dependência: gzcmd-record-linkage==0.2.0, declarada no pyproject.toml.
+Dependência: gzcmd-record-linkage 0.3.0 (tag v0.3.0 no GitHub), declarada no pyproject.toml.
 Se o índice não disponibilizar essa versão, instalar explicitamente um checkout
-da versão 0.2.0 com ``python -m pip install /caminho/do/checkout``; não se altera
+da versão 0.3.0 com ``python -m pip install /caminho/do/checkout``; não se altera
 sys.path para importar um repositório vizinho implicitamente.
 Saídas:
     data/ancoras_validacao.csv          tabela A+/A- (N, acertos, erros, pureza)
