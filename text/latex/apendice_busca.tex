@@ -1,0 +1,89 @@
+\chapter{Protocolo de busca bibliográfica sobre classificação de pares de \textit{linkage}}
+\label{ap:protocolo-busca}
+
+A justificativa desta tese afirma que são escassos, no contexto brasileiro, os estudos que empregam classificadores supervisionados como pós-processamento do \textit{linkage} probabilístico. Este apêndice documenta a busca realizada em 3 de novembro de 2026 para sustentar essa afirmação, com as bases consultadas, as cadeias de busca, os critérios de seleção e o fluxo de registros. O \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), é o domínio do levantamento, e o objeto de interesse são os estudos que classificam potenciais pares com um classificador treinado em pares rotulados. A busca não constitui uma revisão sistemática no sentido do PRISMA, pois a triagem foi conduzida por um único revisor, sem leitura na íntegra dos textos; seu propósito é registrar a base empírica da afirmação de escassez, e não estimar a produção total sobre o tema. Os registros e as decisões de triagem encontram-se em \texttt{data/protocolo\_busca\_T6.csv}, e as consultas ao PubMed podem ser reproduzidas pelo \textit{script} \texttt{scripts/protocolo\_busca\_T6.py}.
+
+\section{Bases consultadas}
+
+Foram consultadas quatro bases, todas em 3 de novembro de 2026. O PubMed/MEDLINE foi acessado por meio das E-utilities do \textit{National Center for Biotechnology Information}, o que permite repetir as consultas e conferir as contagens. A SciELO (\texttt{search.scielo.org}) e a Biblioteca Virtual em Saúde, que reúne a LILACS (\texttt{pesquisa.bvsalud.org}), foram consultadas pela interface de busca do portal, e as contagens refletem o estado dos índices na data da consulta. O OpenAlex, acessado por sua interface de programação pública, foi incluído como complemento porque indexa periódicos, anais de eventos e repositórios que o PubMed não cobre, como o \textit{International Journal of Population Data Science} e a série \textit{Lecture Notes in Computer Science}.
+
+A Scopus não foi consultada, pois exige acesso institucional que não estava disponível no momento da busca. O Google Scholar não foi usado como base de contagem, por não ser reprodutível; sua consulta anterior, de caráter exploratório, não integra os números deste apêndice.
+
+\section{Cadeias de busca}
+
+A cadeia principal combina três blocos, em português e inglês, para o domínio do \textit{linkage}, o método de aprendizado e o contexto brasileiro:
+
+\begin{quote}
+\small
+(``record linkage'' OR ``relacionamento de registros'' OR ``pareamento probabilístico'') AND (``machine learning'' OR ``aprendizado de máquina'' OR supervised) AND (Brasil OR Brazil OR SIM OR SINAN OR DATASUS)
+\end{quote}
+
+O período considerado foi de 2010 a 2026. No PubMed, a cadeia foi aplicada sem rótulos de campo, de modo que o sistema a traduziu por mapeamento automático de termos; essa tradução amplia a recuperação e também admite ruído, uma vez que a sigla SIM e o termo \textit{supervised} são mapeados para vocabulários não relacionados ao tema. Por esse motivo, foram executadas variantes restritas a título e resumo, e uma variante sem restrição de país para referência internacional. A Tabela~\ref{tab:busca-fluxo} apresenta cada consulta, seu filtro e o número de registros recuperados.
+
+\section{Critérios de seleção}
+
+Foram incluídos os estudos que aplicam um classificador supervisionado à classificação de pares candidatos em bases brasileiras de saúde, com treinamento em pares rotulados. Foram excluídos os estudos sobre aprendizado de máquina aplicado a desfechos clínicos de dados já vinculados, as aplicações epidemiológicas que usam o \textit{linkage} apenas como etapa de preparação dos dados, os trabalhos de interoperabilidade de registros eletrônicos, as revisões e os editoriais, e os métodos de \textit{linkage} determinístico, probabilístico, por similaridade ou por escore sem classificador treinado. A triagem considerou título e resumo; o resumo foi lido nos registros mais próximos do critério.
+
+\section{Fluxo e resultado}
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Fluxo da busca bibliográfica: consultas, registros recuperados e estudos selecionados na triagem por título e resumo.}
+\label{tab:busca-fluxo}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{6.9cm}>{\centering\arraybackslash}p{1.9cm}>{\centering\arraybackslash}p{1.9cm}}
+\toprule
+Base & Consulta e filtro & Recuperados & Selecionados \\
+\midrule
+PubMed & Cadeia principal, sem rótulos de campo, 2010 a 2026 & 73 & 0 \\
+PubMed & Cadeia principal restrita a título e resumo & 0 & 0 \\
+PubMed & \textit{Linkage} e aprendizado supervisionado em título e resumo, afiliação no Brasil & 0 & 0 \\
+PubMed & Mesmo bloco sem restrição de país (referência internacional) & 94 & n.a. \\
+SciELO & Cadeia principal, sem filtro de ano & 0 & 0 \\
+SciELO & ``record linkage'' sozinho, sem filtro de ano & 131\textsuperscript{a} & 0 \\
+SciELO & ``record linkage'' AND aprendizado de máquina ou supervisionado & 0 & 0 \\
+SciELO & Termos em português, com aprendizado de máquina & 0 & 0 \\
+SciELO & ``relacionamento de registros'' ou ``pareamento probabilístico'', sem filtro de ano & 8\textsuperscript{a} & 0 \\
+BVS/LILACS & Cadeia principal, sem filtro de ano & 3\textsuperscript{b} & 0 \\
+BVS/LILACS & Linkage em português e aprendizado de máquina, somente LILACS & 1 & 0 \\
+OpenAlex & Cadeia principal em título e resumo, 2010 a 2026 & 10 & 3\textsuperscript{c} \\
+OpenAlex & Variante com \textit{classifier} e SUS & 13 & 0 acréscimos \\
+Item conhecido & Dissertação não recuperada por nenhuma cadeia & 1 & 1 \\
+Scopus & Não executada, por exigir acesso institucional & n.a. & n.a. \\
+\bottomrule
+\multicolumn{4}{p{12.4cm}}{\footnotesize \textsuperscript{a} 78 títulos únicos (cada documento pode constar em mais de uma versão de idioma), dos quais 56 de 2010 em diante. \textsuperscript{b} Um registro no período de 2010 a 2026; os outros dois correspondem ao mesmo artigo de 2007, em duas bases. \textsuperscript{c} Um registro adicional é a versão preliminar (\textit{preprint}) de um dos estudos selecionados e foi contado uma vez. n.a.: não se aplica.}
+\end{tabular}
+\end{table}
+
+Na cadeia principal do PubMed, os 73 registros recuperados não incluíam nenhum estudo que atendesse ao critério. Doze tratavam de interoperabilidade ou de registros eletrônicos em saúde, seis eram revisões, editoriais ou estruturas conceituais, 25 descreviam métodos ou avaliações de \textit{linkage} determinístico, probabilístico, por similaridade ou por escore, 29 eram aplicações epidemiológicas que usam o \textit{linkage} como etapa, e um estudo segmentava nomes com modelo oculto de Markov, sem classificar pares. Entre os métodos, o mais próximo do critério foi o de \citeonline{Duarte2019scoring}, que avaliou um método de escore para identificar pares verdadeiros sem revisão manual, em bases do rastreamento do câncer de mama, mas sem classificador treinado em pares rotulados. As restrições a título e resumo e à afiliação brasileira retornaram zero registro, e nenhum dos 94 registros da cadeia internacional trazia o Brasil nas afiliações. Esse resultado sugere que os estudos pertinentes nem sempre empregam os termos da cadeia no título ou no resumo, ou não constam no PubMed.
+
+Na SciELO, a cadeia principal e as combinações com aprendizado de máquina não retornaram documentos. A busca ampla por ``record linkage'' recuperou 131 registros, e os 56 títulos únicos publicados a partir de 2010 tratavam de aplicações do método, de sua acurácia e de sua qualidade. Entre eles, \citeonline{Brustulin2018posprocessamento} incluíram uma etapa determinística de pós-processamento do \textit{linkage} probabilístico, e \citeonline{Girianelli2019interobservador} avaliaram a concordância entre revisores humanos na classificação de pares, sem classificador supervisionado. Na BVS, a cadeia principal recuperou três registros, e apenas um estava no período, um estudo de harmonização de registros eletrônicos para aprendizado federado que não classifica pares. A consulta restrita à LILACS retornou um estudo chileno de processamento de linguagem natural.
+
+No OpenAlex, a cadeia principal recuperou dez registros, dos quais três atendem ao critério. Um quarto estudo, a dissertação de \citeonline{Paiva2025comparador}, não foi recuperado por nenhuma cadeia e foi incluído por ser conhecido previamente, o que indica que o conjunto selecionado depende em parte do conhecimento prévio da autora e que a cobertura das cadeias é incompleta.
+
+\section{Estudos incluídos}
+
+A Tabela~\ref{tab:busca-incluidos} reúne os quatro estudos que atendem ao critério. Os três primeiros foram recuperados pelo OpenAlex, e a dissertação de Paiva foi incluída por item conhecido. Todos empregam classificadores supervisionados sobre pares de bases brasileiras de saúde, e os detalhes de cada um são discutidos no Capítulo~\ref{cap:referencial}. O estudo de \citeonline{Pita2018accuracy}, que descreve uma ferramenta híbrida de \textit{linkage} probabilístico aplicada à coorte de 114 milhões de brasileiros, não foi recuperado por nenhuma cadeia e, segundo seu resumo, não emprega classificador supervisionado explícito; é mantido como estudo relacionado ao de \citeonline{Pita2017trainable}.
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\caption{Estudos que atendem ao critério de inclusão.}
+\label{tab:busca-incluidos}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{1.0cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{2.9cm}}
+\toprule
+Autores & Ano & Base de recuperação & Método & País e base de dados \\
+\midrule
+\citeonline{Pita2017trainable} & 2017 & OpenAlex & Árvore de decisão, \textit{naïve Bayes}, regressão logística, Floresta Aleatória, SVM linear e \textit{gradient boosting} & Brasil; base não informada no resumo \\
+\citeonline{Pereira2024supervised} & 2024 & OpenAlex & Floresta Aleatória, LightGBM, XGBoost e redes neurais & Brasil; dados do SUS \\
+\citeonline{Paiva2025comparador} & 2025 & Item conhecido & Árvore de decisão & Brasil; SIM e Sinan-TB \\
+\citeonline{Lages2026trauma} & 2026 & OpenAlex & Seis algoritmos, com melhor desempenho do LightGBM & Brasil (Espírito Santo); SIM, SIH-SUS, Sinan e e-SUS VS \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Limitações}
+
+A Scopus não foi consultada, e o Embase não integrou a busca, de modo que a cobertura de periódicos de informática biomédica indexados apenas nessas bases pode ter sido subestimada. A triagem foi realizada por um único revisor, sem dupla checagem independente e sem leitura na íntegra, e a literatura cinzenta foi coberta apenas de forma parcial, por meio do OpenAlex e de um item conhecido. As consultas à SciELO e à BVS foram feitas pela interface do portal, cujos índices e rotinas de busca podem variar ao longo do tempo, e a consulta à BVS com o conjunto completo de documentos (71 registros) não foi triada individualmente, por sobreposição esperada com o PubMed. A cadeia principal tem sensibilidade limitada: as restrições a título e resumo retornaram zero registro e nenhum dos estudos incluídos foi recuperado pelo PubMed, o que reforça a necessidade de repetir a busca na Scopus antes de qualquer afirmação mais categórica de ausência. A afirmação de escassez apresentada na justificativa deve, portanto, ser lida como resultado da busca realizada em 3 de novembro de 2026, nas bases e cadeias aqui descritas, e não como demonstração de inexistência de outros estudos.
