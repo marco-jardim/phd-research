@@ -1,24 +1,24 @@
 \begin{table}[htbp]
 \centering
-\caption{Rejei\c{c}\~oes significativas na an\'alise de equidade (FDR $\alpha = 0{,}05$, corre\c{c}\~ao de Benjamini--Hochberg).}
+\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 58 testes): XGBoost com limiar de sensibilidade equivalente ao corte 6{,}0. $\Delta$ em pontos percentuais (grupo A menos grupo B).}
 \label{tab:qw3-fairness-rejections}
 \small
-\begin{tabular}{llllrrl}
+\begin{tabular}{lllllrrr}
 \toprule
-Dimens\~ao & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ taxa & OR \\
+Dimens\~ao & Tipo & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
 \midrule
-nome (quartis) & VPP & Q3 & Q4 & $<$0{,}001 & $-$0{,}130 & 0{,}025 \\
-nome (quartis) & VPP & Q2 & Q4 & $<$0{,}001 & $-$0{,}133 & 0{,}005 \\
-nome (quartis) & VPP & Q1 & Q4 & $<$0{,}001 & $-$0{,}134 & 0{,}017 \\
-origem         & VPP & controle & TB origem & $<$0{,}001 & $-$0{,}151 & 0{,}094 \\
-faixa et\'aria  & VPP & 0--17 & 60--79 & $<$0{,}001 & $+$0{,}783 & 224{,}7 \\
-faixa et\'aria  & VPP & 0--17 & 40--59 & $<$0{,}001 & $+$0{,}766 & 113{,}2 \\
-faixa et\'aria  & VPP & 0--17 & 80+ & $<$0{,}001 & $+$0{,}768 & 121{,}2 \\
-faixa et\'aria  & VPP & 0--17 & 18--39 & $<$0{,}001 & $+$0{,}758 & 91{,}9 \\
-faixa et\'aria  & VPP & 18--39 & 60--79 & $<$0{,}001 & $+$0{,}024 & 2{,}44 \\
-faixa et\'aria  & VPP & 40--59 & 60--79 & $<$0{,}001 & $+$0{,}017 & 1{,}98 \\
-faixa et\'aria  & TVP & 18--39 & 40--59 & 0{,}039     & $-$0{,}107 & 0{,}25 \\
-sexo           & VPP & F & M & $<$0{,}001 & $+$0{,}023 & 1{,}92 \\
+Sexo & Demogr. & VPP & F & M & $<$0{,}001 & $+$22{,}4 & 5{,}56 \\
+Ano do \'obito & Operac. & VPP & 2019 & 2022 & 0{,}024 & $-$19{,}5 & 0{,}33 \\
+Origem & Operac. & VPP & Controle & TB origem & $<$0{,}001 & $-$29{,}2 & 0{,}10 \\
+Munic\'ipio & Operac. & VPP & Capital (RJ) & Demais & 0{,}046 & $-$25{,}5 & 0{,}07 \\
+Nome (quartis) & Operac. & VPP & Q3 & Q4 & $<$0{,}001 & $-$37{,}0 & 0{,}19 \\
+Nome (quartis) & Operac. & Sens. & Q3 & Q4 & $<$0{,}001 & $-$33{,}2 & 0{,}08 \\
+Nome (quartis) & Operac. & Sens. & Q2 & Q4 & 0{,}020 & $-$95{,}1 & 0{,}01 \\
+Passo & Operac. & VPP & 11 & 9 & $<$0{,}001 & $-$63{,}1 & 0{,}01 \\
+Passo & Operac. & VPP & 11 & 6 & $<$0{,}001 & $-$48{,}8 & 0{,}10 \\
+Passo & Operac. & VPP & 6 & 9 & $<$0{,}001 & $-$14{,}3 & 0{,}09 \\
+Passo & Operac. & Sens. & 11 & 9 & 0{,}002 & $-$21{,}1 & 0{,}12 \\
+Passo & Operac. & Sens. & 11 & 6 & 0{,}041 & $-$17{,}5 & 0{,}24 \\
 \bottomrule
 \end{tabular}
 \end{table}
