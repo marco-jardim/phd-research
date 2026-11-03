@@ -1,0 +1,157 @@
+\begin{chapter}{Estratégias operacionais e impacto epidemiológico}\label{cap:estudo3}
+
+No terceiro objetivo específico, derivam-se e comparam-se duas estratégias operacionais de pós-processamento, uma orientada à sensibilidade, voltada à vigilância e à recuperação exaustiva de pares, e outra orientada à precisão, voltada à confirmação e à construção de conjuntos analíticos de alta confiabilidade, por meio da otimização de limiares e de regras de domínio, caracterizando a fronteira de Pareto entre elas e estimando o impacto epidemiológico da recuperação de vínculos da área cinza sobre a detecção de óbitos em pessoas com tuberculose no município do Rio de Janeiro, bem como o custo da revisão manual.
+
+\section{Método}\label{sec:e3-metodo}
+
+\subsection{Estratégia de maximização da sensibilidade}\label{sec:estrategia-recall}
+
+Na segunda etapa analítica, após a comparação ampla de classificadores do Capítulo~\ref{cap:estudo2}, o foco recaiu sobre a maximização da sensibilidade, buscando recuperar o maior número possível de pares verdadeiros, particularmente aqueles situados na área cinza. Para tanto, foram empregadas técnicas de balanceamento de classes (\textit{SMOTE} \cite{Chawla2002smote}, \textit{Borderline-SMOTE}, \textit{ADASYN} e \textit{SMOTE-Tomek}), seguindo a lógica de combinação de sobreamostragem e subamostragem proposta por Hassani e colaboradores \citeyearpar{Hassani2025oversampling}. Essas técnicas foram combinadas com classificadores configurados para minimizar falsos negativos: Floresta Aleatória com pesos de classe, \textit{AdaBoost} com sobreamostragem, MLP com \textit{SMOTE} em proporção 1:1, votação suave (\textit{Soft Voting Ensemble}) e classificador em cascata (\textit{Cascade Classifier}) de dois estágios. Os limiares de decisão dos classificadores, ou seja, a probabilidade mínima estimada pelo modelo acima da qual um par candidato é classificado como verdadeiro, foram ajustados para valores baixos (entre 0{,}10 e 0{,}30), priorizando sensibilidade sobre precisão. Esta abordagem é particularmente relevante para estudos de subnotificação. Nesses estudos, a não identificação de um par verdadeiro pode resultar em superestimação da subnotificação e comprometer a avaliação do desempenho do sistema de saúde, bem como a identificação de nós críticos no itinerário terapêutico do paciente \cite{Oliveira2012uso, Sousa2011obitos}.
+
+\subsection{Estratégia de maximização da precisão}\label{sec:estrategia-precisao}
+
+Na terceira etapa analítica, o foco direcionou-se à maximização da precisão, buscando identificar apenas os pares de alta confiabilidade e minimizar falsos positivos. Foram empregados classificadores com forte regularização\footnote{Regularização é uma técnica que penaliza a complexidade do modelo durante o treinamento, adicionando um termo proporcional à magnitude dos coeficientes (L1, que favorece a eliminação de coeficientes irrelevantes) ou ao quadrado dessa magnitude (L2, que reduz uniformemente todos os coeficientes). O efeito prático é um modelo mais conservador, menos sujeito a sobreajuste (\textit{overfitting}) aos dados de treinamento e, portanto, com menor tendência a classificar pares duvidosos como verdadeiros.} (XGBoost \cite{Chen2016xgboost} e LightGBM \cite{Ke2017lightgbm}), Floresta Aleatória calibrada por regressão isotônica, combinação por empilhamento (\textit{Stacking}) com meta-aprendiz de regressão logística e votação por consenso (unanimidade). A escolha desses classificadores justifica-se pela adequação ao objetivo de minimização de falsos positivos: a regularização L1/L2 do XGBoost e do LightGBM impõe podas conservadoras que favorecem a rejeição de pares duvidosos, a calibração isotônica produz estimativas de probabilidade confiáveis para a aplicação de limiares elevados e a votação por unanimidade exige concordância de todos os modelos, restringindo a classificação positiva aos casos de maior certeza. Complementarmente, foram desenvolvidas regras de negócio baseadas nos sub-escores do comparador de registros (cf.\ Seção~\ref{sec:comparador-registros}), atribuindo pontuação ponderada a critérios como concordância exata de primeiro e último fragmento do nome, data de nascimento idêntica, similaridade do nome da mãe acima de limiar definido e concordância de município e logradouro avaliada pelo coeficiente de Jaccard. Também foi avaliada uma abordagem híbrida que combina classificadores de aprendizado de máquina com regras de negócio. Os limiares de decisão dos classificadores, ou seja, a probabilidade mínima estimada pelo modelo acima da qual um par candidato é classificado como verdadeiro (cf.\ definição na Seção~\ref{sec:estrategia-recall}), foram selecionados por busca em grade (\textit{grid search}) sobre o conjunto de validação no intervalo de 0{,}60 a 0{,}90, priorizando o ponto operacional de maior precisão. Ao elevar o limiar de decisão, o classificador torna-se mais restritivo: somente pares para os quais o modelo estima alta probabilidade de correspondência são classificados como verdadeiros, reduzindo falsos positivos ao custo de potencialmente rejeitar pares verdadeiros de menor confiança. Esta estratégia é particularmente indicada para estudos de associação, nos quais a inclusão de falsos positivos pode introduzir viés nas estimativas de coeficientes. Cabe notar que, conforme argumentado por Hand e colaboradores \citeyearpar{Hand2018fmeasure}, o F$_1$-Score pode não refletir adequadamente o desempenho do classificador nesse cenário, recomendando-se a utilização complementar de métricas como AUC-PR\footnote{A AUC-ROC (\textit{Area Under the Receiver Operating Characteristic Curve}) mede a discriminação do classificador pela relação entre sensibilidade e taxa de falsos positivos. Sob severo desbalanceamento de classes, a AUC-ROC tende a valores otimistas, pois a especificidade se beneficia do grande volume de verdadeiros negativos. A AUC-PR (\textit{Area Under the Precision-Recall Curve}) substitui a especificidade pela precisão, sendo mais informativa quando a prevalência da classe positiva é muito baixa \cite{Davis2006aucpr, Saito2015aucpr}.}.
+
+\subsection{Delineamento da ablação e da fronteira de Pareto}\label{sec:e3-ablacao-metodo}
+
+Além das duas estratégias, realizou-se um estudo de ablação, procedimento no qual componentes do sistema são sistematicamente removidos ou isolados para quantificar a contribuição de cada um ao desempenho global. Essa abordagem é necessária para determinar se os ganhos observados decorrem das regras de domínio, do classificador de aprendizado de máquina ou da sua combinação, permitindo avaliar se a complexidade adicional do modelo se justifica frente a regras mais simples. Foram comparadas configurações \textit{rules-only}, \textit{ML-only}, combinações híbridas (lógicas AND/OR), cascatas e consenso entre modelos, incluindo a exploração de grades de limiares de decisão no intervalo de 0,10 a 0,90 para os classificadores de aprendizado de máquina e de 5 a 10 pontos para as regras de negócio, além de combinações cruzadas (limiar do classificador $\times$ limiar das regras). Para cada configuração, foram identificados os pontos de Pareto no espaço precisão $\times$ sensibilidade, isto é, as combinações nas quais não é possível melhorar uma métrica sem deteriorar a outra, delimitando a fronteira de configurações eficientes e permitindo ao usuário selecionar o ponto operacional adequado ao seu contexto de uso (por exemplo, vigilância epidemiológica, que demanda alta sensibilidade, \textit{versus} construção de coortes analíticas, que requer alta precisão; cf.\ Seção~\ref{sec:e3-resultados}).
+
+\section{Resultados}\label{sec:e3-resultados}
+
+\subsection{Estratégia de maximização da sensibilidade (NB02)}\label{sec:e3-nb02}
+
+No cenário de maximização da sensibilidade\footnote{Disponível em: \url{https://github.com/marco-jardim/phd-research/blob/main/notebooks/02_estrategia_maximo_recall.ipynb} \cite{Jardim2026phdrepo}.} (cf.\ Seção~\ref{sec:estrategia-recall}), o objetivo foi reduzir ao máximo a perda de pares verdadeiros, aceitando maior carga de revisão manual. Entre as configurações testadas, o modelo Gradient Boosting com SMOTE e pesos de classe atingiu sensibilidade de 0,932 com precisão de 0,885, demonstrando que a engenharia de atributos complementar ao escore agregado permite obter sensibilidade elevada sem degradação extrema da precisão.
+
+Configurações extremamente permissivas (\textit{ensemble} com limiar baixo) atingem sensibilidade próxima de 1,0, porém impõem custos operacionais desproporcionais, reforçando a necessidade de selecionar o ponto operacional com base em restrições reais de capacidade de revisão.
+
+\subsection{Estratégia de maximização da precisão (NB03)}\label{sec:e3-nb03}
+
+No cenário de maximização da precisão\footnote{Disponível em: \url{https://github.com/marco-jardim/phd-research/blob/main/notebooks/03_estrategia_maxima_precisao.ipynb} \cite{Jardim2026phdrepo}.}, o propósito foi gerar listas de candidatos de alta confiança para investigação, minimizando falsos positivos. Foram comparadas três abordagens: (i) regras determinísticas baseadas em concordância forte de atributos-chave (nome perfeito, data de nascimento exata, nome da mãe concordante), (ii) consenso por unanimidade entre modelos de aprendizado de máquina e (iii) um classificador híbrido que combina a probabilidade estimada pelo modelo supervisionado com a pontuação de regras determinísticas.
+
+O resultado mais restritivo (regras com limiar alto) produz precisão próxima de 1,0, porém com sensibilidade limitada, aceitável apenas em contextos de auditoria ou validação amostral. O consenso entre múltiplos modelos eleva a sensibilidade mantendo precisão alta, ao exigir concordância majoritária em vez de unanimidade. A configuração híbrida permite parametrizar o equilíbrio precisão/sensibilidade por meio de dois limiares independentes (probabilidade do classificador e escore das regras), conferindo ao operador controle explícito sobre o ponto operacional. Essa flexibilidade motivou a formalização do \textit{framework} híbrido e o estudo de ablação a seguir, cujo objetivo é quantificar a contribuição marginal de cada componente. A Tabela~\ref{tab:nb03-precision} consolida o desempenho das configurações avaliadas nesta etapa.
+
+\input{tables/tab_nb03_precision.tex}
+
+\subsection{Estudo de ablação e fronteira de Pareto}\label{sec:cap5-ablacao-pareto}
+
+Para isolar a contribuição de cada componente do \textit{framework}, foi conduzido um estudo de ablação (\textit{ablation study}) inicialmente com 70 configurações, organizadas em nove categorias de decisão: limiar ingênuo por escore, regras apenas, aprendizado de máquina apenas (ML-only), híbridos do tipo AND (interseção), híbridos do tipo OR (união), cascatas ML$\rightarrow$Regras e Regras$\rightarrow$ML, consenso entre modelos e consenso combinado com regras. Na execução original, os critérios de regras incluem concordância quase perfeita do nome ($\geq 0{,}95$, +3{,}0 pontos), data de nascimento exata (+3{,}0), concordância forte do nome da mãe ($\geq 0{,}70$, +2{,}0), município idêntico (+1{,}5), endereço concordante (+1{,}0) e nota final do comparador $\geq 9$ (+2{,}0) ou $\geq 8$ e $< 9$ (+1{,}0), além de pontuações intermediárias para concordâncias parciais (cf.\ Seção~\ref{sec:comparador-registros}). As linhas com XGBoost foram acrescentadas posteriormente pelo fluxo Modal, a partir de probabilidades e escores de regras persistidos por par candidato; essa implementação utiliza critérios e pesos de regras distintos dos empregados na execução original. A Tabela~\ref{tab:ablation-best-category} reúne as configurações selecionadas por categoria e a Tabela~\ref{tab:ablation-top10} apresenta dez configurações de alto $F_1$, cujas origens experimentais devem ser distinguidas.
+
+Na ablação original, a base foi dividida diretamente em treinamento e teste, sem conjunto intermediário de validação para a escolha de limiares. As configurações da grade foram avaliadas sobre as respostas conhecidas do teste e ordenadas por $F_1$; os limiares do XGBoost acrescentado também foram avaliados no respectivo conjunto de teste. O melhor $F_1$ da grade não constitui, portanto, avaliação independente da escolha do limiar. Essa limitação não demonstra uso dos dados de teste no ajuste dos modelos, nem permite quantificar eventual otimismo das métricas com os resultados disponíveis.
+
+\input{tables/tab_ablation_best_category.tex}
+
+\input{tables/tab_ablation_top10.tex}
+
+Na comparação entre classificadores da Tabela~\ref{tab:ablation-best-category}, observou-se heterogeneidade entre categorias de decisão. Configurações mais permissivas (Hybrid-OR e Consenso ML) mantiveram $F_1$ em patamar semelhante ao da estratégia ML-only. As reduções mais acentuadas de sensibilidade e $F_1$ nas combinações restritivas referem-se às linhas acrescentadas com XGBoost e ao escore de regras do fluxo Modal, não a todas as configurações da ablação original. Nesse fluxo, nenhum dos 74~pares verdadeiros do teste atinge escore $\geq 7$ (máximo observado: 6{,}5), e apenas 6 atingem escore $\geq 6$. Assim, a imposição de limiar de regras $\geq 7$ como segundo filtro elimina todos os positivos (TP=0; FN=74; $F_1=0{,}000$). No Consenso+Rules que inclui XGBoost, com regras $\geq 6$, a cobertura restringe-se a esses 6~pares (precisão=1{,}000; sensibilidade=0{,}081; $F_1=0{,}150$). Esses resultados delimitam o alcance dessa implementação de regras, sem demonstrar uma limitação geral de regras determinísticas.
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/ablation_best_category.pgf}
+\caption{Melhor F1 por categoria de decisão no estudo de ablação.}
+\label{fig:ablation-barplot}
+\end{figure}
+
+Na ablação original, o limiar de escore $\geq 8$ alcança $F_1 = 0{,}610$, enquanto a abordagem ML-only (RF+SMOTE, $th = 0{,}5$) atinge $F_1 = 0{,}931$, com 67 verdadeiros positivos, 3 falsos positivos e 7 falsos negativos. A diferença observada é de 0,321 pontos. Nas linhas acrescentadas pelo fluxo Modal, o XGBoost com limiar de 0,7 apresenta $F_1 = 0{,}943$, com 66 verdadeiros positivos, nenhum falso positivo e 8 falsos negativos. Esse valor não corresponde ao resultado QW1 da Seção~\ref{sec:qw1-deep-learning}, no qual o XGBoost apresenta $F_1 = 0{,}920$. Os valores devem ser interpretados em seus respectivos protocolos, considerando a seleção de limiares no teste, sem atribuir a diferença exclusivamente à família de classificador.
+
+As combinações híbridas ocupam posições intermediárias na fronteira precisão/sensibilidade, deslocando o ponto operacional conforme a exigência do contexto. A configuração Hybrid-OR (RF$\geq$0,7 $\cup$ Rules$\geq$8) alcança $F_1 = 0{,}921$ com precisão de 0,985 e sensibilidade de 0,865, enquanto a Hybrid-AND (RF$\geq$0,5 $\cap$ Rules$\geq$5) eleva a precisão a 1,000 ao custo de reduzir a sensibilidade a 0,838. A operação de união (OR) aceita pares que qualquer componente classifica como positivos, favorecendo sensibilidade; a interseção (AND) exige concordância de ambos, favorecendo precisão. O consenso entre modelos ($F_1 = 0{,}928$) constitui alternativa competitiva, em que a diversidade de algoritmos funciona como mecanismo de regularização.
+
+A parametrização por dois limiares (probabilidade do classificador e escore de regras), no caso do RF+SMOTE, e por limiar único de probabilidade, no caso do XGBoost, permite mapear de forma contínua o espaço de pontos operacionais. A Tabela~\ref{tab:pareto-frontier} e a Figura~\ref{fig:pareto-frontier} apresentam a fronteira de Pareto (\textit{Pareto frontier}) resultante, cujos extremos variam de configurações de sensibilidade elevada (próxima de 0,96) e precisão moderada até configurações de precisão unitária com sensibilidade reduzida, oferecendo ao gestor da vigilância alternativas de triagem e investigação conforme a capacidade operacional local.
+
+\input{tables/tab_pareto_frontier.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/pareto_frontier_v2.pgf}
+\caption{Fronteira de Pareto para seleção de pontos operacionais (precisão e sensibilidade) em diferentes limiares de decisão para RF+SMOTE e XGBoost.}
+\label{fig:pareto-frontier}
+\end{figure}
+
+\subsection{Validação cruzada das configurações operacionais}\label{sec:e3-validacao-cruzada}
+
+\begin{sloppypar}
+A robustez (\textit{robustness}) das configurações originais foi avaliada por validação cruzada estratificada com cinco partições (5-\textit{fold} CV), cujos resultados são sintetizados na Tabela~\ref{tab:cv-5fold} e na Figura~\ref{fig:cv-boxplots}. A linha de XGBoost incorporada à tabela provém da validação cruzada $5 \times 5$ do QW1, não da mesma execução das configurações originais.
+
+\input{tables/tab_cv_5fold.tex}
+
+\begin{figure}[!ht]
+\centering
+\resizebox{0.96\textwidth}{!}{\input{fig_doc/cv_boxplots_v2.pgf}}
+\caption{Distribuição do $F_1$ por configuração na validação cruzada: cinco partições na análise original e $5 \times 5$ na parcela de treinamento do QW1 para XGBoost. Caixas representam mediana e intervalo interquartil (IIQ); bigodes estendem-se até 1{,}5~$\times$~IIQ; pontos individuais correspondem ao $F_1$ de cada partição.}
+\label{fig:cv-boxplots}
+\end{figure}
+
+Entre as configurações originais, a RF+SMOTE ($th \geq 0{,}5$) obteve o maior $F_1$ médio ($0{,}916 \pm 0{,}026$)\footnote{A validação cruzada original comparou configurações operacionais (combinações de limiares). A comparação QW1 entre famílias de classificadores, apresentada na Seção~\ref{sec:qw1-deep-learning}, indicou $F_1$ médio de $0{,}924 \pm 0{,}030$ para o XGBoost, sob protocolo distinto.}, seguida pela Hybrid-OR RF$\geq$0,7 + Rules$\geq$8 ($0{,}898 \pm 0{,}025$) e pelo Gradient Boosting ($0{,}898 \pm 0{,}032$). O limiar ingênuo $\geq 8$ ficou substancialmente abaixo ($0{,}571 \pm 0{,}057$), com variância também superior, indicando que a abordagem baseada em escore agregado é simultaneamente menos eficaz e menos estável. A magnitude dessa diferença é relevante: o $F_1$ médio do RF+SMOTE supera o do limiar ingênuo em 0,345 pontos, e o desvio-padrão inferior (0,026 contra 0,057) indica que a superioridade se mantém mesmo sob variação amostral.
+\end{sloppypar}
+
+Entre as configurações originais da Tabela~\ref{tab:cv-5fold}, RF+SMOTE ($th \geq 0{,}5$) alcança o maior $F_1$ no teste da ablação ($0{,}931$) e a maior média na validação cruzada original. Essa afirmação não se estende à grade ampliada de limiares da Tabela~\ref{tab:pareto-frontier}. A Hybrid-OR apresenta desvio-padrão menor, sem inversão da ordenação pela média. A escolha do ponto operacional deve considerar tanto o desempenho médio quanto a variabilidade entre partições, sem interpretar essa análise como validação externa ou como avaliação independente da seleção de limiares.
+
+\subsection{Impacto epidemiológico e custo operacional}\label{sec:e3-impacto-epidemiologico}
+
+As Tabelas~\ref{tab:impacto-epidemiologico} e \ref{tab:perfil-recuperados} e as Figuras~\ref{fig:epi-deteccao} a \ref{fig:epi-custo} apresentam o impacto epidemiológico e o custo operacional do pós-processamento supervisionado em relação ao limiar ingênuo $\geq 8$ do escore do \textit{linkage} probabilístico.
+
+\input{tables/tab_impacto_epidemiologico.tex}
+
+\input{tables/tab_perfil_recuperados.tex}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_deteccao.pgf}
+\caption{Pares verdadeiros detectados e perdidos por método de classificação.}
+\label{fig:epi-deteccao}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_revisoes.pgf}
+\caption{Volume total de pares encaminhados para revisão manual por método.}
+\label{fig:epi-revisoes}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\input{fig_doc/epi_custo.pgf}
+\caption{Custo operacional: número de revisões manuais por par verdadeiro recuperado.}
+\label{fig:epi-custo}
+\end{figure}
+
+\section{Discussão}\label{sec:e3-discussao}
+
+\subsection{Impacto epidemiológico e operacional}\label{sec:e3-discussao-impacto}
+
+A subestimação de óbitos por tuberculose constitui problema recorrente nos sistemas de vigilância brasileiros, decorrente tanto da subnotificação de casos quanto de falhas no encerramento oportuno das fichas de investigação \cite{Bartholomay2014improved, Santos2018underreporting}. Quando o \textit{linkage} entre o SIM e o Sinan-TB é utilizado para recuperar esses óbitos, a acurácia da etapa de classificação dos pares candidatos determina diretamente a magnitude do viés de mensuração remanescente \cite{Doidge2019linkageerror, Shaw2022biases}.
+
+Os resultados obtidos neste estudo quantificam esse impacto no conjunto avaliado. A configuração RF+SMOTE (limiar 0,5) recuperou 24 óbitos adicionais em relação ao limiar ingênuo $\geq 8$ do escore agregado, o que representa incremento de 55,8\% na detecção de pares verdadeiros no conjunto de teste (Tabela \ref{tab:impacto-epidemiologico}). Esses valores pertencem à ablação original e não constituem estimativa conservadora por comparação com o XGBoost do QW1 ou do fluxo Modal, cujas configurações e partições não foram demonstradas equivalentes. A escolha de limiares na grade avaliada no teste também impede interpretar o resultado selecionado como avaliação independente dessa escolha. Cada óbito não vinculado ao registro de notificação impede a correção do desfecho na ficha do Sinan, comprometendo o cálculo de indicadores como a taxa de mortalidade entre casos notificados e a proporção de encerramentos por óbito \cite{Lima2020tbquality, Oliveira2019early}.
+
+O custo operacional também favoreceu o pós-processamento supervisionado. A razão de revisões por par verdadeiro recuperado situou-se em aproximadamente 1,0 para RF+SMOTE, contra 1,6 para o limiar ingênuo $\geq 8$, indicando que o modelo de aprendizado de máquina concentra a revisão manual em candidatos com maior probabilidade de serem pares verdadeiros (Tabela \ref{tab:impacto-epidemiologico}, Figuras \ref{fig:epi-deteccao} a \ref{fig:epi-custo}). Essa eficiência é particularmente relevante em contextos municipais, onde a capacidade de revisão clerical é limitada e o custo de oportunidade de cada registro avaliado erroneamente é alto \cite{Coeli2021suboptimal}.
+
+A área cinza convencional, definida pela nota final do Comparador de Registros no intervalo de 5 a~9 ($\geq 5$ e $< 9$), abriga 151 dos 247 pares verdadeiros da base completa, cerca de 61\% (Tabela~\ref{tab:score-bands}). A Tabela~\ref{tab:perfil-recuperados} descreve os óbitos recuperados abaixo do limiar de referência $\geq 8$, recorte mais estreito dentro dessa área, sem redefinir seus limites. Nas faixas intermediárias, a heterogeneidade de erros de digitação, abreviações e variações nominais limita a classificação por limiar fixo. A capacidade do classificador de explorar padrões multivariados nos 29 subescores de similaridade permite discriminar pares que seriam indistinguíveis por um único ponto de corte, resultado consistente com achados de Paixão et al. \citeyearpar{Paixao2017linkageevaluation} sobre o desempenho de abordagens combinadas em bases administrativas brasileiras.
+
+\subsection{Dois \textit{pipelines} e escolha de ponto operacional}\label{sec:e3-dois-pipelines}
+
+A exploração sistemática de sete configurações na fronteira de Pareto (Tabela \ref{tab:pareto-frontier}, Figura \ref{fig:pareto-frontier}) demonstrou que precisão e sensibilidade não podem ser maximizadas simultaneamente, resultado esperado pela teoria de decisão estatística, mas aqui quantificado para o contexto específico do \textit{linkage} SIM--Sinan-TB. A implicação prática é direta: não existe um único ponto operacional ótimo, e a escolha deve ser orientada pela finalidade do \textit{linkage} \cite{Harron2017linkagequality}.
+
+O \textit{pipeline} orientado à vigilância prioriza sensibilidade. A configuração RF+SMOTE (limiar 0,5) atingiu F$_1$-Score de 0,916$\pm$0,026 na validação cruzada original, com cinco partições estratificadas da base completa (Tabela \ref{tab:cv-5fold}). O resultado de XGBoost incorporado à mesma tabela ($F_1 = 0{,}924 \pm 0{,}030$) provém do QW1, com validação cruzada $5 \times 5$ apenas na parcela de treinamento. A reunião dos resultados não estabelece comparação sob as mesmas partições nem superioridade geral dos métodos arbóreos \cite{Breiman2001rf,Chen2016xgboost}. A variabilidade interna informa a escolha operacional, mas não demonstra estabilidade temporal ou transferência para outros contextos. Em monitoramento de mortalidade, a prioridade à sensibilidade pode ser justificada pelo custo atribuído ao óbito não detectado em relação ao par incorreto encaminhado para revisão \cite{Bartholomay2014improved}.
+
+No polo oposto, o \textit{pipeline} de confirmação prioriza precisão. Configurações híbridas do tipo AND (por exemplo, Gradient Boosting com limiar $\geq 0,6$ combinado a regras com escore $\geq 5$) exigem concordância simultânea entre o classificador probabilístico e evidências determinísticas em atributos-chave. O estudo de ablação (Tabela \ref{tab:ablation-best-category}) mostrou que essa exigência dupla eleva a precisão ao custo de sensibilidade moderada, padrão compatível com ações administrativas, relatórios formais de encerramento e situações em que a auditoria posterior é inviável ou onerosa.
+
+A análise de sensibilidade ao desbalanceamento registrou F$_1$-Score na faixa de 0,880 a 0,918 sob nove estratégias distintas (Tabela \ref{tab:imbalance-sensitivity}), descrevendo variação interna do Random Forest nas condições avaliadas. A configuração Hybrid-OR apresentou desvio-padrão de F$_1$ ligeiramente inferior ao RF+SMOTE na validação cruzada original (Tabela~\ref{tab:cv-5fold}). A combinação permite aceitar pares por duas vias, mas o experimento não isolou a complementaridade entre componentes como causa dessa diferença de variabilidade \cite{Doidge2018demystifying}.
+
+A escolha entre os \textit{pipelines}, portanto, não é meramente técnica; envolve análise de risco, volume esperado de revisão e finalidade institucional do \textit{linkage}. O \textit{framework} configurável proposto nesta tese formaliza essa decisão, torna explícitos os compromissos envolvidos e permite que gestores e epidemiologistas selecionem o ponto operacional mais adequado ao seu contexto, com base em evidência empírica documentada.
+
+\subsection{Contribuição do \textit{framework} em relação ao uso isolado de classificadores}\label{sec:e3-contribuicao-framework}
+
+A aplicação de técnicas de aprendizado de máquina ao \textit{linkage} de bases de dados tem sido explorada sob diferentes perspectivas na literatura. Classificadores supervisionados, como Floresta Aleatória e máquinas de vetores de suporte, foram empregados para substituir limiares fixos na classificação de pares candidatos, com ganhos documentados de acurácia em bases administrativas de saúde \cite{Christen2012book, Paixao2017linkageevaluation}. Extensões bayesianas do modelo de Fellegi e Sunter incorporaram informação \textit{a priori} sobre a distribuição de erros para estimar probabilidades posteriores de vínculo \cite{Fellegi1969theory, Enamorado2019fastlink}. Mais recentemente, arquiteturas de aprendizado profundo para \textit{entity matching}, como DeepMatcher e DITTO, alcançaram desempenho competitivo em bases de dados comerciais e bibliográficas, embora sua aplicação a registros de saúde com campos padronizados permaneça limitada \cite{Mudgal2018deepmatcher, Li2020ditto}. Avaliações comparativas em contextos de \textit{linkage} probabilístico confirmaram que o pós-processamento supervisionado reduz tanto falsos positivos quanto falsos negativos em relação a limiares fixos, sobretudo na área cinza \cite{Doidge2018demystifying, DuVall2010extending}. Não obstante, a maioria dessas aplicações avalia um único classificador em um único ponto operacional, sem exploração sistemática do espaço de configurações nem protocolo reprodutível para a seleção do compromisso entre precisão e sensibilidade mais adequado ao contexto de uso.
+
+A distinção entre o \textit{framework} proposto neste trabalho e a aplicação isolada de um classificador, como a Floresta Aleatória (\textit{Random Forest}), é, portanto, substantiva. A execução direta de um único modelo com hiperparâmetros padrão produz apenas um ponto de operação no plano de precisão e sensibilidade, sem oferecer instrumentos para ajustar o comportamento do sistema ao contexto de uso. O \textit{framework} desenvolvido nesta tese organiza cinco componentes integrados, cuja articulação amplia a capacidade analítica e operacional do processo de vinculação.
+
+Em vez de depender apenas de um limiar da nota final agregada, o protocolo opera sobre 29 colunas-base do Comparador de Registros \cite{Jardim2024comparador, Lucena2013algoritmos}, incluindo essa nota, e 29 atributos derivados, conforme descrito na Seção~\ref{sec:engenharia-atributos}. A comparação avalia o uso multivariado dessa informação na classificação de potenciais pares na área cinza, não a exclusão do escore agregado nem a substituição da formulação conceitual de Fellegi e Sunter.
+
+O estudo de ablação reúne mais de 70 configurações experimentais, considerando a execução original e os acréscimos com XGBoost pelo fluxo Modal. A exploração das grades permite descrever compromissos no plano precisão $\times$ sensibilidade e construir a fronteira de Pareto (\textit{Pareto frontier}) entre os pontos avaliados. As origens experimentais e as implementações de regras diferem; a ordenação por $F_1$ nos respectivos testes não constitui seleção validada nem avaliação independente da escolha dos limiares. A fronteira oferece apoio exploratório à definição do compromisso entre falsos positivos e falsos negativos, mas não esgota o espaço de configurações nem substitui a escolha de limiares em dados de validação antes de uma avaliação final.
+
+Os dois \textit{pipelines} propostos (vigilância e confirmação de alta confiança), descritos na Seção~\ref{sec:e3-dois-pipelines}, organizam alternativas operacionais a serem ajustadas à finalidade e à capacidade de revisão. O \textit{framework} foi avaliado internamente no contexto do \textit{linkage} entre SIM e Sinan-TB; a estrutura do comparador de registros \cite{Jardim2024comparador} permite considerar sua aplicação em outros cenários, mas não demonstra transferência dos limiares ou do desempenho. Aplicações a bases como SIH-SUS e Sinan ou SIM e Sinasc requerem padrões-ouro locais e validação externa \cite{Christen2012book, Paixao2017linkageevaluation}. Esses componentes configuram uma proposta de pós-processamento reprodutível, configurável e auditável para a qualificação de dados vinculados em saúde. A governança formal da incerteza por meio do GZ-CMD é detalhada no Capítulo~\ref{cap:estudo4}, que apresenta os resultados operacionais da cascata sem reproduzir aqui seus componentes técnicos.
+
+% PENDENTE (E4.3): o método do impacto epidemiológico está implícito nos resultados e deve ser explicitado.
+
+A escolha entre os pontos operacionais depende da finalidade do \textit{linkage} e da capacidade de revisão; o GZ-CMD (Capítulo~\ref{cap:estudo4}) parte dessas duas estratégias para tratar a área cinza como problema de decisão.
+
+\end{chapter}
