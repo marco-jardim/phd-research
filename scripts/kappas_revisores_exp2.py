@@ -64,6 +64,11 @@ def main() -> None:
     tables = []
     for mode in ("vigilancia", "confirmacao"):
         source = args.data_dir / f"exp2_tres_revisores_{mode}.csv"
+        if not source.exists():
+            raise FileNotFoundError(
+                f"{source} não está versionado no git (rótulos por par). Baixe-o do depósito Zenodo, "
+                "versão 3.0.0, DOI 10.5281/zenodo.23928226 (https://zenodo.org/records/23928226), "
+                "ou regenere-o com os scripts de reconstrução a partir de COMPARADORSEMIDENT.csv.")
         decisions = pd.read_csv(source, dtype={"pair_id": str})
         tables.append(calcular_kappas(decisions, mode))
     result = pd.concat(tables, ignore_index=True)
