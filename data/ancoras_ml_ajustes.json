@@ -1,0 +1,557 @@
+{
+  "seed": 42,
+  "folds": 5,
+  "fingerprint": {
+    "method": "nested-xgb-isotonic-5x5-v1",
+    "seed": 42,
+    "folds": 5,
+    "source_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "code_sha256": "8aeb9b60d99cc061253d1a33d31aaa4316a301ba08e54d2aa322d5c3db0d5f5e",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0",
+    "script_sha256": "0a650a168b49814f9318387f1d88bbba5c9e735349397f1c2e8223e9df287a73",
+    "m1_csv_sha256": "9712d089341089fdbcb01b5cd52e7f80ea85ee6842ab23ebc5b060d406f6ef2f",
+    "package_sha256": "f13027c419293ccbbf4b709a19e8c796459fc7c53527704dc85717ef1bbdda61"
+  },
+  "adapter_api_delta": 0.0,
+  "isotonic_reproduction_delta": 0.0,
+  "anchors": [
+    {
+      "n": 95,
+      "positivos": 93,
+      "taxa_medida": 0.9789473684210527,
+      "alvo": 0.9789473684210527,
+      "suavizada": false
+    },
+    {
+      "n": 39981,
+      "positivos": 3,
+      "taxa_medida": 7.503564192991671e-05,
+      "alvo": 7.503564192991671e-05,
+      "suavizada": false
+    }
+  ],
+  "base_fit": {
+    "slope": 1.5472249776967248,
+    "intercept": -4.930597436367458,
+    "success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "objective": 2.6704865451516608e-05,
+    "max_logit_residual": 1.2994284483980323e-05,
+    "means": [
+      0.9789473555675546,
+      7.50366168975655e-05
+    ],
+    "targets": [
+      0.9789473684210527,
+      7.503564192991671e-05
+    ],
+    "residuals_logit": [
+      -6.236708882667585e-07,
+      1.2994284483980323e-05
+    ],
+    "l2": 1e-06,
+    "alpha_max": 10.0,
+    "beta_max": 50.0
+  },
+  "exp1": {
+    "slope": 1.54723261954253,
+    "intercept": -4.930628853590618,
+    "success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "objective": 4.960391139033416e-19,
+    "max_logit_residual": 5.893556753733264e-10,
+    "means": [
+      0.9789473684331989,
+      7.503564195884942e-05
+    ],
+    "targets": [
+      0.9789473684210527,
+      7.503564192991671e-05
+    ],
+    "residuals_logit": [
+      5.893556753733264e-10,
+      3.8561509541068517e-10
+    ],
+    "l2": 0,
+    "alpha_max": 100,
+    "beta_max": 500
+  },
+  "exp2": {
+    "rates": [
+      {
+        "n": 95,
+        "positivos": 93,
+        "taxa_medida": 0.9789473684210527,
+        "alvo": 0.9789473684210527,
+        "suavizada": false
+      },
+      {
+        "n": 39981,
+        "positivos": 3,
+        "taxa_medida": 7.503564192991671e-05,
+        "alvo": 7.503564192991671e-05,
+        "suavizada": false
+      },
+      {
+        "n": 14263,
+        "positivos": 17,
+        "taxa_medida": 0.0011918951132300357,
+        "alvo": 0.0011918951132300357,
+        "suavizada": false
+      },
+      {
+        "n": 6175,
+        "positivos": 57,
+        "taxa_medida": 0.009230769230769232,
+        "alvo": 0.009230769230769232,
+        "suavizada": false
+      },
+      {
+        "n": 1080,
+        "positivos": 43,
+        "taxa_medida": 0.03981481481481482,
+        "alvo": 0.03981481481481482,
+        "suavizada": false
+      },
+      {
+        "n": 102,
+        "positivos": 34,
+        "taxa_medida": 0.3333333333333333,
+        "alvo": 0.3333333333333333,
+        "suavizada": false
+      }
+    ],
+    "fit": {
+      "slope": 1.5480858715782269,
+      "intercept": -4.984084730322586,
+      "success": true,
+      "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+      "objective": 0.08445041240122092,
+      "max_logit_residual": 0.25824025458704813,
+      "means": [
+        0.9781104261135398,
+        7.337297211290904e-05,
+        0.0015425450729238178,
+        0.008268076844947812,
+        0.03791166166322019,
+        0.33925104388023203
+      ],
+      "targets": [
+        0.9789473684210527,
+        7.503564192991671e-05,
+        0.0011918951132300357,
+        0.009230769230769232,
+        0.03981481481481482,
+        0.3333333333333333
+      ],
+      "residuals_logit": [
+        -0.03984018401321432,
+        -0.022409248714179597,
+        0.25824025458704813,
+        -0.11111163909544342,
+        -0.05096042134746348,
+        0.026513582652007983
+      ],
+      "l2": 1e-06,
+      "alpha_max": 10.0,
+      "beta_max": 50.0
+    }
+  },
+  "exp3": [
+    {
+      "fold": 0,
+      "train_n": 49356,
+      "test_n": 12340,
+      "taxas_treino": [
+        {
+          "n": 77,
+          "positivos": 76,
+          "taxa_medida": 0.987012987012987,
+          "alvo": 0.987012987012987,
+          "suavizada": false
+        },
+        {
+          "n": 32022,
+          "positivos": 3,
+          "taxa_medida": 9.368559115608019e-05,
+          "alvo": 9.368559115608019e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 2.247856433256313,
+        "intercept": -5.172380213154764,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 3.180666486045563e-05,
+        "max_logit_residual": 1.6956294770054114e-05,
+        "means": [
+          0.9870129701503565,
+          9.368717958121864e-05
+        ],
+        "targets": [
+          0.987012987012987,
+          9.368559115608019e-05
+        ],
+        "residuals_logit": [
+          -1.3155062124070582e-06,
+          1.6956294770054114e-05
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "fold": 1,
+      "train_n": 49357,
+      "test_n": 12339,
+      "taxas_treino": [
+        {
+          "n": 77,
+          "positivos": 75,
+          "taxa_medida": 0.974025974025974,
+          "alvo": 0.974025974025974,
+          "suavizada": false
+        },
+        {
+          "n": 31900,
+          "positivos": 3,
+          "taxa_medida": 9.404388714733542e-05,
+          "alvo": 9.404388714733542e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 1.3722451789780343,
+        "intercept": -4.6899064551943175,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 2.3878339560079586e-05,
+        "max_logit_residual": 7.649425878497595e-06,
+        "means": [
+          0.9740259414627821,
+          9.404460646417678e-05
+        ],
+        "targets": [
+          0.974025974025974,
+          9.404388714733542e-05
+        ],
+        "residuals_logit": [
+          -1.2871136414460693e-06,
+          7.649425878497595e-06
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "fold": 2,
+      "train_n": 49357,
+      "test_n": 12339,
+      "taxas_treino": [
+        {
+          "n": 80,
+          "positivos": 79,
+          "taxa_medida": 0.9875,
+          "alvo": 0.9875,
+          "suavizada": false
+        },
+        {
+          "n": 32000,
+          "positivos": 2,
+          "taxa_medida": 6.25e-05,
+          "alvo": 6.25e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 2.2577575543111665,
+        "intercept": -4.326852578631065,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 2.3819150075995126e-05,
+        "max_logit_residual": 5.040018610458219e-06,
+        "means": [
+          0.9874999814311455,
+          6.250031498226918e-05
+        ],
+        "targets": [
+          0.9875,
+          6.25e-05
+        ],
+        "residuals_logit": [
+          -1.5043111680768106e-06,
+          5.040018610458219e-06
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "fold": 3,
+      "train_n": 49357,
+      "test_n": 12339,
+      "taxas_treino": [
+        {
+          "n": 77,
+          "positivos": 75,
+          "taxa_medida": 0.974025974025974,
+          "alvo": 0.974025974025974,
+          "suavizada": false
+        },
+        {
+          "n": 31954,
+          "positivos": 3,
+          "taxa_medida": 9.388495962946736e-05,
+          "alvo": 9.388495962946736e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 2.1515263110254925,
+        "intercept": -4.351336386168597,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 2.3563324522754363e-05,
+        "max_logit_residual": 8.684889767351933e-06,
+        "means": [
+          0.9740257543027782,
+          9.388565762386126e-05
+        ],
+        "targets": [
+          0.974025974025974,
+          9.388495962946736e-05
+        ],
+        "residuals_logit": [
+          -8.684889767351933e-06,
+          7.4352413772516e-06
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "fold": 4,
+      "train_n": 49357,
+      "test_n": 12339,
+      "taxas_treino": [
+        {
+          "n": 69,
+          "positivos": 67,
+          "taxa_medida": 0.9710144927536232,
+          "alvo": 0.9710144927536232,
+          "suavizada": false
+        },
+        {
+          "n": 32048,
+          "positivos": 1,
+          "taxa_medida": 3.120319520718922e-05,
+          "alvo": 3.120319520718922e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 1.027508313071621,
+        "intercept": -3.134153478399581,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 1.0880416065980916e-05,
+        "max_logit_residual": 4.152958258707429e-05,
+        "means": [
+          0.9710144924025618,
+          3.120449104933277e-05
+        ],
+        "targets": [
+          0.9710144927536232,
+          3.120319520718922e-05
+        ],
+        "residuals_logit": [
+          -1.247315850605446e-08,
+          4.152958258707429e-05
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    }
+  ],
+  "sensitivity": [
+    {
+      "s_plus": 9.0,
+      "s_minus": 5.0,
+      "taxas": [
+        {
+          "n": 95,
+          "positivos": 93,
+          "taxa_medida": 0.9789473684210527,
+          "alvo": 0.9789473684210527,
+          "suavizada": false
+        },
+        {
+          "n": 39981,
+          "positivos": 3,
+          "taxa_medida": 7.503564192991671e-05,
+          "alvo": 7.503564192991671e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 1.5472249776967248,
+        "intercept": -4.930597436367458,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 2.6704865451516608e-05,
+        "max_logit_residual": 1.2994284483980323e-05,
+        "means": [
+          0.9789473555675546,
+          7.50366168975655e-05
+        ],
+        "targets": [
+          0.9789473684210527,
+          7.503564192991671e-05
+        ],
+        "residuals_logit": [
+          -6.236708882667585e-07,
+          1.2994284483980323e-05
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "s_plus": 9.0,
+      "s_minus": 4.0,
+      "taxas": [
+        {
+          "n": 95,
+          "positivos": 93,
+          "taxa_medida": 0.9789473684210527,
+          "alvo": 0.9789473684210527,
+          "suavizada": false
+        },
+        {
+          "n": 18783,
+          "positivos": 0,
+          "taxa_medida": 0.0,
+          "alvo": 2.661839863713799e-05,
+          "suavizada": true
+        }
+      ],
+      "ajuste": {
+        "slope": 0.8053715988059953,
+        "intercept": -1.5740968540889035,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 3.126405907420746e-06,
+        "max_logit_residual": 1.1450255010814203e-06,
+        "means": [
+          0.9789473920193492,
+          2.6618412674571546e-05
+        ],
+        "targets": [
+          0.9789473684210527,
+          2.661839863713799e-05
+        ],
+        "residuals_logit": [
+          1.1450255010814203e-06,
+          5.273722027965277e-07
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "s_plus": 9.5,
+      "s_minus": 5.0,
+      "taxas": [
+        {
+          "n": 77,
+          "positivos": 75,
+          "taxa_medida": 0.974025974025974,
+          "alvo": 0.974025974025974,
+          "suavizada": false
+        },
+        {
+          "n": 39981,
+          "positivos": 3,
+          "taxa_medida": 7.503564192991671e-05,
+          "alvo": 7.503564192991671e-05,
+          "suavizada": false
+        }
+      ],
+      "ajuste": {
+        "slope": 1.481090625261284,
+        "intercept": -4.920162019429805,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 2.6401779079687892e-05,
+        "max_logit_residual": 1.2439281773524158e-05,
+        "means": [
+          0.974025954326858,
+          7.503657525517641e-05
+        ],
+        "targets": [
+          0.974025974025974,
+          7.503564192991671e-05
+        ],
+        "residuals_logit": [
+          -7.786401052811698e-07,
+          1.2439281773524158e-05
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    },
+    {
+      "s_plus": 9.5,
+      "s_minus": 4.0,
+      "taxas": [
+        {
+          "n": 77,
+          "positivos": 75,
+          "taxa_medida": 0.974025974025974,
+          "alvo": 0.974025974025974,
+          "suavizada": false
+        },
+        {
+          "n": 18783,
+          "positivos": 0,
+          "taxa_medida": 0.0,
+          "alvo": 2.661839863713799e-05,
+          "suavizada": true
+        }
+      ],
+      "ajuste": {
+        "slope": 0.7911970532925685,
+        "intercept": -1.7234678704983586,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "objective": 3.596336204775661e-06,
+        "max_logit_residual": 1.256651168013434e-06,
+        "means": [
+          0.9740260058184452,
+          2.661841433536429e-05
+        ],
+        "targets": [
+          0.974025974025974,
+          2.661839863713799e-05
+        ],
+        "residuals_logit": [
+          1.256651168013434e-06,
+          5.897664898668609e-07
+        ],
+        "l2": 1e-06,
+        "alpha_max": 10.0,
+        "beta_max": 50.0
+      }
+    }
+  ]
+}

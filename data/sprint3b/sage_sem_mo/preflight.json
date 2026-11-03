@@ -1,0 +1,94 @@
+{
+  "started_at": "2026-11-02T22:14:49.546970+00:00",
+  "ready": {
+    "status": "ready",
+    "load": "low"
+  },
+  "estimate": {
+    "usage": {
+      "min_input_tokens": 1288.0,
+      "max_input_tokens": 2576.0,
+      "exact": false,
+      "min_output_tokens": 0.0,
+      "max_output_tokens": 800.0,
+      "sequences": 1.0
+    }
+  },
+  "estimate_pair_id": "9552589dccf390f6",
+  "estimate_raw_keys": [
+    "usage"
+  ],
+  "updated_at": "2026-11-03T01:00:02.143390+00:00",
+  "quota_exhausted": false,
+  "calls_this_process": {
+    "/ready": 2,
+    "/decide": 2053
+  },
+  "completed": {
+    "vigilancia": 1410,
+    "confirmacao": 435
+  },
+  "http_diagnostics_this_process": [
+    {
+      "endpoint": "/ready",
+      "attempt": 1,
+      "status": 503,
+      "final_url": "https://sage.levanto.ai/ready",
+      "body_literal": "{\"status\":\"unavailable\"}"
+    }
+  ],
+  "execution_history": [
+    {
+      "finished_at": "2026-11-02T23:38:52.251330+00:00",
+      "resume_after_quota": true,
+      "quota_exhausted": false,
+      "calls": {
+        "/ready": 1,
+        "/decide": 382
+      },
+      "completed": {
+        "vigilancia": 688,
+        "confirmacao": 3
+      }
+    },
+    {
+      "finished_at": "2026-11-02T23:41:09.694224+00:00",
+      "resume_after_quota": true,
+      "quota_exhausted": false,
+      "calls": {
+        "/ready": 1,
+        "/decide": 7
+      },
+      "completed": {
+        "vigilancia": 694,
+        "confirmacao": 3
+      }
+    },
+    {
+      "finished_at": "2026-11-03T00:24:14.886962+00:00",
+      "resume_after_quota": true,
+      "quota_exhausted": false,
+      "calls": {
+        "/ready": 1,
+        "/decide": 271
+      },
+      "completed": {
+        "vigilancia": 1199,
+        "confirmacao": 3
+      }
+    },
+    {
+      "finished_at": "2026-11-03T01:00:02.094205+00:00",
+      "resume_after_quota": true,
+      "quota_exhausted": false,
+      "calls": {
+        "/ready": 2,
+        "/decide": 2053
+      },
+      "completed": {
+        "vigilancia": 1410,
+        "confirmacao": 435
+      }
+    }
+  ]
+}

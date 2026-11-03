@@ -1,0 +1,152 @@
+{
+  "models": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "n": 18,
+      "selected_n": 18,
+      "complete": true,
+      "controle": {
+        "MATCH": 0,
+        "UNSURE": 0,
+        "NONMATCH": 18
+      },
+      "sem_pcal": {
+        "MATCH": 9,
+        "UNSURE": 9,
+        "NONMATCH": 0
+      },
+      "transitions": {
+        "MATCH->MATCH": 0,
+        "MATCH->UNSURE": 0,
+        "MATCH->NONMATCH": 0,
+        "UNSURE->MATCH": 0,
+        "UNSURE->UNSURE": 0,
+        "UNSURE->NONMATCH": 0,
+        "NONMATCH->MATCH": 9,
+        "NONMATCH->UNSURE": 9,
+        "NONMATCH->NONMATCH": 0
+      },
+      "gained_match": 9,
+      "lost_match": 0,
+      "mcnemar_match_exact_p": 0.00390625,
+      "fn_to_nonfn": 18,
+      "nonfn_to_fn": 0,
+      "mcnemar_nonmatch_exact_p": 7.62939453125e-06,
+      "original_fn_to_match": 9,
+      "original_fn_to_match_or_unsure": 18,
+      "original_fn_n": 18,
+      "control_fn_n": 18,
+      "control_fn_to_match": 9,
+      "control_fn_to_unsure": 9,
+      "control_original_agree": 18,
+      "control_original_agreement": 1.0,
+      "transport": {
+        "controle": {
+          "calls": 38,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 60909,
+          "output_tokens": 12881,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        },
+        "sem_pcal": {
+          "calls": 40,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 63176,
+          "output_tokens": 12710,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        }
+      },
+      "elapsed_s": {
+        "controle": 151.32,
+        "sem_pcal": 151.59
+      },
+      "review_errors": 0,
+      "cost_usd": null,
+      "cost_estimate_usd": null
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "n": 18,
+      "selected_n": 18,
+      "complete": true,
+      "controle": {
+        "MATCH": 0,
+        "UNSURE": 9,
+        "NONMATCH": 9
+      },
+      "sem_pcal": {
+        "MATCH": 7,
+        "UNSURE": 11,
+        "NONMATCH": 0
+      },
+      "transitions": {
+        "MATCH->MATCH": 0,
+        "MATCH->UNSURE": 0,
+        "MATCH->NONMATCH": 0,
+        "UNSURE->MATCH": 5,
+        "UNSURE->UNSURE": 4,
+        "UNSURE->NONMATCH": 0,
+        "NONMATCH->MATCH": 2,
+        "NONMATCH->UNSURE": 7,
+        "NONMATCH->NONMATCH": 0
+      },
+      "gained_match": 7,
+      "lost_match": 0,
+      "mcnemar_match_exact_p": 0.015625,
+      "fn_to_nonfn": 9,
+      "nonfn_to_fn": 0,
+      "mcnemar_nonmatch_exact_p": 0.00390625,
+      "original_fn_to_match": 2,
+      "original_fn_to_match_or_unsure": 10,
+      "original_fn_n": 10,
+      "control_fn_n": 9,
+      "control_fn_to_match": 2,
+      "control_fn_to_unsure": 7,
+      "control_original_agree": 13,
+      "control_original_agreement": 0.7222222222222222,
+      "transport": {
+        "controle": {
+          "calls": 40,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 95243,
+          "output_tokens": 82562,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "max_request_input_tokens": 3393
+        },
+        "sem_pcal": {
+          "calls": 41,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 95421,
+          "output_tokens": 73376,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "max_request_input_tokens": 3257
+        }
+      },
+      "elapsed_s": {
+        "controle": 359.38,
+        "sem_pcal": 333.06
+      },
+      "review_errors": 0,
+      "cost_usd": null,
+      "cost_estimate_usd": {
+        "controle": 0.0508053,
+        "sem_pcal": 0.0462301
+      }
+    }
+  ],
+  "totals": {
+    "calls": 159,
+    "http_errors": 0,
+    "parse_errors": 0,
+    "review_errors": 0,
+    "note": "Main two models only; optional Kimi probe reported separately."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "rates_yaml": "gzcmd\\error_rates_by_band_v4.yaml",
+  "rates_sha256": "53d02f80bcdab84b90e0e0cf9c792782f564b56faedf1215c4b3267420edc357",
+  "rates_model": "claude-haiku-5-5",
+  "oof_sha256": "9712d089341089fdbcb01b5cd52e7f80ea85ee6842ab23ebc5b060d406f6ef2f",
+  "grid": {
+    "C_llm": [
+      0.005,
+      0.05,
+      0.25
+    ],
+    "human_error": [
+      0.0,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "human_budget": [
+      25,
+      50,
+      100,
+      200,
+      null
+    ]
+  },
+  "infinity_plot_proxy": 400,
+  "direct_human_budget_excludes_llm_unsure": true
+}

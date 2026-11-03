@@ -1,0 +1,244 @@
+{
+  "mode": "confirmacao",
+  "model": "claude-haiku-5-5",
+  "dossier_sha256": {
+    "a31109e27bc9afe1": "4d605919832628d771178a741ce086412f69a29888cfafc6eaa98cd6be2760d2",
+    "51a1d0b7900d9384": "3bf3940e509068879db19f38a5798e262e8c4d9229f428e6216ee9a8dba1fca2",
+    "01d18d4ebcc1224d": "c9368059790060bb428cf8cae7a5cff3af3d4888c870adc3d9bf488b4ec4620b",
+    "92fe0fa8635254f7": "6c95889d024a8b4575fe9c2e27b706dc1b189f72592eea70c7be5744213bc900",
+    "1609df9a7873bea4": "39e4622b9de2a6d3e3bb8740bbf74c2a2f5e8fe6475952b91423289ac2fb903d",
+    "965cf52d3ad2d227": "09be0db1729e773d8f953566d0c024a2e0351c42da6f22f14a6651bdb8102371",
+    "b5036ed97038bdd5": "fa753320402d8b2db2282e5fb18b2b1560bb711e9dc25762c8c78f849273f2e4"
+  },
+  "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+  "prompt_version": "v4",
+  "selected_pair_ids": [
+    "a31109e27bc9afe1",
+    "51a1d0b7900d9384",
+    "01d18d4ebcc1224d",
+    "92fe0fa8635254f7",
+    "1609df9a7873bea4",
+    "965cf52d3ad2d227",
+    "b5036ed97038bdd5"
+  ],
+  "source_sha256": "7e0dd4fcbc16aaad983f5ef26218a30c8a80f8af5e3913ea1d8e5b75eba43ec7",
+  "cohort": "v31_lot",
+  "experiment": "exp2_llm_sync",
+  "timestamp": "2026-11-03T03:58:33.145323+00:00",
+  "n_review_pairs": 7,
+  "workers": 4,
+  "removed_fields": [
+    "model_outputs.p_cal",
+    "model_outputs.base_choice",
+    "model_outputs.band",
+    "model_outputs.evr",
+    "model_outputs.guardrail",
+    "model_outputs.guardrail_reason"
+  ],
+  "elapsed_s": 38.35,
+  "metadata": {
+    "provider": "Anthropic Messages API",
+    "model_exact": "claude-haiku-5-5",
+    "max_tokens": 2500,
+    "temperature_sent": false,
+    "extended_thinking": false,
+    "max_retries": 5,
+    "retry_delay_s": 3,
+    "timeout_s": 120,
+    "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+    "prompt_version": "v4",
+    "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "free_response_fields_saved": false,
+    "checkpoint": "every completed pair + durable per-call usage journal"
+  },
+  "results": [
+    {
+      "pair_id": "a31109e27bc9afe1",
+      "decision": "NONMATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "HIGH_SCORE_ANCHOR"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.36,
+      "total_tokens": 9814
+    },
+    {
+      "pair_id": "51a1d0b7900d9384",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.95,
+      "total_tokens": 9470
+    },
+    {
+      "pair_id": "01d18d4ebcc1224d",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 12.05,
+      "total_tokens": 9025
+    },
+    {
+      "pair_id": "92fe0fa8635254f7",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 19.59,
+      "total_tokens": 10491
+    },
+    {
+      "pair_id": "1609df9a7873bea4",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "arbiter",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 25.55,
+      "total_tokens": 16112,
+      "arbiter_decision": "NONMATCH"
+    },
+    {
+      "pair_id": "965cf52d3ad2d227",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.11,
+      "total_tokens": 9484
+    },
+    {
+      "pair_id": "b5036ed97038bdd5",
+      "decision": "MATCH",
+      "confidence": 0.75,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 16.75,
+      "total_tokens": 10199
+    }
+  ],
+  "errors": [],
+  "failed_pair_ids": [],
+  "n_reviewed": 7,
+  "n_errors": 0,
+  "complete": true,
+  "updated_at": "2026-11-03T03:59:11.491006+00:00",
+  "transport": {
+    "calls": 15,
+    "http_errors": 0,
+    "response_parse_errors": 0,
+    "error_statuses": {},
+    "input_tokens": 48200,
+    "output_tokens": 26395,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "max_request_input_tokens": 4200
+  },
+  "cost_estimate_usd": 0.0180175,
+  "cost_note": "Estimate only: standard/global USD/M input .10, output .50, cache read .01, cache write .125; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-02 (existing ablation).",
+  "metrics": {
+    "mode": "confirmacao",
+    "n_reviewed": 7,
+    "n_errors": 0,
+    "total_elapsed_s": 38.35,
+    "decisions": {
+      "MATCH": 2,
+      "NONMATCH": 4,
+      "UNSURE": 1
+    },
+    "protocols": {
+      "consensus": 6,
+      "arbiter": 1
+    }
+  }
+}

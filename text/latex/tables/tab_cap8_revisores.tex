@@ -1,23 +1,34 @@
-% Fontes: data/exp2_tres_revisores_{vigilancia,confirmacao}.csv (scripts/comparar_revisores_exp2.py),
-% a partir de data/sprint3b/exp2_llm_sync_vigilancia.json (Kimi K2.5, 12/02/2026),
-% data/sprint3b/opencode_go/ (DeepSeek V4.1 Flash), data/sprint3b/anthropic/ (Claude Haiku 5.5)
-% e data/sprint3b/opencode_go_kimi/ (Kimi K3, parcial), todos cruzados com PAR do extrato.
-\begin{table}[!ht]
+% Fonte: data/exp2_reruns_por_banda.csv, estrato limiar_9, dossiê completo/v3.
+\begin{table}[!htbp]
 \centering
-\caption{Revisão assistida por modelos de linguagem independentes, contra o padrão-ouro, por modo operacional. Mesmo lote de pares, mesmo dossiê e mesmo protocolo (dois agentes e árbitro). Sensibilidade calculada entre os pares resolvidos; a última coluna considera os inconclusivos como encaminhados ao revisor humano.}
+\caption{Resultados observados dos revisores com dossiê completo e instruções v3, estratificados pela nota final do CdR ($s$).}
 \label{tab:cap8-revisores}
 \footnotesize
-\begin{tabular}{|l|l|r|r|r|r|r|r|r|r|}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrrr}
 \hline
-Modo & Revisor & VP & FP & FN & VN & Inconcl.\ (vínc.) & Precisão & Sensib. & Sensib.\ c/\ inconcl. \\
+Revisor & Nota & $N$ & VP & FP & FN & VN & Inconcl. (vínculos) & Sens. (\%) \\
 \hline
-\multirow{3}{*}{Vigilância} & Kimi K2.5 & 79 & 6 & 19 & 1.265 & 41 (6) & 92,9\% & 80,6\% & 81,7\% \\
- & DeepSeek V4.1 Flash & 49 & 3 & 42 & 1.256 & 60 (13) & 94,2\% & 53,8\% & 59,6\% \\
- & Claude Haiku 5.5 & 35 & 0 & 10 & 1.103 & 262 (59) & 100,0\% & 77,8\% & 90,4\% \\
+\multicolumn{9}{l}{\textbf{Vigilância}} \\
+Kimi K2.5 & $s<9$ & 1.388 & 57 & 6 & 19 & 1.265 & 41 (6) & 75,0 \\
+ & $s\geq9$ & 22 & 22 & 0 & 0 & 0 & 0 (0) & 100,0 \\
+DeepSeek V4.1 Flash & $s<9$ & 1.388 & 27 & 3 & 42 & 1.256 & 60 (13) & 39,1 \\
+ & $s\geq9$ & 22 & 22 & 0 & 0 & 0 & 0 (0) & 100,0 \\
+Claude Haiku 5.5 & $s<9$ & 1.388 & 16 & 0 & 10 & 1.103 & 259 (56) & 61,5 \\
+ & $s\geq9$ & 22 & 19 & 0 & 0 & 0 & 3 (3) & 100,0 \\
+Levanto Sage 2 & $s<9$ & 1.388 & 36 & 9 & 20 & 1.224 & 99 (26) & 64,3 \\
+ & $s\geq9$ & 22 & 13 & 0 & 1 & 0 & 8 (8) & 92,9 \\
 \hline
-\multirow{3}{*}{Confirmação} & DeepSeek V4.1 Flash & 69 & 2 & 8 & 287 & 69 (24) & 97,2\% & 89,6\% & 92,1\% \\
- & Claude Haiku 5.5 & 55 & 1 & 5 & 203 & 171 (41) & 98,2\% & 91,7\% & 95,0\% \\
- & Kimi K3 (parcial, $n = 343$) & 57 & 3 & 16 & 248 & 19 (14) & 95,0\% & 78,1\% & 81,6\% \\
+\multicolumn{9}{l}{\textbf{Confirmação}} \\
+DeepSeek V4.1 Flash & $s<9$ & 377 & 12 & 1 & 8 & 287 & 69 (24) & 60,0 \\
+ & $s\geq9$ & 58 & 57 & 1 & 0 & 0 & 0 (0) & 100,0 \\
+Claude Haiku 5.5 & $s<9$ & 377 & 6 & 0 & 5 & 203 & 163 (33) & 54,5 \\
+ & $s\geq9$ & 58 & 49 & 1 & 0 & 0 & 8 (8) & 100,0 \\
+Kimi K3 (parcial) & $s<9$ & 295 & 15 & 2 & 16 & 248 & 14 (9) & 48,4 \\
+ & $s\geq9$ & 48 & 42 & 1 & 0 & 0 & 5 (5) & 100,0 \\
 \hline
-\end{tabular}
+\end{tabular}%
+}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos; VN: verdadeiros negativos. Sensibilidade entre resolvidos: $VP/(VP+FN)$; inconclusivos não são acertos. Kimi K3: 343 respostas em 435 pares, sem imputação dos 92 ausentes. Levanto Sage 2 utiliza uma escolha por par, não dois agentes e árbitro; a comparação não isola o efeito do modelo. Fonte: \texttt{data/exp2\_reruns\_por\_banda.csv} \cite{Jardim2026phdrepo}.}
 \end{table}
