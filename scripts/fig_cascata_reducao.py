@@ -27,8 +27,11 @@ stages = [
     "+ Calibração +\nMotor de perda",
     "+ Revisão LLM\ndual-agent",
 ]
+# Fontes: 61.696/247 e 21.620/151 (data/COMPARADORSEMIDENT.csv, faixas de nota final);
+# 18.799 após regras de guarda e 1.410/104 e 41/6 reconstruídos de
+# data/sprint3b/exp2_llm_sync_vigilancia.json por scripts/reconstruir_gabarito_exp2.py.
 pairs = [61_696, 21_620, 18_799, 1_410, 41]
-tp = [247, 151, 151, 104, 16]
+tp = [247, 151, 151, 104, 6]
 prev = [tp_i / p_i * 100 for tp_i, p_i in zip(tp, pairs)]
 
 pct_reductions = [None]  # first bar has no predecessor
