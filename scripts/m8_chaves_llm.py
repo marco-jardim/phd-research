@@ -41,17 +41,7 @@ def chapter_context() -> dict:
     A inferência fica cega à lista de chaves publicada; ela será confrontada no doc.
     Nunca se exportam parágrafos sobre profissionais ou metadados de pacientes.
     """
-    path = ROOT / "text/latex/capitulo5.tex"
-    lines = path.read_text(encoding="utf-8").splitlines()
-    selected = [line for line in lines if line.startswith((
-        "O procedimento de \\textit{linkage} probabilístico no OpenRecLink",
-        "A geração de pares candidatos no OpenRecLink empregou",
-        "\\item \\textbf{Nome próprio e nome da mãe:}"))]
-    # O parágrafo introdutório termina anunciando a enumeração, não a inclui.
-    return {"fonte": "text/latex/capitulo5.tex:21,40,73",
-            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
-            "descricao": selected,
-            "nota": "Especificações por passo das linhas 43–45 retidas da inferência para evitar circularidade. Capítulo diz APROX/distância de edição, não confirma Jaro-Winkler; não presumir algoritmo específico."}
+    return read_json(ROOT / "data/m8/contexto_capitulo.json")
 
 
 def call_once(folder: Path, name: str, payload: dict, instruction: str, offline: bool) -> dict:

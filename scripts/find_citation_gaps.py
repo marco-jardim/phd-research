@@ -125,11 +125,13 @@ def main() -> int:
         "--files",
         nargs="*",
         default=[
-            "capitulo4.tex",
-            "capitulo5.tex",
-            "capitulo7.tex",
-            "reserva_cap6.tex",
-            "capitulo8.tex",
+            "capitulo_dados.tex",
+            "estudo1_comparador.tex",
+            "estudo2_classificadores.tex",
+            "estudo3_estrategias.tex",
+            "estudo4_gzcmd.tex",
+            "estudo5_equidade.tex",
+            "conclusao.tex",
         ],
         help="Basenames under text/latex to scan.",
     )
