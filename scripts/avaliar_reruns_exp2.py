@@ -24,6 +24,7 @@ except ImportError:  # Execução direta, sem instalação de scripts como pacot
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+from gzcmd.provenance import sha256_file_normalized, sha256_normalized  # noqa: E402
 # Manifesto explícito: não varrer backups, traces, resumes ou parciais obsoletos.
 SOURCES = (
     ("kimi-k2.5", "completo", "v3", "data/sprint3b"),
@@ -115,7 +116,7 @@ def load_runs(root: Path, gold: pd.DataFrame, definitions: dict) -> tuple[pd.Dat
                 merged[key] = value
             frames.append(merged)
             sources.append({**identity, **counts, "path": path.relative_to(root).as_posix(),
-                            "sha256": hashlib.sha256(snapshot).hexdigest(),
+                            "sha256": sha256_normalized(snapshot),
                             "reported_model": reported_model, "alternate_source": alternate})
     if not frames:
         raise ValueError("Nenhum run disponível")
@@ -178,7 +179,7 @@ def load_supplemental_runs(root: Path, gold: pd.DataFrame, definitions: dict):
                 merged[key] = value
             frames.append(merged)
             sources.append({**identity, **counts, "cohort": cohort, "path": path.relative_to(root).as_posix(),
-                            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                            "sha256": sha256_file_normalized(path),
                             "reported_model": "claude-haiku-5-5", "alternate_source": False})
     return frames, sources
 
