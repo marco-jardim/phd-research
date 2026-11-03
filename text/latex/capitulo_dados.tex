@@ -1,0 +1,125 @@
+\begin{chapter}{Fontes de dados e \textit{linkage} de origem}\label{cap:dados}
+
+Este capítulo descreve as fontes de dados, a construção da base de pares candidatos e o padrão-ouro, assim como as métricas e o ambiente computacional comuns aos cinco estudos que o seguem. O \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), foi realizado previamente no OpenRecLink, e o que se avalia nesta tese é o pós-processamento dos pares candidatos por ele produzidos. Reúne-se neste ponto o que seria repetido em cada estudo, de modo que os Capítulos~\ref{cap:estudo1} a~\ref{cap:estudo5} descrevam apenas o método que lhes é específico.
+
+Trata-se de um estudo metodológico de desenvolvimento e avaliação de algoritmos de aprendizado de máquina (\textit{machine learning}) aplicados ao pós-processamento do \textit{linkage} probabilístico entre bases de dados em saúde. O estudo utiliza dados secundários provenientes de sistemas nacionais de informação em saúde, vinculados por meio de técnicas probabilísticas, e propõe protocolos computacionais para melhorar a acurácia na classificação de pares candidatos, com vistas a qualificar os dados vinculados e produzir indicadores para a vigilância epidemiológica.
+
+\section{Fontes de dados}\label{sec:fontes-dados}
+
+Foram utilizados registros provenientes de duas bases de dados nacionais de saúde:
+
+\begin{itemize}
+\item \textbf{SIM:} base de dados que registra todos os óbitos ocorridos no território nacional, a partir das Declarações de Óbito (DO), contendo variáveis demográficas (nome, data de nascimento, nome da mãe, sexo), geográficas (município de residência, endereço) e relativas à causa do óbito codificada pela Classificação Internacional de Doenças (CID-10) \cite{Jorge2007qualidade}.
+
+\item \textbf{Sinan:} base que registra os casos de tuberculose notificados compulsoriamente no Brasil, contendo variáveis de identificação do paciente, dados clínicos, laboratoriais e de acompanhamento do tratamento, incluindo a situação de encerramento do caso \cite{Rocha2019scripting}.
+\end{itemize}
+
+Os registros correspondem ao município do Rio de Janeiro, com notificações do Sinan-TB de 2013 a 2022 e óbitos do SIM de 2019 a 2022, e foram previamente submetidos a \textit{linkage} probabilístico por meio do programa OpenRecLink \cite{Camargo2000reclink}, gerando uma base de pares candidatos que constitui o objeto de análise do presente estudo. A escolha dessas bases justifica-se pelas razões detalhadas na Seção \ref{sec:justificativas-especificas}, em particular a relevância da tuberculose como condição marcadora da qualidade do cuidado em saúde e a experiência acumulada do grupo de pesquisa no \textit{linkage} dessas fontes de dados \cite{Oliveira2012uso, Bartholomay2014improved, Oliveira2016accuracy}.
+
+As janelas temporais das duas bases são distintas por construção: a notificação do agravo antecede o óbito, de modo que notificações registradas a partir de 2013 permanecem elegíveis para vinculação com óbitos ocorridos entre 2019 e 2022. A janela efetiva de observação do desfecho é, portanto, 2019 a 2022, com janela de exposição de até dez anos retroativos. No extrato analisado, a data de notificação está integralmente preenchida e distribui-se entre 2 de janeiro de 2013 e 30 de dezembro de 2022; dos 247 vínculos verdadeiros, 184 correspondem a notificações de 2019 a 2022 e 63 a notificações de 2013 a 2018. A data de óbito não integra o extrato, de modo que a janela do SIM é declarada conforme a especificação do \textit{linkage} de origem e não pôde ser reconferida nos dados.
+
+O procedimento de \textit{linkage} probabilístico no OpenRecLink seguiu o modelo de decisão de Fellegi e Sunter \citeyearpar{Fellegi1969theory}. Na etapa de padronização, os campos textuais de ambas as bases foram convertidos para caixa alta, com remoção de acentos diacríticos, preposições e artigos, e as datas de nascimento foram normalizadas para formato numérico contínuo (AAAAMMDD). A etapa de comparação no OpenRecLink utilizou três campos de identificação: nome próprio e nome da mãe, comparados por algoritmo aproximado (tipo APROX, com limiar de similaridade de 85\%); e data de nascimento, comparada caractere a caractere (tipo CARACTERE, com limiar de 65\%). A variável sexo não integrou a etapa de comparação, tendo sido utilizada exclusivamente como chave de blocagem em passos específicos. Os parâmetros de concordância e discordância atribuídos a cada campo estão detalhados na Tabela~\ref{tab:parametros-orl}. Para cada par candidato, o programa calculou um escore probabilístico correspondente à soma das razões de log-verossimilhança (\textit{log-likelihood ratios}) dos campos comparados, no qual campos concordantes contribuem positivamente e campos discordantes contribuem negativamente para o escore total \cite{Fellegi1969theory, Christen2012book}. Na base utilizada, os escores probabilísticos do OpenRecLink variaram de $-12{,}85$ (discordância em todos os campos) a $+15{,}58$ (concordância plena), distribuindo-se em 116 valores distintos. Para evitar ambiguidade, o presente trabalho distingue duas grandezas: o escore do \textit{linkage} probabilístico, calculado pelo OpenRecLink como soma das razões de log-verossimilhança, e a nota final do Comparador de Registros (CdR; Seção~\ref{sec:comparador-registros}), escore composto derivado dos 29 subescores de similaridade campo a campo. A área cinza refere-se, ao longo da tese, à nota final do CdR no intervalo $[5,9)$, e não ao escore probabilístico do OpenRecLink.
+
+\begin{table}[!ht]
+\centering
+\caption{Parâmetros de comparação configurados no OpenRecLink para os campos de identificação.}
+\label{tab:parametros-orl}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Campo} & \textbf{Tipo} & \textbf{Concordância (\%)} & \textbf{Discordância (\%)} & \textbf{Limiar (\%)} \\
+\hline
+Nome (NOME) & Aproximado & 99 & 1 & 85 \\
+Nome da mãe (NOMEMAE) & Aproximado & 75 & 2 & 85 \\
+Data de nascimento (DTNASC) & Caractere & 95 & 5 & 65 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Acesso aos dados e aspectos éticos}\label{sec:dados-acesso-etica}
+
+O \textit{linkage} probabilístico e a produção da base de pares candidatos foram realizados por profissional do serviço de vigilância em atividade de rotina institucional, não vinculada a projeto de pesquisa específico. O autor recebeu dessa profissional um extrato já desprovido de identificadores diretos, contendo, para cada par candidato, os subescores de similaridade e o escore agregado do comparador de registros, o escore do \textit{linkage} probabilístico, o rótulo de revisão, a data e a situação de encerramento da notificação, o sexo, o bairro e o código de município de residência, além dos números dos registros de referência (REFREC, correspondente ao registro do SIM) e comparado (COMPREC, correspondente ao registro do Sinan-TB), utilizados apenas para agrupar as partições de treino e teste. Nome, nome da mãe, endereço nominal e data de nascimento não constam do extrato, e o autor não teve acesso às bases nominais nem aos registros individuais de origem. Por se tratar de dados secundários sem possibilidade de identificação individual, o estudo enquadra-se nas hipóteses de dispensa de registro em sistema CEP/Conep previstas na Resolução CNS n. 510/2016 \cite{BrasilCNS2016}, e os dados não configuram dado pessoal nos termos da Lei n. 13.709/2018. Os passos de blocagem, os parâmetros de comparação e os critérios de revisão do \textit{linkage} de origem são reportados conforme a documentação disponível ao autor e não puderam ser auditados além do que o extrato permite verificar, limitação retomada no Capítulo~\ref{cap:conclusao}.
+
+\subsection{Considerações éticas no uso de modelos de linguagem}\label{sec:dados-etica}
+
+O uso de modelos de linguagem em dados de saúde requer salvaguardas técnicas e normativas, mesmo sob desidentificação \cite{Vayena2018}. Foram adotadas quatro medidas: ausência de identificadores nominais no dossiê, processamento em ambiente controlado, enquadramento ético-regulatório para dados secundários desidentificados e registro auditável das decisões automatizadas.
+
+No plano regulatório, considerou-se a Resolução CNS n. 510/2016 para pesquisas com bases de dados sem possibilidade de identificação individual \cite{BrasilCNS2016}.
+
+\section{Base de pares candidatos}\label{sec:base-pares}
+
+A geração de pares candidatos no OpenRecLink empregou a técnica de blocagem (\textit{blocking}), que particiona os registros em subgrupos definidos por chaves comuns e restringe as comparações aos pares que compartilham a mesma chave, reduzindo substancialmente o custo computacional \cite{Christen2012book}. No ORL, os parâmetros de blocagem foram definidos por combinações de variáveis fonéticas e demográficas (código \textit{Soundex} do primeiro e do último bloco do nome, sexo, ano de nascimento, primeiro e último bloco do nome da mãe e código do município de residência), organizadas em passos sequenciais. Adotou-se, ainda, a estratégia de exclusão progressiva dos registros do Sinan-TB já pareados em cada passo, de modo que, uma vez identificado um par candidato, o respectivo registro do Sinan não retornasse ao universo de busca dos passos subsequentes. Foram utilizados múltiplos passos de blocagem (\textit{blocking steps}), estratégia recomendada para maximizar a sensibilidade do processo ao permitir que pares não capturados por uma chave restritiva fossem recuperados por chaves alternativas \cite{Coeli2002blocking}. O procedimento de blocagem no OpenRecLink foi configurado com 30 passos (29 de blocagem convencional e 1 passo aberto sem restrição de chave), dos quais três foram selecionados para exportação com base na contagem de pares identificados e na viabilidade de revisão manual completa dos candidatos. Os três passos exportados, com suas respectivas chaves de blocagem, foram:
+
+\begin{enumerate}
+\item \textbf{Passo por nome e nome da mãe (passo~6):} código \textit{Soundex} do primeiro e do último bloco do nome (PBLOCO, UBLOCO) e do primeiro e do último bloco do nome da mãe (PBLOCOMAE, UBLOCOMAE), gerando 2\,649 pares candidatos, dos quais 80 foram classificados como pares (76 pelo ponto de corte e 4 em revisão manual);
+\item \textbf{Passo restritivo (passo~9):} código \textit{Soundex} do primeiro e do último bloco do nome (PBLOCO, UBLOCO) + ano de nascimento (ANONASC) + sexo (SEXO), gerando 1\,449 pares candidatos, dos quais 127 foram classificados como pares (120 pelo ponto de corte e 7 em revisão manual);
+\item \textbf{Passo ampliado (passo~11):} código \textit{Soundex} do primeiro e do último bloco do nome (PBLOCO, UBLOCO) + sexo (SEXO) + código do município de residência (CODMUNRES), gerando 57\,598 pares candidatos, dos quais 40 foram classificados como pares (15 pelo ponto de corte e 25 em revisão manual).
+\end{enumerate}
+
+O passo 11, por empregar chave de blocagem com menor especificidade, produziu a grande maioria dos pares candidatos (93,4\%), predominantemente não-pares, mas permitiu a recuperação de pares verdadeiros cujo ano de nascimento ou nome da mãe apresentava discordância entre as bases. A base analítica foi composta pelo conjunto acumulado de pares provenientes dos três passos exportados, com exclusão progressiva dos registros do Sinan-TB já pareados em cada etapa e sem aplicação de limiar inferior de escore no OpenRecLink, totalizando 61\,696 pares candidatos originados da comparação de 19\,388 notificações do Sinan-TB com 1\,515 declarações de óbito do SIM.
+
+Cada par candidato foi subsequentemente submetido ao comparador de registros descrito na Seção~\ref{sec:comparador-registros}, que calculou escores de similaridade campo a campo para as variáveis de identificação disponíveis em ambas as bases:
+
+\begin{itemize}
+\item \textbf{Nome próprio} (7 subescores): concordância do primeiro e último fragmento, proporção de fragmentos iguais, raros, comuns, foneticamente semelhantes e abreviados;
+\item \textbf{Nome da mãe} (7 subescores): mesma estrutura de comparação aplicada ao nome próprio;
+\item \textbf{Data de nascimento} (5 subescores): data exata, proximidade de um dígito, inversão de dia, inversão de mês e inversão de ano;
+\item \textbf{Município de residência} (4 subescores): concordância e proximidade da UF, concordância e proximidade do município;
+\item \textbf{Endereço} (6 subescores): concordância e proximidade da via, número, complemento, texto livre e coeficiente de Jaccard;
+\item \textbf{Escore final composto} (\textit{nota final}): escore agregado calculado pelo comparador de registros;
+\item \textbf{Passo de blocagem} em que o par foi identificado.
+\end{itemize}
+
+\section{Padrão-ouro}\label{sec:padrao-ouro}
+
+Cada par possui uma classificação de referência (padrão-ouro) atribuída por revisão manual, codificada no campo PAR como: 0 (não-par), 1 (par identificado pelo ponto de corte do escore probabilístico) ou 2 (par identificado em revisão manual abaixo do ponto de corte). Para fins de modelagem, os pares com PAR igual a 1 ou 2 foram agrupados em uma única classe positiva, resultando em uma variável-alvo binária. A disponibilidade dessa classificação de referência possibilita o treinamento e a avaliação dos classificadores supervisionados, pois fornece as observações rotuladas necessárias para o aprendizado.
+
+O padrão-ouro (\textit{gold standard}) foi construído por meio de revisão clerical (\textit{clerical review}) conduzida por dois profissionais vinculados ao IESC-UFRJ: um epidemiologista (Luís Guilherme Buteri Alves), responsável pelo pré-processamento dos dados (limpeza de registros com nomes inconsistentes, como ``homem pardo'', ``morador de rua'' e ``recém nascido'', e criação do campo DTNASC2 para normalização de datas de nascimento), e uma epidemiologista (Daniela Medina Coeli Bastos), responsável pela configuração do \textit{linkage}, execução dos passos de blocagem e revisão clerical dos pares candidatos. A classificação seguiu protocolo sequencial, no qual os pares candidatos foram ordenados em ordem decrescente do escore probabilístico do OpenRecLink e avaliados do escore mais alto para o mais baixo, de modo que os casos de concordância mais evidente fossem resolvidos primeiro. Para cada par, a revisora consultou os sistemas de origem (SIM e Sinan) e avaliou o status de par verdadeiro ou não-par com base na concordância das variáveis de identificação utilizadas pelo OpenRecLink (nome, nome da mãe e data de nascimento) e em evidências complementares disponíveis nos registros originais, em particular o endereço de residência (logradouro, número e bairro), que não integrou o conjunto de campos comparados na etapa probabilística mas constitui informação discriminante para a confirmação manual dos pares. Embora dois profissionais tenham participado do processo, não foram produzidos registros independentes de classificação por cada avaliador, o que impede o cálculo de concordância interavaliadores (\textit{kappa} de Cohen). Essa limitação, frequente em estudos operacionais de \textit{linkage} no contexto brasileiro \cite{Coeli2021suboptimal}, é discutida na Seção~\ref{sec:concl-limitacoes}.
+
+\section{Base de dados e desbalanceamento}\label{sec:dados-desbalanceamento}
+
+A base analisada compreendeu 61.696 pares candidatos gerados em três passos de blocagem (cf.\ Seção~\ref{sec:base-pares}), dos quais 247 foram classificados como pares verdadeiros (\textit{true matches}) após conferência manual, resultando em uma razão de desbalanceamento de aproximadamente 1:249.
+
+Do ponto de vista operacional, mesmo uma taxa de falsos positivos de 0,5\% gera centenas de revisões desnecessárias em um universo de dezenas de milhares de pares. As métricas e a partição experimental seguem o delineamento descrito na Seção~\ref{sec:metricas}, e as estratégias de balanceamento, o do Capítulo~\ref{cap:estudo2}.
+
+\subsection{Rendimento da blocagem por passo}
+\label{sec:blocagem-rendimento}
+
+A auditoria da blocagem (M8) identificou 61.696 linhas no extrato, correspondentes a 61.684 potenciais pares distintos, com 12 pares presentes em mais de um passo, todos classificados como não-pares. A Tabela~\ref{tab:blocagem-rendimento} apresenta o rendimento dos três passos exportados. O passo~9 foi o mais produtivo, tanto pelo número de vínculos (127) quanto pela taxa de vinculação (8,8\%), mas também apresentou a maior fração de vínculos na área cinza definida pela nota final do comparador (82,7\%), indicando que a produtividade da blocagem não elimina a necessidade de pós-processamento dos potenciais pares.
+
+\input{tables/tab_blocagem_rendimento.tex}
+
+O passo~11 concentrou 57.598 potenciais pares, cerca de 93\% do volume de linhas exportadas, para 40 dos 247 vínculos distintos, aproximadamente 16\% do total de vínculos. Sua taxa de vinculação foi de 0,07\%, com mediana da nota final de 4,42, evidenciando a concentração do volume de comparações em um passo de baixo rendimento relativo. Esses resultados descrevem o extrato selecionado e a exclusão progressiva entre passos, não o desempenho dos 30 passos configurados no OpenRecLink nem a sensibilidade da blocagem nas bases de origem (Seções~\ref{sec:base-pares} e~\ref{sec:concl-limitacoes}).
+
+\section{Métricas de avaliação e protocolo comum}\label{sec:metricas}
+
+O desempenho dos classificadores foi avaliado por meio das seguintes métricas, reconhecidas na literatura de \textit{linkage} e de aprendizado de máquina \cite{Hand2018fmeasure, Hastie2009elements}:
+
+\begin{itemize}
+\item \textbf{Precisão} (\textit{Precision}): proporção de pares classificados como verdadeiros que são efetivamente pares verdadeiros.
+\item \textbf{Sensibilidade}: proporção de pares verdadeiros corretamente identificados dentre todos os pares verdadeiros existentes.
+\item \textbf{F$_1$-Score}: média harmônica entre precisão e sensibilidade, sintetizando o equilíbrio entre ambas.
+\item \textbf{AUC-ROC}: área sob a curva \textit{Receiver Operating Characteristic}, que avalia a capacidade discriminatória do classificador em diferentes limiares de classificação.
+\item \textbf{AUC-PR}: área sob a curva Precisão-Sensibilidade (\textit{Precision-Recall}), métrica particularmente informativa em cenários de desbalanceamento severo de classes, na medida em que é menos influenciada pela grande quantidade de verdadeiros negativos \cite{He2009imbalanced}.
+\end{itemize}
+
+As avaliações em conjunto de teste interno utilizaram partições estratificadas de 70\% para treinamento e 30\% para teste da mesma base, preservando a proporção de classes, sem pressupor identidade das linhas entre as execuções. Os resultados foram apresentados em quadros comparativos para descrever os compromissos entre técnica, balanceamento e limiar em cada protocolo. As validações cruzadas estratificadas descritas na Seção~\ref{sec:analises-complementares} estimam a variabilidade interna das métricas, não a transferência do desempenho para outra base, população ou período.
+
+\section{Ambiente computacional}\label{sec:ambiente-computacional}
+
+Todos os experimentos foram implementados na linguagem Python (versão 3.12.4), utilizando as bibliotecas \textit{scikit-learn} para os classificadores de aprendizado de máquina e métricas de avaliação, \textit{imbalanced-learn} para as técnicas de balanceamento de classes, \textit{XGBoost} e \textit{LightGBM} para os algoritmos de \textit{Gradient Boosting}, \textit{PyTorch} e \textit{pytorch-tabnet} para o modelo de aprendizado profundo TabNet, e \textit{pandas} e \textit{NumPy} para manipulação e transformação de dados. A biblioteca \textit{SHAP} \cite{Lundberg2017shap} foi empregada para análise de interpretabilidade dos modelos. As análises foram estruturadas em cadernos Jupyter (\textit{Jupyter Notebooks}) e scripts auxiliares, executados de forma reprodutível por meio do \textit{framework} \textit{Papermill}, e versionados em repositório Git, assegurando rastreabilidade das etapas do processo analítico, em consonância com diretrizes metodológicas internacionais para a utilização de dados vinculados e técnicas de aprendizado de máquina na estimação de indicadores de saúde \cite{Haneef2022guidelines}.
+
+Os modelos baseados em árvore (Floresta Aleatória, XGBoost, LightGBM), a regressão logística, o \textit{Support Vector Machine} e o \textit{Multilayer Perceptron} foram treinados em estação de trabalho local equipada com processador multinúcleo e 32\,GB de memória RAM. O modelo TabNet \cite{Arik2021tabnet}, por sua vez, demandou operações matriciais intensivas em unidade de processamento gráfico (GPU), com tempo de execução aproximado de 340 segundos por dobra na validação cruzada $5 \times 5$, o que totalizaria cerca de 2,4 horas apenas para esse classificador. Diante desse custo computacional, os experimentos com TabNet foram executados em infraestrutura de computação em nuvem (\textit{cloud computing}) do tipo \textit{serverless}, provida pela plataforma Modal \cite{Modal2025}, empregando GPU NVIDIA L4 com 24\,GB de memória de vídeo. Modal designa a plataforma de execução, não um protocolo: seu uso no QW1 para TabNet não o torna equivalente ao fluxo Modal de acréscimos à ablação.
+
+A utilização de infraestrutura remota sob demanda atendeu a requisitos complementares de viabilidade e reprodutibilidade. O provisionamento efêmero de GPU permitiu reduzir o tempo total de treinamento das 25 dobras a um patamar compatível com o cronograma da pesquisa, sem exigir aquisição ou reserva de equipamento dedicado. O ambiente de execução foi definido declarativamente como imagem de contêiner (\textit{container image}), incluindo todas as dependências de \textit{software} e o código-fonte do projeto, o que elimina variações decorrentes da configuração da máquina local e possibilita a reexecução integral dos experimentos por terceiros. Essa abordagem pode ser particularmente adequada a grupos de pesquisa em saúde coletiva que, em geral, não dispõem de servidores com aceleradores gráficos dedicados, permitindo o acesso pontual a recursos computacionais de alto desempenho com custo proporcional ao tempo efetivo de processamento.
+
+A avaliação de modelos baseados em árvore considerou a natureza tabular dos atributos e a disponibilidade de métodos de interpretação local. A base contém 247 pares positivos, dos quais 74 integram o teste interno, mas o delineamento não isolou o efeito desse tamanho amostral sobre o desempenho de redes neurais nem estabeleceu um número mínimo de exemplos para seu treinamento. O risco de sobreajuste constitui uma preocupação de modelagem, não uma explicação causal demonstrada neste experimento \cite{Hastie2009elements}. A literatura sobre dados tabulares oferece antecedentes para comparar modelos arbóreos e neurais, sem antecipar uma hierarquia válida para todas as configurações \cite{Grinsztajn2022tabular,ShwartzZiv2022tabular}. A análise de valores SHAP (\textit{Shapley Additive Explanations}) \cite{Lundberg2017shap} aplicada aos modelos arbóreos permite examinar, para cada par candidato, a contribuição dos atributos à previsão, favorecendo a auditoria das decisões; sua utilização neste estudo não implica exclusividade dessa forma de explicação para modelos baseados em árvore.
+
+O QW1 incluiu duas arquiteturas MLP e o modelo TabNet, concebido para dados tabulares com mecanismo de atenção sequencial e seleção esparsa de atributos. A comparação descreve o desempenho das configurações avaliadas, sem testar isoladamente as causas das diferenças entre famílias. Seus resultados são apresentados no Capítulo~\ref{cap:estudo2}.
+
+Em paralelo, com vistas à reprodutibilidade externa dos experimentos, foi estruturado um pacote de dados para depósito em repositório científico, contendo o \textit{benchmark} anonimizado de subescores de similaridade, índices de particionamento reproduzíveis e \textit{baselines} dos principais experimentos. O artefato foi depositado no Zenodo sob licença CC-BY-NC-4.0, com metadados bilíngues e documentação de anonimização por k-anonimidade, de modo a permitir reuso metodológico sem exposição de identificadores diretos \cite{Jardim2026zenodo}.
+
+Os artefatos do GZ-CMD v3.1, compreendendo funis por par, probabilidades fora da amostra (OOF) agrupadas por REFREC, respostas dos revisores identificadas por \texttt{pair\_id}, taxas de erro por banda e instruções de revisão (\textit{prompts}) v3 e v4, foram publicados como a versão 3.0.0 do mesmo depósito (DOI 10.5281/zenodo.23928226) \cite{Jardim2026zenodoGzcmd}, incluindo os rótulos por par do padrão-ouro pseudonimizados por \texttt{pair\_id}, sem identificadores diretos.
+
+Definidos os dados, o padrão-ouro, as métricas e o ambiente computacional, o primeiro estudo trata do comparador de registros, que produz os subescores sobre os quais se assentam as etapas seguintes (Capítulo~\ref{cap:estudo1}).
+
+\end{chapter}
