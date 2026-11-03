@@ -1,0 +1,148 @@
+{
+  "chaves": [
+    {
+      "id": "K1",
+      "chave": "(DTNASC_norm, CODMUNRES_local_norm, SEXO_norm)",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.DTNASC_AAAAMMDD, r.MUN_RES_norm, r.SEXO_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) com s EM SINAN ainda não pareado em passos anteriores e m EM SIM, com chave(s) = chave(m) = k\nEscore calculado depois, sobre os candidatos.",
+      "justificativa": "Remove o nome da chave, de modo que erros de primeiro e último fragmento não bloqueiem o par. Usa data completa e município como componentes demográficos de igualdade exata. Não usa ano isoladamente, porque não há campo de igualdade de ano no dicionário.",
+      "campos": [
+        "DTNASC dt iguais",
+        "CODMUNRES local igual",
+        "SEXO igualdade"
+      ],
+      "erro_recuperado": "Vínculos tardios com NOME prim frag igual < 1 ou NOME ult frag igual < 1 (marginais no grupo so_passos_tardios: aprox. 6 e 3 de 167; a união não é observada), desde que data completa, município e sexo concordem.",
+      "custo_ordem_grandeza": "Hipotético: 10^2 a 10^3 pares candidatos no extrato de 61696 linhas, por blocos menores que o passo 11. Não identificável nas bases originais; não é medida absoluta.",
+      "limitacao_proxy": "Proxy é a igualdade conjunta dos três campos, mas o dicionário fornece apenas marginais. Entre os tardios, DTNASC dt iguais = 0,317, então o proxy é limitado superiormente por essa fração. Concordância conjunta com erros de nome não é observada. Igualdade de data completa exclui datas com erro de 1 dígito (DTNASC dt ap 1digi = 0,869 nos tardios), o que subestima a recuperação. Ano de nascimento: sem proxy; DTNASC dt inv ano não é igualdade de ano e não é usado.",
+      "proxy_dnf": [
+        [
+          {
+            "campo": "DTNASC dt iguais",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "CODMUNRES local igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "SEXO igualdade",
+            "op": ">=",
+            "valor": 1
+          }
+        ]
+      ]
+    },
+    {
+      "id": "K2",
+      "chave": "(NOME_ult_frag_norm, CODMUNRES_local_norm, SEXO_norm)",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.ULTIMO_FRAGMENTO_NOME_norm, r.MUN_RES_norm, r.SEXO_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) não pareados em passos anteriores, com chave(s) = chave(m) = k",
+      "justificativa": "Substitui o primeiro fragmento pelo último, que apresenta maior concordância nos tardios (NOME ult frag igual = 0,982 nos tardios, contra 0,964 no passo 9 e 0,960 no passo 11; NOME prim frag igual = 0,964 nos tardios, sem o dado de fração exata por grupo). Relaxa, portanto, um componente nominal.",
+      "campos": [
+        "NOME ult frag igual",
+        "CODMUNRES local igual",
+        "SEXO igualdade"
+      ],
+      "erro_recuperado": "Vínculos tardios em que o primeiro fragmento do nome diverge (NOME prim frag igual = 0 em aprox. 3,6% dos tardios, ou seja, cerca de 6 de 167) e o último fragmento concorda, com município e sexo iguais.",
+      "custo_ordem_grandeza": "Hipotético: 10^4 pares candidatos no extrato de 61696 linhas, da mesma ordem do passo 11 (57.598 pares), porque blocos por último fragmento, município e sexo são grandes. Não identificável nas bases originais.",
+      "limitacao_proxy": "O campo é igualdade de fragmento textual, não igualdade de Soundex; não há proxy fonético confiável. Variantes fonéticas do primeiro fragmento não são recuperadas, e o proxy subestima. Sobrenomes comuns geram blocos grandes, o que pode criar pares falsos. A concordância conjunta com município e sexo não é observada; o dicionário só dá marginais.",
+      "proxy_dnf": [
+        [
+          {
+            "campo": "NOME ult frag igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "CODMUNRES local igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "SEXO igualdade",
+            "op": ">=",
+            "valor": 1
+          }
+        ]
+      ]
+    },
+    {
+      "id": "K3",
+      "chave": "(NOME_ult_frag_norm, NOMEMAE_ult_frag_norm, CODMUNRES_local_norm)",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.ULTIMO_FRAGMENTO_NOME_norm, r.ULTIMO_FRAGMENTO_NOMEMAE_norm, r.MUN_RES_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) não pareados em passos anteriores, com chave(s) = chave(m) = k",
+      "justificativa": "Mantém os sobrenomes (último fragmento do nome e da mãe) e o município, sem data nem sexo. Relaxa o primeiro fragmento do nome e a informação de data, que tem a maior taxa de erro nos tardios. Recall esperado é baixo, porque o último fragmento da mãe concorda em apenas cerca de 6,6% dos tardios.",
+      "campos": [
+        "NOME ult frag igual",
+        "NOMEMAE ult frag igual",
+        "CODMUNRES local igual"
+      ],
+      "erro_recuperado": "Vínculos tardios com erro simultâneo no primeiro fragmento do nome e na data de nascimento, que ainda concordem nos últimos fragmentos do nome e da mãe e no município. Não é recuperação ampla: a concordância do último fragmento da mãe é baixa nos tardios.",
+      "custo_ordem_grandeza": "Hipotético: 10^3 pares candidatos no extrato de 61696 linhas, por blocos moderados. Não identificável nas bases originais.",
+      "limitacao_proxy": "Proxy de igualdade de último fragmento; não é fonético. NOMEMAE ult frag igual = 0,934 de erro nos tardios, portanto a chave deve ter recall muito baixo, e o proxy não permite estimar a fração recuperada. Concordância conjunta não é observada. Subestimação por variantes fonéticas.",
+      "proxy_dnf": [
+        [
+          {
+            "campo": "NOME ult frag igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "NOMEMAE ult frag igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "CODMUNRES local igual",
+            "op": ">=",
+            "valor": 1
+          }
+        ]
+      ]
+    },
+    {
+      "id": "K4",
+      "chave": "(DTNASC_norm, CODMUNRES_uf_norm, SEXO_norm)",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.DTNASC_AAAAMMDD, r.UF_RES_norm, r.SEXO_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) não pareados em passos anteriores, com chave(s) = chave(m) = k",
+      "justificativa": "Relaxa o componente geográfico de município para UF e remove o nome. Testa se a data completa, com UF e sexo, recupera vínculos com erro de nome em blocos maiores que K1. CODMUNRES uf igual = 1,0 nos tardios, então a UF não restringe a recuperação.",
+      "campos": [
+        "DTNASC dt iguais",
+        "CODMUNRES uf igual",
+        "SEXO igualdade"
+      ],
+      "erro_recuperado": "Vínculos tardios com NOME prim frag igual < 1 ou NOME ult frag igual < 1, com data completa, UF e sexo iguais. Limite superior: número de vínculos com erro de nome, cerca de 9 em 167, pois a data completa é concordante em apenas 0,317 dos tardios.",
+      "custo_ordem_grandeza": "Hipotético: 10^3 a 10^4 pares candidatos no extrato de 61696 linhas. A data completa reduz os blocos, mas a UF é mais ampla que o município. Não identificável nas bases originais.",
+      "limitacao_proxy": "Proxy com igualdade de data completa e UF; agregados dão apenas marginais, sem concordância conjunta com nome. DTNASC dt iguais limita a recuperação: datas com 1 dígito de erro não entram. Ano de nascimento não tem proxy, e o campo DTNASC dt inv ano não representa igualdade de ano. Sexo é tratado pelo campo de igualdade SEXO igualdade, e não por observação direta da chave.",
+      "proxy_dnf": [
+        [
+          {
+            "campo": "DTNASC dt iguais",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "CODMUNRES uf igual",
+            "op": ">=",
+            "valor": 1
+          },
+          {
+            "campo": "SEXO igualdade",
+            "op": ">=",
+            "valor": 1
+          }
+        ]
+      ]
+    }
+  ],
+  "limitacoes": [
+    "As chaves propostas são hipóteses a validar. Não há acesso à configuração efetiva do OpenRecLink nem aos registros normalizados; apenas agregados por campo e passo estão disponíveis.",
+    "Os proxies são avaliados apenas com campos do dicionário. Como os agregados trazem marginais e não concordância conjunta, a fração recuperada por cada chave não é observada e só pode ser limitada superiormente pela fração marginal do campo mais restritivo.",
+    "Ano de nascimento: sem proxy confiável. DTNASC dt inv ano indica inversão de dígito, não igualdade de ano; nenhuma chave com ano é avaliada.",
+    "Soundex: não há campo fonético no dicionário. NOME prim frag igual e NOME ult frag igual são igualdades de fragmento textual; não equivalem a Soundex. A potencial subestimação é que variantes fonéticas do mesmo sobrenome não são recuperadas por estas chaves.",
+    "Sexo: SEXO igualdade é usado como proxy de concordância. A concordância de 1,0 nos passos 11 e 9 e de 0,884 no passo 6 sugere que o campo não é uniforme em todos os passos; a presença do sexo na chave de cada passo não é observada.",
+    "Custo absoluto nas bases originais não é identificável. As ordens de grandeza indicadas são hipotéticas no extrato de 61696 linhas e servem apenas para comparação relativa com o passo 11 (57.598 pares).",
+    "Concordância alta em UF e município pode refletir prevalência geográfica, seleção ou exportação da base e remoção sequencial de registros já pareados, e não necessariamente a composição da chave. Associação não identifica causalidade da chave.",
+    "Recall dos tardios é limitado pelo tamanho pequeno da amostra (167 vínculos tardios; 247 no total), pela ausência de sobreposição em captura-recaptura e pela exclusão progressiva, que invalida listas independentes. Zero sobreposição não significa zero vínculos perdidos.",
+    "Nenhuma chave usa nota, PAR, identificadores, composição comum/raro ou presença de abreviação. DTNASC dt ap 1digi é aproximação e não entra como componente de igualdade de chave.",
+    "Os totais de erros recuperáveis (por exemplo, 6 e 3 vínculos com erro de primeiro e último fragmento nos tardios) são marginais e não permitem determinar a interseção com as demais condições."
+  ]
+}

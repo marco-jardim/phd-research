@@ -304,3 +304,19 @@ AGENTS.md
 
 # Extracoes locais (Drive/Colab), nunca versionar
 .local/
+opencode.json
+PLAN.md
+
+# Artefatos por par distribuídos exclusivamente pelo depósito Zenodo
+data/funil_gzcmd_vigilancia*.csv
+data/funil_gzcmd_confirmacao*.csv
+data/funil_gzcmd_antes_*.csv
+data/pcal_ml_oof.csv
+data/pcal_ml_oof*.csv
+data/*_row.*
+data/m7/*_row.*
+text/latex/figures/*_row.*
+text/latex/tables/*_row.tex
+data/*_m3v3*
+text/latex/figures/*_m3v3.*
+data/ancoras_ml_margens_oof.csv

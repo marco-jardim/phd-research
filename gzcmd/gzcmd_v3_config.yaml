@@ -98,7 +98,9 @@ base_model:
   score_space: "probability"
 
 calibration:
-  # Online / rolling calibration WITHOUT human labels.
+  p_cal: ml_xgb  # platt reproduces the historical monotone probability
+  # ml_xgb: supervised nested OOF evaluation, NOT label-free calibration.
+  # The legacy fields below describe the original Platt/anchor alternatives.
   method: "anchor_platt"   # sigmoid(a*logit(p_base)+b) fitted using anchors
   by_band: true            # fit separate (a,b) per band; recommended for grey bands
   clip_min: 1.0e-6
@@ -120,19 +122,21 @@ calibration:
   output_column: "p_cal"
 
 guardrails:
+  policy_version: v3.1  # run_v3(policy_version="v3", p_cal="platt") reproduces v3
   # Deterministic safety rules (PII-free), to avoid catastrophic false positives.
   params:
     temporal_days: 180
-    nota_always_match: 10.0
-    nota_always_nonmatch: 3.0
+    nota_always_match: 9.0
+    nota_always_nonmatch: 5.0
     homonimia_min_nota: 7.0
     homonimia_year_gap: 5.0
   always_match:
-    - "nota_final >= 9.0"
+    # v3.1: relaxed OOF probability consistency, no exact DOB/municipality gate.
+    - "nota_final >= 9 and p_cal_ml >= 0.9"
   always_nonmatch:
-    - "nota_final <= 3.0"
+    - "nota_final < 5.0"
 
-  # Soft blocks that force LLM_REVIEW (or NONMATCH in confirmacao) in risky situations
+  # Legacy descriptive rules; v3.1 uses only A-/A+ above and Bayesian argmin.
   risky_if:
     # Mother missing is dangerous in the grey zone (thesis: mother's name dominates grey-zone decisions)
     - name: "grey_mother_missing"
@@ -152,19 +156,33 @@ decision_policy:
       costs:
         false_positive: 10.0
         false_negative: 50.0
-        llm_review: 0.25
+        # Unit: equivalent human reviews. 5 s / (20 min * 60) = 1/240
+        # ~= 0.00417, rounded conservatively to the approved 0.005.
+        llm_review: 0.005
+        human_review: 1.0
+      human_error: {e_fp: 0.05, e_fn: 0.05}  # scenario, not measured agreement
+      human_budget: {max_pairs_per_window: null}  # unlimited direct referrals
       auto:
-        # optional hard caps to keep behavior sane under drift
+        # Legacy v3 caps only; v3.1 derives decisions from the four losses.
         min_auto_match_threshold: 0.85
         max_auto_nonmatch_threshold: 0.15
       llm_budget:
         max_calls_per_window: 2000
-        selection_metric: "evr"   # expected value of review
+        selection_metric: "evr"   # v3.1: gain over best non-LLM action, including human
     confirmacao:
+      policy_kind: cost  # alternative: np; cost remains the default comparison
+      np:
+        max_fp_rate_auto: 0.002  # expected false fraction among ALL auto MATCHs, guards included
+        max_fp_expected_total: null  # absolute expected FP budget overrides the rate
+        max_fn_rate_auto: 0.02  # conservative pointwise p<=.02 NONMATCH rule
       costs:
         false_positive: 100.0
         false_negative: 20.0
-        llm_review: 0.25
+        # Same human-equivalent time ratio (5 s vs 20 min), rounded to 0.005.
+        llm_review: 0.005
+        human_review: 1.0
+      human_error: {e_fp: 0.05, e_fn: 0.05}
+      human_budget: {max_pairs_per_window: null}
       auto:
         min_auto_match_threshold: 0.95
         max_auto_nonmatch_threshold: 0.10
@@ -205,6 +223,8 @@ llm_review:
     must_return_json_only: true
 
   reliability:
+    # v4 selects only Claude Haiku 5.5 (sem model_outputs), never the mixed pooled block.
+    estimated_rates_path: error_rates_by_band_v4.yaml
     # Start with conservative assumptions; update online from LLM audits.
     # Values are per-band (typical: LLM is best in grey_high and worst in grey_low).
     error_rates_by_band:
@@ -260,5 +280,5 @@ logging:
 evaluation:
   test_size: 0.3
   seeds: [42, 123, 456, 789, 2024]
-  split_by: "row"        # row | comprec | refrec
+  split_by: "refrec"     # row | comprec | refrec; histórico v3/Platt preservado
   group_stratify: true

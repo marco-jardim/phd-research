@@ -1,0 +1,311 @@
+{
+  "system": "Review the proposed program and return improved pure function as JSON only. Do not invent empirical performance.",
+  "prompt": {
+    "feature_dictionary": [
+      {
+        "name": "NOME prim frag igual",
+        "meaning": "NOME: igualdade do primeiro fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME ult frag igual",
+        "meaning": "NOME: igualdade do último fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag iguais",
+        "meaning": "NOME: contagem de fragmentos iguais",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag raros",
+        "meaning": "NOME: contagem de fragmentos raros coincidentes",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag comuns",
+        "meaning": "NOME: contagem de fragmentos comuns coincidentes",
+        "observed_range": [
+          -1.0,
+          -0.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag muito parec",
+        "meaning": "NOME: contagem de fragmentos muito parecidos",
+        "observed_range": [
+          0.2,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag abrev",
+        "meaning": "NOME: contagem de abreviações compatíveis",
+        "observed_range": [
+          0.0,
+          0.25
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE prim frag igual",
+        "meaning": "NOMEMAE: igualdade do primeiro fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE ult frag igual",
+        "meaning": "NOMEMAE: igualdade do último fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag iguais",
+        "meaning": "NOMEMAE: contagem de fragmentos iguais",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag raros",
+        "meaning": "NOMEMAE: contagem de fragmentos raros coincidentes",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag comuns",
+        "meaning": "NOMEMAE: contagem de fragmentos comuns coincidentes",
+        "observed_range": [
+          -1.0,
+          -0.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag muito parec",
+        "meaning": "NOMEMAE: contagem de fragmentos muito parecidos",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag abrev",
+        "meaning": "NOMEMAE: contagem de abreviações compatíveis",
+        "observed_range": [
+          0.0,
+          0.33
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt iguais",
+        "meaning": "DTNASC: igualdade de nascimento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt ap 1digi",
+        "meaning": "DTNASC: nascimento difere em aproximadamente um dígito",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv dia",
+        "meaning": "DTNASC: indicador de inversão envolvendo dia",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv mes",
+        "meaning": "DTNASC: indicador de inversão envolvendo mês",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv ano",
+        "meaning": "DTNASC: indicador de inversão envolvendo ano",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES uf igual",
+        "meaning": "CODMUNRES: UF igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES uf prox",
+        "meaning": "CODMUNRES: proximidade de UF",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES local igual",
+        "meaning": "CODMUNRES: município igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES local prox",
+        "meaning": "CODMUNRES: proximidade de município",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO via igual",
+        "meaning": "ENDERECO: via de endereço igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO via prox",
+        "meaning": "ENDERECO: proximidade da via",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO numero igual",
+        "meaning": "ENDERECO: número do endereço igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO compl prox",
+        "meaning": "ENDERECO: proximidade do complemento",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO texto prox",
+        "meaning": "ENDERECO: proximidade textual do endereço",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO tokens jacc",
+        "meaning": "ENDERECO: Jaccard de tokens de endereço",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "nota final",
+        "meaning": "nota composta do comparador",
+        "observed_range": [
+          0.53,
+          13.71
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      }
+    ],
+    "problem": "Link death records SIM with Sinan-TB notifications. True links may have spelling variation, inverted day/month, missing birth date, different municipality due to migration. False matches can share common name fragments. No pair examples, no labels, no learned model parameters are available.",
+    "request": "Write a pure Python escore_programado(features: dict) -> float, in [0,1], interpretable weighted rules. Missing keys default zero. Do not mutate features. Only one function (with Portuguese explanatory docstring); no imports, loops, comprehensions, nested functions, globals, annotations or decorators. Only arithmetic, comparisons, if, assignment, return; calls allowed min/max/abs/float/int and features.get('known feature',0). No math exp: use bounded affine score or rational sigmoid. No data/labels embedded. Treat zero as potentially missing; do not mechanically veto migration or uncertain birth. Return JSON: code (string), semantics (list), limitations (list).",
+    "previous_code": "def escore_programado(features):\n    \"\"\"Escore de vinculação semântica, em [0, 1], entre registro SIM e notificação Sinan-TB.\n    Soma evidências ponderadas de concordância entre campos. Não identifica pessoas e não afirma identidade.\n    Valor zero pode significar ausência ou discordância e contribui zero, sem veto.\n    Migração de município/UF e incerteza na data de nascimento apenas reduzem ou mantêm a evidência; não eliminam o par.\n    Não altera o dicionário de entrada.\"\"\"\n    n_pi = min(max(float(features.get('NOME prim frag igual', 0)), 0.0), 1.0)\n    n_ul = min(max(float(features.get('NOME ult frag igual', 0)), 0.0), 1.0)\n    n_ig = min(max(float(features.get('NOME qtd frag iguais', 0)), 0.0), 1.0)\n    n_ra = min(max(float(features.get('NOME qtd frag raros', 0)), 0.0), 1.0)\n    n_co = min(max(float(features.get('NOME qtd frag comuns', 0)), -1.0), 0.0)\n    n_mp = min(max(float(features.get('NOME qtd frag muito parec', 0)), 0.0), 1.0)\n    n_ab = min(max(float(features.get('NOME qtd frag abrev', 0)), 0.0), 1.0)\n    nome = 0.25 * n_pi + 0.15 * n_ul + 0.20 * n_ig + 0.15 * n_ra + 0.15 * n_mp + 0.10 * n_ab + 0.15 * n_co\n    nome = min(max(nome, 0.0), 1.0)\n\n    m_pi = min(max(float(features.get('NOMEMAE prim frag igual', 0)), 0.0), 1.0)\n    m_ul = min(max(float(features.get('NOMEMAE ult frag igual', 0)), 0.0), 1.0)\n    m_ig = min(max(float(features.get('NOMEMAE qtd frag iguais', 0)), 0.0), 1.0)\n    m_ra = min(max(float(features.get('NOMEMAE qtd frag raros', 0)), 0.0), 1.0)\n    m_co = min(max(float(features.get('NOMEMAE qtd frag comuns', 0)), -1.0), 0.0)\n    m_mp = min(max(float(features.get('NOMEMAE qtd frag muito parec', 0)), 0.0), 1.0)\n    m_ab = min(max(float(features.get('NOMEMAE qtd frag abrev', 0)), 0.0), 1.0)\n    nomemae = 0.25 * m_pi + 0.15 * m_ul + 0.20 * m_ig + 0.15 * m_ra + 0.15 * m_mp + 0.10 * m_ab + 0.15 * m_co\n    nomemae = min(max(nomemae, 0.0), 1.0)\n\n    d_ig = min(max(float(features.get('DTNASC dt iguais', 0)), 0.0), 1.0)\n    d_ap = min(max(float(features.get('DTNASC dt ap 1digi', 0)), 0.0), 1.0)\n    d_di = min(max(float(features.get('DTNASC dt inv dia', 0)), 0.0), 1.0)\n    d_me = min(max(float(features.get('DTNASC dt inv mes', 0)), 0.0), 1.0)\n    d_an = min(max(float(features.get('DTNASC dt inv ano', 0)), 0.0), 1.0)\n    dt = max(d_ig, 0.6 * d_ap, 0.5 * max(d_di, d_me), 0.3 * d_an)\n    dt = min(max(dt, 0.0), 1.0)\n\n    u_ig = min(max(float(features.get('CODMUNRES uf igual', 0)), 0.0), 1.0)\n    u_pr = min(max(float(features.get('CODMUNRES uf prox', 0)), 0.0), 0.5)\n    l_ig = min(max(float(features.get('CODMUNRES local igual', 0)), 0.0), 1.0)\n    l_pr = min(max(float(features.get('CODMUNRES local prox', 0)), 0.0), 0.5)\n    mun = max(l_ig, 2.0 * l_pr, 0.4 * u_ig, 0.8 * u_pr)\n    mun = min(max(mun, 0.0), 1.0)\n\n    v_ig = min(max(float(features.get('ENDERECO via igual', 0)), 0.0), 1.0)\n    v_pr = min(max(float(features.get('ENDERECO via prox', 0)), 0.0), 0.8)\n    e_ig = min(max(float(features.get('ENDERECO numero igual', 0)), 0.0), 1.0)\n    c_pr = min(max(float(features.get('ENDERECO compl prox', 0)), 0.0), 0.5)\n    t_pr = min(max(float(features.get('ENDERECO texto prox', 0)), 0.0), 0.8)\n    jac = min(max(float(features.get('ENDERECO tokens jacc', 0)), 0.0), 0.5)\n    end = 0.30 * v_ig + 0.20 * v_pr + 0.20 * e_ig + 0.10 * c_pr + 0.10 * t_pr + 0.10 * jac\n    end = min(max(end, 0.0), 1.0)\n\n    score = 0.35 * nome + 0.20 * nomemae + 0.25 * dt + 0.10 * mun + 0.10 * end\n    return float(min(max(score, 0.0), 1.0))\n",
+    "refinement": "Review and refine the function semantically, particularly double-counting correlated fragments, rare/common fragments, missingness and migration. No validation metrics or labels are provided: remain label-free. Return same JSON schema. Improve interpretability rather than promise accuracy."
+  },
+  "response": {
+    "code": "def escore_programado(features):\n    \"\"\"Escore interpretável, em [0, 1], de vinculação entre registro SIM e notificação Sinan-TB.\n    Nome e nome da mãe usam o maior sinal de concordância exata (fragmentos correlacionados não são somados),\n    acrescentam fragmentos raros e parciais e subtraem levemente fragmentos comuns.\n    Data de nascimento usa o máximo entre evidências alternativas (igualdade, erro de um dígito, inversão), sem somar.\n    Município e endereço são evidências de apoio. Zero significa ausência ou discordância e contribui zero; não há veto.\n    Migração de município ou UF apenas deixa de somar evidência territorial; não elimina o par.\n    Não identifica pessoas e não afirma identidade. Não altera o dicionário de entrada.\"\"\"\n    v = features.get('NOME prim frag igual', 0)\n    if v is None:\n        v = 0.0\n    n_pi = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOME ult frag igual', 0)\n    if v is None:\n        v = 0.0\n    n_ul = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOME qtd frag iguais', 0)\n    if v is None:\n        v = 0.0\n    n_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOME qtd frag raros', 0)\n    if v is None:\n        v = 0.0\n    n_ra = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOME qtd frag comuns', 0)\n    if v is None:\n        v = 0.0\n    n_co = min(max(float(v), -1.0), 0.0)\n    v = features.get('NOME qtd frag muito parec', 0)\n    if v is None:\n        v = 0.0\n    n_mp = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOME qtd frag abrev', 0)\n    if v is None:\n        v = 0.0\n    n_ab = min(max(float(v), 0.0), 1.0)\n    exact_n = max(n_pi, n_ul, n_ig)\n    nome = 0.60 * exact_n + 0.25 * n_ra + 0.15 * max(n_mp, n_ab) + 0.10 * n_co\n    nome = min(max(nome, 0.0), 1.0)\n\n    v = features.get('NOMEMAE prim frag igual', 0)\n    if v is None:\n        v = 0.0\n    m_pi = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOMEMAE ult frag igual', 0)\n    if v is None:\n        v = 0.0\n    m_ul = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOMEMAE qtd frag iguais', 0)\n    if v is None:\n        v = 0.0\n    m_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOMEMAE qtd frag raros', 0)\n    if v is None:\n        v = 0.0\n    m_ra = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOMEMAE qtd frag comuns', 0)\n    if v is None:\n        v = 0.0\n    m_co = min(max(float(v), -1.0), 0.0)\n    v = features.get('NOMEMAE qtd frag muito parec', 0)\n    if v is None:\n        v = 0.0\n    m_mp = min(max(float(v), 0.0), 1.0)\n    v = features.get('NOMEMAE qtd frag abrev', 0)\n    if v is None:\n        v = 0.0\n    m_ab = min(max(float(v), 0.0), 1.0)\n    exact_m = max(m_pi, m_ul, m_ig)\n    mae = 0.60 * exact_m + 0.25 * m_ra + 0.15 * max(m_mp, m_ab) + 0.10 * m_co\n    mae = min(max(mae, 0.0), 1.0)\n\n    v = features.get('DTNASC dt iguais', 0)\n    if v is None:\n        v = 0.0\n    d_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('DTNASC dt ap 1digi', 0)\n    if v is None:\n        v = 0.0\n    d_ap = min(max(float(v), 0.0), 1.0)\n    v = features.get('DTNASC dt inv dia', 0)\n    if v is None:\n        v = 0.0\n    d_di = min(max(float(v), 0.0), 1.0)\n    v = features.get('DTNASC dt inv mes', 0)\n    if v is None:\n        v = 0.0\n    d_me = min(max(float(v), 0.0), 1.0)\n    v = features.get('DTNASC dt inv ano', 0)\n    if v is None:\n        v = 0.0\n    d_an = min(max(float(v), 0.0), 1.0)\n    dt = max(d_ig, 0.6 * d_ap, 0.5 * max(d_di, d_me), 0.3 * d_an)\n    dt = min(max(dt, 0.0), 1.0)\n\n    v = features.get('CODMUNRES uf igual', 0)\n    if v is None:\n        v = 0.0\n    u_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('CODMUNRES uf prox', 0)\n    if v is None:\n        v = 0.0\n    u_pr = min(max(float(v), 0.0), 0.5)\n    v = features.get('CODMUNRES local igual', 0)\n    if v is None:\n        v = 0.0\n    l_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('CODMUNRES local prox', 0)\n    if v is None:\n        v = 0.0\n    l_pr = min(max(float(v), 0.0), 0.5)\n    mun = max(l_ig, 2.0 * l_pr, 0.4 * u_ig, 0.8 * u_pr)\n    mun = min(max(mun, 0.0), 1.0)\n\n    v = features.get('ENDERECO via igual', 0)\n    if v is None:\n        v = 0.0\n    v_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('ENDERECO via prox', 0)\n    if v is None:\n        v = 0.0\n    v_pr = min(max(float(v), 0.0), 0.8)\n    v = features.get('ENDERECO numero igual', 0)\n    if v is None:\n        v = 0.0\n    e_ig = min(max(float(v), 0.0), 1.0)\n    v = features.get('ENDERECO compl prox', 0)\n    if v is None:\n        v = 0.0\n    c_pr = min(max(float(v), 0.0), 0.5)\n    v = features.get('ENDERECO texto prox', 0)\n    if v is None:\n        v = 0.0\n    t_pr = min(max(float(v), 0.0), 0.8)\n    v = features.get('ENDERECO tokens jacc', 0)\n    if v is None:\n        v = 0.0\n    j_ac = min(max(float(v), 0.0), 0.5)\n    via = max(v_ig, 0.75 * v_pr)\n    texto = max(t_pr, j_ac)\n    end = 0.45 * via + 0.25 * e_ig + 0.15 * texto + 0.15 * c_pr\n    end = min(max(end, 0.0), 1.0)\n\n    score = 0.35 * nome + 0.20 * mae + 0.25 * dt + 0.10 * mun + 0.10 * end\n    return float(min(max(score, 0.0), 1.0))\n",
+    "semantics": [
+      "Nome e nome da mãe: o componente de concordância exata é o máximo entre primeiro fragmento, último fragmento e contagem de fragmentos iguais, evitando soma de sinais correlacionados.",
+      "Nome e nome da mãe: fragmentos raros coincidentes somam peso moderado (0.25), pois indicam maior poder discriminativo; fragmentos muito parecidos ou abreviações entram como evidência parcial pelo máximo entre os dois (0.15).",
+      "Fragmentos comuns coincidentes têm sinal negativo e reduzem levemente o escore de nome (peso 0.10), refletindo menor poder discriminativo e maior risco de coincidência fortuita.",
+      "Nome e nome da mãe são limitados a [0, 1] antes da combinação ponderada final.",
+      "Data de nascimento usa máximo (não soma) entre igualdade (1.0), erro aproximado de um dígito (0.6), inversão dia/mês (0.5) e inversão de ano (0.3), pois são alternativas correlacionadas da mesma data.",
+      "Município: igualdade do município ou proximidade e igualdade de UF contribuem como evidência de apoio pelo máximo; diferença de município não gera veto e apenas não soma evidência territorial.",
+      "Endereço: via, número, complemento, texto e Jaccard são agrupados por componentes (via, texto, número, complemento) para reduzir dupla contagem de similaridades textuais correlacionadas.",
+      "Zero em qualquer campo significa ausência ou discordância e contribui zero, sem penalização adicional nem veto; o código não distingue essas situações.",
+      "Pesos finais somam 1.0: nome 0.35, mãe 0.20, data de nascimento 0.25, município 0.10 e endereço 0.10. O escore é ordinal e heurístico, não uma probabilidade calibrada.",
+      "Campo 'nota final' não é usado porque sua escala (0.53 a 13.71) é desconhecida e pode já conter os mesmos sinais, o que aumentaria a dupla contagem.",
+      "Valores None são tratados como zero; valores fora das faixas observadas são limitados às faixas indicadas no código."
+    ],
+    "limitations": [
+      "Sem rótulos, pares de exemplo ou parâmetros aprendidos, os pesos e limiares são escolhas heurísticas e não foram validados; nenhuma acurácia, precisão ou recall é afirmado.",
+      "A ausência de um indicador explícito de missingness impede distinguir campo ausente de discordância; zeros podem subestimar pares verdadeiros com dados incompletos.",
+      "Não há normalização por cobertura: pares com mais campos ausentes tendem a receber escores menores, sem que isso reflita necessariamente menor probabilidade de vínculo.",
+      "A classificação de fragmentos como raros, comuns, muito parecidos ou abreviações depende de fontes externas não descritas aqui e pode variar entre populações e regiões.",
+      "A escolha do máximo para agrupar campos correlacionados é uma simplificação semântica; correlações reais entre campos não foram estimadas.",
+      "Migração é tratada apenas removendo a evidência territorial, sem modelar deslocamentos plausíveis entre municípios ou datas de óbito e notificação.",
+      "Inversões de data e erros de um dígito são indicadores fornecidos externamente; o código não verifica sua coerência com a data de referência.",
+      "O escore é ordinal e não calibrado; limiares de decisão exigem validação externa com dados rotulados antes de qualquer uso operacional.",
+      "A função não trata entradas não numéricas além de None; valores de texto que não possam ser convertidos por float levantarão exceção.",
+      "Não há garantia de que as faixas observadas representem os máximos possíveis de cada campo; valores fora delas são limitados pelo código."
+    ]
+  },
+  "input_tokens": 5392,
+  "output_tokens": 11034
+}

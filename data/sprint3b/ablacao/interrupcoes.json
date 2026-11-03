@@ -1,0 +1,25 @@
+{
+  "reason": "background executor terminated first continuation at 120 seconds; no API error observed",
+  "executor_limit_s": 120,
+  "before_resume": {
+    "deepseek-v4.1-flash_controle": {
+      "completed_pairs": 15,
+      "checkpoint_calls": 31
+    },
+    "deepseek-v4.1-flash_sem_pcal": {
+      "completed_pairs": 14,
+      "checkpoint_calls": 32
+    },
+    "claude-haiku-5-5_controle": {
+      "completed_pairs": 7,
+      "checkpoint_calls": 17
+    },
+    "claude-haiku-5-5_sem_pcal": {
+      "completed_pairs": 8,
+      "checkpoint_calls": 18
+    }
+  },
+  "historical_call_count_exact": false,
+  "possible_uncheckpointed_calls": "unknown; one in-progress review per arm, up to three API attempts per unfinished review without retries",
+  "successful_pairs_reused": true
+}

@@ -1,0 +1,46 @@
+{
+  "seed": 42,
+  "rates_yaml": "D:\\git\\phd-research\\gzcmd\\error_rates_by_band_v4.yaml",
+  "rates_sha256": "9fc27bfe8a3f0cd92648a98586e915594295537a1aebd17c273c11a5771913d2",
+  "rates_model": "claude-haiku-5-5",
+  "reference_runs": [
+    {
+      "mode": "vigilancia",
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "sha256": "d30a30b710334874abad9ff24b9124c02b1fc33899393290d6d713f00fd776e1"
+    },
+    {
+      "mode": "vigilancia",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+      "sha256": "e21baf47edfdd28c3937e9c9401c3b61dd806edcc20d0b1454bdb25a4b7f870c"
+    },
+    {
+      "mode": "vigilancia",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+      "sha256": "cc68b8658866627aefc25d008bb7c978df53f554cd92425b0502eb695ffd468c"
+    },
+    {
+      "mode": "confirmacao",
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "sha256": "a952409dd45d8b755592d16a8919ac098f709d56a6d161a6def76d70af1c4980"
+    },
+    {
+      "mode": "confirmacao",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+      "sha256": "b3aac9bf8d09765c95a135d907e063ecce8a47b906fbb7507e2c79fe7dd35747"
+    },
+    {
+      "mode": "confirmacao",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+      "sha256": "abc76bda740c23707ff95f674f7c32c1d87199fcec5f9a3c028e30bc804308f0"
+    }
+  ],
+  "oof_sha256": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+  "archive_manifest_sha256": "1efab7f830f3b7ffed23d0d5d7f91351671cc346ae3007e0ecb10e4d0e09e70c",
+  "approved_costs": {
+    "llm_review": 0.005,
+    "human_review": 1.0,
+    "human_error": 0.05,
+    "human_budget": null
+  }
+}

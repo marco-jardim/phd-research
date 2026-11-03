@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Matrizes de confus\~ao da revis\~ao assistida por LLM, por modo de opera\c{c}\~ao.}
+\caption{Matrizes de confusão da execução anterior de Kimi K2.5, por modo de operação (15 de fevereiro de 2026; fontes não versionadas).}
 \label{tab:qw2-confusion}
 \small
 \begin{tabular}{llrrrl}
@@ -9,11 +9,13 @@ Modo & Classe real & \multicolumn{2}{c}{Predi\c{c}\~ao} & Total & Protocolo \\
 \cmidrule(lr){3-4}
  & & MATCH & NONMATCH & & \\
 \midrule
-Vigil\^ancia & Positivo & 72 & 32 & 104 & consenso: 1\,371; \'arbitro: 39 \\
-Vigil\^ancia & Negativo & 6 & 1\,300 & 1\,306 & -- \\
+Vigil\^ancia & Positivo & 72 & 32 & 104 & consenso: 1.371; \'arbitro: 39 \\
+Vigil\^ancia & Negativo & 6 & 1.300 & 1.306 & -- \\
 \midrule
 Confirma\c{c}\~ao & Positivo & 91 & 10 & 101 & consenso: 412; \'arbitro: 23 \\
 Confirma\c{c}\~ao & Negativo & 3 & 331 & 334 & -- \\
 \bottomrule
 \end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Fontes: \path{data/qw2/qw2_vigilancia_kimi.json} e \path{data/qw2/qw2_confirmacao_kimi.json}, com metadados de 15 de fevereiro de 2026. A vigilância corresponde a execução anterior do mesmo protocolo, distinta da matriz reconstruída da Tabela~\ref{tab:cap8-revisao-desempenho}; para comparação entre revisores e reavaliações, ver a Tabela~\ref{tab:cap8-reruns}.}
 \end{table}

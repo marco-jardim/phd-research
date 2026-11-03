@@ -1,0 +1,476 @@
+{
+  "mode": "confirmacao",
+  "model": "claude-sonnet-5-5",
+  "dossier_sha256": {
+    "d5d6f7710e0a9d40": "158f0a9c4d8568c64c2a9d90574e10430465eea415a58848a199cad50f3796e4",
+    "ccbe99cb82077fef": "c62aaa2f3ff0004fc6cd5896fba7440f03812807cdb9ebfc5807cd3c4a3ed052",
+    "e79867ee0d8807df": "103b32ba2cc1db45c074ea1a4531c4cc23f2c1abbc5c90c135c015c6fa0a1f30",
+    "09e88d02c8183f29": "0dc925d5bddbdc57c4304ea8b5b2e1ee03d4ad5f12bdf372ae808e6ca7f7ab78",
+    "a68e0df5f92a19e9": "3a22ebe8ceefe46bbe8c754030b653b8616dc989c54173a0e697711a0706ad1f",
+    "6c70794f92d7ada7": "826f4d586e1adc5b693927cc1f0395f6ff635c78fd049057f23955caf495047f",
+    "e7adcb36f7195dfd": "091b16f6ec315ca142ade230b7c595a855cb7afde4d3256f15601522950afa34",
+    "644256d9e537e710": "1c904741d49c85ff9d5eb0963a7beae35ea50c71d5f8d03bc8f7295bb425d7be",
+    "6777541d06af276c": "a49f4f40d16ff88aef338da8281a834062259c5fb4d2beb23fe76435bb1458bc",
+    "d4593eed48fe8b25": "a2c92e2c53db98034e76016f338a5dc9ae270de7fc0090f4a5a674314eb7a150",
+    "1d9a313a249f6f55": "84d8d6adb7e04f366596ad3b3a0047354c3e7f57bd74240f65d78e90541c465d",
+    "5b4852baf4c3c30d": "51fc1c52da65c061591ed969168c52e4c9c7feb24027b1bea4847091e2b80947",
+    "9bf7dd23ce4c2381": "583158403b7878143a52673e75f9675588065c9501ebc704fd39d0b8dca4e160",
+    "c768546c8681725c": "9a3ae673ca3bd541ef3b71443ad41a02cdb50c7f5c9d0e3ac7572cda17c6f22a",
+    "acdce163d77f800e": "3aac20626a8759d737cd64331df72effc6e828a947d1b8ca7811c70764c93a06",
+    "e449fe5da88dae53": "1fd85dc7973518ba485766235327a27aadd8b07be9a645ffd39a52488f75f941",
+    "259e28e378c324bc": "5139cdad3ce3d1e5bb168d359d76ca7f75b7e16be6ce4bf8d19bcd152c531487"
+  },
+  "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+  "prompt_version": "v4",
+  "selected_pair_ids": [
+    "d5d6f7710e0a9d40",
+    "ccbe99cb82077fef",
+    "e79867ee0d8807df",
+    "09e88d02c8183f29",
+    "a68e0df5f92a19e9",
+    "6c70794f92d7ada7",
+    "e7adcb36f7195dfd",
+    "644256d9e537e710",
+    "6777541d06af276c",
+    "d4593eed48fe8b25",
+    "1d9a313a249f6f55",
+    "5b4852baf4c3c30d",
+    "9bf7dd23ce4c2381",
+    "c768546c8681725c",
+    "acdce163d77f800e",
+    "e449fe5da88dae53",
+    "259e28e378c324bc"
+  ],
+  "source_sha256": "99174d9c128369aa4d2536feb76378a06cd7fed8d356b9d0a56c1b5c41234d59",
+  "cohort": "v31_lot",
+  "experiment": "exp2_llm_sync",
+  "timestamp": "2026-11-03T14:42:37.392767+00:00",
+  "n_review_pairs": 17,
+  "workers": 4,
+  "removed_fields": [
+    "model_outputs.p_cal",
+    "model_outputs.base_choice",
+    "model_outputs.band",
+    "model_outputs.evr",
+    "model_outputs.guardrail",
+    "model_outputs.guardrail_reason"
+  ],
+  "elapsed_s": 76.01,
+  "metadata": {
+    "provider": "Anthropic Messages API",
+    "model_exact": "claude-sonnet-5-5",
+    "max_tokens": 2500,
+    "temperature_sent": false,
+    "extended_thinking": false,
+    "max_retries": 5,
+    "retry_delay_s": 3,
+    "timeout_s": 120,
+    "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+    "prompt_version": "v4",
+    "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "free_response_fields_saved": false,
+    "checkpoint": "every completed pair + durable per-call usage journal"
+  },
+  "results": [
+    {
+      "pair_id": "d5d6f7710e0a9d40",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.54,
+      "total_tokens": 7302
+    },
+    {
+      "pair_id": "ccbe99cb82077fef",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.2,
+      "total_tokens": 7490
+    },
+    {
+      "pair_id": "e79867ee0d8807df",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 7.47,
+      "total_tokens": 7154
+    },
+    {
+      "pair_id": "09e88d02c8183f29",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.69,
+      "total_tokens": 7722
+    },
+    {
+      "pair_id": "a68e0df5f92a19e9",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 13.26,
+      "total_tokens": 7897
+    },
+    {
+      "pair_id": "6c70794f92d7ada7",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 13.38,
+      "total_tokens": 7835
+    },
+    {
+      "pair_id": "e7adcb36f7195dfd",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 12.34,
+      "total_tokens": 7779
+    },
+    {
+      "pair_id": "644256d9e537e710",
+      "decision": "MATCH",
+      "confidence": 0.87,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 17.02,
+      "total_tokens": 8602
+    },
+    {
+      "pair_id": "6777541d06af276c",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.76,
+      "total_tokens": 7827
+    },
+    {
+      "pair_id": "d4593eed48fe8b25",
+      "decision": "MATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 20.82,
+      "total_tokens": 9086
+    },
+    {
+      "pair_id": "1d9a313a249f6f55",
+      "decision": "MATCH",
+      "confidence": 0.66,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "arbiter",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 31.1,
+      "total_tokens": 14941,
+      "arbiter_decision": "MATCH"
+    },
+    {
+      "pair_id": "5b4852baf4c3c30d",
+      "decision": "MATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 20.15,
+      "total_tokens": 8905
+    },
+    {
+      "pair_id": "9bf7dd23ce4c2381",
+      "decision": "MATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 19.88,
+      "total_tokens": 9097
+    },
+    {
+      "pair_id": "c768546c8681725c",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.46,
+      "total_tokens": 7741
+    },
+    {
+      "pair_id": "acdce163d77f800e",
+      "decision": "MATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "HIGH_SCORE_ANCHOR"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 18.07,
+      "total_tokens": 8709
+    },
+    {
+      "pair_id": "e449fe5da88dae53",
+      "decision": "MATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "HIGH_SCORE_ANCHOR",
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 17.5,
+      "total_tokens": 8559
+    },
+    {
+      "pair_id": "259e28e378c324bc",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 21.02,
+      "total_tokens": 8940
+    }
+  ],
+  "errors": [],
+  "failed_pair_ids": [],
+  "n_reviewed": 17,
+  "n_errors": 0,
+  "complete": true,
+  "updated_at": "2026-11-03T14:43:53.404728+00:00",
+  "transport": {
+    "calls": 35,
+    "http_errors": 0,
+    "response_parse_errors": 0,
+    "error_statuses": {},
+    "input_tokens": 111293,
+    "output_tokens": 34293,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "max_request_input_tokens": 4455
+  },
+  "cost_estimate_usd": 0.565516,
+  "cost_note": "Estimate only: standard/global USD/M for Claude Sonnet 5.5 input 2, output 10, cache read 0.10, cache write (5m) 2.50; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-03.",
+  "metrics": {
+    "mode": "confirmacao",
+    "n_reviewed": 17,
+    "n_errors": 0,
+    "total_elapsed_s": 76.01,
+    "decisions": {
+      "MATCH": 11,
+      "NONMATCH": 3,
+      "UNSURE": 3
+    },
+    "protocols": {
+      "consensus": 16,
+      "arbiter": 1
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-02T23:37:48.526698+00:00",
+  "reason": "Windows PermissionError replacing tmp checkpoint; no HTTP failure",
+  "checkpoint_counts": {
+    "exp2_llm_sync_vigilancia.json": 1148,
+    "exp2_llm_sync_vigilancia.tmp": 1149
+  },
+  "journal_complete_results": 1152,
+  "canonical_not_in_journal": 0,
+  "tmp_not_in_journal": 0,
+  "journal_extra_vs_canonical": 4,
+  "transport_recovered": {
+    "calls": 2383,
+    "http_errors": 0,
+    "response_parse_errors": 1,
+    "error_statuses": {},
+    "input_tokens": 5328345,
+    "output_tokens": 4034665,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "max_request_input_tokens": 3462
+  },
+  "recovery_policy": "journal successful results authoritative; reuse all successes; canonical/tmp/fallback latest usage; no full-cohort repeat"
+}

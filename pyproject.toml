@@ -22,6 +22,11 @@ dependencies = [
   "lightgbm>=4.0",
   "pyyaml>=6.0",
   "joblib>=1.3",
+  "statsmodels>=0.14",
+  "requests>=2.31",
+  "httpx>=0.27",
+  "anthropic>=0.40",
+  "gzcmd-record-linkage @ git+https://github.com/marco-jardim/gzcmd-record-linkage@v0.3.0",
 ]
 
 [tool.ruff]
@@ -32,7 +37,8 @@ target-version = "py311"
 select = ["E", "F", "I", "B", "UP"]
 
 [tool.pytest.ini_options]
-addopts = "-q"
+# A caller's `-q` must still print the "N passed" verification summary.
+addopts = ""
 pythonpath = ["."]
 testpaths = ["tests"]
 

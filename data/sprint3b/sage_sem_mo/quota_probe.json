@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-11-02T22:56:00.531910+00:00",
+  "method": "POST",
+  "final_url": "https://sage.levanto.ai/decide",
+  "status": 200,
+  "requests": 1,
+  "body_literal": "{\"id\":\"quota_probe\",\"kind\":\"yesno\",\"result\":{\"answer\":\"yes\",\"probability\":0.9968938942454479},\"meta\":{\"model\":\"levanto-sage-2\",\"latency_ms\":67.2,\"question_count\":1,\"usage\":{\"billed_input_tokens\":57,\"rendered_tokens\":57,\"image_count\":0,\"image_tokens\":0,\"input_tokens\":57,\"output_tokens\":0},\"reasoning\":{\"ran\":false,\"finished\":null,\"tokens\":null,\"limited\":null}},\"grounding_meta\":null}",
+  "checkpoint_counts": {
+    "vigilancia": {
+      "completed": 307,
+      "expected": 1410,
+      "status": "quota_exhausted"
+    },
+    "confirmacao": {
+      "completed": 3,
+      "expected": 435,
+      "status": "smoke_complete"
+    }
+  }
+}

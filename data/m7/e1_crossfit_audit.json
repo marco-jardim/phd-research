@@ -1,0 +1,41 @@
+[
+  {
+    "heldout_folds": [
+      1
+    ],
+    "call": "e1_audit",
+    "train_n": 49357,
+    "test_n": 12339,
+    "high_rule": "f['nota final'] >= 7.86 and f['DTNASC dt iguais'] >= 1 and f['NOME qtd frag iguais'] >= 0.75 and f['CODMUNRES local igual'] >= 1",
+    "gray_rule": "f['nota final'] >= 5.47 and f['nota final'] < 7.86 and (f['DTNASC dt iguais'] >= 1 or f['DTNASC dt ap 1digi'] >= 1) and (f['NOMEMAE qtd frag comuns'] >= -0.25 or f['NOMEMAE ult frag igual'] >= 1) and f['NOME qtd frag muito parec'] >= 0.8",
+    "role": "descriptive_audit_only_not_reused_in_crossfit_rules",
+    "note": "Historical engine error masks in this initial audit came from frozen M1 OOF cache; indirect dependence is disclosed."
+  },
+  {
+    "heldout_folds": [
+      0,
+      1,
+      4
+    ],
+    "call": "e1_audit_excluding_0_1_4",
+    "train_n": 24678,
+    "test_n": 37018,
+    "train_test_overlap": 0,
+    "high_rule": "f['nota final'] >= 6.13 and f['NOME qtd frag muito parec'] >= 0.8 and f['DTNASC dt iguais'] >= 1 and f['NOMEMAE qtd frag comuns'] >= -0.2",
+    "gray_rule": "f['nota final'] >= 4.8 and f['nota final'] < 6.13 and f['DTNASC dt iguais'] >= 1 and f['NOME qtd frag iguais'] >= 0.6 and f['NOMEMAE qtd frag muito parec'] >= 0.16 and f['NOME qtd frag comuns'] >= -0.4",
+    "role": "independent_grouped_oof_rule"
+  },
+  {
+    "heldout_folds": [
+      2,
+      3
+    ],
+    "call": "e1_audit_excluding_2_3",
+    "train_n": 37018,
+    "test_n": 24678,
+    "train_test_overlap": 0,
+    "high_rule": "f['NOME qtd frag iguais'] >= 0.75 and f['DTNASC dt iguais'] >= 1 and f['nota final'] >= 6.73",
+    "gray_rule": "f['NOME qtd frag muito parec'] >= 0.6 and f['NOMEMAE ult frag igual'] >= 1 and f['DTNASC dt ap 1digi'] >= 1 and f['nota final'] >= 5.47",
+    "role": "independent_grouped_oof_rule"
+  }
+]

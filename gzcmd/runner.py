@@ -18,7 +18,10 @@ from .classifier import GZCMDClassifier
 from .config import GZCMDConfig, load_config
 from .guardrails import apply_guardrails
 from .loader import LoadConfig, load_comparador_csv
-from .policy_engine import Budget, Costs, LLMError, PolicyEngineV3
+from .ml_oof import fit_xgb_oof, pair_ids
+from .np_policy import NPConstraints
+from .policy_engine import Budget, Costs, HumanBudget, HumanError, LLMError, PolicyEngineV3
+from .reliability import load_band_rates
 
 
 @dataclass(frozen=True)
@@ -31,6 +34,8 @@ class RunSummary:
     review_requested: int
     p_cal_method: str
     p_cal_params: dict[str, float] | None
+    human_used: int = 0
+    human_max: int | None = None
 
 
 def build_engine_from_config(
@@ -38,17 +43,28 @@ def build_engine_from_config(
     *,
     mode: str,
     llm_used: int = 0,
+    policy_version: str | None = None,
+    human_used: int = 0,
+    policy_kind: str | None = None,
+    rates_yaml: str | Path | None = None,
+    np_constraints: NPConstraints | None = None,
 ) -> PolicyEngineV3:
     if mode not in cfg.decision_policy.modes:
         known = ", ".join(sorted(cfg.decision_policy.modes.keys()))
         raise KeyError(f"Unknown mode '{mode}'. Known modes: {known}")
 
     mode_cfg = cfg.decision_policy.modes[mode]
+    policy_version = policy_version or cfg.guardrails.policy_version
+    kind = "cost" if policy_version == "v3" else (policy_kind or mode_cfg.policy_kind)
+    if kind == "np" and mode != "confirmacao":
+        raise ValueError("NP is selectable for confirmacao only")
 
     costs = Costs(
         false_positive=float(mode_cfg.false_positive_cost),
         false_negative=float(mode_cfg.false_negative_cost),
-        llm_review=float(mode_cfg.llm_review_cost),
+        llm_review=(0.25 if policy_version == "v3" and cfg.guardrails.policy_version == "v3.1"
+                    else float(mode_cfg.llm_review_cost)),
+        human_review=float(mode_cfg.human_review_cost),
     )
 
     if cfg.llm_review.enabled:
@@ -63,12 +79,19 @@ def build_engine_from_config(
             llm_error_by_band[band] = LLMError(
                 e_fp=float(rates["e_fp"]),
                 e_fn=float(rates["e_fn"]),
+                e_unsure=float(rates.get("e_unsure", 0.0)),
             )
 
         if missing:
             raise ValueError(
                 "Missing llm_review.reliability.error_rates_by_band for bands: "
                 + ", ".join(missing)
+            )
+
+        if policy_version == "v3.1":
+            llm_error_by_band = load_band_rates(
+                cfg.llm_review.error_rates_by_band, mode=mode,
+                source=rates_yaml or cfg.llm_review.estimated_rates_path,
             )
 
         budget = Budget(
@@ -88,6 +111,10 @@ def build_engine_from_config(
         budget=budget,
         min_auto_match=mode_cfg.min_auto_match_threshold,
         max_auto_nonmatch=mode_cfg.max_auto_nonmatch_threshold,
+        policy_version=policy_version or cfg.guardrails.policy_version,
+        human_error=HumanError(mode_cfg.human_e_fp, mode_cfg.human_e_fn),
+        human_budget=HumanBudget(mode_cfg.human_max_pairs_per_window, human_used),
+        policy_kind=kind, np_constraints=np_constraints or mode_cfg.np_policy,
     )
 
 
@@ -98,13 +125,24 @@ def run_v3(
     mode: str,
     macd_enabled: bool = True,
     llm_used: int = 0,
-    p_cal: str = "fit_platt",
+    p_cal: str | None = None,
     platt_model_path: str | Path | None = None,
     save_platt_model_path: str | Path | None = None,
     ml_rf_model_path: str | Path | None = None,
     save_ml_rf_model_path: str | Path | None = None,
+    policy_version: str | None = None,
+    ml_oof_path: str | Path = "data/pcal_ml_oof.csv",
+    reuse_ml_oof: bool = False,
+    split_by: str | None = None,
+    human_used: int = 0,
+    policy_kind: str | None = None,
+    rates_yaml: str | Path | None = None,
+    np_constraints: NPConstraints | None = None,
 ) -> tuple[pd.DataFrame, RunSummary]:
     cfg = load_config(config_path)
+    policy_version = policy_version or cfg.guardrails.policy_version
+    p_cal = p_cal or cfg.calibration.p_cal
+    legacy_override = policy_version == "v3" and cfg.guardrails.policy_version == "v3.1"
     df = load_comparador_csv(Path(input_csv), cfg=LoadConfig(macd_enabled=macd_enabled))
 
     nota_raw = pd.to_numeric(get_nota_series(df), errors="coerce")
@@ -128,7 +166,7 @@ def run_v3(
         df["p_cal"] = compute_p_cal(
             df, method="stub", clip_min=clip_min, clip_max=clip_max
         )
-    elif p_cal == "fit_platt":
+    elif p_cal in {"fit_platt", "platt"}:
         model = fit_platt_from_df(
             df,
             l2=cfg.calibration.platt.l2,
@@ -155,6 +193,12 @@ def run_v3(
         df["p_cal"] = compute_p_cal(
             df, method="platt", model=model, clip_min=clip_min, clip_max=clip_max
         )
+    elif p_cal == "ml_xgb":
+        oof = fit_xgb_oof(input_csv, output_path=ml_oof_path, reuse=reuse_ml_oof,
+                          split_by=split_by or cfg.evaluation.split_by)
+        df["p_cal"] = pair_ids(df).map(oof.set_index("pair_id")["p_cal_ml"])
+        if df["p_cal"].isna().any():
+            raise ValueError("OOF table does not cover every pair_id")
     elif p_cal == "fit_ml_rf":
         clf = GZCMDClassifier()
         clf.fit(df)
@@ -169,20 +213,22 @@ def run_v3(
         probs = clf.predict_proba(df)[:, 1]
         df["p_cal"] = probs
     else:
-        raise ValueError("p_cal must be one of: stub, fit_platt, load_platt, fit_ml_rf, load_ml_rf")
+        raise ValueError("p_cal must be one of: stub, platt, fit_platt, load_platt, ml_xgb, fit_ml_rf, load_ml_rf")
 
     g = apply_guardrails(
         df,
         temporal_days=cfg.guardrails.temporal_days,
-        nota_always_match=cfg.guardrails.nota_always_match,
-        nota_always_nonmatch=cfg.guardrails.nota_always_nonmatch,
+        nota_always_match=10.0 if legacy_override else cfg.guardrails.nota_always_match,
+        nota_always_nonmatch=3.0 if legacy_override else cfg.guardrails.nota_always_nonmatch,
         homonimia_min_nota=cfg.guardrails.homonimia_min_nota,
         homonimia_year_gap=cfg.guardrails.homonimia_year_gap,
+        policy_version=policy_version,
     )
     df["guardrail"] = g.guardrail
     df["guardrail_reason"] = g.reason
 
-    engine = build_engine_from_config(cfg, mode=mode, llm_used=llm_used)
+    engine = build_engine_from_config(cfg, mode=mode, llm_used=llm_used, policy_version=policy_version, human_used=human_used,
+                                     policy_kind=policy_kind, rates_yaml=rates_yaml, np_constraints=np_constraints)
     out = engine.triage(df)
 
     actions = out["action"].value_counts(dropna=False).to_dict()
@@ -204,5 +250,6 @@ def run_v3(
         review_requested=review_requested,
         p_cal_method=str(p_cal),
         p_cal_params=p_cal_params,
+        human_used=engine.human_budget.used, human_max=engine.human_budget.max_pairs,
     )
     return out, summary

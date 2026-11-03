@@ -1,0 +1,38 @@
+[
+  {
+    "etapa": "chaves_inferidas",
+    "modelo": "claude-haiku-5-5",
+    "inicio_utc": "2026-11-02T23:24:56.273456+00:00",
+    "status": "concluída",
+    "max_tokens": 8000,
+    "prompt_sha256": "bd98b869b72227a5220485f6aa1d3f831a9924a770870c1c98ed21d12ff60606",
+    "segundos": 26.505747899995185,
+    "input_tokens": 17071,
+    "output_tokens": 5473
+  },
+  {
+    "etapa": "chaves_propostas",
+    "modelo": "claude-haiku-5-5",
+    "inicio_utc": "2026-11-02T23:25:22.789026+00:00",
+    "status": "falhou_sem_retentativa",
+    "max_tokens": 8000,
+    "prompt_sha256": "32eb58f334ba884f30bcfac9bfb8ff9e9c3add7faca61108423312c3f5ad8615",
+    "motivo_falha": "truncamento confirmado no log da execução (resposta truncada em 8000 tokens); wrapper original descartou usage",
+    "output_tokens_estimados": 8000,
+    "fonte_estimativa_output": "max_tokens e stop_reason de truncamento, não usage preservado",
+    "input_tokens_estimados": 37080,
+    "fonte_estimativa_input": "usage de tentativa com prompt_sha256 idêntico; não usage preservado da falha"
+  },
+  {
+    "etapa": "chaves_propostas",
+    "modelo": "claude-haiku-5-5",
+    "inicio_utc": "2026-11-02T23:26:21.042346+00:00",
+    "status": "concluída",
+    "max_tokens": 16000,
+    "prompt_sha256": "32eb58f334ba884f30bcfac9bfb8ff9e9c3add7faca61108423312c3f5ad8615",
+    "input_tokens": 37080,
+    "output_tokens": 10363,
+    "segundos": 44.95483529998455,
+    "stop_reason": "end_turn"
+  }
+]
