@@ -1,22 +1,22 @@
 \begin{table}[htbp]
 \centering
-\caption{Distribuição dos pares candidatos por faixa do escore do \textit{linkage} probabilístico}
+\caption{Distribuição dos potenciais pares por nota final do comparador}
 \label{tab:score-bands}
 \begin{tabular}{lrrr}
 \toprule
-Faixa do escore prob. & Total & Pares & \% Pares \\
+Nota final do comparador & Total & Pares & \% Pares \\
 \midrule
-    0-3 & 5,336 & 0 & 0.00\% \\
-    3-5 & 34,645 & 3 & 0.01\% \\
-    5-6 & 14,263 & 17 & 0.12\% \\
-    6-7 & 6,175 & 57 & 0.92\% \\
-    7-8 & 1,080 & 43 & 3.98\% \\
-    8-9 & 102 & 34 & 33.33\% \\
-    9-10 & 44 & 43 & 97.73\% \\
-    10+ & 51 & 50 & 98.04\% \\
+    0-3 & 5.336 & 0 & 0,00\% \\
+    3-5 & 34.645 & 3 & 0,01\% \\
+    5-6 & 14.263 & 17 & 0,12\% \\
+    6-7 & 6.175 & 57 & 0,92\% \\
+    7-8 & 1.080 & 43 & 3,98\% \\
+    8-9 & 102 & 34 & 33,33\% \\
+    9-10 & 44 & 43 & 97,73\% \\
+    10+ & 51 & 50 & 98,04\% \\
 \bottomrule
 \end{tabular}
 
 \smallskip
-{\footnotesize\textit{Nota}: o escore do \textit{linkage} probabilístico corresponde à soma das razões de log-verossimilhança calculadas pelo OpenRecLink para três campos de comparação, a saber, nome, nome da mãe e data de nascimento (cf.\ Seção~\ref{sec:fontes-dados}). O piso ($-12{,}85$) indica discordância em todos os campos. A análise exploratória dos 116 valores distintos permitiu estimar a contribuição aproximada de cada campo quando concordante: data de nascimento ($\approx 2{,}3$ pontos), nome ($\approx 3{,}2$) e nome da mãe ($\approx 4{,}9$). Assim, escores nas faixas intermediárias (5--7) tipicamente refletem concordância parcial em dois campos, ao passo que valores acima de 9 indicam concordância simultânea na totalidade dos campos.}
+{\footnotesize\textit{Nota}: a tabela utiliza a coluna \texttt{nota final} do comparador, e não o escore probabilístico do OpenRecLink. As faixas são fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. Fonte: extrato anonimizado, coluna \texttt{nota final}, e \texttt{scripts/generate\_missing\_figures.py}.}
 \end{table}

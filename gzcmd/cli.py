@@ -47,10 +47,14 @@ def build_parser() -> argparse.ArgumentParser:
     )
     run.add_argument(
         "--p-cal",
-        choices=["fit_platt", "load_platt", "stub", "fit_ml_rf", "load_ml_rf"],
-        default="fit_platt",
-        help="How to compute p_cal (default: fit_platt)",
+        choices=["platt", "fit_platt", "load_platt", "stub", "ml_xgb", "fit_ml_rf", "load_ml_rf"],
+        default=None,
+        help="How to compute p_cal (default: calibration.p_cal in YAML)",
     )
+    run.add_argument("--policy-version", choices=["v3", "v3.1"], default=None,
+                     help="Guardrails/cascade profile (default: YAML); v3 restores historical thresholds")
+    run.add_argument("--reuse-ml-oof", action="store_true",
+                     help="Reuse fingerprint-validated nested OOF artifact, if available")
     run.add_argument(
         "--platt-model",
         default="",
@@ -197,6 +201,8 @@ def main(argv: list[str] | None = None) -> int:
             macd_enabled=not args.no_macd,
             llm_used=args.llm_used,
             p_cal=args.p_cal,
+            policy_version=args.policy_version,
+            reuse_ml_oof=args.reuse_ml_oof,
             platt_model_path=(args.platt_model or None),
             save_platt_model_path=(args.save_platt_model or None),
             ml_rf_model_path=(args.ml_rf_model or None),

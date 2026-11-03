@@ -6,6 +6,8 @@ from typing import Any, Mapping
 
 import yaml
 
+from .np_policy import NPConstraints
+
 
 @dataclass(frozen=True)
 class BandDefinition:
@@ -28,6 +30,12 @@ class ModePolicyConfig:
     min_auto_match_threshold: float | None
     max_auto_nonmatch_threshold: float | None
     llm_max_calls_per_window: int
+    human_review_cost: float = 1.0
+    human_e_fp: float = 0.05
+    human_e_fn: float = 0.05
+    human_max_pairs_per_window: int | None = None
+    policy_kind: str = "cost"
+    np_policy: NPConstraints = field(default_factory=NPConstraints)
 
 
 @dataclass(frozen=True)
@@ -39,10 +47,12 @@ class DecisionPolicyConfig:
 class LLMReviewConfig:
     enabled: bool
     error_rates_by_band: dict[str, dict[str, float]]
+    estimated_rates_path: str | None = None
 
 
 @dataclass(frozen=True)
 class GuardrailsParams:
+    policy_version: str = "v3"
     temporal_days: int = 180
     nota_always_match: float = 10.0
     nota_always_nonmatch: float = 3.0
@@ -59,6 +69,7 @@ class PlattFitParams:
 
 @dataclass(frozen=True)
 class CalibrationConfig:
+    p_cal: str = "platt"
     clip_min: float = 1e-6
     clip_max: float = 0.999999
     platt: PlattFitParams = field(default_factory=PlattFitParams)
@@ -74,11 +85,11 @@ class EvaluationDefaults:
 
 @dataclass(frozen=True)
 class MonitoringConfig:
-    enabled: bool
-    metrics: dict[str, dict[str, float]]
-    slices: list[str]
-    monitored_fields: list[str]
-    actions_on_critical_drift: list[str]
+    enabled: bool = False
+    metrics: dict[str, dict[str, float]] = field(default_factory=dict)
+    slices: list[str] = field(default_factory=list)
+    monitored_fields: list[str] = field(default_factory=list)
+    actions_on_critical_drift: list[str] = field(default_factory=list)
 
 
 @dataclass(frozen=True)
@@ -198,6 +209,23 @@ def _load_decision_policy(data: Mapping[str, Any]) -> DecisionPolicyConfig:
             None if max_auto_raw is None else float(max_auto_raw)
         )
 
+        human_error = _as_mapping(cfg.get("human_error"), field=f"decision_policy.modes[{mode_name}].human_error")
+        human_budget = _as_mapping(cfg.get("human_budget"), field=f"decision_policy.modes[{mode_name}].human_budget")
+        human_max = human_budget.get("max_pairs_per_window")
+        if human_max is not None and (not isinstance(human_max, int) or isinstance(human_max, bool) or human_max < 0):
+            raise ValueError("human_budget.max_pairs_per_window must be a nonnegative integer or null")
+        human_fp, human_fn = float(human_error.get("e_fp", .05)), float(human_error.get("e_fn", .05))
+        if not (0 <= human_fp <= 1 and 0 <= human_fn <= 1):
+            raise ValueError("human_error rates must be probabilities")
+        policy_kind = str(cfg.get("policy_kind", "cost"))
+        if policy_kind not in {"cost", "np"} or (policy_kind == "np" and mode_name != "confirmacao"):
+            raise ValueError("policy_kind must be cost, or np for confirmacao only")
+        np_cfg = _as_mapping(cfg.get("np"), field=f"decision_policy.modes[{mode_name}].np")
+        absolute_fp = np_cfg.get("max_fp_expected_total")
+        np_policy = NPConstraints(float(np_cfg.get("max_fp_rate_auto", .002)),
+                                  None if absolute_fp is None else float(absolute_fp),
+                                  float(np_cfg.get("max_fn_rate_auto", .02)))
+
         parsed[mode_name] = ModePolicyConfig(
             false_positive_cost=float(costs["false_positive"]),
             false_negative_cost=float(costs["false_negative"]),
@@ -205,12 +233,16 @@ def _load_decision_policy(data: Mapping[str, Any]) -> DecisionPolicyConfig:
             min_auto_match_threshold=min_auto_match_threshold,
             max_auto_nonmatch_threshold=max_auto_nonmatch_threshold,
             llm_max_calls_per_window=int(llm_budget["max_calls_per_window"]),
+            human_review_cost=float(costs.get("human_review", 1.0)),
+            human_e_fp=human_fp, human_e_fn=human_fn,
+            human_max_pairs_per_window=human_max,
+            policy_kind=policy_kind, np_policy=np_policy,
         )
 
     return DecisionPolicyConfig(modes=parsed)
 
 
-def _load_llm_review(data: Mapping[str, Any]) -> LLMReviewConfig:
+def _load_llm_review(data: Mapping[str, Any], config_dir: Path) -> LLMReviewConfig:
     llm = _as_mapping(data.get("llm_review"), field="llm_review")
     enabled = bool(llm.get("enabled", False))
 
@@ -224,9 +256,12 @@ def _load_llm_review(data: Mapping[str, Any]) -> LLMReviewConfig:
         cfg = _as_mapping(
             rate_cfg, field=f"llm_review.reliability.error_rates_by_band[{band}]"
         )
-        rates[str(band)] = {"e_fp": float(cfg["e_fp"]), "e_fn": float(cfg["e_fn"])}
+        rates[str(band)] = {"e_fp": float(cfg["e_fp"]), "e_fn": float(cfg["e_fn"]),
+                            "e_unsure": float(cfg.get("e_unsure", 0.0))}
 
-    return LLMReviewConfig(enabled=enabled, error_rates_by_band=rates)
+    source = reliability.get("estimated_rates_path")
+    source_path = None if source is None else str((config_dir / str(source)).resolve())
+    return LLMReviewConfig(enabled=enabled, error_rates_by_band=rates, estimated_rates_path=source_path)
 
 
 def _load_guardrails_params(data: Mapping[str, Any]) -> GuardrailsParams:
@@ -262,6 +297,7 @@ def _load_guardrails_params(data: Mapping[str, Any]) -> GuardrailsParams:
     )
 
     return GuardrailsParams(
+        policy_version=str(guardrails.get("policy_version", "v3")),
         temporal_days=temporal_days,
         nota_always_match=nota_always_match,
         nota_always_nonmatch=nota_always_nonmatch,
@@ -284,6 +320,7 @@ def _load_calibration_config(data: Mapping[str, Any]) -> CalibrationConfig:
     tol_raw = platt.get("tol", 1e-10)
 
     return CalibrationConfig(
+        p_cal=str(cal.get("p_cal", "platt")),
         clip_min=clip_min,
         clip_max=clip_max,
         platt=PlattFitParams(
@@ -312,6 +349,8 @@ def _load_evaluation_defaults(data: Mapping[str, Any]) -> EvaluationDefaults:
         raise ValueError("evaluation.seeds must be non-empty")
 
     split_by = str(ev.get("split_by", "row")).strip().lower()
+    if split_by not in {"row", "comprec", "refrec"}:
+        raise ValueError("evaluation.split_by must be row, comprec or refrec")
     group_stratify = bool(ev.get("group_stratify", True))
 
     test_size = float(ev.get("test_size", 0.3))
@@ -366,7 +405,7 @@ def load_config(path: str | Path) -> GZCMDConfig:
 
     bands = BandsConfig(definitions=_load_band_definitions(data))
     decision_policy = _load_decision_policy(data)
-    llm_review = _load_llm_review(data)
+    llm_review = _load_llm_review(data, p.parent)
     guardrails = _load_guardrails_params(data)
     calibration = _load_calibration_config(data)
     evaluation = _load_evaluation_defaults(data)
