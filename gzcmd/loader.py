@@ -86,16 +86,23 @@ def _digits_only(x: object) -> str | None:
     return d or None
 
 
+def _pad8(s: object) -> str | None:
+    # Série inteiramente vazia vira float/NaN no pandas; tratar como ausente.
+    if s is None or (isinstance(s, float) and np.isnan(s)):
+        return None
+    return str(s).zfill(8)[:8]
+
+
 def parse_date_yyyymmdd(series: pd.Series) -> pd.Series:
-    norm = series.map(_digits_only)
-    norm = norm.map(lambda s: s.zfill(8)[:8] if s is not None else None)
+    norm = series.map(_digits_only).astype(object)
+    norm = norm.map(_pad8)
     norm = norm.where(norm != "00000000", other=None)
     return pd.to_datetime(norm, format="%Y%m%d", errors="coerce")
 
 
 def parse_date_ddmmyyyy(series: pd.Series) -> pd.Series:
-    norm = series.map(_digits_only)
-    norm = norm.map(lambda s: s.zfill(8)[:8] if s is not None else None)
+    norm = series.map(_digits_only).astype(object)
+    norm = norm.map(_pad8)
     norm = norm.where(norm != "00000000", other=None)
     return pd.to_datetime(norm, format="%d%m%Y", errors="coerce")
 
