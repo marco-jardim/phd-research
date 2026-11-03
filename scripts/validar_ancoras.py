@@ -8,6 +8,10 @@ na área cinza 5 <= s < 9.
 
 Uso:
     python scripts/validar_ancoras.py [--csv data/COMPARADORSEMIDENT.csv]
+Dependência: gzcmd-record-linkage==0.2.0, declarada no pyproject.toml.
+Se o índice não disponibilizar essa versão, instalar explicitamente um checkout
+da versão 0.2.0 com ``python -m pip install /caminho/do/checkout``; não se altera
+sys.path para importar um repositório vizinho implicitamente.
 Saídas:
     data/ancoras_validacao.csv          tabela A+/A- (N, acertos, erros, pureza)
     data/ancoras_calibracao_faixas.csv  taxa observada vs p_cal por faixa
@@ -28,9 +32,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import brier_score_loss
 
 ROOT = Path(__file__).resolve().parents[1]
-# Motor de decisão da tese (cópia local usada nos experimentos) e pacote publicado.
+# Motor de decisão da tese (cópia local usada nos experimentos).
 sys.path.insert(0, str(ROOT))
-sys.path.insert(0, str(ROOT.parent / "gzcmd-record-linkage" / "src"))
 from gzcmd.gzcmd_v3_policy_engine import Budget, Costs, LLMError, PolicyEngineV3  # noqa: E402
 from gzcmd_record_linkage.calibration import fit_anchor_platt as pkg_fit_anchor_platt  # noqa: E402
 T_PLUS, T_MINUS = 9.0, 5.0
