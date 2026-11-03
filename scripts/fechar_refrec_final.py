@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -14,6 +13,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from gzcmd.config import load_config
+from gzcmd.provenance import sha256_file_normalized
 from gzcmd.runner import run_v3
 from scripts.funil_gzcmd_v2 import HAIKU_V4, artifact_paths, load_responses, safe_funnel
 
@@ -23,7 +23,7 @@ def command(script, *args):
 
 
 def rates_digest():
-    return hashlib.sha256((ROOT / "gzcmd/error_rates_by_band_v4.yaml").read_bytes()).hexdigest()
+    return sha256_file_normalized(ROOT / "gzcmd/error_rates_by_band_v4.yaml")
 
 
 def reestimate_and_export():

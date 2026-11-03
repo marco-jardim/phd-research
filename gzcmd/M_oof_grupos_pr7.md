@@ -1,6 +1,6 @@
 # Revisão PR7: OOF por grupo e persistência
 
-O padrão `row` permanece inalterado. `fit_xgb_oof` aceita `split_by` como
+O padrão passou a ser `refrec` (ver `M_refrec_fechamento.md`); `row` e `comprec` ficam como análises de sensibilidade. `fit_xgb_oof` aceita `split_by` como
 `row`, `refrec` ou `comprec`; `run_v3` honra `evaluation.split_by` quando não
 recebe uma escolha explícita. O fingerprint do cache inclui a escolha do
 split, além de hashes do código e da fonte e versões dos pacotes.
