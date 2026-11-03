@@ -3,7 +3,7 @@
 Unlike calibrating a global OOF vector, outer-fold labels cannot indirectly enter
 the calibrator through another fold's classifier. Every outer fold gets its own
 inner OOF training probabilities. This is an evaluation artifact, not a deployable
-model or label-free anchor calibration. Seeds/splits are deterministic row splits.
+model or label-free anchor calibration. Row/group splits are deterministic.
 """
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.isotonic import IsotonicRegression
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 
 from .calibration import compute_p_cal, fit_platt_from_df
 from .llm_dossier import make_pair_id
@@ -56,7 +56,7 @@ def _classifier(y: np.ndarray, seed: int):
 
 def nested_oof_probabilities(
     x: pd.DataFrame, y: np.ndarray, *, n_splits: int = N_SPLITS, seed: int = SEED,
-    model_factory=None, calibrator_factory=None, audit=None,
+    model_factory=None, calibrator_factory=None, audit=None, split_by: str = "row", groups=None,
 ) -> tuple[np.ndarray, np.ndarray]:
     """Return probabilities/fold; no fit (including inner fits) sees outer test rows.
 
@@ -70,14 +70,35 @@ def nested_oof_probabilities(
         raise ValueError("Aligned binary labels required")
     if np.bincount(y).min() < n_splits + 1:
         raise ValueError("Too few examples per class for nested stratified OOF")
+    if split_by not in {"row", "refrec", "comprec"}:
+        raise ValueError("split_by must be row, refrec or comprec")
+    grouped = split_by != "row"
+    if grouped:
+        if groups is None or len(groups) != len(y) or pd.isna(groups).any():
+            raise ValueError("Aligned nonmissing groups required for group OOF")
+        groups = np.asarray(groups)
+        if len(np.unique(groups)) < n_splits:
+            raise ValueError("Too few distinct groups for group OOF")
     probabilities = np.full(len(y), np.nan)
     folds = np.full(len(y), -1, dtype=int)
-    outer = StratifiedKFold(n_splits, shuffle=True, random_state=seed)
-    for fold, (train, test) in enumerate(outer.split(x, y)):
+    splitter = StratifiedGroupKFold if grouped else StratifiedKFold
+    outer = splitter(n_splits, shuffle=True, random_state=seed)
+    outer_splits = outer.split(x, y, groups) if grouped else outer.split(x, y)
+    for fold, (train, test) in enumerate(outer_splits):
+        if grouped and not set(groups[train]).isdisjoint(groups[test]):
+            raise ValueError("Outer OOF group leakage")
+        if len(np.unique(y[train])) != 2:
+            raise ValueError("Outer training fold must contain both classes")
         inner_probs = np.full(len(train), np.nan)
-        inner = StratifiedKFold(n_splits, shuffle=True, random_state=seed + fold + 1)
-        for inner_train, inner_test in inner.split(x.iloc[train], y[train]):
+        inner = splitter(n_splits, shuffle=True, random_state=seed + fold + 1)
+        inner_splits = (inner.split(x.iloc[train], y[train], groups[train]) if grouped
+                        else inner.split(x.iloc[train], y[train]))
+        for inner_train, inner_test in inner_splits:
             fit_idx, pred_idx = train[inner_train], train[inner_test]
+            if grouped and not set(groups[fit_idx]).isdisjoint(groups[pred_idx]):
+                raise ValueError("Inner OOF group leakage")
+            if len(np.unique(y[fit_idx])) != 2:
+                raise ValueError("Inner training fold must contain both classes")
             model = model_factory(y[fit_idx], seed)
             model.fit(x.iloc[fit_idx], y[fit_idx])
             inner_probs[inner_test] = model.predict_proba(x.iloc[pred_idx])[:, 1]
@@ -100,7 +121,7 @@ def nested_oof_probabilities(
 
 def fit_xgb_oof(
     input_csv: str | Path, *, output_path: str | Path = "data/pcal_ml_oof.csv",
-    reuse: bool = False,
+    reuse: bool = False, split_by: str = "row",
 ) -> pd.DataFrame:
     """Persist only pair hash, score, Platt comparator, calibrated OOF and fold.
 
@@ -111,8 +132,10 @@ def fit_xgb_oof(
     import xgboost
 
     source, output = Path(input_csv), Path(output_path)
+    if split_by not in {"row", "refrec", "comprec"}:
+        raise ValueError("split_by must be row, refrec or comprec")
     fingerprint = {
-        "method": METHOD, "seed": SEED, "folds": N_SPLITS,
+        "method": METHOD, "seed": SEED, "folds": N_SPLITS, "split_by": split_by,
         "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
         "code_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "sklearn": sklearn.__version__, "xgboost": xgboost.__version__,
@@ -125,9 +148,21 @@ def fit_xgb_oof(
             return pd.read_csv(output)
     # dtype=str avoids Arrow/nullable arrays; decimal-comma is converted explicitly.
     raw = pd.read_csv(source, sep=";", dtype=str, low_memory=False)
+    raw.columns = [c.split(",")[0] for c in raw.columns]
+    if not raw.columns.is_unique:
+        raise ValueError("Ambiguous comparator headers after metadata normalization")
     x = numeric_features(raw)
     y = pd.to_numeric(raw["PAR"], errors="coerce").fillna(0).isin([1, 2]).astype(int).to_numpy()
-    p, fold = nested_oof_probabilities(x, y)
+    groups = None
+    if split_by != "row":
+        column = resolve_prefixed_column(raw, split_by.upper())
+        if column is None:
+            raise ValueError(f"Missing {split_by.upper()} group column")
+        groups = raw[column].astype("string").str.strip()
+        if groups.isna().any() or groups.eq("").any():
+            raise ValueError("Missing group identity")
+        groups = groups.to_numpy(dtype=str)
+    p, fold = nested_oof_probabilities(x, y, split_by=split_by, groups=groups)
     score = x["nota final"] if "nota final" in x else x["nota_final"]
     platt_df = pd.DataFrame({"nota final": score, "TARGET": y})
     platt = compute_p_cal(platt_df, method="platt", model=fit_platt_from_df(platt_df))
@@ -136,5 +171,6 @@ def fit_xgb_oof(
     output.parent.mkdir(parents=True, exist_ok=True)
     result.to_csv(output, index=False)
     meta_path.write_text(json.dumps({"fingerprint": fingerprint, "features": list(x.columns),
+                                    "n_groups": int(len(np.unique(groups))) if groups is not None else len(raw),
                                     "csv_sha256": hashlib.sha256(output.read_bytes()).hexdigest()}, indent=2), encoding="utf-8")
     return result

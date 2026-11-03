@@ -133,6 +133,7 @@ def run_v3(
     policy_version: str | None = None,
     ml_oof_path: str | Path = "data/pcal_ml_oof.csv",
     reuse_ml_oof: bool = False,
+    split_by: str | None = None,
     human_used: int = 0,
     policy_kind: str | None = None,
     rates_yaml: str | Path | None = None,
@@ -193,7 +194,8 @@ def run_v3(
             df, method="platt", model=model, clip_min=clip_min, clip_max=clip_max
         )
     elif p_cal == "ml_xgb":
-        oof = fit_xgb_oof(input_csv, output_path=ml_oof_path, reuse=reuse_ml_oof)
+        oof = fit_xgb_oof(input_csv, output_path=ml_oof_path, reuse=reuse_ml_oof,
+                          split_by=split_by or cfg.evaluation.split_by)
         df["p_cal"] = pair_ids(df).map(oof.set_index("pair_id")["p_cal_ml"])
         if df["p_cal"].isna().any():
             raise ValueError("OOF table does not cover every pair_id")

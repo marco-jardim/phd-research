@@ -1,0 +1,58 @@
+[
+  {
+    "modo": "vigilancia",
+    "lote_v3.1": 347,
+    "lote_antigo": 1410,
+    "novos_no_lote": 190,
+    "com_resposta_sonnet": 347,
+    "faltantes_sonnet": 0,
+    "fontes": [
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4",
+        "n": 1410,
+        "complete": true,
+        "cost_usd": 51.937658
+      },
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4_lote31_refrec",
+        "n": 155,
+        "complete": true,
+        "cost_usd": 4.718392
+      },
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4_lote31_complemento",
+        "n": 100,
+        "complete": true,
+        "cost_usd": 3.132236
+      }
+    ]
+  },
+  {
+    "modo": "confirmacao",
+    "lote_v3.1": 44,
+    "lote_antigo": 435,
+    "novos_no_lote": 20,
+    "com_resposta_sonnet": 44,
+    "faltantes_sonnet": 0,
+    "fontes": [
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4",
+        "n": 435,
+        "complete": true,
+        "cost_usd": 15.85538
+      },
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4_lote31_refrec",
+        "n": 17,
+        "complete": true,
+        "cost_usd": 0.565516
+      },
+      {
+        "dir": "anthropic_sonnet_sem_mo_v4_lote31_complemento",
+        "n": 3,
+        "complete": true,
+        "cost_usd": 0.11054
+      }
+    ]
+  }
+]

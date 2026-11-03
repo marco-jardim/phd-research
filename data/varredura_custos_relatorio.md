@@ -1,6 +1,6 @@
 # Varredura de custos — revisões humanas equivalentes
 
-Taxas M3: gzcmd\error_rates_by_band_v4.yaml; SHA256=53d02f80bcdab84b90e0e0cf9c792782f564b56faedf1215c4b3267420edc357.
+Taxas M3: D:\git\phd-research\gzcmd\error_rates_by_band_v4.yaml; SHA256=9fc27bfe8a3f0cd92648a98586e915594295537a1aebd17c273c11a5771913d2.
 60 pontos por modo; p_cal_ml OOF fixo, seed 42. Expectativas do bloco claude-haiku-5-5, sem respostas LLM simuladas ou chamadas reais.
 C_llm=0,005 deriva do arredondamento de 5s/1200s=1/240; humano base=1.
 Erro humano é cenário, sem concordância inter-humana medida. A perda humana inclui o erro esperado.
@@ -10,10 +10,10 @@ A mudança simultânea de custo LLM e erro humano não garante perda menor: bara
 ## Antes/depois: C_llm 0,25/e_h=0 → 0,005/e_h=0,05
 ```
        modo cenario  C_llm  e_fn_h  lote_llm  humano_direto  humano_total_esperado  AUTO_MATCH  AUTO_NONMATCH  vinculos_perdidos_auto_nonmatch  FP_automaticos  sens_esperada_automatica  sens_esperada_com_humano  perda_esperada_total
- vigilancia   antes  0.250    0.00       198            122             128.504756         101          21216                                4               2                  0.797203                  0.969716            965.295179
- vigilancia  depois  0.005    0.05       301             52              60.933128         111          21173                                4               5                  0.875178                  0.963350            989.648691
-confirmacao   antes  0.250    0.00         0            188             188.000000          73          21376                               12               1                  0.607287                  0.939271            647.139552
-confirmacao  depois  0.005    0.05        25             83              85.341903          79          21450                               15               1                  0.680180                  0.902510            944.813697
+ vigilancia   antes  0.250    0.00       212            207             218.545010          75          21158                                5               2                  0.591428                  0.962594           1208.199643
+ vigilancia  depois  0.005    0.05       347             80              98.819165         132          21093                                5              16                  0.821610                  0.950656           1291.415361
+confirmacao   antes  0.250    0.00         0            229             229.000000          47          21376                               16               0                  0.445344                  0.923077            731.866755
+confirmacao  depois  0.005    0.05        44            121             124.317491          55          21432                               19               0                  0.556636                  0.876790           1121.492177
 ```
 
 Dados completos: varredura_custos_vigilancia.csv e varredura_custos_confirmacao.csv.

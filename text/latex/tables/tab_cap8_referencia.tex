@@ -1,0 +1,26 @@
+% Fontes: data/referencia_comparador_pos_orl.csv (scripts/referencia_pos_orl.py) para as duas primeiras linhas e a de limiar 8;
+% data/funil_gzcmd_final.csv e data/funil_gzcmd_final_metricas.csv para as demais. Contagens observadas no extrato.
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Comparação de referência: Comparador de Registros posterior ao OpenRecLink (revisão humana da área cinza ou corte da nota) e políticas v3 e v3.1 do GZ-CMD, nos 61.696 potenciais pares (247 vínculos).}
+\label{tab:cap8-referencia}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+Estratégia & Modo & Pares ao humano & Pares ao LLM & Sens. automática (\%) & FP automáticos & Sens. com humano, erro 5\% (\%) \\
+\midrule
+Pós-ORL, revisão humana da área cinza & ambos & 21.620 & 0 & 37,7 & 2 & 95,7\textsuperscript{a} \\
+Pós-ORL, corte da nota em 9 & ambos & 0 & 0 & 37,7 & 2 & n.a. \\
+Pós-ORL, limiar da nota em 8 (referência) & ambos & 0 & 0 & 51,4 & 70 & n.a. \\
+\midrule
+GZ-CMD v3 & vigilância & 61 & 1.410 & 58,3 & 35 & 62,9 \\
+GZ-CMD v3.1 & vigilância & 111 & 347 & 78,5 & 34 & 93,2 \\
+GZ-CMD v3 & confirmação & 25 & 435 & 40,5 & 6 & 47,0 \\
+GZ-CMD v3.1 & confirmação & 127 & 44 & 53,4 & 0 & 86,9 \\
+\bottomrule
+\end{tabular}%
+}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Pós-ORL: saída do Comparador de Registros, em que os pares com nota final em $[5,9)$ (21.620 pares, 151 vínculos) seguiam ao revisor humano ou eram descartados abaixo da nota 9 (95 pares, 93 vínculos, 2 falsos positivos). A sensibilidade automática mantém os 247 vínculos no denominador. A sensibilidade com humano é projeção $(VP+0{,}95\,V_H)/247$, sob erro humano hipotético de 5\%, não medido. \textsuperscript{a}\,$(93+0{,}95\times151)/247$; sob erro simétrico de 5\% sobre os 21.469 não vínculos, a revisão integral produziria cerca de 1.073 falsos positivos humanos, hipótese provavelmente pessimista, apresentada apenas para dimensionar a carga. n.a.: não se aplica. Fontes: \texttt{data/referencia\_comparador\_pos\_orl.csv}, \texttt{data/funil\_gzcmd\_final.csv} e \texttt{data/funil\_gzcmd\_final\_metricas.csv} \cite{Jardim2026phdrepo}.}
+\end{table}

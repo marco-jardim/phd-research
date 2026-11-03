@@ -145,6 +145,22 @@ def recover_json(path, *, result_checkpoint=False):
     return recover_candidates(candidates, result_checkpoint=result_checkpoint)
 
 
+def ensure_journal_identity(journal, identity, *, checkpoint_validated=False):
+    """Refuse orphan results of unknown origin; migrate only a validated checkpoint."""
+    path = journal / "identity.json"
+    stored = recover_json(path)
+    if stored is not None:
+        if stored != identity:
+            raise ValueError("Journal identity changed; refusing mixed execution")
+        return
+    has_results = any(".result." in item.name for item in journal.iterdir())
+    if has_results and not checkpoint_validated:
+        raise ValueError("Journal results require identity.json before checkpoint-free recovery")
+    save(path, identity)
+    if recover_json(path) != identity:
+        raise ValueError("Journal identity could not be persisted")
+
+
 # In-memory replacement only: preserve the original ablation runner on disk.
 # Its per-call metering must use the same Windows-safe persistence boundary.
 abl.save = save
@@ -193,7 +209,8 @@ def safe_result(result):
 
 def prepare(mode, ids):
     df, _ = ant.exp2.run_v3(input_csv=str(ROOT / "data/COMPARADORSEMIDENT.csv"),
-                            config_path=str(ROOT / "gzcmd/gzcmd_v3_config.yaml"), mode=mode, p_cal="fit_platt")
+                            config_path=str(ROOT / "gzcmd/gzcmd_v3_config.yaml"), mode=mode,
+                            p_cal="fit_platt", policy_version="v3")
     # The historical IDs, not today's triage policy, define this experiment.
     dossiers = {d.pair_id: d for d in ant.exp2.build_dossiers(df, only_llm_review=False)}
     missing = set(ids) - dossiers.keys()
@@ -315,6 +332,7 @@ def run(args):
     if previous and any(previous.get(k, "v3" if k == "prompt_version" else None) != v
                         for k, v in identity.items()):
         raise ValueError("Checkpoint identity changed; refusing mixed execution")
+    ensure_journal_identity(journal, identity, checkpoint_validated=bool(previous))
     results = {r["pair_id"]: r for r in previous.get("results", [])}
     recovered_pair_ids = {p.name[:16] for p in journal.iterdir() if ".result." in p.name}
     for pid in recovered_pair_ids:
@@ -463,7 +481,7 @@ def summarize():
                       "elapsed_s": run["elapsed_s"], "failed_pair_ids": run["failed_pair_ids"],
                       "provider_pii_flags": sum(r["quality_flags"].get("pii_leak_detected", False) for r in run["results"])}
         paired.append(comparison)
-        table[["dec_old", "dec_new", "y", "nota_final"]].to_csv(ROOT / f"data/{artifact_prefix()}_pares_{mode}.csv")
+        table[["dec_old", "dec_new", "nota_final"]].to_csv(ROOT / f"data/{artifact_prefix()}_pares_{mode}.csv")
         for row in summaries[-2:]:
             if row["arm"] == "new":
                 row.update({k: v for k, v in comparison.items() if not isinstance(v, (dict, list)) and k != "mode"})

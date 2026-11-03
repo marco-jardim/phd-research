@@ -73,6 +73,7 @@ def write_final_funnel(root: Path):
             metrics.update({"sens_ci95_low": low, "sens_ci95_high": high})
             prior = metric_source.loc[metric_source.modo.eq(mode) & metric_source.versao.eq(version)].iloc[0]
             metrics.update({"modo": mode, "versao": version,
+                            "sens_com_humano_erro_05": (metrics["VP_cadeia"] + .95 * metrics["vinculos_ao_humano"]) / (metrics["VP_cadeia"] + metrics["FN_cadeia"]),
                             "sens_esperada_pre_lote31": prior.sens_esperada_pre_lote31,
                             "espec_esperada_aceitacao_pre_lote31": prior.espec_esperada_aceitacao_pre_lote31,
                             "sens_esperada_com_humano": prior.sens_esperada_com_humano,

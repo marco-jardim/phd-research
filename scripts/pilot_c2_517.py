@@ -358,6 +358,7 @@ def main() -> dict:
         config_path=str(CONFIG_PATH),
         mode=MODE,
         p_cal="fit_platt",
+        policy_version="v3",
     )
     log.info("    Total pairs: %d", summary.rows)
     log.info("    Actions: %s", summary.actions)

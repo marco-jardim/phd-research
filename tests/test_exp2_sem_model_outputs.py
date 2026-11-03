@@ -2,7 +2,8 @@
 import importlib.util
 import json
 import sys
-import tempfile
+import contextlib
+import pytest
 import unittest
 from unittest.mock import patch
 from pathlib import Path
@@ -16,6 +17,10 @@ spec.loader.exec_module(runner)
 
 
 class OutputFreeTests(unittest.TestCase):
+    @pytest.fixture(autouse=True)
+    def temporary_path(self, tmp_path):
+        self.tmp_path = tmp_path
+
     def test_transient_windows_file_lock_retried(self):
         operation = unittest.mock.Mock(side_effect=[PermissionError(), PermissionError(), "ok"])
         with patch.object(runner.time, "sleep"):
@@ -25,7 +30,7 @@ class OutputFreeTests(unittest.TestCase):
     def test_replace_retry_and_persistent_lock_fallback_recovery(self):
         import contextlib
         import io
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             path = Path(directory) / "checkpoint.json"
             original_replace = Path.replace
             calls = []
@@ -51,7 +56,7 @@ class OutputFreeTests(unittest.TestCase):
     def test_usage_recovery_ignores_renamed_tmp_and_does_not_double_count(self):
         import contextlib
         import io
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             journal = Path(directory)
             path = journal / ("a" * 16 + ".transport.json")
             stats = runner.abl.meter()
@@ -82,7 +87,7 @@ class OutputFreeTests(unittest.TestCase):
                                                         "features": {"nested": {"p_cal": .9}}}))
 
     def test_json_and_csv_cohorts_and_duplicates(self):
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             path = Path(directory) / "pairs.json"
             path.write_text(json.dumps({"results": [{"pair_id": "a" * 16}]}), encoding="utf-8")
             self.assertEqual(runner.load_ids(path), ["a" * 16])
@@ -94,7 +99,7 @@ class OutputFreeTests(unittest.TestCase):
             self.assertEqual(runner.load_ids(csv), ["b" * 16])
 
     def test_usage_aggregation_counts_attempts_and_max_not_sum(self):
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             for i in range(2):
                 stats = runner.abl.meter()
                 stats.update(calls=3, input_tokens=100, max_request_input_tokens=100, error_statuses={"429": 1})
@@ -127,7 +132,7 @@ class OutputFreeTests(unittest.TestCase):
         old_dec = ["NONMATCH", "NONMATCH", "NONMATCH", "MATCH", "UNSURE"]
         new_dec = ["MATCH", "UNSURE", "MATCH", "NONMATCH", "NONMATCH"]
         table = pd.DataFrame({"y": [1, 1, 0, 0, 0], "nota_final": [7] * 5}, index=ids)
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             root = Path(directory)
             output = root / "data/sprint3b/anthropic_sem_mo"
             for mode in ("vigilancia", "confirmacao"):
@@ -173,7 +178,7 @@ class OutputFreeTests(unittest.TestCase):
                     "quality_flags": {"pii_leak_detected": False}, "protocol": "consensus",
                     "agent_a_decision": "MATCH", "agent_b_decision": "MATCH", "total_latency_s": 0, "total_tokens": 0}, None
 
-        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+        with contextlib.nullcontext(self.tmp_path) as directory:
             root = Path(directory)
             cohort = root / "data/sprint3b/anthropic/exp2_llm_sync_vigilancia.json"
             runner.abl.save(cohort, {"pair_ids": ids})

@@ -44,7 +44,8 @@ def decimal_pt(value, _position=None):
 
 
 def load_candidates(input_csv: Path, oof_csv: Path, cfg) -> pd.DataFrame:
-    oof = fit_xgb_oof(input_csv, output_path=oof_csv, reuse=True).set_index("pair_id")
+    oof = fit_xgb_oof(input_csv, output_path=oof_csv, reuse=True,
+                      split_by=cfg.evaluation.split_by).set_index("pair_id")
     # Pair metadata/labels and birth dates only for an in-memory year-conflict
     # indicator; never persist raw dates, years, names or addresses.
     raw = pd.read_csv(input_csv, sep=";", dtype=str, low_memory=False,

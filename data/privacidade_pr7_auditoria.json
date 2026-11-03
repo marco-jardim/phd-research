@@ -1,0 +1,183 @@
+{
+  "scope": "PR7 outputs only; archived _m3v3 files excluded and kept locally",
+  "files": [
+    {
+      "path": "data/exp2_deepseek_sem_mo_pares_confirmacao.csv",
+      "n": 435,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_deepseek_sem_mo_pares_vigilancia.csv",
+      "n": 1410,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_haiku_sem_mo_pares_confirmacao.csv",
+      "n": 435,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_haiku_sem_mo_pares_vigilancia.csv",
+      "n": 1410,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_ancoragem.csv",
+      "n": 1410,
+      "removed_columns": [
+        "gabarito"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_comparacao.csv",
+      "n": 9,
+      "removed_columns": [],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_comparacao_pares.csv",
+      "n": 9673,
+      "removed_columns": [
+        "gabarito"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_confiabilidade.csv",
+      "n": 30,
+      "removed_columns": [],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_confirmacao.csv",
+      "n": 435,
+      "removed_columns": [
+        "gabarito"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_limiares.csv",
+      "n": 12,
+      "removed_columns": [],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_resumo.csv",
+      "n": 3,
+      "removed_columns": [],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_vigilancia.csv",
+      "n": 1410,
+      "removed_columns": [
+        "gabarito"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/exp2_sage_vigilancia_com_mo.csv",
+      "n": 1410,
+      "removed_columns": [
+        "gabarito"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/lote_llm_novos_confirmacao.csv",
+      "n": 20,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    },
+    {
+      "path": "data/lote_llm_novos_vigilancia.csv",
+      "n": 190,
+      "removed_columns": [
+        "y"
+      ],
+      "label_columns_after": []
+    }
+  ],
+  "legacy_not_edited": [
+    {
+      "path": "data/exp2_comparacao_revisores_confirmacao.csv",
+      "label_columns": [
+        "y"
+      ],
+      "sha256_unchanged": "8a84b26c6fa1f12686a45b32f5bb645a9c3763d2a3535b0b6a99e1b31bc1cb0f"
+    },
+    {
+      "path": "data/exp2_comparacao_revisores_vigilancia.csv",
+      "label_columns": [
+        "y"
+      ],
+      "sha256_unchanged": "2b4ef5ab227087652e4b0d7609080b57ca5900a4f4b29b2d634ea3321c9c08f9"
+    },
+    {
+      "path": "data/exp2_gabarito_por_par.csv",
+      "label_columns": [
+        "PAR",
+        "y"
+      ],
+      "sha256_unchanged": "09d6f05757ee9aa56d93cbaea944a1a8fb282fb90e3303a681038ff67f1cac0a"
+    },
+    {
+      "path": "data/exp2_tres_revisores_confirmacao.csv",
+      "label_columns": [
+        "y"
+      ],
+      "sha256_unchanged": "7a6abe118d272e0937d01c73284e7456a8cca5ec8e33a498f7fcf1f2a1ad7f92"
+    },
+    {
+      "path": "data/exp2_tres_revisores_vigilancia.csv",
+      "label_columns": [
+        "y"
+      ],
+      "sha256_unchanged": "22c8c5ddcc55ddb549e8bfdf27e1ee5f38df34c108eae1907232052c55ff7084"
+    },
+    {
+      "path": "data/sprint3b/anthropic/gabarito_confirmacao_haiku.csv",
+      "label_columns": [
+        "PAR",
+        "y"
+      ],
+      "sha256_unchanged": "3e2f13af3b33d132f608cb364e0a1805dac26914a7324a500f90d72718768f42"
+    },
+    {
+      "path": "data/sprint3b/opencode_go/gabarito_confirmacao_deepseek.csv",
+      "label_columns": [
+        "PAR",
+        "y"
+      ],
+      "sha256_unchanged": "4cd9f291b76eaf509eb548675efbe02de7839cd613dff4cb2293a97c2ea88762"
+    },
+    {
+      "path": "data/sprint3b/opencode_go_kimi/gabarito_confirmacao_kimi_k3.csv",
+      "label_columns": [
+        "PAR",
+        "y"
+      ],
+      "sha256_unchanged": "cbc0bd32994ea2c535ab2348aee0d5af9e9760404e8d7effaf99e9cd7b9a873d"
+    }
+  ],
+  "other_gold_files_for_user_review": [
+    "data/exp2_gabarito_por_par.csv",
+    "data/exp2_gabarito_reconstruido.csv"
+  ]
+}

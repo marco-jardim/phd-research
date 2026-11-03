@@ -546,7 +546,7 @@ def summarize():
                 thresholds.append({**label, "limiar_confidence_chosen": threshold, **rates(part)})
             csv = frame.rename(columns={"nota_final": "nota", "decision": "decisao", "y": "gabarito"})
             suffix = "" if arm == "sem_mo" else "_com_mo"
-            csv[["nota", "decisao", "probability", "gabarito"]].to_csv(ROOT / f"data/exp2_sage_{mode}{suffix}.csv")
+            csv[["nota", "decisao", "probability"]].to_csv(ROOT / f"data/exp2_sage_{mode}{suffix}.csv")
             other_path = ROOT / f"data/exp2_tres_revisores_{mode}.csv"
             if other_path.exists():
                 other = pd.read_csv(other_path).set_index("pair_id")
@@ -576,7 +576,7 @@ def summarize():
     pd.DataFrame(thresholds).to_csv(ROOT / "data/exp2_sage_limiares.csv", index=False)
     pd.DataFrame(comparisons).to_csv(ROOT / "data/exp2_sage_comparacao.csv", index=False)
     pd.DataFrame(pair_comparisons, columns=["modo", "braco", "modelo", "pair_id", "revisor", "sage_decisao",
-                                          "outro_decisao", "gabarito", "p_match"]).to_csv(
+                                          "outro_decisao", "p_match"]).to_csv(
                                               ROOT / "data/exp2_sage_comparacao_pares.csv", index=False)
     save(ROOT / "data/sprint3b/sage_sem_mo/bloqueio_operacional.json", {"updated_at": now(), "runs": operational,
         "quota_exhausted": any(r["status"] == "quota_exhausted" for r in operational),
@@ -592,7 +592,8 @@ def summarize():
             anchoring.append({"pair_id": pid, "gabarito": int(g.loc[pid, "y"]),
                               "com_mo": before[pid]["decision"], "sem_mo": after[pid]["decision"],
                               "p_match_com_mo": before[pid]["p_match"], "p_match_sem_mo": after[pid]["p_match"]})
-        pd.DataFrame(anchoring).to_csv(ROOT / "data/exp2_sage_ancoragem.csv", index=False)
+        pd.DataFrame(anchoring, columns=["pair_id", "com_mo", "sem_mo", "p_match_com_mo", "p_match_sem_mo"]).to_csv(
+            ROOT / "data/exp2_sage_ancoragem.csv", index=False)
     save(ROOT / "data/sprint3b/sage_sem_mo/telemetria.json", {"runs": telemetry})
     report = ["# Exp2 — Sage (Levanto)", "", "## Método", "",
               "Coortes e ordem dos JSONs Anthropic originais: 1.410 vigilância, 435 confirmação. "
@@ -658,7 +659,7 @@ def summarize():
                           + ", ".join(sorted(missing)) + ". Não se imputam decisões nem se usa outro provedor.")
     report += ["", "O CSV fornecido de confirmação identifica Kimi K3, não K2.5; a comparação mantém esse rótulo "
                "e restringe-se aos pares com decisão disponível. Não se fundem versões Kimi nem se imputam ausências. "
-               "As decisões pareadas, gabarito e P(match) estão em data/exp2_sage_comparacao_pares.csv; "
+               "As decisões pareadas e P(match), sem gabarito por par, estão em data/exp2_sage_comparacao_pares.csv; "
                "data/exp2_sage_comparacao.csv contém os agregados por revisor/modo/braço."]
     failures = [r for r in rows if r["n_errors"] and r["status"] != "complete"]
     if failures:

@@ -142,10 +142,15 @@ def update_tables():
             continue
         cells = line.split(" & ")
         name = cells[0].split("\\")[0]
-        dossier, prompt = cells[1].split("/")
+        dossier, prompt_label = cells[1].split("/")
+        prompt = prompt_label.split(" ", 1)[0]
         part = summary.loc[summary["mode"].eq(mode) & summary.model.eq(names[name])
                            & summary.dossie.eq("completo" if dossier == "Completo" else "sem_mo")
                            & summary.prompt.eq(prompt)]
+        if "cohort" in summary:
+            cohort = ("lote31_refrec" if "lote REFREC" in prompt_label else
+                      "lote31_row" if "lote por linha" in prompt_label else None)
+            part = part.loc[part.cohort.eq(cohort)] if cohort else part.loc[part.cohort.isna()]
         if len(part) != 1:
             raise ValueError(f"Ambiguous rerun table source: {mode}/{name}/{dossier}/{prompt}")
         row = part.iloc[0]
@@ -198,16 +203,27 @@ def main():
     rates_path = ROOT / "gzcmd/error_rates_by_band_v4.yaml"
     fixed = cfg.llm_review.error_rates_by_band
     frames = {mode: pd.read_csv(ROOT / f"data/funil_gzcmd_{mode}.csv", low_memory=False).set_index("pair_id") for mode in MODES}
-    old = {mode: load_responses(mode, HAIKU_V4)[0] for mode in MODES}
+    historic = {mode: load_responses(mode, HAIKU_V4)[0] for mode in MODES}
+    profile = yaml.safe_load(rates_path.read_text(encoding="utf-8"))
+    old = {mode: {} for mode in MODES}
+    for source in profile["sources"]:
+        if source["model"] != "claude-haiku-5-5":
+            continue
+        path = ROOT / source["path"]
+        if hashlib.sha256(path.read_bytes()).hexdigest() != source["sha256"]:
+            raise ValueError("Reliability source changed after estimation")
+        for result in json.loads(path.read_text(encoding="utf-8"))["results"]:
+            if result["pair_id"] in old[source["mode"]]:
+                raise ValueError("Overlapping calibration sources")
+            old[source["mode"]][result["pair_id"]] = result["decision"]
     reused = {mode: set(f.index[f.action.eq("LLM_REVIEW")]) & set(old[mode]) for mode, f in frames.items()}
     candidates = load_candidates(ROOT / "data/COMPARADORSEMIDENT.csv", ROOT / "data/pcal_ml_oof.csv", cfg)
     rows, rate_rows, stage_rows, reconciliation, sources = [], [], [], [], []
     for mode in MODES:
         frame = frames[mode]
         responses, _ = load_responses(mode, HAIKU_V4, include_v31=True)
-        supplement_ids = set(responses) - set(old[mode])
-        new_frame = frame.loc[frame.index.isin(supplement_ids)]
-        assert len(new_frame) == (209 if mode == "vigilancia" else 7)
+        supplement_ids = set(responses) - set(historic[mode])
+        new_frame = frame.loc[frame.index.isin(supplement_ids) & frame.action.eq("LLM_REVIEW")]
         assert new_frame.action.eq("LLM_REVIEW").all() and new_frame.llm_decision.notna().all()
         stage_rows.append({"modo": mode, "coorte": "somente_novos", **stage_metrics(new_frame)})
         rates = load_band_rates(fixed, mode=mode, source=rates_path)
@@ -241,7 +257,7 @@ def main():
         rows.append({"modo": mode, "cenario": "reutilizados_substituidos_expectativa", "llm": len(baseline_ids),
                      "reutilizados_original": len(reused[mode]), "inteiramente_observado": False,
                      **endpoint_projection(substituted, costs, rates, human)})
-        prior = loss_metrics(replay(baseline, old[mode], set(baseline.index)), costs, rates, human)
+        prior = loss_metrics(replay(baseline, historic[mode], set(baseline.index)), costs, rates, human)
         prospective = expected_funnel_metrics(baseline, rates, human)
         sweep_out, _, _ = engine_run(candidates, cfg, mode, rates, human_cap=None)
         sweep_expected = expected_funnel_metrics(sweep_out, rates, human)
@@ -277,19 +293,19 @@ def main():
     metadata = {"seed": 42, "sources": sources, "rates_sha256": hashlib.sha256(rates_path.read_bytes()).hexdigest(),
                 "config_sha256": hashlib.sha256((ROOT / "gzcmd/gzcmd_v3_config.yaml").read_bytes()).hexdigest(),
                 "oof_sha256": hashlib.sha256((ROOT / "data/pcal_ml_oof.csv").read_bytes()).hexdigest(),
-                "leaveout": "mode-specific reused pair_ids excluded from that mode's old training cohort (92/18); no pooling, no new responses used in rates",
+                "leaveout": "mode-specific selected pair_ids excluded from all Haiku v4 reliability sources listed in YAML; no pooling",
                 "u_limitation": "marginal UNSURE approximates each class, clipped to 1-e_fn/1-e_fp",
                 "score_evidence": score}
     (ROOT / "data/funil_gzcmd_adversarial_metadata.json").write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
-    report = ["# Auditoria A1/A3/A5/A6", "", "Sem novas chamadas LLM. Calibração OOF preservada. Taxas vigentes não foram alteradas.",
-              "Leave-out exclui os 92/18 identificadores reutilizados da coorte antiga do respectivo modo, pois as taxas são específicas por modo. Não usa suplementos para estimar taxas nem mistura os modos.",
+    report = ["# Auditoria A1/A3/A5/A6", "", "Análise offline das respostas existentes. Calibração OOF preservada. Taxas vigentes não são alteradas por esta auditoria.",
+              "Leave-out exclui os identificadores selecionados pela política das fontes Haiku v4 listadas no YAML do respectivo modo, incluindo os suplementos utilizados na reestimação. Não mistura os modos.",
               "Sensibilidade/especificidade do estágio LLM excluem UNSURE; sens_todos_vinculos mantém todos os vínculos no denominador.",
               "UNSURE permanece encaminhamento humano. As projeções com humano pressupõem erro de 5%, não medido.",
               "A substituição dos reutilizados por expectativas é análise de sensibilidade, não IC nem avaliação independente completa.",
               "Mesmo o lote novo foi selecionado pela política informada por taxas antigas; leave-out testa a influência direta da reutilização, não elimina toda seleção adaptativa.",
               "O leave-out é uma perturbação única, não uma validação cruzada: novos selecionados podem pertencer à coorte restante usada na reestimação. A coluna llm_ainda_nas_taxas quantifica essa sobreposição residual; não se alega independência integral da variante.",
               "Se o leave-out selecionar pares sem resposta existente, a projeção e os limites são reportados, não acertos inventados.",
-              "A5: 93,7%/89,4% são projeções humanas pós-lote; pré-lote eram 94,55%/89,52%. Não são o mesmo momento.",
+              "A5: cascata_pre_lote observa somente respostas da coorte histórica original; cascata_pos_lote usa também todos os suplementos disponíveis. Não são o mesmo momento.",
               "O efeito de arredondar o custo é um contrafactual separado: ambas as saídas publicadas usam 0,005, não se soma esse efeito à reconciliação.",
               "A1: scripts/generate_missing_figures.py, função fig_score_bands, lê df['nota final'] e pd.cut nessa coluna. Contagens confirmadas no extrato: 39.981/21.620/95.",
               "Figura cascata: escolhida a apresentação apenas dos ramos e contagens. A legenda do capítulo deve deixar de citar custo e sensibilidade com humano; esses indicadores permanecem na tabela. Capítulos não foram editados.",
@@ -304,7 +320,8 @@ def main():
         a, h = part.iloc[0], part.iloc[1]
         auto_effect = f"{a.efeito_reutilizacao_pp:.4f}".replace(".", ",")
         human_effect = f"{h.efeito_reutilizacao_pp:.4f}".replace(".", ",")
-        report.append(f"Frase para o capítulo ({mode}): A varredura prospectiva estima sensibilidade automática de {pct(a.varredura)}% e, sob erro humano hipotético de 5,0%, {pct(h.varredura)}%; a cascata pré-lote estimava {pct(a.cascata_pre_lote)}% e {pct(h.cascata_pre_lote)}%, respectivamente, pois incorporava respostas observadas de {len(reused[mode])} pares reutilizados em vez de suas expectativas por banda, diferença de {auto_effect} e {human_effect} pontos percentuais, sem contribuição de orçamento ou arredondamento do custo na comparação do ponto aprovado.")
+        historical_selected = len(set(frames[mode].index[frames[mode].action.eq("LLM_REVIEW")]) & set(historic[mode]))
+        report.append(f"Frase para o capítulo ({mode}): A varredura prospectiva estima sensibilidade automática de {pct(a.varredura)}% e, sob erro humano hipotético de 5,0%, {pct(h.varredura)}%; a cascata pré-lote estimava {pct(a.cascata_pre_lote)}% e {pct(h.cascata_pre_lote)}%, respectivamente, pois incorporava respostas observadas de {historical_selected} pares históricos em vez de suas expectativas por banda, diferença de {auto_effect} e {human_effect} pontos percentuais, sem contribuição de orçamento ou arredondamento do custo na comparação do ponto aprovado.")
     for name, table in outputs.items():
         report.extend([f"\n## {name}", "```", table.to_string(index=False), "```"])
     report.extend(["\n## ICs finais", "```", final[["modo", "versao", "sens_cadeia_observada", "sens_ci95_low", "sens_ci95_high"]].to_string(index=False), "```"])

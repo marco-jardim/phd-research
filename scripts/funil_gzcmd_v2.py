@@ -41,6 +41,10 @@ def artifact_paths(mode: str, model: str, *, include_v31: bool = False) -> list[
         paths = [base / f"anthropic_sem_mo_v4/exp2_llm_sync_{mode}.json"]
         if include_v31:
             paths.append(base / f"anthropic_sem_mo_v4_lote31/exp2_llm_sync_{mode}.json")
+            for directory in ("anthropic_sem_mo_v4_lote31_refrec", "anthropic_sem_mo_v4_lote31_refrec_fechamento"):
+                supplement = base / directory / f"exp2_llm_sync_{mode}.json"
+                if supplement.exists():
+                    paths.append(supplement)
         return paths
     if model == "Kimi K2.5":
         original = base / f"exp2_llm_sync_{mode}.json"
@@ -337,10 +341,12 @@ def main() -> None:
         assert not (new.guardrail.eq("ALWAYS_MATCH") & new.action.eq("LLM_REVIEW")).any()
         assert new_batch <= set(new.index[new.review_area]) <= set(new.index)
         new_ids = new.loc[new.index.isin(new_batch - old_batch), ["nota", "faixa", "y", "p_cal", "evr", "high_consistency_failed"]]
-        new_ids.to_csv(destination / f"lote_llm_novos_{mode}.csv")
+        new_ids.drop(columns=["y"]).to_csv(destination / f"lote_llm_novos_{mode}.csv")
         summaries.extend(summarize(old, mode, "v3"))
         summaries.extend(summarize(new, mode, "v3.1"))
         loaded = {model: load_responses(mode, model) for model in MODELS}
+        if not loaded[HAIKU_V4][1] or old_batch != set(loaded[HAIKU_V4][0]):
+            raise ValueError(f"Old LLM batch differs from the historical Haiku v4 cohort: {mode}")
         completed_reference, _ = load_responses(mode, HAIKU_V4, include_v31=True)
         if not new_batch.issubset(completed_reference):
             raise ValueError(f"Completed Haiku v4 cohorts do not cover the selected v3.1 batch: {mode}")

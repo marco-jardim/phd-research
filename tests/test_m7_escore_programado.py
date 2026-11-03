@@ -28,6 +28,21 @@ def test_pure_deterministic_bounded():
         assert len(set(values)) == 1
 
 
+def test_saved_program_is_available_without_llm(monkeypatch):
+    from scripts import m7_escore_programado as experiment
+    monkeypatch.setattr(experiment, "call_json", lambda *_: pytest.fail("LLM call forbidden"))
+    saved = experiment.saved_program()
+    common = load_module(ROOT / "scripts/m7_common.py")
+    dictionary = {"NOME prim frag igual", "NOME ult frag igual", "NOME qtd frag iguais", "NOME qtd frag raros"}
+    # Feature keys are derived from the existing program, not from any pair.
+    import ast
+    for node in ast.walk(ast.parse(saved["code"])):
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and node.func.attr == "get":
+            dictionary.add(node.args[0].value)
+    function = common.validated_score(saved["code"], dictionary)
+    assert 0 <= function({}) <= 1
+
+
 def test_random_feature_domain():
     import json
     score = load_module(ROOT / "gzcmd/escore_programado.py").escore_programado

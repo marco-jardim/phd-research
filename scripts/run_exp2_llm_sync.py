@@ -148,6 +148,7 @@ def main() -> None:
         config_path=str(CONFIG_YAML),
         mode=mode,
         p_cal="fit_platt",
+        policy_version="v3",
     )
     n_review = (df["action"] == "LLM_REVIEW").sum()
     log.info("Pipeline done: %d total pairs, %d LLM_REVIEW", len(df), n_review)

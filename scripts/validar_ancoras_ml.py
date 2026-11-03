@@ -20,13 +20,14 @@ from scipy.optimize import minimize
 from scipy.special import expit, logit
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import average_precision_score, brier_score_loss, log_loss, roc_auc_score
-from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT.parent / "gzcmd-record-linkage" / "src" / "gzcmd_record_linkage"
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(PACKAGE.parent))
 from gzcmd.ml_oof import N_SPLITS, SEED, _classifier, numeric_features, pair_ids  # noqa: E402
+from gzcmd.config import load_config
 from gzcmd.gzcmd_v3_policy_engine import Budget, Costs, LLMError, PolicyEngineV3  # noqa: E402
 from gzcmd_record_linkage.calibration import (  # noqa: E402
     PlattModel, _logit_mean_and_gradient, fit_anchor_platt,
@@ -122,7 +123,7 @@ def predict(model: PlattModel, score: np.ndarray) -> np.ndarray:
     return expit(model.slope * score + model.intercept)
 
 
-def reconstruct_margins(x, y, nota) -> tuple[pd.DataFrame, list[dict]]:
+def reconstruct_margins(x, y, nota, *, split_by="row", groups=None) -> tuple[pd.DataFrame, list[dict]]:
     """Mesmo 5x5, fábrica e seed de M1; extrai margem antes da isotônica.
 
     E3 ajusta âncoras apenas sobre margens OOF internas e taxas do treino externo.
@@ -133,12 +134,27 @@ def reconstruct_margins(x, y, nota) -> tuple[pd.DataFrame, list[dict]]:
     nested_anchor = np.full(len(y), np.nan)
     folds = np.full(len(y), -1, dtype=int)
     audit = []
-    for fold, (train, test) in enumerate(StratifiedKFold(N_SPLITS, shuffle=True, random_state=SEED).split(x, y)):
+    if split_by not in {"row", "refrec", "comprec"}:
+        raise ValueError("Invalid split_by")
+    grouped = split_by != "row"
+    if grouped and (groups is None or len(groups) != len(y) or pd.isna(groups).any()):
+        raise ValueError("Aligned nonmissing groups required")
+    groups = np.asarray(groups) if grouped else None
+    splitter = StratifiedGroupKFold if grouped else StratifiedKFold
+    outer = splitter(N_SPLITS, shuffle=True, random_state=SEED)
+    outer_splits = outer.split(x, y, groups) if grouped else outer.split(x, y)
+    for fold, (train, test) in enumerate(outer_splits):
+        if grouped:
+            assert set(groups[train]).isdisjoint(groups[test])
         inner_prob, inner_margin = np.full(len(train), np.nan), np.full(len(train), np.nan)
-        for itrain, itest in StratifiedKFold(N_SPLITS, shuffle=True, random_state=SEED + fold + 1).split(x.iloc[train], y[train]):
+        inner = splitter(N_SPLITS, shuffle=True, random_state=SEED + fold + 1)
+        inner_splits = inner.split(x.iloc[train], y[train], groups[train]) if grouped else inner.split(x.iloc[train], y[train])
+        for itrain, itest in inner_splits:
             fit_idx, pred_idx = train[itrain], train[itest]
             assert not np.intersect1d(fit_idx, test).size
             assert not np.intersect1d(pred_idx, test).size
+            if grouped:
+                assert set(groups[fit_idx]).isdisjoint(groups[pred_idx])
             model = _classifier(y[fit_idx], SEED)
             model.fit(x.iloc[fit_idx], y[fit_idx])
             inner_prob[itest] = model.predict_proba(x.iloc[pred_idx])[:, 1]
@@ -154,6 +170,7 @@ def reconstruct_margins(x, y, nota) -> tuple[pd.DataFrame, list[dict]]:
         nested_anchor[test] = predict(anchor, margin[test])
         folds[test] = fold
         audit.append({"fold": fold, "train_n": len(train), "test_n": len(test),
+                      "split_by": split_by, "group_overlap": 0 if grouped else None,
                       "taxas_treino": measured, "ajuste": diagnostic})
         print(f"OOF fold={fold}: train={len(train)}, test={len(test)}, 6 fits, interseção=0", flush=True)
     if not all(np.isfinite(a).all() for a in (margin, iso, nested_anchor)):
@@ -257,19 +274,24 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--csv", type=Path, default=ROOT / "data/COMPARADORSEMIDENT.csv")
     ap.add_argument("--oof", type=Path, default=ROOT / "data/pcal_ml_oof.csv")
+    ap.add_argument("--config", type=Path, default=ROOT / "gzcmd/gzcmd_v3_config.yaml")
+    ap.add_argument("--split-by", choices=("row", "refrec", "comprec"))
     ap.add_argument("--reuse-margins", action="store_true", help="Reutiliza somente cache M5 com hashes/versões válidos")
     args = ap.parse_args()
     import sklearn
     import xgboost
 
     raw = pd.read_csv(args.csv, sep=";", dtype=str, low_memory=False)
+    raw.columns = [c.split(",")[0] for c in raw.columns]
+    split_by = args.split_by or load_config(args.config).evaluation.split_by
+    groups = raw[split_by.upper()].str.strip().to_numpy() if split_by != "row" else None
     x = numeric_features(raw)
     nota = x["nota final" if "nota final" in x else "nota_final"].to_numpy()
     y = pd.to_numeric(raw.PAR, errors="raise").isin([1, 2]).astype(int).to_numpy()
     ids = pair_ids(raw)
     oof = pd.read_csv(args.oof)
     metadata = json.loads(args.oof.with_suffix(".json").read_text(encoding="utf-8"))
-    fingerprint = {"method": "nested-xgb-isotonic-5x5-v1", "seed": SEED, "folds": N_SPLITS,
+    fingerprint = {"method": "nested-xgb-isotonic-5x5-v1", "seed": SEED, "folds": N_SPLITS, "split_by": split_by,
                    "source_sha256": sha(args.csv), "code_sha256": sha(ROOT / "gzcmd/ml_oof.py"),
                    "sklearn": sklearn.__version__, "xgboost": xgboost.__version__}
     if metadata.get("fingerprint") != fingerprint or metadata.get("csv_sha256") != sha(args.oof):
@@ -300,7 +322,7 @@ def main():
         nested_audit = cache_metadata["nested_audit"]
         print("Cache M5 de margens validado por hashes e versões.", flush=True)
     else:
-        margins, nested_audit = reconstruct_margins(x, y, nota)
+        margins, nested_audit = reconstruct_margins(x, y, nota, split_by=split_by, groups=groups)
         margins.insert(0, "pair_id", ids.to_numpy())
         margins.to_csv(cache_path, index=False)
         meta_path.write_text(json.dumps({"fingerprint": fp, "csv_sha256": sha(cache_path),
@@ -406,7 +428,7 @@ def write_report(valid, sens, dec, diagnostic_df, conf, audit, out):
             "", "## Síntese dos resultados e recomendação", "", *findings,
             "", "## Reprodução e protocolo", "", "```powershell",
             "python scripts/validar_ancoras_ml.py", "python scripts/validar_ancoras_ml.py --reuse-margins", "```", "",
-            "Python Miniconda; seed 42; mesma fábrica XGBoost/allowlist de 30 comparações de M1; 5 folds externos × (5 internos + 1 ajuste externo), 300 árvores por ajuste. Nenhum LLM executado.",
+            f"Python Miniconda; seed 42; split_by={audit['fingerprint']['split_by']}; mesma fábrica XGBoost/allowlist de M1; 5 folds externos × (5 internos + 1 ajuste externo), 300 árvores por ajuste. Nenhum LLM executado.",
             f"Equivalência do adaptador à API sobre a nota: max |Δp|={audit['adapter_api_delta']:.12g}. Reprodução da isotônica M1: max |Δp|={audit['isotonic_reproduction_delta']:.12g}; folds iguais (asserções no comando).",
             "Margem extraída por predict(output_margin=True), não pelo logit da isotônica (que perde informação e possui 0/1). O cache M1 original é somente lido e validado por hashes, features, seed e versões; margens M5 têm cache separado com hashes de fonte/código/pacote/CSV e versões.",
             "Gabarito PAR∈{1,2}, leitura dtype=str, decimal vírgula convertido. pair_id é o mesmo hash de M1, com unicidade/cobertura verificadas. Somente hashes, margens, probabilidades e agregados são persistidos; nenhum identificador ou campo pessoal.",

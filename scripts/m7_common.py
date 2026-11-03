@@ -103,10 +103,13 @@ def rule_value(expression, features):
 def load_data():
     import numpy as np
     import pandas as pd
-    from sklearn.model_selection import StratifiedKFold
+    from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
+    from gzcmd.config import load_config
     from gzcmd.ml_oof import numeric_features, pair_ids, SEED, N_SPLITS
     source = ROOT / "data/COMPARADORSEMIDENT.csv"
     raw = pd.read_csv(source, sep=";", dtype=str, low_memory=False)
+    raw.columns = [c.split(",")[0] for c in raw.columns]
+    split_by = load_config(ROOT / "gzcmd/gzcmd_v3_config.yaml").evaluation.split_by
     x = numeric_features(raw)
     y = pd.to_numeric(raw.PAR, errors="raise").isin([1, 2]).astype(int).to_numpy()
     ids = pair_ids(raw)
@@ -115,7 +118,7 @@ def load_data():
     import sklearn
     import xgboost
     from gzcmd.ml_oof import METHOD
-    expected = {"method": METHOD, "seed": SEED, "folds": N_SPLITS,
+    expected = {"method": METHOD, "seed": SEED, "folds": N_SPLITS, "split_by": split_by,
                 "source_sha256": sha(source), "code_sha256": sha(ROOT / "gzcmd/ml_oof.py"),
                 "sklearn": sklearn.__version__, "xgboost": xgboost.__version__}
     if meta["fingerprint"] != expected or meta["csv_sha256"] != sha(oof_path):
@@ -125,7 +128,13 @@ def load_data():
     oof = oof.set_index("pair_id").loc[ids].reset_index()
     nota = x["nota final" if "nota final" in x else "nota_final"].to_numpy()
     np.testing.assert_allclose(oof.nota, nota)
-    for fold, (_, test) in enumerate(StratifiedKFold(N_SPLITS, shuffle=True, random_state=SEED).split(x, y)):
+    groups = raw[split_by.upper()].str.strip().to_numpy() if split_by != "row" else None
+    splitter = StratifiedGroupKFold if groups is not None else StratifiedKFold
+    outer = splitter(N_SPLITS, shuffle=True, random_state=SEED)
+    splits = outer.split(x, y, groups) if groups is not None else outer.split(x, y)
+    for fold, (train, test) in enumerate(splits):
+        if groups is not None:
+            assert set(groups[train]).isdisjoint(groups[test])
         assert (oof.fold.iloc[test] == fold).all()
     assert meta["features"] == list(x.columns)
     return raw, x, y, nota, ids, oof

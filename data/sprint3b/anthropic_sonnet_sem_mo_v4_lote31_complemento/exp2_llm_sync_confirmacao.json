@@ -1,0 +1,147 @@
+{
+  "mode": "confirmacao",
+  "model": "claude-sonnet-5-5",
+  "dossier_sha256": {
+    "965cf52d3ad2d227": "09be0db1729e773d8f953566d0c024a2e0351c42da6f22f14a6651bdb8102371",
+    "a31109e27bc9afe1": "4d605919832628d771178a741ce086412f69a29888cfafc6eaa98cd6be2760d2",
+    "b5036ed97038bdd5": "fa753320402d8b2db2282e5fb18b2b1560bb711e9dc25762c8c78f849273f2e4"
+  },
+  "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+  "prompt_version": "v4",
+  "selected_pair_ids": [
+    "965cf52d3ad2d227",
+    "a31109e27bc9afe1",
+    "b5036ed97038bdd5"
+  ],
+  "source_sha256": "4dc9389dc7f96552e898858f61d4b4266f56a82880e2e989406b283bed4a6eff",
+  "cohort": "v31_lot",
+  "experiment": "exp2_llm_sync",
+  "timestamp": "2026-11-03T15:42:04.737150+00:00",
+  "n_review_pairs": 3,
+  "workers": 4,
+  "removed_fields": [
+    "model_outputs.p_cal",
+    "model_outputs.base_choice",
+    "model_outputs.band",
+    "model_outputs.evr",
+    "model_outputs.guardrail",
+    "model_outputs.guardrail_reason"
+  ],
+  "elapsed_s": 20.39,
+  "metadata": {
+    "provider": "Anthropic Messages API",
+    "model_exact": "claude-sonnet-5-5",
+    "max_tokens": 2500,
+    "temperature_sent": false,
+    "extended_thinking": false,
+    "max_retries": 5,
+    "retry_delay_s": 3,
+    "timeout_s": 120,
+    "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+    "prompt_version": "v4",
+    "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "free_response_fields_saved": false,
+    "checkpoint": "every completed pair + durable per-call usage journal"
+  },
+  "results": [
+    {
+      "pair_id": "965cf52d3ad2d227",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.07,
+      "total_tokens": 8675
+    },
+    {
+      "pair_id": "a31109e27bc9afe1",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "HIGH_SCORE_ANCHOR",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.96,
+      "total_tokens": 8768
+    },
+    {
+      "pair_id": "b5036ed97038bdd5",
+      "decision": "MATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "HIGH_SCORE_ANCHOR"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 17.81,
+      "total_tokens": 8699
+    }
+  ],
+  "errors": [],
+  "failed_pair_ids": [],
+  "n_reviewed": 3,
+  "n_errors": 0,
+  "complete": true,
+  "updated_at": "2026-11-03T15:42:25.124427+00:00",
+  "transport": {
+    "calls": 6,
+    "http_errors": 0,
+    "response_parse_errors": 0,
+    "error_statuses": {},
+    "input_tokens": 18860,
+    "output_tokens": 7282,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "max_request_input_tokens": 3149
+  },
+  "cost_estimate_usd": 0.11054,
+  "cost_note": "Estimate only: standard/global USD/M for Claude Sonnet 5.5 input 2, output 10, cache read 0.10, cache write (5m) 2.50; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-03.",
+  "metrics": {
+    "mode": "confirmacao",
+    "n_reviewed": 3,
+    "n_errors": 0,
+    "total_elapsed_s": 20.39,
+    "decisions": {
+      "MATCH": 1,
+      "NONMATCH": 2
+    },
+    "protocols": {
+      "consensus": 3
+    }
+  }
+}
