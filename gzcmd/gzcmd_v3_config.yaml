@@ -92,7 +92,7 @@ base_model:
   # Your pre-trained model that outputs p_base (uncalibrated or weakly calibrated)
   # Keep it stable; adapt via online calibration, not by retraining.
   type: "random_forest"
-  artifact_path: "models/rf_smote.pkl"
+  artifact_path: null  # placeholder: informar o caminho do artefato do classificador treinado (nenhum modelo e versionado)
   proba_column: "p_base"
   # Optional: if you output logits instead, set transform: "logit"
   score_space: "probability"
@@ -197,15 +197,15 @@ llm_review:
   # You can use one model with different system instructions, or two different models.
   model:
     agent_a:
-      name: "gpt-5.2-pro"
+      name: "claude-haiku-5-5"
       temperature: 0.0
       max_tokens: 500
     agent_b:
-      name: "gpt-5.2-pro"
+      name: "claude-haiku-5-5"
       temperature: 0.0
       max_tokens: 500
     arbiter:
-      name: "gpt-5.2-pro"
+      name: "claude-haiku-5-5"
       temperature: 0.0
       max_tokens: 500
 
