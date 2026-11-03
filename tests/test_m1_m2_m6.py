@@ -17,6 +17,7 @@ from scripts.funil_gzcmd_v2 import loss_metrics, replay
 def test_yaml_and_cli_expose_new_and_reproducible_profiles(tmp_path) -> None:
     cfg = load_config("gzcmd/gzcmd_v3_config.yaml")
     assert cfg.calibration.p_cal == "ml_xgb"
+    assert cfg.evaluation.split_by == "refrec"
     assert cfg.guardrails.policy_version == "v3.1"
     assert cfg.decision_policy.modes["vigilancia"].human_review_cost == 1
     assert cfg.decision_policy.modes["vigilancia"].llm_review_cost == .005

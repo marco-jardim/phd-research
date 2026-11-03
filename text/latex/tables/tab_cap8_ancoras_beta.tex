@@ -9,12 +9,12 @@
 Calibração & Brier & ECE & Prevista & Observada \\
 \midrule
 Platt (nota) & 0,006150 & 0,000742 & n.a. & n.a. \\
-Platt por âncoras (ML) & 0,001539 & 0,001483 & 0,995324 & 0,932836 \\
-Beta por âncoras & 0,001717 & 0,001796 & 0,986006 & 0,925926 \\
-Beta + restrição cinza & 0,001540 & 0,001485 & 0,988176 & 0,938931 \\
-Isotônica supervisionada & 0,001518 & 0,000758 & 0,986570 & 0,980952 \\
+Platt por âncoras (ML) & 0,002654 & 0,002537 & 0,994557 & 0,846774 \\
+Beta por âncoras & 0,002869 & 0,002884 & 0,996232 & 0,828125 \\
+Beta + restrição cinza & 0,002936 & 0,002920 & 0,997720 & 0,840000 \\
+Isotônica supervisionada & 0,002206 & 0,001125 & 0,988457 & 0,973333 \\
 \bottomrule
 \end{tabular}
 \par\smallskip
-\parbox{\linewidth}{\footnotesize Beta+ usa posteriores de Fellegi e Sunter, com prevalência estimada sem rótulos. Platt da nota é histórico; isotônica supervisionada é aninhada. n.a.: ausência de previsões no intervalo superior.}
+\parbox{\linewidth}{\footnotesize Beta+ usa posteriores de Fellegi e Sunter, com prevalência estimada sem rótulos. Platt da nota é histórico; margens OOF e isotônica supervisionada usam partição aninhada agrupada por REFREC. Os ajustes globais por momentos não constituem calibração inteiramente aninhada. n.a.: ausência de previsões no intervalo superior.}
 \end{table}

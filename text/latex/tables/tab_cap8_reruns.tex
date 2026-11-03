@@ -2,12 +2,12 @@
 \begin{table}[!ht]
 \centering
 \footnotesize
-\caption{Resultados observados dos revisores no Exp2 segundo o dossiê e a versão das instruções.}
+\caption{Avaliação dos revisores no Exp2 segundo o dossiê e a versão do prompt.}
 \label{tab:cap8-reruns}
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{llrrrrrrr}
 \toprule
-Modelo & Dossiê/instruções & VP & FP & FN & Inconcl. & Sens. (\%) & Espec. (\%) & Inconcl. (\%) \\
+Modelo & Dossiê/prompt & VP & FP & FN & UNSURE & Sens. (\%) & Espec. (\%) & UNSURE (\%) \\
 \midrule
 \multicolumn{9}{l}{\textbf{Vigilância}} \\
 Kimi K2.5 & Completo/v3 & 79 & 6 & 19 & 41 & 80,6 (71,7; 87,2) & 99,5 (99,0; 99,8) & 2,9 \\
@@ -18,7 +18,10 @@ Claude Haiku 5.5 & Sem MO/v3 & 67 & 6 & 2 & 1.258 & 97,1 (90,0; 99,2) & 92,8 (85
 DeepSeek V4.1 Flash & Sem MO/v3 & 89 & 67 & 0 & 1.216 & 100,0 (95,9; 100,0) & 36,2 (27,6; 45,7) & 86,2 \\
 Levanto Sage 2 & Sem MO/v3 & 65 & 164 & 16 & 446 & 80,2 (70,3; 87,5) & 81,4 (78,7; 83,9) & 31,6 \\
 Claude Haiku 5.5 & Sem MO/v4 & 73 & 34 & 19 & 61 & 79,3 (70,0; 86,4) & 97,3 (96,2; 98,1) & 4,3 \\
+Claude Sonnet 5.5 & Sem MO/v4 & 82 & 52 & 12 & 164 & 87,2 (79,0; 92,5) & 95,5 (94,1; 96,5) & 11,6 \\
 DeepSeek V4.1 Flash & Sem MO/v4 & 89 & 268 & 0 & 1.053 & 100,0 (95,9; 100,0) & 0,0 (0,0; 1,4) & 74,7 \\
+Claude Haiku 5.5 & Sem MO/v4 (lote por linha) & 17 & 8 & 2 & 26 & 89,5 (68,6; 97,1) & 95,1 (90,7; 97,5) & 12,4 \\
+Claude Haiku 5.5 & Sem MO/v4 (lote REFREC) & 13 & 7 & 2 & 9 & 86,7 (62,1; 96,3) & 94,7 (89,4; 97,4) & 5,8 \\
 \midrule
 \multicolumn{9}{l}{\textbf{Confirmação}} \\
 Kimi K2.5 & Completo/v3 & 91 & 3 & 10 & 0 & 90,1 (82,7; 94,5) & 99,1 (97,4; 99,7) & 0,0 \\
@@ -29,12 +32,15 @@ Claude Haiku 5.5 & Sem MO/v3 & 72 & 3 & 0 & 347 & 100,0 (94,9; 100,0) & 81,2 (57
 DeepSeek V4.1 Flash & Sem MO/v3 & 86 & 25 & 0 & 319 & 100,0 (95,7; 100,0) & 16,7 (7,3; 33,6) & 73,3 \\
 Levanto Sage 2 & Sem MO/v3 & 38 & 7 & 50 & 38 & 43,2 (33,3; 53,6) & 97,7 (95,4; 98,9) & 8,7 \\
 Claude Haiku 5.5 & Sem MO/v4 & 64 & 6 & 20 & 25 & 76,2 (66,1; 84,0) & 98,2 (96,0; 99,2) & 5,7 \\
+Claude Sonnet 5.5 & Sem MO/v4 & 73 & 6 & 16 & 56 & 82,0 (72,8; 88,6) & 97,9 (95,6; 99,0) & 12,9 \\
 DeepSeek V4.1 Flash & Sem MO/v4 & 87 & 97 & 0 & 251 & 100,0 (95,8; 100,0) & 0,0 (0,0; 3,8) & 57,7 \\
+Claude Haiku 5.5 & Sem MO/v4 (lote por linha) & 2 & 0 & 1 & 1 & 66,7 (20,8; 93,9) & 100,0 (43,9; 100,0) & 14,3 \\
+Claude Haiku 5.5 & Sem MO/v4 (lote REFREC) & 11 & 0 & 1 & 0 & 91,7 (64,6; 98,5) & 100,0 (56,6; 100,0) & 0,0 \\
 \bottomrule
 \end{tabular}%
 }
 \par\smallskip
-\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos. MO: bloco \texttt{model\_outputs}. Sensibilidade e especificidade excluem \texttt{UNSURE}; a fração de \texttt{UNSURE} usa todas as respostas. NA indica denominador zero. O encaminhamento ao revisor humano não constitui acerto observado. Sensibilidade e especificidade apresentam IC de 95\% de Wilson entre parênteses; análises pareadas constam nos CSVs agregados. A confirmação de Kimi K2.5 utiliza a fonte alternativa QW2, sem pressupor equivalência de protocolo. As diferenças entre execuções não identificam isoladamente efeito causal do prompt. Fonte: artefatos do Exp2 \cite{Jardim2026phdrepo}.}
+\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos. MO: bloco \texttt{model\_outputs}. Sensibilidade e especificidade excluem \texttt{UNSURE}; a fração de \texttt{UNSURE} usa todas as respostas. NA indica denominador zero. O encaminhamento ao revisor humano não constitui acerto observado. Sensibilidade e especificidade apresentam IC de 95\% de Wilson entre parênteses; análises pareadas constam nos CSVs agregados. A confirmação de Kimi K2.5 utiliza a fonte alternativa QW2, sem pressupor equivalência de protocolo. As diferenças entre execuções não identificam isoladamente efeito causal do prompt. Claude Sonnet 5.5 (US\$ 2 e US\$ 10 por milhão de tokens de entrada e de saída, vinte vezes a tarifa do Claude Haiku 5.5) foi avaliado apenas com dossiê sem as saídas do motor e instruções v4, nas mesmas coortes do Haiku, e não alimenta as taxas da política (fonte: \texttt{data/exp2\_sonnet\_v4\_resumo.csv}). Lotes complementares são apresentados separadamente, com seleção distinta da coorte histórica; não constituem braços pareados adicionais. Fonte: artefatos do Exp2 \cite{Jardim2026phdrepo}.}
 \par\smallskip
-\parbox{\linewidth}{\footnotesize\textsuperscript{*} Execução parcial de Kimi K3 na confirmação, dossiê completo/v3: 343 respostas em 435 pares. Pares sem resposta não são classificados como \texttt{UNSURE}. Levanto Sage 2 utiliza uma escolha por par, sem o protocolo de dois agentes e árbitro.}
+\parbox{\linewidth}{\footnotesize\textsuperscript{*} Execuções parciais, respostas disponíveis/coorte esperada: Kimi K3 (confirmacao, completo/v3): 343/435. Pares sem resposta não são classificados como \texttt{UNSURE}.}
 \end{table}

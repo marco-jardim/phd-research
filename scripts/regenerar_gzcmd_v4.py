@@ -75,7 +75,7 @@ def summarize() -> None:
               "A perda mistura erros conhecidos e tempo de encaminhamento observados com perdas esperadas dos pendentes e do revisor humano imperfeito.",
               "A política v3.1 tem cobertura Haiku v4 integral após incorporar o lote complementar. Não há inferência de respostas LLM pendentes na referência.",
               "A projeção anterior foi preservada em colunas pre_lote31. O cenário com revisor humano continua sendo hipótese de erro de 5%, separado do desfecho automático observado.",
-              "Os deltas abaixo usam expectativas da varredura, sem replay, no mesmo ponto C_llm=0,005/e_h=0,05/orçamento infinito. Assim isolam a troca das taxas/revisor de referência.",
+              "Os deltas abaixo usam expectativas da varredura, sem replay, no mesmo ponto C_llm=0,005/e_h=0,05/orçamento infinito. Frente ao arquivo M3v3, podem combinar alterações de taxas e de perfil OOF; não isolam um efeito causal.",
               "Arquivos anteriores preservados com sufixo _m3v3 e hashes em arquivos_preservados_m3v3.json; nenhuma resposta LLM foi gerada.", ""]
     tables = [
         ("Gabarito do Haiku v4 no lote antigo, sem decisões automáticas do motor", gold_table),
@@ -92,7 +92,7 @@ def summarize() -> None:
         report.extend([f"## {title}", "```", table.to_string(index=False), "```", ""])
     report.extend(["## Fontes v4", "```json", json.dumps(sources, indent=2), "```",
                    "Relatórios detalhados: funil_gzcmd_relatorio.md, varredura_custos_relatorio.md e np_confirmacao_relatorio.md.",
-                   "A NP continua inviável em 0,001/0,002 pelas guardas obrigatórias; alterar taxas do revisor não modifica esse risco automático OOF."])
+                   "A viabilidade NP deve ser lida na tabela recalculada. A alteração do perfil OOF pode mudar o risco das guardas, embora trocar apenas taxas LLM não o altere."])
     (ROOT / "data/regeneracao_gzcmd_v4_relatorio.md").write_text("\n".join(report) + "\n", encoding="utf-8")
 
 

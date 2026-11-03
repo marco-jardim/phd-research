@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import sys
 from itertools import combinations
 from pathlib import Path
 
@@ -22,6 +23,7 @@ except ImportError:  # Execução direta, sem instalação de scripts como pacot
     import estimar_taxas_erro_revisor as rates
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 # Manifesto explícito: não varrer backups, traces, resumes ou parciais obsoletos.
 SOURCES = (
     ("kimi-k2.5", "completo", "v3", "data/sprint3b"),
@@ -143,6 +145,42 @@ def metrics(part: pd.DataFrame) -> dict:
         row.update({name: value, f"{name}_ci95_low": lo, f"{name}_ci95_high": hi,
                     f"{name}_denominador": n})
     return row
+
+
+def load_supplemental_runs(root: Path, gold: pd.DataFrame, definitions: dict):
+    """Disjoint Haiku v4 supplements; never treat them as paired historical arms."""
+    frames, sources = [], []
+    for folder, cohort in (("anthropic_sem_mo_v4_lote31", "lote31_row"),
+                           ("anthropic_sem_mo_v4_lote31_refrec", "lote31_refrec")):
+        for mode in rates.MODES:
+            path = root / "data/sprint3b" / folder / f"exp2_llm_sync_{mode}.json"
+            if not path.exists():
+                continue
+            run = json.loads(path.read_text(encoding="utf-8"))
+            original_path = root / f"data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_{mode}.json"
+            original = json.loads(original_path.read_text(encoding="utf-8"))
+            removed = {"model_outputs." + key for key in ("p_cal", "band", "base_choice", "evr", "guardrail", "guardrail_reason")}
+            if (run.get("mode") != mode or run.get("model") != "claude-haiku-5-5"
+                    or run.get("prompt_version") != "v4" or run.get("cohort") != "v31_lot"
+                    or run.get("prompt_sha256") != original.get("prompt_sha256")
+                    or not run.get("complete") or not removed.issubset(run.get("removed_fields", []))):
+                raise ValueError(f"Incompatible supplemental provenance: {path}")
+            ids = set(run["selected_pair_ids"])
+            part, counts = parse_run(run, ids)
+            if not counts["completo"]:
+                raise ValueError(f"Incomplete supplemental cohort: {path}")
+            merged = part.merge(gold, on="pair_id", how="left", validate="one_to_one")
+            if merged.y.isna().any() or merged.nota_final.isna().any():
+                raise ValueError("Supplement contains an unknown pair hash")
+            merged["band"] = rates.assign_bands(merged.nota_final, definitions)
+            identity = dict(zip(KEYS, (mode, "claude-haiku-5-5", "sem_mo", "v4")))
+            for key, value in {**identity, **counts, "cohort": cohort}.items():
+                merged[key] = value
+            frames.append(merged)
+            sources.append({**identity, **counts, "cohort": cohort, "path": path.relative_to(root).as_posix(),
+                            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                            "reported_model": "claude-haiku-5-5", "alternate_source": False})
+    return frames, sources
 
 
 def mcnemar_exact(a_correct_b_wrong: int, a_wrong_b_correct: int) -> float:
@@ -276,7 +314,9 @@ def make_latex(rows: list[dict], only_complete: bool = False) -> str:
             counts = " & ".join(f"{row[k]:,}".replace(",", ".") for k in ("VP", "FP", "FN", "UNSURE"))
             values = " & ".join(interval(row, k) for k in ("sens", "espec"))
             values += " & " + percent(row["fracao_unsure"])
-            lines.append(f"{model}{star} & {dossier}/{row['prompt']} & {counts} & {values} " + r"\\")
+            cohort_name = {"lote31_row": "lote por linha", "lote31_refrec": "lote REFREC"}.get(row.get("cohort"))
+            suffix = f" ({cohort_name})" if cohort_name else ""
+            lines.append(f"{model}{star} & {dossier}/{row['prompt']}{suffix} & {counts} & {values} " + r"\\")
     lines += [r"\bottomrule", r"\end{tabular}%", "}", r"\par\smallskip",
               r"\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos. "
               r"MO: bloco \texttt{model\_outputs}. Sensibilidade e especificidade excluem \texttt{UNSURE}; "
@@ -285,6 +325,7 @@ def make_latex(rows: list[dict], only_complete: bool = False) -> str:
               r"Sensibilidade e especificidade apresentam IC de 95\% de Wilson entre parênteses; análises pareadas constam nos CSVs agregados. "
               r"A confirmação de Kimi K2.5 utiliza a fonte alternativa QW2, sem pressupor equivalência de protocolo. "
               r"As diferenças entre execuções não identificam isoladamente efeito causal do prompt. "
+              r"Lotes complementares são apresentados separadamente, com seleção distinta da coorte histórica; não constituem braços pareados adicionais. "
               r"Fonte: artefatos do Exp2 \cite{Jardim2026phdrepo}.}"]
     partials = [r for r in selected if not r["completo"]]
     if partials:
@@ -310,7 +351,20 @@ def main() -> None:
     gold = rates.load_gold(root / "data/COMPARADORSEMIDENT.csv")
     data, sources = load_runs(root, gold, definitions)
     summary, paired, bands = summarize(data, sources, definitions)
+    extra_frames, extra_sources = load_supplemental_runs(root, gold, definitions)
+    if extra_frames:
+        expanded = pd.concat([data, *extra_frames], ignore_index=True)
+        haiku = expanded[expanded.model.eq("claude-haiku-5-5") & expanded.prompt.eq("v4")]
+        if haiku.duplicated(["mode", "pair_id"]).any():
+            raise ValueError("Overlapping Haiku reliability cohorts")
+        for frame, source in zip(extra_frames, extra_sources):
+            summary.append({**source, **metrics(frame)})
+            for band in definitions:
+                bands.append({**source, "estrato": "banda_yaml", "band": band, **metrics(frame[frame.band.eq(band)])})
+        data, sources = expanded, [*sources, *extra_sources]
     profile = make_v4_yaml(data, sources, definitions, fixed, config_bytes)
+    if extra_sources:
+        profile["limitations"].append("Haiku includes adaptively selected supplemental cohorts; reliability estimates and policy replay are not independent validation.")
     outputs = {"data/exp2_reruns_resumo.csv": pd.DataFrame(summary),
                "data/exp2_reruns_pareado.csv": pd.DataFrame(paired),
                "data/exp2_reruns_por_banda.csv": pd.DataFrame(bands)}

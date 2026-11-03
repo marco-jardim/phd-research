@@ -195,7 +195,7 @@ O desempenho observado no QW1 sustenta a escolha do XGBoost entre as configuraç
 \section{Revisão assistida por modelo de linguagem de grande escala}
 \label{sec:cap5-qw2-llm}
 
-A cascata de filtragem descrita nas seções anteriores reduz o universo de pares candidatos a um subconjunto residual de decisão ambígua, para o qual os classificadores supervisionados e as regras determinísticas não atingem consenso.
+A cascata de filtragem descrita nas seções anteriores reduz o universo de pares candidatos a um subconjunto residual de decisão ambígua. Na versão v3 do GZ-CMD, o lote de 1.410 pares da vigilância foi selecionado pelo valor esperado da revisão (EVR) do motor, e não por um critério de consenso entre classificadores.
 Nesse estrato, a inclusão de um modelo de linguagem de grande escala (\textit{Large Language Model}, LLM) como revisor complementar permite avaliar dossiês estruturados dos potenciais pares.
 
 O protocolo experimental, incluindo o modelo utilizado, a estrutura do dossiê e o mecanismo de duplo agente com árbitro, é descrito na Seção~\ref{sec:protocolo-llm}.
@@ -205,19 +205,19 @@ A taxa de consenso entre os dois agentes primários alcançou 97{,}2\% no modo v
 
 Os resultados indicam desempenho assimétrico entre os dois modos operacionais (Tabela~\ref{tab:qw2-confusion}).
 No modo vigilância, Kimi K2.5 revisou 1.410 pares e obteve precisão de 0{,}923 com sensibilidade de 0{,}692, resultando em $F_1 = 0{,}791$, em execução anterior do mesmo protocolo, de 15 de fevereiro de 2026, registrada no arquivo não versionado \path{data/qw2/qw2_vigilancia_kimi.json}. Essa execução apresentou 72 verdadeiros positivos, 6 falsos positivos, 32 falsos negativos e 1.300 verdadeiros negativos. Distingue-se da matriz reconstruída a partir de \path{data/sprint3b/exp2_llm_sync_vigilancia.json}, com 79 verdadeiros positivos, 6 falsos positivos, 19 falsos negativos, 1.265 verdadeiros negativos e 41 inconclusivos, apresentada na Tabela~\ref{tab:cap8-revisao-desempenho}. A Tabela~\ref{tab:cap8-reruns} constitui a referência para comparação entre revisores e reavaliações no Capítulo~\ref{cap:gzcmd}.
-A especificidade elevada ($0{,}995$) confirma que o modelo raramente classifica pares verdadeiramente negativos como correspondências, comportamento desejável quando o custo de falsos positivos é alto.
+A especificidade elevada ($0{,}995$) indica que o modelo raramente classifica pares verdadeiramente negativos como correspondências, comportamento desejável quando o custo de falsos positivos é alto.
 Contudo, 32 pares verdadeiros foram classificados como não correspondentes, o que representa perda de 30{,}8\% dos positivos nesse estrato residual.
 As rejeições devem ser interpretadas à luz da ancoragem nas saídas do motor examinada na Seção~\ref{sec:cap8-ablacao-dossie}, em vez de serem atribuídas exclusivamente à ausência de campos textuais brutos.
 
-No modo confirmação, o cenário se inverte favoravelmente: sobre 435 pares, a precisão atinge 0{,}968 e a sensibilidade sobe para 0{,}901, elevando o $F_1$ para 0{,}933.
+No modo confirmação, o desempenho difere: sobre 435 pares, a precisão atinge 0{,}968 e a sensibilidade sobe para 0{,}901, elevando o $F_1$ para 0{,}933.
 A prevalência de pares verdadeiros nesse modo (23{,}2\%) é substancialmente maior do que no modo vigilância (7{,}4\%), o que facilita a tarefa de classificação e contribui para o ganho observado.
 
 \input{tables/tab_qw2_llm_comparison.tex}
 
 A Tabela~\ref{tab:qw2-llm-comparison} sintetiza as métricas de desempenho nos dois modos.
 A diferença de sensibilidade entre os modos ($0{,}692$ \textit{versus} $0{,}901$) evidencia a susceptibilidade do revisor LLM à composição do estrato avaliado: quando a proporção de pares verdadeiros é baixa e a evidência disponível se limita a subescores numéricos, o modelo tende a adotar postura mais conservadora, priorizando especificidade em detrimento de sensibilidade.
-Em termos operacionais, esses achados sugerem que a revisão por LLM é particularmente adequada ao modo confirmação, no qual a prevalência mais elevada e a finalidade investigativa se alinham ao perfil de alta precisão do revisor.
-Para o modo vigilância, a perda de sensibilidade demanda cautela e aponta para a necessidade de estratégias complementares, como a revisão humana dos pares rejeitados pelo LLM ou a inclusão de campos textuais no dossiê.
+Em termos operacionais, esses achados, obtidos com dossiê que incluía as saídas do motor, sugeriram que a revisão por LLM seria adequada ao modo confirmação, mas não se mantiveram na cascata final (Seção~\ref{sec:cap8-cascata}), na qual o LLM recebeu poucos pares da confirmação e a revisão humana concentrou o esforço.
+Para o modo vigilância, a perda de sensibilidade demanda cautela e aponta para a necessidade de estratégias complementares, como o encaminhamento ao revisor humano previsto na quarta ação da política v3.1 (Seção~\ref{sec:cap8-politica-v31}) ou a inclusão de campos textuais no dossiê.
 
 \section{Análise de equidade por subgrupos demográficos e de similaridade}
 \label{sec:cap5-qw3-fairness}
@@ -280,7 +280,7 @@ Os resultados evidenciam limitações da decisão baseada exclusivamente em limi
 
 A recomendação operacional decorrente é a adoção de dois \textit{pipelines} complementares: (i) um \textit{pipeline} orientado à vigilância, com configuração ML-only ou Hybrid-OR e limiares permissivos, para priorizar a detecção do maior número de óbitos associados à tuberculose; e (ii) um \textit{pipeline} orientado à investigação, com configurações Hybrid-AND ou consenso e limiares restritivos, para minimizar revisões desnecessárias em contextos de recursos limitados. A análise interpretável via SHAP reforça a importância de campos frequentemente negligenciados (nome da mãe) na resolução da área cinza e destaca a necessidade de políticas de qualidade de dados nas bases de saúde como pré-condição para a eficácia do pós-processamento.
 
-Somam-se a esses achados três extensões complementares. A primeira é a comparação com classificadores de aprendizado profundo (Seção~\ref{sec:qw1-deep-learning}), na qual o XGBoost apresentou o maior $F_1$ entre as configurações QW1 avaliadas: no teste interno, obteve $0{,}920$, contra $0{,}610$ do TabNet, sem que esse contraste se estenda indistintamente às redes neurais, pois as duas MLP superaram o valor de referência reportado de $0{,}610$, cuja comparabilidade entre protocolos é limitada. A revisão assistida por LLM (Seção~\ref{sec:cap5-qw2-llm}) descreveu a execução anterior não versionada do mesmo protocolo; a matriz reconstruída e a comparação entre revisores e reavaliações são apresentadas nas Tabelas~\ref{tab:cap8-revisao-desempenho} e~\ref{tab:cap8-reruns}, no Capítulo~\ref{cap:gzcmd}. A terceira extensão é a análise de equidade (Seção~\ref{sec:cap5-qw3-fairness}), na qual a taxa de verdadeiros positivos se manteve homogênea entre subgrupos, enquanto as disparidades de valor preditivo positivo refletiram diferenças de prevalência subjacentes, e não viés discriminatório do modelo.
+Somam-se a esses achados a comparação com classificadores de aprendizado profundo (Seção~\ref{sec:qw1-deep-learning}), na qual o XGBoost apresentou o maior $F_1$ entre as configurações QW1 avaliadas: no teste interno, obteve $0{,}920$, contra $0{,}610$ do TabNet, sem que esse contraste se estenda indistintamente às redes neurais, pois as duas MLP superaram o valor de referência reportado de $0{,}610$, cuja comparabilidade entre protocolos é limitada. A revisão assistida por LLM (Seção~\ref{sec:cap5-qw2-llm}) descreveu a execução anterior não versionada do mesmo protocolo; a matriz reconstruída e a comparação entre revisores e reavaliações são apresentadas nas Tabelas~\ref{tab:cap8-revisao-desempenho} e~\ref{tab:cap8-reruns}, no Capítulo~\ref{cap:gzcmd}. A análise de equidade (Seção~\ref{sec:cap5-qw3-fairness}), por sua vez, mostrou que a taxa de verdadeiros positivos se manteve homogênea entre subgrupos, enquanto as disparidades de valor preditivo positivo refletiram diferenças de prevalência subjacentes, e não viés discriminatório do modelo.
 A discussão das implicações epidemiológicas, do impacto na detecção de óbitos e das limitações desse desenho é aprofundada nas Considerações Finais (Capítulo~\ref{cap:discussao}).
 
 \end{chapter}

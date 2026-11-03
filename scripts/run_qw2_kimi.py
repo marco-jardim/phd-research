@@ -507,6 +507,7 @@ def _run_mode(mode: str, args: argparse.Namespace, api_key: str) -> None:
         config_path=str(CONFIG_YAML),
         mode=mode,
         p_cal="fit_platt",
+        policy_version="v3",
     )
 
     dossiers = build_dossiers(df, only_llm_review=True)

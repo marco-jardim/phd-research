@@ -223,15 +223,19 @@ def latex_table(valid):
                   for c in ["brier", "ece_10", "high_predicted", "high_observed"]]
         lines.append(NAMES[name] + " & " + " & ".join(values) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\smallskip",
-              r"\parbox{\linewidth}{\footnotesize Beta+ usa posteriores de Fellegi e Sunter, com prevalência estimada sem rótulos. Platt da nota é histórico; isotônica supervisionada é aninhada. n.a.: ausência de previsões no intervalo superior.}", r"\end{table}"]
+              r"\parbox{\linewidth}{\footnotesize Beta+ usa posteriores de Fellegi e Sunter, com prevalência estimada sem rótulos. Platt da nota é histórico; margens OOF e isotônica supervisionada usam partição aninhada agrupada por REFREC. Os ajustes globais por momentos não constituem calibração inteiramente aninhada. n.a.: ausência de previsões no intervalo superior.}", r"\end{table}"]
     return "\n".join(lines) + "\n"
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--csv", type=Path, default=ROOT / "data/COMPARADORSEMIDENT.csv")
+    ap.add_argument("--oof", type=Path, default=ROOT / "data/pcal_ml_oof.csv")
+    ap.add_argument("--config", type=Path, default=ROOT / "gzcmd/gzcmd_v3_config.yaml")
     args = ap.parse_args()
     raw = pd.read_csv(args.csv, sep=";", dtype=str, low_memory=False)
+    raw.columns = [c.split(",")[0] for c in raw.columns]
+    split_by = m5.load_config(args.config).evaluation.split_by
     ids = m5.pair_ids(raw)
     nota = pd.to_numeric(raw["nota final"].str.replace(",", ".", regex=False), errors="raise").to_numpy()
     # Estimador cinza definido e executado ANTES de ler PAR.
@@ -254,11 +258,15 @@ def main():
     if margin_meta["fingerprint"]["source_sha256"] != m5.sha(args.csv) or margin_meta["csv_sha256"] != m5.sha(margin_path):
         raise ValueError("Cache de margens M5 incompatível com a fonte/CSV")
     margins = pd.read_csv(margin_path).set_index("pair_id")
-    oof_path = ROOT / "data/pcal_ml_oof.csv"
+    if margin_meta["fingerprint"].get("split_by") != split_by:
+        raise ValueError("Cache M5 uses a different partition")
+    oof_path = args.oof
     oof_meta = json.loads(oof_path.with_suffix(".json").read_text(encoding="utf-8"))
     if oof_meta["fingerprint"]["source_sha256"] != m5.sha(args.csv) or oof_meta["csv_sha256"] != m5.sha(oof_path):
         raise ValueError("Cache M1 incompatível")
     oof = pd.read_csv(oof_path).set_index("pair_id")
+    if oof_meta["fingerprint"].get("split_by") != split_by:
+        raise ValueError("Cache M1 uses a different partition")
     if not margins.index.is_unique or not oof.index.is_unique or set(ids) != set(margins.index) or set(ids) != set(oof.index):
         raise ValueError("Cobertura/unicidade pair_id incompatível")
     margins, oof = margins.loc[ids], oof.loc[ids]
@@ -319,7 +327,7 @@ def main():
     dec = simulate_decisions(nota, y, probabilities)
     estimator["grey_observed_evaluation_only"] = int(y[grey].sum())
     estimator["difference_expected_minus_observed"] = estimated_count - int(y[grey].sum())
-    audit = {"source_sha256": m5.sha(args.csv), "script_sha256": m5.sha(Path(__file__)),
+    audit = {"source_sha256": m5.sha(args.csv), "script_sha256": m5.sha(Path(__file__)), "split_by": split_by,
              "margin_csv_sha256": m5.sha(margin_path), "m1_csv_sha256": m5.sha(oof_path),
              "seed": SEED, "estimator": estimator, "beta": beta_audit, "beta_plus": plus_audit}
     out = ROOT / "data"

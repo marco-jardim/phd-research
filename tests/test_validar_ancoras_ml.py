@@ -64,14 +64,16 @@ def test_decision_uses_historical_no_guard_simulation_and_table():
     assert latex.count(r"\begin{tabular}") == latex.count(r"\end{tabular}") == 2
 
 
-def test_reconstruction_does_not_fit_on_outer_test(monkeypatch):
+@pytest.mark.parametrize("split_by", ["row", "refrec"])
+def test_reconstruction_does_not_fit_on_outer_test(monkeypatch, split_by):
     import scripts.validar_ancoras_ml as module
-    from sklearn.model_selection import StratifiedKFold
+    from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold
 
     n = 500
     x = pd.DataFrame({"score": np.linspace(-4, 4, n)})
     y = np.arange(n) % 2
     nota = np.tile([3., 4., 9., 9.5, 6.], n // 5)
+    groups = np.arange(n) // 10
     calls = []
 
     class Model:
@@ -81,6 +83,8 @@ def test_reconstruction_does_not_fit_on_outer_test(monkeypatch):
 
         def predict_proba(self, xx):
             assert not np.intersect1d(self.train, xx.index).size
+            if split_by != "row":
+                assert set(groups[self.train]).isdisjoint(groups[xx.index])
             calls.append((self.train.copy(), xx.index.to_numpy()))
             p = expit(xx.score.to_numpy())
             return np.column_stack([1 - p, p])
@@ -92,9 +96,12 @@ def test_reconstruction_does_not_fit_on_outer_test(monkeypatch):
     monkeypatch.setattr(module, "_classifier", lambda y, seed: Model())
     # Ordenação substituta para média da âncora positiva > negativa.
     x["score"] = nota - 6 + np.linspace(0, .1, n)
-    result, audit = reconstruct_margins(x, y, nota)
+    result, audit = reconstruct_margins(x, y, nota, split_by=split_by,
+                                        groups=groups if split_by != "row" else None)
     assert len(calls) == 30 and len(audit) == 5
-    outer = list(StratifiedKFold(5, shuffle=True, random_state=42).split(x, y))
+    splitter = StratifiedGroupKFold if split_by != "row" else StratifiedKFold
+    outer_cv = splitter(5, shuffle=True, random_state=42)
+    outer = list(outer_cv.split(x, y, groups) if split_by != "row" else outer_cv.split(x, y))
     for fold, (train, test) in enumerate(outer):
         for fit, pred in calls[fold * 6: (fold + 1) * 6 - 1]:
             assert set(fit) <= set(train) and set(pred) <= set(train)

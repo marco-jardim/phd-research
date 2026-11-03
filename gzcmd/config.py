@@ -349,6 +349,8 @@ def _load_evaluation_defaults(data: Mapping[str, Any]) -> EvaluationDefaults:
         raise ValueError("evaluation.seeds must be non-empty")
 
     split_by = str(ev.get("split_by", "row")).strip().lower()
+    if split_by not in {"row", "comprec", "refrec"}:
+        raise ValueError("evaluation.split_by must be row, comprec or refrec")
     group_stratify = bool(ev.get("group_stratify", True))
 
     test_size = float(ev.get("test_size", 0.3))

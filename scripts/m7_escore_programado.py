@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+import argparse
+import ast
 import sys
 from pathlib import Path
 
@@ -9,7 +11,7 @@ import numpy as np
 import pandas as pd
 from scipy.special import logit
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import StratifiedKFold, train_test_split
+from sklearn.model_selection import StratifiedGroupKFold, StratifiedKFold, train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -17,6 +19,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from m7_common import (ROOT, OUT, load_data, save, feature_dictionary, call_json,
     validated_score, score_rows, metric, fit_anchor, anchor_predict, sha)
 from gzcmd.ml_oof import SEED, _classifier
+from gzcmd.config import load_config
+
+
+def saved_program():
+    """Load the existing pure function, without a generation/refinement API path."""
+    source = (ROOT / "gzcmd/escore_programado.py").read_text(encoding="utf-8")
+    functions = [node for node in ast.parse(source).body if isinstance(node, ast.FunctionDef) and node.name == "escore_programado"]
+    if len(functions) != 1:
+        raise ValueError("Exactly one saved scoring function required")
+    return {"code": ast.get_source_segment(source, functions[0]), "source": "existing gzcmd/escore_programado.py"}
 
 
 def generate(dictionary):
@@ -43,9 +55,14 @@ def linear_model():
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--offline", action="store_true", help="Reevaluate the saved score only; never generate/refine via LLM")
+    args = parser.parse_args()
     raw, x, y, nota, ids, oof = load_data()
+    split_by = load_config(ROOT / "gzcmd/gzcmd_v3_config.yaml").evaluation.split_by
+    groups = raw[split_by.upper()].str.strip().to_numpy() if split_by != "row" else None
     # Dictionary bounds are feature metadata only, no distribution summaries or outcomes.
-    versions = generate(feature_dictionary(x))
+    versions = [saved_program()] if args.offline else generate(feature_dictionary(x))
     scores = [score_rows(validated_score(v["code"], set(x)), x) for v in versions]
     folds, gray = oof.fold.to_numpy(), (nota >= 5) & (nota < 9)
     p_program, s_program = np.full(len(y), np.nan), np.full(len(y), np.nan)
@@ -54,6 +71,8 @@ def main():
     audit = []
     for fold in range(5):
         train, test = folds != fold, folds == fold
+        if groups is not None:
+            assert set(groups[train]).isdisjoint(groups[test])
         selected, aucs = choose_candidate(scores, y, nota, train)
         score = scores[selected]
         # A bounded score is converted to log-odds before Platt, preserving rank.
@@ -67,7 +86,12 @@ def main():
         # Linear anchor fit uses inner-OOF margins, not fitted training margins.
         train_idx = np.flatnonzero(train)
         inner_margin = np.full(train.sum(), np.nan)
-        for inner_train, inner_test in StratifiedKFold(5, shuffle=True, random_state=SEED + fold + 1).split(x.loc[train], y[train]):
+        splitter = StratifiedGroupKFold if groups is not None else StratifiedKFold
+        inner = splitter(5, shuffle=True, random_state=SEED + fold + 1)
+        inner_splits = inner.split(x.loc[train], y[train], groups[train]) if groups is not None else inner.split(x.loc[train], y[train])
+        for inner_train, inner_test in inner_splits:
+            if groups is not None:
+                assert set(groups[train_idx[inner_train]]).isdisjoint(groups[train_idx[inner_test]])
             model = linear_model().fit(x.iloc[train_idx[inner_train]], y[train_idx[inner_train]])
             inner_margin[inner_test] = model.decision_function(x.iloc[train_idx[inner_test]])
         la_model, la = fit_anchor(inner_margin, nota[train], y[train])
@@ -78,6 +102,7 @@ def main():
         p_nota[test] = anchor_predict(nota_model, nota[test])
         audit.append({"fold": fold, "selected_version": selected, "training_gray_auc": aucs,
             "train_n": int(train.sum()), "test_n": int(test.sum()), "train_test_overlap": 0,
+            "split_by": split_by, "group_overlap": 0 if groups is not None else None,
             "program_anchor": pa, "program_direct_anchor": direct_audit,
             "linear_anchor": la, "nota_anchor": na})
         print(f"E2 fold={fold} selected={selected} train-only AUC={aucs}", flush=True)
@@ -98,6 +123,15 @@ def main():
                 bands.append({"fold": fold, "version": version, "band_low": low, "band_high": high,
                               **metric(y[mask], score[mask])})
     pd.DataFrame(bands).to_csv(OUT / "e2_training_bands.csv", index=False)
+    if args.offline:
+        save("e2_summary.json", {"seed": SEED, "split_by": split_by, "folds": audit, "validation": rows,
+             "saved_module_sha256": sha(ROOT / "gzcmd/escore_programado.py"), "offline": True,
+             "api_ledger_sha256": sha(OUT / "calls.json"), "new_llm_calls": 0,
+             "selection": "Frozen existing score; no candidate regeneration or reselection. Anchors use outer-training data only.",
+             "transport": [], "transport_audit": [], "transport_status": "not rerun in this group-validation analysis; previous row transport preserved with _row suffix",
+             "limitations": ["REFREC grouping does not group COMPREC simultaneously", "Platt anchor calibration is distinct from supervised isotonic calibration", "Frozen score was developed previously; this reevaluation is not external validation"]})
+        print("VALIDATION_OFFLINE\n" + validation.to_string(index=False, float_format=lambda v: f"{v:.8f}"))
+        return
     # PASSO is reserved for stratification, never a model feature or API input.
     passo_col = next(c for c in raw if c == "PASSO" or c.startswith("PASSO,"))
     passo = pd.to_numeric(raw[passo_col].str.replace(",", ".", regex=False), errors="raise").to_numpy()
