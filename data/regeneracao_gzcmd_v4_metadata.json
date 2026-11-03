@@ -1,0 +1,36 @@
+{
+  "seed": 42,
+  "rates_yaml": "gzcmd\\error_rates_by_band_v4.yaml",
+  "rates_sha256": "53d02f80bcdab84b90e0e0cf9c792782f564b56faedf1215c4b3267420edc357",
+  "rates_model": "claude-haiku-5-5",
+  "reference_runs": [
+    {
+      "mode": "vigilancia",
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "sha256": "d30a30b710334874abad9ff24b9124c02b1fc33899393290d6d713f00fd776e1"
+    },
+    {
+      "mode": "vigilancia",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+      "sha256": "e21baf47edfdd28c3937e9c9401c3b61dd806edcc20d0b1454bdb25a4b7f870c"
+    },
+    {
+      "mode": "confirmacao",
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "sha256": "a952409dd45d8b755592d16a8919ac098f709d56a6d161a6def76d70af1c4980"
+    },
+    {
+      "mode": "confirmacao",
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+      "sha256": "b3aac9bf8d09765c95a135d907e063ecce8a47b906fbb7507e2c79fe7dd35747"
+    }
+  ],
+  "oof_sha256": "9712d089341089fdbcb01b5cd52e7f80ea85ee6842ab23ebc5b060d406f6ef2f",
+  "archive_manifest_sha256": "1efab7f830f3b7ffed23d0d5d7f91351671cc346ae3007e0ecb10e4d0e09e70c",
+  "approved_costs": {
+    "llm_review": 0.005,
+    "human_review": 1.0,
+    "human_error": 0.05,
+    "human_budget": null
+  }
+}

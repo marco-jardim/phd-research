@@ -1,0 +1,27 @@
+{
+  "rates_yaml": "gzcmd\\error_rates_by_band_estimadas.yaml",
+  "rates_sha256": "6dd0e6145219ed6307fd0b175f46ca68ec02f0d930704a1c72fc48a8b3d91e1d",
+  "oof_sha256": "9712d089341089fdbcb01b5cd52e7f80ea85ee6842ab23ebc5b060d406f6ef2f",
+  "grid": {
+    "C_llm": [
+      0.005,
+      0.05,
+      0.25
+    ],
+    "human_error": [
+      0.0,
+      0.02,
+      0.05,
+      0.1
+    ],
+    "human_budget": [
+      25,
+      50,
+      100,
+      200,
+      null
+    ]
+  },
+  "infinity_plot_proxy": 400,
+  "direct_human_budget_excludes_llm_unsure": true
+}

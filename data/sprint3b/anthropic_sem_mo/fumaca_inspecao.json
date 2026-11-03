@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-11-02T22:18:14.111407+00:00",
+  "inspected_before_full_run": true,
+  "modes": {
+    "vigilancia": {
+      "n": 3,
+      "decisions": [
+        "MATCH",
+        "MATCH",
+        "MATCH"
+      ],
+      "protocols": [
+        "consensus",
+        "consensus",
+        "consensus"
+      ],
+      "calls": 6,
+      "http_errors": 0,
+      "parse_errors": 0,
+      "pii_flags": 0,
+      "free_response_fields": false,
+      "elapsed_s": 20.8
+    },
+    "confirmacao": {
+      "n": 3,
+      "decisions": [
+        "MATCH",
+        "MATCH",
+        "MATCH"
+      ],
+      "protocols": [
+        "consensus",
+        "consensus",
+        "consensus"
+      ],
+      "calls": 6,
+      "http_errors": 0,
+      "parse_errors": 0,
+      "pii_flags": 0,
+      "free_response_fields": false,
+      "elapsed_s": 18.29
+    }
+  }
+}

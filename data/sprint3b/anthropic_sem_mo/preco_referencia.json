@@ -1,0 +1,15 @@
+{
+  "model": "claude-haiku-5-5",
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+  "retrieved_on": "2026-11-02",
+  "inference_geo": "global (API default)",
+  "prompt_tokens_max_standard_tier": 100000,
+  "usd_per_million_tokens": {
+    "input": 0.10,
+    "output": 0.50,
+    "cache_read": 0.01,
+    "cache_write_5m": 0.125
+  },
+  "estimated_not_invoice": true,
+  "note": "Official pricing independently fetched during this run; agrees with the reused ablation estimator. No batch, caching or inference geography options are sent."
+}

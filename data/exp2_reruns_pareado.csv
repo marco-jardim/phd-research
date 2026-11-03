@@ -1,0 +1,14 @@
+mode,model,dossie_a,prompt_a,dossie_b,prompt_b,completo_a,completo_b,n_comum,n_so_a,n_so_b,FN_revertidos,FN_para_UNSURE,FP_novos,UNSURE_novos,acerto_a_erro_b,erro_a_acerto_b,mcnemar_p_exato,concordancia,kappa
+confirmacao,claude-haiku-5-5,completo,v3,sem_mo,v3,True,True,435,0,0,0,5,3,198,193,20,1.023899912e-36,0.491954023,0.2183129513
+confirmacao,claude-haiku-5-5,completo,v3,sem_mo,v4,True,True,435,0,0,0,1,6,14,21,147,1.780615886e-24,0.5793103448,0.2783519173
+confirmacao,claude-haiku-5-5,sem_mo,v3,sem_mo,v4,True,True,435,0,0,0,0,3,9,13,312,1.73480231e-75,0.2091954023,0.1242977528
+confirmacao,deepseek-v4.1-flash,completo,v3,sem_mo,v3,True,True,435,0,0,4,4,25,287,287,22,5.163909065e-60,0.232183908,0.07961585729
+confirmacao,deepseek-v4.1-flash,completo,v3,sem_mo,v4,True,True,435,0,0,4,4,96,239,294,25,1.975045876e-59,0.1724137931,0.01411465481
+confirmacao,deepseek-v4.1-flash,sem_mo,v3,sem_mo,v4,True,True,435,0,0,0,0,73,9,8,4,0.3876953125,0.8022988506,0.5783933643
+vigilancia,claude-haiku-5-5,completo,v3,sem_mo,v3,True,True,1410,0,0,2,7,6,1035,1031,37,2.892483076e-253,0.234751773,0.02973937866
+vigilancia,claude-haiku-5-5,completo,v3,sem_mo,v4,True,True,1410,0,0,4,3,34,41,65,223,1.972121964e-21,0.7773049645,0.2445057992
+vigilancia,claude-haiku-5-5,sem_mo,v3,sem_mo,v4,True,True,1410,0,0,0,0,28,3,5,1157,0,0.1453900709,0.05892381495
+vigilancia,deepseek-v4.1-flash,completo,v3,sem_mo,v3,True,True,1410,0,0,32,10,64,1185,1220,42,1.635228999e-301,0.08439716312,0.02012914867
+vigilancia,deepseek-v4.1-flash,completo,v3,sem_mo,v4,True,True,1410,0,0,36,6,265,1029,1262,46,7.007692955e-309,0.04964539007,0.00889445623
+vigilancia,deepseek-v4.1-flash,sem_mo,v3,sem_mo,v4,True,True,1410,0,0,0,0,213,51,42,4,5.100190492e-09,0.809929078,0.4203938892
+vigilancia,levanto-sage-2,completo,v3,sem_mo,v3,True,True,1410,0,0,5,6,156,409,528,39,1.410880088e-110,0.5673758865,0.1501164502

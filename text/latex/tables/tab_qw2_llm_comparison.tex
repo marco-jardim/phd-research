@@ -1,14 +1,16 @@
 \begin{table}[htbp]
 \centering
-\caption{Desempenho do modelo de linguagem Kimi K2.5 na revis\~ao assistida de pares residuais, por modo de opera\c{c}\~ao.}
+\caption{Desempenho de Kimi K2.5 na execução anterior da revisão assistida de pares residuais, por modo de operação.}
 \label{tab:qw2-llm-comparison}
 \small
 \begin{tabular}{lrrrrrr}
 \toprule
 Modo & $n$ & Precis\~ao & Sensibilidade & $F_1$ & Especif. & Acur\'acia \\
 \midrule
-Vigil\^ancia   & 1\,410 & 0.923 & 0.692 & 0.791 & 0.995 & 0.973 \\
-Confirma\c{c}\~ao & 435   & 0.968 & 0.901 & \textbf{0.933} & 0.991 & 0.970 \\
+Vigil\^ancia   & 1.410 & 0,923 & 0,692 & 0,791 & 0,995 & 0,973 \\
+Confirma\c{c}\~ao & 435   & 0,968 & 0,901 & \textbf{0,933} & 0,991 & 0,970 \\
 \bottomrule
 \end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Fontes não versionadas: \path{data/qw2/qw2_vigilancia_kimi.json} e \path{data/qw2/qw2_confirmacao_kimi.json}, de 15 de fevereiro de 2026. A execução de vigilância difere da matriz reconstruída da Tabela~\ref{tab:cap8-revisao-desempenho}; a comparação entre revisores e reavaliações consta da Tabela~\ref{tab:cap8-reruns}.}
 \end{table}

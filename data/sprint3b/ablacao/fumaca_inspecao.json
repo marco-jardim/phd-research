@@ -1,0 +1,115 @@
+{
+  "models": [
+    {
+      "model": "deepseek-v4.1-flash",
+      "n": 2,
+      "selected_n": 18,
+      "complete": false,
+      "controle": {
+        "NONMATCH": 2
+      },
+      "sem_pcal": {
+        "UNSURE": 1,
+        "MATCH": 1
+      },
+      "transitions": {
+        "NONMATCH->UNSURE": 1,
+        "NONMATCH->MATCH": 1
+      },
+      "gained_match": 1,
+      "lost_match": 0,
+      "mcnemar_match_exact_p": 1.0,
+      "fn_to_nonfn": 2,
+      "nonfn_to_fn": 0,
+      "mcnemar_nonmatch_exact_p": 0.5,
+      "original_fn_to_match": 1,
+      "original_fn_to_match_or_unsure": 2,
+      "control_original_agree": 2,
+      "control_original_agreement": 1.0,
+      "transport": {
+        "controle": {
+          "calls": 4,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 6244,
+          "output_tokens": 1480,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        },
+        "sem_pcal": {
+          "calls": 5,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 8285,
+          "output_tokens": 1576,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        }
+      },
+      "elapsed_s": {
+        "controle": 16.15,
+        "sem_pcal": 17.77
+      },
+      "review_errors": 0,
+      "cost_usd": null
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "n": 2,
+      "selected_n": 18,
+      "complete": false,
+      "controle": {
+        "NONMATCH": 2
+      },
+      "sem_pcal": {
+        "UNSURE": 2
+      },
+      "transitions": {
+        "NONMATCH->UNSURE": 2
+      },
+      "gained_match": 0,
+      "lost_match": 0,
+      "mcnemar_match_exact_p": 1.0,
+      "fn_to_nonfn": 2,
+      "nonfn_to_fn": 0,
+      "mcnemar_nonmatch_exact_p": 0.5,
+      "original_fn_to_match": 0,
+      "original_fn_to_match_or_unsure": 2,
+      "control_original_agree": 2,
+      "control_original_agreement": 1.0,
+      "transport": {
+        "controle": {
+          "calls": 5,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 12348,
+          "output_tokens": 9424,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        },
+        "sem_pcal": {
+          "calls": 5,
+          "http_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 11981,
+          "output_tokens": 9308,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0
+        }
+      },
+      "elapsed_s": {
+        "controle": 41.54,
+        "sem_pcal": 43.27
+      },
+      "review_errors": 0,
+      "cost_usd": null
+    }
+  ],
+  "inspection": {
+    "two_pairs_each_arm": true,
+    "same_pairs": true,
+    "http_errors": 0,
+    "wall_seconds_including_kimi": 83.57,
+    "kimi_successful_pairs": 3
+  }
+}

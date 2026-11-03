@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-11-02T23:39:14.202162+00:00",
+  "cohorts": [
+    {
+      "mode": "vigilancia",
+      "n": 1410,
+      "model": "claude-haiku-5-5",
+      "gold_positive": 104,
+      "gold_negative": 1306,
+      "two_gold_reconstructors_agree": true,
+      "historical_cached_decisions_agree": true,
+      "original_metrics": {
+        "VP": 35,
+        "FP": 0,
+        "FN": 10,
+        "VN": 1103,
+        "UNSURE": 262,
+        "UNSURE_pos": 59,
+        "acuracia": 0.9913,
+        "precisao": 1.0,
+        "sensibilidade": 0.7778,
+        "sens_incl_unsure_como_vinculo": 0.9038
+      }
+    },
+    {
+      "mode": "confirmacao",
+      "n": 435,
+      "model": "claude-haiku-5-5",
+      "gold_positive": 101,
+      "gold_negative": 334,
+      "two_gold_reconstructors_agree": true,
+      "historical_cached_decisions_agree": true,
+      "original_metrics": {
+        "VP": 55,
+        "FP": 1,
+        "FN": 5,
+        "VN": 203,
+        "UNSURE": 171,
+        "UNSURE_pos": 41,
+        "acuracia": 0.9773,
+        "precisao": 0.9821,
+        "sensibilidade": 0.9167,
+        "sens_incl_unsure_como_vinculo": 0.9505
+      }
+    }
+  ]
+}

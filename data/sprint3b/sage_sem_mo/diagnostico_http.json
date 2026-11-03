@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-11-02T22:16:49.754546+00:00",
+  "quickstart": "https://docs.levanto.ai/decision-model/quickstart.md",
+  "documented_base": "https://sage.levanto.ai",
+  "documented_path": "/decide",
+  "header_template": "Authorization: Bearer <SAGE_API_KEY>",
+  "key_source": ".env",
+  "key_prefix_valid": true,
+  "prefix8": "lv_live_",
+  "request": {
+    "content": "The light is green.",
+    "question": {
+      "id": "synthetic_choice_probe",
+      "kind": "choice",
+      "instructions": "What color is the light?",
+      "options": [
+        {
+          "option": "match",
+          "description": "The light is green."
+        },
+        {
+          "option": "nonmatch",
+          "description": "The light is not green."
+        }
+      ]
+    },
+    "reasoning": "auto",
+    "grounding": {
+      "trigger": "never"
+    }
+  },
+  "responses": [
+    {
+      "method": "POST",
+      "path": "/decide",
+      "attempt": 1,
+      "status": 200,
+      "final_url": "https://sage.levanto.ai/decide",
+      "body_literal": "{\"id\":\"synthetic_choice_probe\",\"kind\":\"choice\",\"result\":{\"chosen\":\"match\",\"probability\":0.9934383933523199,\"probabilities\":[{\"option\":\"match\",\"probability\":0.9934383933523199},{\"option\":\"nonmatch\",\"probability\":0.006561606647680137}]},\"meta\":{\"model\":\"levanto-sage-2\",\"latency_ms\":79.7,\"question_count\":1,\"usage\":{\"billed_input_tokens\":70,\"rendered_tokens\":70,\"image_count\":0,\"image_tokens\":0,\"input_tokens\":70,\"output_tokens\":0},\"reasoning\":{\"ran\":false,\"finished\":null,\"tokens\":null,\"limited\":null}},\"grounding_meta\":{\"triggered\":false,\"trigger_reason\":\"never\",\"queries\":[],\"sources\":[],\"added_context_tokens\":null,\"search_ms\":null}}",
+      "redirect_statuses": []
+    }
+  ],
+  "previous_probe": {
+    "timestamp": "2026-11-02T22:16:35.383542+00:00",
+    "quickstart": "https://docs.levanto.ai/decision-model/quickstart.md",
+    "documented_base": "https://sage.levanto.ai",
+    "documented_path": "/decide",
+    "header_template": "Authorization: Bearer <SAGE_API_KEY>",
+    "key_source": ".env",
+    "key_prefix_valid": true,
+    "prefix8": "lv_live_",
+    "request": {
+      "content": "The light is green.",
+      "question": {
+        "id": "synthetic_ready_probe",
+        "kind": "yesno",
+        "instructions": "Is the light green?"
+      }
+    },
+    "responses": [
+      {
+        "method": "GET",
+        "path": "/ready",
+        "attempt": 1,
+        "status": 200,
+        "final_url": "https://sage.levanto.ai/ready",
+        "body_literal": "{\"status\":\"ready\",\"load\":\"high\"}",
+        "redirect_statuses": []
+      },
+      {
+        "method": "POST",
+        "path": "/decide",
+        "attempt": 1,
+        "status": 200,
+        "final_url": "https://sage.levanto.ai/decide",
+        "body_literal": "{\"id\":\"synthetic_ready_probe\",\"kind\":\"yesno\",\"result\":{\"answer\":\"yes\",\"probability\":0.9968938942454479},\"meta\":{\"model\":\"levanto-sage-2\",\"latency_ms\":121.3,\"question_count\":1,\"usage\":{\"billed_input_tokens\":57,\"rendered_tokens\":57,\"image_count\":0,\"image_tokens\":0,\"input_tokens\":57,\"output_tokens\":0},\"reasoning\":{\"ran\":false,\"finished\":null,\"tokens\":null,\"limited\":null}},\"grounding_meta\":null}",
+        "redirect_statuses": []
+      }
+    ]
+  }
+}

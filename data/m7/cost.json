@@ -1,0 +1,64 @@
+{
+  "pricing": {
+    "source": "https://platform.claude.com/docs/en/about-claude/pricing",
+    "accessed": "2026-11-02",
+    "model": "claude-haiku-5-5",
+    "input_usd_per_million_up_to_100k": 0.1,
+    "output_usd_per_million_up_to_100k": 0.5,
+    "input_usd_per_million_over_100k": 0.5,
+    "output_usd_per_million_over_100k": 2.5,
+    "note": "Public global API list price, no caching/tools/taxes/negotiated discounts; estimate, not invoice."
+  },
+  "attempted_calls": 5,
+  "completed_calls": 5,
+  "input_tokens": 264244,
+  "output_tokens": 32619,
+  "estimated_usd": 0.0920219,
+  "calls": [
+    {
+      "name": "e1_audit",
+      "model": "claude-haiku-5-5",
+      "status": "completed",
+      "input_tokens": 101665,
+      "output_tokens": 4311,
+      "latency_s": 19.98655410000356,
+      "estimated_usd": 0.06161
+    },
+    {
+      "name": "e2_generation",
+      "model": "claude-haiku-5-5",
+      "status": "completed",
+      "input_tokens": 3274,
+      "output_tokens": 7354,
+      "latency_s": 31.598742500005756,
+      "estimated_usd": 0.0040044
+    },
+    {
+      "name": "e2_refinement",
+      "model": "claude-haiku-5-5",
+      "status": "completed",
+      "input_tokens": 5392,
+      "output_tokens": 11034,
+      "latency_s": 45.84694929997204,
+      "estimated_usd": 0.006056199999999999
+    },
+    {
+      "name": "e1_audit_excluding_0_1_4",
+      "model": "claude-haiku-5-5",
+      "status": "completed",
+      "input_tokens": 71134,
+      "output_tokens": 5628,
+      "latency_s": 26.27818959997967,
+      "estimated_usd": 0.009927400000000001
+    },
+    {
+      "name": "e1_audit_excluding_2_3",
+      "model": "claude-haiku-5-5",
+      "status": "completed",
+      "input_tokens": 82779,
+      "output_tokens": 4292,
+      "latency_s": 22.663563500042073,
+      "estimated_usd": 0.0104239
+    }
+  ]
+}

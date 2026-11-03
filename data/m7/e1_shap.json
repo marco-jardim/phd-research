@@ -1,0 +1,1360 @@
+{
+  "method": "native pred_contribs exact TreeSHAP; log-odds margin",
+  "all_rows_descriptive": {
+    "gray_positive": {
+      "n": 151,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.05106965824961662,
+          "mean_abs_shap": 0.06173769757151604
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.002009890042245388,
+          "mean_abs_shap": 0.002801565220579505
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.5158050656318665,
+          "mean_abs_shap": 0.7952052354812622
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.11125867813825607,
+          "mean_abs_shap": 0.4136560559272766
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.036279626190662384,
+          "mean_abs_shap": 0.7449023127555847
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.5435937643051147,
+          "mean_abs_shap": 1.6899367570877075
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.02282129041850567,
+          "mean_abs_shap": 0.0712486058473587
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.4626803398132324,
+          "mean_abs_shap": 0.5973167419433594
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.15749812126159668,
+          "mean_abs_shap": 0.48737841844558716
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.002058743266388774,
+          "mean_abs_shap": 0.02563009224832058
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": 0.3702312409877777,
+          "mean_abs_shap": 1.2280967235565186
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.031191358342766762,
+          "mean_abs_shap": 0.4451029598712921
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": 1.723514199256897,
+          "mean_abs_shap": 2.0767385959625244
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": 0.002746651414781809,
+          "mean_abs_shap": 0.35691025853157043
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": 0.00252172420732677,
+          "mean_abs_shap": 0.014864644035696983
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -1.6103271264000796e-05,
+          "mean_abs_shap": 0.0032361363992094994
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.001954511506482959,
+          "mean_abs_shap": 0.007466278970241547
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.004344313871115446,
+          "mean_abs_shap": 0.011529810726642609
+        },
+        "ENDERECO via prox": {
+          "mean_shap": -0.17925989627838135,
+          "mean_abs_shap": 0.2705517113208771
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.0010170533787459135,
+          "mean_abs_shap": 0.0038239506538957357
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.17639759182929993,
+          "mean_abs_shap": 0.305683970451355
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.07495364546775818,
+          "mean_abs_shap": 0.09081624448299408
+        },
+        "nota final": {
+          "mean_shap": 1.3686836957931519,
+          "mean_abs_shap": 1.7625194787979126
+        }
+      }
+    },
+    "vigilancia_fn": {
+      "n": 5,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.04672752320766449,
+          "mean_abs_shap": 0.04672752320766449
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.030222460627555847,
+          "mean_abs_shap": 0.03045324981212616
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": -0.7468443512916565,
+          "mean_abs_shap": 1.5226706266403198
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.2017291784286499,
+          "mean_abs_shap": 0.4615615904331207
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.32253918051719666,
+          "mean_abs_shap": 0.8137248158454895
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.058325171470642,
+          "mean_abs_shap": 1.472468376159668
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.3380494713783264,
+          "mean_abs_shap": 0.3629325330257416
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": -0.4829431176185608,
+          "mean_abs_shap": 0.5127766132354736
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": 0.5104075074195862,
+          "mean_abs_shap": 0.5104075074195862
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.10160370916128159,
+          "mean_abs_shap": 0.10786737501621246
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": -2.294722318649292,
+          "mean_abs_shap": 2.294722318649292
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": -0.8998122215270996,
+          "mean_abs_shap": 1.120354413986206
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.5623330473899841,
+          "mean_abs_shap": 0.5623330473899841
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.40722590684890747,
+          "mean_abs_shap": 0.40722590684890747
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.01065958570688963,
+          "mean_abs_shap": 0.01065958570688963
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.0006587067618966103,
+          "mean_abs_shap": 0.0027984031476080418
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.017321890220046043,
+          "mean_abs_shap": 0.017321890220046043
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.019459545612335205,
+          "mean_abs_shap": 0.019459545612335205
+        },
+        "ENDERECO via prox": {
+          "mean_shap": -0.30348867177963257,
+          "mean_abs_shap": 0.3609102666378021
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": 0.013396168127655983,
+          "mean_abs_shap": 0.029018927365541458
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.5659376978874207,
+          "mean_abs_shap": 0.5659376978874207
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.10853810608386993,
+          "mean_abs_shap": 0.10853810608386993
+        },
+        "nota final": {
+          "mean_shap": 0.5196260809898376,
+          "mean_abs_shap": 1.4832963943481445
+        }
+      }
+    },
+    "vigilancia_fp": {
+      "n": 8,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.03180820867419243,
+          "mean_abs_shap": 0.03180820867419243
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.008995943702757359,
+          "mean_abs_shap": 0.009613909758627415
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.2834230661392212,
+          "mean_abs_shap": 1.1104098558425903
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": -0.04443596303462982,
+          "mean_abs_shap": 0.2410765290260315
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.4203914701938629,
+          "mean_abs_shap": 0.7774958610534668
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.065416932106018,
+          "mean_abs_shap": 1.4116814136505127
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.17530250549316406,
+          "mean_abs_shap": 0.1914295256137848
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.027635570615530014,
+          "mean_abs_shap": 0.4216213524341583
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": 0.24009738862514496,
+          "mean_abs_shap": 1.0619845390319824
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": 0.006708613131195307,
+          "mean_abs_shap": 0.007320834323763847
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": -1.3242425918579102,
+          "mean_abs_shap": 2.033568859100342
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.40831458568573,
+          "mean_abs_shap": 0.7643592357635498
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.509970486164093,
+          "mean_abs_shap": 0.509970486164093
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.3943711817264557,
+          "mean_abs_shap": 0.3943711817264557
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.005142821930348873,
+          "mean_abs_shap": 0.005142821930348873
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.001981080509722233,
+          "mean_abs_shap": 0.001981080509722233
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.009137380868196487,
+          "mean_abs_shap": 0.009137380868196487
+        },
+        "ENDERECO via igual": {
+          "mean_shap": 0.010190840810537338,
+          "mean_abs_shap": 0.03160782903432846
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.07741759717464447,
+          "mean_abs_shap": 0.1274815797805786
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": 0.010958855040371418,
+          "mean_abs_shap": 0.015550578944385052
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": 0.03949712961912155,
+          "mean_abs_shap": 0.450328528881073
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.0559585802257061,
+          "mean_abs_shap": 0.09796837717294693
+        },
+        "nota final": {
+          "mean_shap": 1.3120059967041016,
+          "mean_abs_shap": 1.8315473794937134
+        }
+      }
+    },
+    "confirmacao_fn": {
+      "n": 15,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.05293526500463486,
+          "mean_abs_shap": 0.05293526500463486
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.009712828323245049,
+          "mean_abs_shap": 0.01051240973174572
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": -0.11519505083560944,
+          "mean_abs_shap": 1.0303783416748047
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.127583310008049,
+          "mean_abs_shap": 0.40630462765693665
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.33434537053108215,
+          "mean_abs_shap": 0.8539442420005798
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 0.6741215586662292,
+          "mean_abs_shap": 1.5800727605819702
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.12649217247962952,
+          "mean_abs_shap": 0.16412118077278137
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.051266539841890335,
+          "mean_abs_shap": 0.4353875517845154
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.13059844076633453,
+          "mean_abs_shap": 0.6593972444534302
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.025521021336317062,
+          "mean_abs_shap": 0.04432088881731033
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": -0.6256638765335083,
+          "mean_abs_shap": 1.7664083242416382
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.0045929523184895515,
+          "mean_abs_shap": 0.8626048564910889
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": 0.07294223457574844,
+          "mean_abs_shap": 1.059583306312561
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": 0.06329339742660522,
+          "mean_abs_shap": 0.5649435520172119
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": 0.005140905734151602,
+          "mean_abs_shap": 0.01843649335205555
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.001047877361997962,
+          "mean_abs_shap": 0.0019124854588881135
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.009839595295488834,
+          "mean_abs_shap": 0.009839595295488834
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.005810771603137255,
+          "mean_abs_shap": 0.019655900076031685
+        },
+        "ENDERECO via prox": {
+          "mean_shap": -0.13000842928886414,
+          "mean_abs_shap": 0.27926090359687805
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": 0.0026457682251930237,
+          "mean_abs_shap": 0.011492596939206123
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.14574290812015533,
+          "mean_abs_shap": 0.4410173296928406
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.08141862601041794,
+          "mean_abs_shap": 0.10382385551929474
+        },
+        "nota final": {
+          "mean_shap": 0.561575710773468,
+          "mean_abs_shap": 1.5892789363861084
+        }
+      }
+    },
+    "confirmacao_fp": {
+      "n": 1,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.04942565783858299,
+          "mean_abs_shap": 0.04942565783858299
+        },
+        "NOME ult frag igual": {
+          "mean_shap": 0.0013788589276373386,
+          "mean_abs_shap": 0.0013788589276373386
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.8828511834144592,
+          "mean_abs_shap": 0.8828511834144592
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.7865622639656067,
+          "mean_abs_shap": 0.7865622639656067
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": 1.023437738418579,
+          "mean_abs_shap": 1.023437738418579
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 2.287700891494751,
+          "mean_abs_shap": 2.287700891494751
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": 0.012351642362773418,
+          "mean_abs_shap": 0.012351642362773418
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.12258277833461761,
+          "mean_abs_shap": 0.12258277833461761
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.2699890732765198,
+          "mean_abs_shap": 0.2699890732765198
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": 0.022361259907484055,
+          "mean_abs_shap": 0.022361259907484055
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": 1.7061573266983032,
+          "mean_abs_shap": 1.7061573266983032
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.26324108242988586,
+          "mean_abs_shap": 0.26324108242988586
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.4272657334804535,
+          "mean_abs_shap": 0.4272657334804535
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.1199008971452713,
+          "mean_abs_shap": 0.1199008971452713
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.0029842564836144447,
+          "mean_abs_shap": 0.0029842564836144447
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.002909638686105609,
+          "mean_abs_shap": 0.002909638686105609
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.0027099428698420525,
+          "mean_abs_shap": 0.0027099428698420525
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.005343376658856869,
+          "mean_abs_shap": 0.005343376658856869
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.18817546963691711,
+          "mean_abs_shap": 0.18817546963691711
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.001416594022884965,
+          "mean_abs_shap": 0.001416594022884965
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.04919281229376793,
+          "mean_abs_shap": 0.04919281229376793
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.03618359938263893,
+          "mean_abs_shap": 0.03618359938263893
+        },
+        "nota final": {
+          "mean_shap": -1.4923495054244995,
+          "mean_abs_shap": 1.4923495054244995
+        }
+      }
+    }
+  },
+  "training_only_sent_to_llm": {
+    "gray_positive": {
+      "n": 119,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.04780910909175873,
+          "mean_abs_shap": 0.06134586036205292
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.00033727099071256816,
+          "mean_abs_shap": 0.0011841695522889495
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.5286602973937988,
+          "mean_abs_shap": 0.7711843252182007
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.1357223242521286,
+          "mean_abs_shap": 0.4285722076892853
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.026354173198342323,
+          "mean_abs_shap": 0.7412990927696228
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.546915054321289,
+          "mean_abs_shap": 1.7054309844970703
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.005258711986243725,
+          "mean_abs_shap": 0.05644703283905983
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.4822772443294525,
+          "mean_abs_shap": 0.6112654805183411
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.17171941697597504,
+          "mean_abs_shap": 0.45111319422721863
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.005479592364281416,
+          "mean_abs_shap": 0.02959955483675003
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": 0.4882262647151947,
+          "mean_abs_shap": 1.1747729778289795
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.041915617883205414,
+          "mean_abs_shap": 0.438355416059494
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": 1.8328261375427246,
+          "mean_abs_shap": 2.1508736610412598
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": 0.03900568187236786,
+          "mean_abs_shap": 0.36626502871513367
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": 0.0009359376854263246,
+          "mean_abs_shap": 0.01338137872517109
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -9.729000157676637e-05,
+          "mean_abs_shap": 0.0032004015520215034
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.0010401783511042595,
+          "mean_abs_shap": 0.007467709016054869
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.0032349247485399246,
+          "mean_abs_shap": 0.011220602318644524
+        },
+        "ENDERECO via prox": {
+          "mean_shap": -0.16720354557037354,
+          "mean_abs_shap": 0.26621100306510925
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.001743046217598021,
+          "mean_abs_shap": 0.003093936713412404
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.15609858930110931,
+          "mean_abs_shap": 0.3018578588962555
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.07175877690315247,
+          "mean_abs_shap": 0.0880124568939209
+        },
+        "nota final": {
+          "mean_shap": 1.4427025318145752,
+          "mean_abs_shap": 1.7469046115875244
+        }
+      }
+    },
+    "vigilancia_fn": {
+      "n": 2,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.03900240361690521,
+          "mean_abs_shap": 0.03900240361690521
+        },
+        "NOME ult frag igual": {
+          "mean_shap": 0.0002884878485929221,
+          "mean_abs_shap": 0.0002884878485929221
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.8920327425003052,
+          "mean_abs_shap": 0.8920327425003052
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.734708309173584,
+          "mean_abs_shap": 0.9235186576843262
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.06977918744087219,
+          "mean_abs_shap": 0.9065341949462891
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.9300892353057861,
+          "mean_abs_shap": 1.9300892353057861
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": 0.03110387548804283,
+          "mean_abs_shap": 0.03110387548804283
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": -0.7876260280609131,
+          "mean_abs_shap": 0.7876260280609131
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": 0.24158814549446106,
+          "mean_abs_shap": 0.24158814549446106
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.2618388533592224,
+          "mean_abs_shap": 0.2618388533592224
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": -1.7672284841537476,
+          "mean_abs_shap": 1.7672284841537476
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": -1.7041735649108887,
+          "mean_abs_shap": 1.7041735649108887
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.5203484296798706,
+          "mean_abs_shap": 0.5203484296798706
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.23069939017295837,
+          "mean_abs_shap": 0.23069939017295837
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.0029966833535581827,
+          "mean_abs_shap": 0.0029966833535581827
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.0034667104482650757,
+          "mean_abs_shap": 0.0034667104482650757
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.0067648617550730705,
+          "mean_abs_shap": 0.0067648617550730705
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.013052846305072308,
+          "mean_abs_shap": 0.013052846305072308
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.07177700102329254,
+          "mean_abs_shap": 0.07177700102329254
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.002972932066768408,
+          "mean_abs_shap": 0.002972932066768408
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.19775232672691345,
+          "mean_abs_shap": 0.19775232672691345
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.06650882214307785,
+          "mean_abs_shap": 0.06650882214307785
+        },
+        "nota final": {
+          "mean_shap": 2.503653049468994,
+          "mean_abs_shap": 2.503653049468994
+        }
+      }
+    },
+    "vigilancia_fp": {
+      "n": 7,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.0315379835665226,
+          "mean_abs_shap": 0.0315379835665226
+        },
+        "NOME ult frag igual": {
+          "mean_shap": -0.010316588915884495,
+          "mean_abs_shap": 0.0109518151730299
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.22256946563720703,
+          "mean_abs_shap": 1.1676971912384033
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": -0.03417477384209633,
+          "mean_abs_shap": 0.25890684127807617
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.5009822249412537,
+          "mean_abs_shap": 0.8680317997932434
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 1.2675764560699463,
+          "mean_abs_shap": 1.563392996788025
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.13932494819164276,
+          "mean_abs_shap": 0.15775583684444427
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.08752758055925369,
+          "mean_abs_shap": 0.4259088933467865
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": 0.07240361720323563,
+          "mean_abs_shap": 1.0117032527923584
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": 0.007686499040573835,
+          "mean_abs_shap": 0.008347154594957829
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": -1.2996803522109985,
+          "mean_abs_shap": 2.1103389263153076
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.17040885984897614,
+          "mean_abs_shap": 0.5773171782493591
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.5242578387260437,
+          "mean_abs_shap": 0.5242578387260437
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.38769403100013733,
+          "mean_abs_shap": 0.38769403100013733
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.004543778486549854,
+          "mean_abs_shap": 0.004543778486549854
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.0021621044725179672,
+          "mean_abs_shap": 0.0021621044725179672
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.00803286675363779,
+          "mean_abs_shap": 0.00803286675363779
+        },
+        "ENDERECO via igual": {
+          "mean_shap": 0.013466672040522099,
+          "mean_abs_shap": 0.03430323675274849
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.08172508329153061,
+          "mean_abs_shap": 0.13894106447696686
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": 0.01285088062286377,
+          "mean_abs_shap": 0.01744561456143856
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": 0.07053765654563904,
+          "mean_abs_shap": 0.489263117313385
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.04880056157708168,
+          "mean_abs_shap": 0.09681175649166107
+        },
+        "nota final": {
+          "mean_shap": 1.1629817485809326,
+          "mean_abs_shap": 1.756743311882019
+        }
+      }
+    },
+    "confirmacao_fn": {
+      "n": 11,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.05539481341838837,
+          "mean_abs_shap": 0.05539481341838837
+        },
+        "NOME ult frag igual": {
+          "mean_shap": 0.0005335081950761378,
+          "mean_abs_shap": 0.0005335081950761378
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.2511501908302307,
+          "mean_abs_shap": 0.7816980481147766
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.23485197126865387,
+          "mean_abs_shap": 0.49317702651023865
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": -0.3819485604763031,
+          "mean_abs_shap": 0.8994743227958679
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 0.6309049725532532,
+          "mean_abs_shap": 1.6780463457107544
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": -0.01585216075181961,
+          "mean_abs_shap": 0.06181063875555992
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.06444305926561356,
+          "mean_abs_shap": 0.42205408215522766
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.17357902228832245,
+          "mean_abs_shap": 0.5185117125511169
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": -0.03655615076422691,
+          "mean_abs_shap": 0.05868282541632652
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": 0.09374497085809708,
+          "mean_abs_shap": 1.461815595626831
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.23129822313785553,
+          "mean_abs_shap": 0.8509977459907532
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": 0.3483806848526001,
+          "mean_abs_shap": 1.1959723234176636
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": 0.25715577602386475,
+          "mean_abs_shap": 0.5995309352874756
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.0047647589817643166,
+          "mean_abs_shap": 0.0047647589817643166
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.0016495719319209456,
+          "mean_abs_shap": 0.0018559937598183751
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.005420861300081015,
+          "mean_abs_shap": 0.005420861300081015
+        },
+        "ENDERECO via igual": {
+          "mean_shap": 4.173427805653773e-05,
+          "mean_abs_shap": 0.018837982788681984
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.07300809025764465,
+          "mean_abs_shap": 0.13051798939704895
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.002409649081528187,
+          "mean_abs_shap": 0.002409649081528187
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": 0.04880568012595177,
+          "mean_abs_shap": 0.35384127497673035
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.05850639194250107,
+          "mean_abs_shap": 0.08905897289514542
+        },
+        "nota final": {
+          "mean_shap": 0.8681432604789734,
+          "mean_abs_shap": 1.8315247297286987
+        }
+      }
+    },
+    "confirmacao_fp": {
+      "n": 1,
+      "features": {
+        "NOME prim frag igual": {
+          "mean_shap": -0.04942565783858299,
+          "mean_abs_shap": 0.04942565783858299
+        },
+        "NOME ult frag igual": {
+          "mean_shap": 0.0013788589276373386,
+          "mean_abs_shap": 0.0013788589276373386
+        },
+        "NOME qtd frag iguais": {
+          "mean_shap": 0.8828511834144592,
+          "mean_abs_shap": 0.8828511834144592
+        },
+        "NOME qtd frag raros": {
+          "mean_shap": 0.7865622639656067,
+          "mean_abs_shap": 0.7865622639656067
+        },
+        "NOME qtd frag comuns": {
+          "mean_shap": 1.023437738418579,
+          "mean_abs_shap": 1.023437738418579
+        },
+        "NOME qtd frag muito parec": {
+          "mean_shap": 2.287700891494751,
+          "mean_abs_shap": 2.287700891494751
+        },
+        "NOME qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "NOMEMAE prim frag igual": {
+          "mean_shap": 0.012351642362773418,
+          "mean_abs_shap": 0.012351642362773418
+        },
+        "NOMEMAE ult frag igual": {
+          "mean_shap": 0.12258277833461761,
+          "mean_abs_shap": 0.12258277833461761
+        },
+        "NOMEMAE qtd frag iguais": {
+          "mean_shap": -0.2699890732765198,
+          "mean_abs_shap": 0.2699890732765198
+        },
+        "NOMEMAE qtd frag raros": {
+          "mean_shap": 0.022361259907484055,
+          "mean_abs_shap": 0.022361259907484055
+        },
+        "NOMEMAE qtd frag comuns": {
+          "mean_shap": 1.7061573266983032,
+          "mean_abs_shap": 1.7061573266983032
+        },
+        "NOMEMAE qtd frag muito parec": {
+          "mean_shap": 0.26324108242988586,
+          "mean_abs_shap": 0.26324108242988586
+        },
+        "NOMEMAE qtd frag abrev": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt iguais": {
+          "mean_shap": -0.4272657334804535,
+          "mean_abs_shap": 0.4272657334804535
+        },
+        "DTNASC dt ap 1digi": {
+          "mean_shap": -0.1199008971452713,
+          "mean_abs_shap": 0.1199008971452713
+        },
+        "DTNASC dt inv dia": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "DTNASC dt inv mes": {
+          "mean_shap": -0.0029842564836144447,
+          "mean_abs_shap": 0.0029842564836144447
+        },
+        "DTNASC dt inv ano": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES uf prox": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "CODMUNRES local igual": {
+          "mean_shap": -0.002909638686105609,
+          "mean_abs_shap": 0.002909638686105609
+        },
+        "CODMUNRES local prox": {
+          "mean_shap": -0.0027099428698420525,
+          "mean_abs_shap": 0.0027099428698420525
+        },
+        "ENDERECO via igual": {
+          "mean_shap": -0.005343376658856869,
+          "mean_abs_shap": 0.005343376658856869
+        },
+        "ENDERECO via prox": {
+          "mean_shap": 0.18817546963691711,
+          "mean_abs_shap": 0.18817546963691711
+        },
+        "ENDERECO numero igual": {
+          "mean_shap": 0.0,
+          "mean_abs_shap": 0.0
+        },
+        "ENDERECO compl prox": {
+          "mean_shap": -0.001416594022884965,
+          "mean_abs_shap": 0.001416594022884965
+        },
+        "ENDERECO texto prox": {
+          "mean_shap": -0.04919281229376793,
+          "mean_abs_shap": 0.04919281229376793
+        },
+        "ENDERECO tokens jacc": {
+          "mean_shap": -0.03618359938263893,
+          "mean_abs_shap": 0.03618359938263893
+        },
+        "nota final": {
+          "mean_shap": -1.4923495054244995,
+          "mean_abs_shap": 1.4923495054244995
+        }
+      }
+    }
+  },
+  "importance": {
+    "gain": {
+      "NOME prim frag igual": 13.469781875610352,
+      "NOME ult frag igual": 19.75149917602539,
+      "NOME qtd frag iguais": 434.29998779296875,
+      "NOME qtd frag raros": 53.89889907836914,
+      "NOME qtd frag comuns": 39.04981231689453,
+      "NOME qtd frag muito parec": 1860.8385009765625,
+      "NOMEMAE prim frag igual": 40.381492614746094,
+      "NOMEMAE ult frag igual": 89.51344299316406,
+      "NOMEMAE qtd frag iguais": 56.8309440612793,
+      "NOMEMAE qtd frag raros": 7.847606182098389,
+      "NOMEMAE qtd frag comuns": 62.00535583496094,
+      "NOMEMAE qtd frag muito parec": 146.54705810546875,
+      "DTNASC dt iguais": 110.34611511230469,
+      "DTNASC dt ap 1digi": 66.272216796875,
+      "DTNASC dt inv mes": 7.124745845794678,
+      "CODMUNRES local igual": 264.0737609863281,
+      "CODMUNRES local prox": 26.08872413635254,
+      "ENDERECO via igual": 18.067996978759766,
+      "ENDERECO via prox": 75.92652893066406,
+      "ENDERECO compl prox": 2.334543466567993,
+      "ENDERECO texto prox": 36.869937896728516,
+      "ENDERECO tokens jacc": 10.5043363571167,
+      "nota final": 291.5091857910156
+    },
+    "total_gain": {
+      "NOME prim frag igual": 983.2940673828125,
+      "NOME ult frag igual": 138.260498046875,
+      "NOME qtd frag iguais": 152005.0,
+      "NOME qtd frag raros": 10240.791015625,
+      "NOME qtd frag comuns": 29873.107421875,
+      "NOME qtd frag muito parec": 362863.5,
+      "NOMEMAE prim frag igual": 2463.27099609375,
+      "NOMEMAE ult frag igual": 10473.0732421875,
+      "NOMEMAE qtd frag iguais": 21709.419921875,
+      "NOMEMAE qtd frag raros": 478.7039794921875,
+      "NOMEMAE qtd frag comuns": 35219.04296875,
+      "NOMEMAE qtd frag muito parec": 55394.78515625,
+      "DTNASC dt iguais": 25710.64453125,
+      "DTNASC dt ap 1digi": 15507.6982421875,
+      "DTNASC dt inv mes": 71.2474594116211,
+      "CODMUNRES local igual": 1320.3687744140625,
+      "CODMUNRES local prox": 234.79852294921875,
+      "ENDERECO via igual": 252.9519500732422,
+      "ENDERECO via prox": 18981.6328125,
+      "ENDERECO compl prox": 49.025413513183594,
+      "ENDERECO texto prox": 13715.6162109375,
+      "ENDERECO tokens jacc": 1239.51171875,
+      "nota final": 396744.0
+    },
+    "weight": {
+      "NOME prim frag igual": 73.0,
+      "NOME ult frag igual": 7.0,
+      "NOME qtd frag iguais": 350.0,
+      "NOME qtd frag raros": 190.0,
+      "NOME qtd frag comuns": 765.0,
+      "NOME qtd frag muito parec": 195.0,
+      "NOMEMAE prim frag igual": 61.0,
+      "NOMEMAE ult frag igual": 117.0,
+      "NOMEMAE qtd frag iguais": 382.0,
+      "NOMEMAE qtd frag raros": 61.0,
+      "NOMEMAE qtd frag comuns": 568.0,
+      "NOMEMAE qtd frag muito parec": 378.0,
+      "DTNASC dt iguais": 233.0,
+      "DTNASC dt ap 1digi": 234.0,
+      "DTNASC dt inv mes": 10.0,
+      "CODMUNRES local igual": 5.0,
+      "CODMUNRES local prox": 9.0,
+      "ENDERECO via igual": 14.0,
+      "ENDERECO via prox": 250.0,
+      "ENDERECO compl prox": 21.0,
+      "ENDERECO texto prox": 372.0,
+      "ENDERECO tokens jacc": 118.0,
+      "nota final": 1361.0
+    },
+    "cover": {
+      "NOME prim frag igual": 65.01560974121094,
+      "NOME ult frag igual": 810.357421875,
+      "NOME qtd frag iguais": 937.64697265625,
+      "NOME qtd frag raros": 401.1488952636719,
+      "NOME qtd frag comuns": 467.6317443847656,
+      "NOME qtd frag muito parec": 2091.371826171875,
+      "NOMEMAE prim frag igual": 352.7128601074219,
+      "NOMEMAE ult frag igual": 381.8218688964844,
+      "NOMEMAE qtd frag iguais": 251.0313262939453,
+      "NOMEMAE qtd frag raros": 241.7621612548828,
+      "NOMEMAE qtd frag comuns": 664.53955078125,
+      "NOMEMAE qtd frag muito parec": 573.609619140625,
+      "DTNASC dt iguais": 880.5989379882812,
+      "DTNASC dt ap 1digi": 205.87872314453125,
+      "DTNASC dt inv mes": 18.7222900390625,
+      "CODMUNRES local igual": 205.1348876953125,
+      "CODMUNRES local prox": 93.21598815917969,
+      "ENDERECO via igual": 56.257225036621094,
+      "ENDERECO via prox": 267.9250793457031,
+      "ENDERECO compl prox": 16.51682472229004,
+      "ENDERECO texto prox": 296.4381408691406,
+      "ENDERECO tokens jacc": 49.14091110229492,
+      "nota final": 625.963134765625
+    }
+  },
+  "bias_mean": 2.8692550659179688
+}
