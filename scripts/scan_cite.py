@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 
 d = Path("D:/git/phd-research/text/latex")
-files = sorted(d.glob("capitulo*.tex")) + [d / "reserva_cap6.tex", d / "tese.tex"]
+files = sorted(d.glob("capitulo*.tex")) + sorted(d.glob("estudo*.tex")) + [d / "conclusao.tex", d / "tese.tex"]
 
 # Pattern 1: Capitalized word right before \cite{
 pat1 = re.compile(r"([A-Z][a-záéíóúãõêâô]+)\s*\\cite\{")
