@@ -173,7 +173,7 @@ def regenerate_nb01_comparison() -> None:
     ax.set_xticklabels(models, fontsize=9)
     ax.set_ylabel("Valor da métrica")
     ax.set_ylim(0, 1.12)
-    ax.set_title("Comparação de técnicas de ML no limiar padrao (0,5)")
+    ax.set_title("Comparação de técnicas de ML no limiar padrão (0,5)")
     ax.legend(loc="upper right", fontsize=9)
 
     for bars in (bars_p, bars_r, bars_f):

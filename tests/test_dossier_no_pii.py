@@ -1,6 +1,7 @@
 """Verifica a fronteira entre os campos de origem e o dossiê de revisão."""
 
 import pandas as pd
+import pytest
 
 from gzcmd.llm_dossier import build_dossier, make_pair_id
 
@@ -52,3 +53,19 @@ def test_dossier_excludes_nominal_fields_and_internal_identifiers():
         "SEXO", "BAIRRO DE TESTE",
     ]:
         assert excluded not in serialized
+
+
+@pytest.mark.parametrize("column", ["observacao", "extra", "auxiliar,String"])
+@pytest.mark.parametrize(
+    "sentinel",
+    ["PESSOA SINTETICA SOB COLUNA INOCUA", "1979-12-31"],
+)
+def test_dossier_excludes_pii_values_under_innocuous_columns(column, sentinel):
+    row = pd.Series({"nota final": 7.5, "p_cal": 0.6})
+    baseline = build_dossier(row, pair_id="synthetic-pair").to_dict()
+    row[column] = sentinel
+
+    dossier = build_dossier(row, pair_id="synthetic-pair")
+
+    assert dossier.to_dict() == baseline
+    assert sentinel not in dossier.to_json()
