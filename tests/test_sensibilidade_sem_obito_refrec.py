@@ -98,6 +98,8 @@ def test_parametros_xgb_iguais_ao_modal_exceto_dispositivo():
 
 
 def test_artefatos_agregados_controle_e_tabela(tmp_path):
+    for arquivo in (sens.OUT, sens.META, tabela.TEX):
+        assert b"\r\n" not in arquivo.read_bytes()
     res = pd.read_csv(sens.OUT)
     meta = json.loads(sens.META.read_text(encoding="utf-8"),
                       parse_constant=lambda valor: pytest.fail(f"JSON nao estrito: {valor}"))

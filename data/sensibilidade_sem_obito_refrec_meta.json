@@ -1,8 +1,8 @@
 {
   "versao_script": "1.0",
-  "inicio_utc": "2026-11-04T12:24:23.321787+00:00",
-  "fim_utc": "2026-11-04T12:25:41.143196+00:00",
-  "tempo_total_segundos": 77.82268649991602,
+  "inicio_utc": "2026-11-04T12:31:05.127045+00:00",
+  "fim_utc": "2026-11-04T12:32:17.937285+00:00",
+  "tempo_total_segundos": 72.81143570004497,
   "semente": 42,
   "versoes": {
     "numpy": "2.4.2",
@@ -14,10 +14,10 @@
   "python": "3.13.11",
   "plataforma": "Windows-11-10.0.22631-SP0",
   "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
-  "csv_sha256": "ee435a072bd691c302d20d0d86d59cc8a5f7ed310b1d0481ec9910ba6d506295",
+  "csv_sha256": "e6154b4261f38140c1eed259e8761d313cffde828245aad085766c7e4210ddc2",
   "fontes_sha256": {
-    "scripts/sensibilidade_sem_obito_refrec.py": "87a0e22ca68a38ca749db4f01d2ed6e4dc567ce0a891eb9f66963915592e25ba",
-    "scripts/gerar_tabela_sensibilidade.py": "4efa33b7d40d106663b92edd156cff53af1e192c39626ec6c3a9c8865ef542ea",
+    "scripts/sensibilidade_sem_obito_refrec.py": "2c6e4abb38cb594004388ec119e8ae057f97c4ee544b0251224118400e34d3e9",
+    "scripts/gerar_tabela_sensibilidade.py": "3dbdaca06e9e5b06e3e55b89ca3573332cc70d33998cfe1656bfcb99b12a9378",
     "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163",
     "scripts/ablation_study.py": "82e5750bed474629a8b751f2474d30a3e33a4a6e3af579196980e85bbd963fa0",
     "scripts/epidemiological_impact.py": "190537b948587ca38fc214ecc8aa4778613d76ba5a20c587c8fdf092f038d70d",
@@ -51,7 +51,7 @@
   "controle_A": "70 configuracoes comparadas individualmente por config/tp/fp/fn com ablation_results.csv",
   "cenarios": {
     "A": {
-      "tempo_segundos": 21.839035300072283,
+      "tempo_segundos": 21.17472839995753,
       "configuracoes_70": [
         {
           "config": "Naive score≥7",
@@ -1115,7 +1115,7 @@
       "importancia": "ganho medio normalizado; ordem decrescente; desempate pela ordem das colunas"
     },
     "B": {
-      "tempo_segundos": 17.988670899998397,
+      "tempo_segundos": 17.265604999964125,
       "configuracoes_70": [
         {
           "config": "Naive score≥7",
@@ -2178,7 +2178,7 @@
       }
     },
     "C": {
-      "tempo_segundos": 17.26400699990336,
+      "tempo_segundos": 15.939221499953419,
       "configuracoes_70": [
         {
           "config": "Naive score≥7",
@@ -3242,7 +3242,7 @@
       "importancia": "ganho medio normalizado; ordem decrescente; desempate pela ordem das colunas"
     },
     "D": {
-      "tempo_segundos": 17.507754700025544,
+      "tempo_segundos": 15.61497600004077,
       "configuracoes_70": [
         {
           "config": "Naive score≥7",

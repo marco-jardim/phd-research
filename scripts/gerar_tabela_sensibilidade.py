@@ -33,7 +33,7 @@ def gerar(res=None, destino=TEX):
                r"\par\smallskip\begin{minipage}{\textwidth}\footnotesize",
                r"Nota: RF: Random Forest; GB: Gradient Boosting; XGB: XGBoost local (CPU), não o resultado do fluxo Modal. O limiar de probabilidade de 0,5 e a nota $\geq 8$ são os da ablação. Recuperados são os vínculos encontrados pelo RF+SMOTE e não pela nota; líquido é a diferença entre as detecções. Com agrupamento por REFREC, o denominador e os vínculos avaliados mudam. 56 atributos excluem \texttt{obito\_tb} e \texttt{obito\_sinan}. Fonte: \texttt{data/sensibilidade\_sem\_obito\_refrec.csv}.",
                r"\end{minipage}", r"\end{table}"]
-    destino.write_text("\n".join(linhas) + "\n", encoding="utf-8")
+    destino.write_text("\n".join(linhas) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
