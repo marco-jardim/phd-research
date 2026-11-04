@@ -1,17 +1,17 @@
 \chapter{O pacote gzcmd-record-linkage}\label{ap:pacote}
 
-O pacote \texttt{gzcmd-record-linkage} reúne componentes de pós-processamento de potenciais pares produzidos por \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), com vistas à classificação e ao encaminhamento da área cinza para revisão \cite{Jardim2026gzcmd}. A versão distribuída no PyPI é a 0.3.0, cujo código foi conferido no commit \texttt{5233785}. Essa versão implementa a política v3; não contém a política v3.1 de quatro ações avaliada no Capítulo~\ref{cap:estudo4}, disponível no repositório da tese \cite{Jardim2026phdrepo}. A numeração do pacote, a versão da política e a versão do depósito de dados designam artefatos diferentes.
+O pacote \texttt{gzcmd-record-linkage} reúne componentes de pós-processamento de potenciais pares produzidos por \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), com vistas à classificação e ao encaminhamento da área cinza para revisão \cite{Jardim2026gzcmd}. A versão 0.3.0 implementava apenas a política v3; a versão 0.4.0, publicada em 4 de novembro de 2026, acrescenta a política v3.1 de quatro ações, selecionável por \texttt{policy\_version}, mantendo a v3 como padrão para reproduzir o perfil histórico. A política v3.1 é descrita no Capítulo~\ref{cap:estudo4}, com os artefatos experimentais disponíveis no repositório da tese \cite{Jardim2026phdrepo}. A numeração do pacote, a versão da política e a versão do depósito de dados designam artefatos diferentes.
 
-Na arquitetura do pacote, o carregador prepara os subescores e atributos derivados; as regras de guarda registram restrições determinísticas; as bandas situam os potenciais pares por intervalos da nota final; a calibração estima probabilidades; e o motor compara a \textit{expected loss} das ações de aceitação, rejeição e encaminhamento ao modelo de linguagem, respeitando um orçamento de revisão. O fluxo completo espera o CSV do comparador, com separador ponto e vírgula e vírgula decimal, os subescores de nome, nome da mãe, data de nascimento, endereço e município e a nota final. Os identificadores \texttt{COMPREC}, \texttt{REFREC} e \texttt{PASSO} permitem rastrear os pares; o gabarito \texttt{PAR} identifica vínculos pelos valores 1 e 2 quando há avaliação ou ajuste supervisionado. Datas de nascimento e de eventos alimentam atributos e guardas específicos, exigindo ambiente protegido quando contêm informação individual. A ausência de colunas não equivale à ausência da informação na base de origem: o carregador admite campos faltantes, mas essa omissão altera atributos e guardas. O pacote não gera potenciais pares nem executa blocagem; no protocolo da tese, essas etapas pertencem ao OpenRecLink.
+Na arquitetura do pacote, o carregador prepara os subescores e atributos derivados; as regras de guarda registram restrições determinísticas; as bandas situam os potenciais pares por intervalos da nota final; a calibração estima probabilidades; e o motor compara a \textit{expected loss} das ações de aceitação, rejeição, encaminhamento ao modelo de linguagem e, na v3.1, revisão humana, respeitando os orçamentos de revisão. O fluxo completo espera o CSV do comparador, com separador ponto e vírgula e vírgula decimal, os subescores de nome, nome da mãe, data de nascimento, endereço e município e a nota final. Os identificadores \texttt{COMPREC}, \texttt{REFREC} e \texttt{PASSO} permitem rastrear os pares; o gabarito \texttt{PAR} identifica vínculos pelos valores 1 e 2 quando há avaliação ou ajuste supervisionado. Datas de nascimento e de eventos alimentam atributos e guardas específicos, exigindo ambiente protegido quando contêm informação individual. A ausência de colunas não equivale à ausência da informação na base de origem: o carregador admite campos faltantes, mas essa omissão altera atributos e guardas. O pacote não gera potenciais pares nem executa blocagem; no protocolo da tese, essas etapas pertencem ao OpenRecLink.
 
 \section{Instalação e exemplo mínimo}
 
 Requer-se Python 3.10 ou superior. A instalação da versão documentada é feita pelo comando:
 \begin{verbatim}
-pip install gzcmd-record-linkage==0.3.0
+pip install gzcmd-record-linkage==0.4.0
 \end{verbatim}
 
-O exemplo a seguir, disponível em \path{scripts/exemplo_pacote_gzcmd.py} no repositório da tese, exercita apenas a triagem v3 com probabilidades e bandas sintéticas já fornecidas. Não ajusta um classificador, não estima calibração e não envia chamadas a serviços externos; os custos e as taxas de erro são ilustrativos.
+O exemplo a seguir, disponível em \path{scripts/exemplo_pacote_gzcmd.py} no repositório da tese, compara a triagem v3 e v3.1 com as mesmas probabilidades, bandas e notas sintéticas. Não ajusta um classificador, não estima calibração e não envia chamadas a serviços externos; os custos e as proporções de erro são ilustrativos.
 
 \begingroup\small
 \begin{verbatim}
@@ -23,23 +23,34 @@ from gzcmd_record_linkage.policy_engine import (
 pares = pd.DataFrame({
     "p_cal": [0.01, 0.50, 0.99],
     "band": ["grey_mid"] * 3,
+    "nota_final": [6.0, 7.0, 8.0],
 })
-motor = PolicyEngineV3(
-    costs=Costs(false_positive=10, false_negative=50,
-                llm_review=0.25),
-    llm_error_by_band={"grey_mid": LLMError(0.06, 0.10)},
-    budget=Budget(llm_max=1),
-)
-saida = motor.triage(pares)
-print(saida[["p_cal", "action", "review_requested"]]
-      .to_string(index=False))
+saida = pares[["p_cal"]].copy()
+for politica in ("v3", "v3.1"):
+    motor = PolicyEngineV3(
+        costs=Costs(false_positive=10, false_negative=50,
+                    llm_review=0.25),
+        llm_error_by_band={"grey_mid": LLMError(0.06, 0.10)},
+        budget=Budget(llm_max=1),
+        policy_version=politica,
+    )
+    saida[politica] = motor.triage(pares)["action"]
+print(saida.to_string(index=False))
 \end{verbatim}
 \endgroup
 
-As ações retornadas são, na ordem, \texttt{NONMATCH}, \texttt{LLM\_REVIEW} e \texttt{MATCH}. O encaminhamento não constitui uma decisão final do revisor. A saída conserva as probabilidades e acrescenta a ação, a escolha automática de referência, as perdas, o ganho esperado da revisão (\texttt{evr}) e o indicador de solicitação de revisão; no fluxo completo, também constam a guarda aplicada e seu motivo. A vigilância e a confirmação são modos configuráveis, com custos distintos para falsos positivos e falsos negativos, e não classificadores independentes.
+Na execução com a versão 0.4.0, obteve-se:
+\begin{verbatim}
+ p_cal         v3     v3.1
+  0.01   NONMATCH NONMATCH
+  0.50 LLM_REVIEW DEFERRED
+  0.99      MATCH    MATCH
+\end{verbatim}
+
+O encaminhamento não constitui uma decisão final do revisor; \texttt{DEFERRED} indica revisão humana. O exemplo mantém o custo humano padrão de uma revisão equivalente e as proporções padrão de erro humano de 5\% para cada tipo de erro, sem estimá-las a partir de dados. A saída de \texttt{triage} conserva as probabilidades e acrescenta a ação, a escolha de referência, as perdas, o ganho esperado da revisão (\texttt{evr}) e o indicador de solicitação de revisão; no fluxo completo, também constam a guarda aplicada e seu motivo. A vigilância e a confirmação são modos configuráveis, com custos distintos para falsos positivos e falsos negativos, e não classificadores independentes.
 
 \section{Configuração, reprodução e limites}
 
-O arquivo \texttt{gzcmd\_v3\_config.yaml}, incluído na distribuição, define bandas, custos, orçamento, parâmetros de guardas e calibração. A interface de linha de comando pode ser consultada com \texttt{gzcmd --help} ou \texttt{python -m gzcmd\_record\_linkage --help}. Deve-se preservar uma cópia do YAML efetivamente utilizado, os modelos ajustados, as versões das dependências, a semente e o particionamento de treinamento e avaliação. Na versão 0.3.0, \texttt{run\_v3} permite explicitar \texttt{p\_cal="platt"}, mas não aceita o argumento \texttt{policy\_version}. O perfil histórico da tese com \texttt{p\_cal="platt"} e \texttt{policy\_version="v3"}, bem como a política v3.1, requer o código \texttt{gzcmd/} do repositório da tese; não se reproduzem os resultados v3.1 apenas com a instalação do pacote \cite{Jardim2026phdrepo}. O ajuste supervisionado e a avaliação no mesmo conjunto não constituem estimativa de desempenho independente.
+O arquivo \texttt{gzcmd\_v3\_config.yaml}, incluído na distribuição, define bandas, custos, orçamentos, parâmetros de guardas e calibração. Na versão 0.4.0, \texttt{policy\_version} seleciona \texttt{v3} ou \texttt{v3.1} na API e no YAML; na linha de comando, utiliza-se \texttt{gzcmd run --policy-version v3.1}. A seleção explícita de \texttt{v3} sobre um YAML v3.1 restaura o custo LLM histórico de 0,25 e as guardas de nota 10 e 3. Para o perfil histórico da tese, \texttt{run\_v3} aceita \texttt{p\_cal="platt"} e \texttt{policy\_version="v3"}. Deve-se preservar o YAML utilizado, os modelos ajustados, as versões das dependências, a semente e o particionamento de treinamento e avaliação. A instalação do pacote não fornece os modelos ajustados nem reproduz, por si só, os resultados da tese \cite{Jardim2026phdrepo}. O ajuste supervisionado e a avaliação no mesmo conjunto não constituem estimativa de desempenho independente.
 
 O código do pacote é distribuído sob licença MIT \cite{Jardim2026gzcmd}. O depósito Zenodo de versão 3.0.0, DOI \url{https://doi.org/10.5281/zenodo.23928226}, corresponde ao \textit{benchmark} de similaridade, não à versão do pacote; o DOI conceito \url{https://doi.org/10.5281/zenodo.18652286} reúne as versões desse depósito \cite{Jardim2026zenodoGzcmd,Jardim2026zenodo}. A disponibilização do código e dos escores não substitui validação externa: calibração, custos e taxas de erro da revisão dependem das bases e das condições do serviço, e os encaminhamentos precisam de revisão efetiva e auditoria antes de integrar listas de vigilância ou confirmação.
