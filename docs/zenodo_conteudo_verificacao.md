@@ -11,7 +11,7 @@ O endereço de versões do DOI conceito retornou HTTP 404. O endereço `https://
 ## Versões e arquivos
 
 | Versão | Registro | Acesso | Arquivos |
-| :--- | :--- | :--- | ---: |
+| :-- | :-- | :-- | --: |
 | 1.0.0 | 18652289 | open | 7 |
 | 2.0.0 | 18674440 | open | 10 |
 | 3.0.0 | 23928226 | open | 11 |
@@ -22,7 +22,7 @@ A versão 1.0.0 contém o mesmo cabeçalho de 31 colunas do benchmark atual e o 
 Na versão 3.0.1:
 
 | Arquivo | Bytes |
-| :--- | ---: |
+| :-- | --: |
 | benchmark_sim_sinan_tb.csv | 7.969.179 |
 | splits.csv | 772.446 |
 | baselines.json | 97.309 |
@@ -46,7 +46,7 @@ O benchmark contém 61.696 linhas e 31 colunas: PAR, PASSO, 28 subescores e nota
 O arquivo `qw3/qw3_analysis_frame.csv` está efetivamente no ZIP e contém as colunas `index,y_true,y_pred,nome_qtd_quartis,bandeira,faixa_idade,sexo,uf,score_band,score_source,score_band_source`, com 61.696 linhas. Cardinalidades incluindo ausentes: faixa etária 6, sexo 2, indicador de encerramento 2 e UF 2. A análise prévia confundia o código de UF com a quantidade de níveis; não foram encontrados 33 níveis de UF. Os índices e os dados por linha não são reproduzidos neste relatório.
 
 | Agrupamento do frame QW3 | Células observadas | k mínimo | Células com k < 5 | Linhas nessas células |
-| :--- | ---: | ---: | ---: | ---: |
+| :-- | --: | --: | --: | --: |
 | faixa_idade × sexo × bandeira × y_true | 41 | 1 | 6 | 13 |
 | faixa_idade × sexo × bandeira | 23 | 6 | 0 | 0 |
 
@@ -59,7 +59,7 @@ O relatório histórico de k-anonimidade mede PASSO e agregados generalizados de
 `funil_gzcmd_vigilancia.csv` e `pcal_ml_oof.csv` possuem, cada um, 61.696 valores distintos de `pair_id`. As cardinalidades dos demais CSVs que contêm essa coluna estão no inventário.
 
 | Campo local | Valores distintos | Comprimento mínimo e máximo em dígitos |
-| :--- | ---: | :--- |
+| :-- | --: | :-- |
 | COMPREC | 19.388 | 1 a 5 |
 | REFREC | 1.515 | 1 a 4 |
 | PASSO | 3 | 1 a 2 |
@@ -68,9 +68,9 @@ Não há valores não numéricos nesses campos. O produto das cardinalidades obs
 
 O SHA-256 truncado sem segredo pode ser testado por enumeração desse domínio, independentemente do espaço de saída de 64 bits. Esta conferência não executou força bruta, não exportou a correspondência e não identificou pessoas. A recuperação de um identificador interno ainda exige informação adicional para associação nominal. Não há evidência suficiente para inserir na tese a afirmação categórica de ausência de meios razoáveis de reidentificação por terceiros.
 
-## Enquadramento e documentação pendente
+## Base legal e descrição do extrato
 
-Foram conferidas as fontes oficiais da LGPD e das Resoluções CNS 466/2012 e 580/2018. O texto distingue o fundamento para estudos por órgão de pesquisa da comprovação das autorizações de divulgação. O art. 13, § 2º, da LGPD também veda a transferência a terceiros dos dados pessoais abrangidos pelo dispositivo; uma hipótese do art. 33 não afasta automaticamente essa vedação. Não se declara conformidade comprovada antes da anexação do parecer, da decisão de dispensa de TCLE e do instrumento de cessão com escopo de compartilhamento e processamento externo. O depósito foi mantido aberto, conforme decisão do autor.
+O tratamento do extrato fundamenta-se no art. 7º, IV, e no art. 11, II, c, da Lei n. 13.709/2018, para estudos por órgão de pesquisa, e observa o art. 13 quanto à pseudonimização, ao ambiente controlado e à divulgação de resultados que não revelem dados pessoais. O autor trabalhou exclusivamente com o extrato pseudonimizado produzido pela equipe do laboratório, sem acesso aos registros nominais nem à correspondência entre identificadores internos e pessoas. O conteúdo publicado e os limites das medidas de k-anonimidade são descritos acima. Para o laboratório, os dados permanecem pseudonimizados. O depósito permanece aberto.
 
 ## Verificação local
 
