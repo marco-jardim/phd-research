@@ -8,14 +8,19 @@
 \toprule
 Decis\~ao & Pred.$+$ & VP & FP & FN & Sens. & VPP & Espec. & Rejei\c{c}\~oes \\
 \midrule
-Corte 6{,}0 da nota & 7\,452 & 227 & 7\,225 & 20 & 91{,}9 & 3{,}0 & 88{,}2 & 22/58 \\
+Corte 6{,}0 da nota & 7.452 & 227 & 7.225 & 20 & 91{,}9 & 3{,}0 & 88{,}2 & 22/58 \\
 XGBoost, sens. do corte & 297 & 226 & 71 & 21 & 91{,}5 & 76{,}1 & 99{,}9 & 12/58 \\
 XGBoost, $p \geq 0{,}9$ & 138 & 136 & 2 & 111 & 55{,}1 & 98{,}6 & 100{,}0 & 6/58 \\
 Cascata v3.1 (vigil.) & 228 & 194 & 34 & 53 & 78{,}5 & 85{,}1 & 99{,}9 & 9/58 \\
 Cascata v3.1 (confirm.) & 132 & 132 & 0 & 115 & 53{,}4 & 100{,}0 & 100{,}0 & 1/58 \\
+\bottomrule
+\end{tabular}}
+\par\medskip
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrr}
+\toprule
+\multicolumn{7}{l}{\textit{Diferen\c{c}a m\'axima entre subgrupos (pontos percentuais)}} \\
 \midrule
-\midrule
-\multicolumn{9}{l}{\textit{Diferen\c{c}a m\'axima entre subgrupos (pontos percentuais)}} \\
 Dimens\~ao & M\'etrica & Corte 6{,}0 & XGB sens. & XGB $p \geq 0{,}9$ & Cascata vig. & Cascata conf. \\
 \midrule
 \multicolumn{7}{l}{\textit{Subgrupos demogr\'aficos}} \\
@@ -25,18 +30,18 @@ Faixa et\'aria & Sens. & 10{,}7 & 2{,}6 & 12{,}4 & 4{,}1 & 8{,}6 \\
 Faixa et\'aria & VPP & 2{,}4 & 12{,}0 & 3{,}0 & 8{,}2 & 0{,}0 \\
 \midrule
 \multicolumn{7}{l}{\textit{Subgrupos operacionais}} \\
-Nome (quartis) & Sens. & -- & -- & -- & -- & -- \\
-Nome (quartis) & VPP & 13{,}4 & 37{,}0 & -- & -- & -- \\
-Origem & Sens. & 2{,}4 & 4{,}7 & 16{,}2 & 8{,}8 & 10{,}7 \\
-Origem & VPP & 15{,}1 & 29{,}2 & 2{,}8 & 12{,}7 & 0{,}0 \\
-Munic\'ipio & Sens. & -- & -- & -- & -- & -- \\
-Munic\'ipio & VPP & 8{,}1 & -- & -- & -- & -- \\
+Nome (quartis) & Sens. & n.a. & n.a. & n.a. & n.a. & n.a. \\
+Nome (quartis) & VPP & 13{,}4 & 37{,}0 & n.a. & n.a. & n.a. \\
+Encerramento da notifica\c{c}\~ao & Sens. & 2{,}4 & 4{,}7 & 16{,}2 & 8{,}8 & 10{,}7 \\
+Encerramento da notifica\c{c}\~ao & VPP & 15{,}1 & 29{,}2 & 2{,}8 & 12{,}7 & 0{,}0 \\
+Munic\'ipio & Sens. & n.a. & n.a. & n.a. & n.a. & n.a. \\
+Munic\'ipio & VPP & 8{,}1 & n.a. & n.a. & n.a. & n.a. \\
 Passo & Sens. & 25{,}0 & 21{,}1 & 41{,}9 & 45{,}6 & 38{,}8 \\
 Passo & VPP & 43{,}8 & 63{,}1 & 0{,}0 & 42{,}0 & 0{,}0 \\
 Ano do \'obito & Sens. & 11{,}3 & 6{,}6 & 12{,}5 & 16{,}7 & 15{,}8 \\
 Ano do \'obito & VPP & 1{,}0 & 19{,}5 & 2{,}9 & 13{,}9 & 0{,}0 \\
-Completude & Sens. & -- & -- & -- & -- & -- \\
-Completude & VPP & 5{,}7 & -- & -- & -- & -- \\
+Completude & Sens. & n.a. & n.a. & n.a. & n.a. & n.a. \\
+Completude & VPP & 5{,}7 & n.a. & n.a. & n.a. & n.a. \\
 \bottomrule
 \end{tabular}}
 \end{table}

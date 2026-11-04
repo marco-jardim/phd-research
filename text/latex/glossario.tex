@@ -1,106 +1,118 @@
-\chapter*{Gloss\'{a}rio de Termos T\'{e}cnicos}
-\addcontentsline{toc}{chapter}{Gloss\'{a}rio de Termos T\'{e}cnicos}
+\chapter*{Glossário de Termos Técnicos}
+\addcontentsline{toc}{chapter}{Glossário de Termos Técnicos}
 
-Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizados ao longo desta tese, visando facilitar a compreens\~{a}o de conceitos que podem ser menos familiares aos profissionais da \'{a}rea de sa\'{u}de coletiva.
+Este glossário apresenta definições de termos técnicos utilizados ao longo desta tese, visando facilitar a compreensão de conceitos que podem ser menos familiares aos profissionais da área de saúde coletiva.
 
 \begin{description}
 
-\item[Acur\'{a}cia] Propor\c{c}\~{a}o de classifica\c{c}\~{o}es corretas (verdadeiros positivos e verdadeiros negativos) em rela\c{c}\~{a}o ao total de pares avaliados.
+\item[Acurácia] Proporção de classificações corretas (verdadeiros positivos e verdadeiros negativos) em relação ao total de pares avaliados.
 
-\item[\'{A}rea cinza] Regi\~{a}o de escores intermedi\'{a}rios no relacionamento probabil\'{i}stico, onde os pares candidatos n\~{a}o podem ser classificados automaticamente como verdadeiros ou falsos, demandando revis\~{a}o adicional.
+\item[Âncoras (conjuntos âncora)] Subconjuntos de potenciais pares com nota final do Comparador de Registros extrema ($\geq 9$ para $A^+$ e $<5$ para $A^-$), cujas prevalências, medidas contra o padrão-ouro ou fixadas a priori, definem os alvos de um ajuste sigmoide ou Beta por momentos. Foram avaliadas como alternativa de calibração e não demonstraram calibração absoluta na área cinza; a política v3.1 usa a calibração isotônica supervisionada.
 
-\item[API] \textit{Application Programming Interface}. Interface de programa\c{c}\~{a}o que define um conjunto padronizado de rotinas, protocolos e ferramentas para comunica\c{c}\~{a}o entre componentes de \textit{software}, permitindo integra\c{c}\~{a}o modular entre sistemas.
+\item[Área cinza] Região de potenciais pares cuja nota final do Comparador de Registros situa-se em $[5, 9)$, na qual a classificação automática por limiar fixo não é confiável e a decisão exige revisão adicional.
 
-\item[Blocagem] Estrat\'{e}gia de redu\c{c}\~{a}o do espa\c{c}o de compara\c{c}\~{a}o no relacionamento de registros, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a compara\c{c}\~{a}o exaustiva de todos os pares poss\'{i}veis.
+\item[API] \textit{Application Programming Interface}. Interface de programação que define um conjunto padronizado de rotinas, protocolos e ferramentas para comunicação entre componentes de \textit{software}, permitindo integração modular entre sistemas.
 
-\item[\textit{Platt scaling}] T\'{e}cnica de p\'{o}s-processamento que ajusta os escores brutos de um classificador por meio de regress\~{a}o log\'{i}stica (fun\c{c}\~{a}o sigmoide), convertendo-os em probabilidades calibradas.
+\item[Blocagem] Estratégia de redução do espaço de comparação no \textit{linkage}, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a comparação exaustiva de todos os pares possíveis.
 
-\item[Calibra\c{c}\~{a}o sigmoidal] Forma de calibra\c{c}\~{a}o probabil\'{i}stica equivalente ao \textit{Platt scaling}, usada para mapear escores n\~{a}o calibrados em probabilidades utiliz\'{a}veis para tomada de decis\~{a}o.
+\item[Calibração isotônica] Calibração por regressão monotônica não paramétrica das probabilidades de um classificador. No GZ-CMD, é ajustada fora da amostra (\textit{out-of-fold}), com partições agrupadas por registro de referência (REFREC), e é a referência de calibração da política v3.1.
 
-\item[Cascata de decis\~{a}o] Arquitetura de processamento em m\'{u}ltiplas etapas de custo crescente, na qual filtros computacionalmente baratos eliminam a maior parcela do volume nos est\'{a}gios iniciais, reservando recursos onerosos para o subconjunto residual de maior incerteza.
+\item[Calibração sigmoidal] Forma de calibração probabilística equivalente ao \textit{Platt scaling}, usada para mapear escores não calibrados em probabilidades utilizáveis para tomada de decisão.
 
-\item[Classifica\c{c}\~{a}o] Tarefa de aprendizado supervisionado que atribui r\'{o}tulos discretos (par verdadeiro ou n\~{a}o-par) a inst\^{a}ncias com base em atributos preditores.
+\item[Cascata de decisão] Arquitetura de processamento em múltiplas etapas de custo crescente, na qual filtros computacionalmente baratos eliminam a maior parcela do volume nos estágios iniciais, reservando recursos onerosos para o subconjunto residual de maior incerteza.
 
-\item[Comparador de registros] Ferramenta que calcula escores de similaridade campo a campo entre pares candidatos, produzindo subescores individuais e um escore final agregado. Neste trabalho, foi utilizada uma implementa\c{c}\~{a}o em Python \cite{Jardim2024comparador} do algoritmo proposto por Lucena \cite{Lucena2013algoritmos}.
+\item[Claude Haiku 5.5] Modelo de linguagem de grande porte desenvolvido pela Anthropic (Estados Unidos). Com as instruções v4 e dossiê sem as saídas do motor, é o revisor de referência da política v3.1 do GZ-CMD, e suas proporções de erro por banda alimentam a política.
 
-\item[Conjuntos \^{a}ncora] Subconjuntos de pares candidatos com alta confian\c{c}a de classifica\c{c}\~{a}o (positivos e negativos), utilizados como pseudo-r\'{o}tulos para calibra\c{c}\~{a}o peri\'{o}dica dos escores do classificador sem necessidade de re-rotulagem manual.
+\item[Claude Sonnet 5.5] Modelo de linguagem de grande porte da Anthropic, de custo por \textit{token} vinte vezes superior ao do Claude Haiku 5.5, avaliado nas mesmas coortes e dossiês. Suas respostas não alimentam as proporções da política.
 
-\item[Decis\~{a}o de limiar] Classifica\c{c}\~{a}o de pares candidatos pela compara\c{c}\~{a}o do escore composto com um ou dois pontos de corte fixos, sem uso de atributos adicionais. Com dois cortes, corresponde \`{a} regra de tr\^{e}s vias de Fellegi e Sunter. Nesta tese, as refer\^{e}ncias s\~{a}o o corte \'{u}nico $\geq 8$ e os cortes (5, 9) com revis\~{a}o integral dos pares entre eles; contra a segunda, comparam-se volume de revis\~{a}o e custo.
+\item[Classificação] Tarefa de aprendizado supervisionado que atribui rótulos discretos (par verdadeiro ou não-par) a instâncias com base em atributos preditores.
 
-\item[Deduplica\c{c}\~{a}o] Processo de identifica\c{c}\~{a}o e remo\c{c}\~{a}o de registros duplicados referentes a um mesmo indiv\'{i}duo dentro de uma \'{u}nica base de dados.
+\item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2024comparador} do algoritmo proposto por Lucena \cite{Lucena2013algoritmos}.
 
-\item[DeepSeek V3.2] Modelo de linguagem de grande porte desenvolvido pela DeepSeek (China), avaliado no piloto de revis\~{a}o assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,681.
+\item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore composto com um ou dois pontos de corte fixos, sem uso de atributos adicionais. Com dois cortes, resultam três regiões (vínculo, revisão e não-vínculo), como na regra de Fellegi e Sunter; a política v3.1 do GZ-CMD substitui os cortes por quatro ações (vínculo, não-vínculo, revisão por modelo de linguagem e revisão humana). Nesta tese, o corte do OpenRecLink usado pelo serviço é o comparador operacional de referência; o corte 9 da nota final do CdR, com revisão integral dos pares abaixo dele, é comparador hipotético; e o corte 6,0 da nota é a referência histórica da análise de equidade.
 
-\item[Desbalanceamento de classes] Situa\c{c}\~{a}o em que uma classe (tipicamente os pares verdadeiros) \'{e} muito menos frequente que a outra (n\~{a}o-pares), podendo comprometer o desempenho de classificadores.
+\item[Deduplicação] Processo de identificação e remoção de registros duplicados referentes a um mesmo indivíduo dentro de uma única base de dados.
 
-\item[Dossi\^{e} de revis\~{a}o] Representa\c{c}\~{a}o estruturada de um par candidato contendo subescores de similaridade, metadados de calibra\c{c}\~{a}o e c\'{o}digos de guarda, submetida ao m\'{o}dulo de revis\~{a}o assistida por modelo de linguagem.
+\item[DeepSeek V3.2] Modelo de linguagem de grande porte desenvolvido pela DeepSeek (China), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,681.
 
-\item[\textit{Ensemble}] Abordagem que combina m\'{u}ltiplos classificadores para produzir uma decis\~{a}o agregada, frequentemente superior ao desempenho individual de cada modelo.
+\item[DeepSeek V4.1 Flash] Modelo de linguagem de grande porte da DeepSeek, avaliado como revisor independente do Claude Haiku 5.5 na replicação da revisão assistida, com raciocínio desligado. Sem as saídas do motor, produziu muitos inconclusivos e falsos positivos, e não alimenta a política.
 
-\item[Escore de similaridade] Valor num\'{e}rico que quantifica o grau de concord\^{a}ncia entre campos de dois registros comparados (ex.: dist\^{a}ncia de Jaro-Winkler para nomes).
+\item[Desbalanceamento de classes] Situação em que uma classe (tipicamente os pares verdadeiros) é muito menos frequente que a outra (não-pares), podendo comprometer o desempenho de classificadores.
 
-\item[EVR] Valor Esperado da Revis\~{a}o (\textit{Expected Value of Review}). M\'{e}trica que quantifica o ganho esperado de submeter um par candidato \`{a} revis\~{a}o por modelo de linguagem em compara\c{c}\~{a}o com a decis\~{a}o autom\'{a}tica de custo m\'{i}nimo.
+\item[Dossiê de revisão] Representação estruturada de um potencial par, submetida ao módulo de revisão assistida por modelo de linguagem. Na versão v3, continha subescores, nota final, medidas contínuas de diferença de datas (MACD) e as saídas do motor (probabilidade calibrada, banda, valor esperado da revisão e códigos de guarda); na v4, as saídas do motor foram retiradas, por indício de ancoragem do revisor.
 
-\item[\textit{Framework}] Estrutura metodol\'{o}gica para organiza\c{c}\~{a}o reprodut\'{i}vel de componentes, etapas e crit\'{e}rios de decis\~{a}o em um processo anal\'{i}tico.
+\item[\textit{Ensemble}] Abordagem que combina múltiplos classificadores para produzir uma decisão agregada, frequentemente superior ao desempenho individual de cada modelo.
 
-\item[F$_1$-Score] M\'{e}dia harm\^{o}nica entre precis\~{a}o e sensibilidade, utilizada como m\'{e}trica-s\'{i}ntese do desempenho de classificadores.
+\item[Escore de similaridade] Valor numérico que quantifica o grau de concordância entre campos de dois registros comparados (ex.: distância de Jaro-Winkler para nomes).
 
-\item[Fronteira de Pareto] Conjunto de configura\c{c}\~{o}es para as quais n\~{a}o \'{e} poss\'{i}vel melhorar uma m\'{e}trica (ex.: sensibilidade) sem degradar outra (ex.: precis\~{a}o), utilizado neste trabalho para sele\c{c}\~{a}o da melhor combina\c{c}\~{a}o de classificador e estrat\'{e}gia de reamostragem.
+\item[\textit{Expected loss}] Critério de decisão que estima, para cada ação possível, o custo esperado associado aos erros de classificação e ao custo de revisão, permitindo selecionar a alternativa de menor perda. Na política v3.1, comparam-se quatro ações, incluindo a revisão humana, de custo $C_H$.
 
-\item[GLM-5] Modelo de linguagem de grande porte desenvolvido pela Zhipu AI (China), avaliado no piloto de revis\~{a}o assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,800.
+\item[\textit{Expected loss engine}] Componente decisório do GZ-CMD que substitui limiares fixos por minimização de \textit{expected loss} com custos assimétricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$ e, na v3.1, $C_H$), determinando para cada par qual ação tem a menor perda esperada.
 
-\item[GPT-4o] Modelo de linguagem de grande porte desenvolvido pela OpenAI (Estados Unidos), avaliado no piloto de revis\~{a}o assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,511.
+\item[EVR] Valor Esperado da Revisão (\textit{Expected Value of Review}). Métrica da versão v3 que quantifica o ganho esperado de submeter um potencial par à revisão por modelo de linguagem em comparação com a decisão automática de custo mínimo.
 
-\item[\textit{Gradient Boosting}] Fam\'{i}lia de algoritmos de aprendizado de m\'{a}quina que constr\'{o}i modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementa\c{c}\~{o}es como XGBoost e LightGBM.
+\item[\textit{Framework}] Estrutura metodológica para organização reprodutível de componentes, etapas e critérios de decisão em um processo analítico.
 
-\item[\textit{Holdout} (conjunto de avalia\c{c}\~{a}o independente)] Subconjunto de dados reservado antes do treinamento e utilizado exclusivamente na etapa final de teste do classificador, ap\'{o}s a valida\c{c}\~{a}o cruzada, com vistas a estimar a capacidade de generaliza\c{c}\~{a}o em observa\c{c}\~{o}es n\~{a}o utilizadas no ajuste.
+\item[F$_1$-Score] Média harmônica entre precisão e sensibilidade, utilizada como métrica-síntese do desempenho de classificadores.
 
-\item[\textit{Expected loss}] Crit\'{e}rio de decis\~{a}o que estima, para cada a\c{c}\~{a}o poss\'{i}vel, o custo esperado associado aos erros de classifica\c{c}\~{a}o e ao custo de revis\~{a}o, permitindo selecionar a alternativa de menor risco operacional.
+\item[Fronteira de Pareto] Conjunto de configurações para as quais não é possível melhorar uma métrica (ex.: sensibilidade) sem degradar outra (ex.: precisão). Nesta tese, é uma análise exploratória, que não indica uma melhor combinação única de classificador e estratégia de reamostragem.
 
-\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governan\c{c}a da incerteza no \textit{linkage} probabil\'{i}stico, integrando calibra\c{c}\~{a}o por conjuntos \^{a}ncora, regras de guarda, \textit{expected loss engine} com custos assim\'{e}tricos e revis\~{a}o assistida por modelo de linguagem em pol\'{i}tica \'{u}nica de decis\~{a}o audit\'{a}vel.
+\item[GLM-5] Modelo de linguagem de grande porte desenvolvido pela Zhipu AI (China), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,800.
 
-\item[Kimi K2.5] Modelo de linguagem de grande porte desenvolvido pela Moonshot AI (China), selecionado como modelo operacional do m\'{o}dulo de revis\~{a}o assistida do GZ-CMD com base, no piloto de 517 pares, no melhor equil\'{i}brio entre F$_1$ (0,845), lat\^{e}ncia m\'{e}dia (7,3\,s/par) e propor\c{c}\~{a}o de inconclusivos (3,5\%).
+\item[GPT-4o] Modelo de linguagem de grande porte desenvolvido pela OpenAI (Estados Unidos), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,511.
 
-\item[\textit{Linkage}] Ver \textit{Relacionamento de registros}.
+\item[\textit{Gradient Boosting}] Família de algoritmos de aprendizado de máquina que constrói modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementações como XGBoost e LightGBM.
 
-\item[MACD] Medidas Cont\'{i}nuas de Diferen\c{c}a de Datas. Atributos derivados que capturam diferen\c{c}as temporais brutas (em dias) entre datas de nascimento e entre datas de \'{o}bito e notifica\c{c}\~{a}o, complementando os subescores discretizados do Comparador de Registros.
+\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano.
 
-\item[\textit{Expected loss engine}] Componente decis\'{o}rio do GZ-CMD que substitui limiares fixos por minimiza\c{c}\~{a}o de \textit{expected loss} com custos assim\'{e}tricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$), determinando para cada par se o valor esperado da revis\~{a}o por modelo de linguagem supera o custo da decis\~{a}o autom\'{a}tica.
+\item[\textit{Holdout} (conjunto de avaliação independente)] Subconjunto de dados reservado antes do treinamento e utilizado exclusivamente na etapa final de teste do classificador, após a validação cruzada, com vistas a estimar a capacidade de generalização em observações não utilizadas no ajuste.
 
-\item[OpenRecLink] \textit{Software} brasileiro de c\'{o}digo aberto para relacionamento probabil\'{i}stico de registros, desenvolvido por Camargo Jr. e Coeli.
+\item[Kimi K2.5] Modelo de linguagem de grande porte desenvolvido pela Moonshot AI (China). Obteve o melhor equilíbrio entre F$_1$ (0,845), latência média (7,3\,s/par) e proporção de inconclusivos (3,5\%) no piloto de 517 pares e foi o revisor da execução histórica de fevereiro de 2026. Não é o revisor de referência da política v3.1, que é o Claude Haiku 5.5 com instruções v4.
 
-\item[\textit{Pipeline}] Sequ\^{e}ncia operacional de etapas anal\'{i}ticas e decis\'{o}rias, desde a prepara\c{c}\~{a}o dos dados at\'{e} a gera\c{c}\~{a}o de resultados.
+\item[Kimi K3] Modelo de linguagem de grande porte da Moonshot AI, avaliado como revisor parcial na replicação da revisão assistida (343 dos 435 pares da confirmação, por esgotamento de cota) e em sondagem exploratória na ablação do dossiê.
 
-\item[Par candidato] Combina\c{c}\~{a}o de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para compara\c{c}\~{a}o detalhada.
+\item[Levanto Sage 2] Modelo de decisão que retorna uma escolha entre vínculo e não-vínculo, com possibilidade de abstenção. Foi avaliado com uma decisão por par, sem o protocolo de dois agentes e árbitro, e não alimenta a política.
 
-\item[Par verdadeiro] Par de registros que se refere ao mesmo indiv\'{i}duo, confirmado por revis\~{a}o manual ou padr\~{a}o-ouro.
+\item[\textit{Linkage}] Processo de identificação de registros referentes ao mesmo indivíduo em duas ou mais bases de dados distintas (\textit{record linkage}). Ver também \textit{Relacionamento de registros}.
 
-\item[Precis\~{a}o] Propor\c{c}\~{a}o de pares classificados como verdadeiros que s\~{a}o efetivamente verdadeiros (\textit{Positive Predictive Value}).
+\item[MACD] Medidas Contínuas de Diferença de Datas. Atributos derivados que capturam diferenças temporais brutas (em dias) entre datas de nascimento e entre datas de óbito e notificação, complementando os subescores discretizados do Comparador de Registros.
 
-\item[Protocolo dual-agente] Protocolo de revis\~{a}o assistida em que cada par candidato \'{e} avaliado independentemente por dois agentes de modelo de linguagem com instru\c{c}\~{o}es complementares (um objetivo, outro c\'{e}tico), com arbitragem por terceiro agente em caso de discord\^{a}ncia.
+\item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli.
 
-\item[Qwen3-VL-30B] Modelo de linguagem de grande porte desenvolvido pela Alibaba (China), avaliado no piloto de revis\~{a}o assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,500.
+\item[\textit{Pipeline}] Sequência operacional de etapas analíticas e decisórias, desde a preparação dos dados até a geração de resultados.
 
-\item[\textit{Random Forest}] Algoritmo de aprendizado de m\'{a}quina baseado em m\'{u}ltiplas \'{a}rvores de decis\~{a}o treinadas em subamostragens aleat\'{o}rias dos dados.
+\item[Par candidato] Combinação de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para comparação detalhada (potencial par).
 
-\item[Regras de guarda] Conjunto de filtros determin\'{i}sticos aplicados antes do \textit{expected loss engine} no GZ-CMD, incluindo filtro temporal (diferen\c{c}a entre \'{o}bito e diagn\'{o}stico superior a 180 dias), limiar inferior de nota global e filtro de homonimia.
+\item[Par verdadeiro] Par de registros que se refere ao mesmo indivíduo, confirmado por revisão manual ou padrão-ouro (vínculo).
 
-\item[Relacionamento de registros] Processo de identifica\c{c}\~{a}o de registros referentes ao mesmo indiv\'{i}duo em duas ou mais bases de dados distintas (\textit{record linkage}).
+\item[\textit{Platt scaling}] Técnica de pós-processamento que ajusta os escores brutos de um classificador por meio de regressão logística (função sigmoide), convertendo-os em probabilidades calibradas. Na execução histórica v3, foi aplicada de forma supervisionada à nota final; o ajuste por momentos nas âncoras é uma variante avaliada como alternativa.
 
-\item[Relacionamento determin\'{i}stico] Estrat\'{e}gia de \textit{linkage} baseada em regras exatas de concord\^{a}ncia entre campos identificadores.
+\item[Precisão] Proporção de pares classificados como verdadeiros que são efetivamente verdadeiros (\textit{Positive Predictive Value}).
 
-\item[Relacionamento probabil\'{i}stico] Estrat\'{e}gia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
+\item[Protocolo dual-agente] Protocolo de revisão assistida em que cada potencial par é avaliado independentemente por dois agentes de modelo de linguagem com instruções complementares (um direto e objetivo, outro cético), com arbitragem por terceiro agente em caso de discordância.
 
-\item[Sensibilidade] Propor\c{c}\~{a}o de pares verdadeiros corretamente identificados pelo classificador dentre todos os pares verdadeiros existentes.
+\item[Qwen3-VL-30B] Modelo de linguagem de grande porte desenvolvido pela Alibaba (China), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,500.
 
-\item[SHAP] \textit{SHapley Additive exPlanations}. M\'{e}todo de interpretabilidade baseado na teoria de jogos cooperativos que atribui a cada atributo uma contribui\c{c}\~{a}o marginal para a previs\~{a}o individual do classificador.
+\item[\textit{Random Forest}] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
 
-\item[SMOTE] \textit{Synthetic Minority Over-sampling Technique}. Algoritmo de sobreamostragem que gera exemplos sint\'{e}ticos da classe minorit\'{a}ria por interpola\c{c}\~{a}o entre vizinhos pr\'{o}ximos no espa\c{c}o de atributos.
+\item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 
-\item[\textit{Stacking}] T\'{e}cnica de \textit{ensemble} que utiliza as sa\'{i}das de m\'{u}ltiplos classificadores de base como atributos de entrada para um meta-classificador.
+\item[Relacionamento de registros] Ver \textit{Linkage}.
 
-\item[Tuberculose (TB)] Doen\c{c}a infecciosa de notifica\c{c}\~{a}o compuls\'{o}ria utilizada neste trabalho como condi\c{c}\~{a}o marcadora para avalia\c{c}\~{a}o do relacionamento de bases de dados.
+\item[\textit{Linkage} determinístico] Estratégia de \textit{linkage} baseada em regras exatas de concordância entre campos identificadores.
 
-\item[Valida\c{c}\~{a}o cruzada] T\'{e}cnica de avalia\c{c}\~{a}o que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ parti\c{c}\~{o}es e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com vari\^{a}ncia reduzida (\textit{cross-validation}, CV).
+\item[\textit{Linkage} probabilístico] Estratégia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
+
+\item[Sensibilidade] Proporção de pares verdadeiros corretamente identificados pelo classificador dentre todos os pares verdadeiros existentes.
+
+\item[SHAP] \textit{SHapley Additive exPlanations}. Método de interpretabilidade baseado na teoria de jogos cooperativos que atribui a cada atributo uma contribuição marginal para a previsão individual do classificador.
+
+\item[SMOTE] \textit{Synthetic Minority Over-sampling Technique}. Algoritmo de sobreamostragem que gera exemplos sintéticos da classe minoritária por interpolação entre vizinhos próximos no espaço de atributos.
+
+\item[\textit{Stacking}] Técnica de \textit{ensemble} que utiliza as saídas de múltiplos classificadores de base como atributos de entrada para um meta-classificador.
+
+\item[Tuberculose (TB)] Doença infecciosa de notificação compulsória utilizada neste trabalho como condição marcadora para avaliação do \textit{linkage} de bases de dados.
+
+\item[Validação cruzada] Técnica de avaliação que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ partições e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com variância reduzida (\textit{cross-validation}, CV).
 
 \end{description}
