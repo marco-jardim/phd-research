@@ -147,7 +147,7 @@ As perdas incorporam probabilidade, consequências do erro e custo da revisão. 
 Os exercícios de exclusão e de expectativas por banda avaliam dependências das escolhas e não são intervalos de confiança. A sobreposição residual e a seleção adaptativa permanecem, mesmo quando os valores se aproximam da cascata observada.
 
 ### 42. Backup: privacidade
-A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
 
 ## Perguntas prováveis
 
@@ -197,7 +197,7 @@ Fonte: `tab:cap8-referencia`; `tab:cap8-cascata-v31`; `estudo4_gzcmd.tex`, Casca
 
 ### 8. Dados identificados foram enviados à nuvem?
 
-O extrato de 61.696 linhas é pseudonimizado. O autor trabalhou exclusivamente com ele, sem acesso aos registros nominais nem à correspondência entre identificadores e pessoas. A base legal está nos arts. 7º, IV, 11, II, c, e 13 da LGPD. Dossiês enviados a APIs externas continham também nota, atributos derivados e pseudônimo; as saídas do motor foram retiradas nas execuções auditadas. Persiste risco de reidentificação.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). O autor recebeu apenas extrato pseudonimizado, sem registros nominais nem correspondência com pessoas. A base legal é a LGPD (arts. 7º, IV, 11, II, c, e 13). Dossiês enviados a APIs externas continham nota, atributos derivados e pseudônimo; nas execuções auditadas, retiraram-se as saídas do motor. Persiste risco de reidentificação.
 
 Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`), ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`). Slides 27 e 42.
 
