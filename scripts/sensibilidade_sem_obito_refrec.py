@@ -111,7 +111,8 @@ def conferir_controle(configs, resumo):
 
 
 def sha256(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """Hash do conteúdo com fins de linha normalizados para LF, independente do checkout."""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def limpar_nan(obj):
