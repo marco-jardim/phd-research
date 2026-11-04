@@ -1,0 +1,20 @@
+{
+  "repositorio": "https://github.com/marco-jardim/Comparador-de-Registros",
+  "commit": "0d5b411",
+  "pr": 25,
+  "branch": "test/equivalencia-java",
+  "jdk": "Temurin 21.0.13",
+  "n": 500,
+  "sublotes": {
+    "ascii": 250,
+    "acentos": 250
+  },
+  "seed": 20150901,
+  "data_utc": "2026-11-04T20:23:05.528652+00:00",
+  "tolerancia": 1e-09,
+  "fonte": "tests/equivalencia/resultado_agregado.csv",
+  "relatorio": "tests/equivalencia/relatorio_equivalencia.md",
+  "sha256_fonte": "5ec55719b96cdd80f15fe53b31b541ac612f93999267f76916785e2355f3510f",
+  "sha256_relatorio": "a1f8e2d7b45e5b1ee51eaab4d5ff1256034468c1a01cb825f50449e4d386348f",
+  "limite": "Lote sintético de fronteira; não estima concordância em dados reais."
+}
