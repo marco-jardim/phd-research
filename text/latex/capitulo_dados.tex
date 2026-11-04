@@ -26,7 +26,11 @@ O procedimento de \textit{linkage} probabilístico no OpenRecLink seguiu o model
 \centering
 \caption{Parâmetros de comparação configurados no OpenRecLink para os campos de identificação.}
 \label{tab:parametros-orl}
-\begin{tabular}{lcccc}
+\begin{tabular}{
+    p{\dimexpr0.32\linewidth-2\tabcolsep\relax}
+    >{\centering\arraybackslash}p{\dimexpr0.16\linewidth-2\tabcolsep\relax}
+    *{2}{>{\centering\arraybackslash}p{\dimexpr0.20\linewidth-2\tabcolsep\relax}}
+    >{\centering\arraybackslash}p{\dimexpr0.12\linewidth-2\tabcolsep\relax}}
 \hline
 \textbf{Campo} & \textbf{Tipo} & \textbf{Concordância (\%)} & \textbf{Discordância (\%)} & \textbf{Limiar (\%)} \\
 \hline
@@ -47,9 +51,11 @@ O \textit{linkage} probabilístico e a produção da base de potenciais pares fo
 
 O \texttt{pair\_id} interno, obtido por SHA-256 sem sal e truncado em 16 caracteres hexadecimais, foi mantido para compatibilidade com os artefatos publicados na versão 3.0.0 do depósito, incluindo os rótulos por potencial par \cite{Jardim2026zenodoGzcmd}. Esse identificador permanece recalculável por quem detenha COMPREC, REFREC e PASSO; sua manutenção não constitui garantia de anonimização nem altera a pendência ético-regulatória descrita nesta seção.
 
+{\sloppy
 Para novas exportações, implementou-se o \textit{script} \path{scripts/export_matriz_desidentificada.py}, que produz uma matriz restrita às 29 colunas-base, correspondentes a 28 subescores de similaridade e à nota final, ao passo de blocagem, ao campo PAR e ao identificador \texttt{pair\_id\_hmac}. Exclui-se o subescore de proximidade entre unidades federativas, conforme a seleção usada na engenharia de atributos. Preserva-se a codificação original de PAR: 0 para não-par, 1 para vínculo aceito pelo corte e 2 para vínculo recuperado por revisão manual. Datas completas, sexo, bairro, códigos geográficos e identificadores internos, inclusive COMPREC, REFREC e C\_IDPESSOA, não integram a saída.
+\par}
 
-O novo pseudônimo é calculado por HMAC-SHA256 da composição textual \texttt{COMPREC|REFREC|PASSO}, com truncamento nos primeiros 16 caracteres hexadecimais e chave secreta de 32 bytes, lida da variável de ambiente \texttt{PAIR\_ID\_HMAC\_KEY} ou de arquivo local \texttt{.env}, fora do repositório versionado. Sem acesso à chave, terceiros não podem reproduzir o cálculo a partir dos identificadores internos apenas. Essa proteção não elimina os demais riscos de inferência e não transforma a matriz em dado anônimo. A rotina valida a lista de colunas, a ausência de padrões de datas, as cardinalidades em relação aos identificadores de origem, a unicidade do pseudônimo por linha e as contagens de 61.696 potenciais pares e 247 vínculos; registra, ainda, metadados agregados e o resumo SHA-256 do arquivo, sem registrar a chave. Testes com dados sintéticos verificam também os valores serializados, incluindo a ausência de identificadores e quase-identificadores de entrada.
+O novo pseudônimo é calculado por HMAC-SHA256 da composição textual \texttt{COMPREC|\allowbreak REFREC|\allowbreak PASSO}, com truncamento nos primeiros 16 caracteres hexadecimais e chave secreta de 32 bytes, lida da variável de ambiente \texttt{PAIR\_\allowbreak ID\_\allowbreak HMAC\_\allowbreak KEY} ou de arquivo local \texttt{.env}, fora do repositório versionado. Sem acesso à chave, terceiros não podem reproduzir o cálculo a partir dos identificadores internos apenas. Essa proteção não elimina os demais riscos de inferência e não transforma a matriz em dado anônimo. A rotina valida a lista de colunas, a ausência de padrões de datas, as cardinalidades em relação aos identificadores de origem, a unicidade do pseudônimo por linha e as contagens de 61.696 potenciais pares e 247 vínculos; registra, ainda, metadados agregados e o resumo SHA-256 do arquivo, sem registrar a chave. Testes com dados sintéticos verificam também os valores serializados, incluindo a ausência de identificadores e quase-identificadores de entrada.
 
 A matriz restrita não foi depositada no Zenodo, permanecendo disponível sob demanda, condicionada às autorizações de acesso, ou para depósito futuro. A implementação pertence ao repositório da tese e não substitui os identificadores dos artefatos históricos nem demonstra sua adoção nas execuções externas já realizadas. No motor, a visualização de registros permanece desabilitada por padrão (\texttt{secure\_record\_view.enabled = false}); o \texttt{pii\_leak\_guard} constitui uma camada adicional de verificação da saída do modelo de linguagem, não uma garantia de redação dos dados de entrada.
 
