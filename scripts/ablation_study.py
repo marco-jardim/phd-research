@@ -128,27 +128,8 @@ def eval_binary(y_true, y_pred, y_proba=None) -> dict:
 # ---------------------------------------------------------------------------
 # Main ablation
 # ---------------------------------------------------------------------------
-def run_ablation():
-    log.info("Loading data with shared feature_engineering (58 features)...")
-    df = load_data()
-    X, y = engineer_features(df)
-    X_train, X_test, y_train, y_test = split_data(X, y)
-
-    log.info(f"Dataset: {len(df)} records, {y.sum()} pairs ({y.mean() * 100:.2f}%)")
-    log.info(f"Features: {X.shape[1]} (58 uniform)")
-    log.info(f"Train: {len(X_train)}, Test: {len(X_test)}")
-
-    # We need the original df columns for rules — build a test df with score cols
-    # X_test already has the 58 feature columns including the base score cols
-    df_test_features = X_test.copy()
-
-    # Rules scores on test set (uses the base score columns present in X_test)
-    rules_test = compute_rules_scores(df_test_features)
-
-    # nota final from test features
-    nota_test = X_test["nota final"].values
-
-    # ── Train ML models ──
+def train_ablation_models(X_train, y_train, X_test):
+    """Train the original three models without changing their protocol."""
     models = {
         "RF": (
             RandomForestClassifier(
@@ -198,6 +179,12 @@ def run_ablation():
         trained[name] = model
         probas[name] = model.predict_proba(X_test)[:, 1]
 
+    return trained, probas
+
+
+def evaluate_configurations(y_test, nota_test, rules_test, probas):
+    """Evaluate the original 70 decision configurations, in their original order."""
+    trained = probas
     # ===================================================================
     # Configurations
     # ===================================================================
@@ -335,9 +322,23 @@ def run_ablation():
                 }
             )
 
-    # ===================================================================
+    return pd.DataFrame(results)
+
+
+def run_ablation():
+    log.info("Loading data with shared feature_engineering (58 features)...")
+    df = load_data()
+    X, y = engineer_features(df)
+    X_train, X_test, y_train, y_test = split_data(X, y)
+    log.info(f"Dataset: {len(df)} records, {y.sum()} pairs ({y.mean() * 100:.2f}%)")
+    log.info(f"Features: {X.shape[1]} (58 uniform)")
+    log.info(f"Train: {len(X_train)}, Test: {len(X_test)}")
+    rules_test = compute_rules_scores(X_test.copy())
+    nota_test = X_test["nota final"].values
+    trained, probas = train_ablation_models(X_train, y_train, X_test)
+    results = evaluate_configurations(y_test, nota_test, rules_test, probas)
+
     # Save results
-    # ===================================================================
     results_df = pd.DataFrame(results)
     results_df = results_df.sort_values("f1", ascending=False).reset_index(drop=True)
     results_df.to_csv(OUT_DIR / "ablation_results.csv", index=False)
