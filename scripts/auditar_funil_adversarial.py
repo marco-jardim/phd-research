@@ -192,7 +192,7 @@ def score_evidence():
             percent_pt = f"{100 * positives / n:.2f}".replace(".", ",")
             lines[index] = f"    {label} & {total_pt} & {positives} & {percent_pt}" + r"\% \\"
         if line.startswith(r"{\footnotesize\textit{Nota}:"):
-            lines[index] = r"{\footnotesize\textit{Nota}: a tabela utiliza a coluna \texttt{nota final} do comparador, e não o escore probabilístico do OpenRecLink. As faixas são fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. Fonte: extrato anonimizado, coluna \texttt{nota final}, e \texttt{scripts/generate\_missing\_figures.py}.}"
+            lines[index] = r"{\footnotesize\textit{Nota}: a tabela utiliza a coluna \texttt{nota final} do comparador, e não o escore probabilístico do OpenRecLink. As faixas são fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. Fonte: extrato pseudonimizado, coluna \texttt{nota final}, e \texttt{scripts/generate\_missing\_figures.py}.}"
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return {"generator": source.relative_to(ROOT).as_posix(), "column": "nota final", "coarse_counts": [39981, 21620, 95],
             "generator_sha256": hashlib.sha256(source.read_bytes()).hexdigest(), "bands": counts.reset_index().to_dict("records")}

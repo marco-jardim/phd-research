@@ -1,6 +1,6 @@
 """Validação dos conjuntos âncora contra o padrão-ouro (Tabela tab:cap8-ancoras).
 
-Calcula, sobre o extrato sem identificadores (data/COMPARADORSEMIDENT.csv),
+Calcula, sobre o extrato pseudonimizado (data/COMPARADORSEMIDENT.csv),
 o tamanho e a pureza dos conjuntos âncora definidos por escore extremo da
 nota final do comparador, e compara a calibração por âncoras (restrições de
 média, sem rótulos) com a calibração supervisionada (Platt sobre a nota final)
@@ -169,7 +169,7 @@ def main() -> None:
     tex = [
         "% Gerado por scripts/validar_ancoras.py sobre data/COMPARADORSEMIDENT.csv",
         r"\begin{table}[!ht]", r"\centering",
-        r"\caption{Validação dos conjuntos âncora contra o padrão-ouro (extrato sem identificadores, $N = 61.696$ pares, 247 vínculos verdadeiros).}",
+        r"\caption{Validação dos conjuntos âncora contra o padrão-ouro (extrato pseudonimizado, $N = 61.696$ pares, 247 vínculos verdadeiros).}",
         r"\label{tab:cap8-ancoras}", r"\begin{tabular}{|l|c|r|r|r|c|}", r"\hline",
         r"Conjunto & Critério & $N$ & Acertos & Erros & Pureza (\%) \\", r"\hline",
     ]
