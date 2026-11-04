@@ -80,6 +80,11 @@ target/
 
 # Data (local only)
 /data/COMPARADORSEMIDENT.csv
+data/export/
+
+# S1 verification builds
+text/latex/tese_s1*
+text/pdf/tese_s1*
 
 
 # IPython
@@ -212,7 +217,7 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Private modules (full-text fetcher — never push)
+# Private modules (full-text fetcher, never push)
 scripts/ref_audit/private/
 scripts/ref_audit/data/fulltext/
 
