@@ -5,7 +5,7 @@ Base da apresentação: tese em `dc25212`, após T5. A numeração abaixo corres
 ## Cronometragem
 
 | Bloco | Slides | Minutos | Acumulado |
-| :--- | :--- | :--- | :--- |
+| :-- | :-- | :-- | :-- |
 | Capa | 1 | 0,5 | 0,5 |
 | Problema e tese central | 2 a 4 | 4,0 | 4,5 |
 | Dados e referência operacional | 5 a 7 | 4,0 | 8,5 |
@@ -197,7 +197,7 @@ Fonte: `tab:cap8-referencia`; `tab:cap8-cascata-v31`; `estudo4_gzcmd.tex`, Casca
 
 ### 8. Dados identificados foram enviados à nuvem?
 
-O extrato de 61.696 linhas é pseudonimizado e contém quase-identificadores, incluindo datas completas, sexo e bairro. O processamento Modal usou infraestrutura remota, e os dossiês LLM sem nomes foram enviados a APIs externas. Isso não elimina risco de reidentificação. Exportação restrita e HMAC são medidas futuras; a documentação ética, de cessão, acesso e transferência requer reconferência, sem afirmar salvaguardas não implementadas.
+O extrato de 61.696 linhas é pseudonimizado. O autor trabalhou exclusivamente com ele, sem acesso aos registros nominais nem à correspondência entre identificadores e pessoas. A base legal está nos arts. 7º, IV, 11, II, c, e 13 da LGPD. Dossiês enviados a APIs externas continham também nota, atributos derivados e pseudônimo; as saídas do motor foram retiradas nas execuções auditadas. Persiste risco de reidentificação.
 
 Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`), ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`). Slides 27 e 42.
 
@@ -212,7 +212,7 @@ Fonte: `estudo5_equidade.tex`, Resultados (`tab:equidade-v31-rejeicoes-cascata`)
 Figuras reaproveitadas, sem alterar os originais:
 
 | Slide | Arquivo | Uso e ressalva |
-| :--- | :--- | :--- |
+| :-- | :-- | :-- |
 | 31 | `text/latex/figures/fig_cap8_cascata_v31.png` | Síntese visual dos indicadores, cascata por REFREC |
 | 36 | `figures/imbalance_sensitivity.pgf` | Estratégias de balanceamento no Random Forest |
 | 37 | `text/latex/fig_doc/epi_deteccao.pgf` | Detecção no teste da ablação, não cascata final |
