@@ -1,4 +1,7 @@
 """
+OBSOLETO: substituído por scripts/desempenho_faixas_ablacao.py (PR #22);
+artefato data/resultados_faixas_score.csv mantido por histórico, não citado na tese.
+
 Análise de desempenho de ML por faixa de score OpenRecLink.
 Reproduz feature engineering do NB01, treina RF+SMOTE global,
 e avalia predições segmentadas por faixa de score.

@@ -718,13 +718,13 @@ def audit_impacto_epidemiologico(idx: int) -> None:
 
 
 # ===========================================================================
-# TAB 9 — tab_score_bands.tex → data/resultados_faixas_score.csv
+# TAB 9 — tab_score_bands.tex → data/tab_score_bands_proveniencia.csv
 # ===========================================================================
 
 def audit_score_bands(idx: int) -> None:
     name = "tab_score_bands.tex"
-    src = "data/resultados_faixas_score.csv"
-    df = _read_csv(DATA_DIR / "resultados_faixas_score.csv")
+    src = "data/tab_score_bands_proveniencia.csv"
+    df = _read_csv(DATA_DIR / "tab_score_bands_proveniencia.csv")
     checks: list[str] = []
     divs: list[str] = []
 
@@ -755,7 +755,7 @@ def audit_score_bands(idx: int) -> None:
         cl = c.lower()
         if cl == "n" or "total" in cl:
             col_n = c
-        elif "pares" in cl and "pct" not in cl and "%" not in cl:
+        elif ("pares" in cl or cl == "vinculos") and "pct" not in cl and "%" not in cl:
             col_pares = c
 
     # Calcular total N no CSV (usando apenas linhas únicas por faixa)
