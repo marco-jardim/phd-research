@@ -147,7 +147,7 @@ As perdas incorporam probabilidade, consequências do erro e custo da revisão. 
 Os exercícios de exclusão e de expectativas por banda avaliam dependências das escolhas e não são intervalos de confiança. A sobreposição residual e a seleção adaptativa permanecem, mesmo quando os valores se aproximam da cascata observada.
 
 ### 42. Backup: privacidade
-A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
 
 ## Perguntas prováveis
 
@@ -197,7 +197,7 @@ Fonte: `tab:cap8-referencia`; `tab:cap8-cascata-v31`; `estudo4_gzcmd.tex`, Casca
 
 ### 8. Dados identificados foram enviados à nuvem?
 
-O extrato de 61.696 linhas é pseudonimizado. O autor trabalhou exclusivamente com ele, sem acesso aos registros nominais nem à correspondência entre identificadores e pessoas. A base legal está nos arts. 7º, IV, 11, II, c, e 13 da LGPD. Dossiês enviados a APIs externas continham também nota, atributos derivados e pseudônimo; as saídas do motor foram retiradas nas execuções auditadas. Persiste risco de reidentificação.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). O autor recebeu apenas extrato pseudonimizado, sem registros nominais nem correspondência com pessoas. A base legal é a LGPD (arts. 7º, IV, 11, II, c, e 13). Dossiês enviados a APIs externas continham nota, atributos derivados e pseudônimo; nas execuções auditadas, retiraram-se as saídas do motor. Persiste risco de reidentificação.
 
 Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`), ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`). Slides 27 e 42.
 
@@ -218,7 +218,7 @@ Figuras reaproveitadas, sem alterar os originais:
 | 36 | `figures/imbalance_sensitivity.pgf` | Estratégias de balanceamento no Random Forest |
 | 37 | `text/latex/fig_doc/epi_deteccao.pgf` | Detecção no teste da ablação, não cascata final |
 
-A captura do slide 9 está em `../../figures/fig_cdr_gui_mapeamento.png`, caminho relativo ao diretório de compilação `text/slides`, sem `graphicspath` adicional. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do texto adjacente, sem lhe atribuir a autoria do protótipo Java.
+A captura do slide 9 está em `../../figures/fig_cdr_gui_mapeamento.png`, caminho relativo ao diretório de compilação `text/slides`, sem `graphicspath` adicional. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do texto adjacente, indicando que utilizou base distinta da desta tese, sem lhe atribuir a autoria do protótipo Java.
 
 Critérios editoriais: menção ao referencial clássico restrita ao slide 8; origem da probabilidade identificada; cascata REFREC; corte operacional 211/247; F1 0,943 atribuído ao fluxo Modal; limitações antes das conclusões; equivalência Java parcial executada e comparação com Lages não realizada; sensibilidade 2×2 e QW1 local distinguidos dos resultados históricos; exportador com HMAC implementado, matriz não depositada; terminologia área cinza. As tabelas foram reduzidas no arquivo de slides.
 
