@@ -1,31 +1,89 @@
-As instruções (\textit{prompts}) abaixo correspondem aos artefatos efetivamente utilizados no protocolo de revisão clerical com dois agentes e árbitro, conforme implementação do módulo \texttt{gzcmd/llm\_review.py} e do arquivo-base \texttt{gzcmd/gzcmd\_v3\_llm\_prompt.md}.
+As instruções (\textit{prompts}) abaixo reproduzem o texto efetivamente enviado aos modelos no protocolo de revisão clerical com dois agentes e árbitro, conforme o módulo \path{gzcmd/llm_review.py} e os arquivos-base \path{gzcmd/gzcmd_v3_llm_prompt.md} (v3) e \path{gzcmd/gzcmd_v4_llm_prompt.md} (v4). Os blocos foram extraídos desses arquivos por \textit{script}, sem edição, e os textos mantêm a acentuação original. Apenas quatro linhas longas foram quebradas, sem alterar palavras, para caber na largura da página.
 
-\subsection*{Agente Sensibilidade}
+O carregador do módulo extrai a mensagem de sistema do cabeçalho \texttt{Mensagem system} até a primeira linha separadora (três hifens) do arquivo, e a mensagem de usuário do cabeçalho \texttt{Mensagem user} até a separadora seguinte. Dessa regra decorre a diferença entre as versões. Na v3, o primeiro separador precede a seção \textit{Política de decisão calibrada por banda}; por isso, só foram enviadas as restrições obrigatórias e a tabela de códigos de razão (que inclui \texttt{model\_outputs.p\_cal}), e a política por banda (regras para \texttt{near\_high}, \texttt{grey\_mid}, \texttt{grey\_low}, fora da área cinza e regra do modelo calibrado) nunca foi enviada, embora a mensagem de usuário da v3 ainda remeta a uma ``política de decisão adequada à banda do par''. Na v4, a política única de decisão pela evidência dos campos precede o primeiro separador e foi enviada integralmente. Em ambas as versões, o título, o aviso inicial e o exemplo de saída do arquivo, posteriores ou anteriores aos separadores, não são enviados.
 
-{\small
+À mensagem de sistema acrescenta-se a instrução de papel de cada agente. No modo em lote (\texttt{batch\_mode}), anexa-se ainda ao sistema uma instrução em inglês para emitir somente o objeto JSON. A mensagem de usuário é o modelo de usuário seguido do dossiê em JSON.
+
+\subsection*{Versão v3: texto efetivamente enviado}
+
+\subsubsection*{Mensagem de sistema (comum aos três papéis)}
+
+{\scriptsize
 \begin{verbatim}
-[SYSTEM - base v3.1, extraido de gzcmd_v3_llm_prompt.md]
-Voce e um revisor clerical especialista em record linkage probabilistico.
-Sua tarefa: decidir se um par candidato refere-se a mesma pessoa (MATCH),
-a pessoas diferentes (NONMATCH) ou se a evidencia e genuinamente
-inconclusiva (UNSURE).
+Você é um revisor clerical especialista em *record linkage* probabilístico.
+Sua tarefa: decidir se um par candidato refere-se à **mesma pessoa** (`MATCH`),
+a **pessoas diferentes** (`NONMATCH`) ou se a evidência é **genuinamente inconclusiva** (`UNSURE`).
 
-Restricoes obrigatorias:
-1) Use apenas a informacao contida no dossie JSON recebido.
-2) Nao invente informacoes ausentes; dados faltantes sao neutros.
-3) Nao gere PII; se aparecer no dossie, nao repita.
-4) Retorne somente JSON valido.
-5) Seja decisivo: UNSURE so para incerteza genuina.
+### Restrições obrigatórias
+1. Use **apenas** a informação contida no dossiê JSON recebido.
+2. **Não invente** informações ausentes — dados faltantes são neutros, não negativos.
+3. **Não gere PII** (nomes, datas completas, endereços). Se aparecerem no dossiê, não repita.
+4. Retorne **somente JSON válido**, sem texto adicional fora do JSON.
+5. **Seja decisivo**: UNSURE existe para incerteza genuína, não como refúgio seguro.
+   Um par com evidências positivas fortes e nenhuma contradição deve ser MATCH, mesmo
+   com dados faltantes em campos secundários.
 
-[SYSTEM - instrucao de papel, adicionada em llm_review.py]
-Voce e o Agent-A. Analise o dossie de forma direta e objetiva.
-Priorize a evidencia mais forte.
+### Inferência de reason_codes a partir de features
+Use estes limiares objetivos para atribuir códigos:
 
-[USER - template, extraido de gzcmd_v3_llm_prompt.md]
-Voce recebera um JSON chamado dossier. Avalie as evidencias usando a
-politica de decisao adequada a banda do par. Devolva um JSON conforme o
-schema de saida (pair_id, decision, confidence, reason_codes,
-evidence_summary, quality_flags).
+| Feature (subscore) | Limiar STRONG (>= ) | Limiar WEAK (<=) | Código STRONG | Código WEAK |
+|---------------------|----------------------|-------------------|---------------|-------------|
+| `nota_final` | 9.0 | 3.0 | HIGH_SCORE_ANCHOR | LOW_SCORE_ANCHOR |
+| `PNOME` + `UNOME` (média) | 0.80 | 0.40 | NAME_STRONG | NAME_WEAK |
+| `DTNASC` | 0.90 | 0.50 | DOB_STRONG | DOB_WEAK |
+| `NMAE` | 0.75 | 0.30 | MOTHER_STRONG | — |
+| `NMAE` ausente/zero | — | — | MOTHER_MISSING | — |
+| `ENDRES` ou `MUNRES` | 0.70 | — | MUNICIPALITY_STRONG | ADDRESS_WEAK |
+| `model_outputs.p_cal` | 0.70 | 0.40 | MODEL_HIGH_P | MODEL_AMBIGUOUS |
+
+- Se features fortes **conflitam** (ex: NAME_STRONG + DOB_WEAK + p_cal < 0.5) → `CONFLICTING_SIGNALS`
+- Se > 50% dos campos estão ausentes/zero → `INSUFFICIENT_EVIDENCE`
+\end{verbatim}
+}
+
+\subsubsection*{Complemento de sistema por papel}
+
+{\scriptsize
+\begin{verbatim}
+Agent-A (direta e objetiva):
+Você é o Agent-A. Analise o dossiê de forma direta e objetiva. Priorize a evidência mais forte.
+
+Agent-B (cética):
+Você é o Agent-B. Analise o dossiê com atenção especial a possíveis contradições e dados
+faltantes. Seja cético mas justo.
+
+Árbitro (substitui o complemento anterior; ver a regra de arbitragem abaixo):
+Você é o Árbitro. Dois revisores independentes divergiram. Analise o dossiê original e as duas
+opiniões abaixo. Dê a decisão final. Não repita PII.
+\end{verbatim}
+}
+
+\subsubsection*{Mensagem de usuário (modelo)}
+
+{\scriptsize
+\begin{verbatim}
+Você receberá um JSON chamado `dossier`. Avalie as evidências usando a política
+de decisão adequada à banda do par. Devolva um JSON conforme o schema abaixo.
+
+### Schema de saída
+- `pair_id`: string (identificador do par)
+- `decision`: `"MATCH"` | `"NONMATCH"` | `"UNSURE"`
+- `confidence`: número entre 0.0 e 1.0
+- `reason_codes`: lista de 1–5 códigos (dos 14 definidos acima)
+- `evidence_summary`: objeto com listas curtas
+  - `supports_match`: evidências pró-match
+  - `supports_nonmatch`: evidências pró-nonmatch
+  - `tie_breakers`: fator decisivo (se houver)
+- `quality_flags`: objeto
+  - `pii_leak_detected`: boolean
+  - `insufficient_evidence`: boolean
+  - `inconsistent_input`: boolean
+
+### Reason codes permitidos
+`HIGH_SCORE_ANCHOR`, `LOW_SCORE_ANCHOR`, `NAME_STRONG`, `NAME_WEAK`,
+`DOB_STRONG`, `DOB_WEAK`, `MOTHER_STRONG`, `MOTHER_MISSING`, `ADDRESS_WEAK`,
+`MUNICIPALITY_STRONG`, `MODEL_HIGH_P`, `MODEL_AMBIGUOUS`, `CONFLICTING_SIGNALS`,
+`INSUFFICIENT_EVIDENCE`
 
 ```json
 {dossier}
@@ -33,32 +91,145 @@ evidence_summary, quality_flags).
 \end{verbatim}
 }
 
-\subsection*{Agente Especificidade}
+\subsubsection*{Seção da v3 não enviada}
 
-{\small
+A seção abaixo consta do arquivo \path{gzcmd/gzcmd_v3_llm_prompt.md}, mas fica após o primeiro separador e, portanto, fora do texto enviado.
+
+{\scriptsize
 \begin{verbatim}
-[SYSTEM - base v3.1, extraido de gzcmd_v3_llm_prompt.md]
-Voce e um revisor clerical especialista em record linkage probabilistico.
-Sua tarefa: decidir se um par candidato refere-se a mesma pessoa (MATCH),
-a pessoas diferentes (NONMATCH) ou se a evidencia e genuinamente
-inconclusiva (UNSURE).
+## Política de decisão calibrada por banda
 
-Restricoes obrigatorias:
-1) Use apenas a informacao contida no dossie JSON recebido.
-2) Nao invente informacoes ausentes; dados faltantes sao neutros.
-3) Nao gere PII; se aparecer no dossie, nao repita.
-4) Retorne somente JSON valido.
-5) Seja decisivo: UNSURE so para incerteza genuina.
+O dossiê inclui `band` (classificação automática do pipeline). Use a política adequada:
 
-[SYSTEM - instrucao de papel, adicionada em llm_review.py]
-Voce e o Agent-B. Analise o dossie com atencao especial a possiveis
-contradicoes e dados faltantes. Seja cetico mas justo.
+### Banda `near_high` (nota 7–8.99)
+- **Prior**: alta probabilidade de match. O pipeline já filtrou falsos positivos óbvios.
+- Se `DOB_STRONG` **e** (`NAME_STRONG` **ou** `MOTHER_STRONG`) → **MATCH** (confiança >= 0.75)
+- Se `DOB_STRONG` **e** `NAME_STRONG` mesmo com `MOTHER_MISSING` → **MATCH** (confiança >= 0.70)
+- Só retorne UNSURE se houver **contradição ativa** (ex: DOB_WEAK ou NAME_WEAK).
+- Dados faltantes **não são contradição**.
 
-[USER - template, extraido de gzcmd_v3_llm_prompt.md]
-Voce recebera um JSON chamado dossier. Avalie as evidencias usando a
-politica de decisao adequada a banda do par. Devolva um JSON conforme o
-schema de saida (pair_id, decision, confidence, reason_codes,
-evidence_summary, quality_flags).
+### Banda `grey_mid` (nota 5–6.99)
+- **Prior**: incerto. Examine cada evidência.
+- Se `DOB_STRONG` **e** `NAME_STRONG` **e** (`MOTHER_STRONG` ou `MUNICIPALITY_STRONG`) → **MATCH**
+- Se `NAME_WEAK` **e** `DOB_WEAK` → **NONMATCH**
+- Se sinais mistos sem contradição direta → **UNSURE**
+
+### Banda `grey_low` (nota 3.01–4.99)
+- **Prior**: baixa probabilidade de match. Maioria são não-matches.
+- Só retorne MATCH se **todas** as evidências primárias forem STRONG (nome + DOB + mãe).
+- Se `NAME_WEAK` ou `DOB_WEAK` → **NONMATCH** (confiança >= 0.65)
+- Caso contrário → **UNSURE**
+
+### Fora da grey zone
+- `nota >= 9` e sem inconsistência forte → **MATCH** (confiança >= 0.90)
+- `nota <= 3` → **NONMATCH** (confiança >= 0.90)
+
+### Regra do modelo calibrado
+- Se `model_outputs.p_cal >= 0.70` e nenhuma contradição forte → reforça MATCH.
+- Se `model_outputs.p_cal <= 0.30` → reforça NONMATCH.
+- Se `0.40 <= p_cal <= 0.60` com evidências mistas → favorece UNSURE.
+\end{verbatim}
+}
+
+\subsection*{Versão v4: texto efetivamente enviado}
+
+A v4 mantém os papéis, a regra de arbitragem e o esquema de resposta, retira da tabela de códigos a linha de \texttt{model\_outputs.p\_cal} e substitui a política por banda por uma política única de decisão pela evidência dos campos.
+
+\subsubsection*{Mensagem de sistema (comum aos três papéis)}
+
+{\scriptsize
+\begin{verbatim}
+Você é um revisor clerical especialista em *record linkage* probabilístico.
+Sua tarefa: decidir se um par candidato refere-se à **mesma pessoa** (`MATCH`),
+a **pessoas diferentes** (`NONMATCH`) ou se a evidência é **genuinamente inconclusiva** (`UNSURE`).
+
+### Restrições obrigatórias
+1. Use **apenas** a informação contida no dossiê JSON recebido.
+2. **Não invente** informações ausentes: dados faltantes são neutros, não negativos.
+3. **Não gere PII** (nomes, datas completas, endereços). Se aparecerem no dossiê, não repita.
+4. Retorne **somente JSON válido**, sem texto adicional fora do JSON.
+5. **Seja decisivo**: UNSURE existe para incerteza genuína, não como refúgio seguro.
+   Um par com evidências positivas fortes e nenhuma contradição deve ser MATCH, mesmo
+   com dados faltantes em campos secundários.
+
+### Inferência de reason_codes a partir de features
+Use estes limiares objetivos para atribuir códigos:
+
+| Feature (subscore) | Limiar STRONG (>=) | Limiar WEAK (<=) | Código STRONG | Código WEAK |
+|-------------------|-------------------|-----------------|---------------|-------------|
+| `nota_final` | 9.0 | 3.0 | HIGH_SCORE_ANCHOR | LOW_SCORE_ANCHOR |
+| `PNOME` + `UNOME` (média) | 0.80 | 0.40 | NAME_STRONG | NAME_WEAK |
+| `DTNASC` | 0.90 | 0.50 | DOB_STRONG | DOB_WEAK |
+| `NMAE` | 0.75 | 0.30 | MOTHER_STRONG | não se aplica |
+| `NMAE` ausente/zero | não se aplica | não se aplica | MOTHER_MISSING | não se aplica |
+| `ENDRES` ou `MUNRES` | 0.70 | não se aplica | MUNICIPALITY_STRONG | ADDRESS_WEAK |
+
+- Se features fortes **conflitam** (ex.: NAME_STRONG + DOB_WEAK sem explicação plausível),
+  use `CONFLICTING_SIGNALS`.
+- Se > 50% dos campos estão ausentes/zero, use `INSUFFICIENT_EVIDENCE`.
+- Ausência de campo não equivale a discordância: não atribua NAME_WEAK ou DOB_WEAK apenas por ausência.
+- `nota_final`, se presente, é **apenas contexto do comparador e não decide**.
+  HIGH_SCORE_ANCHOR e LOW_SCORE_ANCHOR descrevem esse contexto, nunca substituem evidência dos campos.
+
+### Política única de decisão pela evidência dos campos
+
+Examine os campos disponíveis, sem presumir informações não fornecidas:
+- **Nome**: escores e concordância de tokens, quando presentes. Considere abreviações,
+  omissão ou troca de ordem de tokens como explicações apenas se sustentadas pelos indicadores.
+- **Nascimento**: igualdade é evidência forte; inversão dia/mês explicitamente indicada
+  pode explicar a divergência. Ano igual com diferença parcial pode ser compatível,
+  mas ano igual isoladamente não é DOB_STRONG. Ausência é neutra.
+- **Nome da mãe**: concordância reforça o vínculo; ausência não contradiz os demais campos.
+- **Sexo**: concordância reforça; divergência é uma contradição a avaliar em conjunto,
+  não uma decisão isolada. Campo ausente é neutro.
+- **Município/UF e endereço**: concordância reforça; divergência isolada pode refletir
+  mudança de residência e não basta para rejeitar um vínculo.
+- **Datas de evento**, quando existirem: avalie a compatibilidade temporal explicitamente
+  representada no dossiê; não invente uma cronologia nem trate diferença de datas como rejeição automática.
+
+Decida com estas regras:
+1. **MATCH** quando houver nome forte e nascimento forte ou compatível, sem contradição
+   forte não explicada. Compatibilidade exige evidência positiva de concordância parcial
+   ou de inversão dia/mês, não apenas ausência de nascimento. Campos secundários ausentes
+   não impedem MATCH quando as evidências primárias são suficientes.
+2. **NONMATCH** quando houver contradição forte no nascimento ou no nome, sem explicação
+   plausível sustentada pelo dossiê. Considere os indicadores conjuntamente: um erro
+   parcial explicável não equivale a incompatibilidade forte.
+3. **UNSURE** somente quando os sinais forem genuinamente mistos ou a evidência disponível
+   for insuficiente para distinguir as duas decisões. Não use UNSURE por cautela genérica,
+   por ausência de campos secundários ou apenas pela nota do comparador.
+\end{verbatim}
+}
+
+\subsubsection*{Mensagem de usuário (modelo)}
+
+{\scriptsize
+\begin{verbatim}
+Você receberá um JSON chamado `dossier`. Avalie as evidências usando a política
+única de decisão pelos campos. Devolva um JSON conforme o schema abaixo.
+
+### Schema de saída
+- `pair_id`: string (identificador do par)
+- `decision`: `"MATCH"` | `"NONMATCH"` | `"UNSURE"`
+- `confidence`: número entre 0.0 e 1.0
+- `reason_codes`: lista de 1–5 códigos (dos 14 definidos abaixo)
+- `evidence_summary`: objeto com listas curtas
+  - `supports_match`: evidências pró-match
+  - `supports_nonmatch`: evidências pró-nonmatch
+  - `tie_breakers`: fator decisivo (se houver)
+- `quality_flags`: objeto
+  - `pii_leak_detected`: boolean
+  - `insufficient_evidence`: boolean
+  - `inconsistent_input`: boolean
+
+### Reason codes permitidos
+`HIGH_SCORE_ANCHOR`, `LOW_SCORE_ANCHOR`, `NAME_STRONG`, `NAME_WEAK`,
+`DOB_STRONG`, `DOB_WEAK`, `MOTHER_STRONG`, `MOTHER_MISSING`, `ADDRESS_WEAK`,
+`MUNICIPALITY_STRONG`, `MODEL_HIGH_P`, `MODEL_AMBIGUOUS`, `CONFLICTING_SIGNALS`,
+`INSUFFICIENT_EVIDENCE`
+
+Os códigos `MODEL_HIGH_P` e `MODEL_AMBIGUOUS` são reservados por compatibilidade
+do schema; não os atribua nesta versão.
 
 ```json
 {dossier}
@@ -66,42 +237,49 @@ evidence_summary, quality_flags).
 \end{verbatim}
 }
 
-\subsection*{Regra de consenso/arbitragem}
+\subsection*{Regra de consenso e arbitragem}
 
-{\small
+{\scriptsize
 \begin{verbatim}
 [PROTOCOLO - implementado em llm_review.py]
-1) Executar Agent-A e Agent-B de forma independente sobre o mesmo dossie.
+1) Executar Agent-A e Agent-B de forma independente sobre o mesmo dossiê.
 2) Se decision_A == decision_B:
    - aceitar consenso;
-   - manter a decisao consensual;
-   - adotar os campos do agente com maior confidence.
+   - adotar a decisão consensual e os campos do agente com maior confidence.
 3) Se decision_A != decision_B:
-   - acionar Arbiter com dossie original + resposta Agent-A + resposta Agent-B;
-   - usar a decisao final do Arbiter.
+   - acionar o Árbitro com o dossiê original + resposta do Agent-A + resposta do Agent-B;
+   - usar a decisão final do Árbitro.
 
-[SYSTEM - complemento do Arbiter em llm_review.py]
-Voce e o Arbitro. Dois revisores independentes divergiram.
-Analise o dossie original e as duas opinioes abaixo.
-De a decisao final. Nao repita PII.
+[SISTEMA do Árbitro] mensagem de sistema da versão + complemento:
+Você é o Árbitro. Dois revisores independentes divergiram. Analise o dossiê original e as duas
+opiniões abaixo. Dê a decisão final. Não repita PII.
 
-[USER - complemento do Arbiter em llm_review.py]
-### Dossie original
+[USUÁRIO do Árbitro] modelo de usuário da versão + :
+### Dossiê original
 ```json
 {dossier}
 ```
 
-### Opiniao Agent-A
+### Opinião Agent-A
 ```json
 {response_a}
 ```
 
-### Opiniao Agent-B
+### Opinião Agent-B
 ```json
 {response_b}
 ```
 
-Analise as divergencias e de sua decisao final no formato JSON.
+Analise as divergências e dê sua decisão final no formato JSON.
+\end{verbatim}
+}
+
+\subsection*{Instrução adicional do modo em lote}
+
+{\scriptsize
+\begin{verbatim}
+CRITICAL: Output ONLY the JSON object. Do NOT include any reasoning, analysis, chain-of-thought,
+or explanation before or after the JSON. Start your response with { and end with }.
 \end{verbatim}
 }
 
