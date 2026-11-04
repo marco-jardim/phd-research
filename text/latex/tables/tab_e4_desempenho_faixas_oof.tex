@@ -1,0 +1,25 @@
+% Gerado por scripts/gerar_tabelas_nb03_faixas.py a partir de data/desempenho_faixas_oof_refrec.csv.
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\caption{Desempenho do estimador \texttt{p\_cal\_ml} (XGBoost com calibração isotônica) por faixa da nota final $s$ do comparador, nos 61.696 potenciais pares e 247 vínculos do extrato. As probabilidades são estimativas fora da amostra agrupadas por REFREC; contagens e razões usam o limiar 0,5, fixado antes da análise e não otimizado. AUC e AP: área sob a curva ROC e precisão média; n.d.: não definida.}
+\label{tab:e4-desempenho-faixas-oof}
+\begin{tabular}{@{}lrrcccccccc@{}}
+\toprule
+Faixa & Pares & Vínculos & AUC & AP & Brier & VP & FP & FN & Sensib. & Prec. \\
+\midrule
+$<5$ & 39.981 & 3 & 0,8286 & 0,113 & 0,0001 & 0 & 2 & 3 & 0,000 & 0,000 \\
+5--6 & 14.263 & 17 & 0,9995 & 0,721 & 0,0007 & 12 & 7 & 5 & 0,706 & 0,632 \\
+6--7 & 6.175 & 57 & 0,9839 & 0,855 & 0,0023 & 45 & 1 & 12 & 0,789 & 0,978 \\
+7--8 & 1.080 & 43 & 0,9951 & 0,922 & 0,0096 & 33 & 4 & 10 & 0,767 & 0,892 \\
+8--9 & 102 & 34 & 0,9131 & 0,873 & 0,1360 & 29 & 16 & 5 & 0,853 & 0,644 \\
+$\geq9$ & 95 & 93 & 0,9382 & 0,998 & 0,0373 & 89 & 2 & 4 & 0,957 & 0,978 \\
+\midrule
+Área cinza ($5\leq s<9$) & 21.620 & 151 & 0,9951 & 0,862 & 0,0022 & 119 & 28 & 32 & 0,788 & 0,810 \\
+Total & 61.696 & 247 & 0,9955 & 0,911 & 0,0009 & 208 & 32 & 39 & 0,842 & 0,867 \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\par\footnotesize Nota: faixas fechadas à esquerda e abertas à direita. VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos com \texttt{p\_cal\_ml} $\geq 0{,}5$. Fonte: \texttt{data/desempenho\_faixas\_oof\_refrec.csv}.
+\end{table}
