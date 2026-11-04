@@ -500,7 +500,7 @@ def _write_readme(df: pd.DataFrame, out_path: Path) -> None:
             "",
             "## Licenca / License",
             "",
-            "CC-BY-NC-4.0",
+            "MIT",
             "",
             "## Citacao sugerida / Suggested citation",
             "",
@@ -530,7 +530,7 @@ def _write_metadata(out_path: Path) -> None:
                     "affiliation": "IESC - UFRJ",
                 }
             ],
-            "license": "cc-by-nc-4.0",
+            "license": "mit",
             "keywords": [
                 "record linkage",
                 "tuberculose",
