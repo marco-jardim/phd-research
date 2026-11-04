@@ -9,15 +9,15 @@
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
  & Configura\c{c}\~ao & F1 & Configura\c{c}\~ao & F1 \\
 \midrule
-Decis\~ao de limiar & Escore$\geq$8 & 0.610 & Escore$\geq$8 & 0.610 \\
-Somente regras & Rules-only ($\geq$6) & 0.842 & Rules-only ($\geq$6) & 0.842 \\
-Somente ML & RF+SMOTE ($\geq$0.5) & 0.931 & XGBoost ($\geq$0.7) & \textbf{0.943} \\
-H\'ibrido AND & RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 0.912 & XGBoost $\geq$0.5 + Rules$\geq$5 & 0.442 \\
-H\'ibrido OR & RF+SMOTE $\geq$0.7 + Rules$\geq$9 & 0.921 & XGBoost $\geq$0.7 + Rules$\geq$8 & 0.943 \\
-Cascata ML$\rightarrow$Rules & RF+SMOTE $\geq$0.5 $\rightarrow$ Rules$\geq$7 & 0.853 & XGBoost $\geq$0.3 $\rightarrow$ Rules$\geq$7 & 0.000$^{*}$ \\
-Cascata Rules$\rightarrow$ML & Rules$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0.5 & 0.912 & Rules$\geq$5 $\rightarrow$ XGBoost $\geq$0.5 & 0.442 \\
-Consenso ML & Majority (th=0.7, 3 models) & 0.928 & Majority (th=0.7, 3 models incl. XGBoost) & 0.943 \\
-Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & Majority (th=0.5) AND Rules$\geq$6 & 0.150$^{\dagger}$ \\
+Decis\~ao de limiar & Nota final$\geq$8 & 0,610 & Nota final$\geq$8 & 0,610 \\
+Somente regras & Regras ($\geq$6) & 0,842 & Regras ($\geq$6) & 0,842 \\
+Somente ML & RF+SMOTE ($\geq$0,5) & 0,931 & XGBoost ($\geq$0,7) & \textbf{0,943} \\
+H\'ibrido AND & RF+SMOTE $\geq$0,5 + Regras$\geq$5 & 0,912 & XGBoost $\geq$0,5 + Regras$\geq$5 & 0,442 \\
+H\'ibrido OR & RF+SMOTE $\geq$0,7 + Regras$\geq$9 & 0,921 & XGBoost $\geq$0,7 + Regras$\geq$8 & 0,943 \\
+Cascata ML$\rightarrow$Regras & RF+SMOTE $\geq$0,5 $\rightarrow$ Regras$\geq$7 & 0,853 & XGBoost $\geq$0,3 $\rightarrow$ Regras$\geq$7 & 0,000$^{*}$ \\
+Cascata Regras$\rightarrow$ML & Regras$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0,5 & 0,912 & Regras$\geq$5 $\rightarrow$ XGBoost $\geq$0,5 & 0,442 \\
+Consenso ML & Consenso (limiar 0,7; 3 modelos) & 0,928 & Consenso (limiar 0,7; 3 modelos, incl. XGBoost) & 0,943 \\
+Consenso+Regras & Consenso AND Regras$\geq$6 & 0,896 & Consenso (limiar 0,5) AND Regras$\geq$6 & 0,150$^{\dagger}$ \\
 \bottomrule
 \end{tabular}
 \vspace{2pt}
