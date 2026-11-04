@@ -1,6 +1,6 @@
 \subsection{Calibração Probabilística por Âncoras}
 
-A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um par verdadeiro (\textit{match}).
+A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}).
 
 Adota-se a forma sigmoide do \textit{Platt scaling} \cite{Platt1999}, com ajuste por momentos nas âncoras (Platt por âncoras), distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
 
@@ -50,7 +50,7 @@ Sejam $C_{FP}>0$ e $C_{FN}>0$ os custos unitários de um falso positivo e de um 
 \end{aligned}
 \]
 
-Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um custo fixo operacional $C_{LLM}$ e modela-se a falibilidade do revisor através de suas proporções de erro $e_{FP}$ (probabilidade de o revisor aceitar um não-par) e $e_{FN}$ (probabilidade de o revisor rejeitar um par verdadeiro). A \textit{expected loss} da revisão é:
+Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um custo fixo operacional $C_{LLM}$ e modela-se a falibilidade do revisor através de suas proporções de erro $e_{FP}$ (probabilidade de o revisor aceitar um não-par) e $e_{FN}$ (probabilidade de o revisor rejeitar um vínculo). A \textit{expected loss} da revisão é:
 
 \begin{proposition}[Afinidade da perda de revisão]
 \label{prop:review-loss-affine}
@@ -187,7 +187,7 @@ Suponha que o modelo discriminativo produz probabilidades perfeitamente calibrad
 p = \frac{\pi \cdot R}{\pi \cdot R + (1 - \pi)}
 \]
 
-onde $\pi = P(M)\in(0,1)$ é conhecida e denota a prevalência de pares verdadeiros na população de candidatos. Suponha adicionalmente que o revisor é perfeito ($e_{FP} = e_{FN} = 0$), que os custos $C_{FP},C_{FN}>0$ são constantes e que $0<C_{LLM}<H=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. Sem randomização nas fronteiras, com preferência por ações automáticas nos empates, a política ótima define dois limiares:
+onde $\pi = P(M)\in(0,1)$ é conhecida e denota a prevalência de vínculos na população de candidatos. Suponha adicionalmente que o revisor é perfeito ($e_{FP} = e_{FN} = 0$), que os custos $C_{FP},C_{FN}>0$ são constantes e que $0<C_{LLM}<H=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. Sem randomização nas fronteiras, com preferência por ações automáticas nos empates, a política ótima define dois limiares:
 
 \[
 T_\mu^{GZ} = \frac{1-\pi}{\pi} \cdot \frac{C_{FP} - C_{LLM}}{C_{LLM}} \quad \text{(limiar superior)}

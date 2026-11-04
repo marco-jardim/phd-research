@@ -14,6 +14,7 @@ Uso:
 from __future__ import annotations
 
 import argparse
+import re
 import shutil
 import subprocess
 import sys
@@ -116,7 +117,7 @@ def build(
     outname: str | None = None,
     timestamp: bool = False,
 ) -> int:
-    """Full build chain: pdflatex → bibtex → makeindex → pdflatex × 2.
+    """Full build chain: pdflatex → bibtex → makeindex → pdflatex until stable.
 
     Notes (Windows): if the output PDF is open, pdflatex may fail to overwrite it.
     Use --timestamp or --jobname to compile to a different PDF name.
@@ -240,6 +241,28 @@ def build(
         if rc != 0:
             print("[ERRO] pdflatex falhou na 3a passada.")
             return 1
+
+        # Cross-references can need more than three passes after layout changes.
+        log_path = SRC_DIR / f"{effective_jobname}.log"
+        for pass_number in range(4, 7):
+            log_text = log_path.read_text(encoding="latin1")
+            if not re.search(
+                r"Rerun to |rerun LaTeX|Label\(s\) may have changed", log_text
+            ):
+                print(f"  pdflatex estabilizado em {pass_number - 1} passadas.")
+                break
+            if pass_number == 6:
+                print("[ERRO] Referencias nao estabilizaram apos 5 passadas.")
+                return 1
+            rc = run(
+                pdflatex_cmd,
+                cwd=SRC_DIR,
+                verbose=verbose,
+                label=f"  pdflatex ({pass_number}a passada, estabilizacao)...",
+            )
+            if rc != 0:
+                print(f"[ERRO] pdflatex falhou na {pass_number}a passada.")
+                return 1
 
     # --- Copy PDF ---
     src_pdf = SRC_DIR / f"{effective_jobname}.pdf"

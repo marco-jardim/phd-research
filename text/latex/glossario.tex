@@ -25,7 +25,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Claude Sonnet 5.5] Modelo de linguagem de grande porte da Anthropic, de custo por \textit{token} vinte vezes superior ao do Claude Haiku 5.5, avaliado nas mesmas coortes e dossiês. Suas respostas não alimentam as proporções da política.
 
-\item[Classificação] Tarefa de aprendizado supervisionado que atribui rótulos discretos (par verdadeiro ou não-par) a instâncias com base em atributos preditores.
+\item[Classificação] Tarefa de aprendizado supervisionado que atribui rótulos discretos (vínculo ou não-par) a instâncias com base em atributos preditores.
 
 \item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2024comparador} do algoritmo proposto por Lucena \cite{Lucena2013algoritmos}.
 
@@ -37,7 +37,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[DeepSeek V4.1 Flash] Modelo de linguagem de grande porte da DeepSeek, avaliado como revisor independente do Claude Haiku 5.5 na replicação da revisão assistida, com raciocínio desligado. Sem as saídas do motor, produziu muitos inconclusivos e falsos positivos, e não alimenta a política.
 
-\item[Desbalanceamento de classes] Situação em que uma classe (tipicamente os pares verdadeiros) é muito menos frequente que a outra (não-pares), podendo comprometer o desempenho de classificadores.
+\item[Desbalanceamento de classes] Situação em que uma classe (tipicamente os vínculos) é muito menos frequente que a outra (não-pares), podendo comprometer o desempenho de classificadores.
 
 \item[Dossiê de revisão] Representação estruturada de um potencial par, submetida ao módulo de revisão assistida por modelo de linguagem. Na versão v3, continha subescores, nota final, medidas contínuas de diferença de datas (MACD) e as saídas do motor (probabilidade calibrada, banda, valor esperado da revisão e códigos de guarda); na v4, as saídas do motor foram retiradas, por indício de ancoragem do revisor.
 
@@ -81,9 +81,9 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Pipeline}] Sequência operacional de etapas analíticas e decisórias, desde a preparação dos dados até a geração de resultados.
 
-\item[Par candidato] Combinação de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para comparação detalhada (potencial par).
+\item[Potencial par] Combinação de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para comparação detalhada (potencial par).
 
-\item[Par verdadeiro] Par de registros que se refere ao mesmo indivíduo, confirmado por revisão manual ou padrão-ouro (vínculo).
+\item[Vínculo] Par de registros que se refere ao mesmo indivíduo, confirmado por revisão manual ou padrão-ouro (vínculo).
 
 \item[\textit{Platt scaling}] Técnica de pós-processamento que ajusta os escores brutos de um classificador por meio de regressão logística (função sigmoide), convertendo-os em probabilidades calibradas. Na execução histórica v3, foi aplicada de forma supervisionada à nota final; o ajuste por momentos nas âncoras é uma variante avaliada como alternativa.
 
@@ -103,7 +103,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Linkage} probabilístico] Estratégia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
 
-\item[Sensibilidade] Proporção de pares verdadeiros corretamente identificados pelo classificador dentre todos os pares verdadeiros existentes.
+\item[Sensibilidade] Proporção de vínculos corretamente identificados pelo classificador dentre todos os vínculos existentes.
 
 \item[SHAP] \textit{SHapley Additive exPlanations}. Método de interpretabilidade baseado na teoria de jogos cooperativos que atribui a cada atributo uma contribuição marginal para a previsão individual do classificador.
 
