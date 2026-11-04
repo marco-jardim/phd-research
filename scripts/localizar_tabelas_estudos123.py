@@ -73,6 +73,7 @@ def main() -> None:
             "\\quad Faixa 7--8 & 14 (51,9\\%) & 0 (0,0\\%) \\\\",
             "\\quad Faixa 7--8 & 14 (51,9\\%) & 0 (0,0\\%) \\\\\n" + linha,
         )
+    text = text.replace("5--6", "5-6").replace("6--7", "6-7").replace("7--8", "7-8")
     perfil.write_text(text, encoding="utf-8")
     print("[OK] tab_perfil_recuperados.tex")
 

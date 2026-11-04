@@ -8,7 +8,7 @@
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 
-\REQUIRE \parbox[t]{0.85\linewidth}{Conjunto de pares candidatos $P$ com escores brutos $\{s_i\}$;
+\REQUIRE \parbox[t]{0.85\linewidth}{Conjunto de potenciais pares $P$ com escores brutos $\{s_i\}$;
   parâmetros $(C_{FP}, C_{FN}, C_{LLM}, e_{FP}, e_{FN})$;
   conjuntos âncora $A^+$ e $A^-$; orçamento de revisão $B$.}
 \ENSURE \parbox[t]{0.85\linewidth}{Decisão $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{review}\}$ para cada par $i$,
@@ -101,7 +101,7 @@
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 
-\REQUIRE \parbox[t]{0.85\linewidth}{Pares candidatos $P$ com nota final $v_i$ e 29 subescores $x_i$; \textit{labels} apenas no treinamento;
+\REQUIRE \parbox[t]{0.85\linewidth}{Potenciais pares $P$ com nota final $v_i$ e 29 subescores $x_i$; \textit{labels} apenas no treinamento;
   custos $(C_{FP}, C_{FN}, C_H, C_{LLM})$; erro humano hipotético $(e_{FP,h}, e_{FN,h})$;
   proporções de erro e de inconclusivos do revisor LLM por modo e banda $(e_{FP}, e_{FN}, u)$; orçamentos de revisão LLM e humana.}
 \ENSURE \parbox[t]{0.85\linewidth}{Ação $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{llm}, \textsc{humano}\}$ para cada par $i$;
