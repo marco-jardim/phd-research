@@ -128,7 +128,7 @@ abaixo do qual a revisão é economicamente justificável para ao menos alguns p
 
 \subsection{Relaxamento das Hipóteses de Fellegi e Sunter}
 
-O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na razão de verossimilhança $R = P(\gamma\mid M) / P(\gamma\mid U)$ e na determinação de dois limiares, $T_\lambda$ (inferior) e $T_\mu$ (superior), que minimizam a probabilidade de revisão clerical para níveis fixos de erro $\mu$ (falso positivo) e $\lambda$ (falso negativo). O GZ-CMD adota outra parametrização da triagem, com duas diferenças:
+O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na razão de verossimilhança $R = P(\gamma\mid M) / P(\gamma\mid U)$ e na determinação de dois limiares, $T_\lambda$ (inferior) e $T_\mu$ (superior), que minimizam a probabilidade de revisão clerical para níveis fixos de erro $\mu$ (falso positivo) e $\lambda$ (falso negativo). Extensões desse modelo permitem o tratamento de dados de tipos mistos \cite{Vo2023extending}. O GZ-CMD adota outra parametrização da triagem, com duas diferenças:
 
 \begin{enumerate}
 \item \textbf{Modelagem das dependências:} Implementações de Fellegi e Sunter frequentemente assumem que os campos de comparação são condicionalmente independentes, $P(\gamma\mid M) = \prod P(\gamma_i\mid M)$, embora essa hipótese não seja necessária à regra de decisão baseada na razão de verossimilhança. O GZ-CMD, ao empregar um modelo discriminativo (como Random Forest ou Gradient Boosting), pode representar interações não lineares entre atributos sem impor essa independência; a calibração das probabilidades requer avaliação própria.
