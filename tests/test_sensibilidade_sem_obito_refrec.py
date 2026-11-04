@@ -21,6 +21,14 @@ def sintetico():
     return df, X, y
 
 
+def test_sha256_independe_dos_fins_de_linha(tmp_path):
+    crlf = tmp_path / "crlf.txt"
+    lf = tmp_path / "lf.txt"
+    crlf.write_bytes(b"a\r\nb\r\n")
+    lf.write_bytes(b"a\nb\n")
+    assert sens.sha256(crlf) == sens.sha256(lf)
+
+
 def test_limpar_nan_recursivo_e_json_estrito():
     original = {"ausencias": [float("nan"), float("inf"), -float("inf"), pd.NA, pd.NaT],
                 "aninhado": ({"float": np.float32(0.5), "int": np.int64(42)},
