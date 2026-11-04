@@ -1,0 +1,21 @@
+indice,subescore,n,concordancia,diferenca_maxima,mecanismo
+0,paciente_primeiro,500,0.916,1.0,contador; dígitos
+1,paciente_ultimo,500,0.932,1.0,contador; dígitos
+2,paciente_iguais,500,0.848,1.0,contador; precisão; dígitos
+3,paciente_raros,500,0.568,1.0,tabelas de frequência; nome único; contador
+4,paciente_comuns,500,0.392,1.0,tabelas de frequência; nome único; contador
+5,paciente_soundex,500,0.888,0.8,Soundex; contador; precisão
+6,paciente_abreviacoes,500,0.992,0.25,contador; precisão; dígitos
+7,mae_primeiro,500,0.928,1.0,contador; dígitos
+8,mae_ultimo,500,0.932,1.0,contador; dígitos
+9,mae_iguais,500,0.864,1.0,contador; precisão; dígitos
+10,mae_raros,500,0.48,2.0,tabelas de frequência; nome único; contador
+11,mae_comuns,500,0.708,2.0,tabelas de frequência; nome único; contador
+12,mae_soundex,500,0.896,0.8,Soundex; contador; precisão
+13,mae_abreviacoes,500,0.992,0.25,contador; precisão; dígitos
+14,data_igual,500,1.0,0.0,sem divergência
+15,data_um_digito,500,1.0,0.0,sem divergência
+16,data_inverte_dia,500,0.824,1.0,peso da inversão; reconhecimento
+17,data_inverte_mes,500,0.768,1.0,peso da inversão; reconhecimento
+18,data_inverte_ano,500,0.756,0.8,peso da inversão; reconhecimento
+19,nota_final,500,0.112,4.0,soma dos componentes
