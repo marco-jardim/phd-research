@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{Classificadores do QW1 nos quatro cenários de sensibilidade, limiar 0,5.}
+\label{tab:sensibilidade-qw1}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrrr}
+\toprule
+ & \multicolumn{2}{c}{A} & \multicolumn{2}{c}{B} & \multicolumn{2}{c}{C} & \multicolumn{2}{c}{D} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Modelo & $F_1$ & VP/FP & $F_1$ & VP/FP & $F_1$ & VP/FP & $F_1$ & VP/FP \\
+\midrule
+Random Forest & 0,925 & 68/5 & 0,925 & 68/5 & 0,816 & 62/18 & 0,840 & 63/15 \\
+MLP (128,64) & 0,893 & 71/14 & 0,908 & 69/9 & 0,851 & 63/13 & 0,869 & 63/10 \\
+MLP (64,32) & 0,922 & 65/2 & 0,892 & 62/3 & 0,867 & 62/9 & 0,886 & 62/6 \\
+TabNet & 0,841 & 58/6 & 0,803 & 55/8 & 0,845 & 60/10 & 0,851 & 57/5 \\
+XGBoost & 0,937 & 67/2 & 0,944 & 68/2 & 0,878 & 65/11 & 0,878 & 65/11 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\textwidth}\footnotesize Fonte: execução local, agregados em \path{data/qw1_sensibilidade/holdout.csv}. A/B: linha, 58/56 atributos, 18.509 potenciais pares e 74 vínculos no teste; C/D: REFREC, 58/56 atributos, 18.304 potenciais pares e 72 vínculos. VP/FP: verdadeiros/falsos positivos; limiar 0,5 fixo. GPU NVIDIA GeForce RTX 3080 (Random Forest em CPU; MLP com álgebra CUDA e Adam em CPU). PyTorch 2.11.0+cu128, scikit-learn 1.9.1, pytorch-tabnet 4.1.0 e XGBoost 3.4.1. Em relação ao QW1 histórico na L4, diferem hardware, versões e partição por linha do script comparativo. XGBoost com 300 árvores, não as 100 do fluxo Modal da ablação; TabNet com dimensão 16 e 100 épocas, sem validação interna. Limiar fixo, sem seleção no teste nesta reexecução ou no comparativo QW1; a seleção histórica no teste refere-se à ablação.
+\end{minipage}
+\end{table}
