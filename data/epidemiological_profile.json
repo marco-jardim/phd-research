@@ -1,0 +1,37 @@
+{
+  "definicao": "recuperados = RF+SMOTE>=0.5 e nota final <8, entre vinculos verdadeiros do teste",
+  "recuperados": {
+    "n": 27,
+    "idade_media": 50.5,
+    "idade_dp": 13.6,
+    "idade_n_validos": 27,
+    "sexo_masculino": 18,
+    "sexo_feminino": 9,
+    "sexo_outro": 0,
+    "nota_media": 6.88,
+    "faixas": {
+      "5-6": 3,
+      "6-7": 10,
+      "7-8": 14,
+      "8-9": 0,
+      "9-11": 0
+    }
+  },
+  "ja_encontrados": {
+    "n": 40,
+    "idade_media": 50.2,
+    "idade_dp": 18.7,
+    "idade_n_validos": 40,
+    "sexo_masculino": 25,
+    "sexo_feminino": 15,
+    "sexo_outro": 0,
+    "nota_media": 10.03,
+    "faixas": {
+      "5-6": 0,
+      "6-7": 0,
+      "7-8": 0,
+      "8-9": 9,
+      "9-11": 21
+    }
+  }
+}
