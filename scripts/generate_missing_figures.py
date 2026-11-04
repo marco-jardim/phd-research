@@ -581,6 +581,7 @@ def fig_feature_heatmap() -> None:
     all_bands = sorted(pivot.columns.tolist())
     band_order_candidates = [
         ["baixo (0-5)", "cinza-baixo (5-6)", "cinza-médio (6-7)", "cinza-alto (7-8)"],
+        ["baixo (0-5)", "cinza-baixo (5-6)", "cinza-medio (6-7)", "cinza-alto (7-8)"],
         ["baixo(0-5)", "cinza-inferior(5-7)", "cinza-superior(7-8)", "alto(8+)"],
     ]
     band_order = all_bands  # fallback
@@ -598,6 +599,7 @@ def fig_feature_heatmap() -> None:
         "baixo (0-5)": "Baixo\n(0-5)",
         "cinza-baixo (5-6)": "Cinza baixo\n(5-6)",
         "cinza-médio (6-7)": "Cinza médio\n(6-7)",
+        "cinza-medio (6-7)": "Cinza médio\n(6-7)",
         "cinza-alto (7-8)": "Cinza alto\n(7-8)",
         "baixo(0-5)": "Baixo\n(0-5)",
         "cinza-inferior(5-7)": "Cinza inf.\n(5-7)",
