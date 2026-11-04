@@ -125,21 +125,23 @@ A tese reorganiza a decisão posterior ao CdR. Não reestima os parâmetros de c
 \itens{\item Compara nome, nome da mãe, nascimento, município e endereço
 \item Produz 29 subescores e uma nota final ponderada
 \item Pesos internos fixos: o aprendizado de máquina modifica a decisão, não esses pesos
-\item Equivalência parcial com o protótipo Java: não executada}
-% Captura da GUI ausente no worktree. Quando disponível e revisada:
-% \includegraphics[width=.55\textwidth]{../../figures/fig_cdr_gui_EXEMPLO.png}
+\item Protótipo Java de Peçanha (2015): equivalência parcial executada}
+\begin{center}
+\includegraphics[width=.55\textwidth,height=.32\textheight,keepaspectratio]{../../figures/fig_cdr_gui_mapeamento.png}\par
+{\tiny Interface do Comparador de Registros, versão 0.1 (commit 3b43598), dados sintéticos}
+\end{center}
 \fonte{estudo1\_comparador.tex, ``Comparador de registros'' e resultados}
 \end{frame}
 
-\begin{frame}{Estudo 1: o que os subescores permitem interpretar}
-\itens{\item SHAP descreve contribuições à predição, não relações causais
-\item Penalidade por nome comum não mede concordância do campo
-\item Ablação e QW1: 28 subescores + nota, com derivados, totalizam 58 atributos
-\item GZ-CMD: 29 subescores + nota, totalizam 30 atributos, sem indicadores de óbito}
-\begin{block}{Separação necessária}
-A interpretação depende do modelo, da escala de saída e da representação efetivamente utilizada.
+\begin{frame}{Estudo 1: equivalência Java e Python em pares sintéticos}
+\itens{\item Data por igualdade e por um dígito: concordância de 100,0\%
+\item Abreviações: concordância de 99,2\%
+\item Nota final idêntica em 11,2\% dos 500 pares sintéticos
+\item Inversões de data: peso 0,8 em Lucena e no Java, 1,0 no Python}
+\begin{block}{Limitação mantida e declarada}
+As implementações não são equivalentes. O lote de fronteira não estima a concordância em dados reais; a tese utiliza os subescores e a nota do Python.
 \end{block}
-\fonte{estudo1\_comparador.tex, engenharia e SHAP; estudo4\_gzcmd.tex, classificador OOF}
+\fonte{estudo1\_comparador.tex, resultados e discussão; tab:equivalencia-java}
 \end{frame}
 
 % 11 a 13: estudo 2
@@ -214,11 +216,12 @@ Denominador: 74 vínculos no teste. São óbitos de pessoas notificadas por TB, 
 \itens{\item Atributos \texttt{obito\_*} no QW1 e na ablação constituem vazamento de alvo
 \item Partição por linha permite dependência entre treinamento e teste
 \item Escolha dos limiares nos testes pode inflar os valores selecionados
-\item Reexecução sem esses atributos e com agrupamento: trabalho futuro}
+\item Sensibilidade $2\times2$, RF+SMOTE: $F_1$ de 0,931 para 0,938 sem óbito e 0,846 com REFREC
+\item QW1 na GPU, XGBoost: $F_1$ de 0,937 para 0,878 com REFREC}
 \begin{block}{Não transferir a limitação para outro protocolo}
-O GZ-CMD usa 30 atributos, sem \texttt{obito\_*}, e OOF agrupado por REFREC; permanece a dependência possível pelo lado COMPREC.
+O otimismo aparece sobretudo na partição por linha; os vínculos e denominadores mudam. O GZ-CMD usa 30 atributos, sem \texttt{obito\_*}, e OOF por REFREC; permanece dependência por COMPREC.
 \end{block}
-\fonte{estudo2\_classificadores.tex, limitações; estudo3\_estrategias.tex, limitações; estudo4\_gzcmd.tex}
+\fonte{apendice\_sensibilidade.tex; tab:sensibilidade-2x2; tab:sensibilidade-qw1}
 \end{frame}
 
 % 17 a 22: estudo 4
@@ -368,12 +371,12 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 \fonte{capitulo\_dados.tex, padrão-ouro; estudos 2 e 3, limitações; estudo4\_gzcmd.tex, cascata e limitações}
 \end{frame}
 
-\begin{frame}{Limitações: transferência, privacidade e entregas pendentes}
+\begin{frame}{Limitações: transferência e privacidade}
 \itens{\item Uma coorte municipal, sem validação externa da cascata
 \item Dados pseudonimizados, não anônimos; APIs externas no processamento LLM
-\item Exportação restrita e HMAC são propostas futuras, não controles entregues
+\item Exportação restrita com \texttt{pair\_id} por HMAC implementada, matriz não depositada
 \item Base legal: LGPD, arts. 7º, IV, 11, II, c, e 13; autor sem acesso aos registros nominais
-\item Equivalência Java e comparação empírica com Lages não executadas}
+\item Equivalência Java parcial executada; comparação empírica com Lages não realizada}
 \fonte{capitulo\_dados.tex, acesso e ética; estudo1\_comparador.tex, resultados; conclusão, limitações}
 \end{frame}
 
@@ -390,11 +393,11 @@ As projeções com humano não substituem avaliação no serviço. A contribuiç
 \end{frame}
 
 \begin{frame}{Contribuições e agenda de validação}
-\itens{\item CdR em Python documentado, sem equivalência Java demonstrada
+\itens{\item CdR em Python documentado, com equivalência Java parcial avaliada
 \item Comparação de classificadores na base 1:249 e desempenho por faixa
 \item Balanceamento avaliado no Random Forest, com limites de protocolo explícitos
 \item GZ-CMD: composição operacional de guardas, calibração, custos e revisão
-\item Pacote e artefatos pseudonimizados para reprodução, com ressalvas de acesso
+\item Pacote 0.4.0 com v3.1 e artefatos no Zenodo 3.0.1, com ressalvas de acesso
 \item Próxima avaliação: referência independente, revisão humana observada e transferência externa}
 \fonte{conclusao.tex, contribuições e perspectivas; estudos 1 a 5}
 \end{frame}
@@ -555,7 +558,7 @@ L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \itens{\item Extrato com datas completas, sexo, bairro e identificadores internos: pseudonimizado
 \item Dossiê LLM sem nomes, mas enviado a APIs externas
 \item Identificador de par: hash determinístico sem sal, recalculável por detentores dos identificadores
-\item Exportação restrita e HMAC: trabalho futuro
+\item Exportação restrita com HMAC: \texttt{scripts/export\_matriz\_desidentificada.py}, matriz não depositada
 \item Autor trabalhou apenas com o extrato pseudonimizado, sem acesso à correspondência com pessoas
 \item Artefatos publicados não tornam reexecutáveis etapas que exigem campos ausentes do depósito}
 \fonte{capitulo\_dados.tex, acesso, ética e ambiente computacional; conclusao.tex}
