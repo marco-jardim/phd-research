@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Base da apresentação: tese em `dc25212`, após T5. A numeração abaixo corresponde aos quadros do PDF, sem sobreposições. O tempo é uma estimativa para ensaio, não uma duração medida. Os slides 31 a 42 ficam reservados às perguntas, fora dos 40 minutos.
+Base da apresentação: tese em `8d63b3b`, com os resultados de equivalência e sensibilidade. A numeração abaixo corresponde aos quadros do PDF, sem sobreposições. O tempo é uma estimativa de apresentação, não uma duração medida. Os slides 31 a 42 ficam reservados às perguntas, fora dos 40 minutos. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
@@ -48,10 +48,10 @@ As faixas são da nota final do CdR, não do escore probabilístico do OpenRecLi
 O referencial clássico organiza a decisão entre vínculo, não-vínculo e revisão. A tese trabalha depois da geração dos potenciais pares e do cálculo dos subescores, reorganizando a decisão sobre a saída do CdR, sem reestimar os parâmetros de comparação nem substituir a blocagem do OpenRecLink.
 
 ### 9. Comparador em Python
-O comparador torna explícita a evidência campo a campo, com subescores e uma nota ponderada por pesos fixos. A implementação em Python foi documentada, mas a equivalência parcial com o protótipo Java não foi executada; não se apresenta uma interface do GZ-CMD nem se simula uma captura de tela ausente.
+O comparador torna explícita a evidência campo a campo, com subescores e uma nota ponderada por pesos fixos. A equivalência parcial com o protótipo Java de Peçanha (2015) foi executada em pares sintéticos. A captura apresenta a interface do Comparador de Registros, versão 0.1, commit 3b43598, com dados sintéticos, não uma interface do GZ-CMD.
 
-### 10. Interpretação dos atributos
-SHAP informa a contribuição dos atributos à predição, sem interpretação causal, e uma penalidade por nome comum não deve ser chamada de concordância. Os vetores também diferem: a ablação e o QW1 usam 58 atributos, enquanto o GZ-CMD usa os 29 subescores e a nota, sem indicadores de óbito.
+### 10. Equivalência Java e Python
+A comparação em 500 pares sintéticos encontrou concordância de 100,0% nas datas por igualdade e por um dígito, de 99,2% nas abreviações e nota final idêntica em 11,2%. Nas inversões de data, Lucena e o Java atribuem peso 0,8, enquanto o Python usa 1,0. Essa diferença foi mantida e declarada como limitação. O lote de fronteira não estima concordância nos dados reais.
 
 ### 11. Comparação de protocolos
 RF+SMOTE atingiu F1 de 0,931 na ablação original, e o XGBoost do fluxo Modal atingiu 0,943, contra 0,610 do limiar 8. O XGBoost do QW1 atingiu 0,920 no teste; os protocolos não são intercambiáveis, e a escolha dos limiares nos testes torna os resultados selecionados exploratórios.
@@ -69,7 +69,7 @@ A vigilância atribui maior consequência à perda do vínculo, enquanto a confi
 No teste da ablação, o RF+SMOTE detectou 67 vínculos e o limiar 8 detectou 43, uma diferença líquida de 24, ou 55,8%. São 27 recuperados exclusivamente pelo modelo, menos três exclusivos do limiar; esse resultado tem como denominador 74 vínculos do teste e não mede o impacto da cascata final.
 
 ### 16. Limites do impacto
-Os indicadores derivados do encerramento por óbito constituem vazamento de alvo, e a partição por linha pode compartilhar registros entre treinamento e teste. Essas limitações atingem o QW1 e a ablação, não os atributos nem a partição por REFREC do GZ-CMD, embora permaneça a dependência possível pelo lado COMPREC.
+Os indicadores derivados do encerramento por óbito constituem vazamento de alvo. A sensibilidade 2×2 foi executada: o F1 do RF+SMOTE passou de 0,931 para 0,938 sem óbito, mas caiu para 0,846 com REFREC. No QW1 local na GPU, o XGBoost passou de 0,937 para 0,878 com REFREC, sem substituir o resultado histórico de 0,920. O otimismo aparece sobretudo na partição por linha, embora mudem os vínculos e denominadores. O GZ-CMD já utiliza agrupamento por REFREC, sem indicadores de óbito; permanece possível dependência por COMPREC.
 
 ### 17. Arquitetura atual
 As guardas da v3.1 são regras pela nota e pela probabilidade, distintas dos filtros históricos da v3. Depois delas, as faixas informam o perfil de erro do revisor, a probabilidade calibrada alimenta a comparação de custos, e os casos escolhidos seguem ao LLM ou diretamente ao revisor humano.
@@ -102,13 +102,13 @@ Os estudos anteriores já apresentam classificação supervisionada, balanceamen
 O padrão-ouro incorpora decisões de uma revisora e do corte, e a avaliação continua condicional à blocagem. O agrupamento por REFREC não separa simultaneamente COMPREC, e as proporções do revisor usam respostas de lotes selecionados adaptativamente, impedindo tratar a cascata como validação prospectiva.
 
 ### 27. Limitações de transferência e governança
-O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas; exportação restrita, HMAC e reconferência documental não podem ser apresentados como salvaguardas já entregues, assim como não foram executadas a equivalência Java e a comparação com Lages.
+O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas. A exportação restrita com identificador de par por HMAC foi implementada em `scripts/export_matriz_desidentificada.py`, mas a matriz não foi depositada e não se afirma saneamento retroativo das execuções. A equivalência Java parcial foi executada; a comparação empírica com Lages não foi realizada.
 
 ### 28. Conclusões
 A vigilância aceita automaticamente a maior parte dos vínculos, assumindo o custo observado de 34 falsos positivos. A confirmação concentra o esforço humano nos potenciais pares ainda intermediários; reconhecer esse limite faz parte do resultado, não representa falha a ser escondida por uma projeção com revisor perfeito.
 
 ### 29. Contribuições
-As entregas incluem comparador, avaliação dos estimadores e das faixas, pacote decisório e artefatos pseudonimizados de reprodução, com limites declarados. O passo seguinte requer referência independente, observação da revisão humana e avaliação externa, não apenas ajuste adicional do classificador na mesma base.
+As entregas incluem comparador com equivalência parcial avaliada, estimadores e faixas, pacote decisório 0.4.0 com política v3.1 e artefatos pseudonimizados no Zenodo 3.0.1, com limites declarados. A busca Scopus foi executada, sem novos estudos incluídos. O passo seguinte requer referência independente, observação da revisão humana e avaliação externa, não apenas ajuste adicional do classificador na mesma base.
 
 ### 30. Agradecimentos
 O trabalho dependeu da orientação, da equipe responsável pelos dados e da revisão clerical que permitiu a avaliação. A mensagem de encerramento é a transformação da área cinza em decisão, preservando o papel do profissional do serviço onde a evidência não permite avançar automaticamente.
@@ -147,15 +147,15 @@ As perdas incorporam probabilidade, consequências do erro e custo da revisão. 
 Os exercícios de exclusão e de expectativas por banda avaliam dependências das escolhas e não são intervalos de confiança. A sobreposição residual e a seleção adaptativa permanecem, mesmo quando os valores se aproximam da cascata observada.
 
 ### 42. Backup: privacidade
-A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico pode ser recalculado por quem detém os identificadores de origem, e a documentação de acesso e transferência exige reconferência.
+A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
 
 ## Perguntas prováveis
 
-O plano histórico contém dez perguntas, embora o pedido especifique nove. A primeira resposta reúne a pertinência do probabilístico e o escopo do módulo Python, preservando os dez temas em nove respostas novas. Cada resposta tem menos de 70 palavras, para duração estimada de até 30 segundos, a confirmar em ensaio. As fontes usam as seções e os identificadores estáveis da tese, sem depender da paginação do PDF.
+O plano histórico contém dez perguntas, reunidas em nove respostas. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. Cada resposta tem no máximo 70 palavras, para duração estimada de até 30 segundos. As fontes usam as seções e os identificadores estáveis da tese, sem depender da paginação do PDF.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
-O OpenRecLink produziu os potenciais pares e seu corte aceitou 211 dos 247 vínculos, ou 85,4%. A entrega em Python é o CdR e o pós-processamento decisório, não a blocagem nem o OpenRecLink completo. A equivalência parcial com o protótipo Java não foi executada. A proposta complementa a rotina existente, explicitando quando aceitar, rejeitar ou revisar.
+O corte do OpenRecLink aceitou 211/247 vínculos, ou 85,4%. A entrega Python é o CdR, não a blocagem. A equivalência com o Java de Peçanha (2015) foi avaliada: 100,0% nas datas por igualdade/um dígito, 99,2% nas abreviações e nota idêntica em 11,2% dos pares sintéticos. Inversões pesam 0,8 em Lucena/Java e 1,0 no Python, limitação declarada. Não há equivalência integral.
 
 Fonte: `capitulo_dados.tex`, seção Padrão-ouro (`sec:padrao-ouro`); `estudo1_comparador.tex`, Resultados (`sec:e1-resultados`). Slides 6, 8 e 9.
 
@@ -213,22 +213,27 @@ Figuras reaproveitadas, sem alterar os originais:
 
 | Slide | Arquivo | Uso e ressalva |
 | :-- | :-- | :-- |
+| 9 | `figures/fig_cdr_gui_mapeamento.png` | Interface do Comparador de Registros, versão 0.1 (commit 3b43598), dados sintéticos |
 | 31 | `text/latex/figures/fig_cap8_cascata_v31.png` | Síntese visual dos indicadores, cascata por REFREC |
 | 36 | `figures/imbalance_sensitivity.pgf` | Estratégias de balanceamento no Random Forest |
 | 37 | `text/latex/fig_doc/epi_deteccao.pgf` | Detecção no teste da ablação, não cascata final |
 
-A captura `figures/fig_cdr_gui_*.png` não estava presente no worktree na preparação. O slide 9 mantém um espaço reservado comentado, sem imagem fabricada. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do parágrafo imediatamente anterior da mesma seção, pois ele não tem linha própria na tabela atual da tese.
+A captura do slide 9 está em `../../figures/fig_cdr_gui_mapeamento.png`, caminho relativo ao diretório de compilação `text/slides`, sem `graphicspath` adicional. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do texto adjacente, sem lhe atribuir a autoria do protótipo Java.
 
-Critérios editoriais contemplados: menção ao referencial clássico restrita ao slide 8; arquitetura identifica a origem da probabilidade; cascata REFREC; corte operacional 211/247; atribuição do F1 0,943 ao fluxo Modal; limitações nos slides 26 e 27, antes das conclusões 28 e 29; equivalência Java e comparação com Lages declaradas não executadas; terminologia área cinza; ausência de travessões na prosa. As tabelas foram reduzidas no arquivo de slides, sem incluir tabelas completas da tese por comando de entrada.
+Critérios editoriais: menção ao referencial clássico restrita ao slide 8; origem da probabilidade identificada; cascata REFREC; corte operacional 211/247; F1 0,943 atribuído ao fluxo Modal; limitações antes das conclusões; equivalência Java parcial executada e comparação com Lages não realizada; sensibilidade 2×2 e QW1 local distinguidos dos resultados históricos; exportador com HMAC implementado, matriz não depositada; terminologia área cinza. As tabelas foram reduzidas no arquivo de slides.
 
-Pendente de validação humana: ensaio cronometrado, conferência visual da legibilidade das figuras de backup e revisão do roteiro com a orientadora. Os testes automáticos verificam estrutura e compilação, mas não substituem essas etapas.
+O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
 Compilação: `python text/slides/build_slides.py`, com duas passagens de pdflatex. O PDF versionado é `text/slides/defesa.pdf`; os auxiliares já são cobertos pelo `.gitignore` do repositório. A compilação dos slides não escreve nos PDFs oficiais da tese.
 
 ### Verificação técnica em 04/11/2026
 
-O build com pdflatex produziu 42 páginas (30 principais e 12 de backup), sem erro LaTeX nem ocorrência de `Overfull` no log final. A leitura por pypdf confirmou 42 páginas, formato 16:9 e nenhuma página sem texto extraível. A busca por quadro encontrou a menção ao referencial clássico apenas no slide 8; a auditoria editorial encontrou zero ocorrências da terminologia vedada e de travessões. As nove respostas têm, respectivamente, 56, 56, 56, 61, 58, 59, 58, 61 e 61 palavras, sem contar pergunta e referência.
+O build atualizado com pdflatex produziu 42 páginas (30 principais e 12 de backup), confirmadas por pypdf, sem erro LaTeX, ocorrência de `Overfull` ou `??` no texto extraído. A busca no fonte encontrou a menção ao referencial clássico uma única vez, no slide 8; a auditoria editorial encontrou zero ocorrências da terminologia vedada e de travessões. As nove respostas têm, respectivamente, 60, 56, 56, 61, 58, 59, 58, 65 e 61 palavras, sem contar pergunta e referência.
 
-O comando `python -m pytest tests -q` apresentou inicialmente 254 aprovações e cinco falhas por dependências locais ausentes no worktree. Após copiar do clone principal, somente para uso local, o extrato, os agregados históricos por linha, a tabela histórica e o auxiliar de preservação, a execução resultou em **259 testes aprovados e dois avisos em 17,04 segundos**. Cinco desses testes são novos, em `tests/test_build_slides.py`; os avisos são de divisão por zero e separação perfeita no teste log-linear de blocagem, não dos slides. Nenhum desses insumos locais integra o commit da apresentação.
+Na rodada de fechamento, duas execuções locais da suíte completa falharam por falta de memória, sem alteração de código para contorná-las. Após encerrar 33 processos loky órfãos, o orquestrador informou a execução de `python -m pytest tests -q` no mesmo clone e na mesma branch: **300 testes aprovados, um ignorado e dois avisos em 21,17 segundos**. Esse resultado é evidência fornecida pelo orquestrador, não uma terceira execução desta sessão. Os avisos são de divisão por zero e separação perfeita no teste log-linear de blocagem, não dos slides.
 
-Logs locais: `text/slides/build.log`, `text/slides/defesa.log` e `text/slides/pytest.log`, ignorados pelo Git. O TeX Live disponível não continha Beamer nem translator; foram obtidos do CTAN em `.texdeps/`, sem alterar a instalação global. O construtor inclui esse diretório local na busca quando ele existe. Em outra máquina, é necessário instalar os pacotes usuais Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los nesse diretório; não são incorporados ao PDF como uma dependência de execução.
+Logs desta rodada: `text/slides/defesa.log` e `%TEMP%/opencode/fechamento_slides_build.log`. A auditoria final está em `%TEMP%/opencode/fechamento_verificacao.json`. O TeX Live disponível não continha Beamer; a compilação utilizou `TEXINPUTS` apontando para `.texdeps/` do worktree local `pq-f-slides`, sem alterar a instalação global. Em outra máquina, é necessário instalar os pacotes usuais Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em um diretório local de dependências.
+
+A tese foi recompilada oficialmente, com 201 páginas e ficha de 201 f.: il. Os dois PDFs da tese têm SHA-256 `4557a9fcb1ce1043f28edc65aefb2c914e39d5a3aa888da43442c3044ccd571d`. O PDF dos slides tem SHA-256 `25d0cab481b51b64c25704f03f2c2fd91589d2c4f42c0abf08f293e46260c079`. A auditoria confirmou ausência de erros e referências indefinidas no log da tese, de `??` no texto extraído e de overfull acima de 20 pt. Os quatro overfull acima de 15 pt medem 16,58286, 17,13971, 16,51071 e 15,50081 pt. A atualização da ficha não alterou resultados científicos.
+
+O verificador bibliográfico original, executado em uma cópia temporária dos fontes rastreados, encontrou 131 entradas, 131 chaves citadas, zero órfãs e zero fantasmas. A conferência do auxiliar do build oficial confirmou a mesma contagem, excluídas quatro opções de configuração do abntex2cite. A execução direta no clone inclui também o latexdiff local não versionado e encontra 12 chaves históricas sem entrada atual; esse arquivo foi preservado, sem renomeação nem edição.
