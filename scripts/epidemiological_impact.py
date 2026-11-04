@@ -338,7 +338,18 @@ def main() -> None:
             print(f"    Band {low}-{high}: {n_band} ({pct:.1f}%)")
 
     # ── Save outputs ──
-    results_df.to_csv(OUT_DIR / "epidemiological_impact.csv", index=False)
+    # O CSV tambem recebe linhas calculadas fora deste script (XGBoost, pelo fluxo
+    # Modal em qw1_modal_unified_pipeline.update_epidemiological_impact). Essas
+    # linhas sao preservadas: so os metodos computados aqui sao reescritos.
+    csv_path = OUT_DIR / "epidemiological_impact.csv"
+    if csv_path.exists():
+        previous = pd.read_csv(csv_path)
+        external = previous[~previous["method"].isin(results_df["method"])]
+        if len(external):
+            print(f"  (preservando {len(external)} linha(s) externa(s): "
+                  f"{', '.join(external['method'])})")
+            results_df = pd.concat([results_df, external], ignore_index=True)
+    results_df.to_csv(csv_path, index=False)
     print(f"\n-> Saved: data/epidemiological_impact.csv")
 
     # Profile JSON (apenas agregados, sem linhas de pares)
