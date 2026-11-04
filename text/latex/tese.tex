@@ -36,7 +36,7 @@
   \usepackage{setspace}%
   \onehalfspacing
 }{}
-% ---------- Traduções pt-BR manuais (fallback se babel-portuges ausente) ------
+% Traduções pt-BR manuais (fallback se babel-portuges ausente)
 % Usa \AtBeginDocument para garantir que sobrescreve o babel[english].
 \AtBeginDocument{%
   \ifcsname l@brazilian\endcsname
@@ -57,7 +57,7 @@
   \renewcommand{\indexname}{Índice Remissivo}%
   \renewcommand{\abstractname}{Resumo}%
 }
-% ----------------------------------------------------------------------------
+% Fim das traduções manuais
 % Optional packages (keep build working on minimal TeX installs)
 \makeatletter
 \newcommand{\maybeusepackage}[2][]{%
@@ -68,7 +68,7 @@
 \maybeusepackage[ruled,chapter]{algorithm}
 \usepackage{makeidx}
 \maybeusepackage{subfig}
-% amsmath and amssymb loaded by newtxmath — do not reload (Bbbk clash)
+% amsmath and amssymb loaded by newtxmath; do not reload (Bbbk clash)
 %\usepackage{amsmath}
 %\usepackage{amssymb}
 % amsthm moved before newtxmath (line 17) to avoid \openbox clash
@@ -125,7 +125,7 @@
 \newtheorem{proposition}{Proposição}
 \newtheorem{corollary}{Corolário}
 
-% --- Tradução de rótulos para português ---
+% Tradução de rótulos para português
 \floatname{algorithm}{Algoritmo}                    % "Algorithm" → "Algoritmo"
 \renewcommand{\algorithmicrequire}{\textbf{Entrada:}} % "Require" → "Entrada:"
 \renewcommand{\algorithmicensure}{\textbf{Saída:}}    % "Ensure" → "Saída:"
@@ -177,7 +177,7 @@
 
 % custom packages
 %\usepackage{natbib}
-\graphicspath{{./fig_doc/}} % If your image is in a subfolder
+\graphicspath{{./fig_doc/}{../../figures/}} % Figuras locais e da raiz do projeto
 
 
 \renewcommand{\nomname}{Lista de Símbolos}
@@ -219,7 +219,7 @@
 \setlength{\belowcaptionskip}{0.0cm}
 % \setlength{\baselineskip}{24pt}  % Substituído por setspace \onehalfspacing (ABNT)
 
-% --- Estilos de página (definição global, restaurados em \mainmatter) ---
+% Estilos de página (definição global, restaurados em \mainmatter)
 \pagestyle{fancy}
 \lhead{}
 \chead{}
@@ -244,7 +244,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ABNT NBR 14724: Capa (obrigatório) — instituição, autor, título, cidade, ano.
+% ABNT NBR 14724: Capa (obrigatório): instituição, autor, título, cidade, ano.
 
 \frontmatter
 
@@ -287,7 +287,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Folha de Rosto %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ABNT NBR 14724: Folha de rosto (obrigatório) — autor, título,
+% ABNT NBR 14724: Folha de rosto (obrigatório): autor, título,
 % natureza do trabalho, orientador, cidade, ano.
 
 \newpage
@@ -617,7 +617,7 @@ GZ-CMD decides by expected loss among match, nonmatch, large language model (LLM
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Restaurar estilo de página numerado para a parte textual ----------
+% Restaurar estilo de página numerado para a parte textual
 \fancypagestyle{plain}{%
 	\fancyhf{}
 	\lhead{}
@@ -667,6 +667,7 @@ GZ-CMD decides by expected loss among match, nonmatch, large language model (LLM
 \appendix
 \input{apendicea.tex}
 \input{apendice_busca.tex}
+\input{apendice_pacote.tex}
 %\input{apendiceb.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
