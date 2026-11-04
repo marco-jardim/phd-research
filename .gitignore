@@ -313,6 +313,7 @@ data/funil_gzcmd_confirmacao*.csv
 data/funil_gzcmd_antes_*.csv
 data/pcal_ml_oof.csv
 data/pcal_ml_oof*.csv
+!data/pcal_ml_oof_grupos_metricas.csv
 data/*_row.*
 data/m7/*_row.*
 text/latex/figures/*_row.*
@@ -330,3 +331,11 @@ data/exp2_gabarito_por_par.csv
 data/sprint3b/anthropic/gabarito_confirmacao_haiku.csv
 data/sprint3b/opencode_go/gabarito_confirmacao_deepseek.csv
 data/sprint3b/opencode_go_kimi/gabarito_confirmacao_kimi_k3.csv
+
+# Trabalho local e artefatos de build de revisão (M21)
+data/sprint3b/opencode_server/
+*.parcial*.json
+resume_sem_erros.json
+text/latex/tese_rev_*
+text/pdf/tese_rev_*
+Claude.json
