@@ -186,7 +186,9 @@ def executar():
                  cenario, detalhe["tempo_segundos"], linha["rf_smote_f1"],
                  linha["recuperados"], linha["liquido"])
     res = pd.DataFrame(linhas)
-    res.to_csv(OUT, index=False, float_format="%.10g")
+    # LF explicito mantem os hashes validos apos checkout em outras plataformas.
+    with OUT.open("w", encoding="utf-8", newline="\n") as arquivo:
+        res.to_csv(arquivo, index=False, float_format="%.10g", lineterminator="\n")
     from scripts.gerar_tabela_sensibilidade import gerar
     gerar(res)
     fontes = [
@@ -217,7 +219,7 @@ def executar():
         "controle_A": "70 configuracoes comparadas individualmente por config/tp/fp/fn com ablation_results.csv",
         "cenarios": detalhes,
     }
-    with META.open("w", encoding="utf-8") as arquivo:
+    with META.open("w", encoding="utf-8", newline="\n") as arquivo:
         json.dump(limpar_nan(meta), arquivo, ensure_ascii=False, indent=2, allow_nan=False)
         arquivo.write("\n")
     print(res[["cenario", "n_teste", "vinculos_teste", "rf_smote_f1", "gb_f1",
