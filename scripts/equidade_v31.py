@@ -302,15 +302,15 @@ NOMES_DIM = {
     "sexo": "Sexo",
     "faixa_idade": "Faixa et\\'aria",
     "nome_qtd_quartis": "Nome (quartis)",
-    "bandeira": "Origem",
+    "bandeira": "Encerramento da notifica\\c{c}\\~ao",
     "municipio": "Munic\\'ipio",
     "passo": "Passo",
     "ano_obito": "Ano do \\'obito",
     "completude": "Completude",
 }
 NOMES_GRUPO = {
-    "controle": "Controle",
-    "tb_origem": "TB origem",
+    "demais_situacoes": "Demais situa\\c{c}\\~oes",
+    "encerrada_obito": "Encerrada por \\'obito",
     "capital_RJ": "Capital (RJ)",
     "outros_municipios": "Demais",
     "completo": "Completo",
@@ -327,19 +327,19 @@ NOMES_GRUPO = {
 
 
 def fmt_int(v: int) -> str:
-    s = f"{int(v):,}".replace(",", "\\,")
+    s = f"{int(v):,}".replace(",", ".")
     return s
 
 
 def fmt_pct(v: float) -> str:
     if v is None or (isinstance(v, float) and math.isnan(v)):
-        return "--"
+        return "n.a."
     return f"{100 * v:.1f}".replace(".", "{,}")
 
 
 def fmt_pp(v: float) -> str:
     if v is None or (isinstance(v, float) and math.isnan(v)):
-        return "--"
+        return "n.a."
     sinal = "$+$" if v >= 0 else "$-$"
     return sinal + f"{abs(100 * v):.1f}".replace(".", "{,}")
 
@@ -352,7 +352,7 @@ def fmt_p(v: float) -> str:
 
 def fmt_or(v: float) -> str:
     if v is None or math.isnan(v):
-        return "--"
+        return "n.a."
     if v >= 100:
         return f"{v:.0f}".replace(".", "{,}")
     return f"{v:.2f}".replace(".", "{,}")
@@ -391,7 +391,13 @@ def tabela_grupos(grupos: pd.DataFrame, path: Path) -> None:
     )
 
 
-def tabela_rejeicoes(tests: pd.DataFrame, path: Path, decisao: str = "xgb_sens6") -> None:
+def tabela_rejeicoes(
+    tests: pd.DataFrame,
+    path: Path,
+    decisao: str = "xgb_sens6",
+    label: str = "tab:qw3-fairness-rejections",
+    descr: str = "XGBoost com limiar de sensibilidade equivalente ao corte 6{,}0",
+) -> None:
     t = tests[(tests["decisao"] == decisao) & (tests["reject_fdr"])].copy()
     t["ord"] = t["p_value_fdr"]
     t = t.sort_values(["tipo", "dimension", "metric", "ord"])
@@ -406,8 +412,8 @@ def tabela_rejeicoes(tests: pd.DataFrame, path: Path, decisao: str = "xgb_sens6"
     n_total = len(tests[tests["decisao"] == decisao])
     path.write_text(
         "\\begin{table}[htbp]\n\\centering\n"
-        f"\\caption{{Rejei\\c{{c}}\\~oes da hip\\'otese de paridade (Benjamini-Hochberg, $\\alpha = 0{{,}}05$, {n_total} testes): XGBoost com limiar de sensibilidade equivalente ao corte 6{{,}}0. $\\Delta$ em pontos percentuais (grupo A menos grupo B).}}\n"
-        "\\label{tab:qw3-fairness-rejections}\n\\small\n"
+        f"\\caption{{Rejei\\c{{c}}\\~oes da hip\\'otese de paridade (Benjamini-Hochberg, $\\alpha = 0{{,}}05$, {n_total} testes): {descr}. $\\Delta$ em pontos percentuais (grupo A menos grupo B).}}\n"
+        f"\\label{{{label}}}\n\\small\n"
         "\\begin{tabular}{lllllrrr}\n\\toprule\n"
         "Dimens\\~ao & Tipo & M\\'etrica & Grupo A & Grupo B & $p_{\\mathrm{FDR}}$ & $\\Delta$ & OR \\\\\n\\midrule\n"
         f"{corpo}\n\\bottomrule\n\\end{{tabular}}\n\\end{{table}}\n",
@@ -436,7 +442,7 @@ def tabela_resumo(glob: pd.DataFrame, maxd: pd.DataFrame, tests: pd.DataFrame, p
     def cel(dec: str, dim: str, metric: str) -> str:
         r = maxd[(maxd["decisao"] == dec) & (maxd["dimension"] == dim) & (maxd["metric"] == metric)]
         if r.empty or pd.isna(r.iloc[0]["max_diff"]):
-            return "--"
+            return "n.a."
         return fmt_pct(float(r.iloc[0]["max_diff"]))
 
     linhas_b = []
@@ -455,8 +461,9 @@ def tabela_resumo(glob: pd.DataFrame, maxd: pd.DataFrame, tests: pd.DataFrame, p
         "\\label{tab:equidade-v31}\n\\footnotesize\n"
         "\\resizebox{\\textwidth}{!}{%\n\\begin{tabular}{lrrrrrrrr}\n\\toprule\n"
         "Decis\\~ao & Pred.$+$ & VP & FP & FN & Sens. & VPP & Espec. & Rejei\\c{c}\\~oes \\\\\n\\midrule\n"
-        f"{corpo_a}\n\\midrule\n\\midrule\n"
-        "\\multicolumn{9}{l}{\\textit{Diferen\\c{c}a m\\'axima entre subgrupos (pontos percentuais)}} \\\\\n"
+        f"{corpo_a}\n\\bottomrule\n\\end{{tabular}}}}\n\\par\\medskip\n"
+        "\\resizebox{\\textwidth}{!}{%\n\\begin{tabular}{llrrrrr}\n\\toprule\n"
+        "\\multicolumn{7}{l}{\\textit{Diferen\\c{c}a m\\'axima entre subgrupos (pontos percentuais)}} \\\\\n\\midrule\n"
         "Dimens\\~ao & M\\'etrica & Corte 6{,}0 & XGB sens. & XGB $p \\geq 0{,}9$ & Cascata vig. & Cascata conf. \\\\\n\\midrule\n"
         f"{corpo_b}\n\\bottomrule\n\\end{{tabular}}}}\n\\end{{table}}\n",
         encoding="utf-8",
@@ -475,6 +482,10 @@ def main() -> None:
     frame, meta = build_frame(args.input_csv)
     if meta["raca_cor_presente"]:
         raise RuntimeError("coluna de raça/cor encontrada: revisar o capítulo")
+    # C_SITUENCE 3 ou 4 (notificação encerrada por óbito) vs. demais situações
+    frame["bandeira"] = frame["bandeira"].astype("string").replace(
+        {"controle": "demais_situacoes", "tb_origem": "encerrada_obito"}
+    )
     frame = attach_decisions(frame, meta)
 
     globs, grupos, testes = [], [], []
@@ -535,6 +546,13 @@ def main() -> None:
     if not args.no_tables:
         tabela_grupos(grupos_df, args.tables_dir / "tab_qw3_group_metrics.tex")
         tabela_rejeicoes(testes_df, args.tables_dir / "tab_qw3_fairness_rejections.tex")
+        tabela_rejeicoes(
+            testes_df,
+            args.tables_dir / "tab_equidade_v31_rejeicoes_cascata.tex",
+            decisao="cascata_v31_vigilancia",
+            label="tab:equidade-v31-rejeicoes-cascata",
+            descr="cascata v3.1 (vigil\\^ancia), aceitação automática",
+        )
         tabela_resumo(glob, maxd, testes_df, args.tables_dir / "tab_equidade_v31.tex")
 
     pd.set_option("display.width", 250)
