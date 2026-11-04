@@ -31,7 +31,9 @@
     \IF{nota final do CdR $v_i < 3$}
         \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad \textbf{continuar} para o próximo par
     \ENDIF
-    \STATE Aplicar o filtro de homonímia com os parâmetros da configuração (nota mínima e diferença de anos) \COMMENT{Seção~\ref{sec:e4-regras-guarda}}
+    \IF{$v_i \geq 7$ \AND subescores de data de nascimento (ano, mês, dia e data) todos nulos \AND diferença de anos de nascimento $> 5$ \AND subescores de endereço todos nulos}
+        \STATE $d_i \leftarrow \textsc{review}$; \quad $\mathit{razao}_i \leftarrow \texttt{homonimia\_risk}$ \COMMENT{limiares \texttt{homonimia\_min\_nota} e \texttt{homonimia\_year\_gap}; Seção~\ref{sec:e4-regras-guarda}}
+    \ENDIF
     \IF{$(\mathit{data\_obito}_i - \mathit{data\_diagnostico}_i) < -180$ dias}
         \STATE $d_i \leftarrow \textsc{nonmatch}$; \quad $\mathit{razao}_i \leftarrow \texttt{FILTRO\_TEMPORAL}$
         \STATE \textbf{continuar} para o próximo par
