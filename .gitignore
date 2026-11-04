@@ -212,11 +212,14 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Private modules (full-text fetcher — never push)
+# Private modules (full-text fetcher, never push)
 scripts/ref_audit/private/
 scripts/ref_audit/data/fulltext/
 
-docs/
+docs/*
+!docs/support_text/
+docs/support_text/*
+!docs/support_text/scopus_T6_instrucoes.md
 
 # LaTeX build artifacts
 *.aux
