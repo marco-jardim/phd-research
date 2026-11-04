@@ -8,6 +8,15 @@ O primeiro objetivo específico da tese é reimplementar em Python, documentar e
 
 Os escores de similaridade utilizados como insumo para o pós-processamento não foram calculados pelo OpenRecLink, mas por um comparador de registros independente, desenvolvido especificamente para este estudo. A ferramenta constitui uma reimplementação em Python do algoritmo proposto por Lucena \citeyearpar{Lucena2013algoritmos} em dissertação de mestrado apresentada ao Instituto de Estudos em Saúde Coletiva da UFRJ, cujo protótipo original em Java foi desenvolvido por Paiva \citeyearpar{Paiva2025comparador} no mesmo grupo de pesquisa. A versão utilizada neste trabalho encontra-se publicada em repositório de código aberto, sob licença GPL-3.0 \cite{Jardim2024comparador}.
 
+A interface gráfica permite selecionar o arquivo de potenciais pares, mapear os campos de referência e comparação e definir o tipo de comparação, conforme a Figura~\ref{fig:cdr-gui}. A aplicação recebe um arquivo com as duas partes de cada potencial par, e não duas bases a serem blocadas; o resultado é gravado em CSV, sem uma tela própria de visualização dos subescores. A captura foi produzida com registros inteiramente fictícios, sem dados individuais do estudo.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{fig_cdr_gui_mapeamento.png}
+\caption{Interface gráfica do Comparador de Registros, versão 0.1 (commit \texttt{3b43598}), com dados sintéticos. As colunas com prefixos \texttt{R\_} e \texttt{C\_} correspondem aos campos de referência e comparação; os tipos Nome e Data determinam os comparadores aplicados. O arquivo reúne dez potenciais pares fictícios, e os controles inferiores definem o delimitador, o arquivo de saída, a ordenação e o número de núcleos. A saída da comparação é um arquivo CSV. Fonte: captura da aplicação em execução, elaborada para esta tese a partir de \cite{Jardim2024comparador}.}
+\label{fig:cdr-gui}
+\end{figure}
+
 O comparador recebe como entrada a união dos potenciais pares gerados pelo OpenRecLink nos passos de blocagem descritos na Seção~\ref{sec:base-pares}. Para cada par, o comparador executa a comparação campo a campo e produz 29 subescores de similaridade e um escore final agregado (\textit{nota final}). As comparações implementadas abrangem cinco categorias:
 
 \begin{itemize}
