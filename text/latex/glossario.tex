@@ -25,6 +25,8 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[Conjuntos \^{a}ncora] Subconjuntos de pares candidatos com alta confian\c{c}a de classifica\c{c}\~{a}o (positivos e negativos), utilizados como pseudo-r\'{o}tulos para calibra\c{c}\~{a}o peri\'{o}dica dos escores do classificador sem necessidade de re-rotulagem manual.
 
+\item[Decis\~{a}o de limiar] Classifica\c{c}\~{a}o de pares candidatos pela compara\c{c}\~{a}o do escore composto com um ou dois pontos de corte fixos, sem uso de atributos adicionais. Com dois cortes, corresponde \`{a} regra de tr\^{e}s vias de Fellegi e Sunter. Nesta tese, as refer\^{e}ncias s\~{a}o o corte \'{u}nico $\geq 8$ e os cortes (5, 9) com revis\~{a}o integral dos pares entre eles; contra a segunda, comparam-se volume de revis\~{a}o e custo.
+
 \item[Deduplica\c{c}\~{a}o] Processo de identifica\c{c}\~{a}o e remo\c{c}\~{a}o de registros duplicados referentes a um mesmo indiv\'{i}duo dentro de uma \'{u}nica base de dados.
 
 \item[DeepSeek V3.2] Modelo de linguagem de grande porte desenvolvido pela DeepSeek (China), avaliado no piloto de revis\~{a}o assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,681.
@@ -57,7 +59,7 @@ Este gloss\'{a}rio apresenta defini\c{c}\~{o}es de termos t\'{e}cnicos utilizado
 
 \item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governan\c{c}a da incerteza no \textit{linkage} probabil\'{i}stico, integrando calibra\c{c}\~{a}o por conjuntos \^{a}ncora, regras de guarda, \textit{expected loss engine} com custos assim\'{e}tricos e revis\~{a}o assistida por modelo de linguagem em pol\'{i}tica \'{u}nica de decis\~{a}o audit\'{a}vel.
 
-\item[Kimi K2.5] Modelo de linguagem de grande porte desenvolvido pela Moonshot AI (China), selecionado como modelo operacional do m\'{o}dulo de revis\~{a}o assistida do GZ-CMD com base no melhor equil\'{i}brio entre F$_1$ (0,845), lat\^{e}ncia (7,3\,s/par) e taxa de inconclusivos (3,5\%).
+\item[Kimi K2.5] Modelo de linguagem de grande porte desenvolvido pela Moonshot AI (China), selecionado como modelo operacional do m\'{o}dulo de revis\~{a}o assistida do GZ-CMD com base, no piloto de 517 pares, no melhor equil\'{i}brio entre F$_1$ (0,845), lat\^{e}ncia m\'{e}dia (7,3\,s/par) e propor\c{c}\~{a}o de inconclusivos (3,5\%).
 
 \item[\textit{Linkage}] Ver \textit{Relacionamento de registros}.
 

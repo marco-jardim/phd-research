@@ -116,7 +116,7 @@ def main() -> None:
     # Política de decisão por custo esperado na área cinza, executada pelo próprio motor do
     # framework (gzcmd/gzcmd_v3_policy_engine.py: PolicyEngineV3.triage), sem regras de guarda
     # nem restrições de consistência, para isolar o efeito da calibração. Custos, tetos
-    # automáticos, orçamento e taxas de erro do revisor por faixa vêm de gzcmd_v3_config.yaml
+    # automáticos, orçamento e proporções de erro do revisor por faixa vêm de gzcmd_v3_config.yaml
     # (decision_policy.modes, llm_review.reliability.error_rates_by_band).
     modes = {"vigilancia": (10.0, 50.0, 0.25, 0.85, 0.15, 2000), "confirmacao": (100.0, 20.0, 0.25, 0.95, 0.10, 1000)}
     err_by_band = {"grey_low": LLMError(0.08, 0.12), "grey_mid": LLMError(0.06, 0.10),
@@ -153,7 +153,7 @@ def main() -> None:
     tex2 = [
         "% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)",
         r"\begin{table}[!ht]", r"\centering",
-        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e taxas de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as taxas de erro configuradas.}",
+        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e proporções de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as proporções de erro configuradas.}",
         r"\label{tab:cap8-ancoras-decisao}", r"\footnotesize", r"\begin{tabular}{|l|l|r|r|r|r|r|}", r"\hline",
         r"Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\", r"\hline",
     ]

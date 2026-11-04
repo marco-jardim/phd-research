@@ -14,13 +14,11 @@ Avaliar e comparar algoritmos de classificação de aprendizado de máquina para
 | Implementação dos experimentos | ✓ Concluída (3 notebooks) |
 | Execução e geração de resultados | ✓ Concluída (métricas, CSVs, JSONs) |
 | Documentação técnica | ✓ Parcial |
-| Escrita da tese | ~30% em andamento |
+| Escrita da tese | Em andamento (texto em text/latex/) |
 
-### Resultados preliminares
+### Resultados
 
-- **Melhor equilíbrio (F1)**: Random Forest + SMOTE (Precision=0,89, Recall=0,99, F1=0,94)
-- **Melhor precisão**: Gradient Boosting (Precision=0,94)
-- **Melhor recall**: Stacking Ensemble (Recall=1,0)
+Os resultados preliminares listados em versões anteriores deste arquivo (F1 de 0,94 do Random Forest + SMOTE e demais valores) foram retirados por não corresponderem aos protocolos finais. Os números vigentes e os respectivos artefatos estão no texto da tese (text/latex/) e em data/.
 
 ### Próximos passos
 

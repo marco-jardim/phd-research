@@ -9,7 +9,7 @@
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
  & Configura\c{c}\~ao & F1 & Configura\c{c}\~ao & F1 \\
 \midrule
-Limiar ing\^enuo & Naive score$\geq$8 & 0.610 & Naive score$\geq$8 & 0.610 \\
+Decis\~ao de limiar & Escore$\geq$8 & 0.610 & Escore$\geq$8 & 0.610 \\
 Somente regras & Rules-only ($\geq$6) & 0.842 & Rules-only ($\geq$6) & 0.842 \\
 Somente ML & RF+SMOTE ($\geq$0.5) & 0.931 & XGBoost ($\geq$0.7) & \textbf{0.943} \\
 H\'ibrido AND & RF+SMOTE $\geq$0.5 + Rules$\geq$5 & 0.912 & XGBoost $\geq$0.5 + Rules$\geq$5 & 0.442 \\
@@ -21,5 +21,5 @@ Consenso+Rules & Majority AND Rules$\geq$6 & 0.896 & Majority (th=0.5) AND Rules
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: As configurações da coluna Random Forest provêm da ablação original; as configurações com XGBoost foram acrescentadas pelo fluxo Modal e não correspondem ao teste interno QW1. Os valores de limiar ingênuo e somente regras, repetidos nas duas colunas, são referências da ablação original, não novas avaliações no fluxo Modal. As execuções utilizam testes internos de 30\% e semente 42, mas a identidade das linhas entre as partições não foi verificada. As implementações de regras diferem em critérios e pesos; os consensos originais utilizam RF, RF+SMOTE e GB, enquanto os acrescentados utilizam XGBoost, RF+SMOTE e GB. A seleção pelo maior $F_1$ nos testes é exploratória, não avaliação independente da escolha dos limiares. $^{*}$~No escore de regras do fluxo Modal, nenhum dos 74 pares verdadeiros do teste atinge $\geq 7$ (máximo observado: 6{,}5), resultando em TP=0 e FN=74 nas cascatas assinaladas. $^{\dagger}$~Nesse mesmo fluxo, apenas 6 positivos atingem escore de regras $\geq 6$, resultando em TP=6, FN=68 e sensibilidade de 0{,}081. Essas restrições não se estendem às regras da ablação original.
+\par\small Nota: As configurações da coluna Random Forest provêm da ablação original; as configurações com XGBoost foram acrescentadas pelo fluxo Modal e não correspondem ao teste interno QW1. Os valores de decisão de limiar e somente regras, repetidos nas duas colunas, são referências da ablação original, não novas avaliações no fluxo Modal. As execuções utilizam testes internos de 30\% e semente 42, mas a identidade das linhas entre as partições não foi verificada. As implementações de regras diferem em critérios e pesos; os consensos originais utilizam RF, RF+SMOTE e GB, enquanto os acrescentados utilizam XGBoost, RF+SMOTE e GB. A seleção pelo maior $F_1$ nos testes é exploratória, não avaliação independente da escolha dos limiares. $^{*}$~No escore de regras do fluxo Modal, nenhum dos 74 pares verdadeiros do teste atinge $\geq 7$ (máximo observado: 6{,}5), resultando em TP=0 e FN=74 nas cascatas assinaladas. $^{\dagger}$~Nesse mesmo fluxo, apenas 6 positivos atingem escore de regras $\geq 6$, resultando em TP=6, FN=68 e sensibilidade de 0{,}081. Essas restrições não se estendem às regras da ablação original.
 \end{table}
