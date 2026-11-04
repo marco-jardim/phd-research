@@ -83,7 +83,7 @@ def generate_tab_impacto_epidemiologico():
     lines.append(r"\begin{table}[htbp]")
     lines.append(r"\centering")
     lines.append(
-        r"\caption{Comparação de métodos: óbitos detectados, custo operacional e taxa corrigida}"
+        r"\caption{Comparação de métodos: óbitos detectados, custo operacional e sensibilidade}"
     )
     lines.append(r"\label{tab:impacto-epidemiologico}")
     lines.append(r"\footnotesize")
