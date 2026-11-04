@@ -216,7 +216,7 @@ def regenerate_ablation_best_category() -> None:
         )
 
     label_map = {
-        r"Limiar ing\^enuo": "naive-threshold",
+        r"Decis\~ao de limiar": "naive-threshold",
         "Somente regras": "rules-only",
         "Somente ML": "ml-only",
         r"H\'ibrido AND": "hybrid-and",

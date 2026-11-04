@@ -27,7 +27,7 @@ CATEGORY_ORDER = [
 ]
 
 CATEGORY_LABELS = {
-    "naive-threshold": "Limiar ingênuo (escore $\\geq t$)",
+    "naive-threshold": "Decisão de limiar (escore $\\geq t$)",
     "rules-only": "Somente regras determinísticas",
     "ml-only": "Somente ML",
     "hybrid-and": "Híbrido ML $\\cap$ Regras (AND)",
