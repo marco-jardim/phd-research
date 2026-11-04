@@ -1,0 +1,67 @@
+{
+  "script": "scripts/desempenho_faixas_ablacao.py",
+  "versao_script": "1.0",
+  "data_execucao": "2026-11-04",
+  "semente": 42,
+  "limiar": 0.5,
+  "limiar_otimizado": false,
+  "n_atributos": 58,
+  "split": {
+    "test_size": 0.3,
+    "estratificado": true,
+    "random_state": 42
+  },
+  "n_total": 61696,
+  "n_treino": 43187,
+  "n_teste": 18509,
+  "vinculos_treino": 173,
+  "vinculos_teste": 74,
+  "smote": {
+    "sampling_strategy": 0.3,
+    "k_neighbors": 3,
+    "random_state": 42
+  },
+  "rf": {
+    "n_estimators": 150,
+    "max_depth": 12,
+    "random_state": 42
+  },
+  "gb": {
+    "n_estimators": 100,
+    "max_depth": 5,
+    "learning_rate": 0.1,
+    "random_state": 42
+  },
+  "faixas": [
+    "0-3",
+    "3-5",
+    "5-6",
+    "6-7",
+    "7-8",
+    "8-9",
+    "9-10",
+    "10+"
+  ],
+  "area_cinza": [
+    "5-6",
+    "6-7",
+    "7-8",
+    "8-9"
+  ],
+  "controles": {
+    "rf_total": {
+      "vp": 67,
+      "fp": 3
+    },
+    "gb_total": {
+      "vp": 60,
+      "fp": 4
+    },
+    "rf_vp_faixas": {
+      "5-6": 3,
+      "6-7": 10,
+      "7-8": 14,
+      "8-9": 9
+    }
+  }
+}
