@@ -4,8 +4,8 @@ Reproduz o protocolo de ``ablation_study.py`` e ``epidemiological_impact.py``:
 58 atributos de ``feature_engineering.py``, divisao 70/30 estratificada
 (semente 42), SMOTE (razao 0,3, k=3, semente 42) somente no treino para o
 RF+SMOTE (150 arvores, profundidade 12), Gradient Boosting (100 estimadores,
-profundidade 5, taxa 0,1) sem balanceamento e limiar de decisao 0,5, fixado a
-priori. Agrega VP/FP/FN, sensibilidade e precisao por faixa da nota final no
+profundidade 5, taxa 0,1) sem balanceamento e limiar de decisao 0,5,
+selecionado no teste da ablacao entre 0,3, 0,5 e 0,7. Agrega VP/FP/FN, sensibilidade e precisao por faixa da nota final no
 conjunto de teste. Grava somente agregados (sem pares nem valores de campos).
 
 Saidas:
@@ -26,24 +26,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from feature_engineering import engineer_features, load_data, split_data  # noqa: E402
-
-warnings.filterwarnings("ignore")
-
-# pandas >= 3 usa dtype string do Arrow por padrao, o que quebra engineer_features
-try:
-    pd.options.future.infer_string = False
-except (AttributeError, KeyError, ValueError):
-    pass
-
-SCRIPT_VERSION = "1.0"
+SCRIPT_VERSION = "1.1"
 ROOT = Path(__file__).resolve().parent.parent
 OUT_CSV = ROOT / "data" / "desempenho_faixas_ablacao.csv"
 OUT_META = ROOT / "data" / "desempenho_faixas_ablacao_meta.json"
 
 RANDOM_STATE = 42
 THRESHOLD = 0.5
+# Origem: scripts/ablation_study.py:155-184; igualdade verificada em teste.
 RF_PARAMS = {"n_estimators": 150, "max_depth": 12, "random_state": RANDOM_STATE, "n_jobs": -1}
 GB_PARAMS = {"n_estimators": 100, "max_depth": 5, "learning_rate": 0.1, "random_state": RANDOM_STATE}
 SMOTE_PARAMS = {"sampling_strategy": 0.3, "k_neighbors": 3, "random_state": RANDOM_STATE}
@@ -62,10 +52,14 @@ FAIXAS: list[tuple[str, float, float]] = [
 AREA_CINZA = ("5-6", "6-7", "7-8", "8-9")
 COLUNAS = ["modelo", "faixa", "n", "vinculos", "vp", "fp", "fn", "sensibilidade", "precisao"]
 
-# Valores de controle: ablation_results.csv e epidemiological_profile.json.
-ESPERADO_RF = {"vp": 67, "fp": 3}
-ESPERADO_GB = {"vp": 60, "fp": 4}
-ESPERADO_VP_FAIXAS_RF = {"5-6": 3, "6-7": 10, "7-8": 14, "8-9": 9}
+CONTROLE = ROOT / "data" / "ablation_results.csv"
+
+
+def configurar() -> None:
+    sys.path.insert(0, str(ROOT))
+    warnings.filterwarnings("ignore")
+    if hasattr(pd.options.future, "infer_string"):
+        pd.options.future.infer_string = False
 
 
 def atribuir_faixa(nota: float) -> str:
@@ -107,23 +101,25 @@ def agregar(nota: pd.Series, y: np.ndarray, pred: np.ndarray, modelo: str) -> pd
     return pd.DataFrame(linhas, columns=COLUNAS)
 
 
-def verificar(res: pd.DataFrame) -> None:
-    def tot(modelo: str) -> pd.Series:
-        return res[(res.modelo == modelo) & (res.faixa == "total")].iloc[0]
-
-    rf, gb = tot("RF+SMOTE"), tot("GB")
-    assert (int(rf.vp), int(rf.fp)) == (ESPERADO_RF["vp"], ESPERADO_RF["fp"]), (
-        f"RF+SMOTE total VP/FP = {int(rf.vp)}/{int(rf.fp)}, esperado 67/3"
-    )
-    assert (int(gb.vp), int(gb.fp)) == (ESPERADO_GB["vp"], ESPERADO_GB["fp"]), (
-        f"GB total VP/FP = {int(gb.vp)}/{int(gb.fp)}, esperado 60/4"
-    )
-    r = res[res.modelo == "RF+SMOTE"].set_index("faixa")
-    obtido = {k: int(r.loc[k, "vp"]) for k in ESPERADO_VP_FAIXAS_RF}
-    assert obtido == ESPERADO_VP_FAIXAS_RF, f"VP por faixa {obtido}, esperado {ESPERADO_VP_FAIXAS_RF}"
+def verificar(res: pd.DataFrame, controle: Path = CONTROLE) -> dict:
+    referencia = pd.read_csv(controle).set_index("config")
+    controles = {}
+    for modelo in ("RF+SMOTE", "GB"):
+        ref = referencia.loc[f"ML-only {modelo} (≥0.5)"]
+        esperado = {c: int(ref[k]) for c, k in (("vp", "tp"), ("fp", "fp"), ("fn", "fn"))}
+        total = res[(res.modelo == modelo) & (res.faixa == "total")].iloc[0]
+        obtido = {c: int(total[c]) for c in esperado}
+        if obtido != esperado:
+            raise ValueError(f"{modelo} total VP/FP/FN = {obtido}, esperado {esperado}")
+        controles[modelo] = esperado
+    return controles
 
 
 def main() -> None:
+    configurar()
+    import imblearn
+    import sklearn
+    from scripts.feature_engineering import engineer_features, load_data, split_data
     from imblearn.over_sampling import SMOTE
     from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 
@@ -146,7 +142,7 @@ def main() -> None:
         ],
         ignore_index=True,
     )
-    verificar(res)
+    controles = verificar(res)
 
     res.to_csv(OUT_CSV, index=False, float_format="%.6f")
     meta = {
@@ -155,7 +151,8 @@ def main() -> None:
         "data_execucao": date.today().isoformat(),
         "semente": RANDOM_STATE,
         "limiar": THRESHOLD,
-        "limiar_otimizado": False,
+        "limiar_otimizado": "selecionado_no_teste_da_ablacao",
+        "versoes": {"sklearn": sklearn.__version__, "imblearn": imblearn.__version__, "pandas": pd.__version__},
         "n_atributos": int(X.shape[1]),
         "split": {"test_size": 0.3, "estratificado": True, "random_state": RANDOM_STATE},
         "n_total": int(len(X)),
@@ -168,7 +165,7 @@ def main() -> None:
         "gb": GB_PARAMS,
         "faixas": [f[0] for f in FAIXAS],
         "area_cinza": list(AREA_CINZA),
-        "controles": {"rf_total": ESPERADO_RF, "gb_total": ESPERADO_GB, "rf_vp_faixas": ESPERADO_VP_FAIXAS_RF},
+        "controles": controles,
     }
     OUT_META.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(res.to_string(index=False))

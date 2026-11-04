@@ -1,8 +1,38 @@
 {
   "script": "scripts/desempenho_faixas_oof_refrec.py",
-  "versao_script": "1.0",
+  "versao_script": "1.1",
   "data_execucao": "2026-11-04",
   "entrada_oof": "data/pcal_ml_oof_refrec.csv",
+  "csv_sha256": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+  "fingerprint": {
+    "method": "nested-xgb-isotonic-5x5-v1",
+    "seed": 42,
+    "folds": 5,
+    "split_by": "refrec",
+    "source_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "code_sha256": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "hiperparametros": {
+    "n_estimators": 300,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "scale_pos_weight": "float((y == 0).sum() / (y == 1).sum())",
+    "eval_metric": "logloss",
+    "n_jobs": 8,
+    "random_state": 42,
+    "verbosity": 0
+  },
+  "origem_hiperparametros": "gzcmd/ml_oof.py::_classifier, SHA-256 conferido; ausentes do JSON original",
+  "scale_pos_weight_nota": "Razao negativos/positivos recalculada no subconjunto de treino de cada ajuste externo e interno; y na expressao corresponde apenas a esse subconjunto.",
+  "versoes": {
+    "sklearn": "1.8.0",
+    "pandas": "3.0.1",
+    "xgboost": "3.2.0"
+  },
   "estimador": "XGBoost 300 arvores, prof. 6, taxa 0,05, isotonica aninhada, split_by refrec, semente 42 (gzcmd/ml_oof.py)",
   "limiar": 0.5,
   "limiar_otimizado": false,

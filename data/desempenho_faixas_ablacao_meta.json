@@ -1,10 +1,15 @@
 {
   "script": "scripts/desempenho_faixas_ablacao.py",
-  "versao_script": "1.0",
+  "versao_script": "1.1",
   "data_execucao": "2026-11-04",
   "semente": 42,
   "limiar": 0.5,
-  "limiar_otimizado": false,
+  "limiar_otimizado": "selecionado_no_teste_da_ablacao",
+  "versoes": {
+    "sklearn": "1.8.0",
+    "imblearn": "0.14.2",
+    "pandas": "3.0.1"
+  },
   "n_atributos": 58,
   "split": {
     "test_size": 0.3,
@@ -49,19 +54,15 @@
     "8-9"
   ],
   "controles": {
-    "rf_total": {
+    "RF+SMOTE": {
       "vp": 67,
-      "fp": 3
+      "fp": 3,
+      "fn": 7
     },
-    "gb_total": {
+    "GB": {
       "vp": 60,
-      "fp": 4
-    },
-    "rf_vp_faixas": {
-      "5-6": 3,
-      "6-7": 10,
-      "7-8": 14,
-      "8-9": 9
+      "fp": 4,
+      "fn": 14
     }
   }
 }
