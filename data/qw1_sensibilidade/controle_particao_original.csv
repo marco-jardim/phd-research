@@ -1,0 +1,12 @@
+cenario,modelo,avaliacao,fold,n_atributos,n_treino,f1,precisao,sensibilidade,auc,ap,vp,fp,fn,vn,n_teste,vinculos_teste,limiar,tempo_segundos,dispositivo,avisos,f1_historico,diferenca_f1,dentro_tolerancia
+A0,RandomForest,holdout,0,58,43187,0.8905109489051095,0.9682539682539684,0.8243243243243243,0.9858908949633116,0.92652944294622,61,2,13,18433,18509,74,0.5,1.506247799959965,cpu,,0.8549618320610687,0.0355491168440408,False
+A0,"MLP (128,64)",holdout,0,58,43187,0.84375,1.0,0.7297297297297297,0.9802157324126404,0.8638970601436772,54,0,20,18435,18509,74,0.5,11.538686000043526,cuda,,0.84375,0.0,True
+A0,"MLP (64,32)",holdout,0,58,43187,0.8591549295774648,0.8970588235294118,0.8243243243243243,0.9982608727523292,0.9230815775555812,61,7,13,18428,18509,74,0.5,21.497422999935225,cuda,,0.8591549295774648,0.0,True
+A0,TabNet,holdout,0,58,43187,0.711864406779661,0.9545454545454546,0.5675675675675675,0.9957154062117447,0.8876226238239866,42,2,32,18433,18509,74,0.5,564.632308100001,cuda,"No early stopping will be performed, last training weights will be used. | Please import `spmatrix` from the `scipy.sparse` namespace; the `scipy.sparse.base` namespace is deprecated and will be removed in SciPy 2.0.0.",0.6101694915254238,0.10169491525423724,False
+A0,XGBoost,holdout,0,58,43187,0.9117647058823529,1.0,0.8378378378378378,0.9954232914769937,0.9512699623055387,62,0,12,18435,18509,74,0.5,0.9597826999379322,cuda,"[14:03:13] WARNING: C:\actions-runner\_work\xgboost\xgboost\src\common\error_msg.cc:62: Falling back to prediction using DMatrix due to mismatched devices. This might lead to higher memory usage and slower performance. XGBoost is running on: cuda:0, while the input data is on: cpu.
+Potential solutions:
+- Use a data structure that matches the device ordinal in the booster.
+- Set the device for booster before call to inplace_predict.
+
+This warning will only be shown once.
+",0.9197080291970804,-0.007943323314727468,True
