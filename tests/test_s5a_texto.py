@@ -18,7 +18,7 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
         "16,0\\%", "9,06 FP", "66,7\\%", "57,1\\%",
         "22 por", "quatro por", "um, seis e seis",
         "99,97\\%", "99,99\\%", "não existe no histórico do git",
-        "69 chamadas", "dois ou três PAR", "01:22 UTC", "04:13 UTC",
+        "69 chamadas", "dois ou três PAR", "01:22:17 UTC", "02:17:13 UTC",
         "não generalização", r"\input{tables/tab_cap8_robustez_arranjo.tex}",
         r"\ref{tab:cap8-robustez-arranjo}",
     ):
@@ -31,13 +31,14 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
 
 def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     objectives = (LATEX / "capitulo3.tex").read_text(encoding="utf-8")
-    assert "potenciais pares não decididos pelo corte" in objectives
+    assert "potenciais pares não aceitos pelo corte" in objectives
     assert "Desenvolver e avaliar o GZ-CMD" in objectives
     assert "prática do serviço (corte seguido de revisão manual)" in objectives
     assert "origem do registro" not in objectives
     assert "O objetivo específico 4 mantém" not in objectives
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "única vantagem" in conclusion and "limite inferior" in conclusion
+    assert "pior em todo desfecho medido contra" in conclusion
+    assert "referência de sua vantagem em carga é apenas um limite inferior derivado" in conclusion
     assert "não adotar a recalibração isotônica abaixo do corte" in conclusion
     assert "validação em dados novos antes da adoção" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
@@ -55,5 +56,5 @@ def test_small_band_warning_follows_csv_when_editorial_instruction_differs():
              and row["banda"] == "grey_low" and float(row["e_fn"]) == 1.0]
     assert folds == [0, 1, 3, 4]
     study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
-    assert "quatro folds na vigilância" in study
+    assert r"quatro \textit{folds} na vigilância" in study
     assert r"\texttt{grey\_low} em dois folds" not in study
