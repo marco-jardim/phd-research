@@ -25,12 +25,20 @@ isotônica nas probabilidades OOF internas dos pares de treino abaixo do corte.
 Nem rótulos nem grupos do teste externo entram no ajuste do calibrador.
 
 P-Platt substitui a isotônica por Platt no logit da probabilidade bruta do
-XGBoost, truncada em [0,000001; 0,999999]. Reutiliza `calibration.fit_platt`,
-com os parâmetros existentes l2=0,001, max_iter=100 e tol=1e-10. Se um conjunto
+XGBoost, truncada em [0,000001; 0,999999]. Após a emenda técnica 1, usa os
+alvos suavizados de Platt (1999): t+=(N++1)/(N++2) e t-=1/(N-+2). O novo
+módulo ajusta a regressão logística com Newton e backtracking, recorrendo a
+BFGS se necessário. Conserva a penalização da inclinação l2=0,001, o intercepto
+sem penalização, max_iter=100 e tol=1e-10, sem alterar `calibration.py`.
+Se um conjunto
 de calibração tem menos de dez PAR=2, P usa Platt nesse fold e registra a
 substituição. B1 usa a base inteira e a probabilidade REFREC original, mas
 troca as taxas do revisor pelas taxas cross-fitted. A simulação confere folds
 e probabilidades B1 contra `pcal_ml_oof.csv` antes de construir os funis.
+Os testes de reprodução com máscara integral desligam P-Platt explicitamente
+e impedem qualquer ajuste Platt com um gancho de teste. P e B1 seguem apenas
+pela isotônica nesse teste; Platt é ajustado somente para P-Platt ou quando
+a regra pré-registrada de poucos positivos exige sua substituição.
 
 A3 restringe também os ajustes do classificador aos pares abaixo do corte,
 mantendo os mesmos folds externos e internos. A outra sensibilidade conserva
@@ -97,3 +105,27 @@ Os desfechos primários ficam para S3: entre os 36 PAR=2 abaixo do corte,
 aceitos automaticamente, encaminhados ao revisor humano e perdidos, com IC
 de Wilson de 95%; métricas na base inteira e em [5,9) por modo. Encaminhamento
 humano não é acerto observado; a taxa humana de 5% é somente um cenário.
+
+## Emenda técnica 1: diagnóstico anterior à repetição da S1
+
+O primeiro treino da S1 parou antes de produzir ações ou avaliar desfechos da
+cascata. No fold externo 0, o conjunto de calibração abaixo do corte continha
+49.189 potenciais pares: 32 positivos e 49.157 negativos. Nenhuma probabilidade
+bruta era zero ou um. Todos os logits recortados eram finitos e sua variância
+era 2,9673083611. Os intervalos por classe se sobrepunham: positivos de
+-11,6973123081 a 10,7274274605 e negativos de -13,8155095580 a 9,9969190053.
+Não havia separação linear perfeita nem variância nula.
+
+O Newton sem controle de passo passou de intercepto -7,3215 e inclinação zero
+para intercepto 10.796.318,0483 e inclinação 1.082.103,7950 na iteração 3.
+Todos os 49.189 valores previstos saturaram em zero ou um; a curvatura do
+intercepto e o determinante da Hessiana se tornaram zero. Portanto, a
+singularidade foi uma falha numérica de otimização sob desbalanceamento,
+não evidência de separação perfeita no conjunto de calibração.
+
+A emenda foi autorizada antes de repetir S1. Não foram examinados desfechos
+com rótulos da cascata, métricas de acerto ou resultados S2. Rótulos foram
+usados exclusivamente no treinamento e no diagnóstico autorizado. Objetivo
+científico, braços, folds, seed, custos, regras de parada e parâmetros
+registrados permanecem fixos; a formulação suavizada autorizada estabiliza o
+ajuste Platt. Os hashes novos ficam registrados no YAML da emenda.
