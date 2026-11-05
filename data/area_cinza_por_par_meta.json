@@ -1,0 +1,18 @@
+{
+  "script": "scripts/area_cinza_por_par.py",
+  "fontes": [
+    {
+      "arquivo": "COMPARADORSEMIDENT.csv",
+      "sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65"
+    }
+  ],
+  "faixas": [
+    "<5",
+    "[5,9)",
+    ">=9"
+  ],
+  "total_potenciais_pares": 61696,
+  "total_vinculos": 247,
+  "definicao": "PAR em {1, 2}; nota final do CdR; intervalos fechados à esquerda",
+  "saida": "Somente agregados, sem identificadores de par"
+}
