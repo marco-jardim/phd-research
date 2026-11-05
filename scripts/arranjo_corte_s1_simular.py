@@ -105,7 +105,7 @@ def preregister(data_root):
         "sha256": fingerprints(data_root),
         "classifier": {"source": "gzcmd/ml_oof.py:_classifier,numeric_features",
                        "features": 30, "outer_folds": 5, "inner_folds": 5,
-                       "split_by": "refrec", "seed": 42, "n_jobs": 2,
+                       "split_by": "refrec", "seed": 42, "n_jobs": 8,
                        "n_estimators": 300, "max_depth": 6, "learning_rate": .05,
                        "subsample": .8, "colsample_bytree": .8,
                        "scale_pos_weight": "n_negative/n_positive in each fit",
@@ -221,7 +221,7 @@ def simulate(data_root, expected_hash):
         raise ValueError("Missing REFREC")
     import psutil
     memory = psutil.virtual_memory()
-    print("RAM_AVAILABLE_GIB", round(memory.available / 2**30, 3), "N_JOBS", 2, flush=True)
+    print("RAM_AVAILABLE_GIB", round(memory.available / 2**30, 3), "N_JOBS", 8, flush=True)
     events = []
 
     def audit(fold, stage, fit, predict, external):

@@ -146,10 +146,6 @@ class LogitPlatt:
         return predict_platt(self.design(p), model=self.model).to_numpy()
 
 
-def low_thread_classifier(y, seed):
-    return _classifier(y, seed).set_params(n_jobs=2)
-
-
 def nested_cutoff_probabilities(
     x, y, below, groups, *, par2=None, n_splits=N_SPLITS, seed=SEED,
     model_factory=None, audit=None, include_a3=True, include_platt=True,
@@ -160,7 +156,7 @@ def nested_cutoff_probabilities(
     actual fitting boundary. A3 restricts model fits, but not split construction.
     The all-mask case is exactly the original nested isotonic calculation.
     """
-    factory = model_factory or low_thread_classifier
+    factory = model_factory or _classifier
     y = np.asarray(y, dtype=int)
     below = np.asarray(below, dtype=bool)
     groups = np.asarray(groups)
