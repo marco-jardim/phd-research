@@ -92,7 +92,8 @@ def test_editorial_area_review_is_a_ceiling_without_numeric_change():
     assert old.count('21.497 (28)') == 2
     assert new.count('21.497 (teto; 28)') == 2
     numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
-    assert numeric(old.split(r'\noindent')[0]) == numeric(new.split(r'\noindent')[0])
+    from editorial_expectations import arrangement_expected_notes
+    assert numeric(arrangement_expected_notes(old)) == numeric(new)
 
 
 def test_fraction_denominators_are_explicitly_minima_not_observed_counts():
