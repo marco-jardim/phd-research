@@ -279,11 +279,17 @@
 \color{red}
 \pgfsetdash{}{0pt}
 \pgfpathcircle{\pgfpoint{6.64303cm}{1.98056cm}}{2pt}\pgfusepath{fill}
-\pgftext[left,at={\pgfpoint{6.74303cm}{2.28056cm}}]{\scriptsize P vig.: (96, 23), 21 FP, +344 LLM}
+\pgfsetlinewidth{0.35pt}
+\pgfpathmoveto{\pgfpoint{6.64303cm}{1.98056cm}}
+\pgfpathlineto{\pgfpoint{0.35000cm}{2.58000cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{0.35000cm}{2.70000cm}}]{\scriptsize P vig.: (96, 23), 21 FP, +344 LLM}
 \color{red}
 \pgfsetdash{}{0pt}
 \pgfpathcircle{\pgfpoint{4.12351cm}{0.77500cm}}{2pt}\pgfusepath{fill}
-\pgftext[left,at={\pgfpoint{4.22351cm}{0.47500cm}}]{\scriptsize P conf.: (17, 9), 4 FP, +41 LLM}
+\pgfsetlinewidth{0.35pt}
+\pgfpathmoveto{\pgfpoint{4.12351cm}{0.77500cm}}
+\pgfpathlineto{\pgfpoint{6.30000cm}{0.18000cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{6.30000cm}{0.30000cm}}]{\scriptsize P conf.: (17, 9), 4 FP, +41 LLM}
 \color{gray}
 \pgfsetdash{}{0pt}
 \pgfpathmoveto{\pgfpoint{0.00cm}{-1.00cm}}

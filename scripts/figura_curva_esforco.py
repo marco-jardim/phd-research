@@ -74,8 +74,8 @@ def render(curve_rows, comparator_rows):
                 lines.extend([rf"\pgfpathlineto{{{point(k, last_y)}}}", rf"\pgfpathlineto{{{point(k, y)}}}"])
                 last_y = y
         lines.extend([rf"\pgfpathlineto{{{point(*points[-1])}}}", r"\pgfusepath{stroke}"])
-    for mode, label, dx, dy in (("vigilancia", "P vig.", 0.10, 0.30),
-                                 ("confirmacao", "P conf.", 0.10, -0.30)):
+    for mode, label, label_x, label_y in (("vigilancia", "P vig.", 0.35, height - 0.40),
+                                         ("confirmacao", "P conf.", 6.30, 0.30)):
         matches = [r for r in comparator_rows if r["ordenacao"] == "O3_p_cal_ml"
                    and r["modo"] == mode and r["carga"] == "K1_humana"]
         if len(matches) != 1:
@@ -83,7 +83,9 @@ def render(curve_rows, comparator_rows):
         row = matches[0]
         k, y = int(row["P_pares_humano"]), int(row["P_par2_recuperados"])
         lines.extend([r"\color{red}", r"\pgfsetdash{}{0pt}", rf"\pgfpathcircle{{{point(k,y)}}}{{2pt}}\pgfusepath{{fill}}",
-                      text(width*math.log10(k)/math.log10(xmax)+dx, height*y/ymax+dy,
+                      r"\pgfsetlinewidth{0.35pt}", rf"\pgfpathmoveto{{{point(k,y)}}}",
+                      rf"\pgfpathlineto{{\pgfpoint{{{label_x:.5f}cm}}{{{label_y - 0.12:.5f}cm}}}}\pgfusepath{{stroke}}",
+                      text(label_x, label_y,
                            f"{label}: ({k}, {y}), {row['P_fp']} FP, +{row['P_pares_llm']} LLM", "left")])
     for i, (name, label, color, _) in enumerate(series):
         label = label.replace("_", r"\_")
