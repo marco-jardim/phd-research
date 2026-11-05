@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Base versionada desta revisão S6b: `7cdece7f79e3925626780a6f398031daf253c71c`. O hash registrado na verificação técnica identifica a árvore compilada, não o commit final. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 16 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
+Base versionada desta revisão S7b: `3a27df71d5277f53cb70083cae4b033a7a7d7b2a`. O hash registrado na verificação técnica identifica a árvore compilada, não o commit final. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 16 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
@@ -30,16 +30,16 @@ A pesquisa foi desenvolvida no IESC-UFRJ, sob orientação de Rejane Sobrino Pin
 A tuberculose é uma condição marcadora, e a vinculação entre notificações e óbitos permite examinar desfechos do cuidado. O problema estudado não é apenas computacional: uma decisão incorreta de vínculo pode modificar a informação usada pela vigilância.
 
 ### 3. Revisão abaixo do corte
-Sob a hipótese de revisão em ordem decrescente de escore, derivada do rótulo, o limite inferior da carga histórica é de 2.156 potenciais pares com limiar por passo. Com limiar global SCORE ≥ −5,648, são 2.522. A hipótese de 20 minutos por par equivale a pelo menos 718 h 40 min e 840 h 40 min, respectivamente, conforme o CSV de horas. Não são tempos observados. Comparam-se 96/17 encaminhamentos, com 13/27 vínculos perdidos. Os 61.485 são apenas teto teórico, não o contraponto principal. A tese não fixa o critério de aceitação dessa troca; ele cabe ao serviço. A área cinza da nota do CdR, [5,9), é outra delimitação.
+Sob a hipótese de revisão em ordem decrescente de escore, derivada do *label*, o limite inferior da carga histórica é de 2.156 potenciais pares com limiar por passo. Com limiar global SCORE ≥ −5,648, são 2.522. A hipótese de 20 minutos por par equivale a pelo menos 718 h 40 min e 840 h 40 min, respectivamente, conforme o CSV de horas. Não são tempos observados. Comparam-se 96/17 encaminhamentos, com 13/27 vínculos perdidos. Os 61.485 são apenas teto teórico, não o contraponto principal. A tese não fixa o critério de aceitação dessa troca; ele cabe ao serviço. A área cinza da nota do CdR, [5,9), é outra delimitação.
 
 ### 4. Tese central
-A tese central é uma hipótese condicionada à carga e à aceitação das consequências dos erros pelo serviço. O GZ-CMD pode organizar a revisão dos potenciais pares não aceitos pelo corte e reduzir os encaminhamentos, mas a evidência de carga é um limite inferior, e o arranjo é pior em todo desfecho medido contra o rótulo da prática do serviço. O objetivo 4 é desenvolver e avaliar a cascata por *expected loss*, com custos assimétricos, calibração fora da amostra e revisão assistida por LLM, nos potenciais pares não aceitos pelo corte. Comparam-se vínculos recuperados, falsos positivos, encaminhamentos, custo e carga com o corte seguido de revisão manual e com estratégias de corte único e de duas fronteiras.
+A tese central é uma hipótese condicionada à carga e à aceitação das consequências dos erros pelo serviço. O GZ-CMD pode organizar a revisão dos potenciais pares não aceitos pelo corte e reduzir os encaminhamentos, mas a evidência de carga é um limite inferior, e o arranjo é pior em todo desfecho medido contra o *label* da prática do serviço. O objetivo 4 é desenvolver e avaliar a cascata por *expected loss*, com custos assimétricos, calibração fora da amostra e revisão assistida por LLM, nos potenciais pares não aceitos pelo corte. Comparam-se vínculos recuperados, falsos positivos, encaminhamentos, custo e carga com o corte seguido de revisão manual e com estratégias de corte único e de duas fronteiras.
 
 ### 5. Fontes e blocagem
 Foram analisados 61.696 potenciais pares e 247 vínculos, com razão aproximada de 1:249, gerados em três passos exportados do OpenRecLink. O passo ampliado concentra o volume, mas não a maioria dos vínculos; a avaliação está condicionada ao extrato, e não estima a sensibilidade de toda a blocagem nas bases de origem.
 
 ### 6. Referência operacional
-O corte do OpenRecLink aceitou 211 dos 247 vínculos, ou 85,4%, e a revisão manual acrescentou 36. PAR é o rótulo do padrão-ouro: 1 designa aceitação pelo corte; 2, recuperação pela revisão manual. O corte 9 da nota do CdR é outro objeto, um cenário hipotético. Os 211 aceitos e zero falsos positivos acima do corte decorrem do rótulo, não de avaliação independente. O limite inferior de carga foi apresentado no quadro 3.
+O corte do OpenRecLink aceitou 211 dos 247 vínculos, ou 85,4%, e a revisão manual acrescentou 36. PAR é o *label* do padrão-ouro: 1 designa aceitação pelo corte; 2, recuperação pela revisão manual. O corte 9 da nota do CdR é outro objeto, um cenário hipotético. Os 211 aceitos e zero falsos positivos acima do corte decorrem do *label*, não de avaliação independente. O limite inferior de carga foi apresentado no quadro 3.
 
 ### 7. Faixas e padrão-ouro
 As faixas são da nota final do CdR, não do escore probabilístico do OpenRecLink. Há três vínculos abaixo de 5, 151 na faixa intermediária e 93 a partir de 9; uma revisora realizou a classificação, sem segunda avaliação independente para medir concordância humana.
@@ -62,7 +62,7 @@ RF+SMOTE atingiu F1 de 0,931 na ablação original, e o XGBoost do fluxo Modal a
 As nove estratégias de balanceamento foram avaliadas no Random Forest, com F1 médio entre 0,880 e 0,918. Essa variação descreve o experimento realizado, não demonstra que uma estratégia de reamostragem seja necessária ou superior em qualquer modelo.
 
 ### 13. Estimador do GZ-CMD
-O GZ-CMD usa outro XGBoost, com 30 atributos e calibração isotônica aninhada, agrupando por REFREC nos níveis externo e interno. Na área cinza da nota, a AUC é 0,995 e a AP é 0,862; o corte ilustrativo de 0,5 produz 119 verdadeiros positivos e 28 falsos positivos. Esses números descrevem o estimador original, não o arranjo. Nele, o classificador continua ajustado na base inteira, mas a isotônica é reajustada apenas com as probabilidades OOF internas do treino abaixo do corte, sem os rótulos da partição externa.
+O GZ-CMD usa outro XGBoost, com 30 atributos e calibração isotônica aninhada, agrupando por REFREC nos níveis externo e interno. Na área cinza da nota, a AUC é 0,995 e a AP é 0,862; o corte ilustrativo de 0,5 produz 119 verdadeiros positivos e 28 falsos positivos. Esses números descrevem o estimador original, não o arranjo. Nele, o classificador continua ajustado na base inteira, mas a isotônica é reajustada apenas com as probabilidades OOF internas do treino abaixo do corte, sem os *labels* da partição externa.
 
 ### 14. Finalidades operacionais
 A vigilância atribui maior consequência à perda do vínculo, enquanto a confirmação atribui maior consequência ao falso vínculo. A fronteira permite explicitar esse compromisso, sem transformar os pontos explorados no teste em limiares validados para uso externo.
@@ -74,13 +74,13 @@ No teste da ablação, o RF+SMOTE detectou 67 vínculos e o limiar 8 detectou 43
 Os indicadores derivados do encerramento por óbito constituem vazamento de alvo. A sensibilidade 2×2 foi executada: o F1 do RF+SMOTE passou de 0,931 para 0,938 sem óbito, mas caiu para 0,846 com REFREC. No QW1 local na GPU, o XGBoost passou de 0,937 para 0,878 com REFREC, sem substituir o resultado histórico de 0,920. O otimismo aparece sobretudo na partição por linha, embora mudem os vínculos e denominadores. O GZ-CMD já utiliza agrupamento por REFREC, sem indicadores de óbito; permanece possível dependência por COMPREC.
 
 ### 17. Arquitetura depois do corte
-O arranjo preserva a aceitação acima do corte e aplica o GZ-CMD abaixo dele. As guardas usam nota e probabilidade recalibrada; as faixas estratificam o erro do revisor. A isotônica é reajustada apenas no treino abaixo do corte, sem rótulos da partição externa. As taxas foram congeladas antes das chamadas novas, sem realimentação por essas respostas, mas P reutiliza sobretudo lotes históricos também usados para estimar as proporções do revisor. Não é avaliação prospectiva. *Grey-Zone* no nome remete ao conceito de Fellegi e Sunter, a região que a regra automática não decide; nos resultados, área cinza da nota designa somente [5,9).
+O arranjo preserva a aceitação acima do corte e aplica o GZ-CMD abaixo dele. As guardas usam nota e probabilidade recalibrada; as faixas estratificam o erro do revisor. A isotônica é reajustada apenas no treino abaixo do corte, sem *labels* da partição externa. As taxas foram congeladas antes das chamadas novas, sem realimentação por essas respostas, mas P reutiliza sobretudo lotes históricos também usados para estimar as proporções do revisor. Não é avaliação prospectiva. *Grey-Zone* no nome remete ao conceito de Fellegi e Sunter, a região que a regra automática não decide; nos resultados, área cinza da nota designa somente [5,9).
 
 ### 18. Custos e ações
 O custo do falso negativo é maior na vigilância, enquanto o custo do falso positivo é maior na confirmação. As quatro ações são comparadas na mesma escala de utilidade, e essa escala não deve ser confundida com dólares nem com custos econômicos medidos no serviço.
 
 ### 19. Arranjo sequencial com registro prévio
-S1 é a simulação sem API; S2, as chamadas ao LLM; S3, a avaliação com rótulos. Em 05/11/2026, o registro `8c16a41` ocorreu às 01:22:17 UTC. Os metadados da S3 registram 02:11:52 UTC; o commit `16d5876`, 02:17:13 UTC. Essa cronologia coincide com `estudo4_gzcmd.tex` na base S6a `7cdece7`.
+S1 é a simulação sem API; S2, as chamadas ao LLM; S3, a avaliação com *labels*. Em 05/11/2026, o registro `8c16a41` ocorreu às 01:22:17 UTC. Os metadados da S3 registram 02:11:52 UTC; o commit `16d5876`, 02:17:13 UTC.
 
 O registro prévio é um YAML versionado no repositório, não um registro público. O braço P é a calibração isotônica registrada como principal; P-Platt é a análise de sensibilidade com *Platt scaling*. Vigilância e confirmação são os dois perfis de custo. Na vigilância, são 211 vínculos pelo corte e quatro pela política, totalizando 215/247, ou 87,0%, com IC de 82,3 a 90,7%, 21 falsos positivos e 13 perdidos. Encaminha 96 potenciais pares ao revisor humano, incluindo 19 vínculos, e 344 ao LLM, a US$ 0,94. O fechamento é (211+4)+13+19=247. Na confirmação, são 211 pelo corte e oito pela política, totalizando 219, ou 88,7%, com IC de 84,1 a 92,0%, 4 falsos positivos e 27 perdidos. Encaminha 17 ao revisor humano, incluindo um vínculo, e 41 ao LLM, a US$ 0,11: (211+8)+27+1=247. O acréscimo frente ao corte isolado é de quatro e oito vínculos, com 13 e 27 perdidos; os intervalos se sobrepõem ao do corte.
 
@@ -102,13 +102,13 @@ As perdas correspondem a 36,1% e 75,0% dos 36 PAR=2. Na vigilância, uma perda v
 Claude Haiku 5.5 com instruções v4 recebe dossiê sem as saídas decisórias do motor, em protocolo de dois agentes e árbitro. Toda aceitação abaixo do corte em P veio do LLM. Na vigilância, somente quatro das 25 aceitações eram vínculos: VPP de 16,0%, com IC de 6,4 a 34,7%. Na confirmação, são oito de 12, ou 66,7%. P-Platt tem quatro de sete na vigilância, ou 57,1%. As taxas congeladas previam cerca de 9,06 falsos positivos em P na vigilância, contra 21 observados. A transferência de proporções de coortes com potenciais pares mais fáceis subestimou o erro nessa região. A recomendação é encaminhar MATCH do LLM abaixo do corte ao revisor humano, não à aceitação automática, e monitorar essas respostas. Trata-se de proposta que exige avaliação registrada própria, não de resultado observado ou de política já avaliada.
 
 ### 22. P-Platt e a dependência da calibração
-P foi dominado na avaliação original por P-Platt, registrado como análise de sensibilidade com *Platt scaling*. Na vigilância, P-Platt aceita 217, com três falsos positivos, 77 encaminhamentos humanos, 110 ao LLM e US$ 0,30. P aceita 211 pelo corte e quatro pela política, com 21 falsos positivos, 96 ao revisor humano, 344 ao LLM e US$ 0,94. Ambos perdem 13 vínculos. A robustez com registro prévio, não confirmatória, não sustentou a dominância: sete e quatro das 20 réplicas na vigilância, sete e cinco na confirmação, nos blocos N e P. A redução de FP na vigilância ocorreu em todas as réplicas dos dois blocos, mas P-Platt perdeu, em mediana, um e dois vínculos a mais. P permanece principal. A recomendação é preservar o corte; a isotônica abaixo dele não superou as alternativas, e adotar Platt exige validação em dados novos.
+P foi dominado na avaliação original por P-Platt, registrado como análise de sensibilidade com *Platt scaling*. Na vigilância, P-Platt aceita 217, com três falsos positivos, 77 encaminhamentos humanos, 110 ao LLM e US$ 0,30. P aceita 211 pelo corte e quatro pela política, com 21 falsos positivos, 96 ao revisor humano, 344 ao LLM e US$ 0,94. Ambos perdem 13 vínculos. A robustez com registro prévio, não confirmatória, não sustentou a dominância: sete e quatro das 20 réplicas na vigilância, sete e cinco na confirmação, nos blocos N e P. A redução de FP na vigilância ocorreu em todas as réplicas dos dois blocos, mas P-Platt perdeu, em mediana, um e dois vínculos a mais. P permanece principal porque foi registrado antes. A recomendação é preservar o corte; a isotônica abaixo dele não superou as alternativas, e adotar Platt exige validação em dados novos.
 
 ### 23. Equidade por sexo
-No arranjo P de vigilância, o VPP é de 86,3% no sexo feminino e 93,3% no masculino, sem rejeição após Benjamini-Hochberg, p ajustado de 0,378. Na cascata sobre a base inteira (comparação), é de 87,9% e 84,0%. A aceitação do arranjo combina corte e respostas de vínculo do LLM; o encaminhamento humano conta como não aceito. Os 211 vínculos acima do corte são aceitos por construção. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR=2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo do corte. O poder é limitado por esses números e pela incorporação do corte ao rótulo; ausência de rejeição não comprova equidade. Raça/cor não está disponível.
+No arranjo P de vigilância, o VPP é de 86,3% no sexo feminino e 93,3% no masculino, sem rejeição após Benjamini-Hochberg, p ajustado de 0,378. Na cascata sobre a base inteira (comparação), é de 87,9% e 84,0%. A aceitação do arranjo combina corte e respostas de vínculo do LLM; o encaminhamento humano conta como não aceito. Os 211 vínculos acima do corte são aceitos por construção. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR=2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo do corte. O poder é limitado por esses números e pela incorporação do corte ao *label*; ausência de rejeição não comprova equidade. Raça/cor não está disponível.
 
 ### 24. Desigualdade operacional
-A disparidade por passo é herdada do corte e do rótulo, não um efeito isolado do GZ-CMD. O corte sozinho aceita 15 dos 40 vínculos do passo 11, ou 37,5%, contra 76 de 80 no passo 6 (95,0%) e 120 de 127 no passo 9 (94,5%). No passo 11 estão 25 dos 36 vínculos com PAR=2. O arranjo aceita dois desses 25 na vigilância e quatro na confirmação, chegando a 17/40 (42,5%) e 19/40 (47,5%). Nos passos 6/9/11, as aceitações PAR=2 são 0/2/2 na vigilância e 1/3/4 na confirmação, conforme `data/par_por_passo.csv`. Nos passos 6 e 9, a sensibilidade do arranjo é de pelo menos 95,0% nos dois modos. Na vigilância, fica abaixo da cascata sobre a base inteira (comparação) no passo 11: 42,5% contra 45,0%. Após Benjamini-Hochberg, são sete e três rejeições em P, todas operacionais; na base inteira (comparação), nove e uma. A contagem não ordena equidade. A equidade do processo completo depende da revisão humana ainda não observada.
+A disparidade por passo é herdada do corte e do *label*, não um efeito isolado do GZ-CMD. O corte sozinho aceita 15 dos 40 vínculos do passo 11, ou 37,5%, contra 76 de 80 no passo 6 (95,0%) e 120 de 127 no passo 9 (94,5%). No passo 11 estão 25 dos 36 vínculos com PAR=2. O arranjo aceita dois desses 25 na vigilância e quatro na confirmação, chegando a 17/40 (42,5%) e 19/40 (47,5%). Nos passos 6/9/11, as aceitações PAR=2 são 0/2/2 na vigilância e 1/3/4 na confirmação, conforme `data/par_por_passo.csv`. Nos passos 6 e 9, a sensibilidade do arranjo é de pelo menos 95,0% nos dois modos. Na vigilância, fica abaixo da cascata sobre a base inteira (comparação) no passo 11: 42,5% contra 45,0%. Após Benjamini-Hochberg, são sete e três rejeições em P, todas operacionais; na base inteira (comparação), nove e uma. A contagem não ordena equidade. A equidade do processo completo depende da revisão humana ainda não observada.
 
 ### 25. Posicionamento
 Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. A tese propõe sua composição operacional com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
@@ -120,13 +120,13 @@ O padrão-ouro incorpora o corte e uma revisão com acesso ao CdR, combinando ve
 O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas. A exportação restrita com identificador de par por HMAC foi implementada em `scripts/export_matriz_desidentificada.py`, mas a matriz não foi depositada e não se afirma saneamento retroativo das execuções. A equivalência Java parcial foi executada; a comparação empírica com Lages não foi realizada.
 
 ### 28. Conclusões
-Na vigilância, são 211 vínculos pelo corte e quatro pela política, 87,0%, com 21 falsos positivos, 96 encaminhamentos e 13 dos 36 vínculos da revisão perdidos. Na confirmação, são 211 e oito, 88,7%, com quatro falsos positivos, 17 encaminhamentos e 27 perdidos. A hipótese é condicionada à carga: esses encaminhamentos contrastam com um limite inferior de 2.156, não com uma carga histórica medida. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o rótulo; a vantagem de carga é só um limite inferior derivado do rótulo. P é principal porque foi registrado antes. A contribuição é a avaliação registrada e o resultado negativo: a isotônica abaixo do corte não funcionou na região avaliada, e nenhuma variante superou a prática do serviço contra o rótulo. O serviço define o critério de aceitação da troca; a tese não o fixa.
+Na vigilância, são 211 vínculos pelo corte e quatro pela política, 87,0%, com 21 falsos positivos, 96 encaminhamentos e 13 dos 36 vínculos da revisão perdidos. Na confirmação, são 211 e oito, 88,7%, com quatro falsos positivos, 17 encaminhamentos e 27 perdidos. A hipótese é condicionada à carga: esses encaminhamentos contrastam com um limite inferior de 2.156, não com uma carga histórica medida. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o *label*; a vantagem de carga é só um limite inferior derivado do *label*. P é principal porque foi registrado antes. A contribuição é a avaliação registrada e o resultado negativo: a isotônica abaixo do corte não funcionou na região avaliada, e nenhuma variante superou a prática do serviço contra o *label*. O serviço define o critério de aceitação da troca; a tese não o fixa.
 
 ### 29. Contribuições
 As entregas incluem comparador com equivalência parcial avaliada, estimadores e faixas, pacote decisório 0.4.0 com política v3.1 e artefatos pseudonimizados no Zenodo 3.0.1. O pacote e o depósito cobrem a v3.1 sobre a base inteira, não o arranjo; seus agregados estão no repositório e as saídas por par ficam locais. A adoção de Platt requer validação em dados novos. Recomenda-se também encaminhar MATCH do LLM abaixo do corte ao revisor humano, em vez de aceitação automática, com monitoramento e avaliação registrada própria. Nenhuma dessas recomendações é resultado de uma nova política já avaliada.
 
 ### 30. Agradecimentos
-O trabalho dependeu da orientação, da equipe responsável pelos dados e da revisão manual que permitiu a avaliação. Preservar o corte pode reduzir a revisão, se o serviço aceitar o custo em vínculos: 96/17 encaminhamentos frente a pelo menos 2.156, com 13/27 perdidos. A hipótese requer avaliação em dados novos.
+O trabalho dependeu da orientação, da equipe responsável pelos dados e da revisão manual que permitiu a avaliação. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o *label*: 13/27 vínculos perdidos e 21/4 falsos positivos. A vantagem em carga é só um limite inferior: pelo menos 2.156 pares, equivalentes a 718 h 40 min sob hipótese de 20 min por par, não tempo observado. O arranjo encaminha 96/17 pares; a aceitabilidade da troca cabe ao serviço.
 
 ### 31. Backup: base inteira (comparação), cascata gráfica
 A figura sintetiza a cascata sobre a base inteira por política e modo, não o arranjo. Os subtotais humanos incluem encaminhamento direto e inconclusivos do LLM, não constituindo novos ramos a somar novamente.
@@ -180,7 +180,7 @@ Para P na vigilância, o Jaccard mediano do lote LLM em relação à partição 
 
 ## Perguntas prováveis
 
-São 23 respostas, com 60, 58, 56, 61, 66, 63, 50, 68, 57, 62, 58, 58, 55, 53, 57, 59, 56, 60, 58, 60, 57, 58 e 58 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
+São 23 respostas, com 60, 58, 56, 61, 66, 63, 50, 68, 57, 62, 58, 58, 55, 55, 57, 59, 56, 60, 58, 60, 57, 58 e 58 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -232,7 +232,7 @@ Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`
 
 ### 9. Como discutir equidade sem raça/cor?
 
-A falta de raça/cor impede examinar disparidades raciais. Avaliaram-se sensibilidade e VPP, não toda a igualdade de oportunidades de erro. No passo 11, P tem 42,5% e 47,5% nos dois modos; na vigilância, fica abaixo dos 45,0% da base inteira (comparação). A diferença reflete sobretudo o corte e o rótulo. Ausência de rejeição demográfica não demonstra equidade.
+A falta de raça/cor impede examinar disparidades raciais. Avaliaram-se sensibilidade e VPP, não toda a igualdade de oportunidades de erro. No passo 11, P tem 42,5% e 47,5% nos dois modos; na vigilância, fica abaixo dos 45,0% da base inteira (comparação). A diferença reflete sobretudo o corte e o *label*. Ausência de rejeição demográfica não demonstra equidade.
 
 Fonte: `data/equidade_arranjo_group_metrics.csv`, passo; `data/equidade_arranjo_pairwise_tests.csv`, rejeições de P. Slides 23 e 24.
 
@@ -262,7 +262,7 @@ Fonte: `data/arranjo_corte_vpp_llm.csv:2,8`. Slide 21.
 
 ### 14. De onde vêm os vínculos perdidos?
 
-Na vigilância de P, uma perda vem da guarda de nota inferior a 5, seis do não-vínculo automático por custo e seis da resposta de não-vínculo do LLM, totalizando 13. Na confirmação, são uma, 22 e quatro, totalizando 27. Essa decomposição identifica os ramos da decisão; não isola causalmente o efeito da calibração.
+Em P, as perdas distribuem-se por guarda/custo/LLM, na vigilância: 1/6/6, totalizando 13; na confirmação: 1/22/4, totalizando 27. Os encaminhamentos são desfechos do arranjo; não se atribuem exclusivamente ao LLM. As aceitações e os falsos positivos abaixo do corte vieram do LLM. Essa decomposição identifica os ramos da decisão, sem isolar causalmente o efeito da calibração.
 
 Fonte: `data/arranjo_corte_perdas_mecanismo.csv:2-4,50-52`. Slide 20.
 
@@ -280,7 +280,7 @@ Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `data/arranjo_corte_taxas_crossfit.cs
 
 ### 17. A AUC de 0,995 elimina o viés de incorporação?
 
-Não. A AUC descreve discriminação interna no padrão-ouro disponível; não mede independência do rótulo nem calibração absoluta. O CdR estava disponível antes da revisão, e o corte define PAR=1. O agrupamento por REFREC reduz uma dependência, mas não separa simultaneamente COMPREC nem cria referência externa. O GZ-CMD não usa os atributos de óbito dos experimentos exploratórios.
+Não. A AUC descreve discriminação interna no padrão-ouro disponível; não mede independência do *label* nem calibração absoluta. O CdR estava disponível antes da revisão, e o corte define PAR=1. O agrupamento por REFREC reduz uma dependência, mas não separa simultaneamente COMPREC nem cria referência externa. O GZ-CMD não usa os atributos de óbito dos experimentos exploratórios.
 
 Fonte: `tab:e4-desempenho-faixas-oof`; `data/arranjo_corte_metadata.json`, `verification_bias` e `incorporation_bias`. Slides 13, 16 e 26.
 
@@ -310,7 +310,7 @@ Fonte: `data/robustez_arranjo_resumo.csv:270,278,654`; `data/robustez_arranjo_me
 
 ### 22. Qual é a vantagem demonstrada frente à prática do serviço?
 
-Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o rótulo. A vantagem de carga é só um limite inferior derivado do rótulo: 96/17 encaminhamentos frente a pelo menos 2.156, sob hipótese de revisão decrescente de escore. Isso não mede economia histórica nem aceitabilidade das perdas; o critério de aceitação cabe ao serviço.
+Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o *label*. A vantagem de carga é só um limite inferior derivado do *label*: 96/17 encaminhamentos frente a pelo menos 2.156, sob hipótese de revisão decrescente de escore. Isso não mede economia histórica nem aceitabilidade das perdas; o critério de aceitação cabe ao serviço.
 
 Fonte: `data/carga_abaixo_corte.csv:9`; `data/arranjo_corte_metricas.csv:12,30`; `data/arranjo_corte_par2.csv:7,16`. Slides 3, 4 e 28.
 
@@ -333,11 +333,11 @@ Figuras reaproveitadas, sem alterar os originais:
 
 A captura do slide 9 está em `../../figures/fig_cdr_gui_mapeamento.png`, caminho relativo ao diretório de compilação `text/slides`, sem `graphicspath` adicional. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do texto adjacente, indicando que utilizou base distinta da desta tese, sem lhe atribuir a autoria do protótipo Java.
 
-Critérios editoriais: menção ao referencial clássico restrita ao slide 8; probabilidade recalibrada abaixo do corte; arranjo P principal e cascata REFREC sobre a base inteira como comparação; corte operacional 211/247 por construção do rótulo; F1 0,943 atribuído ao fluxo Modal; perdas de 13 e 27 vínculos junto do acréscimo automático; limitações antes das conclusões; equivalência Java parcial executada e comparação com Lages não realizada; sensibilidade 2×2 e QW1 local distinguidos dos resultados históricos; exportador com HMAC implementado, matriz não depositada; área cinza apenas para [5,9). As tabelas foram reduzidas no arquivo de slides.
+Critérios editoriais: menção ao referencial clássico restrita ao slide 8; probabilidade recalibrada abaixo do corte; arranjo P principal e cascata REFREC sobre a base inteira como comparação; corte operacional 211/247 por construção do *label*; F1 0,943 atribuído ao fluxo Modal; perdas de 13 e 27 vínculos junto do acréscimo automático; limitações antes das conclusões; equivalência Java parcial executada e comparação com Lages não realizada; sensibilidade 2×2 e QW1 local distinguidos dos resultados históricos; exportador com HMAC implementado, matriz não depositada; área cinza apenas para [5,9). As tabelas foram reduzidas no arquivo de slides.
 
 O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
-Compilação de teste: duas passagens de pdflatex, com jobname `defesa_s6b_teste` e saída em `.local/slides_s6b/`. O `TEXINPUTS` aponta para `.texdeps` do worktree local `pq-f-slides`, que contém Beamer e translator. Esse build não substitui `text/slides/defesa.pdf` nem os PDFs oficiais da tese.
+Compilação de teste: duas passagens de pdflatex, com jobname `defesa_s7b_teste` e saída em `.local/slides_s7b/`. O `TEXINPUTS` aponta para `.texdeps` do worktree local `pq-f-slides`, que contém Beamer e translator. Esse build não substitui `text/slides/defesa.pdf` nem os PDFs oficiais da tese.
 
 ### Verificação técnica em 05/11/2026
 
@@ -345,9 +345,9 @@ O build de teste em duas passagens produziu 46 páginas, com 30 quadros principa
 
 A verificação desta fatia abrange os dois arquivos da apresentação, o contrato editorial dos testes e o build de teste. Resultados históricos do código científico não constituem verificação desta revisão editorial.
 
-Log: `.local/slides_s6b/defesa_s6b_teste.log`. Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências.
+Log: `.local/slides_s7b/defesa_s7b_teste.log`. Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências.
 
-SHA-256 da árvore compilada: `1318c79c7428f69db6b21c72367c722bfaa70d4b11fdbf7f441add689ff36f78`. O manifesto `.local/slides_s6b/arvore_compilada.json` registra os 5 arquivos de entrada do repositório efetivamente lidos pelo pdflatex, identificados pelo recorder e por seus hashes; não inclui dependências externas de TeX nem identifica o commit final. SHA-256 do PDF de teste: `6949d7ef3d093239a1721f9e7763fbc0205ba274eefea79acf5bbf2ff30fac47`. Os arquivos da tese e seus PDFs não são alterados nesta fatia.
+SHA-256 da árvore compilada: `a1a7c28d55199524e2a306d78c50f21754b30ce24ab90dab0ded5e5cbd60b0c1`. O manifesto `.local/slides_s7b/arvore_compilada.json` registra os 5 arquivos de entrada do repositório efetivamente lidos pelo pdflatex, identificados pelo recorder e por seus hashes; não inclui dependências externas de TeX nem identifica o commit final. SHA-256 do PDF de teste: `aec66c71bcd58560ef375451938951e4d2bb789b20c0d00a22bf46d8b797f85c`. Os arquivos da tese e seus PDFs não são alterados nesta fatia.
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 
@@ -385,7 +385,7 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | Corte isolado nos passos 11/6/9: 15/40 (37,5%), 76/80 (95,0%) e 120/127 (94,5%) | `par_por_passo.csv:5-10,14-19,23-28` |
 | PAR=2 aceitos nos passos 6/9/11: 0/2/2 na vigilância e 1/3/4 na confirmação | `par_por_passo.csv:8,17,26,35,44,53` |
 | Pendentes de P∪B1 com chamada nova: 10 na vigilância e 14 na confirmação, não de P isolado; reutilização histórica e ausência de avaliação prospectiva | `arranjo_corte_s1_metadata.json:477-481`, campo `pending_P_union_B1_by_mode`; `arranjo_corte_metadata.json:355,357` |
-| Limites inferiores de carga: 2.156 por passo e 2.522 global; SCORE global ≥ −5,648, sob hipótese de revisão decrescente de escore derivada do rótulo | `carga_abaixo_corte.csv:5,9` |
+| Limites inferiores de carga: 2.156 por passo e 2.522 global; SCORE global ≥ −5,648, sob hipótese de revisão decrescente de escore derivada do *label* | `carga_abaixo_corte.csv:5,9` |
 | Hipótese de 20 min por par: por passo, pelo menos 718 h 40 min; global, pelo menos 840 h 40 min; não são tempos observados | `carga_abaixo_corte_horas.csv:3,2` |
 | P, vigilância: VPP do LLM 4/25 = 16,0%, IC 6,4 a 34,7%; 9,06 FP previstos contra 21 observados | `arranjo_corte_vpp_llm.csv:2` |
 | P, confirmação: VPP 8/12 = 66,7%, IC 39,1 a 86,2%; P-Platt vigilância: 4/7 = 57,1%, IC 25,0 a 84,2% | `arranjo_corte_vpp_llm.csv:8,3` |

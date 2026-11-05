@@ -88,7 +88,7 @@ Nota $\geq9$: 93/247 = 37,7\%\par
 \end{block}
 \end{columns}
 \medskip
-O corte define PAR~=~1; a revisão, PAR~=~2. Os 211 aceitos e zero FP acima do corte decorrem do rótulo. O limite de carga pressupõe revisão em ordem decrescente de escore; o volume histórico não foi observado.
+O corte define PAR~=~1; a revisão, PAR~=~2. Os 211 aceitos e zero FP acima do corte decorrem do \textit{label}. O limite de carga pressupõe revisão em ordem decrescente de escore; o volume histórico não foi observado.
 \fonte[]{data/arranjo\_corte\_metricas.csv, linha 2; data/carga\_abaixo\_corte.csv, linha 9; tese, tab:cap8-referencia, cenário do CdR}
 \end{frame}
 
@@ -233,7 +233,7 @@ O otimismo aparece sobretudo na partição por linha; os vínculos e denominador
 \begin{tabular}{p{.9\textwidth}}
 \toprule Corte do OpenRecLink: aceita acima dele; GZ-CMD decide abaixo \\
 \midrule Classificador ajustado na base inteira, OOF aninhado por REFREC \\
-Isotônica reajustada apenas no treino abaixo do corte, sem rótulos da partição externa \\
+Isotônica reajustada apenas no treino abaixo do corte, sem \textit{labels} da partição externa \\
 Guardas: $s<5$ rejeita; $s\geq9$ e $p\geq0{,}9$ aceita \\
 \midrule Faixas da nota final: estratificam o perfil de erro do revisor \\
 Probabilidade recalibrada: XGBoost com os mesmos 30 atributos \\
@@ -332,7 +332,7 @@ Abaixo do corte, encaminhar MATCH do LLM ao revisor humano, não à aceitação 
 \item Robustez com registro prévio, não confirmatória: dominância não sustentada, 7/20 e 4/20 na vigilância, 7/20 e 5/20 na confirmação (blocos N/P)
 \item Na vigilância, menos FP em 20/20 réplicas de ambos os blocos, mas P-Platt perde em mediana 1 a 2 vínculos a mais}
 \begin{block}{Recomendação}
-Preservar o corte. A isotônica abaixo dele não funcionou na região avaliada; nenhuma variante superou a prática do serviço contra o rótulo. Adotar Platt exige validação em dados novos.
+Preservar o corte. A isotônica abaixo dele não funcionou na região avaliada; nenhuma variante superou a prática do serviço contra o \textit{label}. Adotar Platt exige validação em dados novos.
 \end{block}
 \fonte[]{data/arranjo\_corte\_metricas.csv, linhas 12 e 14; data/robustez\_arranjo\_resumo.csv, linhas 2 a 5, 404 e 488; reserva 46}
 \end{frame}
@@ -361,7 +361,7 @@ Cascata, base inteira (comparação) & 87,9\% & 84,0\% \\
 {\LARGE 42,5\% e 47,5\%}\par
 sensibilidade automática do arranjo no passo 11, vigilância e confirmação
 \end{center}
-\itens{\item Disparidade herdada do corte e do rótulo: corte isolado de 37,5\% no passo 11 (15/40), contra 95,0\% no passo 6 e 94,5\% no passo 9
+\itens{\item Disparidade herdada do corte e do \textit{label}: corte isolado de 37,5\% no passo 11 (15/40), contra 95,0\% no passo 6 e 94,5\% no passo 9
 \item Dos 25 PAR~=~2 do passo 11, P aceita 2/4 nos dois modos. Nos passos 6 e 9, sensibilidade $\geq95{,}0\%$; na vigilância do passo 11, fica abaixo da base inteira, 42,5 contra 45,0\%
 \item Benjamini-Hochberg: 7/3 rejeições em P contra 9/1 na base inteira, todas operacionais; a contagem não ordena equidade
 \item O processo completo depende da revisão humana ainda não observada}
@@ -414,7 +414,7 @@ P aceita 211 vínculos pelo corte e 4 pela política: 87,0\%, com 21 FP e 96 enc
 \begin{block}{Confirmação}
 P aceita 211 vínculos pelo corte e 8 pela política: 88,7\% (85,4\% pelo corte), com 4 FP e 17 encaminhamentos ao revisor humano. Perde 27 dos 36 vínculos da revisão.
 \end{block}
-A hipótese é condicionada à carga: 96/17 encaminhamentos frente a pelo menos 2.156. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o rótulo; a vantagem de carga é só um limite inferior derivado do rótulo. P é principal pelo registro anterior; a contribuição é a avaliação registrada e o resultado negativo.
+A hipótese é condicionada à carga: 96/17 encaminhamentos frente a pelo menos 2.156. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o \textit{label}; a vantagem de carga é só um limite inferior derivado do \textit{label}. P é principal pelo registro anterior; a contribuição é a avaliação registrada e o resultado negativo.
 \fonte[]{data/carga\_abaixo\_corte.csv, linha 9; data/arranjo\_corte\_metricas.csv, linhas 12 e 30; data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16}
 \end{frame}
 
@@ -433,8 +433,9 @@ A hipótese é condicionada à carga: 96/17 encaminhamentos frente a pelo menos 
 \Large Orientadora, banca e equipe do IESC-UFRJ\medskip\par
 \normalsize Profissionais responsáveis pelo processamento e pela revisão dos dados\bigskip\par
 \begin{block}{Mensagem final}
-Preservar o corte pode reduzir a revisão, se o serviço aceitar o custo em vínculos: 96/17 encaminhamentos, frente a pelo menos 2.156, com 13/27 perdidos. A hipótese requer avaliação em dados novos.
+\small Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o \textit{label}: 13/27 vínculos perdidos e 21/4 falsos positivos. A vantagem em carga é só um limite inferior: pelo menos 2.156 pares, equivalentes a 718 h 40 min sob hipótese de 20 min por par, não tempo observado. O arranjo encaminha 96/17 pares; a aceitabilidade da troca cabe ao serviço.
 \end{block}
+\fonte[]{data/carga\_abaixo\_corte\_horas.csv, linha 3; data/arranjo\_corte\_metricas.csv, linhas 12 e 30}
 \end{frame}
 
 \appendix
