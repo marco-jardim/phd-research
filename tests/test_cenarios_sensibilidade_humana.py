@@ -8,6 +8,7 @@ from local_data import DATA_ROOT, requires_files, requires_reviewer_sources
 from scripts.cenarios_sensibilidade_humana import (
     aggregate_agreement, audit_filter_modes, compare_order, generate,
 )
+from scripts.filtro_llm import MODES, RUN_DIRS, resolve
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -89,6 +90,8 @@ def test_versioned_mode_audit_proves_shared_queue_not_shared_response_file():
                 ROOT / "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json",
                 ROOT / "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json")
 @requires_reviewer_sources()
+@requires_files(*(resolve(DATA_ROOT, f"data/sprint3b/{directory}/exp2_llm_sync_{mode}.json")
+                  for directory in RUN_DIRS for mode in MODES))
 def test_private_mode_audit_regenerates_count_only_outputs(tmp_path):
     audit_filter_modes(DATA_ROOT, output=tmp_path)
     for name in ("filtro_llm_concordancia_modos.csv", "filtro_llm_concordancia_modos_metadata.json"):
