@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import subprocess
@@ -36,6 +37,7 @@ RUN_DIRS = (
     "anthropic_sem_mo_v4_arranjo_corte_supl",
     "anthropic_sem_mo_v4_arranjo_robustez",
 )
+NEW_RUN_DIR = "data/sprint3b/anthropic_sem_mo_v4_filtro_llm"
 OUTPUTS = ("filtro_llm_cobertura.csv", "filtro_llm.csv", "filtro_llm_metadata.json")
 RESULT_COLUMNS = [
     "modo", "k", "nonmatch", "H", "par2_topk", "par2_recuperados",
@@ -111,6 +113,59 @@ def verify_protocol(data_root):
         raise ValueError("Protocol differs from committed version")
     subprocess.run(["git", "merge-base", "--is-ancestor", commit, "origin/pq/arranjo-corte"], cwd=ROOT, check=True)
     return spec, commit
+
+
+def load_new_execution(spec, data_root):
+    """Gate new responses against the published amendment and aggregate audit."""
+    if not spec.get("amendments"):
+        return None, {}
+    note = spec["amendments"][-1]
+    if note["output_directory"] != NEW_RUN_DIR:
+        raise ValueError("Unexpected amended output directory")
+    execution_path = resolve(data_root, NEW_RUN_DIR + "/execucao.json")
+    execution = json.loads(execution_path.read_text(encoding="utf-8"))
+    audit_path = resolve(data_root, NEW_RUN_DIR + "/auditoria.json")
+    audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    if audit.get("secret_matches") != 0 or audit.get("result_schema_allowlist_valid") is not True:
+        raise ValueError("New response secret/schema audit not accepted")
+    if execution.get("new_responses_reestimate_rates") is not False or execution.get("new_responses_feed_other_arms") is not False:
+        raise ValueError("New responses must not update rates/other arms")
+    if execution["protocol_sha256"] != sha256(PROTOCOL):
+        raise ValueError("New execution protocol differs from published amendment")
+    if execution["total_pairs"] > 100 or execution["total_cost_estimate_usd"] > .50:
+        raise ValueError("STOP: new execution exceeds authorization limits")
+    hashes = {NEW_RUN_DIR + "/execucao.json": sha256(execution_path),
+              NEW_RUN_DIR + "/auditoria.json": sha256(audit_path)}
+    for mode in MODES:
+        name = NEW_RUN_DIR + f"/exp2_llm_sync_{mode}.json"
+        path = resolve(data_root, name)
+        run = json.loads(path.read_text(encoding="utf-8"))
+        recorded = [r for r in execution["runs"] if r["mode"] == mode]
+        count = note["pending_counts"][mode]
+        if len(recorded) != 1 or sha256(path) != recorded[0]["run_sha256"]:
+            raise ValueError("New run SHA256 differs from execution audit")
+        if run.get("complete") is not True or run.get("n_errors") != 0 or run.get("errors"):
+            raise ValueError("New responses incomplete or have errors")
+        if run["transport"]["http_errors"] or run["transport"]["response_parse_errors"]:
+            raise ValueError("New run transport/parsing errors")
+        ids = [r["pair_id"] for r in run["results"]]
+        if len(ids) != count or len(set(ids)) != count or set(ids) != set(run["selected_pair_ids"]):
+            raise ValueError("New response cohort differs from approved size/identity")
+        original_csv = pd.DataFrame({"pair_id": run["selected_pair_ids"]}).to_csv(index=False, lineterminator="\n")
+        expected = note["pending_sha256"][mode]
+        if run["source_sha256"] != expected or hashlib.sha256(original_csv.encode()).hexdigest() != expected:
+            raise ValueError("New response IDs differ from approved pending SHA256")
+        field_name = NEW_RUN_DIR + f"/dossier_field_audit_{mode}.json"
+        field_path = resolve(data_root, field_name)
+        field_audit = json.loads(field_path.read_text(encoding="utf-8"))
+        if field_audit.get("forbidden_present") is not False or field_audit.get("n_dossiers") != count:
+            raise ValueError("New dossier field audit failed")
+        identity_name = NEW_RUN_DIR + f"/exp2_llm_sync_{mode}_journal/identity.json"
+        hashes.update({name: sha256(path), field_name: sha256(field_path),
+                       identity_name: sha256(resolve(data_root, identity_name))})
+    if execution["total_pairs"] != sum(note["pending_counts"].values()):
+        raise ValueError("New executed pair total differs from amendment")
+    return execution, hashes
 
 
 def select_responses(frozen, extras):
@@ -203,6 +258,9 @@ def collect(data_root):
     for mode in MODES:
         frozen = [base / s["path"] for s in sources if s["mode"] == mode]
         extra = [resolve(data_root, f"data/sprint3b/{d}/exp2_llm_sync_{mode}.json") for d in RUN_DIRS]
+        spec = yaml.safe_load(PROTOCOL.read_text(encoding="utf-8"))
+        if spec.get("amendments"):
+            extra.append(resolve(data_root, NEW_RUN_DIR + f"/exp2_llm_sync_{mode}.json"))
         run_paths[mode] = (frozen, [p for p in extra if p.exists()])
     wanted = set()
     for frozen, extra in run_paths.values():
@@ -246,6 +304,7 @@ def collect(data_root):
 
 def generate(data_root, out=ROOT / "data", *, local=LOCAL, coverage_only=False):
     spec, commit = verify_protocol(data_root)
+    new_execution, new_hashes = load_new_execution(spec, data_root)
     out, local = Path(out), Path(local)
     out.mkdir(parents=True, exist_ok=True)
     local.mkdir(parents=True, exist_ok=True)
@@ -288,17 +347,21 @@ def generate(data_root, out=ROOT / "data", *, local=LOCAL, coverage_only=False):
         "analysis": "exploratory_post_hoc", "post_hoc": True, "registered": "internal",
         "date": spec["date"], "protocol_commit": commit, "protocol_sha256": sha256(PROTOCOL),
         "api_calls": 0, "model_fits": 0, "input_sha256": spec["input_sha256"],
+        "analysis_api_calls": 0,
+        "authorized_new_api_calls": new_execution["total_api_calls"] if new_execution else 0,
+        "new_input_sha256": new_hashes, "new_execution": new_execution,
+        "new_responses_reestimate_rates": False, "new_responses_feed_other_arms": False,
         "response_audit": audit, "pending": pending_summary,
         "stop_rule_triggered": bool(coverage.escalate.any()),
         "interpretation": {m: interpret([r["diferenca_par2"] for r in results if r["modo"] == m]) for m in MODES},
         "evaluated_k": {m: [r["k"] for r in results if r["modo"] == m] for m in MODES},
-        "limitations": spec["limitations"],
-        "response_reuse_warning": "As respostas do LLM também alimentaram as taxas do revisor e o braço P.",
+        "limitations": spec["limitations"] + ([spec["amendments"][-1]["temporal_stochastic_limitation"]] if new_execution else []),
+        "response_reuse_warning": "As respostas históricas do LLM também alimentaram as taxas do revisor e o braço P. As respostas novas autorizadas não alimentam taxas nem outros braços.",
         "human_review": "Perfeito; erro de 5% é cenário, não desfecho observado; sem FP hipotéticos.",
         "wilson": "IC 95% descritivo; sem correção de dependência entre pares; n=0 indefinido.",
         "coverage_blinding": "Fila sem PAR; dossiês só com features via loader canônico, sem ajuste/model_outputs; cobertura persistida antes dos rótulos.",
         "code_sha256_lf": {name: text_sha256(ROOT / name) for name in (
-            "scripts/filtro_llm.py", "tests/test_filtro_llm.py",
+            "scripts/filtro_llm.py", "scripts/filtro_llm_executar.py", "tests/test_filtro_llm.py",
         )},
         "output_sha256": {name: sha256(out / name) for name in OUTPUTS[:2]},
     }
