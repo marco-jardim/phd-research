@@ -116,22 +116,22 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
     text = replace_once(text, "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
     text = replace_once(text, r"\end{minipage}", step_ppv_note(
         frames["maxdiff"], frames["group_metrics"], frames["pairwise_tests"]) + r"\end{minipage}")
-    target.write_text(text, encoding="utf-8")
+    target.write_text(text, encoding="utf-8", newline="\r\n")
     for mode in ("vigilancia", "confirmacao"):
         target = tables_dir / f"tab_equidade_arranjo_grupos_{mode}.tex"
         equity.table_groups(frames["group_metrics"], mode, target)
         text = replace_once(target.read_text(encoding="utf-8"), "Grupos MISSING", "Grupos sem informação")
-        target.write_text(text, encoding="utf-8")
+        target.write_text(text, encoding="utf-8", newline="\r\n")
     for decision in equity.DECISIONS:
         name = f"tab_equidade_arranjo_rejeicoes_{decision}.tex"
         (tables_dir / name).write_bytes((ROOT / "text/latex/tables" / name).read_bytes())
     sources = [pd.read_csv(data_dir / name) for name in (
         "referencia_comparador_pos_orl.csv", "arranjo_corte_metricas.csv",
         "funil_gzcmd_final_metricas.csv", "carga_abaixo_corte.csv")]
-    (tables_dir / "tab_cap8_referencia.tex").write_text(render_reference(*sources), encoding="utf-8")
+    (tables_dir / "tab_cap8_referencia.tex").write_text(render_reference(*sources), encoding="utf-8", newline="\r\n")
     name = "tab_cap8_arranjo_corte.tex"
     historical = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
-    (tables_dir / name).write_text(render_arrangement(historical), encoding="utf-8")
+    (tables_dir / name).write_text(render_arrangement(historical), encoding="utf-8", newline="\r\n")
 
 
 if __name__ == "__main__":
