@@ -147,7 +147,9 @@ As perdas incorporam probabilidade, consequências do erro e custo da revisão. 
 Os exercícios de exclusão e de expectativas por banda avaliam dependências das escolhas e não são intervalos de confiança. A sobreposição residual e a seleção adaptativa permanecem, mesmo quando os valores se aproximam da cascata observada.
 
 ### 42. Backup: privacidade
-O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ (CAAE 43856720.1.0000.5286) e no CEP da SMS-Rio (CAAE 43856720.1.3001.5279). A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
+
+A origem do extrato é o processo de linkage descrito por Oliveira (2026, p. 33 a 39), após retirada dos vínculos determinísticos e limitado a três passos probabilísticos. Na área cinza do CdR, o corte aceitou 123 vínculos; a cascata aceitou 113 na vigilância e 65 na confirmação. Não há ganho de recuperação automática sobre esse corte nessa faixa.
 
 ## Perguntas prováveis
 
@@ -179,7 +181,7 @@ Fonte: `capitulo2.tex`, `tab:posicionamento`; `tab:qw1-deep-learning`; `tab:abla
 
 ### 5. Como foi construído o padrão-ouro?
 
-Luís Guilherme Buteri Alves realizou o pré-processamento, e Daniela Medina Coeli Bastos configurou a vinculação e revisou os potenciais pares. Dos 247 vínculos, 211 vieram do corte e 36 da revisão abaixo dele. Não houve duas classificações independentes nem kappa humano. A referência incorpora o corte, tem viés de verificação e limita a sensibilidade aos potenciais pares exportados.
+Luís Guilherme Buteri Alves realizou o pré-processamento, e Daniela Medina Coeli Bastos configurou a vinculação e revisou os potenciais pares. Dos 247 vínculos, 211 vieram do corte e 36 da revisão abaixo dele. O CdR foi executado antes da revisão, com risco de viés de incorporação. Não houve segunda classificação independente nem kappa. A referência incorpora o corte e limita a sensibilidade aos potenciais pares exportados.
 
 Fonte: `capitulo_dados.tex`, Padrão-ouro (`sec:padrao-ouro`). Slides 6 e 7.
 
@@ -197,7 +199,7 @@ Fonte: `tab:cap8-referencia`; `tab:cap8-cascata-v31`; `estudo4_gzcmd.tex`, Casca
 
 ### 8. Dados identificados foram enviados à nuvem?
 
-O estudo integra projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286). O autor recebeu apenas extrato pseudonimizado, sem registros nominais nem correspondência com pessoas. A base legal é a LGPD (arts. 7º, IV, 11, II, c, e 13). Dossiês enviados a APIs externas continham nota, atributos derivados e pseudônimo; nas execuções auditadas, retiraram-se as saídas do motor. Persiste risco de reidentificação.
+O estudo integra projeto aprovado no CEP do IESC-UFRJ (CAAE 43856720.1.0000.5286) e no CEP da SMS-Rio (CAAE 43856720.1.3001.5279). O autor recebeu apenas extrato pseudonimizado, sem registros nominais nem correspondência com pessoas. A base legal é a LGPD (arts. 7º, IV, 11, II, c, e 13). Dossiês enviados a APIs externas continham nota, atributos derivados e pseudônimo; nas execuções auditadas, retiraram-se as saídas do motor. Persiste risco de reidentificação.
 
 Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`), ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`). Slides 27 e 42.
 
