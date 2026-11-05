@@ -1,0 +1,7710 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "registered": false,
+  "date": "2026-11-05",
+  "input_sha256": {
+    "COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad"
+  },
+  "code_sha256": {
+    "gzcmd/subamostragem.py": "6164554a76f755854d2300421a1bb984d8ba987fa9ee07c3325b3dc9b1f94e11",
+    "scripts/subamostragem_treino.py": "0cad2695ecd28b3ed5a7e18dbe12f2c3637ff0ec0caac7c537dd45ec369e299c",
+    "scripts/subamostragem_treino.ps1": "5282844fd237610a580fb0e872937c3706e856b5ba3a9e89373b20d92e698617",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5",
+    "scripts/qw3_fairness_analysis.py": "ba83b37da3e473b27d666c4e3a5bc8f71096c3fdb9ed8625500f94325244d352",
+    "scripts/equidade_v31.py": "361cb482ed2918217a825fd2131d9bae648a4077115246221a7db08d207b2883",
+    "scripts/equidade_arranjo.py": "58b1b89df714f7300d49b2a63ff5f695964c1dc237ee52167e66d8e4c4660d99"
+  },
+  "versions": {
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "warning": "subamostragem só no treino; avaliação na prevalência real",
+  "api_calls": 0,
+  "llm_calls": 0,
+  "fold_seed": 42,
+  "folds": "REFREC 5x5",
+  "removal_seeds": [
+    1000,
+    1001,
+    1002,
+    1003,
+    1004,
+    1005,
+    1006,
+    1007,
+    1008,
+    1009
+  ],
+  "ratios": [
+    "original",
+    "1:1",
+    "1:5",
+    "1:20",
+    "1:50"
+  ],
+  "reference_max_abs_error": 1.1102230246251565e-16,
+  "evaluation": {
+    "below": 61485,
+    "below_PAR2": 36,
+    "full": 61696,
+    "full_links": 247
+  },
+  "prior_source": {
+    "doi": "10.1109/SSCI.2015.33",
+    "url": "https://dalpozz.github.io/static/pdf/SSCI_calib_final_noCC.pdf",
+    "pdf_sha256": "263540d93a6854c0bcc59d5d86396b4e030d435683b7ff83f57327ea1a9a7055",
+    "physical_page": 3,
+    "equation": 9,
+    "beta": "retained negatives / original training negatives"
+  },
+  "variants": {
+    "isotonic": "Original nested calibration on unsampled inner OOF labels",
+    "raw": "Sampled-training XGBoost probabilities before isotonic",
+    "raw_prior": "Equation (9) on raw probabilities, using actual outer-fit beta",
+    "isotonic_prior": "Diagnostic only: equation (9) after real-prevalence isotonic; may double-correct"
+  },
+  "scale_pos_weight": "Original model_factory: actual training negatives / positives (also after sampling)",
+  "prior_limitation": "Class-weighted XGBoost is not guaranteed to estimate the sampled posterior; no calibration improvement assumed",
+  "auc_pr": "Average precision (non-interpolated PR area), not trapezoidal PR AUC",
+  "ece": "10 probability quantile bins, duplicate edges removed; constant probabilities one bin; ties unsplit",
+  "ranking": "Descending probability, ascending lexical pair hash on ties; exact k; hashes never output",
+  "subgroups": "Global below-cutoff top-96, not top-96 per group; same sex recode as equidade_arranjo/equidade_v31; MISSING or n<30 sensitivity undefined, coverage retained",
+  "limitations": "Post hoc; 36 positives below cutoff; labels share verification/incorporation bias; no inferential or causal claim",
+  "total_worker_seconds": 1371.2466370001202,
+  "training_counts": [
+    {
+      "ratio": "original",
+      "seed": 1000,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 39325,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 39325,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 39326,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 39326,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 39326,
+          "beta": 1.0
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 49157,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39326,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39327,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39327,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39327,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 39325,
+          "beta": 1.0
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 49158,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39327,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 49160,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39327,
+          "beta": 1.0
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 49160,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 39328,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 39329,
+          "beta": 1.0
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 49161,
+          "beta": 1.0
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1000,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1001,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1002,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1003,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1004,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1005,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1006,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1007,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1008,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:1",
+      "seed": 1009,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.0039923712650985375
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 157,
+          "beta": 0.003992269745206734
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 196,
+          "beta": 0.003987224606871859
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017698214921426
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 156,
+          "beta": 0.003966942148760331
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 197,
+          "beta": 0.0040074860653403314
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.0040683482506102524
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017596053601851
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 160,
+          "beta": 0.004068244806631239
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 199,
+          "beta": 0.004048006509357201
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017493897477624
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004043023876725914
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.00402766476810415
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042818276589794
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 159,
+          "beta": 0.004042921074043938
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 158,
+          "beta": 0.004017391746548349
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 198,
+          "beta": 0.004027582840056142
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1000,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1001,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1002,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1003,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1004,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1005,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1006,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1007,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1008,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:5",
+      "seed": 1009,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.01996185632549269
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 785,
+          "beta": 0.019961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 980,
+          "beta": 0.019936123034359297
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 780,
+          "beta": 0.019834710743801654
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 985,
+          "beta": 0.020037430326701657
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.02034174125305126
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020087980268009255
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 800,
+          "beta": 0.020341224033156195
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 995,
+          "beta": 0.020240032546786003
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.02008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020215119383629566
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.02013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 795,
+          "beta": 0.020214605370219692
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 790,
+          "beta": 0.020086958732741744
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 990,
+          "beta": 0.020137914200280712
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1000,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1001,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1002,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1003,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1004,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1005,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1006,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1007,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1008,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:20",
+      "seed": 1009,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984742530197075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 3140,
+          "beta": 0.07984539490413467
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 3920,
+          "beta": 0.07974449213743719
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035396429842852
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 3120,
+          "beta": 0.07933884297520662
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 3940,
+          "beta": 0.08014972130680663
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136696501220504
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08035192107203702
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 3200,
+          "beta": 0.08136489613262478
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 3980,
+          "beta": 0.08096013018714401
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034987794955248
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08086047753451826
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.080553295362083
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085636553179587
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 3180,
+          "beta": 0.08085842148087877
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 3160,
+          "beta": 0.08034783493096698
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 3960,
+          "beta": 0.08055165680112285
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1000,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1001,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1002,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1003,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1004,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1005,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1006,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1007,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1008,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    },
+    {
+      "ratio": "1:50",
+      "seed": 1009,
+      "fits": [
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961856325492688
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "inner",
+          "n_positive": 157,
+          "n_negative": 7850,
+          "beta": 0.19961348726033667
+        },
+        {
+          "stage": "outer",
+          "n_positive": 196,
+          "n_negative": 9800,
+          "beta": 0.199361230343593
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008849107460713
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 156,
+          "n_negative": 7800,
+          "beta": 0.19834710743801653
+        },
+        {
+          "stage": "outer",
+          "n_positive": 197,
+          "n_negative": 9850,
+          "beta": 0.20037430326701655
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341741253051263
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20087980268009256
+        },
+        {
+          "stage": "inner",
+          "n_positive": 160,
+          "n_negative": 8000,
+          "beta": 0.20341224033156194
+        },
+        {
+          "stage": "outer",
+          "n_positive": 199,
+          "n_negative": 9950,
+          "beta": 0.20240032546786005
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.2008746948738812
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20215119383629568
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013832384052075
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.20214091382948968
+        },
+        {
+          "stage": "inner",
+          "n_positive": 159,
+          "n_negative": 7950,
+          "beta": 0.2021460537021969
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "inner",
+          "n_positive": 158,
+          "n_negative": 7900,
+          "beta": 0.20086958732741741
+        },
+        {
+          "stage": "outer",
+          "n_positive": 198,
+          "n_negative": 9900,
+          "beta": 0.2013791420028071
+        }
+      ]
+    }
+  ],
+  "output_sha256": {
+    "subamostragem_treino.csv": "ffc011adb38be328fadd0d4d578b7742087ea03e1db4e0730c2489aaa2dc624b",
+    "subamostragem_treino_curva.csv": "0ddc1c3e6d425b511a00d7d5b820f1f9c68807f12713b6ca1f1f8ef35f20524c",
+    "subamostragem_treino_resumo.csv": "95a789c202b0f518fd2b32c4474d4c292be0be94267904e252b840a0d096109c"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "registered": false,
+  "sources": {
+    "data/comparador_mesma_carga.csv": "22309375a497830401e43d8fae2caf73c90658156209e636182342e49ac0bd5d",
+    "data/comparador_mesma_carga_curva.csv": "f22da3c1971777c6c44cc2de1beed0d2d17afbd981c55e5030f3c78f04dc4d9c",
+    "data/arranjo_corte_vpp_llm.csv": "97ff6c04b2a1afd79f4c46c9d3837faa2daa433c45a9005fc2cc94063c8afb2f",
+    "data/arranjo_corte_par2.csv": "2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e"
+  },
+  "perfect_reviewer": "Hypothesis on BOTH sides: all P human referrals and LLM MATCH pairs, and all O3 top-k pairs, are correctly reviewed. Not observed human outcomes.",
+  "FP_perfect": "Zero conditional on perfect review in both arms; automatic MATCH of the LLM below cutoff is no longer accepted without human review.",
+  "error05": "Sensitivity scenario only: 5% false negatives among true links sent to humans. Does not model human false positives. It does not assert zero human FP under imperfect review.",
+  "interpretation": "At the same workload, report both PAR=2 counts; minimum O3 k is a separate comparison, not a claim of exact equality at all workloads.",
+  "api_calls": 0,
+  "model_fits": 0
+}

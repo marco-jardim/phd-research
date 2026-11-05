@@ -202,7 +202,7 @@
 \nomenclature{MLP}{Perceptron Multicamadas (\textit{Multilayer Perceptron})}
 \nomenclature{SMOTE}{\textit{Synthetic Minority Over-sampling Technique}}
 \nomenclature{AUC-ROC}{\'Area sob a Curva ROC (\textit{Area Under the ROC Curve})}
-\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Revoca\c{c}\~ao}
+\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Sensibilidade}
 \nomenclature{KDD}{Descoberta de Conhecimento em Bases de Dados (\textit{Knowledge Discovery in Databases})}
 \nomenclature{LGPD}{Lei Geral de Prote\c{c}\~ao de Dados}
 
@@ -230,13 +230,13 @@
 
 \fancypagestyle{plain}
 {
-	\fancyhf{}
-	\lhead{}
-	\chead{}
-	\rhead{\thepage}
-	\lfoot{}
-	\cfoot{}
-	\rfoot{}
+    \fancyhf{}
+    \lhead{}
+    \chead{}
+    \rhead{\thepage}
+    \lfoot{}
+    \cfoot{}
+    \rfoot{}
 }
 
 \renewcommand{\headrulewidth}{0pt}
@@ -268,7 +268,7 @@
 
 \vspace{30pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
@@ -300,7 +300,7 @@
 
 \vspace{40pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{50pt}
 
@@ -342,9 +342,9 @@ Jardim, Marco Elisio Oliveira
 % VER http://biblioteca.if.ufrj.br/wp-uploads/2014/09/tutorial-ficha-catalografica.pdf
 % VER TAMBÉM http://biblioteca.if.ufrj.br/servicos-produtos/ficha-catalografica/
 % O código Cutter é gerado pela biblioteca no momento do depósito.
-\hspace{1,59cm} Aprendizado de m\'aquina aplicado ao p\'os-processamento do relacionamento probabil\'{\i}stico de bases de dados de sa\'ude / Marco Elisio Oliveira Jardim. -{}- Rio de Janeiro, 2026.
+\hspace{1,59cm} Aprendizado de M\'aquina Aplicado ao P\'os-Processamento do \textit{Linkage} Probabil\'istico de Bases de Dados de Sa\'ude / Marco Elisio Oliveira Jardim. -{}- Rio de Janeiro, 2026.
 
-\hspace{1cm} 205 f.: il.
+\hspace{1cm} [extensão a atualizar no build oficial]: il.
 
 \hspace{1cm} Orientadora: Rejane Sobrino Pinheiro.
 
@@ -380,7 +380,7 @@ Jardim, Marco Elisio Oliveira
 
 \vspace{20pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
@@ -522,7 +522,7 @@ a sociedade muda.''}\\[6pt]
 \begin{center}
 {\LARGE\bf Resumo}\\
 \vspace{15pt}
-{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
+{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
 \vspace{6pt}
 {\bf Marco Elisio Oliveira Jardim}\\
 \vspace{12pt}
@@ -533,13 +533,13 @@ a sociedade muda.''}\\[6pt]
 \end{center}
 \vspace*{35pt}
 
-O \textit{linkage} integra sistemas sem identificador comum. Avalia-se se uma cascata de decisão pode reduzir a revisão manual dos potenciais pares não aceitos pelo corte do OpenRecLink. O arranjo sequencial preserva esse corte e aplica abaixo dele o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD). A política compara vínculo, não-vínculo, revisão por modelo de linguagem (LLM) e revisão humana por \textit{expected loss}. Vigilância e confirmação são dois perfis de custo: priorizam, respectivamente, evitar a perda de vínculo e evitar o falso vínculo.
+O \textit{linkage} integra sistemas sem identificador comum. Esta avaliação gerou a hipótese, \textit{post hoc} e a validar, de que ordenar os potenciais pares abaixo do corte do OpenRecLink concentra os vínculos e reduz a revisão necessária para uma meta de recuperação. O ganho de esforço decorre de revisar menos pares na ordem escolhida, não de superioridade demonstrada da política de decisão.
 
-Cinco estudos avaliaram o \textit{linkage} entre o Sistema de Informação sobre Mortalidade e o Sistema de Informação de Agravos de Notificação para tuberculose, no Rio de Janeiro. Usaram notificações de 2013 a 2022 e óbitos de 2019 a 2022: 61.696 potenciais pares e 247 vínculos. PAR é o \textit{label} do padrão-ouro: 1 indica aceitação pelo corte; 2, recuperação pela revisão manual. O Comparador de Registros (CdR) calcula similaridades campo a campo e uma nota final. Compararam-se classificadores, balanceamento, estratégias operacionais, decisão assistida e equidade. O XGBoost do GZ-CMD é distinto daquele dos experimentos de ablação e impacto, afetados por vazamento de alvo e seleção de limiar no teste.
+Foram utilizados potenciais pares entre o Sistema de Informação sobre Mortalidade e o Sistema de Informação de Agravos de Notificação para tuberculose no Rio de Janeiro. PAR é o \textit{label} da referência; os 36 PAR~=~2, entre 247 vínculos, são vínculos recuperados pela revisão abaixo do corte. No arranjo sequencial, preserva-se o corte e aplica-se a política abaixo dele. Vigilância prioriza evitar perdas; confirmação, evitar falsos vínculos. P é a política com recalibração isotônica abaixo do corte; P-Platt é a análise de sensibilidade com \textit{Platt scaling}, sobre o mesmo XGBoost avaliado fora da amostra. P teve registro interno antes da avaliação, sem proteção da escolha posterior do enquadramento. A verificação seletiva e a possível incorporação das evidências à referência limitam a interpretação.
 
-P é a configuração com calibração isotônica fora da amostra registrada como principal no repositório, não em registro público. O enquadramento sequencial foi escolhido \textit{a posteriori}, e a reutilização de respostas impede interpretação prospectiva. O corte aceitou 211 vínculos (85,4\%; IC 95\%: 80,5 a 89,3). P aceitou 215 na vigilância (87,0\%; 82,3 a 90,7) e 219 na confirmação (88,7\%; 84,1 a 92,0), com intervalos sobrepostos aos do corte. Todas as aceitações abaixo dele vieram de Claude Haiku 5.5 e incluíram 21 e quatro falsos positivos. O arranjo registrou 96 e 17 encaminhamentos humanos e 13 e 27 PAR~=~2 perdidos (36,1\% e 75,0\%). O comparador preserva o corte e aplica a cascata publicada sem recalibração: perdeu nove e 17. Na vigilância, P aceitou quatro PAR~=~2 contra dez desse comparador; o VPP do LLM foi de 16,0\% (IC 95\%: 6,4 a 34,7). P-Platt, análise de sensibilidade com \textit{Platt scaling}, dominou P originalmente; a robustez não confirmatória não sustentou essa dominância, embora sua vantagem em falsos positivos na vigilância fosse estável.
+Sob a mesma hipótese de revisor perfeito e na mesma carga humana, nenhuma estratégia domina. Com o \texttt{MATCH} ao humano, P recuperaria no máximo um vínculo adicional frente à ordenação calibrada, ao custo de 344 pares avaliados pelo modelo de linguagem de grande porte (LLM) na vigilância; na confirmação, ambos recuperariam nove com 29 revisões. O LLM não se paga como aceitador na política abaixo do corte. Como filtro de \texttt{NONMATCH}, ajuda nos dois modos nos orçamentos com respostas disponíveis para toda a fila: com 22 revisões humanas, recupera 13 vínculos contra seis da fila sem filtro, mas também descarta vínculos verdadeiros. Os cenários de sensibilidade humana indicam perdas de cobertura, não de erro humano; os falsos positivos (FP) humanos não são modelados. A sensibilidade do arranjo foi de 42,5\% na vigilância, no passo 11 de blocagem, contra pelo menos 95\% nos demais. A subamostragem não melhorou de forma estável o topo da fila e a calibração.
 
-Na vigilância, o VPP de P foi de 86,3\% no sexo feminino (IC 95\%: 76,6 a 92,4) e 93,3\% no masculino (88,3 a 96,2), sem rejeição após ajuste de Benjamini-Hochberg (BH; $p$ ajustado $=0{,}378$). O Zenodo cobre a cascata sobre a base inteira; o arranjo está no repositório da tese. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o \textit{label}. A referência de sua vantagem em carga é só um limite inferior derivado desse \textit{label}: 2.156 pares com limiar por passo ou 2.522 com limiar global, sob revisão em ordem decrescente de escore.
+As contribuições são a decomposição por PAR, a curva de esforço para escolha da ordenação e da parada, a investigação do LLM como aceitador e filtro e de sua ancoragem, os instrumentos auditáveis e abertos e o resultado negativo com registro interno. O VPP, valor preditivo positivo, de 16,0\% do LLM e a comparação entre FP previstos e observados são \textit{post hoc}; o filtro é exploratório, com protocolo fixado antes dos desfechos e respostas de datas diferentes. Recomenda-se preservar o corte e revisar abaixo dele por probabilidade ou escore, escolhendo ordenação e parada pela curva de esforço e pelo orçamento humano. Se a ordenação usar probabilidade aprendida, treinar na prevalência original. O LLM pode apenas filtrar, nunca aceitar vínculos sozinho; fora do orçamento, a decisão é não vínculo. Essa recomendação depende de validação registrada em dados novos.
 
 \vspace{15pt}
 
@@ -570,17 +570,17 @@ Na vigilância, o VPP de P foi de 86,3\% no sexo feminino (IC 95\%: 76,6 a 92,4)
 \end{center}
 \vspace*{35pt}
 
-\textit{Linkage} integrates systems without a common identifier. This thesis evaluates whether a decision cascade can reduce manual review of potential pairs not accepted by the OpenRecLink cut-off. The sequential arrangement preserves that cut-off and applies Grey-Zone Cost-based Mixture Deferral (GZ-CMD) below it. The policy compares match, nonmatch, large language model (LLM) review, and human review through expected loss. Surveillance and confirmation are two cost profiles prioritizing, respectively, avoiding lost links and avoiding false links.
+Linkage integrates systems without a common identifier. This evaluation generated a post hoc hypothesis requiring validation: ordering potential pairs below the OpenRecLink cut-off concentrates links and reduces the review required for a recovery target. Effort savings come from reviewing fewer pairs in the chosen order, not from demonstrated superiority of the decision policy.
 
-Five studies evaluated \textit{linkage} between the Mortality Information System and the Notifiable Diseases Information System for tuberculosis in Rio de Janeiro. They used notifications from 2013 to 2022 and deaths from 2019 to 2022: 61,696 potential pairs and 247 links. PAR is the reference-standard label: 1 denotes cut-off acceptance; 2, recovery through manual review. The Record Comparator (CdR) computes field similarities and an aggregate score. Classifiers, balancing, operational strategies, assisted decisions, and fairness were compared. GZ-CMD uses a separate XGBoost from the ablation and impact experiments, which were affected by target leakage and test-set threshold selection.
+Potential pairs came from the Mortality Information System and the Notifiable Diseases Information System for tuberculosis in Rio de Janeiro. PAR is the reference label; the 36 PAR~=~2 links, among 247 reference links, were recovered by review below the cut-off. The sequential arrangement preserves the cut-off and applies the policy below it. Surveillance prioritizes avoiding missed links; confirmation prioritizes avoiding false links. P uses isotonic recalibration below the cut-off; P-Platt is the sensitivity analysis using Platt scaling, with the same out-of-fold XGBoost. P was registered internally before evaluation, without protecting the subsequent framing choice. Selective verification and possible incorporation of comparison evidence into the reference limit interpretation.
 
-P is the configuration with out-of-fold isotonic calibration preregistered as principal in the repository, not in a public registry. The sequential framing was selected post hoc, and response reuse precludes a prospective interpretation. The cut-off accepted 211 links (85.4\%; 95\% CI: 80.5 to 89.3). P accepted 215 in surveillance (87.0\%; 82.3 to 90.7) and 219 in confirmation (88.7\%; 84.1 to 92.0), with intervals overlapping those of the cut-off. All acceptances below it came from Claude Haiku 5.5 and included 21 and four false positives. The arrangement had 96 and 17 human referrals and 13 and 27 lost PAR~=~2 links (36.1\% and 75.0\%). The comparator preserves the cut-off and applies the published cascade without recalibration: it lost nine and 17 links. In surveillance, P accepted four PAR~=~2 links versus ten for that comparator; LLM positive predictive value (PPV) was 16.0\% (95\% CI: 6.4 to 34.7). P-Platt, a sensitivity analysis using \textit{Platt scaling}, originally dominated P; nonconfirmatory robustness analysis did not sustain dominance, although its false-positive advantage in surveillance was stable.
+Under the same perfect-reviewer assumption and the same human workload, neither strategy dominates. Sending large language model (LLM) \texttt{MATCH} decisions to humans, P would recover at most one additional link compared with calibrated ordering, at the cost of 344 LLM-reviewed pairs in surveillance; in confirmation both would recover nine with 29 reviews. LLM acceptance is not justified within the policy below the cut-off. As a \texttt{NONMATCH} filter, it helps in both modes at budgets with responses available for the entire queue: with 22 human reviews, it recovers 13 links versus six without filtering, but also discards true links. Human-sensitivity scenarios indicate coverage losses rather than human error; human false positives (FP) are not modeled. Arrangement sensitivity was 42.5\% in surveillance blocking step 11 versus at least 95\% elsewhere. Undersampling did not stably improve both the queue head and calibration.
 
-In surveillance, P had PPV of 86.3\% for females (95\% CI: 76.6 to 92.4) and 93.3\% for males (88.3 to 96.2), without rejection after Benjamini-Hochberg correction (BH-adjusted $p=0.378$). Zenodo covers the whole-dataset cascade; the arrangement is implemented in the thesis repository. Compared with service practice, the arrangement is worse on every outcome measured against the label. Its workload advantage is referenced only to a label-derived lower bound: 2,156 pairs using step-specific thresholds or 2,522 using a global threshold, assuming descending-score review.
+Contributions are PAR decomposition, the effort-versus-recovered-links curve for choosing ordering and stopping, investigation of LLM acceptance, filtering and anchoring, auditable open instruments, and the negative result with internal registration. LLM positive predictive value (PPV) of 16.0\% and the expected-versus-observed false-positive comparison are post hoc; filtering is exploratory, with protocol fixed before outcomes and responses from different dates. The recommendation is to preserve the cut-off and review below it by probability or score, choosing ordering and stopping from the effort curve and human budget. If ordering uses learned probabilities, train at original prevalence. LLMs may only filter, never accept links independently; pairs outside the budget receive nonmatch. This recommendation requires registered validation on new data.
 
 \vspace{15pt}
 
-\textbf{Keywords:} Probabilistic \textit{record linkage}. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance. Large language models. Grey zone.
+\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance. Large language models. Grey zone.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -618,13 +618,13 @@ In surveillance, P had PPV of 86.3\% for females (95\% CI: 76.6 to 92.4) and 93.
 
 % Restaurar estilo de página numerado para a parte textual
 \fancypagestyle{plain}{%
-	\fancyhf{}
-	\lhead{}
-	\chead{}
-	\rhead{\thepage}
-	\lfoot{}
-	\cfoot{}
-	\rfoot{}
+    \fancyhf{}
+    \lhead{}
+    \chead{}
+    \rhead{\thepage}
+    \lfoot{}
+    \cfoot{}
+    \rfoot{}
 }
 \pagestyle{fancy}
 

@@ -11,15 +11,15 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
     study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
     for text in (
         "P foi dominado por P-Platt na avaliação original",
-        "P permanece o resultado principal registrado",
+        "P permanece o resultado principal do registro interno",
         "dominância de P-Platt sobre P não foi sustentada",
         "7/20", "4/20", "5/20", "0/20", "20/20", "19/20",
         "0,427", "0,65", "US\\$~0,6255", "US\\$~0,8703",
         "16,0\\%", "9,06 FP", "66,7\\%", "57,1\\%",
         "22 por", "quatro por", "um, seis e seis",
-        "99,97\\%", "99,99\\%", "não existe no histórico do git",
-        "69 chamadas", "dois ou três PAR", "01:22:17 UTC", "02:17:13 UTC",
-        "não generalização", r"\input{tables/tab_cap8_robustez_arranjo.tex}",
+        "99,97\\%", "99,99\\%", "está ausente do histórico do git",
+        "69 do suplemento", "dois ou três PAR", "01:22:17 UTC", "02:17:13 UTC",
+        "não generalização", r"\input{tables/editorial/tab_cap8_robustez_arranjo.tex}",
         r"\ref{tab:cap8-robustez-arranjo}",
     ):
         assert text in study, text
@@ -37,10 +37,10 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     assert "origem do registro" not in objectives
     assert "O objetivo específico 4 mantém" not in objectives
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "pior em todo desfecho medido contra" in conclusion
-    assert "referência de sua vantagem em carga é apenas um limite inferior derivado" in conclusion
-    assert "não adotar a recalibração isotônica abaixo do corte" in conclusion
-    assert "validação em dados novos antes da adoção" in conclusion
+    assert "pior em todo desfecho" not in conclusion
+    assert "não reproduz 13 e 27 dos 36" in conclusion
+    assert "ordem decrescente de uma probabilidade ou escore" in conclusion
+    assert "validação registrada em dados novos" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
     assert "quantifica-se o custo de revisão manual" not in conclusion
     assert "sem demonstrar manutenção integral" not in conclusion

@@ -1,6 +1,7 @@
 """Camada editorial: só apresentação; geradores e tabelas históricos intactos."""
 from pathlib import Path
 import sys
+import re
 
 import pandas as pd
 
@@ -51,13 +52,14 @@ def render_reference(referencia, arranjo, cascata, carga):
     changes = [
         ("scripts/tabela_referencia_arranjo.py", "scripts/tabelas_arranjo_editorial.py"),
         ("Corte + revisão manual do serviço & ambos & n.d.",
-         "Corte + revisão manual do serviço & ambos & $\\geq " + lower + "$"),
+         "Corte + revisão manual do serviço & ambos & cenário $\\geq " + lower + "$"),
         (f"Corte + revisão humana integral (cenário) & ambos & até {ceiling}",
          f"Corte + revisão humana integral (cenário) & ambos & {ceiling} (teto)"),
         ("O volume examinado e o limite inferior da revisão do serviço não estão documentados (n.d.).",
-         "O volume examinado total não foi registrado. Sob a hipótese de revisão em ordem decrescente de escore, "
-         f"o limite inferior é {lower} potenciais pares, com limiar por passo, ou {global_lower} com limiar global. "
-         r"São limites derivados do \textit{label}, não registros de carga observada."),
+         "O volume examinado total e a ordem de revisão não foram registrados. Se a revisão tivesse seguido "
+         "ordem decrescente do escore do OpenRecLink, o cenário exigiria pelo menos "
+         f"{lower} potenciais pares, com limiar por passo, ou {global_lower} com limiar global. "
+         r"A reconstrução é exploratória, \textit{post hoc} e não registrada, não carga histórica observada."),
         (f"A revisão integral abaixo do corte é cenário de até {ceiling} potenciais pares, não carga histórica medida.",
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
@@ -68,11 +70,16 @@ def render_reference(referencia, arranjo, cascata, carga):
         ("revisão do serviço incorporada ao rótulo", r"revisão do serviço incorporada ao \textit{label}"),
         ("n.a.: não se aplica.",
          "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica."),
+        ("registro prévio versionado no repositório, com emendas e suplemento, não a registro público",
+         r"registro interno versionado antes da avaliação com os \textit{labels} (S3), com emendas e suplemento"),
         (r"Fontes: \path{data/referencia_comparador_pos_orl.csv}",
          r"Fontes: \path{data/carga_abaixo_corte.csv}, \path{data/referencia_comparador_pos_orl.csv}"),
     ]
     for old, new in changes:
         text = replace_once(text, old, new)
+    text = replace_once(text,
+        r"Todas as sensibilidades com humano, salvo a revisão do serviço incorporada ao \textit{label}, usam erro hipotético de 5,0\%, não medido.",
+        r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     return text
 
 
@@ -86,14 +93,42 @@ def render_arrangement(historical):
             line = replace_once(line, "até 61.485 (36)", "61.485 (teto; 36)")
         if "21.497 (28)" in line:
             line = replace_once(line, "21.497 (28)", "21.497 (teto; 28)")
+        if line.startswith("(i) Corte & 211 &"):
+            line = replace_once(line, "85,4 [80,5; 89,3]", "85,4")
+        if line.startswith("(i) Corte & 123 &"):
+            line = replace_once(line, "81,5 [74,5; 86,8]", "81,5")
+        if " & " in line and len(line.split(" & ")) == 10 and not line.startswith("Braço &"):
+            cells = line.split(" & ")
+            if re.fullmatch(r"\d+(?:,\d+)? \[[^]]+\]", cells[2]):
+                cells[2] = cells[2].split(" [", 1)[0]
+            line = " & ".join(cells)
+        if "registro prévio" in line:
+            line = replace_once(line, "registro prévio", "registro interno")
         if "A posteriori" in line:
             line = replace_once(line, "A posteriori", r"\textit{A posteriori}")
         if "O a posteriori reutiliza" in line:
             line = replace_once(line, "O a posteriori reutiliza", r"O \textit{a posteriori} reutiliza")
         if "área cinza" in line:
             line = replace_once(line, "área cinza", "área cinza da nota")
+        if "as classes PAR~=~1 e PAR~=~2 também participam" in line:
+            line = replace_once(line,
+                "as classes PAR~=~1 e PAR~=~2 também participam do ajuste supervisionado, com viés de incorporação.",
+                "as classes PAR~=~1 e PAR~=~2 não estabelecem, por si, viés de incorporação: este diz respeito ao uso das evidências na referência, não ao ajuste supervisionado em si.")
+        if line.startswith(r"\caption{Arranjo sequencial"):
+            line = replace_once(line, line,
+                r"\caption{Arranjo sequencial OpenRecLink e GZ-CMD v3.1, Claude Haiku 5.5, instruções v4: decisões, revisão e custo. São 247 vínculos na base e 151 em $[5,9)$. PAR~=~1 é definido pelo corte; as classes PAR~=~1 e PAR~=~2 não comprovam incorporação, que depende das evidências usadas na referência. Predição fora da amostra não equivale a validação externa.}")
+        if line.startswith("Braço &") and "$S_A$" in line:
+            line = replace_once(line, r"$S_A$ (IC 95\%)", r"$S_A$ (\%)")
         lines.append(line)
-    return "\n".join(lines) + "\n"
+    text = "\n".join(lines) + "\n"
+    text = replace_once(text,
+        r"IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do padrão-ouro. ", "")
+    text = replace_once(text,
+        r"$S_H=(V_A+0{,}95V_H)/n$ é cenário de erro humano de 5\%, não resultado humano observado.",
+        r"$S_H=(V_A+0{,}95V_H)/n$ exibe o cenário de sensibilidade humana 0,95, não resultado humano observado. Os três cenários, 0,95, 0,99 e 1,00, constam da Tabela~\ref{tab:cap8-sensibilidade-humana} e de \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
+    # Legenda curta no corpo e nota explicativa completa, sem truncar a legenda.
+    text = replace_once(text, r"\caption{Arranjo sequencial", r"\caption[Arranjo sequencial: decisões, revisão e custo]{Arranjo sequencial")
+    return text
 
 
 def generate(data_dir: Path, tables_dir: Path) -> None:
