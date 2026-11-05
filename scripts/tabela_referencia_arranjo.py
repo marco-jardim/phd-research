@@ -82,7 +82,7 @@ def notas(referencia, arranjo):
         f"(b) Os {percentual(manual.sens_com_humano)}\\% da linha corte + revisão manual decorrem da definição de PAR, não de acurácia observada. "
         "Zero FP acima do corte também decorre do rótulo. "
         f"Em $[5,9)$ há {inteiro(grey.vinculos_area_cinza)} vínculos: {kept} pelo corte e {int(grey.vinculos_area_cinza)-kept} pela revisão. "
-        f"Nessa faixa, o arranjo aceita {inteiro(row('P').aceitos)} e {inteiro(row('P', 'confirmacao').aceitos)} nos dois modos, "
+        f"Nessa faixa, o arranjo aceita {inteiro(row('P').aceitos)} vínculos na vigilância e {inteiro(row('P', 'confirmacao').aceitos)} na confirmação, "
         f"incluindo {kept} pelo corte em cada modo; a cascata sobre a base inteira aceita {inteiro(row('publicada').aceitos)} e {inteiro(row('publicada', 'confirmacao').aceitos)}. "
         f"(c) A revisão integral abaixo do corte é cenário de até {inteiro(human.pares_humano)} potenciais pares, não carga histórica medida. "
         f"Sua sensibilidade é $({inteiro(cut.vp_automaticos)}+{recovered_tex}\\times{inteiro(manual.vinculos_ao_humano)})/{total}$. "
