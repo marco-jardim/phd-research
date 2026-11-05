@@ -167,5 +167,8 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     assert formatted in en
     assert formatted.replace('.', '{,}') in pt
     assert 'worse on every outcome measured against the label' in en
-    assert 'só um limite inferior derivado desse' in pt
+    assert (r'só um limite inferior derivado desse \textit{label}: 2.156 pares com limiar por passo '
+            r'ou 2.522 com limiar global, sob revisão em ordem decrescente de escore.') in pt
+    assert ('only to a label-derived lower bound: 2,156 pairs using step-specific thresholds '
+            'or 2,522 using a global threshold, assuming descending-score review.') in en
     assert not re.search(r'(?<![\\\w{])(?:linkage|Linkage)(?![\w}])', en)
