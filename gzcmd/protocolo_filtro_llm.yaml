@@ -1,0 +1,116 @@
+analysis: exploratory_post_hoc
+registered: internal
+date: '2026-11-05'
+api_calls_allowed: false
+thesis_changes: false
+queue:
+  source: data/pcal_ml_oof.csv
+  population: abaixo do corte OpenRecLink, SCORE < corte do passo
+  order: p_cal_ml OOF decrescente, pair_id lexicográfico crescente no desempate
+  reference: scripts/comparador_mesma_carga.py
+modes:
+- vigilancia
+- confirmacao
+k:
+- 17
+- 29
+- 58
+- 96
+- 121
+- 125
+- 440
+filter:
+  NONMATCH: descarte
+  MATCH: humano
+  UNSURE: humano
+response_identity:
+  model: Claude Haiku 5.5
+  prompt_version: v4
+  removed_fields:
+  - model_outputs
+  validate: modo, pair_id, modelo, prompt_sha256 e dossier_sha256 reconstruído e auditado
+  frozen_sources: as três coortes por modo em error_rates_by_band_v4.yaml, validadas
+    por cohort_sources/validated_responses de S1
+  extra_sources:
+  - anthropic_sem_mo_v4_arranjo_corte
+  - anthropic_sem_mo_v4_arranjo_corte_supl
+  - anthropic_sem_mo_v4_arranjo_robustez
+  choice: Preferir coortes congeladas; entre elas usar exatamente a resposta carregada
+    pelo braço P (validated_responses). Fora delas, S2 antes de suplemento antes de
+    robustez; última ocorrência válida no mesmo arquivo.
+  conflicts: Contar pares por modo com decisões válidas divergentes entre fontes;
+    também contar no top-k.
+coverage:
+  phase: sem usar rótulos PAR; medir e persistir antes de carregar rótulos para desfechos
+  complete_required: true
+  stop: Não calcular desfechos de modo/k incompleto; para k <= 125 registrar pendências
+    privadas, custo e ESCALATE. Outros modo/k completos seguem. k=440 incompleto apenas
+    informa cobertura.
+  missing_pair_cost_usd_no_cache: 0.00316
+  cost_reference: gzcmd/llm_usage_cost.py
+outcomes:
+  H: k - NONMATCH
+  par2_recovered: PAR=2 no top-k menos PAR=2 descartados por NONMATCH
+  par2_discarded: PAR=2 descartados por NONMATCH
+  nonlinks_discarded: PAR=0 descartados por NONMATCH
+  vpn_nonmatch: não vínculos descartados / NONMATCH; IC de Wilson bilateral 95%; indefinido
+    se denominador zero
+  comparator: PAR=2 da fila O3 sem filtro com k=H em data/comparador_mesma_carga_curva.csv;
+    H=0 implica zero recuperados
+  difference: par2_recovered - comparator_par2_recovered
+  human_perfect: (211 + PAR2_recuperados)/247
+  human_error_05: (211 + 0.95 * PAR2_recuperados)/247; mesma fórmula para o comparador;
+    cenário de sensibilidade, não taxa observada de erro nem hipótese de falsos positivos
+interpretation:
+  ajuda: Em todos os k avaliados no modo, diferença >= 0 e em pelo menos um k diferença
+    > 0
+  prejudica: Pior em algum k e não melhor em nenhum
+  misto: Demais casos, incluindo igualdade em todos os k
+  unavailable: Nenhum k completo no modo; sem classificação
+limitations:
+- Respostas do LLM também alimentaram as taxas do revisor e o braço P; análise não
+  independente, exploratória e post hoc.
+- Rótulos PAR=2 são oriundos da revisão do serviço; não se trata de validação independente.
+- Apenas modo/k com cobertura completa são avaliados; classificação é restrita aos
+  k avaliados.
+outputs:
+- data/filtro_llm_cobertura.csv
+- data/filtro_llm.csv
+- data/filtro_llm_metadata.json
+privacy: Apenas agregados versionados; pair_id pendentes ficam somente em .local/filtro_llm.
+input_sha256:
+  data/COMPARADORSEMIDENT.csv: 48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65
+  data/pcal_ml_oof.csv: fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b
+  data/pcal_ml_oof.json: 1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad
+  data/comparador_mesma_carga_curva.csv: f22da3c1971777c6c44cc2de1beed0d2d17afbd981c55e5030f3c78f04dc4d9c
+  gzcmd/error_rates_by_band_v4.yaml: 0c48024b94de9bd2c3299fd0c21640a1e8a7f0733a424c59d6250ba30ae778b1
+  gzcmd/prereg_arranjo_corte.yaml: 3f156cfe3c316cef63a3349f4d46608128cc28893f6691d314c508a3b183c278
+  gzcmd/gzcmd_v4_llm_prompt.md: 0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56
+  gzcmd/arranjo_robustez.py: 7b67cfa669415f39fdd7089abaea4495cf7145096dccc9789f8f0d68cbcf9498
+  gzcmd/arranjo_corte.py: 4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5
+  gzcmd/llm_dossier.py: a9cdf3f078507254cd05c4278eca992266f8d1ab783074a3a241605fc35e9589
+  gzcmd/loader.py: 6a9302f7324aac9149c3abba74fbd5fb5d9c4d7e376f058609fe956311eeb473
+  gzcmd/ml_oof.py: 5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8
+  scripts/arranjo_corte_s1_simular.py: 9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd
+  scripts/comparador_mesma_carga.py: b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b
+  scripts/run_exp2_ablacao_dossie.py: f94d3e1bb4d22687ae5e8dcf47a12596e875703aff7adf6b70c9d1679ca34ce7
+  scripts/run_exp2_sem_model_outputs.py: f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae
+  gzcmd/llm_usage_cost.py: 880c6267237d646d9eff2dfe3a2badeeba0af45d47a742fd94d802dcbe782a16
+  data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json: 4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156
+  data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json: 4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1
+  data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json: e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb
+  data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json: ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json: c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json: 0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json: cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json: 75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json: 5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json: edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json: eac7b67c63a38e40cf9e40d0d780c9223b43aaf0f3bc61c462fb12b90be1e329
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json: 89dcbeb754b3bfeb59cfd68d42ba0f83d6439bec18237c265674c624fe310060
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia_journal/identity.json: 8f764d0ca9cb762ff9199fa58eea51e62ea0233a50ea09cfb77f7c39284445af
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao_journal/identity.json: 964af5a58b81fd2c98c83d0591eb4619f769ba2dcf05b2de084fd2d648c98407
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia_journal/identity.json: 82db37d399b724e1557b11c85c56af28f8934f36326f9a3485bcbae84e8ef6e0
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao_journal/identity.json: 3fee763fd85f1fd036820d5ebf7fce65ebaf7dce97814cc1c3c265ed50753cc4
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia_journal/identity.json: 4d1a279819f15165a8c91db2bfa3cc34c783d7542c78d233ef6ea626711a179f
+  data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao_journal/identity.json: 510ebf820bf576b00178057043dda9320ca4afefca9129ac6d0a4ec1cdaafe7c
