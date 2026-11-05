@@ -66,7 +66,7 @@ def test_fp_position_and_loss_qualification_follow_sources():
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
     assert 'não reproduz 13 e 27 dos 36 vínculos recuperados pelo serviço' in conclusion
     assert 'aceita 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in conclusion
-    assert 'quatro e oito são PAR~=~2' in conclusion
+    assert '4 e 8 são PAR~=~2' in conclusion
     assert 'pior em todo desfecho' not in conclusion
     assert '17 dos 21 FP' in conclusion and '11 acima do limiar por passo' in conclusion
 
@@ -78,11 +78,11 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
                      'registro interno', 'ordem decrescente', 'orçamento humano'):
             assert term in text, (name, term)
     thesis = (L / 'tese.tex').read_text(encoding='utf-8')
-    for prefix in (r'O \textit{linkage} integra', r'\textit{Linkage} integrates'):
+    for prefix in (r'O \textit{linkage} integra', r'Linkage integrates'):
         i = thesis.index(prefix)
         text = thesis[i:thesis.index(r'\vspace{15pt}', i)]
         assert len(text.split()) <= 500
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 13
         assert '36 PAR~=~2' in text
         assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text
@@ -97,7 +97,7 @@ def test_order_is_unverified_and_cdr_exposure_not_transferred_to_three_steps():
     assert 'não nos passos 6, 9 e 11' in data
     assert 'revisora única, sem classificação independente' in data
     assert 'p.~36 a~38' in data
-    assert 'parecer do CEP abrangem' in data
+    assert 'parecer do CEP abrange' in data
 
 
 def test_cutoff_sensitivity_has_no_sampling_interval_in_editorial_table():

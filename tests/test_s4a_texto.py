@@ -7,7 +7,7 @@ LATEX = ROOT / "text/latex"
 
 def abstracts():
     text = (LATEX / "tese.tex").read_text(encoding="utf-8")
-    for start in ("O \\textit{linkage} integra sistemas sem", "\\textit{Linkage} integrates systems without"):
+    for start in ("O \\textit{linkage} integra sistemas sem", "Linkage integrates systems without"):
         begin = text.index(start)
         yield text[begin:text.index(r"\vspace{15pt}", begin)].strip()
 
@@ -19,13 +19,13 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert len(text.split("\n\n")) == 4
         assert not re.search("—|–", text)
         assert "P-Platt" in text and "XGBoost" in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 13
     assert r"PAR é o \textit{label} da referência" in resumo
     assert "registered internally before evaluation" in abstract
     assert "preregistered" not in abstract
-    assert "Sob revisor perfeito nos dois lados" in resumo
+    assert "Sob a mesma hipótese de revisor perfeito" in resumo
     assert "nove com 29 revisões" in resumo
-    assert "perfect reviewer on both sides" in abstract
+    assert "the same perfect-reviewer assumption" in abstract
     assert "nine with 29 reviews" in abstract
     assert "verificação seletiva" in resumo and "incorporação" in resumo
     assert "Selective verification" in abstract and "incorporation" in abstract

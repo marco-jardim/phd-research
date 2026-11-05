@@ -15,7 +15,7 @@ def number(value, decimals=0):
     return f'{value:,.{decimals}f}'.replace(',', 'X').replace('.', '{,}').replace('X', '.')
 
 
-def same_load(data, projections=None, matches=None, scenarios=None, metrics=None):
+def same_load(data, projections=None, matches=None, scenarios=None, metrics=None, workload=None):
     projections = projections if projections is not None else pd.read_csv(ROOT / 'data/comparador_mesma_carga_erro05.csv')
     keys = ['modo', 'ordenacao', 'carga', 'k']
     if projections.duplicated(keys).any():
@@ -26,6 +26,7 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
     matches = matches if matches is not None else pd.read_csv(ROOT / 'data/comparador_p_match_humano.csv')
     scenarios = scenarios if scenarios is not None else pd.read_csv(ROOT / 'data/cenarios_sensibilidade_humana.csv')
     metrics = metrics if metrics is not None else pd.read_csv(ROOT / 'data/arranjo_corte_metricas.csv')
+    workload = workload if workload is not None else pd.read_csv(ROOT / 'data/esforco_arranjo.csv')
     lines = [r'\begin{table}[!htbp]', r'\centering\scriptsize',
              r'\caption{Ordenações abaixo do corte na mesma carga humana de P. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}',
              r'\label{tab:cap8-mesma-carga}', r'\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrrr}', r'\toprule',
@@ -42,11 +43,12 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
             ('P_MATCH_ao_humano', r'P, \texttt{MATCH} ao humano', match.P_revisoes_humanas_total, match.P_FP_revisor_perfeito),
         ):
             projection = scenarios.loc[scenarios.modo.eq(mode) & scenarios.estrategia.eq(strategy) & scenarios.s.eq(.95)].iloc[0]
-            lines.append(f'{label} & {title} & {number(reviews)} & {number(match.P_par2_recuperados)} & n.a. & '
+            projected_count = workload.loc[workload.modo.eq(mode) & workload.braco.eq('P') & workload.carga.eq('K1_humana'), 'par2_recuperados_erro05'].item()
+            lines.append(f'{label} & {title} & {number(reviews)} & {number(match.P_par2_recuperados)} & {number(projected_count, 2)} & '
                          f'{number(projection.sensibilidade_total * 100, 2)} & '
                          f'{number(policy.pares_llm)} ({number(policy.chamadas_llm)}) & {number(fp)} & n.a. ' + r'\\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% apresenta a contagem projetada das ordenações O1 a O4, lida de \path{data/comparador_mesma_carga_erro05.csv}; n.a. nas linhas de P, cuja projeção total consta separadamente. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. As outras sensibilidades estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% apresenta a projeção se todos os recuperáveis forem revistos por humano, sem aceitação automática: O1 a O4 de \path{data/comparador_mesma_carga_erro05.csv}; P de \path{data/esforco_arranjo.csv}. Não confundir essa contagem com $S_{0,95}$, que preserva as aceitações automáticas de cada estratégia. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
 
 
 def effort(data):
@@ -62,7 +64,7 @@ def effort(data):
                  number(row.horas_poupadas_por_vinculo_perdido), number(row.horas_por_fp)]
         lines.append(' & '.join(cells) + r' \\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões não arredondadas e fontes temporais em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões não arredondadas e fontes temporais em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
 
 
 def generate(root=ROOT, output=None):
@@ -89,7 +91,7 @@ def generate(root=ROOT, output=None):
                 lines.append(line)
             text = '\n'.join(lines) + '\n'
         (output / (name + '.tex')).write_text(text, encoding='utf-8', newline='\n')
-    (output / 'tab_cap8_mesma_carga.tex').write_text(same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv'), pd.read_csv(root / 'data/comparador_mesma_carga_erro05.csv'), pd.read_csv(root / 'data/comparador_p_match_humano.csv'), pd.read_csv(root / 'data/cenarios_sensibilidade_humana.csv'), pd.read_csv(root / 'data/arranjo_corte_metricas.csv')), encoding='utf-8', newline='\n')
+    (output / 'tab_cap8_mesma_carga.tex').write_text(same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv'), pd.read_csv(root / 'data/comparador_mesma_carga_erro05.csv'), pd.read_csv(root / 'data/comparador_p_match_humano.csv'), pd.read_csv(root / 'data/cenarios_sensibilidade_humana.csv'), pd.read_csv(root / 'data/arranjo_corte_metricas.csv'), pd.read_csv(root / 'data/esforco_arranjo.csv')), encoding='utf-8', newline='\n')
     (output / 'tab_cap8_esforco.tex').write_text(effort(pd.read_csv(root / 'data/esforco_arranjo.csv')), encoding='utf-8', newline='\n')
 
 

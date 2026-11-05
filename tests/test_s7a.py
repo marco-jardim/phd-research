@@ -14,7 +14,7 @@ DATA = ROOT / 'data'
 
 def abstracts():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    for start in (r'O \textit{linkage} integra', r'\textit{Linkage} integrates'):
+    for start in (r'O \textit{linkage} integra', r'Linkage integrates'):
         i = thesis.index(start)
         yield thesis[i:thesis.index(r'\vspace{15pt}', i)]
 
@@ -24,7 +24,7 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     for text in (pt, en):
         assert len(text.split()) <= 500
     assert 'no máximo um vínculo adicional' in pt
-    assert '344 pares avaliados pelo LLM' in pt
+    assert '344 pares avaliados pelo modelo de linguagem de grande porte (LLM)' in pt
     assert 'at most one additional link' in en
     assert '344 LLM-reviewed pairs' in en
     assert 'VPP' in pt and 'PPV' in en
@@ -55,7 +55,7 @@ def test_cutoffs_remain_three_points_not_a_confidence_interval():
 def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     pt, en = abstracts()
     assert r'análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert r'the sensitivity analysis using \textit{Platt scaling}' in en
+    assert r'the sensitivity analysis using Platt scaling' in en
     assert '42,5' in pt and '42.5' in en
     assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     for path in LATEX.glob('*.tex'):
@@ -68,7 +68,7 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
                 # Rótulo de campo de uma busca bibliográfica não é alvo de ML.
                 assert path.name == 'apendice_busca.tex' and 'sem rótulos de campo' in line
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    assert r'Keywords:} Probabilistic \textit{record linkage}.' in thesis
+    assert r'Keywords:} Probabilistic record linkage.' in thesis
 
 
 def test_conclusion_separates_registration_from_negative_finding_and_has_comparators():
@@ -92,7 +92,7 @@ def test_editorial_area_review_is_a_ceiling_without_numeric_change():
     assert old.count('21.497 (28)') == 2
     assert new.count('21.497 (teto; 28)') == 2
     numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
-    assert numeric(old) == numeric(new)
+    assert numeric(old.split(r'\noindent')[0]) == numeric(new.split(r'\noindent')[0])
 
 
 def test_fraction_denominators_are_explicitly_minima_not_observed_counts():

@@ -57,7 +57,7 @@ def render_reference(referencia, arranjo, cascata, carga):
          f"Corte + revisão humana integral (cenário) & ambos & {ceiling} (teto)"),
         ("O volume examinado e o limite inferior da revisão do serviço não estão documentados (n.d.).",
          "O volume examinado total e a ordem de revisão não foram registrados. Se a revisão tivesse seguido "
-         "ordem decrescente de SCORE, o cenário exigiria pelo menos "
+         "ordem decrescente do escore do OpenRecLink, o cenário exigiria pelo menos "
          f"{lower} potenciais pares, com limiar por passo, ou {global_lower} com limiar global. "
          r"A reconstrução é exploratória, \textit{post hoc} e não registrada, não carga histórica observada."),
         (f"A revisão integral abaixo do corte é cenário de até {ceiling} potenciais pares, não carga histórica medida.",
@@ -77,6 +77,9 @@ def render_reference(referencia, arranjo, cascata, carga):
     ]
     for old, new in changes:
         text = replace_once(text, old, new)
+    text = replace_once(text,
+        r"Todas as sensibilidades com humano, salvo a revisão do serviço incorporada ao \textit{label}, usam erro hipotético de 5,0\%, não medido.",
+        r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     return text
 
 
@@ -118,6 +121,11 @@ def render_arrangement(historical):
             line = replace_once(line, r"$S_A$ (IC 95\%)", r"$S_A$ (\%)")
         lines.append(line)
     text = "\n".join(lines) + "\n"
+    text = replace_once(text,
+        r"IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do padrão-ouro. ", "")
+    text = replace_once(text,
+        r"$S_H=(V_A+0{,}95V_H)/n$ é cenário de erro humano de 5\%, não resultado humano observado.",
+        r"$S_H=(V_A+0{,}95V_H)/n$ exibe o cenário de sensibilidade humana 0,95, não resultado humano observado. Os três cenários, 0,95, 0,99 e 1,00, constam da Tabela~\ref{tab:cap8-sensibilidade-humana} e de \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     # Legenda curta no corpo e nota explicativa completa, sem truncar a legenda.
     text = replace_once(text, r"\caption{Arranjo sequencial", r"\caption[Arranjo sequencial: decisões, revisão e custo]{Arranjo sequencial")
     return text

@@ -30,7 +30,7 @@ def subsampling(data):
             *[number(part.loc[m, 'median'], 6) for m in metrics[1:3]],
             *[number(part.loc[m, 'median'] * 100, 1) for m in metrics[3:]]])
     return table('Subamostragem no treinamento: análise exploratória, posterior à avaliação principal. Ordenação isotônica abaixo do corte.',
-        'tab:cap8-subamostragem', 'lrrrrr', r'Pos.:neg. & PAR=2 no topo 96 & Brier & ECE & Sens. passo 11 (\%) & Sens. sexo M (\%)', rows,
+        'tab:cap8-subamostragem', 'lrrrrr', r'Pos.:neg. & PAR=2 no topo 96 & Brier & ECE & \shortstack{Fração dos PAR=2 do passo 11\\no topo 96 (\%)} & Sens. sexo M (\%)', rows,
         r'Medianas entre sementes; colchetes indicam mínimo e máximo, não IC. A referência foi executada uma vez. A avaliação mantém a prevalência original. Métricas das outras variantes e grupos: \path{data/subamostragem_treino_resumo.csv}.')
 
 
