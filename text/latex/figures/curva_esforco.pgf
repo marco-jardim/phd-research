@@ -15,6 +15,7 @@
 \pgftext[at={\pgfpoint{5.70000cm}{-0.60000cm}}]{\scriptsize Revisões humanas (escala logarítmica)}
 \pgftext[left,at={\pgfpoint{0.00000cm}{3.37000cm}}]{\scriptsize PAR=2 recuperados, revisor perfeito}
 \color{gray}
+\pgfsetdash{}{0pt}
 \pgfsetlinewidth{0.9pt}
 \pgfpathmoveto{\pgfpoint{0.00000cm}{0.00000cm}}
 \pgfpathlineto{\pgfpoint{1.00882cm}{0.00000cm}}
@@ -92,6 +93,7 @@
 \pgfpathlineto{\pgfpoint{11.40000cm}{3.10000cm}}
 \pgfusepath{stroke}
 \color{orange}
+\pgfsetdash{{4pt}{2pt}}{0pt}
 \pgfsetlinewidth{0.9pt}
 \pgfpathmoveto{\pgfpoint{0.00000cm}{0.08611cm}}
 \pgfpathlineto{\pgfpoint{1.00882cm}{0.08611cm}}
@@ -135,6 +137,7 @@
 \pgfpathlineto{\pgfpoint{11.40000cm}{1.72222cm}}
 \pgfusepath{stroke}
 \color{blue}
+\pgfsetdash{{1pt}{1.7pt}}{0pt}
 \pgfsetlinewidth{0.9pt}
 \pgfpathmoveto{\pgfpoint{0.00000cm}{0.08611cm}}
 \pgfpathlineto{\pgfpoint{1.00882cm}{0.08611cm}}
@@ -204,6 +207,7 @@
 \pgfpathlineto{\pgfpoint{11.40000cm}{2.84167cm}}
 \pgfusepath{stroke}
 \color{teal}
+\pgfsetdash{{4pt}{1.5pt}{1pt}{1.5pt}}{0pt}
 \pgfsetlinewidth{0.9pt}
 \pgfpathmoveto{\pgfpoint{0.00000cm}{0.08611cm}}
 \pgfpathlineto{\pgfpoint{1.00882cm}{0.08611cm}}
@@ -273,18 +277,35 @@
 \pgfpathlineto{\pgfpoint{11.40000cm}{2.84167cm}}
 \pgfusepath{stroke}
 \color{red}
+\pgfsetdash{}{0pt}
 \pgfpathcircle{\pgfpoint{6.64303cm}{1.98056cm}}{2pt}\pgfusepath{fill}
-\pgftext[left,at={\pgfpoint{6.74303cm}{2.28056cm}}]{\scriptsize P vig.: (96, 23), 21 FP}
+\pgftext[left,at={\pgfpoint{6.74303cm}{2.28056cm}}]{\scriptsize P vig.: (96, 23), 21 FP, +344 LLM}
 \color{red}
+\pgfsetdash{}{0pt}
 \pgfpathcircle{\pgfpoint{4.12351cm}{0.77500cm}}{2pt}\pgfusepath{fill}
-\pgftext[left,at={\pgfpoint{4.22351cm}{0.47500cm}}]{\scriptsize P conf.: (17, 9), 4 FP}
+\pgftext[left,at={\pgfpoint{4.22351cm}{0.47500cm}}]{\scriptsize P conf.: (17, 9), 4 FP, +41 LLM}
 \color{gray}
-\pgftext[left,at={\pgfpoint{0.10000cm}{-1.00000cm}}]{\scriptsize O1: SCORE}
+\pgfsetdash{}{0pt}
+\pgfpathmoveto{\pgfpoint{0.00cm}{-1.00cm}}
+\pgfpathlineto{\pgfpoint{0.45cm}{-1.00cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{0.55000cm}{-1.00000cm}}]{\scriptsize O1: escore OpenRecLink}
 \color{orange}
-\pgftext[left,at={\pgfpoint{3.00000cm}{-1.00000cm}}]{\scriptsize O2: nota CdR}
+\pgfsetdash{{4pt}{2pt}}{0pt}
+\pgfpathmoveto{\pgfpoint{5.90cm}{-1.00cm}}
+\pgfpathlineto{\pgfpoint{6.35cm}{-1.00cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{6.45000cm}{-1.00000cm}}]{\scriptsize O2: nota do CdR}
 \color{blue}
-\pgftext[left,at={\pgfpoint{5.90000cm}{-1.00000cm}}]{\scriptsize O3: p\_cal\_ml}
+\pgfsetdash{{1pt}{1.7pt}}{0pt}
+\pgfpathmoveto{\pgfpoint{0.00cm}{-1.38cm}}
+\pgfpathlineto{\pgfpoint{0.45cm}{-1.38cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{0.55000cm}{-1.38000cm}}]{\scriptsize O3: probabilidade calibrada (OOF)}
 \color{teal}
-\pgftext[left,at={\pgfpoint{8.80000cm}{-1.00000cm}}]{\scriptsize O4: recalibrada}
+\pgfsetdash{{4pt}{1.5pt}{1pt}{1.5pt}}{0pt}
+\pgfpathmoveto{\pgfpoint{5.90cm}{-1.38cm}}
+\pgfpathlineto{\pgfpoint{6.35cm}{-1.38cm}}\pgfusepath{stroke}
+\pgftext[left,at={\pgfpoint{6.45000cm}{-1.38000cm}}]{\scriptsize O4: probabilidade recalibrada de P}
+\color{black}
+\pgfsetdash{}{0pt}
+\pgftext[at={\pgfpoint{5.70000cm}{-1.80000cm}}]{\scriptsize Eixo x limitado a 2.522 revisões}
 \color{black}
 \end{pgfpicture}

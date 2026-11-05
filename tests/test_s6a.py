@@ -54,7 +54,7 @@ def test_arrangement_editorial_preserves_every_number():
     current = (LATEX / 'tables/editorial/tab_cap8_arranjo_corte.tex').read_text(encoding='utf-8')
     assert current == render_arrangement(original)
     # Remove comentários de proveniência, que têm o nome de script com S3.
-    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text).replace('85,4 [80,5; 89,3]', '85,4').replace('81,5 [74,5; 86,8]', '81,5'))
+    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
     assert numeric(original) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
@@ -140,9 +140,9 @@ def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
 def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
-    assert r'Todo \texttt{MATCH} do LLM deve seguir ao revisor humano' in recommendation
-    assert r'\textit{post hoc} e não registrada' in recommendation
-    assert 'não uma política já avaliada' in recommendation
+    assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
+    assert 'hipótese exploratória a validar em dados novos' in recommendation
+    assert 'nunca deve aceitar vínculos sozinho' in recommendation
     assert 'validação registrada em dados novos' in recommendation
 
 
@@ -157,8 +157,8 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     assert r'P-Platt é a análise de sensibilidade com \textit{Platt scaling}' in pt
     assert '42,5' in pt and '42.5' in en
     assert 'pelo menos 95' in pt and 'at least 95' in en
-    assert 'não superou essa ordenação simples' in pt
-    assert 'did not outperform this simple ordering' in en
+    assert 'nenhuma estratégia domina' in pt
+    assert 'neither strategy dominates' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]

@@ -23,10 +23,12 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     assert r"PAR é o \textit{label} da referência" in resumo
     assert "registered internally before evaluation" in abstract
     assert "preregistered" not in abstract
-    assert "ordenação calibrada recuperaria 22" in resumo
-    assert "ordering would recover 22" in abstract
-    assert "viés de verificação" in resumo and "incorporação" in resumo
-    assert "Verification bias" in abstract and "incorporation" in abstract
+    assert "Sob revisor perfeito nos dois lados" in resumo
+    assert "nove com 29 revisões" in resumo
+    assert "perfect reviewer on both sides" in abstract
+    assert "nine with 29 reviews" in abstract
+    assert "verificação seletiva" in resumo and "incorporação" in resumo
+    assert "Selective verification" in abstract and "incorporation" in abstract
     assert "intervalos sobrepostos" not in resumo and "intervals overlapping" not in abstract
     assert "16,0" in resumo and "16.0" in abstract
     assert "curva de esforço" in resumo and "effort-versus-recovered-links curve" in abstract
@@ -68,10 +70,12 @@ def test_final_editorial_contract_and_table_placement():
         assert "quatro contra dez" not in text
         assert r"\ref{sec:e4-mesma-carga}" in text or r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "P e O3 recuperariam 23 e 22" in conclusion
-    assert "21 FP e utilizou 344" in conclusion
+    assert "P usaria 121 revisões para 23" in conclusion
+    assert "O3 recuperaria 22 na mesma carga" in conclusion
+    assert "21 e 4 foram rejeitados ou não examinados" in conclusion
+    assert "344 potenciais pares avaliados pelo LLM" in conclusion
     assert "revisor perfeito" in conclusion
-    assert "não constitui dominância" in conclusion
+    assert "Sob a mesma hipótese de revisor e na mesma carga, nenhuma domina" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     cutoff = chapter.index(r"\subsection{Comparação com o corte 6,0}")
     for mode in ("vigilancia", "confirmacao"):

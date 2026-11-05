@@ -3,19 +3,19 @@
 \caption{Esforço hipotético com 20 minutos por par. Economia frente ao cenário de 2.156 revisões; horas são ordem de grandeza, não medida.}
 \label{tab:cap8-esforco}
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{lllrrrrrr}
+\resizebox{\linewidth}{!}{\begin{tabular}{lllrrrrrrr}
 \toprule
-Modo & Braço & Carga & Rev. & PAR=2 & Horas & h poupadas & h/perdido & h/FP \\
+Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & h poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\
 \midrule
-Vig. & P & K1 & 96 & 23 & 32{,}00 & 686{,}67 & 2{,}46 & 1{,}52 \\
-Vig. & O3 & K1 & 96 & 22 & 32{,}00 & 686{,}67 & 2{,}29 & n.a. \\
-Vig. & P & K2 & 96 & 23 & 32{,}00 & 686{,}67 & 2{,}46 & 1{,}52 \\
-Vig. & O3 & K2 & 440 & 26 & 146{,}67 & 572{,}00 & 14{,}67 & n.a. \\
-Conf. & P & K1 & 17 & 9 & 5{,}67 & 713{,}00 & 0{,}21 & 1{,}42 \\
-Conf. & O3 & K1 & 17 & 6 & 5{,}67 & 713{,}00 & 0{,}19 & n.a. \\
-Conf. & P & K2 & 17 & 9 & 5{,}67 & 713{,}00 & 0{,}21 & 1{,}42 \\
-Conf. & O3 & K2 & 58 & 20 & 19{,}33 & 699{,}33 & 1{,}21 & n.a. \\
+Vig. & P & K1 & 96 & 344 & 23 & 32 & 687 & 53 & 2 \\
+Vig. & O3 & K1 & 96 & 0 & 22 & 32 & 687 & 49 & n.a. \\
+Vig. & P & K2 & 96 & 344 & 23 & 32 & 687 & 53 & 2 \\
+Vig. & O3 & K2 & 440 & 0 & 26 & 147 & 572 & 57 & n.a. \\
+Conf. & P & K1 & 17 & 41 & 9 & 6 & 713 & 26 & 1 \\
+Conf. & O3 & K1 & 17 & 0 & 6 & 6 & 713 & 24 & n.a. \\
+Conf. & P & K2 & 17 & 41 & 9 & 6 & 713 & 26 & 1 \\
+Conf. & O3 & K2 & 58 & 0 & 20 & 19 & 699 & 44 & n.a. \\
 \bottomrule
-\end{tabular}
-\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana; K2: total humano e LLM de P convertido em orçamento humano para O3. n.a.: denominador FP zero. Recuperação pressupõe revisor perfeito; cenários com erro humano e razões de horas poupadas por erro constam de \path{data/esforco_arranjo.csv}. O cenário de 5\% considera somente falsos negativos entre vínculos revisados e não modela FP do revisor humano. Análise exploratória, \textit{post hoc}, não registrada.}
+\end{tabular}}
+\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões não arredondadas e fontes temporais em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}
 \end{table}

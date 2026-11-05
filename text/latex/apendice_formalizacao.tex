@@ -2,7 +2,7 @@
 
 A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}).
 
-Adota-se a forma sigmoide do \textit{Platt scaling} \cite{Platt1999}, com ajuste por momentos nas âncoras (Platt por âncoras), distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
+Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada na forma logística de \citeonline{Platt1999}, distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
 
 \[
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
@@ -132,7 +132,7 @@ O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na
 
 \begin{enumerate}
 \item \textbf{Modelagem das dependências:} Implementações de Fellegi e Sunter frequentemente assumem que os campos de comparação são condicionalmente independentes, $P(\gamma\mid M) = \prod P(\gamma_i\mid M)$, embora essa hipótese não seja necessária à regra de decisão baseada na razão de verossimilhança. O GZ-CMD, ao empregar um modelo discriminativo (como Random Forest ou Gradient Boosting), pode representar interações não lineares entre atributos sem impor essa independência; a calibração das probabilidades requer avaliação própria.
-\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de Registros (Seção~\ref{sec:base-pares}).
+\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de Registros (Seção~\ref{sec:fontes-dados}).
 \end{enumerate}
 
 \subsubsection{Efeito do custo de revisão e decisão binária}

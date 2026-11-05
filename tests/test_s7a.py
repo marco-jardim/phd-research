@@ -23,10 +23,12 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    assert 'P acrescentou 21 falsos positivos' in pt
-    assert 'P added 21 false positives' in en
+    assert 'no máximo um vínculo adicional' in pt
+    assert '344 pares avaliados pelo LLM' in pt
+    assert 'at most one additional link' in en
+    assert '344 LLM-reviewed pairs' in en
     assert 'VPP' in pt and 'PPV' in en
-    assert '96 revisões' in pt and '96 surveillance reviews' in en
+    assert '22 revisões humanas' in pt and '22 human reviews' in en
     losses = pd.read_csv(DATA / 'arranjo_corte_perdas_mecanismo.csv')
     totals = pd.read_csv(DATA / 'arranjo_corte_metricas.csv')
     llm = pd.read_csv(DATA / 'arranjo_corte_vpp_llm.csv')
@@ -55,7 +57,7 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     assert r'análise de sensibilidade com \textit{Platt scaling}' in pt
     assert r'the sensitivity analysis using \textit{Platt scaling}' in en
     assert '42,5' in pt and '42.5' in en
-    assert '0,427' in pt and '0.427' in en
+    assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     for path in LATEX.glob('*.tex'):
         text = path.read_text(encoding='utf-8')
         assert not re.search(r'calibração sigmoidal|sigmoid calibration', text, re.I), path
@@ -89,7 +91,7 @@ def test_editorial_area_review_is_a_ceiling_without_numeric_change():
     new = (LATEX / 'tables/editorial/tab_cap8_arranjo_corte.tex').read_text(encoding='utf-8')
     assert old.count('21.497 (28)') == 2
     assert new.count('21.497 (teto; 28)') == 2
-    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text).replace('85,4 [80,5; 89,3]', '85,4').replace('81,5 [74,5; 86,8]', '81,5'))
+    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
     assert numeric(old) == numeric(new)
 
 
@@ -114,7 +116,7 @@ def test_study_grey_zone_model_version_chronology_and_range_are_unambiguous():
     assert r'S3 às 02:11:52 UTC, conforme \path{data/arranjo_corte_metadata.json} na versão \texttt{16d5876}' in study
     assert 'não no JSON atual' in study
     assert 'e as perdas de nove a 21' not in study
-    assert 'mediana 14, mínimo nove e máximo 21' in study
+    assert 'mediana 14, mínimo 9 e máximo 21' in study
 
 
 def test_historical_fingerprints_still_match_exactly():

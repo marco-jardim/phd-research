@@ -1,6 +1,7 @@
 """Camada editorial: só apresentação; geradores e tabelas históricos intactos."""
 from pathlib import Path
 import sys
+import re
 
 import pandas as pd
 
@@ -70,7 +71,7 @@ def render_reference(referencia, arranjo, cascata, carga):
         ("n.a.: não se aplica.",
          "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica."),
         ("registro prévio versionado no repositório, com emendas e suplemento, não a registro público",
-         "registro interno versionado antes da S3, com emendas e suplemento"),
+         r"registro interno versionado antes da avaliação com os \textit{labels} (S3), com emendas e suplemento"),
         (r"Fontes: \path{data/referencia_comparador_pos_orl.csv}",
          r"Fontes: \path{data/carga_abaixo_corte.csv}, \path{data/referencia_comparador_pos_orl.csv}"),
     ]
@@ -93,6 +94,13 @@ def render_arrangement(historical):
             line = replace_once(line, "85,4 [80,5; 89,3]", "85,4")
         if line.startswith("(i) Corte & 123 &"):
             line = replace_once(line, "81,5 [74,5; 86,8]", "81,5")
+        if " & " in line and len(line.split(" & ")) == 10 and not line.startswith("Braço &"):
+            cells = line.split(" & ")
+            if re.fullmatch(r"\d+(?:,\d+)? \[[^]]+\]", cells[2]):
+                cells[2] = cells[2].split(" [", 1)[0]
+            line = " & ".join(cells)
+        if "registro prévio" in line:
+            line = replace_once(line, "registro prévio", "registro interno")
         if "A posteriori" in line:
             line = replace_once(line, "A posteriori", r"\textit{A posteriori}")
         if "O a posteriori reutiliza" in line:
@@ -103,8 +111,16 @@ def render_arrangement(historical):
             line = replace_once(line,
                 "as classes PAR~=~1 e PAR~=~2 também participam do ajuste supervisionado, com viés de incorporação.",
                 "as classes PAR~=~1 e PAR~=~2 não estabelecem, por si, viés de incorporação: este diz respeito ao uso das evidências na referência, não ao ajuste supervisionado em si.")
+        if line.startswith(r"\caption{Arranjo sequencial"):
+            line = replace_once(line, line,
+                r"\caption{Arranjo sequencial OpenRecLink e GZ-CMD v3.1, Claude Haiku 5.5, instruções v4: decisões, revisão e custo. São 247 vínculos na base e 151 em $[5,9)$. PAR~=~1 é definido pelo corte; as classes PAR~=~1 e PAR~=~2 não comprovam incorporação, que depende das evidências usadas na referência. Predição fora da amostra não equivale a validação externa.}")
+        if line.startswith("Braço &") and "$S_A$" in line:
+            line = replace_once(line, r"$S_A$ (IC 95\%)", r"$S_A$ (\%)")
         lines.append(line)
-    return "\n".join(lines) + "\n"
+    text = "\n".join(lines) + "\n"
+    # Legenda curta no corpo e nota explicativa completa, sem truncar a legenda.
+    text = replace_once(text, r"\caption{Arranjo sequencial", r"\caption[Arranjo sequencial: decisões, revisão e custo]{Arranjo sequencial")
+    return text
 
 
 def generate(data_dir: Path, tables_dir: Path) -> None:
