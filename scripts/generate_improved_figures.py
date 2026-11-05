@@ -151,7 +151,7 @@ ax.bar(
     color="#1f77b4",
     edgecolor="black",
     linewidth=0.3,
-    label="Total de pares candidatos",
+    label="Total de potenciais pares",
 )
 ax.bar(
     xb,
@@ -160,7 +160,7 @@ ax.bar(
     color="#d62728",
     edgecolor="black",
     linewidth=0.3,
-    label="Pares verdadeiros",
+    label="Vínculos",
 )
 ax.set_xticks(xb)
 ax.set_xticklabels(bands, fontsize=9)

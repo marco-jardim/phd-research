@@ -2,8 +2,8 @@
 """Generate computational cost figure for GZ-CMD cascade (Figure 7.x).
 
 Two panels:
-  (a) Unit cost per pair (log scale) — 7 orders of magnitude
-  (b) Total cost per stage (log scale) — volume reduction compensates unit cost
+  (a) Unit cost per pair (log scale), 7 orders of magnitude
+  (b) Total cost per stage (log scale), volume reduction compensates unit cost
 """
 
 from pathlib import Path
@@ -17,7 +17,7 @@ import numpy as np
 
 # ── Data ──────────────────────────────────────────────────────────────
 stages = [
-    "Limiares\nFellegi–Sunter",
+    "Limiares\nFellegi e Sunter",
     "Regras\nde guarda",
     "Platt +\nMotor de perda",
     "Revisão LLM\ndual-agent",
