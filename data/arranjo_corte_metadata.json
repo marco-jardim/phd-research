@@ -1,6 +1,6 @@
 {
   "stage": "S3_observed_evaluation_no_API_calls",
-  "timestamp_utc": "2026-11-05T04:02:59.745888+00:00",
+  "timestamp_utc": "2026-11-05T04:13:28.365118+00:00",
   "prereg_commit": "d526c3fb3068d4e1b50df0571324915cb83c13e3",
   "prereg_sha256": "3f156cfe3c316cef63a3349f4d46608128cc28893f6691d314c508a3b183c278",
   "S1_prereg_commit": "7b40cfb3821b46e0eb402feb44f8e529dba801a3",
@@ -357,15 +357,15 @@
   "new_responses_reestimate_rates": false,
   "chapter_tex_modified": false,
   "code_sha256": {
-    "scripts/arranjo_corte_s3_avaliar.py": "d8315767690ce7e38d41315ca07e858f645ba10737c81fc2209404e2f0d988c6",
+    "scripts/arranjo_corte_s3_avaliar.py": "cfeeb20361982f9d3d5c56c72a2fe296396f5ee1d6d6892ac70da033ed793b5a",
     "scripts/arranjo_corte_orl_gzcmd.py": "94cab542b5ddd9e4dc8bc63552596736026388772305172d82a80a506918898e",
     "scripts/arranjo_corte_s2_suplementar.py": "723165f1f3db74bd0a3bfa0ceb226b880554145474d82918f24d397d81d43dc3",
-    "tests/test_arranjo_corte_s3.py": "71b2184b15abec8ad657e6bdf45ed541ab65d22f929b262779a146917c55092e"
+    "tests/test_arranjo_corte_s3.py": "bc39c580d19fae224c52f3ae17586bc323750f715a76cf5a9950491ca1f3d576"
   },
   "output_sha256": {
     "data\\arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
     "data\\arranjo_corte_par2.csv": "2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e",
-    "text\\latex\\tables\\tab_cap8_arranjo_corte.tex": "ce728336b1103b89b2e5c9a6690169e4cd4a63d08e2ff199a8849807af6a9ef3",
+    "text\\latex\\tables\\tab_cap8_arranjo_corte.tex": "c533dab12e5089a0c0ecfe87da91de384106a93125f1fa5b127035530c7a6ccd",
     "data\\arranjo_corte_aposteriori.csv": "bf29b96a32753b54bcedddf1503e39f8c8dbfa22bd071b70a7cff125599bc0c7"
   }
 }
