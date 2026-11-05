@@ -3,11 +3,11 @@ protocol: ORL aceita SCORE >= corte; GZ-CMD v3.1 abaixo
 base_commit: b09e979
 created_at: '2026-11-05T01:22:05.974769+00:00'
 sha256:
-  gzcmd/arranjo_corte.py: ca87d060a9c09d5e755e382b74bc6510111324fe3fac2eed21639fb6c37c5a5f
-  scripts/arranjo_corte_s1_simular.py: 0eeae303f810b33acebbccd78e1d714497436fac6d597201e5d755d4f8f5f7ee
+  gzcmd/arranjo_corte.py: 4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5
+  scripts/arranjo_corte_s1_simular.py: 9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd
   scripts/arranjo_corte_s2_executar.py: ac0d5b9b5c1d9c7730b0992f13e7e2dd3530284f14636d29731259c25fa02f60
   tests/test_arranjo_corte.py: 8d30e41ad0fb88de99ce490030023f4568c89f75f642d0f085ce7bd9497fb0f9
-  gzcmd/M_arranjo_corte.md: 0bc2c3a8cb020853056fa15879f988dc5348f44cc1ca470ffa1677b86244f763
+  gzcmd/M_arranjo_corte.md: c73bcaec0efd43f1318211207c9227cdec503517e7ce74def997ae25b4f740b8
   scripts/run_exp2_sem_model_outputs.py: f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae
   gzcmd/ml_oof.py: 5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8
   gzcmd/runner.py: 3fe59df92bd95b80c34434c5f9bc1c8e87b800a99d7cffab52a999c459811f27
@@ -39,7 +39,7 @@ classifier:
   inner_folds: 5
   split_by: refrec
   seed: 42
-  n_jobs: 2
+  n_jobs: 8
   n_estimators: 300
   max_depth: 6
   learning_rate: 0.05
@@ -321,3 +321,43 @@ amendments:
     gzcmd/arranjo_corte.py: ca87d060a9c09d5e755e382b74bc6510111324fe3fac2eed21639fb6c37c5a5f
     tests/test_arranjo_corte.py: 8d30e41ad0fb88de99ce490030023f4568c89f75f642d0f085ce7bd9497fb0f9
     gzcmd/M_arranjo_corte.md: 0bc2c3a8cb020853056fa15879f988dc5348f44cc1ca470ffa1677b86244f763
+- number: 2
+  timestamp_utc: '2026-11-05T01:37:34.025177+00:00'
+  authorization: Explicitly authorized technical amendment to restore the original
+    _classifier without overriding n_jobs, in every arm, before repeating S1.
+  previous_prereg_commit: 83c7842
+  previous_prereg_sha256: f907f6605613c272c7c698c57f50eedf4381c46a7e959b902c46836be12462a0
+  reason: XGBoost hist in this environment requires the original thread count to
+    reproduce the published REFREC OOF. Reducing n_jobs changed probabilities despite
+    identical source, features, folds and seed. The comparison does not evaluate accuracy.
+  reproduction_diagnosis:
+  - n_jobs: 8
+    folds_equal: true
+    divergent_probabilities_at_1e_14: 0
+    max_absolute_probability_difference: 1.1102230246251565e-16
+  - n_jobs: 2
+    folds_equal: true
+    divergent_probabilities_at_1e_14: 41194
+    max_absolute_probability_difference: 0.44052287581699345
+  change: Remove the new module's n_jobs=2 override and use ml_oof._classifier unchanged,
+    retaining its original n_jobs=8 in all arms. No published-profile file is modified.
+    Update the script's preregistration template and resource log to report eight threads.
+  resource_safety: Check free RAM using Get-CimInstance Win32_OperatingSystem before
+    training. Below 6 GiB, terminate only orphan miniconda Python workers whose command
+    line contains joblib.externals.loky and whose parent no longer exists. Record the
+    number terminated locally. Do not run arms in parallel.
+  outcome_blinding: No label-based cascade evaluation result or accuracy metric was
+    seen. Labels were used only for training and the authorized numerical diagnostics.
+    No S1 action counts or pending lists were generated; S2 was not started.
+  unchanged_protocol: The scientific objective, original classifier hyperparameters,
+    data, features, folds, seed, calibration formulations, reliability sources, costs,
+    budgets, arms and stopping rule are unchanged; the original execution thread count
+    is restored to meet the exact OOF reproduction requirement.
+  previous_sha256:
+    gzcmd/arranjo_corte.py: ca87d060a9c09d5e755e382b74bc6510111324fe3fac2eed21639fb6c37c5a5f
+    scripts/arranjo_corte_s1_simular.py: 0eeae303f810b33acebbccd78e1d714497436fac6d597201e5d755d4f8f5f7ee
+    gzcmd/M_arranjo_corte.md: 0bc2c3a8cb020853056fa15879f988dc5348f44cc1ca470ffa1677b86244f763
+  updated_sha256:
+    gzcmd/arranjo_corte.py: 4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5
+    scripts/arranjo_corte_s1_simular.py: 9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd
+    gzcmd/M_arranjo_corte.md: c73bcaec0efd43f1318211207c9227cdec503517e7ce74def997ae25b4f740b8

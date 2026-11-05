@@ -19,7 +19,9 @@ incluindo 36 PAR=2. O corte não usa a nota final do comparador.
 O novo módulo `gzcmd/arranjo_corte.py` importa `_classifier` e `numeric_features`
 de `ml_oof.py`, sem alterar esse arquivo ou seu fingerprint. Mantém os 30
 atributos, hiperparâmetros, seed 42 e cinco folds externos por REFREC, com cinco
-folds internos, construídos na base inteira. Apenas `n_jobs=2` limita RAM/CPU.
+folds internos, construídos na base inteira. A emenda técnica 2 restaura
+`n_jobs=8`, sem sobrescrever nenhum parâmetro de `_classifier`, em todos os
+braços. O treino dos braços não é executado em paralelo.
 O braço principal P conserva os classificadores da base inteira e ajusta a
 isotônica nas probabilidades OOF internas dos pares de treino abaixo do corte.
 Nem rótulos nem grupos do teste externo entram no ajuste do calibrador.
@@ -129,3 +131,29 @@ usados exclusivamente no treinamento e no diagnóstico autorizado. Objetivo
 científico, braços, folds, seed, custos, regras de parada e parâmetros
 registrados permanecem fixos; a formulação suavizada autorizada estabiliza o
 ajuste Platt. Os hashes novos ficam registrados no YAML da emenda.
+
+## Emenda técnica 2: reprodução do OOF e número de threads
+
+Após estabilizar Platt, a repetição da S1 parou na conferência das
+probabilidades OOF contra `data/pcal_ml_oof.csv`, antes de gerar ações,
+pendentes ou métricas de acerto. O diagnóstico com `nested_oof_probabilities`
+e os mesmos dados, atributos, folds e seed encontrou:
+
+| n_jobs | Folds iguais | Probabilidades divergentes a 1e-14 | Maior diferença absoluta |
+|---:|:---:|---:|---:|
+| 8, classificador original | sim | 0 | 1,1102230246251565e-16 |
+| 2, sobrescrita inicial | sim | 41.194 | 0,44052287581699345 |
+
+O `hist` do XGBoost neste ambiente exige o mesmo número de threads para
+reproduzir os resultados publicados. A emenda autorizada remove a sobrescrita
+de `n_jobs` exclusivamente do módulo novo e usa `_classifier` sem alterações,
+restaurando suas oito threads em todos os braços. A comparação é de
+probabilidades e folds, não de acerto contra rótulos. Nenhum desfecho de
+avaliação da cascata foi examinado; S2 ainda não havia sido iniciada.
+
+Antes de treinar, a RAM livre é conferida com
+`Get-CimInstance Win32_OperatingSystem`. Abaixo de 6 GiB, somente workers
+Python do miniconda com `joblib.externals.loky` e pai inexistente podem ser
+encerrados; a quantidade é registrada localmente. Os demais processos são
+preservados e os braços permanecem sequenciais. Os novos hashes e o
+diagnóstico agregado ficam na seção de emendas do pré-registro antes da S1.
