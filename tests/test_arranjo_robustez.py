@@ -177,16 +177,39 @@ def test_supplement_checks_actual_dossier_hash(tmp_path):
            'removed_fields': list(REMOVED_FIELDS), 'dossier_sha256': {'a': digest},
            'results': [{'pair_id': 'a', 'decision': 'MATCH'}]}
     path = tmp_path / 'run.json'
-    supplement.validate_dossiers(path, run, 'vigilancia', {'a': View()})
+    robust.validate_dossiers(path, run, 'vigilancia', {'a': View()}, prompt_sha256=run['prompt_sha256'])
     altered = deepcopy(run)
     altered['dossier_sha256']['a'] = 'different'
     with pytest.raises(ValueError, match='Dossier cache identity'):
-        supplement.validate_dossiers(path, altered, 'vigilancia', {'a': View()})
+        robust.validate_dossiers(path, altered, 'vigilancia', {'a': View()}, prompt_sha256=run['prompt_sha256'])
     identity = path.with_name('run_journal')
     identity.mkdir()
     robust.atomic_json(identity / 'identity.json', altered)
     with pytest.raises(ValueError, match='Dossier cache identity'):
-        supplement.validate_dossiers(path, run, 'vigilancia', {'a': View()})
+        robust.validate_dossiers(path, run, 'vigilancia', {'a': View()}, prompt_sha256=run['prompt_sha256'])
+
+
+def test_technical_amendment_preserves_execution_identity():
+    from scripts import arranjo_robustez as cli
+    spec = {'sha256': {'code': 'new'}, 'versions': {'sklearn': '1.8.0', 'xgboost': '3.2.0'},
+            'amendments': [{'execution_identity': {'prereg_sha256': 'original', 'sha256': {'code': 'old'}}}]}
+    original = cli.identity_for(spec, 'original', robust.grid()[0], False)
+    assert original['sha256'] == {'code': 'old'}
+    assert original['prereg_sha256'] == 'original'
+    assert cli.identity_for(spec, 'amended', robust.grid()[0], False)['sha256'] == {'code': 'new'}
+
+
+def test_historical_fingerprints_are_exact_and_robustness_outputs_unchanged():
+    root = Path(__file__).resolve().parents[1]
+    for name in ('data/arranjo_corte_metadata.json', 'data/equidade_arranjo_manifest.json'):
+        metadata = json.loads((root / name).read_text(encoding='utf-8'))
+        for path, digest in metadata['code_sha256'].items():
+            assert robust.sha256(root / path) == digest
+    metadata = json.loads((root / 'data/robustez_arranjo_metadata.json').read_text(encoding='utf-8'))
+    for name, digest in metadata['outputs_sha256'].items():
+        assert robust.sha256(root / f'data/robustez_arranjo_{name}.csv') == digest
+    assert robust.sha256(root / 'data/arranjo_corte_metricas.csv') == 'd5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16'
+    assert robust.sha256(root / 'data/arranjo_corte_par2.csv') == '2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e'
 
 
 def test_phase_a_no_api_no_outcome_metrics_and_allowlist():

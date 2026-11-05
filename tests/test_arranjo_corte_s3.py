@@ -152,16 +152,7 @@ def test_supplement_complete_and_rates_frozen():
     assert meta["new_responses_reestimate_rates"] is False
     assert "chapter_tex_modified" not in meta
     for name, value in meta["code_sha256"].items():
-        if name in {"scripts/arranjo_corte_s2_suplementar.py", "tests/test_arranjo_corte_s3.py"}:
-            # S3 provenance describes the original execution, not later cache
-            # validation/audit fixes. Verify those original bytes in git, while
-            # the robustness registration pins the current implementation.
-            import hashlib
-            import subprocess
-            original = subprocess.check_output(["git", "show", "893a2bb:" + name], cwd=ROOT)
-            assert hashlib.sha256(original).hexdigest() == value
-        else:
-            assert sha256(ROOT / name) == value
+        assert sha256(ROOT / name) == value
 
 
 @requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", ROOT / ".local/arranjo_corte/oof.npz",
