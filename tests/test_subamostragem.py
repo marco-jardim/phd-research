@@ -170,6 +170,47 @@ def test_persisted_outputs_never_contain_pair_ids():
         assert "pair_id" not in pd.read_csv(path, nrows=0).columns
 
 
+@pytest.mark.parametrize("reference", [None,
+    {"identity": {"source": "changed"}, "reference_reproduced": True},
+    {"identity": {"source": "expected"}, "reference_reproduced": False}])
+def test_reference_gate_blocks_subsampling_before_loading_or_fitting(tmp_path, monkeypatch, reference):
+    import json
+    from scripts import subamostragem_treino as cli
+    fingerprint = {"source": "expected"}
+    monkeypatch.setattr(cli, "LOCAL", tmp_path)
+    monkeypatch.setattr(cli, "identity", lambda source: fingerprint)
+    (tmp_path / "preflight.json").write_text(json.dumps({"identity": fingerprint}), encoding="utf-8")
+    if reference is not None:
+        (tmp_path / "replica_original_1000.json").write_text(json.dumps(reference), encoding="utf-8")
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Inputs/model must not be touched before the reference gate")
+
+    monkeypatch.setattr(cli, "load_inputs", forbidden)
+    monkeypatch.setattr(cli, "undersampled_oof", forbidden)
+    with pytest.raises(FileNotFoundError if reference is None else ValueError,
+                       match=None if reference is None else "Reference gate required"):
+        cli.worker(tmp_path / "private.csv", 1, 1000)
+
+
+def test_matching_reproduced_reference_allows_input_loading(tmp_path, monkeypatch):
+    import json
+    from scripts import subamostragem_treino as cli
+    fingerprint = {"source": "expected"}
+    monkeypatch.setattr(cli, "LOCAL", tmp_path)
+    monkeypatch.setattr(cli, "identity", lambda source: fingerprint)
+    (tmp_path / "preflight.json").write_text(json.dumps({"identity": fingerprint}), encoding="utf-8")
+    (tmp_path / "replica_original_1000.json").write_text(
+        json.dumps({"identity": fingerprint, "reference_reproduced": True}), encoding="utf-8")
+
+    def sentinel(source):
+        raise RuntimeError("reference gate passed; no training in this test")
+
+    monkeypatch.setattr(cli, "load_inputs", sentinel)
+    with pytest.raises(RuntimeError, match="reference gate passed"):
+        cli.worker(tmp_path / "private.csv", 1, 1000)
+
+
 @requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", DATA_ROOT / "data/pcal_ml_oof.csv",
                 DATA_ROOT / "data/pcal_ml_oof.json")
 def test_private_reference_reproduces_published_oof(monkeypatch):
