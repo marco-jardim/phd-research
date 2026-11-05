@@ -13,7 +13,7 @@ import pandas as pd
 import pytest
 
 from scripts import equidade_arranjo as historical
-from scripts.tabelas_arranjo_editorial import generate, render_reference
+from scripts.tabelas_arranjo_editorial import generate, render_reference, step_ppv_note
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
@@ -32,7 +32,7 @@ def numbers(text):
 def test_editorial_versions_reproduce_without_overwriting_historical(tmp_path):
     before = {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}
     generate(ROOT / "data", tmp_path)
-    assert len(list(tmp_path.glob("*.tex"))) == 8
+    assert len(list(tmp_path.glob("*.tex"))) == 9
     for path in tmp_path.glob("*.tex"):
         assert path.read_bytes() == (EDITORIAL / path.name).read_bytes()
     assert before == {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}
@@ -62,11 +62,13 @@ def test_equity_numeric_cells_only_change_specificity_precision():
             assert original == current
     text = (EDITORIAL / "tab_equidade_arranjo.tex").read_text(encoding="utf-8")
     assert "99{,}97" in text and "99{,}99" in text
-    assert "passo 11 ficou fora dos testes de VPP" in text
+    assert "não para os testes pareados de VPP" in text
     assert "padrão-ouro" in text and "corte do escore OpenRecLink" in text
     assert "gabarito" not in text and "corte SCORE" not in text
-    # A nota acrescenta apenas o identificador do passo e o denominador mínimo.
-    allowed_numbers.update(["11", "30"])
+    # Os números novos da nota vêm dos denominadores e grupos dos CSVs.
+    note = step_ppv_note(*[pd.read_csv(ROOT / "data" / f"equidade_arranjo_{name}.csv")
+                           for name in ("maxdiff", "group_metrics", "pairwise_tests")])
+    allowed_numbers.update(numbers(note))
     assert numbers(editorial_text) == +allowed_numbers
 
 
@@ -96,6 +98,9 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
             assert original[:2] == current[:2] and original[3:] == current[3:]
+        elif original[0] == "CdR, revisão humana da área cinza":
+            assert current[0] == "CdR, revisão humana da área cinza da nota"
+            assert original[1:] == current[1:]
         else:
             assert original == current
     text = (EDITORIAL / "tab_cap8_referencia.tex").read_text(encoding="utf-8")
@@ -117,5 +122,5 @@ def test_chapters_include_editorial_not_historical_versions():
         text = re.sub(r"(?m)^%.*$", "", text)
         inputs = re.findall(r"\\input\{([^}]+)\}", text)
         for table in inputs:
-            if "tab_equidade_arranjo" in table or "tab_cap8_referencia" in table:
+            if "tab_equidade_arranjo" in table or "tab_cap8_referencia" in table or "tab_cap8_arranjo_corte" in table:
                 assert table.startswith("tables/editorial/")

@@ -19,17 +19,17 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert len(text.split("\n\n")) == 4
         assert "Zenodo" in text and "211" in text
         assert not re.search("—|–", text)
-    assert "211 vínculos" in resumo and "PAR é o rótulo do padrão-ouro" in resumo
+    assert "211 vínculos" in resumo and r"PAR é o \textit{label} do padrão-ouro" in resumo
     assert "1 indica aceitação pelo corte; 2, recuperação pela revisão manual" in resumo
-    assert "preregistered in the repository, not in a public registry" in abstract
+    assert "preregistered as principal in the repository, not in a public registry" in abstract
     assert "61,696" in abstract and "85.4" in abstract and "86.3" in abstract
-    assert "Zenodo deposit covers the whole-dataset cascade" in abstract
+    assert "Zenodo covers the whole-dataset cascade" in abstract
     assert "arrangement is implemented in the thesis repository" in abstract
-    assert "P lost 13 and 27" in abstract and "without recalibration lost nine and 17" in abstract
+    assert "13 and 27 lost PAR~=~2 links" in abstract and "without recalibration: it lost nine and 17" in abstract
     assert "96 and 17 human referrals" in abstract
     assert "86.3\\% for females (95\\% CI: 76.6 to 92.4)" in abstract
     assert "93.3\\% for males (88.3 to 96.2)" in abstract
-    assert "P perdeu 13 e 27" in resumo and "comparador perdeu nove e 17" in resumo
+    assert "13 e 27 PAR~=~2 perdidos" in resumo and "sem recalibração: perdeu nove e 17" in resumo
     assert "vazamento de alvo e seleção de limiar no teste" in resumo
     assert "oito contra oito" not in resumo and "eight versus eight" not in abstract
     assert "quatro PAR~=~2 contra dez" in resumo
@@ -42,8 +42,10 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     assert "2,156" in abstract and "2,522" in abstract and "lower bound" in abstract
     assert "intervalos sobrepostos" in resumo and "intervals overlapping" in abstract
     assert "não sustentou essa dominância" in resumo and "did not sustain dominance" in abstract
-    assert "hipótese permanece condicionada à carga" in resumo
-    assert "hypothesis remains conditional on workload" in abstract
+    assert "pior em todo desfecho medido contra" in resumo
+    assert "worse on every outcome measured against the label" in abstract
+    assert "só um limite inferior derivado" in resumo
+    assert "only to a label-derived lower bound" in abstract
 
 
 def test_every_study5_input_table_is_referenced_in_chapter():
@@ -76,7 +78,7 @@ def test_final_editorial_contract_and_table_placement():
     limits = study.split(r"\subsection{Limitações}")[1]
     for text in (discussion, limits):
         assert "vem inteiramente" not in text
-        assert "quatro contra dez" in text
+        assert "quatro contra dez" not in text
         assert r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "permanece análise de sensibilidade" in conclusion
@@ -104,7 +106,7 @@ def test_canonical_names_and_operational_area_cinza_definition():
         assert "Floresta Aleatória" not in text
         assert r"\textit{Random Forest}" not in text
     formal = (LATEX / "apendice_formalizacao.tex").read_text(encoding="utf-8")
-    assert r"\textit{labels}" not in formal
+    assert r"\textit{labels}" in formal
     assert "Essas regiões não redefinem a área cinza operacional" in formal
     assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):

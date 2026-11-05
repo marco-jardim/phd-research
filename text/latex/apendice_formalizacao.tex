@@ -8,7 +8,7 @@ Adota-se a forma sigmoide do \textit{Platt scaling} \cite{Platt1999}, com ajuste
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
 \]
 
-No entanto, em cenários de vigilância onde não se dispõe de rótulos em tempo de execução para treinar essa calibração (o problema \textit{unsupervised}), propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}). Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
+No entanto, em cenários de vigilância onde não se dispõe de \textit{labels} em tempo de execução para treinar essa calibração (o problema \textit{unsupervised}), propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}). Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
 
 \begin{enumerate}
 \item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$), assumindo-se uma probabilidade média alvo $r^+$ próxima de 1. Na base desta tese, $A^+$ contém 95 pares com pureza observada de 97,9\%, de onde $r^+ = 0{,}979$ (Tabela~\ref{tab:cap8-ancoras}).
@@ -35,7 +35,7 @@ As duas restrições de média sobre $A^+$ e $A^-$ não garantem que $p_{cal}(s)
 As equações restringem apenas duas médias preditas. Mantidas as distribuições e as proporções nas âncoras, podem existir diferentes funções $P(y=1\mid s)$ na região intermediária que satisfazem as mesmas restrições. Essas funções não precisam coincidir com a sigmoide ajustada. Mudanças temporais nessa região também não são controladas pelas duas médias.
 \end{proof}
 
-A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na área cinza depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos rótulos no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
+A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na área cinza depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
 
 \subsection{Função de Perda e Decisão em Quatro Ações}
 

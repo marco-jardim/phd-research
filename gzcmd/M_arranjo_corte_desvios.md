@@ -8,7 +8,7 @@ As tabelas históricas e seus testes byte a byte permanecem intactos; a apresent
 
 - O registro inicial, commit `8c16a41`, fixou hashes de código que só entrou no git em `83c7842`. A versão originalmente registrada não existe no histórico do git. A primeira S1 utilizou essa versão. O histórico disponível não permite reconstruí-la apenas por checkout.
 - O suplemento, emenda 3, autorizou 69 chamadas adicionais, apesar da regra inicial `no sensitivity API calls`. A declaração `parameter_change: false` não elimina o desvio de protocolo. O suplemento foi registrado antes da S3.
-- O comparador a posteriori aplica o corte seguido da cascata publicada, sem recalibração. Sua análise foi feita antes do registro inicial, de 01:22 UTC. A S3 ocorreu às 04:13 UTC. Portanto, os resultados de PAR=2 da cascata já eram conhecidos quando se registraram recalibração, braços e avaliação. O enquadramento sequencial não foi escolhido sem conhecimento dos resultados.
+- O comparador a posteriori aplica o corte seguido da cascata publicada, sem recalibração. Sua análise foi feita antes do registro inicial, de 5 de novembro de 2026, às 01:22:17 UTC. Os metadados originais da S3 registram 02:11:52 UTC; seu commit `16d5876` consta no git log às 02:17:13 UTC do mesmo dia. A referência anterior a 04:13 UTC foi corrigida pelo histórico. Portanto, os resultados de PAR=2 da cascata já eram conhecidos quando se registraram recalibração, braços e avaliação. O enquadramento sequencial foi escolhido com conhecimento desses resultados.
 - A especificidade constava dos desfechos registrados. Sua ausência na apresentação inicial é uma omissão de relato. O texto revisto distingue esse desfecho da taxa esperada de falsos vínculos.
 
 ## Reprodutibilidade e interpretação
