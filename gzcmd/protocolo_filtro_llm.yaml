@@ -114,3 +114,43 @@ input_sha256:
   data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao_journal/identity.json: 3fee763fd85f1fd036820d5ebf7fce65ebaf7dce97814cc1c3c265ed50753cc4
   data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia_journal/identity.json: 4d1a279819f15165a8c91db2bfa3cc34c783d7542c78d233ef6ea626711a179f
   data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao_journal/identity.json: 510ebf820bf576b00178057043dda9320ca4afefca9129ac6d0a4ec1cdaafe7c
+amendments:
+- number: 1
+  date: '2026-11-05T16:08:04.490331+00:00'
+  authorization: Autor aprovou explicitamente as 83 chamadas de pares pendentes, cerca
+    de US$ 0,26, para completar cobertura até k=125 nos dois modos.
+  overrides: api_calls_allowed=false aplica-se à fase inicial offline; esta emenda
+    autoriza somente as listas fixadas abaixo.
+  pending_counts:
+    vigilancia: 12
+    confirmacao: 71
+  pending_sha256:
+    vigilancia: 932c63adc2546a7b388d28316b3889f001dc8c8a081f0f4aace637770f9bcaa6
+    confirmacao: 061445152fae40cbac4298d130ac09cc2072ebbe2fbe5ff8022206c86aee682b
+  pending_paths:
+    vigilancia: .local/filtro_llm/pendentes_vigilancia.csv
+    confirmacao: .local/filtro_llm/pendentes_confirmacao.csv
+  runner: scripts/run_exp2_sem_model_outputs.py
+  runner_sha256: f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae
+  arguments: --provider anthropic --modelo claude-haiku-5-5 --prompt-version v4 --allow-new-cohort
+    --pares <CSV aprovado do modo> --modo <modo> --saida-dir data/sprint3b/anthropic_sem_mo_v4_filtro_llm
+    --workers 4
+  dossier: Mesmo runner histórico, dossiê sem model_outputs; validar prompt e dossier_sha256
+    contra reconstrução.
+  output_directory: data/sprint3b/anthropic_sem_mo_v4_filtro_llm
+  response_precedence: Coortes congeladas (a resposta usada por P), S2, suplemento,
+    robustez e por último as respostas novas desta emenda.
+  stop_rule:
+    max_pairs: 100
+    max_estimated_usd: 0.5
+    action: Interromper e relatar se exceder qualquer limite; monitorar custo dos
+      journals durante o processo; nunca iniciar o modo seguinte após falha.
+  acceptance: complete=true, zero erros por par/HTTP/parsing, secret_matches=0 e identidade
+    validada
+  estimated_usd_no_cache: 0.26228
+  new_responses_reestimate_rates: false
+  new_responses_feed_other_arms: false
+  temporal_stochastic_limitation: As respostas novas têm outra data de execução e
+    o modelo é estocástico; o filtro mistura respostas antigas e novas. Não é uma
+    avaliação prospectiva independente.
+  execution_code_sha256: b884df01c7678b8d7b79619dd86d5f145ce651a68ad18759a06c2a35dbd74b7e
