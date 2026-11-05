@@ -51,13 +51,14 @@ def render_reference(referencia, arranjo, cascata, carga):
     changes = [
         ("scripts/tabela_referencia_arranjo.py", "scripts/tabelas_arranjo_editorial.py"),
         ("Corte + revisão manual do serviço & ambos & n.d.",
-         "Corte + revisão manual do serviço & ambos & $\\geq " + lower + "$"),
+         "Corte + revisão manual do serviço & ambos & cenário $\\geq " + lower + "$"),
         (f"Corte + revisão humana integral (cenário) & ambos & até {ceiling}",
          f"Corte + revisão humana integral (cenário) & ambos & {ceiling} (teto)"),
         ("O volume examinado e o limite inferior da revisão do serviço não estão documentados (n.d.).",
-         "O volume examinado total não foi registrado. Sob a hipótese de revisão em ordem decrescente de escore, "
-         f"o limite inferior é {lower} potenciais pares, com limiar por passo, ou {global_lower} com limiar global. "
-         r"São limites derivados do \textit{label}, não registros de carga observada."),
+         "O volume examinado total e a ordem de revisão não foram registrados. Se a revisão tivesse seguido "
+         "ordem decrescente de SCORE, o cenário exigiria pelo menos "
+         f"{lower} potenciais pares, com limiar por passo, ou {global_lower} com limiar global. "
+         r"A reconstrução é exploratória, \textit{post hoc} e não registrada, não carga histórica observada."),
         (f"A revisão integral abaixo do corte é cenário de até {ceiling} potenciais pares, não carga histórica medida.",
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
@@ -68,6 +69,8 @@ def render_reference(referencia, arranjo, cascata, carga):
         ("revisão do serviço incorporada ao rótulo", r"revisão do serviço incorporada ao \textit{label}"),
         ("n.a.: não se aplica.",
          "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica."),
+        ("registro prévio versionado no repositório, com emendas e suplemento, não a registro público",
+         "registro interno versionado antes da S3, com emendas e suplemento"),
         (r"Fontes: \path{data/referencia_comparador_pos_orl.csv}",
          r"Fontes: \path{data/carga_abaixo_corte.csv}, \path{data/referencia_comparador_pos_orl.csv}"),
     ]
@@ -86,12 +89,20 @@ def render_arrangement(historical):
             line = replace_once(line, "até 61.485 (36)", "61.485 (teto; 36)")
         if "21.497 (28)" in line:
             line = replace_once(line, "21.497 (28)", "21.497 (teto; 28)")
+        if line.startswith("(i) Corte & 211 &"):
+            line = replace_once(line, "85,4 [80,5; 89,3]", "85,4")
+        if line.startswith("(i) Corte & 123 &"):
+            line = replace_once(line, "81,5 [74,5; 86,8]", "81,5")
         if "A posteriori" in line:
             line = replace_once(line, "A posteriori", r"\textit{A posteriori}")
         if "O a posteriori reutiliza" in line:
             line = replace_once(line, "O a posteriori reutiliza", r"O \textit{a posteriori} reutiliza")
         if "área cinza" in line:
             line = replace_once(line, "área cinza", "área cinza da nota")
+        if "as classes PAR~=~1 e PAR~=~2 também participam" in line:
+            line = replace_once(line,
+                "as classes PAR~=~1 e PAR~=~2 também participam do ajuste supervisionado, com viés de incorporação.",
+                "as classes PAR~=~1 e PAR~=~2 não estabelecem, por si, viés de incorporação: este diz respeito ao uso das evidências na referência, não ao ajuste supervisionado em si.")
         lines.append(line)
     return "\n".join(lines) + "\n"
 

@@ -202,7 +202,7 @@
 \nomenclature{MLP}{Perceptron Multicamadas (\textit{Multilayer Perceptron})}
 \nomenclature{SMOTE}{\textit{Synthetic Minority Over-sampling Technique}}
 \nomenclature{AUC-ROC}{\'Area sob a Curva ROC (\textit{Area Under the ROC Curve})}
-\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Revoca\c{c}\~ao}
+\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Sensibilidade}
 \nomenclature{KDD}{Descoberta de Conhecimento em Bases de Dados (\textit{Knowledge Discovery in Databases})}
 \nomenclature{LGPD}{Lei Geral de Prote\c{c}\~ao de Dados}
 
@@ -268,7 +268,7 @@
 
 \vspace{30pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
@@ -300,7 +300,7 @@
 
 \vspace{40pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{50pt}
 
@@ -344,7 +344,7 @@ Jardim, Marco Elisio Oliveira
 % O código Cutter é gerado pela biblioteca no momento do depósito.
 \hspace{1,59cm} Aprendizado de m\'aquina aplicado ao p\'os-processamento do relacionamento probabil\'{\i}stico de bases de dados de sa\'ude / Marco Elisio Oliveira Jardim. -{}- Rio de Janeiro, 2026.
 
-\hspace{1cm} 205 f.: il.
+\hspace{1cm} [extensão a atualizar no build oficial]: il.
 
 \hspace{1cm} Orientadora: Rejane Sobrino Pinheiro.
 
@@ -380,7 +380,7 @@ Jardim, Marco Elisio Oliveira
 
 \vspace{20pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
@@ -522,7 +522,7 @@ a sociedade muda.''}\\[6pt]
 \begin{center}
 {\LARGE\bf Resumo}\\
 \vspace{15pt}
-{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
+{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
 \vspace{6pt}
 {\bf Marco Elisio Oliveira Jardim}\\
 \vspace{12pt}
@@ -533,13 +533,13 @@ a sociedade muda.''}\\[6pt]
 \end{center}
 \vspace*{35pt}
 
-O \textit{linkage} integra sistemas sem identificador comum. Avalia-se se uma cascata de decisão pode reduzir a revisão manual dos potenciais pares não aceitos pelo corte do OpenRecLink. O arranjo sequencial preserva esse corte e aplica abaixo dele o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD). A política compara vínculo, não-vínculo, revisão por modelo de linguagem (LLM) e revisão humana por \textit{expected loss}. Vigilância e confirmação são dois perfis de custo: priorizam, respectivamente, evitar a perda de vínculo e evitar o falso vínculo.
+O \textit{linkage} integra sistemas sem identificador comum e permite investigar desfechos de tuberculose como condição marcadora da qualidade do cuidado. Avalia-se a hipótese de que ordenar os potenciais pares abaixo do corte do OpenRecLink por probabilidade calibrada fora da amostra pode reduzir a revisão necessária para recuperar vínculos. A política de quatro ações com revisor por modelo de linguagem (LLM) não superou essa ordenação simples quando se consideram conjuntamente recuperação, falsos positivos e uso da revisão assistida.
 
-Cinco estudos avaliaram o \textit{linkage} entre o Sistema de Informação sobre Mortalidade e o Sistema de Informação de Agravos de Notificação para tuberculose, no Rio de Janeiro. Usaram notificações de 2013 a 2022 e óbitos de 2019 a 2022: 61.696 potenciais pares e 247 vínculos. PAR é o \textit{label} do padrão-ouro: 1 indica aceitação pelo corte; 2, recuperação pela revisão manual. O Comparador de Registros (CdR) calcula similaridades campo a campo e uma nota final. Compararam-se classificadores, balanceamento, estratégias operacionais, decisão assistida e equidade. O XGBoost do GZ-CMD é distinto daquele dos experimentos de ablação e impacto, afetados por vazamento de alvo e seleção de limiar no teste.
+Os estudos utilizaram potenciais pares do Sistema de Informação sobre Mortalidade e do Sistema de Informação de Agravos de Notificação para tuberculose, no município do Rio de Janeiro. O Comparador de Registros (CdR) calcula similaridades de campos e uma nota agregada. PAR é o \textit{label} da referência: distingue vínculos definidos pelo corte daqueles recuperados pela revisão manual. P é a política com recalibração isotônica abaixo do corte; P-Platt é a análise de sensibilidade com \textit{Platt scaling}. Ambas utilizam o mesmo classificador XGBoost, avaliado fora da amostra, com partições agrupadas por registro de referência. P teve registro interno versionado antes da avaliação, mas o enquadramento sequencial foi escolhido depois do conhecimento de resultados e o código inicialmente registrado não está no histórico.
 
-P é a configuração com calibração isotônica fora da amostra registrada como principal no repositório, não em registro público. O enquadramento sequencial foi escolhido \textit{a posteriori}, e a reutilização de respostas impede interpretação prospectiva. O corte aceitou 211 vínculos (85,4\%; IC 95\%: 80,5 a 89,3). P aceitou 215 na vigilância (87,0\%; 82,3 a 90,7) e 219 na confirmação (88,7\%; 84,1 a 92,0), com intervalos sobrepostos aos do corte. Todas as aceitações abaixo dele vieram de Claude Haiku 5.5 e incluíram 21 e quatro falsos positivos. O arranjo registrou 96 e 17 encaminhamentos humanos e 13 e 27 PAR~=~2 perdidos (36,1\% e 75,0\%). O comparador preserva o corte e aplica a cascata publicada sem recalibração: perdeu nove e 17. Na vigilância, P aceitou quatro PAR~=~2 contra dez desse comparador; o VPP do LLM foi de 16,0\% (IC 95\%: 6,4 a 34,7). P-Platt, análise de sensibilidade com \textit{Platt scaling}, dominou P originalmente; a robustez não confirmatória não sustentou essa dominância, embora sua vantagem em falsos positivos na vigilância fosse estável.
+Na comparação exploratória, \textit{post hoc} e não registrada, com 96 revisões na vigilância, a ordenação calibrada recuperaria 22 vínculos da revisão manual, contra 23 de P. P acrescentou 21 falsos positivos; a ordenação pressupõe revisor perfeito. O cenário com erro humano não substitui sua aferição. O valor preditivo positivo (VPP) do LLM abaixo do corte foi de 16,0\%, indicando falha de transferência das taxas do revisor. A dominância original de P-Platt não se sustentou na robustez; entre partições, os falsos positivos de P variaram de 9 a 31 e o Jaccard dos selecionados ao LLM teve mediana 0,427 em relação à partição original. A sensibilidade foi de 42,5\% no passo de blocagem 11, contra pelo menos 95\% nos demais. O viés de verificação favorece a ordenação pelo escore; a possível incorporação das evidências à referência e a revisão por uma única avaliadora limitam a interpretação.
 
-Na vigilância, o VPP de P foi de 86,3\% no sexo feminino (IC 95\%: 76,6 a 92,4) e 93,3\% no masculino (88,3 a 96,2), sem rejeição após ajuste de Benjamini-Hochberg (BH; $p$ ajustado $=0{,}378$). O Zenodo cobre a cascata sobre a base inteira; o arranjo está no repositório da tese. Frente à prática do serviço, o arranjo é pior em todo desfecho medido contra o \textit{label}. A referência de sua vantagem em carga é só um limite inferior derivado desse \textit{label}: 2.156 pares com limiar por passo ou 2.522 com limiar global, sob revisão em ordem decrescente de escore.
+As contribuições são a decomposição por PAR, que revela o pequeno ganho sobre os vínculos da revisão; a curva de esforço contra vínculos recuperados; a identificação da falha de transferência das taxas e da ancoragem do LLM; a política auditável, o CdR em Python, o pacote e o \textit{benchmark} abertos; e o resultado negativo com registro interno. Recomenda-se preservar o corte e revisar abaixo dele em ordem decrescente de probabilidade calibrada, até o orçamento humano, encaminhando o \texttt{MATCH} do LLM ao revisor humano. Essa recomendação é exploratória e depende de validação registrada em dados novos. As horas projetadas são ordem de grandeza, não esforço medido; a aceitabilidade das perdas cabe ao serviço.
 
 \vspace{15pt}
 
@@ -570,13 +570,13 @@ Na vigilância, o VPP de P foi de 86,3\% no sexo feminino (IC 95\%: 76,6 a 92,4)
 \end{center}
 \vspace*{35pt}
 
-\textit{Linkage} integrates systems without a common identifier. This thesis evaluates whether a decision cascade can reduce manual review of potential pairs not accepted by the OpenRecLink cut-off. The sequential arrangement preserves that cut-off and applies Grey-Zone Cost-based Mixture Deferral (GZ-CMD) below it. The policy compares match, nonmatch, large language model (LLM) review, and human review through expected loss. Surveillance and confirmation are two cost profiles prioritizing, respectively, avoiding lost links and avoiding false links.
+\textit{Linkage} integrates systems without a common identifier and supports the investigation of tuberculosis outcomes as a tracer condition for healthcare quality. This thesis evaluates whether ordering potential pairs below the OpenRecLink cut-off by out-of-fold calibrated probability can reduce the review needed to recover links. The four-action policy with a large language model (LLM) reviewer did not outperform this simple ordering when recovery, false positives, and assisted-review use are considered jointly.
 
-Five studies evaluated \textit{linkage} between the Mortality Information System and the Notifiable Diseases Information System for tuberculosis in Rio de Janeiro. They used notifications from 2013 to 2022 and deaths from 2019 to 2022: 61,696 potential pairs and 247 links. PAR is the reference-standard label: 1 denotes cut-off acceptance; 2, recovery through manual review. The Record Comparator (CdR) computes field similarities and an aggregate score. Classifiers, balancing, operational strategies, assisted decisions, and fairness were compared. GZ-CMD uses a separate XGBoost from the ablation and impact experiments, which were affected by target leakage and test-set threshold selection.
+The studies used potential pairs from the Mortality Information System and the Notifiable Diseases Information System for tuberculosis in Rio de Janeiro. The Record Comparator (CdR) computes field similarities and an aggregate score. PAR is the reference label, distinguishing cut-off-defined links from those recovered by manual review. P is the policy with isotonic recalibration below the cut-off; P-Platt is the sensitivity analysis using \textit{Platt scaling}. Both use the same XGBoost classifier, evaluated out of fold with reference-record-grouped partitions. P was registered internally before evaluation, but the sequential framing was selected after results were known and the originally registered code is absent from version history.
 
-P is the configuration with out-of-fold isotonic calibration preregistered as principal in the repository, not in a public registry. The sequential framing was selected post hoc, and response reuse precludes a prospective interpretation. The cut-off accepted 211 links (85.4\%; 95\% CI: 80.5 to 89.3). P accepted 215 in surveillance (87.0\%; 82.3 to 90.7) and 219 in confirmation (88.7\%; 84.1 to 92.0), with intervals overlapping those of the cut-off. All acceptances below it came from Claude Haiku 5.5 and included 21 and four false positives. The arrangement had 96 and 17 human referrals and 13 and 27 lost PAR~=~2 links (36.1\% and 75.0\%). The comparator preserves the cut-off and applies the published cascade without recalibration: it lost nine and 17 links. In surveillance, P accepted four PAR~=~2 links versus ten for that comparator; LLM positive predictive value (PPV) was 16.0\% (95\% CI: 6.4 to 34.7). P-Platt, a sensitivity analysis using \textit{Platt scaling}, originally dominated P; nonconfirmatory robustness analysis did not sustain dominance, although its false-positive advantage in surveillance was stable.
+In the exploratory, unregistered post hoc comparison, with 96 surveillance reviews, calibrated ordering would recover 22 manually identified links versus 23 for P. P added 21 false positives; ordering assumes a perfect reviewer. The human-error scenario does not replace measurement. LLM positive predictive value (PPV) below the cut-off was 16.0\%, indicating failure to transfer reviewer rates. P-Platt's original dominance was not sustained in robustness analysis; across partitions, P false positives ranged from 9 to 31 and the median Jaccard index for LLM selections was 0.427 relative to the original partition. Sensitivity was 42.5\% in blocking step 11 versus at least 95\% elsewhere. Verification bias favors score ordering; possible incorporation of comparison evidence into the reference and assessment by a single reviewer limit interpretation.
 
-In surveillance, P had PPV of 86.3\% for females (95\% CI: 76.6 to 92.4) and 93.3\% for males (88.3 to 96.2), without rejection after Benjamini-Hochberg correction (BH-adjusted $p=0.378$). Zenodo covers the whole-dataset cascade; the arrangement is implemented in the thesis repository. Compared with service practice, the arrangement is worse on every outcome measured against the label. Its workload advantage is referenced only to a label-derived lower bound: 2,156 pairs using step-specific thresholds or 2,522 using a global threshold, assuming descending-score review.
+The contributions are PAR decomposition, exposing the small gain among manually recovered links; the effort-versus-recovered-links curve; identification of reviewer-rate transfer failure and LLM anchoring; the auditable policy, Python CdR, open package and benchmark; and the negative result with internal registration. The recommendation is to preserve the cut-off and review below it in descending calibrated-probability order up to the human budget, sending LLM \texttt{MATCH} decisions to the human reviewer. This exploratory recommendation requires registered validation on new data. Projected hours represent orders of magnitude, not measured effort; the service must judge whether the losses are acceptable.
 
 \vspace{15pt}
 

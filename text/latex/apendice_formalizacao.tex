@@ -132,7 +132,7 @@ O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na
 
 \begin{enumerate}
 \item \textbf{Modelagem das dependências:} Implementações de Fellegi e Sunter frequentemente assumem que os campos de comparação são condicionalmente independentes, $P(\gamma\mid M) = \prod P(\gamma_i\mid M)$, embora essa hipótese não seja necessária à regra de decisão baseada na razão de verossimilhança. O GZ-CMD, ao empregar um modelo discriminativo (como Random Forest ou Gradient Boosting), pode representar interações não lineares entre atributos sem impor essa independência; a calibração das probabilidades requer avaliação própria.
-\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza operacional dos resultados, fixada em $[5,9)$ da nota do Comparador de Registros (Seção~\ref{sec:padrao-ouro}).
+\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de Registros (Seção~\ref{sec:base-pares}).
 \end{enumerate}
 
 \subsubsection{Efeito do custo de revisão e decisão binária}
