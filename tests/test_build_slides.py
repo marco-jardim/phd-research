@@ -94,7 +94,7 @@ def test_slide_structure_and_editorial_contract():
     assert main.count(r"\begin{frame}") == 30
     backup_frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", backup, re.S)
     assert backup_frames
-    assert len(backup_frames) == 16
+    assert len(backup_frames) == 19
     assert len(backup_frames) == backup.count(r"\begin{frame}")
     for frame in backup_frames:
         title = re.match(r"\{Backup:\s*([^{}]+)\}", frame)
@@ -132,19 +132,19 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_twenty_nine_short_answers():
+def test_script_has_thirty_three_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 29
+    assert len(answers) == 33
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 30)
+        range(1, 34)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     counts = [len(answer.split()) for answer in answers]
-    recorded = re.search(r"São 29 respostas, com (.*?) palavras, respectivamente", source)[1]
+    recorded = re.search(r"São 33 respostas, com (.*?) palavras, respectivamente", source)[1]
     assert [int(n) for n in re.findall(r"\d+", recorded)] == counts
 
 
@@ -166,8 +166,8 @@ def scientific_requirements(csv_loader=read_csv):
     global_lower = one_row(load, limiar="global", passo="TOTAL")
     requirements = {
         3: ["preservar o corte operacional", "mesmo orçamento humano", "falsos positivos"],
-        4: ["Hipótese de ordenação", "fora da amostra", "não superou essa ordenação simples",
-            "duas fronteiras", "não registrada", "mesmo XGBoost OOF", "(LLM)", "(CdR)", "P:"],
+        4: ["hipótese gerada nesta avaliação", "Hipótese exploratória, a validar", "fora da amostra",
+            "duas fronteiras", "mesmo XGBoost", "LLM:", "CdR:", "OOF:", "FP:", "VPP:", "P:", "O3:", "O4:"],
         5: [],
         6: ["Cenário exploratório", "se a revisão tivesse seguido", "Não é uma reconstrução histórica",
             pt_number(lower["pares_acima_limiar"], 0), pt_number(global_lower["pares_acima_limiar"], 0)],
@@ -175,32 +175,37 @@ def scientific_requirements(csv_loader=read_csv):
             "não nos passos 6, 9 e 11", "viés de verificação e incorporação"],
         13: ["OOF", "REFREC", "A política v3.1 compara custos, não usa esse corte único"],
         19: [],
-        20: ["figures/curva_esforco.pgf", "não registrada", "Revisor perfeito é hipótese",
-             "erro de 5,0", "favorece O1 por construção", "mesmo XGBoost OOF"],
-        21: ["impede interpretação prospectiva", "Recomendação, não resultado observado",
-             "encaminhar MATCH do LLM ao revisor humano", "não à aceitação automática",
-             "avaliação registrada própria"],
-        22: ["principal porque foi registrado antes", "dominado por P-Platt",
-             "análise de sensibilidade", "não confirmatória", "não sustentou a dominância",
-             "A política não superou a ordenação simples", "validação em dados novos"],
+        18: [r"p\geq C_H/C_{FN}", "Os pares restantes recebem não vínculo", "restrito às ações revisor humano e não vínculo"],
+        20: ["figures/curva_esforco.pgf", "não registrada", "Revisor perfeito é hipótese dos dois lados",
+             "Se a revisão histórica seguiu o escore", "favoreceria O1", "mesmos", "verificados"],
+        21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
+             "O LLM nunca aceita sozinho", "filtro antes do revisor humano",
+             "validação registrada própria", "VPN (valor preditivo negativo)"],
+        22: ["principal porque foi registrado antes", "análise de sensibilidade", "não confirmatória",
+             "sem dominância sustentada", "hipótese de revisor perfeito dos dois lados",
+             "Não é empate sem qualificação", "Não se substitui o revisor humano pelo LLM"],
         23: ["proporção de vínculos", "definida pelo corte", "FP abaixo do corte"],
-        24: [r"Disparidade herdada do corte e do \textit{label}", "Benjamini-Hochberg (vig./conf.)"],
-        26: ["Respostas históricas reutilizadas", "conhecido antes do registro",
+        24: [r"Disparidade herdada do corte e do \textit{label}", "Benjamini-Hochberg: vigilância"],
+        26: ["Respostas históricas reutilizadas", "conhecido antes do registro", "favoreceria O1",
              "recalibração, braços e avaliação", "desvios de protocolo", "não generalização"],
-        28: ["não superou a ordenação simples", "Horas são ordem de grandeza, não medida",
-             "o serviço decide se aceita a troca", "Não há superioridade em acurácia sobre o serviço"],
+        28: ["perdas de cobertura", "Horas são ordem de grandeza, não medida",
+             "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", r"\texttt{p\_cal\_ml}",
-             "MATCH do LLM ao revisor humano, não à aceitação automática", "registro interno",
-             "validação registrada em dados novos", "Decomposição por PAR", "Curva de esforço",
+             "prevalência original", "Revisor humano no topo até o orçamento", "restante como não vínculo",
+             "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro interno",
+             "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
              "Falha de transferência", "ancoragem", "quatro ações", "benchmark"],
-        30: ["não uma melhora de acurácia sobre o serviço", "não reproduz",
-             "A política não superou a ordenação simples", "recomendação exploratória",
-             "validação registrada em dados novos"],
+        30: ["cobertura do topo da fila", "não reproduz", "no máximo 1 vínculo",
+             "recomendações a validar", "filtro experimental, nunca aceitando sozinho"],
         43: [],
         44: [],
         45: [],
         46: ["não confirmatória", "não generalização", "em relação à partição original",
-             "A réplica original é um ponto dessa distribuição"],
+              "A réplica original é um ponto dessa distribuição"],
+        47: ["Exploratória", "prevalência original", "Brier mediano", "sem demonstrar melhora de equidade"],
+        48: ["MATCH e inconclusivos vão ao revisor humano", "Nunca aceita sozinho",
+             "protocolo fixado antes dos desfechos", "respostas de datas diferentes", "Contagens iguais não significam todas as decisões iguais"],
+        49: ["especificidade humana perfeita", "sem modelar FP humanos", "metadados na versão"],
     }
     reference = csv_loader("referencia_comparador_pos_orl.csv")
     two_frontiers = one_row(reference, estrategia="pos_orl_revisao_humana_area_cinza")
@@ -210,6 +215,8 @@ def scientific_requirements(csv_loader=read_csv):
         f"{pt_percent(two_frontiers['erro_humano_hipotese'])}\\%",
     ))
     requirements[6].append(f"{integer(cutoff['aceitos'])}/{integer(cutoff['vinculos'])} = {pt_percent(cutoff['sens_auto'])}")
+    hours = one_row(csv_loader("carga_abaixo_corte_horas.csv"), limiar="por_passo")
+    requirements[6].append(f"{integer(hours['horas_inteiras'])} h {integer(hours['minutos_restantes'])} min")
     baseline = one_row(reference, estrategia="orl_corte_servico")
     for band in ("lt5", "area_cinza", "ge9"):
         requirements[7].append(
@@ -230,8 +237,8 @@ def scientific_requirements(csv_loader=read_csv):
         table = [label]
         for field in ("aceitos", "humano", "perdidos"):
             table.extend((integer(observed[field]), integer(published[field])))
-        requirements[45].extend((" & ".join(table), pt_percent(observed["perdidos_proporcao"])))
-        requirements[45].append("/".join(
+        requirements[49].extend((" & ".join(table), pt_percent(observed["perdidos_proporcao"])))
+        requirements[49].append("/".join(
             integer(one_row(mechanisms, modo=mode, braco="P", mecanismo=mechanism)["vinculos_perdidos"])
             for mechanism in mechanisms_order
         ))
@@ -240,7 +247,6 @@ def scientific_requirements(csv_loader=read_csv):
             f"({integer(cutoff['aceitos'])}+{integer(observed['aceitos'])})+{integer(p['perdidos'])}+"
             f"{integer(p['vinc_humano'])}={integer(cutoff['vinculos'])}"
         )
-        requirements[reserve].append(f"IC 95\\% {pt_percent(p['ic95_inf'])} a {pt_percent(p['ic95_sup'])}")
         published_metrics = one_row(metrics, modo=mode, braco="publicada", faixa="TODAS")
         requirements[reserve].append(f"& {pt_percent(published_metrics['sens_auto'])}\\%")
         requirements[reserve].append(
@@ -256,11 +262,11 @@ def scientific_requirements(csv_loader=read_csv):
         f"{integer(principal['vigilancia']['fp'])} e "
         f"{integer(principal['confirmacao']['fp'])} falsos positivos",
     ))
-    requirements[45].extend((
+    requirements[49].extend((
         f"{integer(cost_losses['vinculos_perdidos'])} perdas por AUTO\\_NONMATCH",
         "Sem varredura de custos no arranjo",
     ))
-    requirements[45].append(
+    requirements[49].append(
         f"{integer(principal['vigilancia']['perdidos'])} e "
         f"{integer(principal['confirmacao']['perdidos'])}"
     )
@@ -283,6 +289,7 @@ def scientific_requirements(csv_loader=read_csv):
         f"{integer(platt['pares_humano'])} ao revisor humano, {integer(platt['pares_llm'])} ao LLM "
         f"e US\\$ {pt_number(platt['custo_llm_usd'], 2)}"
     )
+    requirements[45].append("dominado por P-Platt na avaliação original, análise de sensibilidade")
     for mode, label in labels.items():
         dominance = [one_row(robustness, tipo="dominancia", modo=mode, bloco=block)
                      for block in ("N", "P")]
@@ -345,9 +352,10 @@ def scientific_requirements(csv_loader=read_csv):
     comparator = csv_loader("comparador_mesma_carga.csv")
     regions = csv_loader("fp_arranjo_por_regiao.csv")
     for mode, label in (("vigilancia", "vigilância"), ("confirmacao", "confirmação")):
-        high = one_row(regions, modo=mode, braco="P", limiar="global", passo="TOTAL", regiao_SCORE="maior_ou_igual")
-        low = one_row(regions, modo=mode, braco="P", limiar="global", passo="TOTAL", regiao_SCORE="menor")
-        requirements[45].append(f"{label}, {high['FP']} acima ou iguais e {low['FP']} abaixo")
+        for threshold in ("global", "por_passo"):
+            high = one_row(regions, modo=mode, braco="P", limiar=threshold, passo="TOTAL", regiao_SCORE="maior_ou_igual")
+            low = one_row(regions, modo=mode, braco="P", limiar=threshold, passo="TOTAL", regiao_SCORE="menor")
+            requirements[45].append(f"{label}, {high['FP']} acima ou iguais e {low['FP']} abaixo")
     for mode in ("vigilancia", "confirmacao"):
         p = principal[mode]
         label = "vigilância" if mode == "vigilancia" else "confirmação"
@@ -359,24 +367,84 @@ def scientific_requirements(csv_loader=read_csv):
         for arm in ("P", "O3"):
             effort = one_row(csv_loader("esforco_arranjo.csv"), modo=mode, braco=arm, carga="K1_humana")
             if arm == "P":
-                requirements[28].extend((pt_number(effort['revisoes_poupadas'], 0), pt_number(effort['horas_poupadas'])))
-            else:
-                requirements[28].append(integer(effort['par2_nao_recuperados']))
-        row = one_row(comparator, modo=mode, ordenacao="O3_p_cal_ml", carga="K1_humana")
-        requirements[28].append(integer(row['k_min_equivalente_P']))
-        requirements[28].append(integer(row['P_par2_recuperados']))
-    vig = one_row(comparator, modo="vigilancia", ordenacao="O3_p_cal_ml", carga="K1_humana")
-    requirements[22].append(f"recuperam {integer(vig['par2_topk'])} PAR~=~2 em {integer(vig['k'])} revisões")
-    requirements[22].append(f"contra {integer(vig['P_par2_recuperados'])} de P com {integer(vig['P_fp'])} FP e {integer(vig['P_pares_llm'])} ao LLM")
+                requirements[28].append(pt_number(effort['horas_poupadas'], 0))
+        p = principal[mode]
+        mode_text = "vigilância" if mode == "vigilancia" else "confirmação"
+        requirements[28].append(f"{integer(p['perdidos'])} {'vínculos na ' if mode == 'vigilancia' else 'na '}{mode_text}")
+    requirements[28].append(f"{integer(principal['vigilancia']['fp'])} e {integer(principal['confirmacao']['fp'])} FP")
+    par2_counts = [str(sum(int(r['n']) for r in steps if r['modo']=='vigilancia' and r['passo']==step and r['par']=='2')) for step in ('6','9','11')]
+    requirements[7].append(", ".join(par2_counts[:-1]) + " e " + par2_counts[-1])
     for mode in ("vigilancia", "confirmacao"):
         for arm in ("P", "P-Platt", "A3", "P-PAR2-grey", "B1", "aposteriori"):
             row = one_row(metrics, modo=mode, braco=arm, faixa="TODAS")
             accepted = f"({integer(cutoff['aceitos'])}+{integer(float(row['aceitos']) - float(cutoff['aceitos']))})" if arm == "P" else integer(row['aceitos'])
             requirements[45].append("/".join((accepted, integer(row['fp']), integer(row['pares_humano']), integer(row['pares_llm']))))
+    for number, fragments in final_scientific_requirements(csv_loader).items():
+        requirements[number].extend(fragments)
     return requirements
 
 
-@pytest.mark.parametrize("frame_number", [3, 4, 5, 6, 7, 13, 19, 20, 21, 22, 23, 24, 26, 28, 29, 30, 43, 44, 45, 46])
+def final_scientific_requirements(csv_loader=read_csv):
+    required = {number: [] for number in (19, 21, 22, 28, 47, 48, 49)}
+    match = csv_loader("comparador_p_match_humano.csv")
+    metrics = csv_loader("arranjo_corte_metricas.csv")
+    llm = csv_loader("arranjo_corte_vpp_llm.csv")
+    for mode, label in (("vigilancia", "Vigilância"), ("confirmacao", "Confirmação")):
+        row = one_row(match, modo=mode)
+        cells = [label,
+            f"{row['P_revisoes_humanas_total']} / {row['P_par2_recuperados']}",
+            f"{row['O3_k_mesma_carga']} / {row['O3_par2_mesma_carga']}",
+            f"{row['O3_k_min_igualar_P']} / {row['O3_par2_no_k_min']}"]
+        required[22].append(" & ".join(cells))
+        p = one_row(metrics, modo=mode, braco="P", faixa="TODAS")
+        required[22].append(f"{p['pares_llm']} {'pares avaliados pelo LLM na vigilância' if mode == 'vigilancia' else 'na confirmação'}")
+        accepted = one_row(llm, modo=mode, braco="P")
+        required[19].append(f"{accepted['aceitacoes_llm_abaixo']} {'pares na vigilância' if mode == 'vigilancia' else 'na confirmação'}")
+    vp = [one_row(llm, modo=mode, braco="P") for mode in ("vigilancia", "confirmacao")]
+    required[19].extend((f"{vp[0]['VP']} e {vp[1]['VP']} são PAR~=~2",
+                         f"os {vp[0]['FP']} e {vp[1]['FP']} FP foram rejeitados ou não examinados"))
+    scenarios = csv_loader("cenarios_sensibilidade_humana.csv")
+    for strategy, words in (("humano_integral", "na revisão integral"), (None, "nas estratégias de carga reduzida")):
+        amplitude = max(float(r["amplitude_pp"]) for r in scenarios
+                        if (r["estrategia"] == strategy if strategy else r["estrategia"] != "humano_integral"))
+        required[28].append(f"{pt_number(amplitude, 2)} p.p. {words}")
+        required[49].append(f"{pt_number(amplitude, 2)} p.p.")
+    required[22].append(f"no máximo {max(int(r['diferenca_P_O3_PAR2_mesma_carga']) for r in match)} vínculo a mais")
+    subset = csv_loader("subamostragem_treino_resumo.csv")
+    for ratio in ("original", "1:1", "1:5", "1:20", "1:50"):
+        row = one_row(subset, ratio=ratio, variant="isotonic", population="below", metric="par2_top_96")
+        def count(value):
+            return integer(value) if float(value).is_integer() else pt_number(value)
+        required[47].append(
+            f"{'Original' if ratio == 'original' else ratio} & {count(row['median'])} & "
+            f"{count(row['minimum'])} a {count(row['maximum'])}"
+        )
+    for metric, group in (("sens96_passo_6", "passo 6"), ("sens96_sexo_M", "sexo masculino")):
+        row = one_row(subset, ratio="1:1", variant="isotonic", population="below", metric=metric)
+        required[47].append(f"{pt_number(-100*float(row['delta_median']), 0)} p.p. no {group}")
+    filters = csv_loader("filtro_llm.csv")
+    selected = []
+    for mode, label, k in (("vigilancia", "Vigilância", "96"), ("confirmacao", "Confirmação", "125")):
+        row = one_row(filters, modo=mode, k=k)
+        selected.append(row)
+        required[48].append(
+            f"{label}, {k} & {row['H']} & {row['par2_recuperados']} & {row['o3_par2_mesma_carga']} & "
+            f"{pt_percent(row['vpn_nonmatch'])}\\% & {row['par2_descartados']} de {row['par2_topk']}"
+        )
+    required[21].extend((
+        f"Com {selected[0]['H']} revisões humanas, recupera {selected[0]['par2_recuperados']} PAR~=~2 contra {selected[0]['o3_par2_mesma_carga']}",
+        f"no topo {selected[1]['k']}, descarta {selected[1]['par2_descartados']} dos {selected[1]['par2_topk']}",
+        f"cerca de {pt_percent(selected[0]['vpn_nonmatch'], 0)} a {pt_percent(selected[1]['vpn_nonmatch'], 0)}\\%",
+    ))
+    concordance = csv_loader("filtro_llm_concordancia_modos.csv")
+    p = one_row(concordance, k="125", classe="PAR2")
+    n = one_row(concordance, k="125", classe="nao_vinculo")
+    required[48].extend((f"{p['coincidentes']} coincidentes, {p['diferentes']} diferentes",
+                         f"há {n['diferentes']} diferenças"))
+    return required
+
+
+@pytest.mark.parametrize("frame_number", [3, 4, 5, 6, 7, 13, 18, 19, 20, 21, 22, 23, 24, 26, 28, 29, 30, 43, 44, 45, 46, 47, 48, 49])
 def test_slide_scientific_contract_from_csv(frame_number):
     assert_fragments(slide_frames()[frame_number - 1], scientific_requirements()[frame_number])
 
@@ -434,10 +502,29 @@ def test_effort_figure_is_regenerated_from_csv(tmp_path):
         row = one_row(read_csv("comparador_mesma_carga.csv"), modo=mode,
                       ordenacao="O3_p_cal_ml", carga="K1_humana")
         assert f"{label}: ({integer(row['P_pares_humano'])}, {integer(row['P_par2_recuperados'])}), {integer(row['P_fp'])} FP" in content
+        assert f"+{integer(row['P_pares_llm'])} LLM" in content
     curves = read_csv("comparador_mesma_carga_curva.csv")
     for order, _, _ in plot["ORDERS"]:
         expected = sorted((int(r["k"]), int(r["par2_topk"])) for r in curves if r["ordenacao"] == order)
         assert plot["curve_series"](curves, order) == expected
+    assert len(set(plot["LINE_STYLES"].values())) == len(plot["ORDERS"])
+    for order, label, _ in plot["ORDERS"]:
+        assert label in content
+        assert content.count(plot["LINE_STYLES"][order]) >= 2
+    assert "Eixo x limitado a 2.522 revisões" in content
+
+
+def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
+    plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
+    plot["main"].__globals__["ROOT"] = tmp_path
+    monkeypatch.setattr("sys.argv", ["figura_curva_esforco.py", "--curve",
+        str(ROOT / "data/comparador_mesma_carga_curva.csv"), "--comparator",
+        str(ROOT / "data/comparador_mesma_carga.csv")])
+    plot["main"]()
+    thesis = tmp_path / "text/latex/figures/curva_esforco.pgf"
+    slides = tmp_path / "text/slides/figures/curva_esforco.pgf"
+    assert thesis.read_bytes() == slides.read_bytes()
+    assert slides.read_bytes() == (SLIDES / "figures/curva_esforco.pgf").read_bytes()
 
 
 def test_slide_backup_cascade_rows_from_csv():
@@ -472,6 +559,11 @@ def test_effort_figure_rejects_invalid_curve_and_tracks_csv_changes():
             {"ordenacao": "O1_SCORE", "k": "1", "par2_topk": "2"},
             {"ordenacao": "O1_SCORE", "k": "2", "par2_topk": "1"},
         ], "O1_SCORE")
+    with pytest.raises(ValueError, match="não contínuo"):
+        plot["curve_series"]([
+            {"ordenacao": "O1_SCORE", "k": "1", "par2_topk": "1"},
+            {"ordenacao": "O1_SCORE", "k": "3", "par2_topk": "2"},
+        ], "O1_SCORE")
 
 
 def test_script_s8_comparator_effort_and_false_positive_regions_from_csv():
@@ -484,9 +576,9 @@ def test_script_s8_comparator_effort_and_false_positive_regions_from_csv():
             assert expected in script
     for row in read_csv("esforco_arranjo.csv"):
         expected = " | ".join((row["modo"], row["braco"], row["carga"], integer(row["revisoes"]),
-                               pt_number(row["horas"]), pt_number(row["horas_poupadas"]),
-                               pt_number(row["horas_poupadas_por_vinculo_perdido"]),
-                               pt_number(row["horas_poupadas_por_fp"]) if row["horas_poupadas_por_fp"] else "não se aplica"))
+                               pt_number(row["horas"], 0), pt_number(row["horas_poupadas"], 0),
+                               pt_number(row["horas_poupadas_por_vinculo_perdido"], 2),
+                               pt_number(row["horas_poupadas_por_fp"], 2) if row["horas_poupadas_por_fp"] else "não se aplica"))
         assert expected in script
         assert row["cenario"] == "True" and row["horas_medidas"] == "False"
     for row in read_csv("fp_arranjo_por_regiao.csv"):
@@ -506,15 +598,97 @@ def test_slide_s8_word_list_structure_and_robustness_block_names():
         for forbidden in (r"rótulos?", "calibração sigmoidal", "revocação", r"\bexplicam\b",
                           "denominadores pequenos", "pior em todo desfecho", "os intervalos se sobrepõem"):
             assert not re.search(forbidden, text, re.I), forbidden
-        assert not re.search(r"(?<![0-9])(?:96/17|13/27|4/8)(?![0-9])", text)
+        assert "registro prévio" not in text.lower()
+        assert "bloco P" not in text and "bloco de partição (R), bloco de partição (R)" not in text
+        assert not re.search(r"(?<![0-9])(?:96/17|13/27|4/8|121/125|29/29|7/3|9/1)(?![0-9])", text)
     frames = slide_frames()
     assert not re.search(r"\d", frames[2].split("\\fonte")[0])
     assert frames[21].count(r"\item ") == 2
     assert "IC 95" not in frames[18] and "Fechamentos" not in frames[18]
     assert "01:22:17" not in frames[18]
-    assert "02:11:52 UTC (metadados na versão" in frames[44]
+    assert "02:11:52 UTC (metadados na versão" in frames[48]
     assert "Numérico (N) & Partição (R)" in frames[45]
     assert "bloco de partição (R), Jaccard" in frames[45]
+    assert frames[45].count("bloco de partição (R)") == 3
+    assert not re.search(r"IC 95\\% (?:82,3 a 90,7|84,1 a 92,0)", source)
+
+
+def test_script_s81_new_artifacts_provenance_and_hours():
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    for row in read_csv("comparador_p_match_humano.csv"):
+        keys = ("modo", "P_revisoes_humanas_originais", "P_MATCH_llm_ao_humano", "P_revisoes_humanas_total",
+                "P_par2_recuperados", "O3_k_mesma_carga", "O3_par2_mesma_carga", "O3_k_min_igualar_P",
+                "diferenca_P_O3_PAR2_mesma_carga")
+        assert " | ".join(row[key] for key in keys) in script
+        assert row["revisor_perfeito_ambos"] == "True"
+    for row in read_csv("filtro_llm.csv"):
+        assert " | ".join([row[k] for k in ("modo", "k", "H", "par2_recuperados", "o3_par2_mesma_carga")]
+                          + [pt_percent(row["vpn_nonmatch"]), row["par2_descartados"]]) in script
+    for row in read_csv("cenarios_sensibilidade_humana.csv"):
+        assert " | ".join([row[k] for k in ("modo", "estrategia", "k", "revisoes_humanas", "vinculos_perdidos_cobertura")]
+                          + [pt_percent(row["s"], 0), pt_percent(row["sensibilidade_total"], 2),
+                             pt_number(row["amplitude_pp"], 2)]) in script
+    for row in read_csv("subamostragem_treino_resumo.csv"):
+        if row["variant"] == "isotonic" and row["population"] == "below" and row["metric"] in (
+                "par2_top_96", "brier", "sens96_passo_6", "sens96_sexo_M"):
+            digits = 6 if row["metric"] == "brier" else (2 if row["metric"].startswith("sens") else 1)
+            assert " | ".join([row["ratio"], row["metric"]] + [pt_number(row[k], digits)
+                              for k in ("median", "minimum", "maximum", "reference")]) in script
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    answer12 = questions.split("### 12.")[1].split("### 13.")[0]
+    for row in read_csv("carga_abaixo_corte_horas.csv"):
+        assert f"{row['horas_inteiras']} h {row['minutos_restantes']} min" in answer12
+    for number, topic in ((30, "filtro"), (31, "prevalência original"), (32, "99%"), (33, "revisor humano pelo LLM")):
+        assert topic in questions.split(f"### {number}.")[1].split("### ")[0]
+    assert "não superou" not in slide_frames()[3]
+    assert "hipótese gerada" in script
+
+
+def test_slide_s81_contract_rejects_changed_human_comparison():
+    def changed(name):
+        rows = read_csv(name)
+        if name == "comparador_p_match_humano.csv":
+            row = one_row(rows, modo="vigilancia")
+            row["P_par2_recuperados"] = str(int(row["P_par2_recuperados"]) + 1)
+        return rows
+    with pytest.raises(AssertionError):
+        assert_fragments(slide_frames()[21], scientific_requirements(changed)[22])
+
+
+def test_human_scenarios_are_coverage_not_measured_error():
+    rows = read_csv("cenarios_sensibilidade_humana.csv")
+    assert {float(r["s"]) for r in rows} == {0.95, 0.99, 1.0}
+    assert all(float(r["especificidade_humana_assumida"]) == 1 for r in rows)
+    for row in rows:
+        assert float(row["sensibilidade_total"]) == pytest.approx(
+            (float(row["vinculos_aceitos_sem_humano"]) + float(row["s"])*float(row["vinculos_ao_humano"]))
+            / float(row["vinculos_total"])
+        )
+    for mode in ("vigilancia", "confirmacao"):
+        keys = {(r["estrategia"], r["k"]) for r in rows if r["modo"] == mode}
+        series = {key: [one_row(rows, modo=mode, estrategia=key[0], k=key[1], s=s)
+                        for s in ("0.95", "0.99", "1.0")] for key in keys}
+        for left in series.values():
+            for right in series.values():
+                if float(left[0]["sensibilidade_total"]) > float(right[0]["sensibilidade_total"]):
+                    assert all(float(a["sensibilidade_total"]) >= float(b["sensibilidade_total"]) - 1e-12
+                               for a, b in zip(left, right))
+    text = slide_frames()[27]
+    assert all(f"{value}\\%" in text for value in (95, 99, 100))
+    assert "As perdas são de cobertura" in text
+
+
+def test_slides_no_control_characters_and_definitions_before_results():
+    for path in SLIDES.glob("*.tex"):
+        text = path.read_text(encoding="utf-8")
+        assert not re.search(r"[\x00-\x09\x0b\x0c\x0e-\x1f\x7f]", text), path
+    frames = slide_frames()
+    for definition in ("OOF: fora da amostra", "FP: falso positivo", "VPP: valor preditivo positivo", "O3:", "O4:"):
+        assert definition in frames[3]
+    assert "nenhuma ordenação domina em todas as cargas" in frames[3]
+    for row in read_csv("subamostragem_treino_resumo.csv"):
+        if row["population"] == "below" and row["variant"] == "isotonic" and row["metric"] == "brier" and row["ratio"] != "original":
+            assert float(row["median"]) > float(row["reference"])
 
 
 def test_script_s6_questions_and_provenance():
