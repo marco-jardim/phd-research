@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from gzcmd.arranjo_corte import MODEL, REMOVED_FIELDS, pending_cost, sha256
+from gzcmd.arranjo_corte import MODEL, REMOVED_FIELDS, cache_matches, pending_cost, sha256
 from scripts.arranjo_corte_s1_simular import MODES, PREREG, PROMPT, verify_prereg
 from scripts import arranjo_corte_s2_executar as executor
 from scripts import funil_gzcmd_v2 as funnel
@@ -33,7 +33,20 @@ def read_run(path, mode):
     return run
 
 
-def responses(data_root, mode, *, include_supplement=False):
+def validate_dossiers(path, run, mode, views):
+    """Never reuse a response with a different policy-independent dossier."""
+    import hashlib
+    identity_path = path.with_name(path.stem + "_journal") / "identity.json"
+    identity = json.loads(identity_path.read_text(encoding="utf-8")) if identity_path.exists() else run
+    for result in run["results"]:
+        pid = result["pair_id"]
+        digest = hashlib.sha256(views[pid].to_json(sort_keys=True).encode()).hexdigest()
+        if not cache_matches(identity, run, mode=mode, pair_id=pid,
+                             prompt_sha256=sha256(PROMPT), dossier_sha256=digest):
+            raise ValueError(f"Dossier cache identity mismatch: {mode}/{pid}")
+
+
+def responses(data_root, mode, *, include_supplement=False, views=None):
     old = funnel.ROOT
     funnel.ROOT = data_root
     try:
@@ -57,6 +70,18 @@ def responses(data_root, mode, *, include_supplement=False):
                 raise ValueError("Invalid structured reviewer decision")
             decisions[pid] = decision
         paths.append(path)
+    if views is None:
+        import run_exp2_sem_model_outputs as runner
+        from gzcmd.ml_oof import pair_ids
+        from gzcmd.runner import run_v3
+        from scripts.arranjo_corte_s1_simular import CONFIG
+        historical, _ = run_v3(input_csv=data_root / "data/COMPARADORSEMIDENT.csv",
+                               config_path=CONFIG, mode=mode, p_cal="fit_platt", policy_version="v3")
+        selected = historical.loc[pair_ids(historical).isin(decisions)]
+        views = {d.pair_id: runner.abl.DossierView(d, True)
+                 for d in runner.ant.exp2.build_dossiers(selected, only_llm_review=False)}
+    for path in paths:
+        validate_dossiers(path, read_run(path, mode), mode, views)
     return decisions, paths
 
 
