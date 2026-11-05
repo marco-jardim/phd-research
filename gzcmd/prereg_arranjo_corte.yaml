@@ -3,11 +3,11 @@ protocol: ORL aceita SCORE >= corte; GZ-CMD v3.1 abaixo
 base_commit: b09e979
 created_at: '2026-11-05T01:22:05.974769+00:00'
 sha256:
-  gzcmd/arranjo_corte.py: d80c9bc0ee74d82656344d96685d3eab67cfac28c03e287485dc4312007b44d6
+  gzcmd/arranjo_corte.py: ca87d060a9c09d5e755e382b74bc6510111324fe3fac2eed21639fb6c37c5a5f
   scripts/arranjo_corte_s1_simular.py: 0eeae303f810b33acebbccd78e1d714497436fac6d597201e5d755d4f8f5f7ee
   scripts/arranjo_corte_s2_executar.py: ac0d5b9b5c1d9c7730b0992f13e7e2dd3530284f14636d29731259c25fa02f60
-  tests/test_arranjo_corte.py: 0689d46f258a40d15cc8b51397e131899c55dcf0e1adcb779d2353b7589764d6
-  gzcmd/M_arranjo_corte.md: 1a255b0535b45b6854b541fe7cbe2b93e22f1f0e418c40fd6a824b28943895d1
+  tests/test_arranjo_corte.py: 8d30e41ad0fb88de99ce490030023f4568c89f75f642d0f085ce7bd9497fb0f9
+  gzcmd/M_arranjo_corte.md: 0bc2c3a8cb020853056fa15879f988dc5348f44cc1ca470ffa1677b86244f763
   scripts/run_exp2_sem_model_outputs.py: f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae
   gzcmd/ml_oof.py: 5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8
   gzcmd/runner.py: 3fe59df92bd95b80c34434c5f9bc1c8e87b800a99d7cffab52a999c459811f27
@@ -123,8 +123,9 @@ guardrails:
 arms:
   P: Same full-data classifiers and 5x5 splits; nested isotonic only on below-cutoff
     training inner OOF
-  P-Platt: Same inner OOF, Platt on clipped raw XGBoost logit; calibration.py defaults
-    l2=.001 max_iter=100 tol=1e-10
+  P-Platt: Same inner OOF and clipped raw XGBoost logit; Platt (1999) smoothed targets;
+    safeguarded Newton with BFGS fallback in arranjo_corte.py; unchanged slope penalty
+    l2=.001, unpenalized intercept, max_iter=100, tol=1e-10
   B1: Entire base, original REFREC p, cross-fitted reviewer rates
 sensitivities:
   A3: Restrict XGBoost fitting to below cutoff, retaining original outer and inner
@@ -270,4 +271,53 @@ stop_rule:
   output_usd_per_million: 0.5
   retry_multiplier: 1.2
   action: Stop and consult author; do not call API
-amendments: []
+amendments:
+- number: 1
+  timestamp_utc: '2026-11-05T01:28:10.418082+00:00'
+  authorization: Technical amendment explicitly authorized by the orchestrator on behalf
+    of the author before repeating S1; no scientific protocol change.
+  previous_prereg_commit: 8c16a41
+  previous_prereg_sha256: 0e3fe0f07c0b3fcba6bb56d83eb55e6a84bbdbec8eb09635a56b124c846070a9
+  reason: Singular Hessian in unsafeguarded Newton on classifier logits. Fold 0 has
+    severe class imbalance, overlapping class ranges and finite nonconstant logits.
+    Newton overshoots and saturates every prediction, zeroing intercept curvature.
+  diagnosis:
+    outer_fold: 0
+    calibration_n: 49189
+    positives: 32
+    negatives: 49157
+    raw_p_zero: 0
+    raw_p_one: 0
+    clipped_logit_all_finite: true
+    logit_variance: 2.9673083610927016
+    positive_logit_range: [-11.697312308101777, 10.727427460519914]
+    negative_logit_range: [-13.815509557963773, 9.996919005286674]
+    perfect_linear_separation: false
+    failure_iteration: 3
+    failed_intercept: 10796318.048255187
+    failed_slope: 1082103.7950388137
+    saturated_predictions: 49189
+    hessian_intercept_curvature: 0.0
+    hessian_determinant: 0.0
+  change: Platt (1999) targets t+=(N_positive+1)/(N_positive+2),
+    t-=1/(N_negative+2); p clipped to [1e-6,1-1e-6] before logit; logistic fit
+    with Newton backtracking and BFGS fallback, implemented only in arranjo_corte.py.
+    Isotonic-only reproduction tests explicitly disable P-Platt and forbid its fit.
+  unchanged_objective_and_parameters: The scientific objective and registered parameters
+    are unchanged. Logistic loss and the .001 slope penalty are retained with the
+    explicitly authorized Platt targets. Intercept remains unpenalized, max_iter=100,
+    tol=1e-10. Folds, seed, arms, classifier, costs, budgets, sources and stop rule
+    are unchanged. No published-profile file was modified.
+  outcome_blinding: No label-based cascade evaluation result or accuracy metric was
+    seen. Labels were used only for training and the explicitly authorized optimizer
+    diagnosis. S1 produced no policy counts or pending lists; S2 was not started.
+  pre_repeat_checks: Four synthetic/isolation tests passed; corrected fold-0 calibration
+    returned finite parameters using Newton with backtracking. No outcome was evaluated.
+  previous_sha256:
+    gzcmd/arranjo_corte.py: d80c9bc0ee74d82656344d96685d3eab67cfac28c03e287485dc4312007b44d6
+    tests/test_arranjo_corte.py: 0689d46f258a40d15cc8b51397e131899c55dcf0e1adcb779d2353b7589764d6
+    gzcmd/M_arranjo_corte.md: 1a255b0535b45b6854b541fe7cbe2b93e22f1f0e418c40fd6a824b28943895d1
+  updated_sha256:
+    gzcmd/arranjo_corte.py: ca87d060a9c09d5e755e382b74bc6510111324fe3fac2eed21639fb6c37c5a5f
+    tests/test_arranjo_corte.py: 8d30e41ad0fb88de99ce490030023f4568c89f75f642d0f085ce7bd9497fb0f9
+    gzcmd/M_arranjo_corte.md: 0bc2c3a8cb020853056fa15879f988dc5348f44cc1ca470ffa1677b86244f763
