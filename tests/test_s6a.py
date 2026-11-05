@@ -118,7 +118,12 @@ def test_phase_C_aggregates_and_table_regenerate_from_versioned_csvs(tmp_path):
     from scripts.arranjo_robustez import render_table
     target = tmp_path / 'robustez.tex'
     render_table(conclusions, target)
-    assert target.read_bytes() == (LATEX / 'tables/tab_cap8_robustez_arranjo.tex').read_bytes()
+    # O artefato oficial foi gerado no Windows (CRLF), fixado no .gitattributes.
+    official = (LATEX / 'tables/tab_cap8_robustez_arranjo.tex').read_bytes()
+    assert b'\r\n' in official
+    assert b'\n' not in official.replace(b'\r\n', b'')
+    assert b'\r' not in official.replace(b'\r\n', b'')
+    assert target.read_bytes().decode('utf-8').replace('\r\n', '\n') == official.decode('utf-8').replace('\r\n', '\n')
 
 
 def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
