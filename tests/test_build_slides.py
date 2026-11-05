@@ -176,13 +176,18 @@ def scientific_requirements(csv_loader=read_csv):
              "Preservar o corte", "nenhuma variante superou a prática do serviço",
              "validação em dados novos"],
         23: ["proporção de vínculos", "definida pelo corte", "FP abaixo do corte"],
-        24: ["Disparidade herdada do corte e do rótulo"],
+        24: [r"Disparidade herdada do corte e do \textit{label}"],
         26: ["Respostas históricas reutilizadas", "conhecido antes do registro",
              "recalibração, braços e avaliação", "desvios de protocolo", "não generalização"],
         28: ["hipótese é condicionada à carga", pt_number(lower["pares_acima_limiar"], 0),
-             "pior em todo desfecho medido contra o rótulo", "limite inferior derivado do rótulo",
+              r"pior em todo desfecho medido contra o \textit{label}",
+              r"limite inferior derivado do \textit{label}",
              "avaliação registrada e o resultado negativo"],
         29: ["MATCH do LLM ao revisor humano, não aceitação automática", "registro próprio"],
+        30: [r"pior em todo desfecho medido contra o \textit{label}",
+             "A vantagem em carga é só um limite inferior",
+             f"pelo menos {pt_number(lower['pares_acima_limiar'], 0)} pares",
+             "sob hipótese", "não tempo observado", "aceitabilidade da troca cabe ao serviço"],
         46: ["não confirmatória", "não generalização", "em relação à partição original",
              "A réplica original é um ponto dessa distribuição"],
     }
@@ -193,6 +198,10 @@ def scientific_requirements(csv_loader=read_csv):
             requirements[3].append(
                 f"{integer(row['horas_inteiras'])} h {integer(row['minutos_restantes'])} min"
             )
+            if threshold == "por_passo":
+                requirements[30].append(
+                    f"{integer(row['horas_inteiras'])} h {integer(row['minutos_restantes'])} min"
+                )
     mechanisms_order = ("guarda_nota_lt_5", "AUTO_NONMATCH_custo", "NONMATCH_LLM")
     labels = {"vigilancia": "Vigilância", "confirmacao": "Confirmação"}
     for mode, label in labels.items():
@@ -212,6 +221,14 @@ def scientific_requirements(csv_loader=read_csv):
     cost_losses = one_row(
         mechanisms, modo="confirmacao", braco="P", mecanismo="AUTO_NONMATCH_custo"
     )
+    requirements[30].extend((
+        f"{integer(principal['vigilancia']['perdidos'])}/"
+        f"{integer(principal['confirmacao']['perdidos'])} vínculos perdidos",
+        f"{integer(principal['vigilancia']['fp'])}/"
+        f"{integer(principal['confirmacao']['fp'])} falsos positivos",
+        f"encaminha {integer(principal['vigilancia']['pares_humano'])}/"
+        f"{integer(principal['confirmacao']['pares_humano'])} pares",
+    ))
     requirements[20].extend((
         f"{integer(cost_losses['vinculos_perdidos'])} perdas por AUTO\\_NONMATCH",
         "Sem varredura de custos no arranjo",
@@ -304,7 +321,7 @@ def scientific_requirements(csv_loader=read_csv):
     return requirements
 
 
-@pytest.mark.parametrize("frame_number", [3, 4, 19, 20, 21, 22, 23, 24, 26, 28, 29, 46])
+@pytest.mark.parametrize("frame_number", [3, 4, 19, 20, 21, 22, 23, 24, 26, 28, 29, 30, 46])
 def test_slide_scientific_contract_from_csv(frame_number):
     assert_fragments(slide_frames()[frame_number - 1], scientific_requirements()[frame_number])
 
@@ -319,6 +336,35 @@ def test_slide_contract_rejects_changed_csv_dominance():
 
     with pytest.raises(AssertionError):
         assert_fragments(slide_frames()[45], scientific_requirements(changed_csv)[46])
+
+
+def test_slide_final_message_rejects_missing_false_positives():
+    frame = slide_frames()[29]
+    frame = re.sub(r"\d+/\d+ falsos positivos", "", frame)
+    with pytest.raises(AssertionError, match="falsos positivos"):
+        assert_fragments(frame, scientific_requirements()[30])
+
+
+def test_slide_and_script_s7_terminology_and_attribution():
+    source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    for text, singular, plural in ((source, r"\textit{label}", r"\textit{labels}"),
+                                    (script, "*label*", "*labels*")):
+        assert not re.search(r"rótulos?|calibração sigmoidal", text, re.I)
+        assert singular in text and plural in text
+    speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
+    assert "porque foi registrado antes" in speech.split("### 22.")[1].split("### 23.")[0]
+    assert "na base S6a" not in speech
+    assert "Preservar o corte pode reduzir a revisão" not in slide_frames()[29]
+    assert "Preservar o corte pode reduzir a revisão" not in speech.split("### 30.")[1].split("### 31.")[0]
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    answer = questions.split("### 14.")[1].split("### 15.")[0]
+    mechanisms = read_csv("arranjo_corte_perdas_mecanismo.csv")
+    for mode, label in (("vigilancia", "vigilância"), ("confirmacao", "confirmação")):
+        counts = [integer(one_row(mechanisms, modo=mode, braco="P", mecanismo=mechanism)["vinculos_perdidos"])
+                  for mechanism in ("guarda_nota_lt_5", "AUTO_NONMATCH_custo", "NONMATCH_LLM")]
+        assert f"{label}: " + "/".join(counts) in answer
+    assert "guarda/custo/LLM" in answer
 
 
 def test_script_s6_questions_and_provenance():
