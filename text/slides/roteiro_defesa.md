@@ -74,18 +74,27 @@ No teste da ablação, o RF+SMOTE detectou 67 vínculos e o limiar 8 detectou 43
 Os indicadores derivados do encerramento por óbito constituem vazamento de alvo. A sensibilidade 2×2 foi executada: o F1 do RF+SMOTE passou de 0,931 para 0,938 sem óbito, mas caiu para 0,846 com REFREC. No QW1 local na GPU, o XGBoost passou de 0,937 para 0,878 com REFREC, sem substituir o resultado histórico de 0,920. O otimismo aparece sobretudo na partição por linha, embora mudem os vínculos e denominadores. O GZ-CMD já utiliza agrupamento por REFREC, sem indicadores de óbito; permanece possível dependência por COMPREC.
 
 ### 17. Arquitetura depois do corte
-O arranjo preserva a aceitação acima do corte e aplica o GZ-CMD abaixo dele. As guardas usam nota e probabilidade recalibrada; as faixas estratificam o erro do revisor. A isotônica é reajustada apenas no treino abaixo do corte, sem rótulos da partição externa, e a política compara quatro ações por custo esperado. As taxas foram congeladas antes das chamadas novas, sem realimentação por essas respostas. Isso não torna a avaliação prospectiva: as decisões do LLM em P reutilizam sobretudo lotes históricos, também usados para estimar as proporções do revisor. As chamadas novas abrangeram 10 potenciais pares na vigilância e 14 na confirmação.
+O arranjo preserva a aceitação acima do corte e aplica o GZ-CMD abaixo dele. As guardas usam nota e probabilidade recalibrada; as faixas estratificam o erro do revisor. A isotônica é reajustada apenas no treino abaixo do corte, sem rótulos da partição externa, e a política compara quatro ações por custo esperado. As taxas foram congeladas antes das chamadas novas, sem realimentação por essas respostas. Isso não torna a avaliação prospectiva: as decisões do LLM em P reutilizam sobretudo lotes históricos, também usados para estimar as proporções do revisor. Os 10 e 14 potenciais pares com chamada nova eram pendentes de P∪B1, na vigilância e na confirmação, não de P isolado.
 
 ### 18. Custos e ações
 O custo do falso negativo é maior na vigilância, enquanto o custo do falso positivo é maior na confirmação. As quatro ações são comparadas na mesma escala de utilidade, e essa escala não deve ser confundida com dólares nem com custos econômicos medidos no serviço.
 
 ### 19. Arranjo sequencial com registro prévio
-O registro prévio é um YAML versionado no repositório, não um registro público. O braço P é o resultado principal. Na vigilância, aceita 215/247 vínculos, ou 87,0%, com IC de 82,3 a 90,7%, 21 falsos positivos e 13 perdidos. Encaminha 96 potenciais pares ao revisor humano, incluindo 19 vínculos, e 344 ao LLM, a US$ 0,94. O fechamento é 215+13+19=247. Na confirmação, aceita 219, ou 88,7%, com IC de 84,1 a 92,0%, 4 falsos positivos e 27 perdidos. Encaminha 17 ao revisor humano, incluindo um vínculo, e 41 ao LLM, a US$ 0,11: 219+27+1=247. São quatro e oito vínculos aceitos além do corte, mas com 13 e 27 vínculos perdidos, e os intervalos se sobrepõem ao do corte.
+O registro prévio é um YAML versionado no repositório, não um registro público. O braço P é o resultado principal. Na vigilância, são 211 vínculos pelo corte e quatro pela política, totalizando 215/247, ou 87,0%, com IC de 82,3 a 90,7%, 21 falsos positivos e 13 perdidos. Encaminha 96 potenciais pares ao revisor humano, incluindo 19 vínculos, e 344 ao LLM, a US$ 0,94. O fechamento é (211+4)+13+19=247. Na confirmação, são 211 pelo corte e oito pela política, totalizando 219, ou 88,7%, com IC de 84,1 a 92,0%, 4 falsos positivos e 27 perdidos. Encaminha 17 ao revisor humano, incluindo um vínculo, e 41 ao LLM, a US$ 0,11: (211+8)+27+1=247. O acréscimo frente ao corte isolado é de quatro e oito vínculos, com 13 e 27 perdidos; os intervalos se sobrepõem ao do corte.
 
 A cascata v3.1 sobre a base inteira é comparação: 194 e 132 aceitos, ou 78,5% e 53,4%, com 34 e zero falsos positivos, 111 e 127 encaminhamentos ao revisor humano e lotes LLM de 347 e 44. Ela também submete à política os potenciais pares que o corte já aceita. O custo estimado na vigilância é de US$ 0,94 no arranjo e US$ 0,92 na base inteira. Os valores somam consumo estimado, sem pessoal nem infraestrutura.
 
 ### 20. O que a troca custa
-Dos 36 vínculos com PAR=2, P aceita quatro, encaminha 19 e perde 13 na vigilância. Na confirmação, aceita oito, encaminha um e perde 27. Todas as aceitações abaixo do corte vieram do LLM: 25 na vigilância, sendo quatro vínculos e 21 falsos positivos, e 12 na confirmação, sendo oito e quatro. Não houve aceitação pelo motor nessa região. A sensibilidade com revisor humano, sob erro hipotético de 5,0%, seria de 94,4% e 89,0%, contra 99,3% com revisão integral de até 61.485 potenciais pares. São projeções, não decisões humanas observadas. A vigilância só apresenta maior sensibilidade quando se incorpora essa revisão projetada; automaticamente, aceita menos que a confirmação.
+Nos 36 vínculos com PAR=2, o arranjo aceita menos que a cascata sobre a base inteira na vigilância e empata na confirmação. Perde mais nos dois modos:
+
+| Modo | Aceitos: arranjo × cascata | Ao revisor humano: arranjo × cascata | Perdidos: arranjo × cascata |
+| :-- | :-- | :-- | :-- |
+| Vigilância | 4 × 10 | 19 × 17 | 13 × 9 |
+| Confirmação | 8 × 8 | 1 × 11 | 27 × 17 |
+
+A vantagem global do arranjo sobre a cascata vem inteiramente dos 211 vínculos preservados pelo corte por construção, não de maior recuperação abaixo dele. Os números da comparação são de `data/arranjo_corte_par2.csv:3,7,12,16`.
+
+Todas as aceitações abaixo do corte vieram do LLM: 25 na vigilância, sendo quatro vínculos e 21 falsos positivos, e 12 na confirmação, sendo oito e quatro. Não houve aceitação pelo motor nessa região. A sensibilidade com revisor humano, sob erro hipotético de 5,0%, seria de 94,4% e 89,0%, contra 99,3% com revisão integral de até 61.485 potenciais pares. São projeções, não decisões humanas observadas. A vigilância só apresenta maior sensibilidade quando se incorpora essa revisão projetada; automaticamente, aceita menos que a confirmação.
 
 ### 21. Revisor de referência
 Claude Haiku 5.5 com instruções v4 revisa a evidência sem receber as saídas decisórias do motor. A ablação é compatível com ancoragem nessas saídas, mas não demonstra causalidade geral; Claude Sonnet 5.5 recuperou dois a quatro vínculos adicionais na cascata sobre a base inteira (comparação), com mais encaminhamentos e tarifa vinte vezes maior por token.
@@ -97,22 +106,23 @@ Os 96 e 17 encaminhamentos em P são trabalho pendente. Sob erro humano hipotét
 No arranjo P de vigilância, o VPP é de 86,3% no sexo feminino e 93,3% no masculino. Na cascata sobre a base inteira (comparação), é de 87,9% e 84,0%. A aceitação do arranjo combina corte e respostas de vínculo do LLM; o encaminhamento humano conta como não aceito. Como os 211 são aceitos por construção, diferenças de sensibilidade dependem dos 36 com PAR=2 e as de VPP dos 21 ou quatro falsos positivos. O poder é limitado, e ausência de rejeição não comprova equidade. Raça/cor não está disponível.
 
 ### 24. Desigualdade operacional
+<!-- % CONFERIR par_por_passo.csv -->
 A diferença por passo reflete sobretudo o corte e a construção do rótulo, não um efeito isolado do GZ-CMD. Na vigilância, os vínculos não aceitos automaticamente por P são 23, quatro e cinco nos passos 11, 6 e 9. Como P aceita os PAR=1 por construção, pelo menos 23 dos 36 vínculos com PAR=2 estão no passo 11. Nele, a sensibilidade automática do arranjo é de 42,5% na vigilância e 47,5% na confirmação; nos passos 6 e 9, é de pelo menos 95,0%. Na vigilância, o arranjo fica abaixo da cascata sobre a base inteira (comparação) no passo 11: 42,5% contra 45,0%. Após Benjamini-Hochberg, são sete e três rejeições em P, todas operacionais; na base inteira (comparação), nove e uma. A equidade do processo completo depende da revisão humana ainda não observada.
 
 ### 25. Posicionamento
 Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. A tese propõe sua composição operacional com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
 
 ### 26. Limitações de método
-O padrão-ouro incorpora decisões de uma revisora e do corte, com zero falsos positivos acima dele por construção. O volume e o limite inferior da revisão não estão documentados, podendo existir vínculos não examinados. A avaliação é condicional à blocagem, e REFREC não separa simultaneamente COMPREC. Os 36 vínculos com PAR=2 produzem intervalos largos. As respostas do LLM em P reutilizam majoritariamente lotes históricos, também usados para estimar as proporções do revisor; permanece seleção adaptativa, e a validação cruzada não equivale a avaliação prospectiva nem externa. Foram novas as chamadas para 10 dos 344 potenciais pares na vigilância e 14 dos 41 na confirmação. O enquadramento do arranjo como principal foi escolhido depois da análise a posteriori; o registro prévio cobre a recalibração, os braços e a avaliação, não essa escolha.
+O padrão-ouro incorpora decisões de uma revisora e do corte, com zero falsos positivos acima dele por construção. O volume e o limite inferior da revisão não estão documentados, podendo existir vínculos não examinados. A avaliação é condicional à blocagem, e REFREC não separa simultaneamente COMPREC. Os 36 vínculos com PAR=2 produzem intervalos largos. As respostas do LLM em P reutilizam majoritariamente lotes históricos, também usados para estimar as proporções do revisor; permanece seleção adaptativa, e a validação cruzada não equivale a avaliação prospectiva nem externa. Os 10 e 14 potenciais pares com chamada nova eram pendentes de P∪B1, na vigilância e na confirmação. Não se pode atribuir essas contagens a P isolado nem dividi-las pelos lotes de P de 344 e 41. O enquadramento do arranjo como principal foi escolhido depois da análise a posteriori; o registro prévio cobre a recalibração, os braços e a avaliação, não essa escolha.
 
 ### 27. Limitações de transferência e governança
 O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas. A exportação restrita com identificador de par por HMAC foi implementada em `scripts/export_matriz_desidentificada.py`, mas a matriz não foi depositada e não se afirma saneamento retroativo das execuções. A equivalência Java parcial foi executada; a comparação empírica com Lages não foi realizada.
 
 ### 28. Conclusões
-Na vigilância, P aceita 87,0% dos vínculos (85,4% pelo corte), com 21 falsos positivos, 96 encaminhamentos e 13 dos 36 vínculos da revisão perdidos. Na confirmação, aceita 88,7% (85,4% pelo corte), com quatro falsos positivos, 17 encaminhamentos e 27 dos 36 perdidos. A carga de 96 ou 17 é comparada ao teto de até 61.485 potenciais pares, não a uma carga histórica medida. A contribuição é governar a decisão e medir o que ela custa, não prometer automação integral.
+Na vigilância, são 211 vínculos pelo corte e quatro pela política: 87,0% (85,4% pelo corte), com 21 falsos positivos, 96 encaminhamentos e 13 dos 36 vínculos da revisão perdidos. Na confirmação, são 211 pelo corte e oito pela política: 88,7% (85,4% pelo corte), com quatro falsos positivos, 17 encaminhamentos e 27 dos 36 perdidos. A vantagem global sobre a cascata sobre a base inteira vem inteiramente dos 211 preservados por construção. Nos 36 PAR=2, P aceita quatro e oito, contra dez e oito da cascata, e perde 13 e 27, contra nove e 17. A carga de 96 ou 17 é comparada ao teto de até 61.485 potenciais pares, não a uma carga histórica medida. A contribuição é governar a decisão e medir o que ela custa, não prometer automação integral.
 
 ### 29. Contribuições
-As entregas incluem comparador com equivalência parcial avaliada, estimadores e faixas, pacote decisório 0.4.0 com política v3.1 e artefatos pseudonimizados no Zenodo 3.0.1. O pacote e o depósito cobrem a v3.1 sobre a base inteira, não o arranjo; seus agregados estão no repositório e as saídas por par ficam locais. A avaliação seguinte requer referência independente, observação da revisão humana e transferência externa.
+As entregas incluem comparador com equivalência parcial avaliada, estimadores e faixas, pacote decisório 0.4.0 com política v3.1 e artefatos pseudonimizados no Zenodo 3.0.1. O pacote e o depósito cobrem a v3.1 sobre a base inteira, não o arranjo; seus agregados estão no repositório e as saídas por par ficam locais. A vantagem global do arranjo vem da preservação dos 211 pelo corte, não de maior recuperação dos 36 abaixo dele. A avaliação seguinte requer referência independente, observação da revisão humana e transferência externa.
 
 ### 30. Agradecimentos
 O trabalho dependeu da orientação, da equipe responsável pelos dados e da revisão manual que permitiu a avaliação. Depois do corte, o GZ-CMD organiza a revisão como decisão, com 96 ou 17 encaminhamentos ao revisor humano e 13 ou 27 vínculos perdidos. Esse custo em vínculos deve acompanhar a discussão com o profissional do serviço.
@@ -198,7 +208,7 @@ Fonte: `capitulo_dados.tex`, Padrão-ouro (`sec:padrao-ouro`). Slides 6 e 7.
 
 ### 6. O arranjo é determinístico?
 
-O corte e as guardas são determinísticos, mas a cadeia inclui probabilidade estimada, custos e Claude Haiku 5.5, cuja geração é estocástica. Na vigilância, P aceita 215 vínculos, perde 13 e encaminha 19 vínculos entre 96 potenciais pares ao revisor humano. As aceitações abaixo do corte vieram do LLM, com 21 falsos positivos. Isso não garante repetibilidade integral.
+O corte e as guardas são determinísticos, mas a cadeia inclui probabilidade estimada, custos e Claude Haiku 5.5, cuja geração é estocástica. Na vigilância, são 211 vínculos pelo corte e quatro pela política, com 13 perdidos e 19 vínculos entre 96 encaminhamentos ao revisor humano. Abaixo do corte, as aceitações vieram do LLM, com 21 falsos positivos. Não há garantia de repetibilidade integral.
 
 Fonte: `data/arranjo_corte_metricas.csv:12`; `data/arranjo_corte_s1_resumo.csv:2-15`; `sec:e4-politica-v31`. Slides 17, 19 a 21.
 
@@ -222,9 +232,9 @@ Fonte: `data/equidade_arranjo_group_metrics.csv`, passo; `data/equidade_arranjo_
 
 ### 10. Por que o arranjo, e não a cascata publicada?
 
-O corte aceita 211 vínculos; a cascata sobre a base inteira também os submete à política. O arranjo preserva essa aceitação e recalibra abaixo do corte, acrescentando quatro ou oito vínculos, com 13 ou 27 perdidos. O enquadramento foi escolhido depois da análise a posteriori. O registro prévio protege recalibração, braços e avaliação, não essa escolha. A cascata permanece como comparação.
+O arranjo preserva 211 vínculos pelo corte e acrescenta quatro ou oito pela política, com 13 ou 27 perdidos. Nos 36 PAR=2, aceita 4/8 contra 10/8 da cascata sobre a base inteira. A vantagem global vem inteiramente da preservação pelo corte, não de maior recuperação abaixo dele. O enquadramento foi escolhido a posteriori; o registro cobre recalibração e avaliação, não essa escolha.
 
-Fonte: `data/arranjo_corte_metricas.csv:2,4,12,22,30`; `data/arranjo_corte_par2.csv:7,16`; `gzcmd/prereg_arranjo_corte.yaml`. Slides 17, 19, 20 e 26.
+Fonte: `data/arranjo_corte_metricas.csv:2,4,12,22,30`; `data/arranjo_corte_par2.csv:3,7,12,16`; `gzcmd/prereg_arranjo_corte.yaml`. Slides 17, 19, 20, 26 e 28.
 
 ### 11. Por que não adotar P-Platt?
 
@@ -271,10 +281,10 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | :-- | :-- |
 | 61.696, 247, corte 211/247, 85,4%, IC 80,5 a 89,3%, 36 abaixo | `arranjo_corte_metricas.csv:2` |
 | Até 61.485 potenciais pares na revisão integral, diretamente do campo `pares_humano` | `arranjo_corte_metricas.csv:8` |
-| Vigilância P: 215, 87,0%, IC 82,3 a 90,7%, 21 FP, 13 perdidos, 19 vínculos em 96 encaminhamentos, 344 LLM, US$ 0,94, 94,4% com revisor humano | `arranjo_corte_metricas.csv:12` |
-| Confirmação P: 219, 88,7%, IC 84,1 a 92,0%, 4 FP, 27 perdidos, 1 vínculo em 17 encaminhamentos, 41 LLM, US$ 0,11, 89,0% com revisor humano | `arranjo_corte_metricas.csv:30` |
-| Fechamentos 215+13+19=247 e 219+27+1=247 | `arranjo_corte_metricas.csv:12,30` |
-| PAR=2: 4/19/13 e 8/1/27 | `arranjo_corte_par2.csv:7,16` |
+| Vigilância P: 211 pelo corte e 4 pela política, total 215; 87,0%, IC 82,3 a 90,7%, 21 FP, 13 perdidos, 19 vínculos em 96 encaminhamentos, 344 LLM, US$ 0,94, 94,4% com revisor humano | `arranjo_corte_metricas.csv:2,12`; `arranjo_corte_par2.csv:7` |
+| Confirmação P: 211 pelo corte e 8 pela política, total 219; 88,7%, IC 84,1 a 92,0%, 4 FP, 27 perdidos, 1 vínculo em 17 encaminhamentos, 41 LLM, US$ 0,11, 89,0% com revisor humano | `arranjo_corte_metricas.csv:20,30`; `arranjo_corte_par2.csv:16` |
+| Fechamentos (211+4)+13+19=247 e (211+8)+27+1=247 | `arranjo_corte_metricas.csv:2,12,20,30` |
+| PAR=2, aceitos/humano/perdidos: P 4/19/13 contra cascata 10/17/9; P 8/1/27 contra cascata 8/11/17 | `arranjo_corte_par2.csv:3,7,12,16` |
 | Revisão integral de até 61.485: 99,3%, hipótese de erro humano de 5,0% | `arranjo_corte_metricas.csv:8,26`, campo `sens_humano_05` |
 | Nenhum MATCH de P pelo motor abaixo do corte | `arranjo_corte_s1_resumo.csv:2-15,78-88` |
 | Aceitações do LLM: 25 (4+21) e 12 (8+4) | `arranjo_corte_s1_resumo.csv:2-15,78-88` e `arranjo_corte_metricas.csv:2,12,30` |
@@ -293,6 +303,6 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | BH na base inteira (comparação): 9/1 rejeições | `equidade_arranjo_pairwise_tests.csv:87,92,93,95,98-102,215` |
 | 211 aceitos por construção; diferenças avaliadas nos 36 PAR=2 e 21/4 FP | `arranjo_corte_metricas.csv:2,12,30`; `equidade_arranjo_global.csv:2,4` |
 | Na vigilância, não aceitos por passo 11/6/9: 23/4/5, todos PAR=2; no passo 11, 42,5% em P contra 45,0% na base inteira (comparação) | `equidade_arranjo_group_metrics.csv:17-19,41` |
-| Chamadas novas: 10/344 em P vigilância e 14/41 em P confirmação; reutilização histórica e ausência de avaliação prospectiva | `arranjo_corte_metadata.json:282-287,327-332,355,357`; `arranjo_corte_metricas.csv:12,30` |
+| Pendentes de P∪B1 com chamada nova: 10 na vigilância e 14 na confirmação, não de P isolado; reutilização histórica e ausência de avaliação prospectiva | `arranjo_corte_s1_metadata.json:477-481`, campo `pending_P_union_B1_by_mode`; `arranjo_corte_metadata.json:355,357` |
 
 Os resultados históricos de v3, dos estudos 1 a 3 e da restrição na base inteira foram mantidos com as remissões que já constavam dos slides. Não são resultados novos do arranjo, nem foram reestimados nesta fatia.
