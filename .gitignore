@@ -352,6 +352,8 @@ Claude.json
 # Arranjo corte: novos resultados e journals por par ficam somente locais.
 data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_*.json
 data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/*_journal/
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_*.json
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/*_journal/
 
 # Fixture local exigida pelos testes do arquivo histórico por linha.
 scripts/preservar_m5_m7_row.py

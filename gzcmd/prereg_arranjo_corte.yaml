@@ -361,3 +361,27 @@ amendments:
     gzcmd/arranjo_corte.py: 4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5
     scripts/arranjo_corte_s1_simular.py: 9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd
     gzcmd/M_arranjo_corte.md: c73bcaec0efd43f1318211207c9227cdec503517e7ce74def997ae25b4f740b8
+- number: 3
+  kind: authorized_sensitivity_execution_supplement
+  timestamp_utc: '2026-11-05T02:01:57.112066+00:00'
+  authorization: Author/orchestrator explicitly authorized exactly 69 unanswered sensitivity
+    pairs before S3; registration is committed and pushed before paid execution.
+  reason: S2 covered P union B1 only; P-Platt and A3 require additional observed decisions
+    for S3. The supplement covers only these preregistered sensitivity arms.
+  pending_by_mode: {vigilancia: 66, confirmacao: 3}
+  pending_total: 69
+  estimated_additional_usd_with_retry_margin: 0.21831875999999997
+  estimated_initial_and_supplement_usd: 0.29425572
+  original_S1_prereg_commit: 7b40cfb3821b46e0eb402feb44f8e529dba801a3
+  original_S1_prereg_sha256: b55899f0e5ab114bf89a00c3e529bd9df14f48b49cc1b10ae7ec7e9e01644601
+  frozen_rates_sha256: d0876836394b2513135995df3fc6e21621a2e162806bd8dd88b6fe54fb931172
+  pending_sha256:
+    vigilancia: 8d8546985b6de9ba16770f067e635f979a2a5f853200a97b46c0a7b6140740bb
+    confirmacao: c2e9aa0755fe1cf5f438764af2353343feae8a901401a978ee6ede2a925d1232
+  execution_script_sha256: 723165f1f3db74bd0a3bfa0ceb226b880554145474d82918f24d397d81d43dc3
+  parameter_change: false
+  reestimate_reviewer_rates: false
+  unchanged_protocol: Same registered arms, features, classifier, folds, seed, calibration,
+    costs, prompt and model; no new arm or parameter. New responses never update reviewer
+    rates. Fewer than 500 pairs and less than USD 2 including the initial run.
+  output_directory: data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl
