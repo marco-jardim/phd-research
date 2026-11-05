@@ -1,0 +1,36 @@
+name: Testes Python (pytest)
+
+on:
+  push:
+    branches: [pos-qualificacao]
+  pull_request:
+    branches: [pos-qualificacao]
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    name: pytest (testes portaveis)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PHD_RESEARCH_DATA_ROOT: ${{ runner.temp }}/phd-research-private-data-unavailable
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --group ci
+
+      - name: Run tests
+        run: python -m pytest tests -q -rs
