@@ -100,6 +100,7 @@ def test_cut_and_integral_human_primary_endpoints():
     assert cut.aceitos.eq(0).all() and cut.perdidos.eq(36).all()
     assert human.humano.eq(36).all() and human.perdidos.eq(0).all()
     assert table.loc[table.braco.isin(["corte_sozinho", "humano_integral"]), "pares_llm"].eq(0).all()
+    assert table.loc[table.braco.eq("corte_sozinho"), "pares_humano"].eq(0).all()
 
 
 def test_render_identifies_comparisons_and_has_no_trailing_midrule(tmp_path):
@@ -112,6 +113,9 @@ def test_render_identifies_comparisons_and_has_no_trailing_midrule(tmp_path):
     assert "PAR~=~1" in tex and "PAR=1" not in tex
     assert "\\midrule\n\\bottomrule" not in tex
     assert "\\midrule\n\\end{longtable}" not in tex
+    assert "(ii) Humano integral" in tex and "(iii)" not in tex
+    assert "reutiliza a cascata sobre a base inteira" in tex
+    assert tex == (ROOT / "text/latex/tables/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
 
 
 def test_aggregate_privacy_latex_and_exact_original_script():
@@ -120,7 +124,8 @@ def test_aggregate_privacy_latex_and_exact_original_script():
     assert not forbidden.intersection(table.columns)
     assert not forbidden.intersection(primary.columns)
     tex = (ROOT / "text/latex/tables/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
-    assert all(value in tex for value in (r"\footnotesize", r"\toprule", r"\bottomrule",
+    assert tex.splitlines()[2:4] == [r"\scriptsize", r"\setlength{\tabcolsep}{2pt}"]
+    assert all(value in tex for value in (r"\toprule", r"\bottomrule",
                                           r"\label{tab:cap8-arranjo-corte}", "verificação", "incorporação", "0{,}95"))
     assert sha256(ROOT / "scripts/arranjo_corte_orl_gzcmd.py") == sha256(
         Path("D:/git/phd-research/scripts/arranjo_corte_orl_gzcmd.py"))

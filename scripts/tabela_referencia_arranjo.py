@@ -22,7 +22,7 @@ def linhas(referencia, arranjo, cascata):
         ("orl_corte_servico_mais_revisao_manual", "Corte + revisão manual do serviço"),
     ]:
         r = referencia.loc[referencia.estrategia.eq(key)].iloc[0]
-        rows.append(("Referência operacional", label, "ambos", "n.d.", "0",
+        rows.append(("Referência operacional", label, "ambos", "0" if key == "orl_corte_servico" else "n.d.", "0",
                      percentual(r.sens_automatica), inteiro(r.fp_automaticos),
                      inteiro(r.total_vinculos - r.vp_automaticos - r.vinculos_ao_humano),
                      "n.a." if pd.isna(r.sens_com_humano) else percentual(r.sens_com_humano)))
@@ -63,6 +63,38 @@ def linhas(referencia, arranjo, cascata):
     return rows
 
 
+def notas(referencia, arranjo):
+    """Resultados numéricos das notas seguem os mesmos agregados das linhas."""
+    cut = referencia.loc[referencia.estrategia.eq("orl_corte_servico")].iloc[0]
+    manual = referencia.loc[referencia.estrategia.eq("orl_corte_servico_mais_revisao_manual")].iloc[0]
+    grey = referencia.loc[referencia.estrategia.eq("pos_orl_revisao_humana_area_cinza")].iloc[0]
+    subset = arranjo.loc[arranjo.faixa.eq("[5,9)")]
+    row = lambda arm, mode="vigilancia": subset.loc[subset.braco.eq(arm) & subset.modo.eq(mode)].iloc[0]
+    kept = int(row("corte_sozinho").aceitos)
+    total = int(grey.total_vinculos)
+    human = arranjo.loc[arranjo.braco.eq("humano_integral") & arranjo.faixa.eq("TODAS")].iloc[0]
+    recovered = 1 - grey.erro_humano_hipotese
+    recovered_tex = f"{recovered:.2f}".replace(".", "{,}")
+    return (
+        r"\parbox{\linewidth}{\footnotesize "
+        f"(a) O corte aceita {inteiro(cut.vp_automaticos)} vínculos; a revisão manual acrescenta {inteiro(manual.vinculos_ao_humano)}. "
+        "O volume examinado e o limite inferior da revisão do serviço não estão documentados (n.d.). "
+        f"(b) Os {percentual(manual.sens_com_humano)}\\% da linha corte + revisão manual decorrem da definição de PAR, não de acurácia observada. "
+        "Zero FP acima do corte também decorre do rótulo. "
+        f"Em $[5,9)$ há {inteiro(grey.vinculos_area_cinza)} vínculos: {kept} pelo corte e {int(grey.vinculos_area_cinza)-kept} pela revisão. "
+        f"Nessa faixa, o arranjo aceita {inteiro(row('P').aceitos)} e {inteiro(row('P', 'confirmacao').aceitos)} nos dois modos, "
+        f"incluindo {kept} pelo corte em cada modo; a cascata sobre a base inteira aceita {inteiro(row('publicada').aceitos)} e {inteiro(row('publicada', 'confirmacao').aceitos)}. "
+        f"(c) A revisão integral abaixo do corte é cenário de até {inteiro(human.pares_humano)} potenciais pares, não carga histórica medida. "
+        f"Sua sensibilidade é $({inteiro(cut.vp_automaticos)}+{recovered_tex}\\times{inteiro(manual.vinculos_ao_humano)})/{total}$. "
+        "(d) O arranjo corresponde ao braço P do registro prévio versionado no repositório, com emendas e suplemento, não a registro público. "
+        "Seus FP estão abaixo do corte. Vínculos perdidos são apenas os classificados como não-vínculo, excluindo encaminhamentos pendentes. "
+        r"(e) A revisão da área cinza do CdR é cenário com aceitação de notas $\geq9$ e descarte de notas $<5$, "
+        f"com sensibilidade $({inteiro(grey.vp_automaticos)}+{recovered_tex}\\times{inteiro(grey.vinculos_area_cinza)})/{total}$. "
+        f"Todas as sensibilidades com humano, salvo a revisão do serviço incorporada ao rótulo, usam erro hipotético de {percentual(grey.erro_humano_hipotese)}\\%, não medido. "
+        r"n.a.: não se aplica. Fontes: \path{data/referencia_comparador_pos_orl.csv}, \path{data/arranjo_corte_metricas.csv} e \path{data/funil_gzcmd_final_metricas.csv} \cite{Jardim2026phdrepo}."
+    )
+
+
 def render(referencia, arranjo, cascata):
     tex = [r"% Gerada por scripts/tabela_referencia_arranjo.py; não editar manualmente.",
            r"\begin{table}[!ht]", r"\centering\footnotesize",
@@ -77,7 +109,7 @@ def render(referencia, arranjo, cascata):
         tex.append(" & ".join(cells) + r" \\")
         previous = group
     tex += [r"\bottomrule", r"\end{tabular}}", r"\par\smallskip",
-            r"\parbox{\linewidth}{\footnotesize (a) O corte aceita 211 vínculos; a revisão manual acrescenta 36. O volume examinado e o limite inferior da revisão do serviço não estão documentados (n.d.). (b) Zero FP acima do corte é consequência do rótulo, não medida de acurácia. Em $[5,9)$ há 151 vínculos: 123 pelo corte e 28 pela revisão. Nessa faixa, o arranjo aceita 127 nos dois modos, 123 pelo corte e 4 com PAR~=~2; a cascata sobre a base inteira aceita 113 e 65. (c) A revisão integral abaixo do corte é cenário de até 61.485 potenciais pares, não carga histórica medida. Sua sensibilidade é $(211+0{,}95\times36)/247$. (d) O arranjo corresponde ao braço P do registro prévio versionado no repositório, com duas emendas e um suplemento, não a registro público. Seus FP estão abaixo do corte. Vínculos perdidos são apenas os classificados como não-vínculo, excluindo encaminhamentos pendentes. (e) A revisão da área cinza do CdR é cenário com aceitação de notas $\geq9$, descarte de notas $<5$ e sensibilidade $(93+0{,}95\times151)/247$. Todas as sensibilidades com humano, salvo a revisão observada do serviço, usam erro hipotético de 5\%, não medido. n.a.: não se aplica. Fontes: \path{data/referencia_comparador_pos_orl.csv}, \path{data/arranjo_corte_metricas.csv} e \path{data/funil_gzcmd_final_metricas.csv} \cite{Jardim2026phdrepo}.",
+            notas(referencia, arranjo),
             r"}", r"\end{table}", ""]
     return "\n".join(tex)
 
