@@ -102,8 +102,10 @@ $s\geq9$ & 95 & 93 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item A nota final do CdR não é o escore probabilístico do OpenRecLink
+\itens{\item Origem: processo de \textit{linkage} descrito por Oliveira (2026), p.~33 a~39
+\item A nota final do CdR não é o escore probabilístico do OpenRecLink
 \item Uma revisora realizou a classificação; não há avaliações humanas independentes nem kappa
+\item CdR executado antes da revisão: risco de viés de incorporação
 \item A sensibilidade é condicional aos potenciais pares exportados}
 \fonte{tab:score-bands; capitulo\_dados.tex, ``Padrão-ouro''}
 \end{frame}
@@ -363,7 +365,7 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 
 % 26 e 27: limitações antes de conclusões
 \begin{frame}{Limitações: referência, dependência e seleção}
-\itens{\item Padrão-ouro com uma revisora e viés de verificação pelo corte
+\itens{\item Padrão-ouro com uma revisora, viés de verificação pelo corte e risco de incorporação da nota do CdR
 \item Sensibilidade condicional à blocagem e ao extrato exportado
 \item QW1 e ablação: vazamento por \texttt{obito\_*}, partição por linha e limiares explorados no teste
 \item GZ-CMD: REFREC agrupado, mas COMPREC não agrupado simultaneamente
@@ -376,7 +378,7 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 \item Dados pseudonimizados, não anônimos; APIs externas no processamento LLM
 \item Exportação restrita com \texttt{pair\_id} por HMAC implementada, matriz não depositada
 \item Base legal: LGPD, arts. 7º, IV, 11, II, c, e 13; autor sem acesso aos registros nominais
-\item Projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286)
+\item Projeto: CEP IESC-UFRJ, CAAE 43856720.1.0000.5286; CEP SMS-Rio, CAAE 43856720.1.3001.5279
 \item Equivalência Java parcial executada; comparação empírica com Lages não realizada}
 \fonte{capitulo\_dados.tex, acesso e ética; estudo1\_comparador.tex, resultados; conclusão, limitações}
 \end{frame}
@@ -561,7 +563,7 @@ L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \item Identificador de par: hash determinístico sem sal, recalculável por detentores dos identificadores
 \item Exportação restrita com HMAC: \texttt{scripts/export\_matriz\_desidentificada.py}, matriz não depositada
 \item Autor trabalhou apenas com o extrato pseudonimizado, sem acesso à correspondência com pessoas
-\item Projeto aprovado no CEP do IESC-UFRJ e da SMS-Rio (CAAE 43856720.1.0000.5286)
+\item Projeto: CEP IESC-UFRJ, CAAE 43856720.1.0000.5286; CEP SMS-Rio, CAAE 43856720.1.3001.5279
 \item Artefatos publicados não tornam reexecutáveis etapas que exigem campos ausentes do depósito}
 \fonte{capitulo\_dados.tex, acesso, ética e ambiente computacional; conclusao.tex}
 \end{frame}
