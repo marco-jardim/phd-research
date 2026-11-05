@@ -8,11 +8,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ORDERS = (
-    ("O1_SCORE", "O1: SCORE", "gray"),
-    ("O2_CdR", "O2: nota CdR", "orange"),
-    ("O3_p_cal_ml", "O3: p_cal_ml", "blue"),
-    ("O4_P_recalibrada", "O4: recalibrada", "teal"),
+    ("O1_SCORE", "O1: escore OpenRecLink", "gray"),
+    ("O2_CdR", "O2: nota do CdR", "orange"),
+    ("O3_p_cal_ml", "O3: probabilidade calibrada (OOF)", "blue"),
+    ("O4_P_recalibrada", "O4: probabilidade recalibrada de P", "teal"),
 )
+LINE_STYLES = {
+    "O1_SCORE": r"\pgfsetdash{}{0pt}",
+    "O2_CdR": r"\pgfsetdash{{4pt}{2pt}}{0pt}",
+    "O3_p_cal_ml": r"\pgfsetdash{{1pt}{1.7pt}}{0pt}",
+    "O4_P_recalibrada": r"\pgfsetdash{{4pt}{1.5pt}{1pt}{1.5pt}}{0pt}",
+}
 
 
 def read_rows(path):
@@ -29,6 +35,8 @@ def curve_series(rows, order):
         raise ValueError(f"Valores inválidos: {order}")
     if any(right[1] < left[1] for left, right in zip(series, series[1:])):
         raise ValueError(f"Recuperação não monotônica: {order}")
+    if [k for k, _ in series] != list(range(1, series[-1][0] + 1)):
+        raise ValueError(f"Orçamento k não contínuo: {order}")
     return series
 
 
@@ -36,6 +44,8 @@ def render(curve_rows, comparator_rows):
     series = [(name, label, color, curve_series(curve_rows, name))
               for name, label, color in ORDERS]
     xmax = max(points[-1][0] for _, _, _, points in series)
+    if len({points[-1][0] for _, _, _, points in series}) != 1:
+        raise ValueError("As ordenações precisam do mesmo limite de k")
     ymax = max(y for _, _, _, points in series for _, y in points)
     width, height = 11.4, 3.1
 
@@ -56,7 +66,7 @@ def render(curve_rows, comparator_rows):
     lines.append(text(width/2, -0.60, "Revisões humanas (escala logarítmica)"))
     lines.append(text(0, height+0.27, "PAR=2 recuperados, revisor perfeito", "left"))
     for name, label, color, points in series:
-        lines.extend([rf"\color{{{color}}}", r"\pgfsetlinewidth{0.9pt}",
+        lines.extend([rf"\color{{{color}}}", LINE_STYLES[name], r"\pgfsetlinewidth{0.9pt}",
                       rf"\pgfpathmoveto{{{point(*points[0])}}}"])
         last_y = points[0][1]
         for k, y in points[1:]:
@@ -72,12 +82,18 @@ def render(curve_rows, comparator_rows):
             raise ValueError(f"P sem ponto único: {mode}")
         row = matches[0]
         k, y = int(row["P_pares_humano"]), int(row["P_par2_recuperados"])
-        lines.extend([r"\color{red}", rf"\pgfpathcircle{{{point(k,y)}}}{{2pt}}\pgfusepath{{fill}}",
+        lines.extend([r"\color{red}", r"\pgfsetdash{}{0pt}", rf"\pgfpathcircle{{{point(k,y)}}}{{2pt}}\pgfusepath{{fill}}",
                       text(width*math.log10(k)/math.log10(xmax)+dx, height*y/ymax+dy,
-                           f"{label}: ({k}, {y}), {row['P_fp']} FP", "left")])
-    for i, (_, label, color, _) in enumerate(series):
+                           f"{label}: ({k}, {y}), {row['P_fp']} FP, +{row['P_pares_llm']} LLM", "left")])
+    for i, (name, label, color, _) in enumerate(series):
         label = label.replace("_", r"\_")
-        lines.extend([rf"\color{{{color}}}", text(0.1+i*2.9, -1.0, label, "left")])
+        x, y = (i % 2)*5.9, -1.0-(i // 2)*0.38
+        lines.extend([rf"\color{{{color}}}", LINE_STYLES[name],
+                      rf"\pgfpathmoveto{{\pgfpoint{{{x:.2f}cm}}{{{y:.2f}cm}}}}",
+                      rf"\pgfpathlineto{{\pgfpoint{{{x+0.45:.2f}cm}}{{{y:.2f}cm}}}}\pgfusepath{{stroke}}",
+                      text(x+0.55, y, label, "left")])
+    lines.extend([r"\color{black}", r"\pgfsetdash{}{0pt}",
+                  text(width/2, -1.8, f"Eixo x limitado a {xmax:,} revisões".replace(",", "."))])
     lines.extend([r"\color{black}", r"\end{pgfpicture}"])
     return "\n".join(lines) + "\n"
 
@@ -94,9 +110,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--curve", type=Path, default=ROOT / "data/comparador_mesma_carga_curva.csv")
     parser.add_argument("--comparator", type=Path, default=ROOT / "data/comparador_mesma_carga.csv")
-    parser.add_argument("--output", type=Path, default=ROOT / "text/slides/figures/curva_esforco.pgf")
+    parser.add_argument("--output", type=Path, help="Destino único opcional; por padrão grava tese e slides")
     args = parser.parse_args()
-    print(generate(args.curve, args.comparator, args.output))
+    outputs = [args.output] if args.output else [
+        ROOT / "text/latex/figures/curva_esforco.pgf",
+        ROOT / "text/slides/figures/curva_esforco.pgf",
+    ]
+    for output in outputs:
+        print(generate(args.curve, args.comparator, output))
 
 
 if __name__ == "__main__":
