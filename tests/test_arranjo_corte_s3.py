@@ -7,7 +7,7 @@ import pytest
 from gzcmd.arranjo_corte import sha256
 from gzcmd.intervals import wilson95
 from scripts.arranjo_corte_s2_suplementar import responses
-from scripts.arranjo_corte_s3_avaliar import ARMS, metrics, replay
+from scripts.arranjo_corte_s3_avaliar import ARMS, metrics, render_tex, replay
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -100,6 +100,18 @@ def test_cut_and_integral_human_primary_endpoints():
     assert cut.aceitos.eq(0).all() and cut.perdidos.eq(36).all()
     assert human.humano.eq(36).all() and human.perdidos.eq(0).all()
     assert table.loc[table.braco.isin(["corte_sozinho", "humano_integral"]), "pares_llm"].eq(0).all()
+
+
+def test_render_identifies_comparisons_and_has_no_trailing_midrule(tmp_path):
+    table, primary = load_tables()
+    target = tmp_path / "arranjo.tex"
+    render_tex(table, primary, target)
+    tex = target.read_text(encoding="utf-8")
+    assert "Cascata sobre a base inteira" in tex
+    assert "A posteriori (sem registro prévio)" in tex
+    assert "PAR~=~1" in tex and "PAR=1" not in tex
+    assert "\\midrule\n\\bottomrule" not in tex
+    assert "\\midrule\n\\end{longtable}" not in tex
 
 
 def test_aggregate_privacy_latex_and_exact_original_script():

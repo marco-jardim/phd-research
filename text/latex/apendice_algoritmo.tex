@@ -1,5 +1,30 @@
 \label{apendice:gzcmd}
 
+\refstepcounter{algorithm}%
+\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1, resultado principal do Capítulo~\ref{cap:estudo4}.
+\label{alg:gzcmd-arranjo}
+
+\noindent\rule{\textwidth}{0.4pt}
+\begin{algorithmic}[1]
+\REQUIRE Potenciais pares $P$, escore OpenRecLink, passo de blocagem, atributos do classificador, custos e orçamentos da v3.1
+\ENSURE Aceitações acima do corte e decisões auditáveis abaixo dele
+\STATE \textbf{Fase 0: Corte por passo}
+\STATE Aceitar os potenciais pares com escore maior ou igual ao corte do respectivo passo
+\STATE Definir $P^{-}$ como os potenciais pares abaixo do corte
+\STATE \textbf{Fase 1: Recalibração sem os rótulos externos}
+\STATE Particionar por REFREC; ajustar o XGBoost na base inteira de treinamento
+\STATE Ajustar a isotônica apenas nas probabilidades internas fora da amostra de $P^{-}$ do treinamento
+\STATE Aplicar a calibração à partição externa de $P^{-}$
+\STATE Estimar as proporções de erro e inconclusivos do revisor por validação cruzada nas partições externas; congelá-las antes das chamadas novas
+\STATE \textbf{Fases 2 a 6: Política abaixo do corte}
+\STATE Aplicar as fases 2 a 6 do Algoritmo~\ref{alg:gzcmd-v31} somente a $P^{-}$, usando a probabilidade recalibrada também na guarda superior
+\STATE Reutilizar respostas apenas quando coincidirem modo, potencial par, modelo, instruções e dossiê
+\STATE Manter os inconclusivos do LLM como encaminhamentos humanos pendentes
+\RETURN Aceitações do corte e decisões de $P^{-}$, sem imputar acertos humanos
+\end{algorithmic}
+\noindent\rule{\textwidth}{0.4pt}
+\bigskip
+
 % Sem float: permite quebra de página natural no algoritmo longo
 \refstepcounter{algorithm}%
 \noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD (calibração por conjuntos âncora), com regras de guarda históricas, política de custo e trilha de auditoria. Não é a execução histórica v3, que usou \textit{Platt scaling} supervisionado da nota e as guardas indicadas na Fase 2; a versão v3.1 é descrita no Algoritmo seguinte.
@@ -101,7 +126,7 @@
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 
-\REQUIRE \parbox[t]{0.85\linewidth}{Potenciais pares $P$ com nota final $v_i$ e 29 subescores $x_i$; \textit{labels} apenas no treinamento;
+\REQUIRE \parbox[t]{0.85\linewidth}{Potenciais pares $P$ com nota final $v_i$ e 29 subescores $x_i$; rótulos apenas no treinamento;
   custos $(C_{FP}, C_{FN}, C_H, C_{LLM})$; erro humano hipotético $(e_{FP,h}, e_{FN,h})$;
   proporções de erro e de inconclusivos do revisor LLM por modo e banda $(e_{FP}, e_{FN}, u)$; orçamentos de revisão LLM e humana.}
 \ENSURE \parbox[t]{0.85\linewidth}{Ação $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{llm}, \textsc{humano}\}$ para cada par $i$;

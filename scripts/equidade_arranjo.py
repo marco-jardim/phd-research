@@ -28,8 +28,8 @@ DECISIONS = ("arranjo_P_vigilancia", "arranjo_P_confirmacao",
              "cascata_v31_vigilancia", "cascata_v31_confirmacao")
 LABELS = {"arranjo_P_vigilancia": "Arranjo P (vigil.)",
           "arranjo_P_confirmacao": "Arranjo P (confirm.)",
-          "cascata_v31_vigilancia": "Cascata v3.1 (vigil.)",
-          "cascata_v31_confirmacao": "Cascata v3.1 (confirm.)"}
+          "cascata_v31_vigilancia": "Base inteira v3.1 (vigil., comparação)",
+          "cascata_v31_confirmacao": "Base inteira v3.1 (confirm., comparação)"}
 TEST_COLUMNS = ["decisao", "tipo", "dimension", "metric", "group_a", "group_b", "test", "n1", "n2",
                 "num_a", "num_b", "p_value_raw", "p_value_fdr", "reject_fdr", "odds_ratio", "or_ci_low",
                 "or_ci_high", "rate_a", "rate_b", "rate_diff", "rate_diff_ci_low", "rate_diff_ci_high"]
@@ -108,6 +108,10 @@ def table_groups(groups, mode, path):
     text = text.replace("cascata v3.1 (vigil\\^ancia)", "cascata v3.1 (" + (
         "vigil\\^ancia" if mode == "vigilancia" else "confirma\\c{c}\\~ao") + ")")
     text = text.replace("tab:qw3-group-metrics", f"tab:equidade-arranjo-grupos-{mode}")
+    text = text.replace("cascata v3.1 (", "cascata v3.1 sobre a base inteira, comparação (")
+    text = text.replace("{Cascata v3.1}", "{Base inteira (comparação)}")
+    text = text.replace(r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
+    text = text.replace(r"\end{tabular}", r"\end{tabular}}")
     text = text.replace(r"\end{table}", r"\par\smallskip\begin{minipage}{\linewidth}\footnotesize "
                         r"A aceitação automática inclui MATCH do motor ou do modelo de linguagem; UNSURE e DEFERRED seguem ao revisor humano e contam como não aceitos. Grupos MISSING e com menos de 30 potenciais pares não integram os testes, como na análise anterior. A faixa etária exclui 403 potenciais pares, com um vínculo, sem idade classificada; a contagem integral consta no CSV de cobertura. Intervalos e testes não corrigem a dependência por REFREC."
                         r"\end{minipage}\end{table}")
@@ -129,7 +133,7 @@ def table_summary(glob, maximum, tests, path):
         lines.append(" & ".join(cells) + r" \\")
     lines += [r"\bottomrule", r"\end{tabular}}", r"\par\medskip", r"\resizebox{\textwidth}{!}{%",
               r"\begin{tabular}{llrrrr}", r"\toprule",
-              r"Dimensão & Métrica & P vigil. & P confirm. & Publicada vigil. & Publicada confirm. \\", r"\midrule"]
+              r"Dimensão & Métrica & P vigil. & P confirm. & Base inteira vigil. (comparação) & Base inteira confirm. (comparação) \\", r"\midrule"]
     for dims in (legacy.DEMOGRAFICAS, legacy.OPERACIONAIS):
         for dim in dims:
             for metric, label in (("sens", "Sens."), ("ppv", "VPP")):

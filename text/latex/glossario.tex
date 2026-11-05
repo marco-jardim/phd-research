@@ -13,6 +13,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Área cinza] Região de potenciais pares cuja nota final do Comparador de Registros situa-se em $[5, 9)$, na qual a classificação automática por limiar fixo não é confiável e a decisão exige revisão adicional.
 
+\item[Arranjo sequencial] Aplicação do GZ-CMD depois do corte do OpenRecLink. Os potenciais pares com escore maior ou igual ao corte do respectivo passo são aceitos; a política v3.1, recalibrada apenas abaixo do corte, decide os demais. É o resultado principal da tese. A aplicação da política a todos os potenciais pares constitui a cascata sobre a base inteira, usada como comparação.
+
 \item[Blocagem] Estratégia de redução do espaço de comparação no \textit{linkage}, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a comparação exaustiva de todos os pares possíveis.
 
 \item[Calibração isotônica] Calibração por regressão monotônica não paramétrica das probabilidades de um classificador. No GZ-CMD, é ajustada fora da amostra (\textit{out-of-fold}), com partições agrupadas por registro de referência (REFREC), e é a referência de calibração da política v3.1.
@@ -29,7 +31,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2024comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui subescores de endereço derivados dos critérios de \citeonline{Paiva2025comparador}, além dos de município.
 
-\item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore composto com um ou dois pontos de corte fixos, sem uso de atributos adicionais. Com dois cortes, resultam três regiões (vínculo, revisão e não-vínculo), como na regra de Fellegi e Sunter; a política v3.1 do GZ-CMD substitui os cortes por quatro ações (vínculo, não-vínculo, revisão por modelo de linguagem e revisão humana). Nesta tese, o corte do OpenRecLink usado pelo serviço é o comparador operacional de referência; o corte 9 da nota final do CdR é comparador hipotético; a revisão integral de $[5,9)$, aceitando-se automaticamente as notas $\geq9$ e descartando-se as notas $<5$, é outro cenário hipotético; e o corte 6,0 da nota é a referência histórica da análise de equidade.
+\item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore com um ou dois pontos de corte fixos. Com dois cortes, resultam regiões de vínculo, revisão e não-vínculo, como na regra de Fellegi e Sunter. O comparador operacional desta tese é o corte do OpenRecLink, isolado ou seguido da revisão humana abaixo dele. No arranjo sequencial, esse corte é preservado, e a v3.1 decide abaixo dele entre vínculo, não-vínculo, LLM e revisor humano. O corte 9 da nota do CdR e a revisão integral de $[5,9)$ são cenários hipotéticos; o corte 6,0 é referência histórica da análise de equidade.
 
 \item[Deduplicação] Processo de identificação e remoção de registros duplicados referentes a um mesmo indivíduo dentro de uma única base de dados.
 
@@ -63,7 +65,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Gradient Boosting}] Família de algoritmos de aprendizado de máquina que constrói modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementações como XGBoost e LightGBM.
 
-\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano.
+\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano. No arranjo sequencial, resultado principal da tese, é aplicado aos potenciais pares abaixo do corte do OpenRecLink.
 
 \item[\textit{Holdout} (conjunto de avaliação independente)] Subconjunto de dados reservado antes do treinamento e utilizado exclusivamente na etapa final de teste do classificador, após a validação cruzada, com vistas a estimar a capacidade de generalização em observações não utilizadas no ajuste.
 
