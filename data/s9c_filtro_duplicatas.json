@@ -1,0 +1,23 @@
+{
+  "analysis": "offline_source_duplicate_audit",
+  "source_metadata": "data/filtro_llm_metadata.json:response_audit",
+  "total_source_rows": 2651,
+  "duplicate_rows_within_source": 0,
+  "note": "Rows summed across sources are not distinct pairs across cohorts. No pair IDs are published.",
+  "sources": [
+    {"source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json", "rows": 435, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json", "rows": 1410, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json", "rows": 14, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json", "rows": 10, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json", "rows": 3, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json", "rows": 66, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json", "rows": 12, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json", "rows": 230, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json", "rows": 71, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json", "rows": 12, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json", "rows": 7, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json", "rows": 209, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json", "rows": 17, "duplicates": 0},
+    {"source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json", "rows": 155, "duplicates": 0}
+  ]
+}

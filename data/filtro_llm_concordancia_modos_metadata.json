@@ -1,0 +1,94 @@
+{
+  "analysis": "aggregate_offline_audit",
+  "queue": "One common descending p_cal_ml queue with pair_id tie-break constructed outside the mode loop in the frozen collect function.",
+  "queue_same_by_design": true,
+  "top_pairs": 125,
+  "distinct_response_files": true,
+  "declared_modes_validated": true,
+  "sources": {
+    "vigilancia": [
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "eac7b67c63a38e40cf9e40d0d780c9223b43aaf0f3bc61c462fb12b90be1e329"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json",
+        "declared_mode": "vigilancia",
+        "sha256": "dfaef60fee7fbc372d46be0ce57645a9721f103c3c3f2cbe8369be3361454752"
+      }
+    ],
+    "confirmacao": [
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "89dcbeb754b3bfeb59cfd68d42ba0f83d6439bec18237c265674c624fe310060"
+      },
+      {
+        "source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json",
+        "declared_mode": "confirmacao",
+        "sha256": "a72566eae9661e8b81774cf894141e18c2741c92ea14fc7cd31a2e4dadf5ad84"
+      }
+    ]
+  },
+  "historical_response_hashes_reproduced": true,
+  "coincident_top_decisions": 119,
+  "different_top_decisions": 6,
+  "coincident_PAR2_decisions": 23,
+  "different_PAR2_decisions": 0,
+  "explanation": "Among top 125, 119 decisions coincide and 6 differ; among PAR=2, 23 coincide and 0 differ. Equal recovered-link totals do not imply shared response files. Cross-mode NONMATCH/UNSURE counts among nonlinks explain differences in human workload and VPN; opposite switches cancel in k=17 and k=29.",
+  "historical_filter_metadata_edited": false,
+  "api_calls": 0,
+  "model_fits": 0,
+  "note": "The frozen original filtro_llm_metadata.json is not edited. Pair IDs and per-pair decisions are never written by this audit."
+}

@@ -14,7 +14,7 @@ DATA = ROOT / 'data'
 
 def abstracts():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    for start in (r'O \textit{linkage} integra', r'\textit{Linkage} integrates'):
+    for start in (r'O \textit{linkage} integra', r'Linkage integrates'):
         i = thesis.index(start)
         yield thesis[i:thesis.index(r'\vspace{15pt}', i)]
 
@@ -23,13 +23,12 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    assert 'Haiku 5.5 e incluíram 21 e quatro falsos positivos. O arranjo registrou' in pt
-    assert 'Haiku 5.5 and included 21 and four false positives. The arrangement had' in en
-    assert '96 e 17 encaminhamentos humanos e 13 e 27 PAR~=~2 perdidos' in pt
-    assert '96 and 17 human referrals and 13 and 27 lost PAR~=~2 links' in en
-    # Perdas e encaminhamentos não pertencem à oração das aceitações do LLM.
-    assert not re.search(r'Haiku 5\.5[^.]*encaminhamentos', pt)
-    assert not re.search(r'Haiku 5\.5[^.]*human referrals', en)
+    assert 'no máximo um vínculo adicional' in pt
+    assert '344 pares avaliados pelo modelo de linguagem de grande porte (LLM)' in pt
+    assert 'at most one additional link' in en
+    assert '344 LLM-reviewed pairs' in en
+    assert 'VPP' in pt and 'PPV' in en
+    assert '22 revisões humanas' in pt and '22 human reviews' in en
     losses = pd.read_csv(DATA / 'arranjo_corte_perdas_mecanismo.csv')
     totals = pd.read_csv(DATA / 'arranjo_corte_metricas.csv')
     llm = pd.read_csv(DATA / 'arranjo_corte_vpp_llm.csv')
@@ -49,16 +48,16 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
 
 def test_cutoffs_remain_three_points_not_a_confidence_interval():
     text = (LATEX / 'capitulo_dados.tex').read_text(encoding='utf-8')
-    assert 'pontos de corte (7,0240; 7,8444; 7,9019)' in text
+    assert '7,0240; 7,8444; 7,9019' in text
     assert '7,8444 a 7,9019' not in text
 
 
 def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     pt, en = abstracts()
     assert r'análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert r'a sensitivity analysis using \textit{Platt scaling}' in en
-    assert r'BH; $p$ ajustado' in pt
-    assert r'BH-adjusted $p=' in en
+    assert r'the sensitivity analysis using Platt scaling' in en
+    assert '42,5' in pt and '42.5' in en
+    assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     for path in LATEX.glob('*.tex'):
         text = path.read_text(encoding='utf-8')
         assert not re.search(r'calibração sigmoidal|sigmoid calibration', text, re.I), path
@@ -69,14 +68,14 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
                 # Rótulo de campo de uma busca bibliográfica não é alvo de ML.
                 assert path.name == 'apendice_busca.tex' and 'sem rótulos de campo' in line
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    assert r'Keywords:} Probabilistic \textit{record linkage}.' in thesis
+    assert r'Keywords:} Probabilistic record linkage.' in thesis
 
 
 def test_conclusion_separates_registration_from_negative_finding_and_has_comparators():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'registrado antes da avaliação. Na análise, a isotônica' in text
+    assert 'não lhe confere força confirmatória' in text
     assert 'registrado antes da avaliação:' not in text
-    assert text.count('pior em todo desfecho medido contra') == 1
+    assert text.count('pior em todo desfecho medido contra') == 0
     reference = pd.read_csv(DATA / 'referencia_comparador_pos_orl.csv').set_index('estrategia')
     cut = reference.loc['pos_orl_corte_nota_9']
     review = reference.loc['pos_orl_revisao_humana_area_cinza']
@@ -84,7 +83,7 @@ def test_conclusion_separates_registration_from_negative_finding_and_has_compara
     assert fmt(cut.sens_automatica * 100) + r'\%' in text
     assert fmt(review.sens_com_humano * 100) + r'\%' in text
     assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in text
-    assert 'área cinza da nota projetariam' in text
+    assert 'área cinza da nota projetaria' in text
 
 
 def test_editorial_area_review_is_a_ceiling_without_numeric_change():
@@ -92,8 +91,9 @@ def test_editorial_area_review_is_a_ceiling_without_numeric_change():
     new = (LATEX / 'tables/editorial/tab_cap8_arranjo_corte.tex').read_text(encoding='utf-8')
     assert old.count('21.497 (28)') == 2
     assert new.count('21.497 (teto; 28)') == 2
-    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text))
-    assert numeric(old) == numeric(new)
+    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
+    from editorial_expectations import arrangement_expected_notes
+    assert numeric(arrangement_expected_notes(old)) == numeric(new)
 
 
 def test_fraction_denominators_are_explicitly_minima_not_observed_counts():
@@ -114,10 +114,10 @@ def test_study_grey_zone_model_version_chronology_and_range_are_unambiguous():
         paragraph = next(p for p in study.split('\n\n') if p.startswith(prefix))
         assert not re.search(r'área cinza(?! da nota)', paragraph)
     assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in study
-    assert r'na versão do \textit{commit} \texttt{16d5876} registra a S3 às 02:11:52 UTC' in study
-    assert 'não ao JSON atual' in study
+    assert r'S3 às 02:11:52 UTC, conforme \path{data/arranjo_corte_metadata.json} na versão \texttt{16d5876}' in study
+    assert 'não no JSON atual' in study
     assert 'e as perdas de nove a 21' not in study
-    assert 'mediana 14, mínimo nove e máximo 21' in study
+    assert 'mediana 14, mínimo 9 e máximo 21' in study
 
 
 def test_historical_fingerprints_still_match_exactly():

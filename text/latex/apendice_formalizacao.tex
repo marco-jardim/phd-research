@@ -2,7 +2,7 @@
 
 A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}).
 
-Adota-se a forma sigmoide do \textit{Platt scaling} \cite{Platt1999}, com ajuste por momentos nas âncoras (Platt por âncoras), distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
+Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada na forma logística de \citeonline{Platt1999}, distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
 
 \[
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
@@ -39,7 +39,7 @@ A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste
 
 \subsection{Função de Perda e Decisão em Quatro Ações}
 
-O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente. As proposições desta seção cobrem essas três ações do desenho original; a política v3.1 acrescenta a revisão humana como quarta ação, com custo $C_H$ e perda $\mathcal{L}_H$ (Seção~\ref{sec:e4-politica-v31}), que não é objeto das proposições.
+O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente. As proposições desta seção cobrem essas três ações do desenho original; a política v3.1 acrescenta a revisão humana como quarta ação, com custo $C_H$ e perda $\mathcal{L}_H$ (Seção~\ref{sec:e4-politica-v31}), que não é objeto das proposições de três ações a seguir. A Proposição~\ref{prop:duas-acoes-orcamento}, ao final, trata separadamente da restrição às ações revisão humana e não vínculo.
 
 Sejam $C_{FP}>0$ e $C_{FN}>0$ os custos unitários de um falso positivo e de um falso negativo. Em vigilância epidemiológica, frequentemente $C_{FN} > C_{FP}$ (o custo de perder um óbito é maior que o de investigar um falso alarme) \cite{Sadinle2017}. A \textit{expected loss} $\mathcal{L}$ para cada ação, dada a probabilidade posterior $p\in[0,1]$, é definida como:
 
@@ -132,7 +132,7 @@ O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na
 
 \begin{enumerate}
 \item \textbf{Modelagem das dependências:} Implementações de Fellegi e Sunter frequentemente assumem que os campos de comparação são condicionalmente independentes, $P(\gamma\mid M) = \prod P(\gamma_i\mid M)$, embora essa hipótese não seja necessária à regra de decisão baseada na razão de verossimilhança. O GZ-CMD, ao empregar um modelo discriminativo (como Random Forest ou Gradient Boosting), pode representar interações não lineares entre atributos sem impor essa independência; a calibração das probabilidades requer avaliação própria.
-\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza operacional dos resultados, fixada em $[5,9)$ da nota do Comparador de Registros (Seção~\ref{sec:padrao-ouro}).
+\item \textbf{Substituição de Limiares por Custos:} Enquanto Fellegi e Sunter definem limiares baseados em proporções de erro toleráveis (Seção~\ref{sec:area-cinza}), o GZ-CMD delimita as regiões de decisão pela utilidade econômica, permitindo que suas fronteiras se desloquem conforme as prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de Registros (Seção~\ref{sec:fontes-dados}).
 \end{enumerate}
 
 \subsubsection{Efeito do custo de revisão e decisão binária}
@@ -242,3 +242,16 @@ Defina-se $\theta=\pi/(1-\pi)>0$ e, para $j\in\{\lambda,\mu\}$, $t_j=\theta T_j/
 \textbf{Observação.} A equivalência requer que a probabilidade produzida coincida com a posterior derivada de $R$ e $\pi$, condição que na prática é apenas aproximada. As restrições por âncoras não asseguram essa condição, sobretudo na região intermediária. A pureza de $A^+$ e $A^-$ e a adequação da hipótese sigmoide devem ser avaliadas com dados rotulados independentes. A propagação da incerteza de calibração para as fronteiras de decisão permanece como trabalho futuro, sem garantia de robustez estabelecida aqui.
 
 A formulação permite parametrizar a triagem por custos e proporções residuais do revisor, com fronteiras sensíveis às probabilidades estimadas e às prioridades epidemiológicas (vigilância \textit{versus} confirmação). A validade dessas decisões depende da adequação das probabilidades e dos parâmetros de perda ao contexto de aplicação.
+
+\subsection{Revisão Humana e Não Vínculo sob Orçamento}
+
+Esta derivação é exclusivamente teórica e não presume calibração empírica nem desempenho humano medido.
+
+\begin{proposition}[Duas ações e orçamento de revisão]
+\label{prop:duas-acoes-orcamento}
+Sejam $p_i\in[0,1]$ as probabilidades condicionais de vínculo, $C_H>0$ o custo constante de revisão humana perfeita e $C_{FN}>0$ a perda por vínculo rejeitado. Admitam-se apenas as ações revisar e não vincular, com perdas esperadas $C_H$ e $C_{FN}p_i$, respectivamente. Sem restrição de orçamento, revisar é ótimo quando $p_i\geq C_H/C_{FN}$, com indiferença na igualdade. Com orçamento para no máximo $B$ revisões de custo igual, existe solução ótima que revisa os maiores $p_i$ entre os que satisfazem esse limiar, até o limite $B$.
+\end{proposition}
+
+\begin{proof}
+A diferença entre não vincular e revisar é $\Delta_i=C_{FN}p_i-C_H$. Revisar não aumenta a perda se e somente se $\Delta_i\geq0$, equivalente ao limiar enunciado. Como $C_{FN}>0$, $\Delta_i$ é crescente em $p_i$. Suponha que uma solução revise $j$ e não revise $i$, com $p_i>p_j$. Trocá-los mantém o número de revisões e altera a perda total em $C_{FN}(p_j-p_i)<0$. Logo, uma solução ótima pode ser escolhida como prefixo da ordem decrescente de $p_i$, limitado aos ganhos não negativos e a $B$. Empates admitem qualquer escolha sem alterar a perda. Se o orçamento for monetário, toma-se $B=\lfloor\text{orçamento}/C_H\rfloor$. Não se conclui daqui optimalidade para custos variáveis, revisão falível ou um escore que não represente essas probabilidades.
+\end{proof}

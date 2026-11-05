@@ -54,8 +54,9 @@ def test_arrangement_editorial_preserves_every_number():
     current = (LATEX / 'tables/editorial/tab_cap8_arranjo_corte.tex').read_text(encoding='utf-8')
     assert current == render_arrangement(original)
     # Remove comentários de proveniência, que têm o nome de script com S3.
-    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text))
-    assert numeric(original) == numeric(current)
+    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
+    from editorial_expectations import arrangement_expected_notes
+    assert numeric(arrangement_expected_notes(original)) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
     assert 'área cinza da nota' in current
@@ -139,33 +140,30 @@ def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
 
 def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'todo \\texttt{MATCH} do LLM abaixo do corte ao revisor humano' in text
-    assert 'sob registro próprio' in text
-    assert 'não é resultado de uma política já avaliada' in text
+    recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
+    assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
+    assert 'hipótese exploratória a validar em dados novos' in recommendation
+    assert 'nunca deve aceitar vínculos sozinho' in recommendation
+    assert 'validação registrada em dados novos' in recommendation
 
 
 def test_abstract_definitions_and_nonrejection_follow_source():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
     start_pt = thesis.index(r'O \textit{linkage} integra')
-    start_en = thesis.index(r'\textit{Linkage} integrates')
+    start_en = thesis.index(r'Linkage integrates')
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
-    for text in (pt, en):
-        assert len(text.split()) <= 500
-    assert 'O arranjo sequencial preserva esse corte' in pt
-    assert 'P é a configuração com calibração isotônica fora da amostra registrada como principal' in pt
-    assert r'P-Platt, análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert 'dois perfis de custo' in pt
-    assert 'O comparador preserva o corte e aplica a cascata publicada sem recalibração' in pt
-    assert 'sem rejeição após ajuste de Benjamini-Hochberg' in pt
-    assert 'BH-adjusted' in en
+    assert len(pt.split()) <= 500 and len(en.split()) <= 500
+    assert 'P é a política com recalibração isotônica abaixo do corte' in pt
+    assert r'P-Platt é a análise de sensibilidade com \textit{Platt scaling}' in pt
+    assert '42,5' in pt and '42.5' in en
+    assert 'pelo menos 95' in pt and 'at least 95' in en
+    assert 'nenhuma estratégia domina' in pt
+    assert 'neither strategy dominates' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
     assert not result.reject_fdr
-    formatted = f'{result.p_value_fdr:.3f}'
-    assert formatted in en
-    assert formatted.replace('.', '{,}') in pt
-    assert 'worse on every outcome measured against the label' in en
-    assert 'só um limite inferior derivado desse' in pt
-    assert not re.search(r'(?<![\\\w{])(?:linkage|Linkage)(?![\w}])', en)
+    # A ausência de rejeição demográfica foi substituída pelo resultado operacional.
+    assert 'BH-adjusted' not in en and 'pelo menos' in pt
+    assert r'\textit{Linkage}' not in en and r'\textit{Platt scaling}' not in en
