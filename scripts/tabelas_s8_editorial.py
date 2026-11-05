@@ -28,12 +28,12 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
     metrics = metrics if metrics is not None else pd.read_csv(ROOT / 'data/arranjo_corte_metricas.csv')
     lines = [r'\begin{table}[!htbp]', r'\centering\scriptsize',
              r'\caption{Ordenações abaixo do corte na mesma carga humana de P. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}',
-             r'\label{tab:cap8-mesma-carga}', r'\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrr}', r'\toprule',
-             r'Modo & Ordem & Revisões & PAR=2 & $S_{0,95}$ (\%) & Pares LLM (chamadas) & FP & $k$ para igualar P \\', r'\midrule']
+             r'\label{tab:cap8-mesma-carga}', r'\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrrr}', r'\toprule',
+             r'Modo & Ordem & Revisões & PAR=2 & \shortstack{PAR=2\\com erro 5\%} & $S_{0,95}$ (\%) & Pares LLM (chamadas) & FP & $k$ para igualar P \\', r'\midrule']
     for mode, label in [('vigilancia', 'Vigilância'), ('confirmacao', 'Confirmação')]:
         for _, row in data.loc[data.modo.eq(mode) & data.carga.eq('K1_humana')].iterrows():
             lines.append(f'{label} & {row.ordenacao.split("_")[0]} & {number(row.k)} & '
-                         f'{number(row.par2_topk)} & {number(row.sens_humano_05 * 100, 2)} & 0 (0) & '
+                         f'{number(row.par2_topk)} & {number(row.par2_topk_erro05, 2)} & {number(row.sens_humano_05 * 100, 2)} & 0 (0) & '
                          f'{number(row.comparador_fp_revisor_perfeito)} & {number(row.k_min_equivalente_P)} ' + r'\\')
         policy = metrics.loc[metrics.modo.eq(mode) & metrics.braco.eq('P') & metrics.faixa.eq('TODAS')].iloc[0]
         match = matches.loc[matches.modo.eq(mode)].iloc[0]
@@ -42,11 +42,11 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
             ('P_MATCH_ao_humano', r'P, \texttt{MATCH} ao humano', match.P_revisoes_humanas_total, match.P_FP_revisor_perfeito),
         ):
             projection = scenarios.loc[scenarios.modo.eq(mode) & scenarios.estrategia.eq(strategy) & scenarios.s.eq(.95)].iloc[0]
-            lines.append(f'{label} & {title} & {number(reviews)} & {number(match.P_par2_recuperados)} & '
+            lines.append(f'{label} & {title} & {number(reviews)} & {number(match.P_par2_recuperados)} & n.a. & '
                          f'{number(projection.sensibilidade_total * 100, 2)} & '
                          f'{number(policy.pares_llm)} ({number(policy.chamadas_llm)}) & {number(fp)} & n.a. ' + r'\\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita. As outras sensibilidades estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% apresenta a contagem projetada das ordenações O1 a O4, lida de \path{data/comparador_mesma_carga_erro05.csv}; n.a. nas linhas de P, cuja projeção total consta separadamente. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. As outras sensibilidades estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
 
 
 def effort(data):

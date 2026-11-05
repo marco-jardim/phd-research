@@ -170,8 +170,11 @@ def test_persisted_outputs_never_contain_pair_ids():
         assert "pair_id" not in pd.read_csv(path, nrows=0).columns
 
 
-@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
-def test_private_reference_reproduces_published_oof():
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", DATA_ROOT / "data/pcal_ml_oof.csv",
+                DATA_ROOT / "data/pcal_ml_oof.json")
+def test_private_reference_reproduces_published_oof(monkeypatch):
+    from scripts import subamostragem_treino as cli
+    monkeypatch.setattr(cli, "ROOT", DATA_ROOT)
     from scripts.subamostragem_treino import load_inputs, versions
     versions()
     raw, x, y, _, original = load_inputs(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
@@ -180,8 +183,11 @@ def test_private_reference_reproduces_published_oof():
     np.testing.assert_allclose(probabilities["isotonic"], original.p_cal_ml.to_numpy(), rtol=0, atol=1e-14)
 
 
-@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
-def test_private_regeneration_is_identical():
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", DATA_ROOT / "data/pcal_ml_oof.csv",
+                DATA_ROOT / "data/pcal_ml_oof.json")
+def test_private_regeneration_is_identical(monkeypatch):
+    from scripts import subamostragem_treino as cli
+    monkeypatch.setattr(cli, "ROOT", DATA_ROOT)
     from scripts.subamostragem_treino import load_inputs, versions
     versions()
     raw, x, y, below, _ = load_inputs(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
