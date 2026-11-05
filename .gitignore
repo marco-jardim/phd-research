@@ -355,5 +355,10 @@ data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/*_journal/
 data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_*.json
 data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/*_journal/
 
-# Fixture local exigida pelos testes do arquivo histórico por linha.
-scripts/preservar_m5_m7_row.py
+# Robustez: respostas e journals por par permanecem locais; agregados são versionados.
+data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_*.json
+data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/*_journal/
+
+# Builds de verificação com jobname alternativo; tese.pdf continua elegível.
+text/latex/tese_*.pdf
+text/pdf/tese_*.pdf
