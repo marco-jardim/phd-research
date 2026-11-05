@@ -55,7 +55,8 @@ def test_arrangement_editorial_preserves_every_number():
     assert current == render_arrangement(original)
     # Remove comentários de proveniência, que têm o nome de script com S3.
     numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^([^&\n]+ & \d+ & \d+(?:,\d+)?) \[[^]]+\]( &.*)$', r'\1\2', re.sub(r'(?m)^%.*$', '', text)).replace(r'$S_A$ (IC 95\%)', r'$S_A$ (\%)'))
-    assert numeric(original.split(r'\noindent')[0]) == numeric(current.split(r'\noindent')[0])
+    from editorial_expectations import arrangement_expected_notes
+    assert numeric(arrangement_expected_notes(original)) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
     assert 'área cinza da nota' in current

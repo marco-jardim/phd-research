@@ -49,7 +49,7 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
 def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_proof():
     text = (L / 'apendice_formalizacao.tex').read_text(encoding='utf-8')
     assert r'\label{prop:duas-acoes-orcamento}' in text
-    section = text.split(r'\subsection{Revisão humana e não vínculo sob orçamento}')[1]
+    section = text.split(r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}')[1]
     assert 'exclusivamente teórica' in section
     assert r'p_i\geq C_H/C_{FN}' in section
     assert r'C_{FN}(p_j-p_i)<0' in section
@@ -58,18 +58,42 @@ def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_pro
     assert not re.search(r'CSV|247|36|0,95', section)
 
 
-def test_policy_projected_count_reads_versioned_workload_not_a_literal():
+@pytest.mark.parametrize('mode', ['vigilancia', 'confirmacao'])
+@pytest.mark.parametrize('strategy,title', [('P', 'P'), ('P_MATCH_ao_humano', r'P, \texttt{MATCH} ao humano')])
+def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, strategy, title):
     data = pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv')
-    workload = pd.read_csv(ROOT / 'data/esforco_arranjo.csv')
-    text = same_load(data, workload=workload)
-    row = workload.loc[workload.modo.eq('vigilancia') & workload.braco.eq('P') & workload.carga.eq('K1_humana')].iloc[0]
-    assert row.par2_recuperados_erro05 == 22.05
-    assert r'23 & 22{,}05' in text
-    changed = workload.copy()
-    changed.loc[changed.braco.eq('P'), 'par2_recuperados_erro05'] = 13.37
-    assert r'23 & 13{,}37' in same_load(data, workload=changed)
-    assert 'se todos os recuperáveis forem revistos por humano' in text
-    assert 'h/FP: horas de revisão divididas pelos FP automáticos' in effort(workload)
+    scenarios = pd.read_csv(ROOT / 'data/cenarios_sensibilidade_humana.csv')
+    selected = scenarios.modo.eq(mode) & scenarios.estrategia.eq(strategy) & scenarios.s.eq(.95)
+    scenario = scenarios.loc[selected].iloc[0]
+    label = 'Vigilância' if mode == 'vigilancia' else 'Confirmação'
+
+    def cells(text):
+        return next(line.split(' & ') for line in text.splitlines() if line.startswith(f'{label} & {title} & '))
+
+    def value(cell):
+        return float(cell.replace('{,}', '.'))
+
+    row = cells(same_load(data, scenarios=scenarios))
+    baseline = scenario.vinculos_total - scenario.vinculos_abaixo_corte
+    expected = scenario.vinculos_aceitos_sem_humano + scenario.s * scenario.vinculos_ao_humano - baseline
+    assert value(row[4]) == pytest.approx(expected)
+    assert value(row[5]) == pytest.approx(scenario.sensibilidade_total * 100, abs=.005)
+    assert (baseline + value(row[4])) / scenario.vinculos_total == pytest.approx(scenario.sensibilidade_total)
+    if strategy == 'P_MATCH_ao_humano':
+        assert scenario.vinculos_aceitos_sem_humano == baseline
+        assert value(row[4]) == pytest.approx(scenario.s * scenario.vinculos_ao_humano)
+    else:
+        assert scenario.vinculos_aceitos_sem_humano > baseline
+    changed = scenarios.copy()
+    changed.loc[selected, 'vinculos_ao_humano'] += 2
+    changed.loc[selected, 'sensibilidade_total'] += 2 * scenario.s / scenario.vinculos_total
+    mutated = cells(same_load(data, scenarios=changed))
+    assert value(mutated[4]) == pytest.approx(expected + 2 * scenario.s)
+    assert value(mutated[5]) != value(row[5])
+    text = same_load(data, scenarios=scenarios)
+    assert 'em P, os vínculos aceitos pelo LLM não recebem desconto' in text
+    assert 'em P com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
+    assert 'h/FP: horas de revisão divididas pelos FP automáticos' in effort(pd.read_csv(ROOT / 'data/esforco_arranjo.csv'))
 
 
 def test_english_convention_expansions_denominators_and_surveillance():
