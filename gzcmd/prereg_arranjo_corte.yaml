@@ -1,0 +1,273 @@
+schema_version: 1
+protocol: ORL aceita SCORE >= corte; GZ-CMD v3.1 abaixo
+base_commit: b09e979
+created_at: '2026-11-05T01:22:05.974769+00:00'
+sha256:
+  gzcmd/arranjo_corte.py: d80c9bc0ee74d82656344d96685d3eab67cfac28c03e287485dc4312007b44d6
+  scripts/arranjo_corte_s1_simular.py: 0eeae303f810b33acebbccd78e1d714497436fac6d597201e5d755d4f8f5f7ee
+  scripts/arranjo_corte_s2_executar.py: ac0d5b9b5c1d9c7730b0992f13e7e2dd3530284f14636d29731259c25fa02f60
+  tests/test_arranjo_corte.py: 0689d46f258a40d15cc8b51397e131899c55dcf0e1adcb779d2353b7589764d6
+  gzcmd/M_arranjo_corte.md: 1a255b0535b45b6854b541fe7cbe2b93e22f1f0e418c40fd6a824b28943895d1
+  scripts/run_exp2_sem_model_outputs.py: f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae
+  gzcmd/ml_oof.py: 5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8
+  gzcmd/runner.py: 3fe59df92bd95b80c34434c5f9bc1c8e87b800a99d7cffab52a999c459811f27
+  gzcmd/reliability.py: ec08fc224d0ad66177135ef1c9bcc115ff9fa86655c90a07ae68de0515ad6d31
+  gzcmd/guardrails.py: c23d5d5dc3087daeca7b5ade3245b57f19b04209b3d75e47d84092ad4210a850
+  gzcmd/calibration.py: f1eb1af2f07db02baa74a23d7f0986793067a6b9e5766473ddf20acfc34c6629
+  gzcmd/gzcmd_v3_policy_engine.py: c9a35191db3d4ec689720b3a91722b93f5a65bc8cb8affd9f90dc84e22f4a666
+  gzcmd/llm_dossier.py: a9cdf3f078507254cd05c4278eca992266f8d1ab783074a3a241605fc35e9589
+  scripts/run_exp2_ablacao_dossie.py: f94d3e1bb4d22687ae5e8dcf47a12596e875703aff7adf6b70c9d1679ca34ce7
+  scripts/funil_gzcmd_v2.py: b3b4c60e55829cbcbedead76ee80d4f664476280b7576ccf404346db189518c6
+  gzcmd/gzcmd_v3_config.yaml: d9d16a6e6b1726e3926b7c543c543e7fc2b580a031210283ae57c373d32a41e6
+  gzcmd/error_rates_by_band_v4.yaml: 0c48024b94de9bd2c3299fd0c21640a1e8a7f0733a424c59d6250ba30ae778b1
+  gzcmd/gzcmd_v4_llm_prompt.md: 0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56
+  data/COMPARADORSEMIDENT.csv: 48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65
+  data/pcal_ml_oof.csv: fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b
+  data/pcal_ml_oof.json: 1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad
+  data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json: 4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156
+  data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json: 4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1
+  data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json: e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb
+  data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json: ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json: c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia_journal/identity.json: 0913e85596138fb15c2e9122d9e9f19c0c95db3339eedcd295316a6f3fc8ac60
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json: 0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717
+  data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao_journal/identity.json: 59e3a3682583cbfb9b13b4b6ccaa78bea632bb8a5192a264558e6f301e62d6f6
+classifier:
+  source: gzcmd/ml_oof.py:_classifier,numeric_features
+  features: 30
+  outer_folds: 5
+  inner_folds: 5
+  split_by: refrec
+  seed: 42
+  n_jobs: 2
+  n_estimators: 300
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+  scale_pos_weight: n_negative/n_positive in each fit
+  eval_metric: logloss
+  sklearn: 1.8.0
+  xgboost: 3.2.0
+orl_cutoffs:
+  6: 7.02408276169
+  9: 7.84444860082
+  11: 7.90191406713
+partition_check:
+  above: 211
+  below: 61485
+  below_PAR2: 36
+  above_exactly_PAR1: true
+costs_and_budgets:
+  vigilancia:
+    false_positive_cost: 10.0
+    false_negative_cost: 50.0
+    llm_review_cost: 0.005
+    min_auto_match_threshold: 0.85
+    max_auto_nonmatch_threshold: 0.15
+    llm_max_calls_per_window: 2000
+    human_review_cost: 1.0
+    human_e_fp: 0.05
+    human_e_fn: 0.05
+    human_max_pairs_per_window: null
+    policy_kind: cost
+    np_policy:
+      max_fp_rate_auto: 0.002
+      max_fp_expected_total: null
+      max_fn_rate_auto: 0.02
+  confirmacao:
+    false_positive_cost: 100.0
+    false_negative_cost: 20.0
+    llm_review_cost: 0.005
+    min_auto_match_threshold: 0.95
+    max_auto_nonmatch_threshold: 0.1
+    llm_max_calls_per_window: 1000
+    human_review_cost: 1.0
+    human_e_fp: 0.05
+    human_e_fn: 0.05
+    human_max_pairs_per_window: null
+    policy_kind: cost
+    np_policy:
+      max_fp_rate_auto: 0.002
+      max_fp_expected_total: null
+      max_fn_rate_auto: 0.02
+bands:
+- name: low
+  min: 0.0
+  max: 5.0
+  inclusive_max: false
+- name: grey_low
+  min: 5.0
+  max: 6.0
+  inclusive_max: false
+- name: grey_mid
+  min: 6.0
+  max: 7.0
+  inclusive_max: false
+- name: grey_high
+  min: 7.0
+  max: 8.0
+  inclusive_max: false
+- name: near_high
+  min: 8.0
+  max: 9.0
+  inclusive_max: false
+- name: high
+  min: 9.0
+  max: 999.0
+  inclusive_max: true
+guardrails:
+  version: v3.1
+  nonmatch: nota < 5
+  match: nota >= 9 and recalibrated_p >= 0.9
+arms:
+  P: Same full-data classifiers and 5x5 splits; nested isotonic only on below-cutoff
+    training inner OOF
+  P-Platt: Same inner OOF, Platt on clipped raw XGBoost logit; calibration.py defaults
+    l2=.001 max_iter=100 tol=1e-10
+  B1: Entire base, original REFREC p, cross-fitted reviewer rates
+sensitivities:
+  A3: Restrict XGBoost fitting to below cutoff, retaining original outer and inner
+    REFREC splits
+  P-PAR2-grey: P with e_fn estimated only on PAR=2, pooling [5,9) bands; same M3 fallback
+calibration_abort_rule: If fewer than 10 PAR=2 in a calibration set, use Platt as
+  principal in that fold and record it
+reviewer_rates:
+  estimator: M3 FP/negative, FN/positive, UNSURE/n; fixed if n<10 or denominator=0
+  sources:
+  - mode: vigilancia
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 1410
+    n_esperado: 1410
+    n_sem_resposta: 0
+    completo: true
+    path: data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json
+    sha256: 4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: 4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156
+    sha256_matches_rates_manifest: true
+  - mode: confirmacao
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 435
+    n_esperado: 435
+    n_sem_resposta: 0
+    completo: true
+    path: data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json
+    sha256: 4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: 4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1
+    sha256_matches_rates_manifest: true
+  - mode: vigilancia
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 209
+    n_esperado: 209
+    n_sem_resposta: 0
+    completo: true
+    cohort: lote31_row
+    path: data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json
+    sha256: e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: e21baf47edfdd28c3937e9c9401c3b61dd806edcc20d0b1454bdb25a4b7f870c
+    sha256_matches_rates_manifest: false
+  - mode: confirmacao
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 7
+    n_esperado: 7
+    n_sem_resposta: 0
+    completo: true
+    cohort: lote31_row
+    path: data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json
+    sha256: ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: b3aac9bf8d09765c95a135d907e063ecce8a47b906fbb7507e2c79fe7dd35747
+    sha256_matches_rates_manifest: false
+  - mode: vigilancia
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 155
+    n_esperado: 155
+    n_sem_resposta: 0
+    completo: true
+    cohort: lote31_refrec
+    path: data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json
+    sha256: c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: cc68b8658866627aefc25d008bb7c978df53f554cd92425b0502eb695ffd468c
+    sha256_matches_rates_manifest: false
+  - mode: confirmacao
+    model: claude-haiku-5-5
+    dossie: sem_mo
+    prompt: v4
+    n_respondido: 17
+    n_esperado: 17
+    n_sem_resposta: 0
+    completo: true
+    cohort: lote31_refrec
+    path: data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json
+    sha256: 0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717
+    reported_model: claude-haiku-5-5
+    alternate_source: false
+    rates_yaml_sha256: abc76bda740c23707ff95f674f7c32c1d87199fcec5f9a3c028e30bc804308f0
+    sha256_matches_rates_manifest: false
+  crossfit: Same external REFREC folds; exclude evaluated fold; freeze before S2
+  s2_reestimation: false
+llm:
+  provider: anthropic
+  model: claude-haiku-5-5
+  prompt_version: v4
+  prompt_sha256: 0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56
+  removed_fields:
+  - model_outputs.p_cal
+  - model_outputs.base_choice
+  - model_outputs.band
+  - model_outputs.evr
+  - model_outputs.guardrail
+  - model_outputs.guardrail_reason
+  workers: 4
+  modes_sequential: true
+  dossier_reconstruction: run_v3 fit_platt/v3; build_dossiers; DossierView(remove_model_outputs=True)
+  cache_key:
+  - mode
+  - pair_id
+  - model
+  - prompt_sha256
+  - dossier_sha256
+  - removed_fields
+  legacy_identity: Compare existing journal identity.json; legacy complete checkpoints
+    without journal identity retain their embedded, SHA256-pinned identity; never
+    treat absence of dossier hash as a hit
+  checkpoint: Existing incremental runner with Windows replacement backoff and transport
+    journal
+primary_outcomes_S3_only:
+- 'Among 36 PAR=2: automatically accepted, referred to human, lost; Wilson 95% intervals'
+- 'Full base and nota [5,9) by mode: acceptance sensitivity/specificity, FP/FN, human
+  referrals, LLM calls, costs; human 5% is scenario, not observed truth'
+S1_outputs:
+  summary: mode x arm x band x action counts ONLY
+  rates: mode x fold x band reviewer probabilities
+  pending: Ignored local pair_id-only CSV, union of P and B1 per mode; no sensitivity
+    API calls
+stop_rule:
+  pending_union_P_B1_more_than: 500
+  estimated_usd_more_than: 2
+  input_tokens_per_pair: 6847
+  output_tokens_per_pair: 3904
+  input_usd_per_million: 0.1
+  output_usd_per_million: 0.5
+  retry_multiplier: 1.2
+  action: Stop and consult author; do not call API
+amendments: []
