@@ -19,29 +19,37 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert len(text.split("\n\n")) == 4
         assert "Zenodo" in text and "211" in text
         assert not re.search("—|–", text)
-    assert "211 preservados por construção" in resumo
-    assert "Nos 36 PAR~=~2" in resumo
-    assert "pre-specified protocol versioned in the repository (not a public registration)" in abstract
-    assert "61,696" in abstract and "85.4" in abstract
-    assert "37.5" in abstract and "94.5" in abstract and "86.3" in abstract
+    assert "211 vínculos" in resumo and "PAR é o rótulo do padrão-ouro" in resumo
+    assert "1 indica aceitação pelo corte; 2, recuperação pela revisão manual" in resumo
+    assert "preregistered in the repository, not in a public registry" in abstract
+    assert "61,696" in abstract and "85.4" in abstract and "86.3" in abstract
     assert "Zenodo deposit covers the whole-dataset cascade" in abstract
-    assert "not the Python package" in abstract
-    assert "lost 13 and nine" in abstract and "lost 27 and 17" in abstract
-    assert "referring 19 and 17" in abstract and "referring one and 11" in abstract
-    assert "42.5\\% versus 45.0\\%" in abstract
-    assert "86.3\\% for females and 93.3\\% for males" in abstract
-    assert "13 e nove" in resumo and "27 e 17" in resumo
-    assert "estratégia de máxima sensibilidade" in resumo
+    assert "arrangement is implemented in the thesis repository" in abstract
+    assert "P lost 13 and 27" in abstract and "without recalibration lost nine and 17" in abstract
+    assert "96 and 17 human referrals" in abstract
+    assert "86.3\\% for females (95\\% CI: 76.6 to 92.4)" in abstract
+    assert "93.3\\% for males (88.3 to 96.2)" in abstract
+    assert "P perdeu 13 e 27" in resumo and "comparador perdeu nove e 17" in resumo
+    assert "vazamento de alvo e seleção de limiar no teste" in resumo
     assert "oito contra oito" not in resumo and "eight versus eight" not in abstract
-    assert "Ambos aceitaram oito vínculos PAR~=~2 na confirmação" in resumo
-    assert "sem empate nas perdas e nos encaminhamentos" in resumo
-    assert "Both accepted eight PAR~=~2 links in confirmation" in abstract
-    assert "without equivalent losses or human referrals" in abstract
+    assert "quatro PAR~=~2 contra dez" in resumo
+    assert "four PAR~=~2 links versus ten" in abstract
+    for text in (resumo, abstract):
+        assert "P-Platt" in text and "Claude Haiku 5.5" in text
+        assert "16" in text and "75" in text and "36" in text
+        assert "24 óbitos" not in text and "24 additional deaths" not in text
+    assert "2.156" in resumo and "2.522" in resumo and "limite inferior" in resumo
+    assert "2,156" in abstract and "2,522" in abstract and "lower bound" in abstract
+    assert "intervalos sobrepostos" in resumo and "intervals overlapping" in abstract
+    assert "não sustentou essa dominância" in resumo and "did not sustain dominance" in abstract
+    assert "hipótese permanece condicionada à carga" in resumo
+    assert "hypothesis remains conditional on workload" in abstract
 
 
 def test_every_study5_input_table_is_referenced_in_chapter():
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
-    for name in re.findall(r"\\input\{(tables/[^}]+)\}", chapter):
+    active = re.sub(r"(?m)^%.*$", "", chapter)
+    for name in re.findall(r"\\input\{(tables/[^}]+)\}", active):
         table = (LATEX / name).read_text(encoding="utf-8")
         labels = re.findall(r"\\label\{([^}]+)\}", table)
         assert labels, name
@@ -53,10 +61,13 @@ def test_reuse_caveat_present_in_method_limitations_and_conclusion():
     method = study.split(r"\label{sec:e4-arranjo-metodo}")[1].split(r"\section{Resultados}")[0]
     limits = study.split(r"\label{sec:e4-limitacoes}")[1]
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
+    assert "reutilizam majoritariamente" in method
+    assert r"$P\cup B1$" in method and "14" in method
     for text in (method, limits, conclusion):
-        assert "reutilizam majoritariamente" in text
-        assert r"$P\cup B1$" in text and "14" in text
         assert "não é prospectiva" in text
+    for text in (limits, conclusion):
+        assert r"\ref{sec:e4-arranjo-metodo}" in text
+        assert "reutilização" in text
 
 
 def test_final_editorial_contract_and_table_placement():
@@ -65,7 +76,7 @@ def test_final_editorial_contract_and_table_placement():
     limits = study.split(r"\subsection{Limitações}")[1]
     for text in (discussion, limits):
         assert "vem inteiramente" not in text
-        assert "quatro contra dez" not in text
+        assert "quatro contra dez" in text
         assert r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "permanece análise de sensibilidade" in conclusion
@@ -79,7 +90,7 @@ def test_final_editorial_contract_and_table_placement():
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     cutoff = chapter.index(r"\subsection{Comparação com o corte 6,0}")
     for mode in ("vigilancia", "confirmacao"):
-        name = f"tables/tab_equidade_arranjo_rejeicoes_cascata_v31_{mode}.tex"
+        name = f"tables/editorial/tab_equidade_arranjo_rejeicoes_cascata_v31_{mode}.tex"
         assert chapter.index(r"\input{" + name + "}") < cutoff
     assert "Não é incluída" in chapter
     assert "tab_equidade_v31_rejeicoes_cascata.tex" in chapter

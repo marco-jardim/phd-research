@@ -33,7 +33,8 @@ Os resultados principais provêm de \path{scripts/equidade_arranjo.py}, com agre
 
 O arranjo P aceitou 236 potenciais pares na vigilância, com 215 vínculos e 21 falsos positivos: sensibilidade de 87,0\% (IC 95\%: 82,3; 90,7) e VPP de 91,1\% (86,8; 94,1). Na confirmação, aceitou 223, com 219 vínculos e quatro falsos positivos: sensibilidade de 88,7\% (84,1; 92,0) e VPP de 98,2\% (95,5; 99,3). Os encaminhamentos humanos foram 96 e 17, com 19 e um vínculos, respectivamente. A Tabela~\ref{tab:equidade-arranjo} reúne o desempenho e as diferenças máximas; seus falsos negativos incluem a revisão pendente.
 
-\input{tables/tab_equidade_arranjo.tex}
+% Artefato histórico preservado, não incluído: \input{tables/tab_equidade_arranjo.tex}
+\input{tables/editorial/tab_equidade_arranjo.tex}
 
 Os 211 vínculos acima do corte são aceitos por construção em P. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR~=~2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. Não refletem somente o desempenho da política abaixo do corte. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo dele. O poder é limitado por esses números e pela incorporação do corte ao rótulo. A ausência de rejeição não demonstra paridade.
 
@@ -43,9 +44,9 @@ Na vigilância, a sensibilidade de P foi de 88,7\% no sexo feminino e de 86,4\% 
 
 O XGBoost com sensibilidade equivalente apresentou VPP de 93,1\% nas mulheres e 70,7\% nos homens, com FPR de 0,04\% e 0,14\%. Esses valores pertencem ao classificador, não à cascata. Na cascata sobre a base inteira, comparação, o VPP foi de 87,9\% e 84,0\%, com FPR de 0,063\% e 0,053\%. A direção da diferença entre sexos muda entre as decisões. O contraste não permite atribuir a diferença somente à prevalência nem interpretar a cascata como etapa que corrigiria o arranjo. As Tabelas~\ref{tab:equidade-arranjo-grupos-vigilancia} e~\ref{tab:equidade-arranjo-grupos-confirmacao} apresentam os resultados completos por subgrupo.
 
-\input{tables/tab_equidade_arranjo_grupos_vigilancia.tex}
+\input{tables/editorial/tab_equidade_arranjo_grupos_vigilancia.tex}
 
-\input{tables/tab_equidade_arranjo_grupos_confirmacao.tex}
+\input{tables/editorial/tab_equidade_arranjo_grupos_confirmacao.tex}
 
 \subsubsection{Subgrupos operacionais}
 
@@ -53,13 +54,13 @@ A disparidade dominante por passo no arranjo é herdada do corte e do rótulo. O
 
 P apresentou sete rejeições na vigilância e três na confirmação, todas em dimensões operacionais. A cascata sobre a base inteira apresentou nove e uma, também operacionais. A contagem não ordena equidade, pois as decisões mudam denominadores, poder e número de comparações com VPP definido. As Tabelas~\ref{tab:equidade-arranjo-rejeicoes-arranjo-P-vigilancia} e~\ref{tab:equidade-arranjo-rejeicoes-arranjo-P-confirmacao} identificam as rejeições de P; as Tabelas~\ref{tab:equidade-arranjo-rejeicoes-cascata-v31-vigilancia} e~\ref{tab:equidade-arranjo-rejeicoes-cascata-v31-confirmacao}, as da base inteira.
 
-\input{tables/tab_equidade_arranjo_rejeicoes_arranjo_P_vigilancia.tex}
+\input{tables/editorial/tab_equidade_arranjo_rejeicoes_arranjo_P_vigilancia.tex}
 
-\input{tables/tab_equidade_arranjo_rejeicoes_arranjo_P_confirmacao.tex}
+\input{tables/editorial/tab_equidade_arranjo_rejeicoes_arranjo_P_confirmacao.tex}
 
-\input{tables/tab_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex}
+\input{tables/editorial/tab_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex}
 
-\input{tables/tab_equidade_arranjo_rejeicoes_cascata_v31_confirmacao.tex}
+\input{tables/editorial/tab_equidade_arranjo_rejeicoes_cascata_v31_confirmacao.tex}
 
 No encerramento da notificação, o VPP de P na vigilância foi de 86,5\% nas demais situações e de 97,9\% nas encerradas por óbito. Na confirmação, foi de 96,9\% e 100,0\%. Na vigilância, o VPP apresentou rejeições de paridade para Q2 e Q3 contra Q4 do nome; na confirmação, para Q3 contra Q4. A sensibilidade permaneceu menor no terceiro quartil que no quarto, mas os poucos vínculos dos quartis inferiores limitam a estimação das diferenças máximas. Esses resultados são operacionais, não atributos demográficos.
 
