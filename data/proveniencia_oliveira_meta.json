@@ -1,0 +1,66 @@
+{
+  "fonte": "Oliveira2026obitoTBpulmonar.txt",
+  "paginas_impressas": {
+    "processo": [
+      33,
+      34
+    ],
+    "total_pares": 35,
+    "quadro5": [
+      36,
+      37
+    ],
+    "passo_aberto_quadro6": 39,
+    "maior_data_notificacao": 41,
+    "data_mais_proxima_obito": "resumo"
+  },
+  "conversao_pagina": "pagina impressa = marcador p. menos 2; resumo sem pagina impressa",
+  "passos": [
+    {
+      "passo": 6,
+      "corte": "7,0240",
+      "pelo_corte": 76,
+      "apos_revisao": 80
+    },
+    {
+      "passo": 9,
+      "corte": "7,8444",
+      "pelo_corte": 120,
+      "apos_revisao": 127
+    },
+    {
+      "passo": 11,
+      "corte": "7,9019",
+      "pelo_corte": 15,
+      "apos_revisao": 40
+    }
+  ],
+  "total_pares_processo": 2549,
+  "total_passos_probabilisticos": 29,
+  "passo_aberto": {
+    "chave": "PBLOCO",
+    "recuperados_cdr": 5
+  },
+  "decisoes_informadas_pelo_autor": [
+    "Extrato oriundo do mesmo processo descrito por Oliveira (2026)",
+    "Vinculos deterministicos retirados antes do probabilistico",
+    "SIM do extrato restrito a TB como causa basica",
+    "CdR Python executado antes da revisao clerical que originou PAR",
+    "Base exportada nao deduplicada por obito"
+  ],
+  "nao_informados": [
+    "orgao fornecedor",
+    "data da extracao",
+    "criterio de escolha dos passos"
+  ],
+  "fontes_documentais": [
+    {
+      "arquivo": "Oliveira2026obitoTBpulmonar.txt",
+      "sha256": "0b4906ebd2c9761ef39436f14adb3bc51be0caf1d5ee5dcde6f09da7ba26857e"
+    },
+    {
+      "arquivo": "Paiva2025comparador.txt",
+      "sha256": "ccb4dd110cecf8a894e477eb1703ac0e06d28ad446fae03937a3e1a00f1eb033"
+    }
+  ]
+}

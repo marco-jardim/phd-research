@@ -1,0 +1,34 @@
+{
+  "script": "scripts/sensibilidade_gzcmd_por_par.py",
+  "fontes": [
+    {
+      "arquivo": "COMPARADORSEMIDENT.csv",
+      "sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65"
+    },
+    {
+      "arquivo": "funil_gzcmd_final_metricas.csv",
+      "sha256": "a67433f7772f3bd21a84966bccb53b22875f7524165cb5243d77b193610cb213"
+    },
+    {
+      "arquivo": "funil_gzcmd_vigilancia.csv",
+      "sha256": "c68b9bcf940f3e4c04d1d5fe28ad93fba7e9e72116c10e42a2f17824e076328f"
+    },
+    {
+      "arquivo": "funil_gzcmd_confirmacao.csv",
+      "sha256": "63fcc8757df20cfc4471173ed659b74c854f80f05a0b942f7454607d5de0d025"
+    }
+  ],
+  "endpoint": "final == MATCH, incluindo LLM MATCH; UNSURE e DEFERRED não são aceitos",
+  "particionamento": "REFREC; artefatos sem sufixo _row",
+  "matrizes_e_sensibilidades_conferidas": true,
+  "area_cinza": {
+    "vinculos": 151,
+    "corte_orl": 123,
+    "cascata": {
+      "confirmacao": 65,
+      "vigilancia": 113
+    }
+  },
+  "regra_de_parada": true,
+  "saida": "Somente agregados, sem pair_id"
+}
