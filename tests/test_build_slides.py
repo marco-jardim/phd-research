@@ -54,23 +54,34 @@ def test_slide_structure_and_editorial_contract():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     main, backup = source.split(r"\appendix")
     assert main.count(r"\begin{frame}") == 30
-    assert backup.count(r"\begin{frame}") == 12
+    backup_frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", backup, re.S)
+    assert backup_frames
+    assert len(backup_frames) == backup.count(r"\begin{frame}")
+    for frame in backup_frames:
+        title = re.match(r"\{Backup:\s*([^{}]+)\}", frame)
+        assert title and title.group(1).strip()
+        assert re.search(r"\\fonte(?:\[[^\]]*\])?\{[^}]+\}", frame)
     frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", source, re.S)
     assert sum("Fellegi" in frame for frame in frames) == 1
     assert source.index("Limitações: referência") < source.index("Conclusões:")
     assert "211/247 = 85,4" in source
     assert "Fluxo Modal & XGBoost & 0,943" in source
-    assert "cascata REFREC" in source
+    assert any(
+        "base inteira (comparação)" in frame
+        and "REFREC" in frame
+        and "tab:cap8-cascata-v31" in frame
+        for frame in backup_frames
+    )
     for path in [SLIDES / "defesa.tex", SLIDES / "roteiro_defesa.md"]:
         text = path.read_text(encoding="utf-8")
         assert not re.search("zona (?:cinza|cinzenta)|[\u2013\u2014]", text, re.I)
 
 
-def test_script_has_nine_short_answers():
+def test_script_has_eleven_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 9
+    assert len(answers) == 11
     assert all(len(answer.split()) <= 70 for answer in answers)
