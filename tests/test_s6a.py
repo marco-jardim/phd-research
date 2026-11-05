@@ -149,11 +149,11 @@ def test_abstract_definitions_and_nonrejection_follow_source():
         assert len(text.split()) <= 500
     assert 'O arranjo sequencial preserva esse corte' in pt
     assert 'P é a configuração com calibração isotônica fora da amostra registrada como principal' in pt
-    assert 'P-Platt, análise de sensibilidade com calibração sigmoidal' in pt
+    assert r'P-Platt, análise de sensibilidade com \textit{Platt scaling}' in pt
     assert 'dois perfis de custo' in pt
     assert 'O comparador preserva o corte e aplica a cascata publicada sem recalibração' in pt
-    assert 'sem rejeição após ajuste para múltiplas comparações' in pt
-    assert 'without rejection after adjustment for multiple comparisons' in en
+    assert 'sem rejeição após ajuste de Benjamini-Hochberg' in pt
+    assert 'BH-adjusted' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
