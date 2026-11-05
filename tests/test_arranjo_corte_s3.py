@@ -117,7 +117,10 @@ def test_render_identifies_comparisons_and_has_no_trailing_midrule(tmp_path):
     assert "reutiliza a cascata sobre a base inteira" in tex
     caption = tex.split(r"\caption{", 1)[1].split(r"\label{", 1)[0]
     assert "corte do OpenRecLink" in caption and "padrão-ouro" in caption
-    assert "gabarito" not in caption
+    # O contrato cobre ambas as legendas e todas as notas, não só a primeira.
+    assert "gabarito" not in tex.lower()
+    assert "vieses do padrão-ouro" in tex
+    assert "ressalvas sobre o padrão-ouro" in tex
     assert tex == (ROOT / "text/latex/tables/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
 
 

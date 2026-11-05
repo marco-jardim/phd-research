@@ -33,6 +33,10 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     assert "13 e nove" in resumo and "27 e 17" in resumo
     assert "estratégia de máxima sensibilidade" in resumo
     assert "oito contra oito" not in resumo and "eight versus eight" not in abstract
+    assert "Ambos aceitaram oito vínculos PAR~=~2 na confirmação" in resumo
+    assert "sem empate nas perdas e nos encaminhamentos" in resumo
+    assert "Both accepted eight PAR~=~2 links in confirmation" in abstract
+    assert "without equivalent losses or human referrals" in abstract
 
 
 def test_every_study5_input_table_is_referenced_in_chapter():
@@ -66,6 +70,12 @@ def test_final_editorial_contract_and_table_placement():
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "permanece análise de sensibilidade" in conclusion
     assert "permanece sensibilidade" not in conclusion
+    assert "cascata, apresentada como comparação" in conclusion
+    assert "78,5\\% e 53,4\\%" in conclusion
+    assert "34 e zero falsos positivos" in conclusion
+    assert "restrição de 0,2\\% foi inviável" in conclusion
+    assert "Claude Sonnet 5.5 acrescentou de dois a quatro vínculos" in conclusion
+    assert "vinte vezes maior por" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     cutoff = chapter.index(r"\subsection{Comparação com o corte 6,0}")
     for mode in ("vigilancia", "confirmacao"):
@@ -77,12 +87,15 @@ def test_final_editorial_contract_and_table_placement():
 
 def test_canonical_names_and_operational_area_cinza_definition():
     for name in ("estudo1_comparador.tex", "estudo2_classificadores.tex", "estudo3_estrategias.tex",
-                 "tese.tex", "conclusao.tex", "glossario.tex"):
+                 "tese.tex", "conclusao.tex", "glossario.tex", "capitulo2.tex",
+                 "apendice_busca.tex", "siglas.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
         assert "Floresta Aleatória" not in text
         assert r"\textit{Random Forest}" not in text
     formal = (LATEX / "apendice_formalizacao.tex").read_text(encoding="utf-8")
     assert r"\textit{labels}" not in formal
+    assert "Essas regiões não redefinem a área cinza operacional" in formal
+    assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
         assert "Nos resultados desta tese" in text
