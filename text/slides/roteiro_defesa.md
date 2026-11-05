@@ -99,7 +99,7 @@ A disparidade por passo é herdada do corte e do *label*, não um efeito isolado
 Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. A tese propõe sua composição operacional com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
 
 ### 26. Limitações de método
-A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, taxas com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O comparador *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a robustez mede estabilidade nos mesmos dados, não generalização.
+A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, taxas com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O comparador *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade utiliza os mesmos dados e não avalia generalização.
 
 ### 27. Limitações de transferência e governança
 O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas. A exportação restrita com identificador de par por HMAC foi implementada em `scripts/export_matriz_desidentificada.py`, mas a matriz não foi depositada e não se afirma saneamento retroativo das execuções. A equivalência Java parcial foi executada; a comparação empírica com Lages não foi realizada.
@@ -158,8 +158,8 @@ Na base inteira, a cascata aceita 132, perde 28 e encaminha 87 vínculos, totali
 ### 45. Backup: análises de sensibilidade do arranjo e comparadores
 A tabela de reserva preserva os braços de sensibilidade e os mecanismos de perda, sem substituir P por outro resultado depois da avaliação. As perdas de P por guarda/custo/LLM são 1/6/6 na vigilância e 1/22/4 na confirmação. A posição dos FP frente aos limiares permanece rastreável. O registro interno precede a S3 (avaliação com os *labels*) em 49 minutos; o resultado *a posteriori* já era conhecido e o código registrado está ausente do git.
 
-### 46. Backup: robustez com registro interno, não confirmatória
-O bloco numérico (N) varia *threads* e semente; o bloco de partição (R) varia as partições. A robustez não é confirmatória nem valida generalização. A dominância de P-Platt foi 7/20 e 4/20 na vigilância, 7/20 e 5/20 na confirmação, sem dominância inversa. No bloco de partição (R), o Jaccard mediano de P na vigilância é 0,43 em relação à partição original, FP vão de 9 a 31 e perdas de 9 a 21. Essa amplitude marginal não mede a incerteza da diferença pareada. Uma diferença de um vínculo em 36 não sustenta superioridade.
+### 46. Backup: análise de estabilidade com registro interno, não confirmatória
+O bloco numérico (N) varia *threads* e semente; o bloco de partição (R) varia as partições. A análise de estabilidade não é confirmatória nem valida generalização. A dominância de P-Platt foi 7/20 e 4/20 na vigilância, 7/20 e 5/20 na confirmação, sem dominância inversa. No bloco de partição (R), o Jaccard mediano de P na vigilância é 0,43 em relação à partição original, FP vão de 9 a 31 e perdas de 9 a 21. Essa amplitude marginal não mede a incerteza da diferença pareada. Uma diferença de um vínculo em 36 não sustenta superioridade.
 
 ### 47. Backup: subamostragem
 A subamostragem é exploratória e não melhorou a fila nem a calibração de forma que justifique substituir o treino na prevalência original. Na isotônica, a mediana do topo 96 cai de 22 para 13 com 1:1 e 18,5 com 1:5; 1:20 e 1:50 ficam dentro da variação entre sementes. O Brier mediano piora em todas as proporções. Não se infere melhora de equidade. A referência original tem uma única execução, não intervalo entre sementes. A queda de 25 p.p. no passo 6 tem denominador de 4 PAR=2. Fonte: `subamostragem_treino_resumo.csv:24,25,786`, população abaixo do corte, variante isotonic.
@@ -172,7 +172,7 @@ Os mecanismos da política original são distintos do erro do revisor humano: gu
 
 ## Perguntas prováveis
 
-São 33 respostas, com 60, 58, 58, 61, 66, 63, 60, 68, 57, 70, 61, 62, 55, 55, 57, 59, 56, 60, 58, 67, 65, 60, 58, 52, 52, 61, 59, 60, 63, 55, 57, 65 e 57 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
+São 33 respostas, com 60, 58, 58, 61, 66, 63, 60, 68, 57, 70, 63, 62, 55, 55, 57, 59, 56, 62, 58, 67, 65, 60, 58, 52, 52, 61, 59, 60, 63, 55, 57, 65 e 57 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -236,7 +236,7 @@ Fonte: `data/arranjo_corte_metricas.csv:2,4,12,22,30`; `data/arranjo_corte_par2.
 
 ### 11. Por que não adotar P-Platt?
 
-P é principal porque foi registrado antes. P-Platt, análise de sensibilidade, dominou P na avaliação original da vigilância. A robustez com registro interno, não confirmatória, não sustentou a dominância: vigilância 7/20 e 4/20, confirmação 7/20 e 5/20, nos blocos numérico (N)/partição (R). Na vigilância, menos FP coexistem com perdas medianas de um/dois vínculos a mais. Adotar *Platt scaling* exige dados novos.
+P é principal porque foi registrado antes. P-Platt, análise de sensibilidade, dominou P na avaliação original da vigilância. A análise de estabilidade com registro interno, não confirmatória, não sustentou a dominância: vigilância 7/20 e 4/20, confirmação 7/20 e 5/20, nos blocos numérico (N)/partição (R). Na vigilância, menos FP coexistem com perdas medianas de um/dois vínculos a mais. Adotar *Platt scaling* exige dados novos.
 
 Fonte: `data/arranjo_corte_metricas.csv:12,14`; `data/robustez_arranjo_resumo.csv:2-5,404,488`. Slides 22 e 46.
 
@@ -278,7 +278,7 @@ Fonte: `tab:e4-desempenho-faixas-oof`; `data/arranjo_corte_metadata.json`, `veri
 
 ### 18. O arranjo pode ser reproduzido somente com o Zenodo?
 
-Não. O depósito e o pacote cobrem a cascata v3.1 sobre a base inteira, não o arranjo. O repositório contém código, registros, configurações e agregados do arranjo e da robustez. As saídas por par ficam locais, e o extrato pseudonimizado não é público. Reexecutar as etapas depende de acesso autorizado e das versões registradas, não apenas de instalar o pacote.
+Não. O depósito e o pacote cobrem a cascata v3.1 sobre a base inteira, não o arranjo. O repositório contém código, registros, configurações e agregados do arranjo e da análise de estabilidade. As saídas por par ficam locais, e o extrato pseudonimizado não é público. Reexecutar as etapas depende de acesso autorizado e das versões registradas, não apenas de instalar o pacote.
 
 Fonte: repositório, `gzcmd/prereg_arranjo_corte.yaml` e `gzcmd/prereg_robustez_arranjo.yaml`; disponibilidade dos dados na tese. Slides 29 e 42.
 
@@ -294,7 +294,7 @@ Nenhuma ordenação domina em todas as cargas. Para igualar os 23 e 9 vínculos 
 
 Fonte: `capitulo3.tex`, `sec:objetivos-especificos`; `data/comparador_mesma_carga.csv`. Slides 20 e 28.
 
-### 21. A robustez confirma generalização e repetibilidade?
+### 21. A análise de estabilidade confirma generalização e repetibilidade?
 
 Não. É análise com registro interno, não confirmatória, nos mesmos dados. Em P na vigilância, bloco de partição (R), o Jaccard mediano em relação à partição original é 0,43 no bloco de partição (R). Nesse bloco, FP variam de nove a 31 e perdas de nove a 21; a réplica original é um ponto dessa distribuição. Essa instabilidade não valida externamente nem garante repetibilidade integral.
 
@@ -390,25 +390,27 @@ Critérios editoriais: menção ao referencial clássico restrita ao slide 8; pr
 
 O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
-Compilação oficial pós-revisão linguística do PR #51, autorizada pelo autor. A tese foi compilada por `python scripts/build_pdf.py --jobname tese --outname tese`, com BibTeX e passagens de pdflatex até estabilizar, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex, com jobname `defesa` e saída em `text/slides/defesa.pdf`. Ambos usaram `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/.texdeps//;`, o mesmo do PR #50.
+Compilação oficial da lista final de revisão linguística do PR #51, autorizada pelo autor. A tese foi compilada por `python scripts/build_pdf.py --jobname tese --outname tese`, com BibTeX e três passagens de pdflatex, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex. Ambos usaram `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/.texdeps//;`, o mesmo do PR #50.
 
-### Verificação técnica do build oficial pós-revisão
+### Verificação técnica do build oficial após ajuste do refrão
 
-A tese oficial contém **224 páginas** e a ficha registra **`224 f.: il.`**, pela convenção do PR #50: folhas iguais às páginas físicas do PDF. O primeiro build, antes da atualização da ficha, produziu 224 páginas e estabilizou em quatro passagens. A ficha foi corrigida de 225 para 224 folhas; o segundo build manteve 224 páginas e estabilizou em três passagens. Não há `.nlo`, portanto o script oficial não executou makeindex.
+A tese oficial manteve **224 páginas**, e a ficha permanece em **`224 f.: il.`**. Não foi necessária nova edição da ficha nesta etapa. O build estabilizou em três passagens; não há `.nlo`, portanto o script oficial não executou makeindex.
 
-Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. Suas entradas não foram alteradas neste build. Os logs finais dos dois documentos não contêm erros LaTeX, referências ou citações indefinidas, pedidos de nova passagem ou marcadores `??`, também ausentes no texto extraído dos PDFs. Permanecem somente os cinco Overfull herdados na tese, com larguras idênticas ao baseline; nos slides não há Overfull. Os avisos do pacote externo xcolor não constituem erro de compilação. Não foi realizado novo ensaio presencial de projeção.
+Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. Suas únicas alterações de entrada nesta etapa são as três ocorrências terminológicas de robustez para estabilidade, nos locais indicados pelo autor. Não houve mudança de resultados, números ou fontes. O roteiro foi harmonizado no mesmo conceito, preservando os nomes dos arquivos `robustez_*`.
 
-Logs e evidências locais, não versionados: `.local/linguistica/oficial/tese.log`, `.local/linguistica/oficial/defesa.log`, stdout/stderr dos scripts oficiais e `.local/linguistica/oficial/verificacao.json`. Em outra máquina, é necessário instalar as dependências de TeX ou disponibilizá-las via TEXINPUTS.
+Os logs finais da tese e dos slides não contêm erros LaTeX, referências ou citações indefinidas, pedidos de nova passagem ou marcadores `??`, também ausentes no texto extraído dos PDFs. Permanecem somente os cinco Overfull herdados na tese, com larguras idênticas ao baseline; nos slides não há Overfull. Não foi realizado novo ensaio presencial de projeção.
 
-*Commit* da árvore compilada antes das alterações autorizadas neste build: `7c1f17171235dc1be513fdb2a2f8d45daad4141f`. As entradas dos slides são as desse commit; o fonte da tese recebeu o agradecimento a Luís Guilherme Buteri Alves pelo pré-processamento e a atualização da extensão da ficha. O commit de entrega acrescenta os três PDFs oficiais e esta atualização do roteiro. As dependências externas de TeX não fazem parte dessa árvore.
+Logs e evidências locais, não versionados: `.local/linguistica/refrao/tese.log`, `.local/linguistica/refrao/defesa.log`, stdout/stderr dos scripts oficiais e `.local/linguistica/refrao/verificacao.json`.
 
-SHA-256 do PDF oficial dos slides: `841ef599863a3c64b8f667b0c9d55811645f592d1189185b6def8eec7684fa8e`. Relação dos PDFs oficiais:
+*Commit* da árvore compilada antes das alterações desta lista: `4fb0b3aa60dbcf01e78ce1796a3a03b637883164`. O commit de entrega inclui os ajustes de prosa, as três ocorrências dos slides, o roteiro, o teste editorial de terminologia e os PDFs oficiais. As dependências externas de TeX não fazem parte dessa árvore.
+
+SHA-256 do PDF oficial dos slides: `599f535d6ca546dbb1ed99d119751a7c51a6dc9d0a6cecb3a486347945d4d927`. Relação dos PDFs oficiais:
 
 | Arquivo | Páginas | SHA-256 |
 | :-- | --: | :-- |
-| `text/slides/defesa.pdf` | 49 | `841ef599863a3c64b8f667b0c9d55811645f592d1189185b6def8eec7684fa8e` |
-| `text/latex/tese.pdf` | 224 | `f722705258caae7cf4032553c642daa450b53190e300872e771e6ab82336cc15` |
-| `text/pdf/tese.pdf` | 224 | `f722705258caae7cf4032553c642daa450b53190e300872e771e6ab82336cc15` |
+| `text/slides/defesa.pdf` | 49 | `599f535d6ca546dbb1ed99d119751a7c51a6dc9d0a6cecb3a486347945d4d927` |
+| `text/latex/tese.pdf` | 224 | `deecf0562aef89d671d7de52c93ae4033c8cb808690593de8fe680c8759050bc` |
+| `text/pdf/tese.pdf` | 224 | `deecf0562aef89d671d7de52c93ae4033c8cb808690593de8fe680c8759050bc` |
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 
@@ -458,8 +460,8 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | P na vigilância, bloco de partição (R): FP de 9 a 31, perdas de 9 a 21 e Jaccard mediano 0,43 em relação à partição original | `robustez_arranjo_resumo.csv:270,278,654` |
 | VPP por sexo de P na vigilância sem rejeição: p ajustado BH de 0,378 | `equidade_arranjo_pairwise_tests.csv:3` |
 | Mudança máxima da probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R) | `robustez_arranjo_resumo.csv:632,652` |
-| Robustez: 242 potenciais pares novos, US$ 0,6255, arredondados para US$ 0,63 | `robustez_arranjo_metadata.json:206,208` |
-| Consumo novo anterior: US$ 0,2448; somado a US$ 0,6255 da robustez, sem representar fatura | `arranjo_corte_metadata.json:285,293,330,338`, soma dos custos novos de S2 e suplemento; `robustez_arranjo_metadata.json:208` |
+| Estabilidade: 242 potenciais pares novos, US$ 0,6255, arredondados para US$ 0,63 | `robustez_arranjo_metadata.json:206,208` |
+| Consumo novo anterior: US$ 0,2448; somado a US$ 0,6255 da análise de estabilidade, sem representar fatura | `arranjo_corte_metadata.json:285,293,330,338`, soma dos custos novos de S2 e suplemento; `robustez_arranjo_metadata.json:208` |
 
 Os resultados históricos de v3, dos estudos 1 a 3 e da restrição na base inteira foram mantidos com as remissões que já constavam dos slides. Não são resultados novos do arranjo, nem foram reestimados nesta fatia.
 
