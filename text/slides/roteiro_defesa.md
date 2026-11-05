@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Base versionada desta revisão S9b: `1121fa0e57c6a3f29e365d3f3371975688339d7a`. O hash registrado na verificação técnica identifica a árvore compilada, não o *commit* final. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
+Base versionada do build oficial pós-PR48: `7ecd34ad839317668af59c87d313f884330d287c`. Esse *commit* identifica a árvore compilada dos slides, cujas entradas não foram alteradas neste build; os hashes dos PDFs oficiais estão na verificação técnica. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
@@ -390,17 +390,25 @@ Critérios editoriais: menção ao referencial clássico restrita ao slide 8; pr
 
 O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
-Compilação de teste: duas passagens de pdflatex, com jobname `defesa_s9b_teste` e saída em `.local/slides_s9b/`. O `TEXINPUTS` aponta para `.texdeps` do worktree local `pq-f-slides`, que contém Beamer e translator. Esse build não substitui `text/slides/defesa.pdf` nem os PDFs oficiais da tese.
+Compilação oficial pós-PR48, autorizada pelo autor: duas passagens de pdflatex por `text/slides/build_slides.py`, com jobname `defesa` e saída em `text/slides/defesa.pdf`. O `TEXINPUTS` é `C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/.texdeps//;`, o mesmo registrado na verificação final do PR48, com Beamer e translator. Este build substitui o PDF oficial dos slides. A tese foi compilada por `scripts/build_pdf.py --jobname tese --outname tese`, com BibTeX e passagens de pdflatex até estabilizar, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`.
 
 ### Verificação técnica em 05/11/2026
 
-O build de teste em duas passagens produziu 49 páginas, com 30 quadros principais e 19 de reserva, sem sobreposições. O log não contém erros LaTeX, referências indefinidas, Overfull ou marcadores de referência não resolvida. Há aviso de nome do pacote externo xcolor, que se identifica como xcolor-2022-06-12. As 33 respostas têm no máximo 70 palavras, conforme contagem por espaços. A inspeção visual abrange os quadros alterados; não constitui ensaio presencial de projeção.
+O build oficial dos slides em duas passagens produziu 49 páginas, com 30 quadros principais e 19 de reserva. O log não contém erros LaTeX, referências ou citações indefinidas, Overfull ou marcadores de referência não resolvida (`??`), também ausentes no texto extraído do PDF. Há aviso de nome do pacote externo xcolor, que se identifica como xcolor-2022-06-12. As 33 respostas têm no máximo 70 palavras, conforme contagem por espaços. A inspeção visual da revisão anterior abrangeu os quadros alterados; não foi realizado novo ensaio presencial de projeção neste build.
 
-A verificação desta fatia abrange os dois arquivos da apresentação, o contrato editorial dos testes e o build de teste. Resultados históricos do código científico não constituem verificação desta revisão editorial.
+A tese oficial contém 225 páginas. A ficha foi atualizada apenas na extensão, para `225 f.: il.`, seguindo a convenção do build do PR44: PDF de 205 páginas e ficha `205 f.: il.`, isto é, folhas iguais às páginas físicas do PDF. A contagem permaneceu em 225 páginas antes e depois da edição. O build final estabilizou em três passagens de pdflatex, sem erros, referências ou citações indefinidas, necessidade de nova passagem ou `??` no log e no texto extraído. Permanecem somente os cinco Overfull herdados, idênticos aos registrados no build final do PR48. Os demais avisos são o nome do pacote xcolor, substituição de tamanho de fonte e uma página contendo somente figuras ou tabelas. Resultados históricos do código científico não constituem verificação deste build.
 
-Log: `.local/slides_s9b/defesa_s9b_teste.log`. Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências.
+Logs locais, não versionados: `.local/build-oficial/defesa.log` e `.local/build-oficial/tese.log`; contagens, hashes e comparação dos Overfull em `.local/build-oficial/verificacao.json`. Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências.
 
-SHA-256 da árvore compilada: `7384d2fe8c1967d5488a16e3abdc3c5b58228d4034040f2f6712964dda4b4e99`. O manifesto `.local/slides_s9b/arvore_compilada.json` registra os 6 arquivos de entrada do repositório efetivamente lidos pelo pdflatex, identificados pelo recorder e por seus hashes; não inclui dependências externas de TeX nem identifica o *commit* final. SHA-256 do PDF de teste: `61911fb68ccd2ca38e4d5ee6f89641c0657846658e9d0a2089715cc94d0b65a4`. Os arquivos da tese e seus PDFs não são alterados nesta fatia.
+*Commit* da árvore-fonte dos slides: `7ecd34ad839317668af59c87d313f884330d287c` (merge do PR48), sem alterações nas entradas da apresentação. A tese parte do mesmo *commit*, com a única alteração da extensão da ficha descrita acima. O *commit* de entrega acrescenta os PDFs oficiais e esta atualização do roteiro; as dependências externas de TeX não fazem parte dessa árvore.
+
+SHA-256 do PDF oficial dos slides: `02c7d7004f75fe6234e9847294ce5a83274f4c7ba6128f2ddc5da60775bdaa09`. Relação dos PDFs oficiais:
+
+| Arquivo | Páginas | SHA-256 |
+| :-- | --: | :-- |
+| `text/slides/defesa.pdf` | 49 | `02c7d7004f75fe6234e9847294ce5a83274f4c7ba6128f2ddc5da60775bdaa09` |
+| `text/latex/tese.pdf` | 225 | `25141c1bcb28ff0c6d5c7fd066546c5046e67b3540deb10136637f88d91d7c20` |
+| `text/pdf/tese.pdf` | 225 | `25141c1bcb28ff0c6d5c7fd066546c5046e67b3540deb10136637f88d91d7c20` |
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 
