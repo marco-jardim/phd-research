@@ -1,6 +1,6 @@
-As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo. A transcrição literal de instrumento fica fora da regra de travessão adotada para o texto autoral. O teste editorial compara os bytes de cada bloco com o arquivo-fonte.
+As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo. A transcrição literal de instrumento fica fora da regra de travessão adotada para o texto autoral.
 
-O carregador extrai a mensagem de sistema de seu cabeçalho até a primeira separadora e a mensagem de usuário até a seguinte. Na v3, a política por banda fica após a primeira separadora e não foi enviada; na v4, a política única pelos campos integra o sistema. Títulos, avisos e exemplos não integram as mensagens enviadas. Acrescentam-se as instruções de papel dos dois agentes e do árbitro, e, no modo em lote, a exigência de resposta somente em JSON, conforme \path{gzcmd/llm_review.py}.
+O carregador extrai a mensagem de sistema até a primeira separadora e a de usuário até a seguinte. Na v3, a política por banda está após a primeira separadora e não foi enviada; na v4, a política única pelos campos integra o sistema. Títulos, avisos e exemplos do arquivo-base não integram as mensagens enviadas. Os complementos de papel provêm de \path{gzcmd/llm_review.py}: dicionário de papéis, construção da mensagem efetiva do árbitro e instrução adicional do modo em lote. A instrução do árbitro genérico é distinguida da chamada efetivamente usada para arbitragem.
 
 \subsection*{Arquivo-base v3: transcrição literal}
 
@@ -260,5 +260,55 @@ do schema; não os atribua nesta versão.
   }
 }
 ```
+\end{verbatim}
+}
+
+\subsection*{Agent-A}
+
+{\fontsize{4.5}{6}\selectfont
+\begin{verbatim}
+
+
+Você é o Agent-A. Analise o dossiê de forma direta e objetiva. Priorize a evidência mais forte.
+\end{verbatim}
+}
+
+\subsection*{Agent-B}
+
+{\fontsize{4.5}{6}\selectfont
+\begin{verbatim}
+
+
+Você é o Agent-B. Analise o dossiê com atenção especial a possíveis contradições e dados faltantes. Seja cético mas justo.
+\end{verbatim}
+}
+
+\subsection*{Arbiter}
+
+{\fontsize{4.5}{6}\selectfont
+\begin{verbatim}
+
+
+Você é o Árbitro. Dois revisores divergiram na decisão. Analise o dossiê original e as duas opiniões. Dê a decisão final com justificativa.
+\end{verbatim}
+}
+
+\subsection*{Árbitro: chamada efetiva}
+
+{\fontsize{4.5}{6}\selectfont
+\begin{verbatim}
+
+
+Você é o Árbitro. Dois revisores independentes divergiram. Analise o dossiê original e as duas opiniões abaixo. Dê a decisão final. Não repita PII.
+\end{verbatim}
+}
+
+\subsection*{Modo em lote: instrução JSON}
+
+{\fontsize{4.5}{6}\selectfont
+\begin{verbatim}
+
+
+CRITICAL: Output ONLY the JSON object. Do NOT include any reasoning, analysis, chain-of-thought, or explanation before or after the JSON. Start your response with { and end with }.
 \end{verbatim}
 }

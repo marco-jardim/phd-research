@@ -1,20 +1,24 @@
 \begin{table}[!htbp]
-\centering\small
+\centering\scriptsize
 \caption{Ordenações abaixo do corte na mesma carga humana de P. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}
 \label{tab:cap8-mesma-carga}
-\begin{tabular}{llrrrr}
+\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrr}
 \toprule
-Modo & Ordem & Revisões & PAR=2 & Com erro 5\% & $k$ para igualar P \\
+Modo & Ordem & Revisões & PAR=2 & $S_{0,95}$ (\%) & Pares LLM (chamadas) & FP & $k$ para igualar P \\
 \midrule
-Vigilância & O1 & 96 & 19 & 18{,}05 & 501 \\
-Vigilância & O2 & 96 & 12 & 11{,}40 & 4.163 \\
-Vigilância & O3 & 96 & 22 & 20{,}90 & 125 \\
-Vigilância & O4 & 96 & 22 & 20{,}90 & 106 \\
-Confirmação & O1 & 17 & 3 & 2{,}85 & 51 \\
-Confirmação & O2 & 17 & 9 & 8{,}55 & 11 \\
-Confirmação & O3 & 17 & 6 & 5{,}70 & 29 \\
-Confirmação & O4 & 17 & 5 & 4{,}75 & 27 \\
+Vigilância & O1 & 96 & 19 & 92{,}73 & 0 (0) & 0 & 501 \\
+Vigilância & O2 & 96 & 12 & 90{,}04 & 0 (0) & 0 & 4.163 \\
+Vigilância & O3 & 96 & 22 & 93{,}89 & 0 (0) & 0 & 125 \\
+Vigilância & O4 & 96 & 22 & 93{,}89 & 0 (0) & 0 & 106 \\
+Vigilância & P & 96 & 23 & 94{,}35 & 344 (755) & 21 & n.a. \\
+Vigilância & P, \texttt{MATCH} ao humano & 121 & 23 & 94{,}27 & 344 (755) & 0 & n.a. \\
+Confirmação & O1 & 17 & 3 & 86{,}58 & 0 (0) & 0 & 51 \\
+Confirmação & O2 & 17 & 9 & 88{,}89 & 0 (0) & 0 & 11 \\
+Confirmação & O3 & 17 & 6 & 87{,}73 & 0 (0) & 0 & 29 \\
+Confirmação & O4 & 17 & 5 & 87{,}35 & 0 (0) & 0 & 27 \\
+Confirmação & P & 17 & 9 & 89{,}05 & 41 (87) & 4 & n.a. \\
+Confirmação & P, \texttt{MATCH} ao humano & 29 & 9 & 88{,}89 & 41 (87) & 0 & n.a. \\
 \bottomrule
-\end{tabular}
-\par\smallskip\parbox{\linewidth}{\footnotesize O1: SCORE; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. A curva completa está em \path{data/comparador_mesma_carga_curva.csv}; os pontos vêm de \path{data/comparador_mesma_carga.csv} e as projeções de \path{data/comparador_mesma_carga_erro05.csv}. O cenário de 5\% de erro considera somente falsos negativos entre vínculos revisados; não modela falsos positivos do revisor humano.}
+\end{tabular}}
+\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita. As outras sensibilidades estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}
 \end{table}

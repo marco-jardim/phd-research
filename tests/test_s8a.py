@@ -17,7 +17,7 @@ L = ROOT / 'text/latex'
 def test_prompt_appendix_is_literal_source_bytes(version, index):
     appendix = (L / 'apendice_prompts.tex').read_bytes()
     blocks = re.findall(rb'\\begin\{verbatim\}\r?\n(.*?)\\end\{verbatim\}', appendix, re.S)
-    assert len(blocks) == 2
+    assert len(blocks) == 7
     source = (ROOT / f'gzcmd/gzcmd_{version}_llm_prompt.md').read_bytes()
     assert blocks[index] == source
     assert 'transcrição literal de instrumento fica fora da regra de travessão' in appendix.decode('utf-8')
@@ -65,7 +65,8 @@ def test_fp_position_and_loss_qualification_follow_sources():
         assert above.loc[above.modo.eq(mode), 'FP'].tolist() == expected
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
     assert 'não reproduz 13 e 27 dos 36 vínculos recuperados pelo serviço' in conclusion
-    assert 'aceita 25 e 12 potenciais pares abaixo do corte que o serviço rejeitou ou não examinou' in conclusion
+    assert 'aceita 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in conclusion
+    assert 'quatro e oito são PAR~=~2' in conclusion
     assert 'pior em todo desfecho' not in conclusion
     assert '17 dos 21 FP' in conclusion and '11 acima do limiar por passo' in conclusion
 
@@ -82,7 +83,8 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         text = thesis[i:thesis.index(r'\vspace{15pt}', i)]
         assert len(text.split()) <= 500
         assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
-        assert '0,427' in text or '0.427' in text
+        assert '36 PAR~=~2' in text
+        assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text
         assert 'MATCH' in text and 'P-Platt' in text
         assert 'preregistered' not in text and 'intervals overlapping' not in text
@@ -91,11 +93,11 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
 def test_order_is_unverified_and_cdr_exposure_not_transferred_to_three_steps():
     data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
     assert 'Não foram documentados ordem, limite ou regra de parada' in data
-    assert 'Se ela tivesse seguido ordem decrescente de SCORE' in data
+    assert 'Se ela tivesse seguido ordem decrescente de escore do OpenRecLink' in data
     assert 'não nos passos 6, 9 e 11' in data
     assert 'revisora única, sem classificação independente' in data
     assert 'p.~36 a~38' in data
-    assert 'termo de aprovação do CEP abrange' in data
+    assert 'parecer do CEP abrangem' in data
 
 
 def test_cutoff_sensitivity_has_no_sampling_interval_in_editorial_table():

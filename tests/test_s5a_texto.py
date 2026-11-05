@@ -39,7 +39,7 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "pior em todo desfecho" not in conclusion
     assert "não reproduz 13 e 27 dos 36" in conclusion
-    assert "ordem decrescente de" in conclusion
+    assert "ordem decrescente da" in conclusion
     assert "validação registrada em dados novos" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
     assert "quantifica-se o custo de revisão manual" not in conclusion
