@@ -11,7 +11,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[API] \textit{Application Programming Interface}. Interface de programação que define um conjunto padronizado de rotinas, protocolos e ferramentas para comunicação entre componentes de \textit{software}, permitindo integração modular entre sistemas.
 
-\item[Área cinza] Região de potenciais pares cuja nota final do Comparador de Registros situa-se em $[5, 9)$, na qual a classificação automática por limiar fixo não é confiável e a decisão exige revisão adicional.
+\item[Área cinza] No modelo de Fellegi e Sunter, faixa intermediária entre os limiares de aceitação e rejeição, discutida no Capítulo~\ref{cap:referencial} (Seção~\ref{sec:area-cinza}). Nos resultados desta tese, o termo designa os potenciais pares com nota final do Comparador de Registros em $[5,9)$. Essa definição operacional não coincide com a região abaixo do corte do OpenRecLink.
 
 \item[Arranjo sequencial] Aplicação do GZ-CMD depois do corte do OpenRecLink. Os potenciais pares com escore maior ou igual ao corte do respectivo passo são aceitos; a política v3.1, recalibrada apenas abaixo do corte, decide os demais. É o resultado principal da tese. A aplicação da política a todos os potenciais pares constitui a cascata sobre a base inteira, usada como comparação.
 
@@ -97,7 +97,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Qwen3-VL-30B] Modelo de linguagem de grande porte desenvolvido pela Alibaba (China), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,500.
 
-\item[\textit{Random Forest}] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
+\item[Random Forest] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
 
 \item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 

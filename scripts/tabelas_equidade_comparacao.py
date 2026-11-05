@@ -1,4 +1,9 @@
-"""Apresentação da comparação histórica sem alterar a análise equidade_v31."""
+"""Apresentação da comparação histórica sem alterar a análise equidade_v31.
+
+tab_equidade_v31_rejeicoes_cascata.tex é conservada como artefato de regressão
+do gerador histórico. Não é incluída no capítulo: suas rejeições de vigilância
+já constam de tab_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex.
+"""
 from pathlib import Path
 import sys
 
