@@ -23,7 +23,7 @@ from gzcmd.arranjo_corte import (
 )
 from gzcmd.arranjo_robustez import (
     action_stability, atomic_json, checkpoint_matches, classify, clopper_pearson,
-    dominates, grid, replace_backoff, resolve_input, run_replica, safety_stop, verify_prereg,
+    dominates, grid, replace_backoff, resolve_input, run_replica, safety_stop, validate_dossiers, verify_prereg,
 )
 from gzcmd.bands import BandAssigner
 from gzcmd.config import load_config
@@ -136,9 +136,25 @@ def known_responses(data_root, mode):
     supplement.BASE_OUT = input_path(data_root, 'data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_' + mode + '.json').parent
     supplement.OUT = input_path(data_root, 'data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_' + mode + '.json').parent
     try:
-        return supplement.responses(data_root, mode, include_supplement=True)
+        decisions, paths = supplement.responses(data_root, mode, include_supplement=True)
     finally:
         supplement.BASE_OUT, supplement.OUT = old_base, old_out
+    validate_response_paths(data_root, mode, decisions, paths)
+    return decisions, paths
+
+
+def validate_response_paths(data_root, mode, decisions, paths):
+    """Wrap the unchanged historical response loader with dossier validation."""
+    import run_exp2_sem_model_outputs as runner
+    from gzcmd.runner import run_v3
+    historical, _ = run_v3(input_csv=data_root / 'data/COMPARADORSEMIDENT.csv',
+                           config_path=s1.CONFIG, mode=mode, p_cal='fit_platt', policy_version='v3')
+    selected = historical.loc[pair_ids(historical).isin(decisions)]
+    views = {d.pair_id: runner.abl.DossierView(d, True)
+             for d in runner.ant.exp2.build_dossiers(selected, only_llm_review=False)}
+    for path in paths:
+        validate_dossiers(path, supplement.read_run(path, mode), mode, views,
+                          prompt_sha256=sha256(s1.PROMPT))
 
 
 def inputs(data_root):
@@ -160,8 +176,11 @@ def policy_path(replica, mode, arm):
 
 
 def identity_for(spec, expected, replica, include_a3):
+    execution = next((a['execution_identity'] for a in spec.get('amendments', [])
+                      if a.get('execution_identity', {}).get('prereg_sha256') == expected), None)
     return {'replica': asdict(replica), 'prereg_sha256': expected,
-            'sha256': spec['sha256'], 'versions': spec['versions'], 'include_a3': include_a3}
+            'sha256': execution['sha256'] if execution else spec['sha256'],
+            'versions': spec['versions'], 'include_a3': include_a3}
 
 
 def frozen_responses(spec, data_root, mode):
@@ -419,10 +438,12 @@ def prepare_llm(data_root, expected):
 
 
 def queue_gate(data_root, expected):
-    verified(data_root, expected)
+    spec, _ = verified(data_root, expected)
     commit = pushed_file(NOTE)
     note = json.loads(NOTE.read_text(encoding='utf-8'))
-    if note['prereg_sha256'] != expected or sha256(LOCAL / 'fase_a.json') != note['phase_a_sha256']:
+    execution_hashes = {expected} | {a['execution_identity']['prereg_sha256']
+                                   for a in spec.get('amendments', []) if 'execution_identity' in a}
+    if note['prereg_sha256'] not in execution_hashes or sha256(LOCAL / 'fase_a.json') != note['phase_a_sha256']:
         raise ValueError('Phase A identity changed')
     for mode in s1.MODES:
         queue = ROOT / f'data/robustez_arranjo_fila_{mode}.csv'
@@ -471,7 +492,7 @@ def all_responses(data_root, mode):
         selected = historical.loc[pair_ids(historical).isin(wanted)]
         views = {d.pair_id: runner.abl.DossierView(d, True)
                  for d in runner.ant.exp2.build_dossiers(selected, only_llm_review=False)}
-        supplement.validate_dossiers(path, run, mode, views)
+        validate_dossiers(path, run, mode, views, prompt_sha256=sha256(s1.PROMPT))
         known.update({r['pair_id']: r['decision'].strip().upper() for r in run['results']})
         paths.append(path)
     return known, paths
@@ -498,7 +519,7 @@ def phase_c(data_root, expected):
         costs, usage, _ = s3.selected_usage(paths, needed)
         for replica in grid():
             metadata = json.loads((LOCAL / replica.replica / 'oof.json').read_text(encoding='utf-8'))
-            if metadata['identity'] != identity_for(spec, expected, replica, metadata['identity']['include_a3']):
+            if metadata['identity'] != identity_for(spec, note['prereg_sha256'], replica, metadata['identity']['include_a3']):
                 raise ValueError('Replica checkpoint identity mismatch')
             for arm in ARMS:
                 path = policy_path(replica, mode, arm)

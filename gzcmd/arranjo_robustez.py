@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -11,7 +12,7 @@ import numpy as np
 from scipy.stats import beta
 import yaml
 
-from .arranjo_corte import nested_cutoff_probabilities, pending_cost, sha256
+from .arranjo_corte import cache_matches, nested_cutoff_probabilities, pending_cost, sha256
 from .ml_oof import _classifier
 
 
@@ -34,6 +35,19 @@ def grid():
 
 def replica_factory(xgb_seed, n_jobs):
     return lambda y, _seed: _classifier(y, xgb_seed).set_params(n_jobs=n_jobs)
+
+
+def validate_dossiers(path, run, mode, views, *, prompt_sha256):
+    """Validate complete cache identity without changing historical loaders."""
+    path = Path(path)
+    identity_path = path.with_name(path.stem + '_journal') / 'identity.json'
+    identity = json.loads(identity_path.read_text(encoding='utf-8')) if identity_path.exists() else run
+    for result in run['results']:
+        pid = result['pair_id']
+        digest = hashlib.sha256(views[pid].to_json(sort_keys=True).encode()).hexdigest()
+        if not cache_matches(identity, run, mode=mode, pair_id=pid,
+                             prompt_sha256=prompt_sha256, dossier_sha256=digest):
+            raise ValueError(f'Dossier cache identity mismatch: {mode}/{pid}')
 
 
 def run_replica(x, y, below, groups, *, par2, replica, include_a3=False, audit=None):
