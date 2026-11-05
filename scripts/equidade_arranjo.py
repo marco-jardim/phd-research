@@ -103,7 +103,7 @@ def table_groups(groups, mode, path):
     legacy.tabela_grupos(pd.concat([a, b], ignore_index=True), path)
     text = path.read_text(encoding="utf-8")
     text = text.replace("XGBoost com limiar de sensibilidade equivalente ao corte 6{,}0",
-                        "arranjo corte OpenRecLink com o braço P abaixo do corte")
+                        "arranjo sequencial do corte do OpenRecLink com o braço P abaixo dele")
     text = text.replace("XGBoost", "Arranjo P")
     text = text.replace("cascata v3.1 (vigil\\^ancia)", "cascata v3.1 (" + (
         "vigil\\^ancia" if mode == "vigilancia" else "confirma\\c{c}\\~ao") + ")")

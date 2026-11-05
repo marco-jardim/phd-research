@@ -9,6 +9,7 @@ import pytest
 from gzcmd.arranjo_corte import sha256
 from scripts import equidade_v31 as legacy
 from scripts.equidade_arranjo import DECISIONS, SORT_KEYS, analyze
+from scripts.tabelas_equidade_comparacao import TABLES, generate
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path("D:/git/phd-research")
@@ -127,3 +128,11 @@ def test_original_equity_analysis_unchanged_and_comparisons_labeled():
     for mode in ("vigilancia", "confirmacao"):
         table = ROOT / f"text/latex/tables/tab_equidade_arranjo_grupos_{mode}.tex"
         assert "sobre a base inteira, comparação" in table.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("name", TABLES)
+def test_versioned_historical_tables_equal_legacy_generation_with_labels(tmp_path, name):
+    generate(ROOT / "data", tmp_path)
+    actual = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
+    assert actual == (tmp_path / name).read_text(encoding="utf-8")
+    assert "comparação" in actual

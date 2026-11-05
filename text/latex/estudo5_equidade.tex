@@ -4,14 +4,14 @@ O quinto objetivo específico consiste em avaliar o desempenho das decisões por
 
 \section{Método}\label{sec:e5-metodo}
 
-A equidade das decisões de \textit{linkage}, também denominado relacionamento de registros, foi examinada a partir da sensibilidade e do valor preditivo positivo (VPP) por subgrupo. A análise foi inspirada no \textit{framework} de \textit{equalized odds} \cite{Hardt2016equality}, mas não o reproduz: a paridade simultânea de sensibilidade e VPP é o critério operacional adotado \cite{Barocas2019fairml}. A especificidade é descritiva, e a proporção de falsos positivos entre não vínculos (FPR) é seu complemento. O padrão-ouro mantém 247 vínculos, com PAR igual a 1 ou 2, entre 61.696 potenciais pares.
+A equidade das decisões de \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), foi examinada a partir da sensibilidade e do valor preditivo positivo (VPP) por subgrupo. A análise foi inspirada no \textit{framework} de \textit{equalized odds} \cite{Hardt2016equality}, mas não o reproduz: a paridade simultânea de sensibilidade e VPP é o critério operacional adotado \cite{Barocas2019fairml}. A especificidade é descritiva, e a proporção de falsos positivos entre não vínculos (FPR) é seu complemento. O padrão-ouro mantém 247 vínculos, com PAR igual a 1 ou 2, entre 61.696 potenciais pares.
 
 \subsection{Decisões avaliadas}\label{sec:e5-metodo-decisoes}
 
-A decisão principal é o arranjo sequencial P do Capítulo~\ref{cap:estudo4}, avaliado nos modos vigilância e confirmação. Seu registro prévio é versionado no repositório, não um registro público. A cascata v3.1 sobre a base inteira permanece como comparação. O XGBoost com calibração isotônica fora da amostra e o corte 6,0 da nota final do Comparador de Registros (CdR) permitem distinguir o efeito do classificador do efeito da política. Todas as decisões usam o mesmo universo de potenciais pares.
+A decisão principal é o arranjo sequencial P do Capítulo~\ref{cap:estudo4}, avaliado nos modos vigilância e confirmação. Seu registro prévio é versionado no repositório, não um registro público. A cascata v3.1 sobre a base inteira permanece como comparação. O XGBoost com calibração isotônica fora da amostra permite descrever a aceitação pelo classificador, separadamente da política; o corte 6,0 da nota final do Comparador de Registros (CdR) é referência histórica. Esses contrastes não isolam efeitos causais dos componentes. Todas as decisões usam o mesmo universo de potenciais pares.
 
 \begin{enumerate}
-\item \textit{Arranjo sequencial P}: aceita os potenciais pares acima do corte OpenRecLink e aqueles com decisão final de vínculo abaixo dele, após recalibração restrita. Neste braço, todas as aceitações abaixo do corte vieram do modelo de linguagem Claude Haiku 5.5, com instruções v4 e dossiê sem as saídas do motor. Os encaminhamentos humanos, diretos ou inconclusivos do LLM, contam como não aceitos. A sensibilidade é a da aceitação automática, não a do processo após revisão humana.
+\item \textit{Arranjo sequencial P}: aceita os potenciais pares acima do corte do OpenRecLink e aqueles com decisão final de vínculo abaixo dele, após recalibração restrita. Neste braço, todas as aceitações abaixo do corte vieram do modelo de linguagem Claude Haiku 5.5, com instruções v4 e dossiê sem as saídas do motor. Os encaminhamentos humanos, diretos ou inconclusivos do LLM, contam como não aceitos. A sensibilidade é a da aceitação automática, não a do processo após revisão humana.
 \item \textit{Cascata v3.1 sobre a base inteira, comparação}: aceita os MATCH do motor ou do LLM sem preservar previamente as aceitações do corte. Os encaminhamentos humanos também contam como não aceitos.
 \item \textit{XGBoost}: usa probabilidades isotônicas fora da amostra, agrupadas por REFREC, no limiar de sensibilidade mais próxima da do corte 6,0 e, separadamente, em $p\geq0{,}9$. O limiar equivalente foi escolhido com o padrão-ouro para comparação descritiva, não para estimar desempenho prospectivo.
 \item \textit{Corte 6,0 da nota, referência histórica}: aceita nota final $\geq6{,}0$. Somente essa decisão produziu os 7.452 preditos positivos da análise anterior, não o corte do OpenRecLink, o XGBoost ou o arranjo.
@@ -35,13 +35,13 @@ O arranjo P aceitou 236 potenciais pares na vigilância, com 215 vínculos e 21 
 
 \input{tables/tab_equidade_arranjo.tex}
 
-Os 211 vínculos acima do corte são aceitos por construção em P. As diferenças de sensibilidade entre subgrupos refletem, portanto, apenas a recuperação dos 36 vínculos PAR~=~2; as de VPP dependem dos 21 e quatro falsos positivos abaixo do corte. O poder é limitado por esses números e pela incorporação do corte ao rótulo. A ausência de rejeição não demonstra paridade.
+Os 211 vínculos acima do corte são aceitos por construção em P. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR~=~2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. Não refletem somente o desempenho da política abaixo do corte. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo dele. O poder é limitado por esses números e pela incorporação do corte ao rótulo. A ausência de rejeição não demonstra paridade.
 
 \subsubsection{Subgrupos demográficos}
 
 Na vigilância, a sensibilidade de P foi de 88,7\% no sexo feminino e de 86,4\% no masculino. O VPP foi de 86,3\% e 93,3\%, com FPR de 0,078\% e 0,023\%, respectivamente. A diferença de VPP, 7,0 pontos percentuais, teve IC 95\% de $-4{,}1$ a 19,6. Na confirmação, os VPP foram de 95,5\% e 99,4\%. Nenhuma rejeição de Benjamini-Hochberg do arranjo recaiu sobre dimensão demográfica. Isso não significa ausência de diferenças: os denominadores de vínculos são pequenos, e os intervalos incluem contrastes que poderiam importar para o serviço.
 
-O XGBoost com sensibilidade equivalente apresentou VPP de 93,1\% nas mulheres e 70,7\% nos homens, com FPR de 0,04\% e 0,14\%. Esses valores pertencem ao classificador, não à cascata. Na cascata sobre a base inteira, comparação, o VPP foi de 87,9\% e 84,0\%, com FPR de 0,063\% e 0,053\%. A direção da diferença entre sexos muda entre as decisões, impedindo atribuí-la somente à prevalência ou afirmar que a cascata reduz a diferença no arranjo.
+O XGBoost com sensibilidade equivalente apresentou VPP de 93,1\% nas mulheres e 70,7\% nos homens, com FPR de 0,04\% e 0,14\%. Esses valores pertencem ao classificador, não à cascata. Na cascata sobre a base inteira, comparação, o VPP foi de 87,9\% e 84,0\%, com FPR de 0,063\% e 0,053\%. A direção da diferença entre sexos muda entre as decisões. O contraste não permite atribuir a diferença somente à prevalência nem interpretar a cascata como etapa que corrigiria o arranjo. As Tabelas~\ref{tab:equidade-arranjo-grupos-vigilancia} e~\ref{tab:equidade-arranjo-grupos-confirmacao} apresentam os resultados completos por subgrupo.
 
 \input{tables/tab_equidade_arranjo_grupos_vigilancia.tex}
 
@@ -49,29 +49,31 @@ O XGBoost com sensibilidade equivalente apresentou VPP de 93,1\% nas mulheres e 
 
 \subsubsection{Subgrupos operacionais}
 
-A disparidade dominante no arranjo é operacional e recai sobre o passo de blocagem. No passo~11, P aceitou 17 dos 40 vínculos na vigilância (42,5\%; IC 95\%: 28,5; 57,8) e 19 na confirmação (47,5\%; 32,9; 62,5). Nos passos~6 e~9, as sensibilidades foram de 95,0\% e 96,1\% na vigilância e de 96,2\% e 96,9\% na confirmação. A diferença máxima entre passos foi de 53,6 pontos percentuais na vigilância (IC 95\%: 33,3; 69,8) e de 49,4 na confirmação (29,7; 65,8), maior que nas demais dimensões com denominador elegível. No passo~11, 14 vínculos seguiram ao humano na vigilância e um na confirmação; sua recuperação não foi observada.
+A disparidade dominante por passo no arranjo é herdada do corte e do rótulo. O corte isolado aceita 15 dos 40 vínculos do passo~11 (37,5\%), contra 76 de 80 no passo~6 (95,0\%) e 120 de 127 no passo~9 (94,5\%). Entre os 25 vínculos PAR~=~2 do passo~11, o arranjo aceita dois na vigilância e quatro na confirmação, chegando a 17 de 40 (42,5\%; IC 95\%: 28,5; 57,8) e 19 de 40 (47,5\%; 32,9; 62,5). As aceitações PAR~=~2 nos passos~6,~9 e~11 são zero, dois e dois na vigilância e um, três e quatro na confirmação (\path{data/par_por_passo.csv}). Nos passos~6 e~9, a sensibilidade do arranjo é de pelo menos 95,0\% nos dois modos. Na vigilância, o passo~11 tem sensibilidade menor no arranjo que na base inteira, 42,5\% contra 45,0\%, e VPP de 68,0\%. A diferença máxima de sensibilidade entre passos em P é de 53,6 pontos percentuais na vigilância e 49,4 na confirmação. No passo~11, 14 vínculos seguem ao humano na vigilância e um na confirmação, sem recuperação humana observada (\path{data/equidade_arranjo_group_metrics.csv}).
 
-P apresentou sete rejeições na vigilância e três na confirmação, todas em dimensões operacionais. A cascata sobre a base inteira apresentou nove e uma, também operacionais. A contagem não ordena equidade, pois as decisões mudam denominadores, poder e número de comparações com VPP definido. As tabelas de rejeições preservam a identificação de cada decisão.
+P apresentou sete rejeições na vigilância e três na confirmação, todas em dimensões operacionais. A cascata sobre a base inteira apresentou nove e uma, também operacionais. A contagem não ordena equidade, pois as decisões mudam denominadores, poder e número de comparações com VPP definido. As Tabelas~\ref{tab:equidade-arranjo-rejeicoes-arranjo-P-vigilancia} e~\ref{tab:equidade-arranjo-rejeicoes-arranjo-P-confirmacao} identificam as rejeições de P; as Tabelas~\ref{tab:equidade-arranjo-rejeicoes-cascata-v31-vigilancia} e~\ref{tab:equidade-arranjo-rejeicoes-cascata-v31-confirmacao}, as da base inteira.
 
 \input{tables/tab_equidade_arranjo_rejeicoes_arranjo_P_vigilancia.tex}
 
 \input{tables/tab_equidade_arranjo_rejeicoes_arranjo_P_confirmacao.tex}
 
-No encerramento da notificação, o VPP de P na vigilância foi de 86,5\% nas demais situações e de 97,9\% nas encerradas por óbito. Na confirmação, foi de 96,9\% e 100,0\%. A sensibilidade permaneceu menor no terceiro quartil do nome que no quarto, mas os poucos vínculos dos quartis inferiores limitam a estimação das diferenças máximas. Os resultados completos constam das tabelas por subgrupo, sem converter diferenças operacionais em atributos demográficos.
+No encerramento da notificação, o VPP de P na vigilância foi de 86,5\% nas demais situações e de 97,9\% nas encerradas por óbito. Na confirmação, foi de 96,9\% e 100,0\%. Na vigilância, o VPP apresentou rejeições de paridade para Q2 e Q3 contra Q4 do nome; na confirmação, para Q3 contra Q4. A sensibilidade permaneceu menor no terceiro quartil que no quarto, mas os poucos vínculos dos quartis inferiores limitam a estimação das diferenças máximas. Esses resultados são operacionais, não atributos demográficos.
 
 \subsection{Comparação com o corte 6,0}\label{sec:e5-resultados-corte6}
 
-O corte 6,0 aceitou 7.452 potenciais pares, com 227 vínculos e 7.225 falsos positivos, VPP de 3,0\% e sensibilidade de 91,9\%. O XGBoost com sensibilidade equivalente aceitou 297, com 226 vínculos e 71 falsos positivos. A cascata sobre a base inteira aceitou 228 na vigilância, com 194 vínculos e 34 falsos positivos, e 132 na confirmação, todos vínculos. Esses resultados são comparações, não resultados do arranjo.
+O corte 6,0 aceitou 7.452 potenciais pares, com 227 vínculos e 7.225 falsos positivos, VPP de 3,0\% e sensibilidade de 91,9\%. O XGBoost com sensibilidade equivalente aceitou 297, com 226 vínculos e 71 falsos positivos. A cascata sobre a base inteira aceitou 228 na vigilância, com 194 vínculos e 34 falsos positivos, e 132 na confirmação, todos vínculos. Esses resultados são comparações, não resultados do arranjo (Tabela~\ref{tab:equidade-v31}); a Tabela~\ref{tab:qw3-group-metrics} apresenta os subgrupos do XGBoost e da cascata sobre a base inteira.
 
 \input{tables/tab_equidade_v31.tex}
 
 \input{tables/tab_qw3_group_metrics.tex}
 
-Nas dimensões atuais, o corte 6,0 teve 22 rejeições, contra 12 do XGBoost com sensibilidade equivalente, seis do XGBoost com $p\geq0{,}9$ e nove e uma da cascata sobre a base inteira. A análise original do corte usou menos dimensões e produziu 12 rejeições em 36 testes, não a mesma família de comparações. As tabelas históricas são mantidas para documentar essa diferença de escopo.
+Nas dimensões atuais, o corte 6,0 teve 22 rejeições, contra 12 do XGBoost com sensibilidade equivalente, seis do XGBoost com $p\geq0{,}9$ e nove e uma da cascata sobre a base inteira. A análise original do corte usou menos dimensões e produziu 12 rejeições em 36 testes, não a mesma família de comparações. As Tabelas~\ref{tab:qw3-fairness-rejections} e~\ref{tab:qw3-fairness-rejections-corte6} documentam as rejeições históricas do XGBoost e do corte, respectivamente.
 
 \input{tables/tab_qw3_fairness_rejections.tex}
 
-\input{tables/tab_equidade_v31_rejeicoes_cascata.tex}
+\input{tables/tab_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex}
+
+\input{tables/tab_equidade_arranjo_rejeicoes_cascata_v31_confirmacao.tex}
 
 \input{tables/tab_qw3_fairness_rejections_corte6.tex}
 
@@ -79,7 +81,7 @@ Nas dimensões atuais, o corte 6,0 teve 22 rejeições, contra 12 do XGBoost com
 
 \subsection{Equidade das decisões: implicações para a vigilância e limites da análise}\label{sec:e5-discussao-equidade}
 
-Preservar as aceitações do corte não resolve a desigualdade operacional da recuperação abaixo dele. A sensibilidade global de 87,0\% e 88,7\% em P encobre a de 42,5\% e 47,5\% no passo~11, onde se concentram vínculos dependentes da revisão manual do serviço. A revisão humana pode recuperar parte dos encaminhamentos, mas sua qualidade não foi observada. A equidade do processo completo permanece condicionada à revisão efetiva e ao volume de vínculos nunca verificados.
+Preservar as aceitações do corte não resolve a desigualdade operacional herdada dele e do rótulo. A sensibilidade global de 87,0\% e 88,7\% em P encobre a de 42,5\% e 47,5\% no passo~11, cujo corte isolado já aceita somente 37,5\% dos vínculos, contra 95,0\% e 94,5\% nos passos~6 e~9. A política acrescenta dois e quatro dos 25 PAR~=~2 desse passo; na vigilância, fica abaixo da aceitação da base inteira (45,0\%). A revisão humana pode recuperar parte dos encaminhamentos, mas sua qualidade não foi observada. A equidade do processo completo permanece condicionada à revisão efetiva e aos vínculos nunca verificados.
 
 A incompatibilidade geral entre paridade de sensibilidade e de VPP sob prevalências desiguais impede exigir simultaneamente ambos os critérios de uma decisão imperfeita \cite{Kleinberg2016inherent,Chouldechova2017fair}. Isso não permite atribuir toda diferença à prevalência. No XGBoost, os valores de 93,1\% e 70,7\% de VPP por sexo acompanham FPR distintas; no arranjo, a direção do contraste se inverte. No encerramento da notificação, a desigualdade de prevalência ajuda a interpretar o VPP, mas não demonstra que a política seja equânime. As diferenças precisam ser examinadas em relação aos denominadores e às consequências dos erros para o serviço.
 

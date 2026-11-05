@@ -24,7 +24,7 @@ from scripts import arranjo_corte_orl_gzcmd as posterior
 ARMS = ("corte_sozinho", "publicada", "B1", "humano_integral", "aposteriori",
         "P", "P-Platt", "A3", "P-PAR2-grey")
 NAMES = {"corte_sozinho": "(i) Corte", "publicada": "Cascata sobre a base inteira", "B1": "B1",
-         "humano_integral": "(iii) Humano integral", "aposteriori": "A posteriori (sem registro prévio)",
+         "humano_integral": "(ii) Humano integral", "aposteriori": "A posteriori (sem registro prévio)",
          "P": "P", "P-Platt": "P-Platt", "A3": "A3", "P-PAR2-grey": "P-PAR2-grey"}
 
 
@@ -195,7 +195,7 @@ def render_tex(table, primary, path):
             if mode != MODES[-1] or scope != "[5,9)":
                 lines.append(r"\midrule")
     lines += [r"\end{longtable}",
-              r"\noindent\parbox{\linewidth}{\footnotesize $V_A$: vínculos aceitos automaticamente, inclusive MATCH do modelo de linguagem (LLM); $V_N$: vínculos perdidos por NONMATCH; $H$: potenciais pares ao revisor humano, com vínculos $V_H$ entre parênteses. UNSURE do LLM segue ao humano uma única vez. LLM e humano se sobrepõem nesse encaminhamento, sem somar novamente sua carga humana. $S_A=V_A/n$; IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do gabarito. $S_H=(V_A+0{,}95V_H)/n$ é cenário de erro humano de 5\%, não resultado humano observado. Custos usam somente os registros de consumo dos potenciais pares selecionados por cada braço e faixa, com tarifas históricas por tokens, não faturas. O a posteriori reutiliza a cascata publicada sem recalibração. Fonte: \texttt{data/arranjo\_corte\_metricas.csv} e \texttt{data/arranjo\_corte\_par2.csv}.}",
+              r"\noindent\parbox{\linewidth}{\footnotesize $V_A$: vínculos aceitos automaticamente, inclusive MATCH do modelo de linguagem (LLM); $V_N$: vínculos perdidos por NONMATCH; $H$: potenciais pares ao revisor humano, com vínculos $V_H$ entre parênteses. UNSURE do LLM segue ao humano uma única vez. LLM e humano se sobrepõem nesse encaminhamento, sem somar novamente sua carga humana. $S_A=V_A/n$; IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do gabarito. $S_H=(V_A+0{,}95V_H)/n$ é cenário de erro humano de 5\%, não resultado humano observado. Custos usam somente os registros de consumo dos potenciais pares selecionados por cada braço e faixa, com tarifas históricas por tokens, não faturas. O a posteriori reutiliza a cascata sobre a base inteira sem recalibração. Fonte: \texttt{data/arranjo\_corte\_metricas.csv} e \texttt{data/arranjo\_corte\_par2.csv}.}",
               r"\begin{longtable}{lrrr}",
               r"\caption{Partição dos 36 vínculos PAR~=~2 abaixo do corte. Cada célula mostra a contagem e seu IC de Wilson de 95\%, em porcentagem. As ressalvas sobre o gabarito e a dependência entre pares permanecem.}",
               r"\label{tab:cap8-arranjo-corte-par2}\\", r"\toprule",
