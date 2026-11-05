@@ -116,13 +116,60 @@ def test_aggregate_outputs_and_stop_consistency():
     for name in filtro.OUTPUTS[:2]:
         frame = pd.read_csv(filtro.ROOT / "data" / name)
         assert not {"pair_id", "COMPREC", "REFREC", "PAR", "SCORE", "nota final"}.intersection(frame)
+    assert table.H.eq(table.k - table.nonmatch).all()
+    assert table.par2_topk.eq(table.par2_recuperados + table.par2_descartados).all()
+    assert table.nonmatch.eq(table.par2_descartados + table.nao_vinculos_descartados).all()
+    assert table.diferenca_par2.eq(table.par2_recuperados - table.o3_par2_mesma_carga).all()
+    for row in table.itertuples():
+        assert row.sens_humano_05 == pytest.approx((211 + .95 * row.par2_recuperados) / 247)
+        assert row.o3_sens_humano_05 == pytest.approx((211 + .95 * row.o3_par2_mesma_carga) / 247)
+        if row.nonmatch:
+            assert row.vpn_nonmatch == pytest.approx(row.nao_vinculos_descartados / row.nonmatch)
+            low, high = filtro.wilson95(row.nao_vinculos_descartados, row.nonmatch)
+            assert row.vpn_ic95_inf == pytest.approx(low)
+            assert row.vpn_ic95_sup == pytest.approx(high)
+    for mode in filtro.MODES:
+        assert meta["interpretation"][mode] == filtro.interpret(
+            table.loc[table.modo.eq(mode), "diferenca_par2"].tolist()
+        )
+    assert meta["new_responses_reestimate_rates"] is False
+    assert meta["new_responses_feed_other_arms"] is False
+    if meta["new_execution"]:
+        assert meta["authorized_new_api_calls"] == meta["new_execution"]["total_api_calls"]
+        assert meta["new_execution"]["total_pairs"] <= 100
+        assert meta["new_execution"]["total_cost_estimate_usd"] <= .50
 
 
 def private_inputs_available():
     if not filtro.PROTOCOL.exists():
         return False
     spec = yaml.safe_load(filtro.PROTOCOL.read_text(encoding="utf-8"))
-    return all(filtro.resolve(DATA_ROOT, name).exists() for name in spec["input_sha256"])
+    names = list(spec["input_sha256"])
+    if spec.get("amendments"):
+        names.extend(filtro.NEW_RUN_DIR + f"/{name}" for name in (
+            "execucao.json", "auditoria.json", "exp2_llm_sync_vigilancia.json",
+            "exp2_llm_sync_confirmacao.json",
+            "exp2_llm_sync_vigilancia_journal/identity.json",
+            "exp2_llm_sync_confirmacao_journal/identity.json",
+            "dossier_field_audit_vigilancia.json", "dossier_field_audit_confirmacao.json",
+        ))
+    return all(filtro.resolve(DATA_ROOT, name).exists() for name in names)
+
+
+@pytest.mark.parametrize("counts,cost,blocked", [
+    ({"vigilancia": 12, "confirmacao": 71}, .2633497, False),
+    ({"vigilancia": 50, "confirmacao": 50}, .50, False),
+    ({"vigilancia": 50, "confirmacao": 51}, .20, True),
+    ({"vigilancia": 12, "confirmacao": 71}, .50001, True),
+])
+def test_authorized_execution_budget(counts, cost, blocked):
+    from scripts.filtro_llm_executar import budget_gate
+
+    if blocked:
+        with pytest.raises(ValueError, match="STOP"):
+            budget_gate(counts, cost)
+    else:
+        budget_gate(counts, cost)
 
 
 @pytest.mark.skipif(not private_inputs_available(), reason="Private reviewer runs/extract unavailable")
