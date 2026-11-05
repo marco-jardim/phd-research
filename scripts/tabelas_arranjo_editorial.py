@@ -84,6 +84,8 @@ def render_arrangement(historical):
             line = replace_once(line, "scripts/arranjo_corte_s3_avaliar.py", "scripts/tabelas_arranjo_editorial.py")
         if "até 61.485 (36)" in line:
             line = replace_once(line, "até 61.485 (36)", "61.485 (teto; 36)")
+        if "21.497 (28)" in line:
+            line = replace_once(line, "21.497 (28)", "21.497 (teto; 28)")
         if "A posteriori" in line:
             line = replace_once(line, "A posteriori", r"\textit{A posteriori}")
         if "O a posteriori reutiliza" in line:
