@@ -106,7 +106,7 @@ def test_acceptances_split_true_and_false_and_match_to_human_comparator():
     for name in ('estudo4_gzcmd.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
         assert 'dos quais 21 e 4 foram rejeitados ou não examinados' in text
-        assert 'quatro e oito são PAR~=~2' in text
+        assert '4 e 8 são PAR~=~2' in text
         assert 'aceita 25 e 12 potenciais pares abaixo do corte que o serviço rejeitou' not in text
     text = same_load(pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv'))
     assert 'P, \\texttt{MATCH} ao humano' in text
