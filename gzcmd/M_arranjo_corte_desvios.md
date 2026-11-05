@@ -17,7 +17,7 @@ A reprodução numérica deve ser descrita como concordância dentro de `1e-14`,
 
 Os cortes do OpenRecLink são o menor SCORE entre os PAR=1 de cada passo. Coincidem com Oliveira (2026) até a quarta casa decimal. São derivados do rótulo, não estimativas independentes dele.
 
-As taxas do revisor têm denominadores pequenos. Em grey_low, e_fn foi 1,0 em dois folds; P-PAR2-grey tem apenas dois ou três PAR=2 em algumas estimativas. Sua transferência para os pares selecionados abaixo do corte não foi validada em dados novos.
+As taxas do revisor têm denominadores pequenos. Em grey_low, e_fn foi 1,0 em quatro folds na vigilância (0, 1, 3 e 4), conforme `data/arranjo_corte_taxas_crossfit.csv`, linhas 2, 8, 20 e 26. Essa contagem corrige os dois folds mencionados na instrução editorial. P-PAR2-grey tem apenas dois ou três PAR=2 em algumas estimativas. Sua transferência para os pares selecionados abaixo do corte não foi validada em dados novos.
 
 ## Fontes preservadas
 
