@@ -7,6 +7,10 @@ import pytest
 
 from scripts.area_cinza_por_par import carregar, gravar, resumir
 from scripts.sensibilidade_gzcmd_por_par import executar, identificar
+from local_data import DATA_ROOT, requires_files
+
+EXTRATO = Path(os.environ.get("EXTRATO_CSV", DATA_ROOT / "data/COMPARADORSEMIDENT.csv"))
+FUNIL = Path(os.environ.get("FUNIL_DATA_DIR", DATA_ROOT / "data"))
 
 
 def test_saida_agregada_metadados_e_regra_de_parada(tmp_path):
@@ -47,14 +51,10 @@ def test_saida_agregada_metadados_e_regra_de_parada(tmp_path):
     assert area.with_name("area_meta.json").exists()
 
 
+@requires_files(EXTRATO, FUNIL / "funil_gzcmd_vigilancia.csv",
+                FUNIL / "funil_gzcmd_confirmacao.csv", FUNIL / "funil_gzcmd_final_metricas.csv")
 def test_sensibilidade_local_quando_disponivel(tmp_path):
-    root = Path(__file__).resolve().parents[1]
-    extrato = Path(os.environ.get("EXTRATO_CSV", root / "data/COMPARADORSEMIDENT.csv"))
-    data_dir = Path(os.environ.get("FUNIL_DATA_DIR", root / "data"))
-    paths = [extrato, data_dir / "funil_gzcmd_vigilancia.csv",
-             data_dir / "funil_gzcmd_confirmacao.csv", data_dir / "funil_gzcmd_final_metricas.csv"]
-    if not all(path.exists() for path in paths):
-        pytest.skip("Extrato ou funis locais não versionados ausentes")
+    extrato, data_dir = EXTRATO, FUNIL
     out = tmp_path / "sensibilidade.csv"
     table = executar(extrato, data_dir, out)
     assert table.aceitos_automaticamente.tolist() == [184, 10, 105, 8, 124, 8, 61, 4]

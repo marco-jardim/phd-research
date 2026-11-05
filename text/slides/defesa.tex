@@ -12,7 +12,7 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[frame number]
 \setbeamersize{text margin left=8mm,text margin right=8mm}
-\newcommand{\fonte}[1]{\vfill\par{\tiny\color{black!65}Fonte: tese, #1.\par}}
+\newcommand{\fonte}[2][tese, ]{\vfill\par{\tiny\color{black!65}Fonte: #1#2.\par}}
 \newcommand{\itens}[1]{\begin{itemize}#1\end{itemize}}
 \title{Aprendizado de Máquina Aplicado ao Pós-Processamento do Relacionamento Probabilístico de Bases de Dados de Saúde}
 \author{Marco Elisio Oliveira Jardim}
@@ -37,24 +37,26 @@ O \textit{linkage}, também denominado relacionamento de registros, permite exam
 \fonte{capitulo2.tex, seção ``A tuberculose como condição marcadora''}
 \end{frame}
 
-\begin{frame}{A área cinza concentra trabalho e vínculos}
-\begin{center}
-{\Huge 21.620}\par potenciais pares com nota final do CdR em $[5,9)$\medskip\par
-{\LARGE 151 dos 247 vínculos}
-\end{center}
-Revisar todos ou aplicar um corte único produz consequências distintas para a carga de trabalho e para os vínculos perdidos.
-\fonte{tab:score-bands; tab:cap8-referencia}
+\begin{frame}{Da decisão automática ao orçamento de revisão}
+\begin{block}{Problema do serviço}
+Como concentrar a revisão nos potenciais pares com maior probabilidade de vínculo, sem confundir redução de esforço com melhora da acurácia?
+\end{block}
+\itens{\item Primeiro, preservar o corte operacional
+\item Abaixo dele, comparar ordenações sob o mesmo orçamento humano
+\item Explicitar vínculos não recuperados e falsos positivos}
+\fonte[]{capitulo3.tex, objetivos; data/comparador\_mesma\_carga.csv, análise exploratória}
 \end{frame}
 
-\begin{frame}{Tese central e percurso da investigação}
-\begin{block}{Da quantidade à decisão}
-A área cinza passa de um problema de volume a um problema de decisão.
+\begin{frame}{Tese central: hipótese gerada nesta avaliação}
+\small
+LLM: modelo de linguagem de grande porte; CdR: Comparador de Registros. OOF: fora da amostra; FP: falso positivo; VPP: valor preditivo positivo.
+\begin{block}{Hipótese exploratória, a validar}
+Abaixo do corte, a ordenação por probabilidade ou escore concentra vínculos. O ganho em esforço vem de revisar menos pares na ordem certa, não de evidência de superioridade da política de quatro ações.
 \end{block}
-\itens{\item Comparador: tornar explícita a evidência dos campos
-\item Estimador e estratégias: discriminar e escolher compromissos
-\item GZ-CMD: decidir quando automatizar e quando revisar
-\item Equidade: identificar onde a decisão deixa de recuperar vínculos}
-\fonte{capitulo3.tex, objetivos; estudo4\_gzcmd.tex, discussão}
+\itens{\item P: isotônica registrada internamente como principal; vigilância e confirmação são perfis de custo
+\item O3: probabilidade calibrada OOF na prevalência original; O4: probabilidade recalibrada de P, com o mesmo XGBoost
+\item Preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore; escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano; nenhuma ordenação domina em todas as cargas. Comparar também corte único e duas fronteiras}
+\fonte[]{data/comparador\_mesma\_carga.csv; data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv, análises exploratórias}
 \end{frame}
 
 % 05 a 07: dados
@@ -74,40 +76,43 @@ Razão de classes de aproximadamente 1:249. São três passos exportados, não t
 \fonte{capitulo\_dados.tex, ``Base de potenciais pares''; tab:blocagem-rendimento}
 \end{frame}
 
-\begin{frame}{A referência operacional é o corte do OpenRecLink}
+\begin{frame}{O corte e os cenários de revisão}
+\small
 \begin{columns}[T]
 \column{.48\textwidth}
-\begin{block}{Rotina do serviço}
-211/247 = 85,4\% pelo corte\par
-36 vínculos por revisão manual
+\begin{block}{Referência operacional}
+211/247 = 85,4\% pelo corte, por construção do \textit{label}\par
+36 vínculos pela revisão manual\par
+Volume e ordem históricos não observados
 \end{block}
 \column{.48\textwidth}
-\begin{block}{Cenário hipotético do CdR}
-Nota $\geq9$: 93/247 = 37,7\%\par
-2 falsos positivos
+\begin{block}{Duas fronteiras da nota do CdR}
+Nota $\geq9$: 93 vínculos, 2 FP\par
+21.620 ao revisor humano\par
+95,7\% no cenário humano de 95\%; cenários de sensibilidade humana de 95\%, 99\% e 100\% (quadro 28)
 \end{block}
 \end{columns}
-\medskip
-O padrão-ouro incorpora o corte e a revisão: não é referência independente para medir a acurácia do próprio corte. O volume examinado manualmente não está documentado.
-\fonte{capitulo\_dados.tex, ``Padrão-ouro''; tab:cap8-referencia}
+\medskip Cenário exploratório: se a revisão tivesse seguido ordem decrescente do escore do OpenRecLink, seriam pelo menos 2.156 pares por passo, ou 2.522 com limiar global. Não é uma reconstrução histórica.\par
+\footnotesize A 20 min por par, o cenário por passo equivale a 718 h 40 min, não tempo observado.
+\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linhas 2 a 5; data/carga\_abaixo\_corte.csv, linhas 5 e 9; data/carga\_abaixo\_corte\_horas.csv, linha 3}
 \end{frame}
 
 \begin{frame}{As faixas se referem à nota final do CdR}
+\small
 \begin{center}
 \begin{tabular}{lrr}
 \toprule Nota final $s$ & Potenciais pares & Vínculos \\
 \midrule $s<5$ & 39.981 & 3 \\
-$5\leq s<9$: área cinza & 21.620 & 151 \\
+$5\leq s<9$: área cinza da nota & 21.620 & 151 \\
 $s\geq9$ & 95 & 93 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Origem: processo de \textit{linkage} descrito por Oliveira (2026), p.~33 a~39
-\item A nota final do CdR não é o escore probabilístico do OpenRecLink
-\item Uma revisora realizou a classificação; não há avaliações humanas independentes nem kappa
-\item CdR executado antes da revisão: risco de viés de incorporação
-\item A sensibilidade é condicional aos potenciais pares exportados}
-\fonte{tab:score-bands; capitulo\_dados.tex, ``Padrão-ouro''}
+\itens{\item A nota do CdR não é o escore probabilístico do OpenRecLink
+\item Revisora única, sem classificação independente
+\item Oliveira (2026), Quadros 5 e 6: CdR no passo aberto, com 5 pares; não nos passos 6, 9 e 11
+\item PAR=2 por passo 6, 9 e 11: 4, 7 e 25; referência sujeita a viés de verificação e incorporação, sem isolar o efeito do CdR}
+\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linha 2; data/par\_por\_passo.csv; Oliveira (2026), p. 34 e 36 a 38}
 \end{frame}
 
 % 08: único frame com a menção ao referencial clássico
@@ -116,7 +121,7 @@ $s\geq9$ & 95 & 93 \\
 Escore probabilístico do OpenRecLink\par $\downarrow$\par
 Potenciais pares exportados\par $\downarrow$\par
 Subescores e nota final do CdR\par $\downarrow$\par
-Decisão: vínculo, não-vínculo ou revisão
+Decisão: vínculo, não vínculo ou revisão
 \end{center}
 A tese reorganiza a decisão posterior ao CdR. Não reestima os parâmetros de comparação nem reimplementa a blocagem do OpenRecLink.
 \fonte{capitulo\_dados.tex, ``Fontes de dados''; estudo1\_comparador.tex, método}
@@ -130,7 +135,7 @@ A tese reorganiza a decisão posterior ao CdR. Não reestima os parâmetros de c
 \item Protótipo Java de Peçanha (2015): equivalência parcial executada}
 \begin{center}
 \includegraphics[width=.55\textwidth,height=.32\textheight,keepaspectratio]{../../figures/fig_cdr_gui_mapeamento.png}\par
-{\tiny Interface do Comparador de Registros, versão 0.1 (commit 3b43598), dados sintéticos}
+{\tiny Interface do Comparador de Registros, versão 0.1 (\textit{commit} 3b43598), dados sintéticos}
 \end{center}
 \fonte{estudo1\_comparador.tex, ``Comparador de registros'' e resultados}
 \end{frame}
@@ -158,7 +163,7 @@ Ablação original & Nota $\geq8$ & 0,610 \\
 \bottomrule
 \end{tabular}
 \end{center}
-Os limiares da ablação e do fluxo Modal foram escolhidos nos próprios testes. O valor 0,943 não é resultado do QW1 nem da cascata GZ-CMD.
+Os limiares da ablação e do fluxo Modal foram escolhidos nos próprios testes. O valor 0,943 não é resultado do QW1, do arranjo nem da cascata GZ-CMD.
 \fonte{tab:ablation-best-category; tab:qw1-deep-learning; estudo3\_estrategias.tex, limitações}
 \end{frame}
 
@@ -166,10 +171,10 @@ Os limiares da ablação e do fluxo Modal foram escolhidos nos próprios testes.
 \begin{center}
 \begin{tabular}{lr}
 \toprule Estratégia & $F_1$ médio na validação cruzada \\
-\midrule Sem balanceamento & $0,897\pm0,041$ \\
-Pesos de classe & $0,880\pm0,041$ \\
-SMOTE 0,3 & $0,916\pm0,026$ \\
-SMOTE-Tomek 0,3 & $0,918\pm0,024$ \\
+\midrule Sem balanceamento & $0{,}897\pm0{,}041$ \\
+Pesos de classe & $0{,}880\pm0{,}041$ \\
+SMOTE 0,3 & $0{,}916\pm0{,}026$ \\
+SMOTE-Tomek 0,3 & $0{,}918\pm0{,}024$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -181,9 +186,9 @@ Nove estratégias foram avaliadas no Random Forest. A comparação não demonstr
 \itens{\item XGBoost com 30 atributos: subescores e nota final
 \item Calibração isotônica fora da amostra (OOF), aninhada
 \item Agrupamento por REFREC, registro do SIM, nos níveis externo e interno
-\item Área cinza: AUC 0,995 e precisão média (AP) 0,862}
+\item Área cinza da nota: AUC 0,995 e precisão média (AP) 0,862}
 \begin{block}{Discriminação não é decisão}
-A $p\geq0,5$: 119 verdadeiros positivos, 28 falsos positivos e 32 falsos negativos na área cinza. A cascata compara custos, não usa esse corte único.
+A $p\geq0{,}5$: 119 verdadeiros positivos, 28 falsos positivos e 32 falsos negativos na área cinza da nota. A política v3.1 compara custos, não usa esse corte único.
 \end{block}
 \fonte{estudo4\_gzcmd.tex, classificador OOF; tab:e4-desempenho-faixas-oof}
 \end{frame}
@@ -210,7 +215,7 @@ A consequência do falso vínculo recebe maior custo.
 {\LARGE +24 líquidos, +55,8\%}\par
 27 recuperados apenas pelo modelo, menos 3 apenas pelo limiar
 \end{center}
-Denominador: 74 vínculos no teste. São óbitos de pessoas notificadas por TB, não necessariamente óbitos cuja causa foi TB. O resultado não é estimativa de impacto da cascata final.
+Denominador: 74 vínculos no teste. São óbitos de pessoas notificadas por TB, não necessariamente óbitos cuja causa foi TB. O resultado não é estimativa de impacto do arranjo nem da cascata sobre a base inteira.
 \fonte{tab:impacto-epidemiologico; tab:perfil-recuperados; estudo3\_estrategias.tex, discussão do impacto}
 \end{frame}
 
@@ -227,96 +232,101 @@ O otimismo aparece sobretudo na partição por linha; os vínculos e denominador
 \end{frame}
 
 % 17 a 22: estudo 4
-\begin{frame}{Estudo 4: arquitetura do GZ-CMD v3.1}
+\begin{frame}{Estudo 4: GZ-CMD v3.1 depois do corte}
+\small
 \begin{center}
 \begin{tabular}{p{.9\textwidth}}
-\toprule Guardas: $s<5$ rejeita; $s\geq9$ e $p\geq0,9$ aceita \\
+\toprule Corte do OpenRecLink: aceita acima dele; GZ-CMD decide abaixo \\
+\midrule Classificador ajustado na base inteira, OOF aninhado por REFREC \\
+Isotônica reajustada apenas no treino abaixo do corte, sem \textit{labels} da partição externa \\
+Guardas: $s<5$ rejeita; $s\geq9$ e $p\geq0{,}9$ aceita \\
 \midrule Faixas da nota final: estratificam o perfil de erro do revisor \\
-Probabilidade calibrada: XGBoost + isotônica OOF por REFREC \\
-\textit{Expected loss}: comparar vínculo, não-vínculo, LLM e humano \\
-Revisão assistida: dossiê sem saídas do motor; inconclusivos ao humano \\
+Probabilidade recalibrada: XGBoost com os mesmos 30 atributos \\
+\textit{Expected loss}: comparar vínculo, não vínculo, LLM e humano \\
+Revisão assistida: dossiê sem saídas do motor; inconclusivos ao revisor humano \\
 \bottomrule
 \end{tabular}
 \end{center}
-ML é uma etapa. As guardas atuais não são os filtros temporais da versão histórica v3.
-\fonte{estudo4\_gzcmd.tex, política v3.1 e classificador OOF}
+\textit{Grey-Zone} no nome: região que a regra automática não decide, não a faixa $[5,9)$ da nota. Taxas congeladas, sem realimentação; P reutiliza respostas históricas também usadas para estimá-las, não uma avaliação prospectiva.
+\fonte[]{tese, estudo4\_gzcmd.tex, política v3.1; data/arranjo\_corte\_metadata.json, cost\_sources e incorporation\_bias}
 \end{frame}
 
-\begin{frame}{Estudo 4: explicitar o custo de cada decisão}
+\begin{frame}{Estudo 4: duas ações de \textit{expected loss}}
+\begin{center}
+\textit{Expected loss}: revisor humano ou não vínculo
 \[
-\mathcal L(M\mid p)=(1-p)C_{FP},\qquad
-\mathcal L(N\mid p)=pC_{FN}
+L_H=C_H,\qquad L_N=pC_{FN},\qquad p\geq C_H/C_{FN}
 \]
+\end{center}
+\itens{\item Sob revisor perfeito, revisar quando o custo de revisão não excede o de perder o vínculo
+\item Com orçamento, enviar ao revisor humano os maiores valores de probabilidade calibrada até o ponto de parada
+\item Os pares restantes recebem não vínculo: GZ-CMD restrito às ações revisor humano e não vínculo}
+\small A hipótese sobre o fluxo deve ser validada em dados novos. A falha da política de quatro ações não invalida o critério: suas entradas de calibração e de erro do LLM não se transferiram à região abaixo do corte.
+\fonte[]{apendice\_formalizacao.tex, funções de perda; data/arranjo\_corte\_vpp\_llm.csv, linha 2; data/comparador\_p\_match\_humano.csv}
+\end{frame}
+
+\begin{frame}{Estudo 4: arranjo sequencial, P principal}
+\small
 \begin{center}
-\begin{tabular}{lrr}
-\toprule Modo & $C_{FP}$ & $C_{FN}$ \\
-\midrule Vigilância & 10 & 50 \\
-Confirmação & 100 & 20 \\
+\begin{tabular}{lrrrrr}
+\toprule Decisão & Vínculos aceitos & FP & Perdidos & Revisor humano & LLM \\
+\midrule Corte isolado & 211 (85,4\%) & 0 & 36 & 0 & 0 \\
+\textbf{P, vigilância} & \textbf{211+4 (87,0\%)} & 21 & 13 & 96 & 344 \\
+\textbf{P, confirmação} & \textbf{211+8 (88,7\%)} & 4 & 27 & 17 & 41 \\
+\midrule Base inteira, vig. & 194 (78,5\%) & 34 & 15 & 111 & 347 \\
+Base inteira, conf. & 132 (53,4\%) & 0 & 28 & 127 & 44 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item LLM e humano têm custos de revisão e erros condicionais
-\item A ação de menor custo esperado depende de calibração e capacidade
-\item Custos relativos são preferências de decisão, não despesas medidas}
-\fonte{estudo4\_gzcmd.tex, política v3.1; apêndice de formalização}
+\itens{\item P não reproduz 13 (vigilância) e 27 (confirmação) dos 36 vínculos recuperados pelo serviço
+\item Aceita 25 pares na vigilância e 12 na confirmação: 4 e 8 são PAR~=~2; os 21 e 4 FP foram rejeitados ou não examinados pelo serviço
+\item Registro interno versionado antes da S3 (avaliação com os \textit{labels}); comparadores de carga e decomposição são exploratórios \textit{post hoc}, não registrados}
+\fonte[]{data/arranjo\_corte\_metricas.csv, linhas 2, 4, 12, 22 e 30; data/arranjo\_corte\_vpp\_llm.csv, linhas 2 e 8; reserva 43 a 45}
 \end{frame}
 
-\begin{frame}{Estudo 4: cascata REFREC, vigilância}
+\begin{frame}{Estudo 4: curva de esforço e ponto de parada}
+\centering
+\resizebox{.94\textwidth}{!}{\input{figures/curva_esforco.pgf}}
+\par\footnotesize
+Exploratória \textit{post hoc}, não registrada. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados. Nenhuma ordenação domina em todas as cargas.
+\fonte[]{data/comparador\_mesma\_carga\_curva.csv; data/comparador\_mesma\_carga.csv; data/comparador\_p\_match\_humano.csv}
+\end{frame}
+
+\begin{frame}{Estudo 4: o mesmo LLM, dois papéis distintos}
+\small
+Claude Haiku 5.5, instruções v4; dois agentes e árbitro, sem saídas decisórias do motor.
 \begin{center}
-\begin{tabular}{lrr}
-\toprule Indicador & v3 & v3.1 \\
-\midrule Sensibilidade automática & 58,3\% & 78,5\% \\
-Falsos positivos & 35 & 34 \\
-Vínculos perdidos por não-vínculo & 91 & 15 \\
-Potenciais pares ao humano & 61 & 111 \\
-Potenciais pares ao LLM & 1.410 & 347 \\
-Custo LLM estimado (US\$) & 3,79 & 0,92 \\
+\begin{tabular}{lrrl}
+\toprule Braço e modo & Vínculos/aceitos & VPP & IC 95\% \\
+\midrule P, vigilância & 4/25 & 16,0\% & 6,4 a 34,7\% \\
+P, confirmação & 8/12 & 66,7\% & 39,1 a 86,2\% \\
+P-Platt, vigilância & 4/7 & 57,1\% & 25,0 a 84,2\% \\
 \bottomrule
 \end{tabular}
 \end{center}
-IC 95\% da sensibilidade v3.1: 73,0; 83,2.\par
-Fechamento dos vínculos: $194+15+38=247$ (aceitos, perdidos, ao humano).
-\fonte{tab:cap8-cascata-v31; IC de Wilson descritivo, sem ajuste por dependência}
-\end{frame}
-
-\begin{frame}{Estudo 4: cascata REFREC, confirmação}
-\begin{center}
-\begin{tabular}{lrr}
-\toprule Indicador & v3 & v3.1 \\
-\midrule Sensibilidade automática & 40,5\% & 53,4\% \\
-Falsos positivos & 6 & 0 \\
-Vínculos perdidos por não-vínculo & 130 & 28 \\
-Potenciais pares ao humano & 25 & 127 \\
-Potenciais pares ao LLM & 435 & 44 \\
-Custo LLM estimado (US\$) & 1,16 & 0,12 \\
-\bottomrule
-\end{tabular}
-\end{center}
-IC 95\% da sensibilidade v3.1: 47,2; 59,6.\par
-Fechamento: $132+28+87=247$. Encaminhar ao humano não é perder o vínculo.
-\fonte{tab:cap8-cascata-v31; custos LLM não incluem pessoal nem infraestrutura}
-\end{frame}
-
-\begin{frame}{Estudo 4: revisor LLM e independência da evidência}
-\itens{\item Referência: Claude Haiku 5.5, instruções v4
-\item Dois agentes e árbitro; dossiê sem saídas decisórias do motor
-\item Inconclusivo é uma saída permitida, seguida de revisão humana
-\item Claude Sonnet 5.5 recuperou de 2 a 4 vínculos adicionais na cascata, com mais encaminhamentos e tarifa 20 vezes maior por token}
-\begin{block}{Limite da inferência}
-A ablação conjunta das saídas do motor é compatível com ancoragem, mas não isola cada campo nem demonstra efeito causal geral.
+\itens{\item Aceitador: 21 FP observados contra 9,06 previstos. Transferência de taxas e reutilização impede interpretação prospectiva
+\item Filtro antes do revisor humano, vigilância: 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas em k=96; recupera 13 PAR~=~2 contra 6 sem filtro na mesma carga
+\item VPN (valor preditivo negativo): 87,8\% em k=96; 78,0\% em k=58, na vigilância. Perdas por descarte: reserva 48}
+\begin{block}{Hipótese de uso, não política validada}
+O LLM nunca aceita sozinho. O filtro exige validação registrada própria.
 \end{block}
-\fonte{estudo4\_gzcmd.tex, ablação do dossiê e reavaliação; tab:cap8-ablacao-dossie}
+\fonte[]{data/arranjo\_corte\_vpp\_llm.csv, linhas 2, 3 e 8; data/filtro\_llm.csv, linhas 4 e 5; reserva 48}
 \end{frame}
 
-\begin{frame}{Estudo 4: limites da automação são parte do resultado}
-\itens{\item Humano pendente: 111 potenciais pares na vigilância e 127 na confirmação
-\item Erro humano de 5,0\%: hipótese, não resultado observado
-\item Sob essa hipótese: sensibilidade projetada de 93,2\% e 86,9\%
-\item Restrição de 0,2\% de falsos vínculos esperados: inviável com as probabilidades e guardas disponíveis}
-\begin{block}{Confirmação}
-Ausência de falso positivo observado não garante risco esperado nulo. A calibração absoluta e a revisão no serviço ainda precisam de validação.
-\end{block}
-\fonte{tab:cap8-cascata-v31; estudo4\_gzcmd.tex, confirmação por restrição e limitações}
+\begin{frame}{Estudo 4: o LLM como aceitador não se paga abaixo do corte}
+\small
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule Modo & P com MATCH ao humano & O3, mesma carga & O3 para igualar P \\
+& \multicolumn{3}{c}{Revisões humanas / PAR~=~2 recuperados} \\
+\midrule Vigilância & 121 / 23 & 121 / 22 & 125 / 23 \\
+Confirmação & 29 / 9 & 29 / 9 & 29 / 9 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\itens{\item Sob a mesma hipótese de revisor perfeito dos dois lados, P recupera no máximo 1 vínculo a mais na mesma carga humana, ao custo adicional de 344 pares avaliados pelo LLM na vigilância e 41 na confirmação. Não é empate sem qualificação
+\item Uma diferença de um vínculo em 36 não sustenta superioridade. P é principal porque foi registrado antes; P-Platt é análise de sensibilidade não confirmatória, sem dominância sustentada. Não se substitui o revisor humano pelo LLM}
+\fonte[]{data/comparador\_p\_match\_humano.csv, linhas 2 e 3; data/arranjo\_corte\_metricas.csv, linhas 12 e 30; data/robustez\_arranjo\_resumo.csv, linha 278}
 \end{frame}
 
 % 23 e 24: estudo 5
@@ -324,27 +334,30 @@ Ausência de falso positivo observado não garante risco esperado nulo. A calibr
 \begin{center}
 \begin{tabular}{lrr}
 \toprule VPP por sexo & Feminino & Masculino \\
-\midrule XGBoost, sensibilidade equivalente & 93,1\% & 70,7\% \\
-Cascata v3.1, vigilância & 87,9\% & 84,0\% \\
+\midrule Arranjo P, vigilância & 86,3\% & 93,3\% \\
+Cascata, base inteira (comparação) & 87,9\% & 84,0\% \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Avaliados sensibilidade e valor preditivo positivo (VPP)
-\item Não é avaliação completa de igualdade de oportunidades de erro
-\item Ausência de rejeição não demonstra equidade; raça/cor indisponível}
-\fonte{estudo5\_equidade.tex, diferenças demográficas e limitações; tab:equidade-v31}
+\small
+\itens{\item Aceitação no arranjo: corte ou vínculo do LLM abaixo dele; humano conta como não aceito
+\item VPP por sexo sem rejeição em P na vigilância: $p_{BH}=0{,}378$; isso não demonstra paridade
+\item Os 211 são aceitos por construção. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR~=~2 em cada subgrupo, definida pelo corte, e da recuperação desses 36. As diferenças de VPP dependem dos 21 e 4 FP abaixo do corte
+\item Não cobre toda a igualdade de oportunidades de erro; ausência de rejeição não demonstra equidade e raça/cor está indisponível}
+\fonte[]{data/equidade\_arranjo\_group\_metrics.csv, sexo; data/equidade\_arranjo\_pairwise\_tests.csv, linha 3; data/equidade\_arranjo\_global.csv}
 \end{frame}
 
 \begin{frame}{Estudo 5: a principal disparidade é operacional}
+\small
 \begin{center}
-{\Huge 45,0\% versus 90,6\%}\par
-sensibilidade automática da cascata, passos 11 e 9
+{\LARGE 42,5\% e 47,5\%}\par
+sensibilidade automática do arranjo no passo 11, vigilância e confirmação
 \end{center}
-\itens{\item Nove rejeições de paridade na cascata de vigilância, após correção
-\item Cinco dessas rejeições recaem no passo de blocagem
-\item No passo 11, 15 dos 40 vínculos seguiram ao humano
-\item A equidade do processo completo depende da revisão ainda não observada}
-\fonte{estudo5\_equidade.tex, subgrupos operacionais; tab:equidade-v31-rejeicoes-cascata}
+\itens{\item Disparidade herdada do corte e do \textit{label}: corte isolado de 37,5\% no passo 11 (15/40), contra 95,0\% no passo 6 e 94,5\% no passo 9
+\item Dos 25 PAR~=~2 do passo 11, P aceita 2 na vigilância e 4 na confirmação. Nos passos 6 e 9, sensibilidade $\geq95{,}0\%$; na vigilância do passo 11, fica abaixo da base inteira, 42,5 contra 45,0\%
+\item Benjamini-Hochberg: vigilância, 7 rejeições em P contra 9 na base inteira; confirmação, 3 contra 1. Todas operacionais; a contagem não ordena equidade
+\item O processo completo depende da revisão humana ainda não observada}
+\fonte[]{data/par\_por\_passo.csv, linhas 5 a 28 e 53; data/equidade\_arranjo\_group\_metrics.csv, linhas 17 a 19, 41 e 65 a 67; data/equidade\_arranjo\_pairwise\_tests.csv, reject\_fdr}
 \end{frame}
 
 % 25: posicionamento
@@ -354,7 +367,7 @@ sensibilidade automática da cascata, passos 11 e 9
 \toprule Estudo & Elemento documentado no referencial \\
 \midrule Pita (2017) & Modelo treinável para refinar vínculos e reduzir revisão \\
 Pereira (2024) & Comparação supervisionada em pares do SUS \\
-Paiva (2025) & Base distinta, árvores de decisão, exclusão da área cinza e balanceamento \\
+Paiva (2025) & Base distinta, árvores de decisão, exclusão da região intermediária e balanceamento \\
 Lages (2026) & Classificação supervisionada, razão 1:5, validação independente \\
 Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão seletiva e equidade \\
 \bottomrule
@@ -365,16 +378,16 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 
 % 26 e 27: limitações antes de conclusões
 \begin{frame}{Limitações: referência, dependência e seleção}
-\itens{\item Padrão-ouro com uma revisora, viés de verificação pelo corte e risco de incorporação da nota do CdR
-\item Sensibilidade condicional à blocagem e ao extrato exportado
-\item QW1 e ablação: vazamento por \texttt{obito\_*}, partição por linha e limiares explorados no teste
-\item GZ-CMD: REFREC agrupado, mas COMPREC não agrupado simultaneamente
-\item Proporções do LLM reutilizam respostas dos lotes avaliados; seleção adaptativa, não avaliação prospectiva}
-\fonte{capitulo\_dados.tex, padrão-ouro; estudos 2 e 3, limitações; estudo4\_gzcmd.tex, cascata e limitações}
+\small
+\itens{\item Revisora única, sem classificação independente; corte incorporado ao \textit{label}. Se a revisão seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados
+\item Ordem histórica desconhecida: 2.156 revisões são cenário. Apenas 36 PAR~=~2; REFREC não separa COMPREC
+\item Respostas históricas reutilizadas; taxas de coortes mais fáceis e denominadores mínimos. Sensibilidade humana não medida; especificidade perfeita assumida, sem FP humanos
+\item Comparador \textit{a posteriori} conhecido antes do registro interno; código registrado ausente do git e desvios de protocolo. Registro: recalibração, braços e avaliação; robustez: estabilidade interna, não generalização}
+\fonte[]{data/comparador\_mesma\_carga\_metadata.json; data/cenarios\_sensibilidade\_humana.csv; gzcmd/M\_arranjo\_corte\_desvios.md; reservas 45 a 48}
 \end{frame}
 
 \begin{frame}{Limitações: transferência e privacidade}
-\itens{\item Uma coorte municipal, sem validação externa da cascata
+\itens{\item Uma coorte municipal, sem validação externa do arranjo nem da cascata
 \item Dados pseudonimizados, não anônimos; APIs externas no processamento LLM
 \item Exportação restrita com \texttt{pair\_id} por HMAC implementada, matriz não depositada
 \item Base legal: LGPD, arts. 7º, IV, 11, II, c, e 13; autor sem acesso aos registros nominais
@@ -384,25 +397,33 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 \end{frame}
 
 % 28 e 29: conclusões
-\begin{frame}{Conclusões: decidir inclui reconhecer quando não automatizar}
-\begin{block}{Vigilância}
-A cascata resolve a maior parte sem revisão humana, com 78,5\% dos vínculos aceitos automaticamente e 34 falsos positivos.
-\end{block}
-\begin{block}{Confirmação}
-A aceitação automática de 53,4\%, sem falso positivo observado, concentra no profissional do serviço os potenciais pares ainda intermediários.
-\end{block}
-As projeções com humano não substituem avaliação no serviço. A contribuição é governar a decisão, não prometer automação integral.
-\fonte{estudo4\_gzcmd.tex, discussão; conclusao.tex}
+\begin{frame}{Conclusões: cobertura e orçamento humano}
+\small
+Sob revisor perfeito, vínculos recuperados abaixo do corte:
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule Modo e carga & P & O3: rec. / não rec. & Igualar P: O3 / O4 \\
+\midrule
+Vigilância, k=96 & 23 & 22 / 14 & 125 / 106 \\
+Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\itens{\item P não reproduz 13 vínculos na vigilância e 27 na confirmação; 21 e 4 FP. Para os 36 PAR~=~2, O1 requer 2.521 e O3, 23.443 revisões
+\item As perdas são de cobertura. Sensibilidade humana de 95\%, 99\% e 100\%: até 0,53 p.p. nas estratégias de carga reduzida e 0,73 p.p. na revisão integral; especificidade humana é assumida perfeita
+\item Preservar o corte; escolher probabilidade ou escore e ponto de parada pela curva de esforço, conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. O serviço decide se aceita a troca}
+\fonte[]{data/cenarios\_sensibilidade\_humana.csv, amplitudes; data/arranjo\_corte\_metricas.csv, linhas 12 e 30; data/comparador\_mesma\_carga.csv; data/esforco\_arranjo.csv, linhas 2 e 6}
 \end{frame}
 
-\begin{frame}{Contribuições e agenda de validação}
-\itens{\item CdR em Python documentado, com equivalência Java parcial avaliada
-\item Comparação de classificadores na base 1:249 e desempenho por faixa
-\item Balanceamento avaliado no Random Forest, com limites de protocolo explícitos
-\item GZ-CMD: composição operacional de guardas, calibração, custos e revisão
-\item Pacote 0.4.0 com v3.1 e artefatos no Zenodo 3.0.1, com ressalvas de acesso
-\item Próxima avaliação: referência independente, revisão humana observada e transferência externa}
-\fonte{conclusao.tex, contribuições e perspectivas; estudos 1 a 5}
+\begin{frame}{Contribuições e fluxo recomendado, a validar}
+\small
+\itens{\item Decomposição por PAR e curva de esforço: escolher a ordenação e o ponto de parada, sem alegar dominância universal
+\item Mesmo LLM: ruim como aceitador (VPP de 16,0\%), útil como filtro exploratório de NONMATCH (VPN de 87,8\% em k=96 e 78,0\% em k=58, vigilância). Falha de transferência e ancoragem
+\item Política auditável de quatro ações, CdR em Python, pacote e \textit{benchmark} abertos; resultado negativo com registro interno}
+\begin{block}{Recomendação final como hipótese a validar}
+Preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore; escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. Se usar probabilidade aprendida, treinar na prevalência original: a subamostragem não melhorou a fila. Revisor humano no topo até o orçamento; restante como não vínculo. LLM apenas como filtro de NONMATCH antes do revisor humano, nunca aceitando sozinho. Adoção depende de validação registrada em dados novos.
+\end{block}
+\fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv}
 \end{frame}
 
 \begin{frame}{Agradecimentos}
@@ -410,19 +431,20 @@ As projeções com humano não substituem avaliação no serviço. A contribuiç
 \Large Orientadora, banca e equipe do IESC-UFRJ\medskip\par
 \normalsize Profissionais responsáveis pelo processamento e pela revisão dos dados\bigskip\par
 \begin{block}{Mensagem final}
-O GZ-CMD transforma a área cinza de um problema de volume em um problema de decisão, mantendo explícito o trabalho que ainda exige revisão humana.
+\small O ganho em esforço vem da cobertura do topo da fila. P não reproduz 13 vínculos na vigilância e 27 na confirmação, com 21 e 4 falsos positivos. Na mesma carga humana, a política com LLM acrescenta no máximo 1 vínculo. Preservar o corte; escolher probabilidade ou escore e ponto de parada pela curva de esforço conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. Se usar probabilidade aprendida, treinar na prevalência original. São recomendações a validar; o LLM só entra como filtro experimental, nunca aceitando sozinho.
 \end{block}
+\fonte[]{data/comparador\_p\_match\_humano.csv; data/cenarios\_sensibilidade\_humana.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv}
 \end{frame}
 
 \appendix
-% 31 a 42: backup, fora dos 40 minutos
-\begin{frame}{Backup: cascata por REFREC, síntese visual}
+% 31 a 49: backup, fora dos 40 minutos
+\begin{frame}{Backup: base inteira (comparação), síntese visual}
 \centering
 \includegraphics[width=\textwidth,height=.72\textheight,keepaspectratio]{../latex/figures/fig_cap8_cascata_v31.png}
 \fonte{fig:cap8-cascata-v31; tab:cap8-cascata-v31}
 \end{frame}
 
-\begin{frame}{Backup: contagens completas da decisão final}
+\begin{frame}{Backup: base inteira (comparação), contagens completas}
 \small\centering
 \begin{tabular}{lrrrr}
 \toprule & \multicolumn{2}{c}{Vigilância} & \multicolumn{2}{c}{Confirmação} \\
@@ -450,10 +472,10 @@ $[6,7)$ & 6.175 & 57 & 0,984 & 0,855 & 45 & 1 & 12 \\
 $[7,8)$ & 1.080 & 43 & 0,995 & 0,922 & 33 & 4 & 10 \\
 $[8,9)$ & 102 & 34 & 0,913 & 0,873 & 29 & 16 & 5 \\
 $\geq9$ & 95 & 93 & n.d. & n.d. & 89 & 2 & 4 \\
-\midrule Área cinza & 21.620 & 151 & 0,995 & 0,862 & 119 & 28 & 32 \\
+\midrule Área cinza da nota & 21.620 & 151 & 0,995 & 0,862 & 119 & 28 & 32 \\
 \bottomrule
 \end{tabular}
-\medskip\par Contagens a $p\geq0,5$, fixado antes da análise. Não é a política v3.1. AUC e AP omitidas quando a classe minoritária tem menos de cinco casos.
+\medskip\par Contagens a $p\geq0{,}5$, fixado antes da análise. Não é a política v3.1. AUC e AP omitidas quando a classe minoritária tem menos de cinco casos.
 \fonte{tab:e4-desempenho-faixas-oof}
 \end{frame}
 
@@ -461,11 +483,11 @@ $\geq9$ & 95 & 93 & n.d. & n.d. & 89 & 2 & 4 \\
 \centering
 \begin{tabular}{lrr}
 \toprule Modelo & $F_1$ na validação cruzada & $F_1$ no teste \\
-\midrule XGBoost & $0,924\pm0,030$ & 0,920 \\
-Random Forest & $0,913\pm0,029$ & 0,855 \\
-MLP (64, 32) & $0,882\pm0,037$ & 0,859 \\
-MLP (128, 64) & $0,872\pm0,038$ & 0,844 \\
-TabNet & $0,821\pm0,055$ & 0,610 \\
+\midrule XGBoost & $0{,}924\pm0{,}030$ & 0,920 \\
+Random Forest & $0{,}913\pm0{,}029$ & 0,855 \\
+MLP (64, 32) & $0{,}882\pm0{,}037$ & 0,859 \\
+MLP (128, 64) & $0{,}872\pm0{,}038$ & 0,844 \\
+TabNet & $0{,}821\pm0{,}055$ & 0,610 \\
 \bottomrule
 \end{tabular}
 \medskip\par Validação $5\times5$ no treinamento e teste interno de 30\%.\par
@@ -501,7 +523,7 @@ Consenso e regras & 0,896 & 0,150 \\
 \begin{frame}{Backup: detecção no teste da ablação}
 \centering
 \resizebox{!}{.66\textheight}{\input{../latex/fig_doc/epi_deteccao.pgf}}
-\fonte{fig:epi-deteccao; tab:impacto-epidemiologico; não é resultado da cascata final}
+\fonte{fig:epi-deteccao; tab:impacto-epidemiologico; não é resultado do arranjo nem da cascata}
 \end{frame}
 
 \begin{frame}{Backup: ablação do dossiê, 18 vínculos selecionados}
@@ -512,7 +534,7 @@ Consenso e regras & 0,896 & 0,150 \\
 Claude Haiku 5.5 & 0/9/9 & 7/11/0 \\
 \bottomrule
 \end{tabular}
-\medskip\par M: vínculo; U: inconclusivo; N: não-vínculo.\par
+\medskip\par M: vínculo; U: inconclusivo; N: não vínculo.\par
 \itens{\item Seleção por erro compartilhado, não amostra independente
 \item Retirada conjunta de probabilidade, decisão e demais saídas
 \item Inconclusivo não é reconhecimento correto do vínculo
@@ -524,9 +546,9 @@ Claude Haiku 5.5 & 0/9/9 & 7/11/0 \\
 \itens{\item v3: carregador interrompia o sistema no primeiro separador; política por bandas posterior ao separador não foi enviada
 \item v4: política de decisão pela evidência antes do separador
 \item Concordância forte e nascimento compatível sustentam vínculo
-\item Contradição forte não explicada sustenta não-vínculo
+\item Contradição forte não explicada sustenta não vínculo
 \item Sinais mistos ou evidência insuficiente justificam inconclusivo
-\item Dossiê final não expõe ao revisor as saídas decisórias do motor}
+\item Dossiê utilizado não expõe ao revisor as saídas decisórias do motor}
 \fonte{apendice\_prompts.tex, texto efetivamente enviado; estudo4\_gzcmd.tex, reavaliação}
 \end{frame}
 
@@ -543,12 +565,12 @@ L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \]
 \itens{\item $u$: proporção de inconclusivos; $e$: erros condicionais por banda
 \item Escolha de menor \textit{expected loss}, após guardas e sob orçamento
-\item $C_H=1$, $C_L=0,005$: revisões humanas equivalentes
-\item $e_{FP,h}=e_{FN,h}=0,05$: hipótese de cenário}
+\item $C_H=1$, $C_L=0{,}005$: revisões humanas equivalentes
+\item $e_{FP,h}=e_{FN,h}=0{,}05$: hipótese de cenário}
 \fonte{estudo4\_gzcmd.tex, política v3.1; apêndice de formalização}
 \end{frame}
 
-\begin{frame}{Backup: sensibilidade e restrição na confirmação}
+\begin{frame}{Backup: base inteira (comparação), sensibilidade e restrição}
 \itens{\item Exclusão dos lotes originais na estimação por banda: sensibilidade automática de 80,2\% e 52,6\%, com sobreposição residual
 \item Mesmos lotes com expectativas por banda: 82,2\% e 55,7\%, não resultados observados
 \item Restrição: $\sum_{i\in\mathcal M}(1-p_i)/|\mathcal M|\leq\alpha$
@@ -566,5 +588,138 @@ L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \item Projeto: CEP IESC-UFRJ, CAAE 43856720.1.0000.5286; CEP SMS-Rio, CAAE 43856720.1.3001.5279
 \item Artefatos publicados não tornam reexecutáveis etapas que exigem campos ausentes do depósito}
 \fonte{capitulo\_dados.tex, acesso, ética e ambiente computacional; conclusao.tex}
+\end{frame}
+\begin{frame}{Backup: base inteira (comparação), vigilância REFREC}
+\begin{center}
+\begin{tabular}{lrr}
+\toprule Indicador & v3 & v3.1 \\
+\midrule Sensibilidade automática & 58,3\% & 78,5\% \\
+Falsos positivos & 35 & 34 \\
+Vínculos perdidos por não vínculo & 91 & 15 \\
+Potenciais pares ao humano & 61 & 111 \\
+Potenciais pares ao LLM & 1.410 & 347 \\
+Custo LLM estimado (US\$) & 3,79 & 0,92 \\
+\bottomrule
+\end{tabular}
+\end{center}
+IC 95\% da sensibilidade v3.1: 73,0 a 83,2\%.\par
+Fechamento: $194+15+38=247$ (aceitos, perdidos, ao humano).\par
+\footnotesize Sensibilidade humana: cenários de 95\%, 99\% e 100\%, não medida. Especificidade perfeita; sem FP humanos modelados.
+\par\footnotesize Arranjo P, vigilância: fechamento $(211+4)+13+19=247$. Custo LLM estimado US\$ 0,94.\par
+\fonte[]{tese, tab:cap8-cascata-v31; data/arranjo\_corte\_metricas.csv, linha 4, v3.1; data/arranjo\_corte\_metricas.csv, P}
+\end{frame}
+
+\begin{frame}{Backup: base inteira (comparação), confirmação REFREC}
+\begin{center}
+\begin{tabular}{lrr}
+\toprule Indicador & v3 & v3.1 \\
+\midrule Sensibilidade automática & 40,5\% & 53,4\% \\
+Falsos positivos & 6 & 0 \\
+Vínculos perdidos por não vínculo & 130 & 28 \\
+Potenciais pares ao humano & 25 & 127 \\
+Potenciais pares ao LLM & 435 & 44 \\
+Custo LLM estimado (US\$) & 1,16 & 0,12 \\
+\bottomrule
+\end{tabular}
+\end{center}
+IC 95\% da sensibilidade v3.1: 47,2 a 59,6\%.\par
+Fechamento: $132+28+87=247$. Encaminhar não é perder o vínculo.\par
+\footnotesize Cenários humanos de 95\%, 99\% e 100\%: ver quadro 28; não são medidas do serviço.
+\par\footnotesize Arranjo P, confirmação: fechamento $(211+8)+27+1=247$. Custo LLM estimado US\$ 0,11.\par
+\fonte[]{tese, tab:cap8-cascata-v31; data/arranjo\_corte\_metricas.csv, linha 22, v3.1; data/arranjo\_corte\_metricas.csv, P}
+\end{frame}
+
+\begin{frame}{Backup: arranjo, mecanismos e registro interno}
+\scriptsize
+\begin{tabular}{lrr}
+\toprule Braço & Vigilância & Confirmação \\
+& \multicolumn{2}{c}{Vínculos aceitos / FP / revisor humano / LLM} \\
+\midrule P, principal & (211+4)/21/96/344 & (211+8)/4/17/41 \\
+P-Platt, sensibilidade & 217/3/77/110 & 219/3/16/25 \\
+A3, sensibilidade & 219/19/100/367 & 219/5/22/32 \\
+P-PAR2-grey, sensibilidade & 211/21/116/265 & 217/0/22/18 \\
+B1, base inteira & 194/40/115/374 & 131/4/131/70 \\
+\textit{A posteriori}, não registrado & 221/34/90/330 & 219/0/51/25 \\
+\bottomrule
+\end{tabular}\par\smallskip
+Na vigilância, P-Platt dominou P na avaliação original, como análise de sensibilidade. P-Platt aceita 217, com 3 FP, 77 ao revisor humano, 110 ao LLM e US\$ 0,30 na vigilância.\par
+FP frente ao limiar global do escore do OpenRecLink $-5{,}648$: vigilância, 17 acima ou iguais e 4 abaixo; confirmação, 4 acima ou iguais e 0 abaixo. Por passo: vigilância, 11 acima ou iguais e 10 abaixo; confirmação, 4 acima ou iguais e 0 abaixo.\par
+\fonte[]{data/arranjo\_corte\_metricas.csv, linhas 4 a 36; data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_perdas\_mecanismo.csv, linhas 2 a 4 e 50 a 52; data/fp\_arranjo\_por\_regiao.csv, totais; estudo4\_gzcmd.tex, cronologia}
+\end{frame}
+\begin{frame}{Backup: robustez com registro interno, não confirmatória}
+\footnotesize
+Bloco numérico (N): \textit{threads}/semente; bloco de partição (R): partições. Estabilidade nos mesmos dados, não generalização.
+\begin{center}
+\begin{tabular}{lrr}
+\toprule Dominância de P-Platt sobre P & Numérico (N) & Partição (R) \\
+\midrule Vigilância & 7/20 & 4/20 \\
+Confirmação & 7/20 & 5/20 \\
+Dominância inversa, ambos os modos & 0/20 & 0/20 \\
+P perde mais PAR~=~2 que o \textit{a posteriori}, vig. & 20/20 & 19/20 \\
+P perde mais PAR~=~2 que o \textit{a posteriori}, conf. & 20/20 & 20/20 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\itens{\item Dominância não sustentada. Vigilância: menos FP com P-Platt em 20/20 nos dois blocos, mas mediana de 1 a 2 vínculos perdidos a mais e menos encaminhamentos
+\item P, vigilância: bloco de partição (R), Jaccard mediano de lote LLM de 0,43 em relação à partição original; FP de 9 a 31 e perdas de 9 a 21. A réplica original é um ponto dessa distribuição
+\item Mudança máxima de probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R)
+\item Chamadas novas da robustez: 242 potenciais pares, US\$ 0,63; consumo estimado, não fatura}
+\fonte[]{data/robustez\_arranjo\_resumo.csv, linhas 2 a 12, 270, 278, 404, 488, 632, 652 e 654; data/robustez\_arranjo\_metadata.json, linhas 206 e 208; registro 3ade1c7}
+\end{frame}
+
+\begin{frame}{Backup: subamostragem, treino na prevalência original}
+\small
+\begin{center}
+\begin{tabular}{lrr}
+\toprule Proporção no treino & PAR~=~2 no topo 96, mediana & Intervalo entre sementes \\
+\midrule Original & 22 & Referência: uma execução \\
+1:1 & 13 & 8 a 17 \\
+1:5 & 18,5 & 16 a 21 \\
+1:20 & 21 & 18 a 22 \\
+1:50 & 22,5 & 20 a 24 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\itens{\item Exploratória. A subamostragem não melhorou a fila; 1:20 e 1:50 ficam dentro da variação entre sementes
+\item Brier mediano da isotônica piora em todas as proporções frente à prevalência original
+\item Com 1:1, quedas de cerca de 25 p.p. no passo 6 (4 PAR~=~2) e 33 p.p. no sexo masculino, sem demonstrar melhora de equidade}
+\fonte[]{data/subamostragem\_treino\_resumo.csv, população abaixo do corte, variante isotonic, métricas par2\_top\_96, brier e sens96; análise exploratória}
+\end{frame}
+
+\begin{frame}{Backup: filtro de NONMATCH, potencial e perdas}
+\small
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule Modo e topo da fila & Humano & PAR~=~2 & Sem filtro, mesma carga & VPN & Descartados \\
+\midrule Vigilância, 96 & 22 & 13 & 6 & 87,8\% & 9 de 22 \\
+Confirmação, 125 & 22 & 13 & 6 & 90,3\% & 10 de 23 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\itens{\item Em k=96 na vigilância: 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas. VPN: 87,8\% em k=96; 78,0\% em k=58. LLM descarta apenas NONMATCH; MATCH e inconclusivos vão ao revisor humano. Nunca aceita sozinho
+\item Exploratória, protocolo fixado antes dos desfechos, respostas de datas diferentes. A hipótese exige validação registrada em dados novos
+\item PAR~=~2 têm decisões coincidentes entre modos no topo 125: 23 coincidentes, 0 diferentes. Nos não vínculos, há 6 diferenças. Contagens iguais não significam todas as decisões iguais
+\item O filtro sacrifica cobertura. Sensibilidade humana real não medida; cenários 95\%, 99\% e 100\%, especificidade perfeita}
+\fonte[]{data/filtro\_llm.csv, linhas 5, 7 e 13; data/filtro\_llm\_concordancia\_modos.csv, linhas 18 e 19; data/filtro\_llm\_metadata.json; data/cenarios\_sensibilidade\_humana.csv}
+\end{frame}
+
+\begin{frame}{Backup: mecanismos, cenários humanos e registro interno}
+\small
+PAR~=~2, aceitos / ao revisor humano / perdidos: arranjo e cascata sobre a base inteira.\par
+\begin{tabular}{lrrrrrr}
+\toprule & \multicolumn{2}{c}{Aceitos} & \multicolumn{2}{c}{Ao humano} & \multicolumn{2}{c}{Perdidos} \\
+Modo & P & Cascata & P & Cascata & P & Cascata \\
+\midrule
+Vigilância & 4 & 10 & 19 & 17 & 13 & 9 \\
+Confirmação & 8 & 8 & 1 & 11 & 27 & 17 \\
+\end{tabular}
+\par\smallskip Horas são ordem de grandeza, não medida: no cenário de 2.156 revisões, P poupa cerca de 687 h na vigilância e 713 h na confirmação.\par
+P perde 13 e 27 dos 36 PAR~=~2 (36,1\% e 75,0\%). Guarda/custo/LLM: 1/6/6 na vigilância; 1/22/4 na confirmação. $C_{FP}=5C_{FN}$ na confirmação, com 22 perdas por AUTO\_NONMATCH. Sem varredura de custos no arranjo.\par
+
+\par\smallskip
+Sensibilidade humana: cenários de 95\%, 99\% e 100\%; não medida. Os cenários assumem especificidade humana perfeita, sem modelar FP humanos. Amplitudes máximas: 0,53 p.p. nas cargas reduzidas e 0,73 p.p. na revisão integral.\par\smallskip
+Registro interno 49 min antes da S3 (avaliação com os \textit{labels}): 01:22:17 e 02:11:52 UTC (metadados na versão \texttt{16d5876}), em 05/11/2026. \textit{Commit} da S3: 02:17:13 UTC.
+
+\fonte[]{data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_perdas\_mecanismo.csv, linhas 2 a 4 e 50 a 52; data/esforco\_arranjo.csv, linhas 2 e 6; data/cenarios\_sensibilidade\_humana.csv; estudo4\_gzcmd.tex, cronologia}
 \end{frame}
 \end{document}

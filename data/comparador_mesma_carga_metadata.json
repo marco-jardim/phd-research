@@ -1,0 +1,76 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "registered": false,
+  "date": "2026-11-05",
+  "api_calls": 0,
+  "llm_calls": 0,
+  "model_fits": 0,
+  "universe": {
+    "below_cutoff": 61485,
+    "PAR2": 36,
+    "nonlinks": 61449,
+    "above_cutoff_links": 211,
+    "total_links": 247
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/arranjo_corte_par2.csv": "2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e",
+    "data/arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
+    "data/carga_abaixo_corte.csv": "25e0aaf2e52bcbf0ae847ca05766b9b2fa46d37802fb8aa2ad6f7af67bfaa6e6",
+    ".local/arranjo_corte/oof.npz": "b1e58f592f3f87894aa787d0f74b02b38900e3c120c790dfe52be91102e77614",
+    "data/arranjo_corte_s1_metadata.json": "49aa35a88bb818fd231bc8feb45efefc6554581e8de0e43944a7463406e42cb6"
+  },
+  "code_sha256_lf": {
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8"
+  },
+  "O4": {
+    "available": true,
+    "identity_checks": [
+      "S1 source and code fingerprints",
+      "exact unique pair set",
+      "aligned REFREC folds",
+      "B1 equals original OOF at atol=1e-14",
+      "finite P probabilities in [0,1]"
+    ],
+    "limitation": "Cache has no historical P checksum in S1; current NPZ SHA256 is recorded."
+  },
+  "notable_k": {
+    "O1_SCORE": {
+      "k_min_36": 2521,
+      "k_min_vigilancia_P": 501,
+      "k_min_confirmacao_P": 51
+    },
+    "O2_CdR": {
+      "k_min_36": 24248,
+      "k_min_vigilancia_P": 4163,
+      "k_min_confirmacao_P": 11
+    },
+    "O3_p_cal_ml": {
+      "k_min_36": 23443,
+      "k_min_vigilancia_P": 125,
+      "k_min_confirmacao_P": 29
+    },
+    "O4_P_recalibrada": {
+      "k_min_36": 53591,
+      "k_min_vigilancia_P": 106,
+      "k_min_confirmacao_P": 27
+    }
+  },
+  "ordering": "Descending numeric score, ascending lexical pair_id on ties; exactly k rows.",
+  "curve": {
+    "k_min": 1,
+    "k_max": 2522
+  },
+  "inclusion_convention": "ORL accepts SCORE >= step cutoff; comparator uses SCORE < cutoff. Service global lower bound uses SCORE >= minimum PAR=2 SCORE, including all ties (2522). Exact top-k breaks ties by pair_id, so k_min_36 may be smaller than 2522.",
+  "assumptions": {
+    "perfect_reviewer": "All top-k PAR=2 accepted and all top-k nonlinks rejected: comparator FP=0. Nonlinks reviewed are workload, NOT false positives; P_fp are observed automatic false positives.",
+    "human_error_05": "Sensitivity scenario only: (211 + 0.95 * PAR2_topk)/247. The 211 ORL links remain fixed; no 5% false-positive rate is assumed for nonlinks.",
+    "P_recovery": "Accepted + referred PAR=2, assuming perfect review of referrals; P 5% scenario discounts referrals only, not automatic acceptances.",
+    "K2": "Human + LLM review counts of P, not time-equivalent or cost-equivalent workloads."
+  },
+  "verification_bias": "Os PAR=2 foram definidos pela revisao do servico, que se presume em ordem de SCORE. O1 e favorecido por construcao. O3/O4 sao comparadores mais justos com o GZ-CMD. Nao e uma estimativa independente de sensibilidade nem uma analise registrada."
+}

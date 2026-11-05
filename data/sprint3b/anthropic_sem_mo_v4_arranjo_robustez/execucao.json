@@ -1,0 +1,122 @@
+{
+  "stage": "B_complete",
+  "queue_commit": "47b5b59f46cde8e6047d5a90ce87fcdd35180b26",
+  "runs": [
+    {
+      "mode": "vigilancia",
+      "model": "claude-haiku-5-5",
+      "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+      "prompt_version": "v4",
+      "removed_fields": [
+        "model_outputs.p_cal",
+        "model_outputs.base_choice",
+        "model_outputs.band",
+        "model_outputs.evr",
+        "model_outputs.guardrail",
+        "model_outputs.guardrail_reason"
+      ],
+      "timestamp": "2026-11-05T06:53:06.079968+00:00",
+      "updated_at": "2026-11-05T07:10:16.662760+00:00",
+      "n_review_pairs": 230,
+      "n_reviewed": 230,
+      "n_errors": 0,
+      "complete": true,
+      "workers": 4,
+      "elapsed_s": 1030.6,
+      "metadata": {
+        "provider": "Anthropic Messages API",
+        "model_exact": "claude-haiku-5-5",
+        "max_tokens": 2500,
+        "temperature_sent": false,
+        "extended_thinking": false,
+        "max_retries": 5,
+        "retry_delay_s": 3,
+        "timeout_s": 120,
+        "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+        "prompt_version": "v4",
+        "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "free_response_fields_saved": false,
+        "checkpoint": "every completed pair + durable per-call usage journal"
+      },
+      "transport": {
+        "calls": 487,
+        "http_errors": 0,
+        "response_parse_errors": 0,
+        "error_statuses": {},
+        "input_tokens": 1546097,
+        "output_tokens": 876773,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "max_request_input_tokens": 4292
+      },
+      "cost_estimate_usd": 0.5929962,
+      "cost_note": "Estimate only: standard/global USD/M input .10, output .50, cache read .01, cache write .125; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-02 (existing ablation).",
+      "run_sha256": "eac7b67c63a38e40cf9e40d0d780c9223b43aaf0f3bc61c462fb12b90be1e329",
+      "wall_seconds": 1123.177
+    },
+    {
+      "mode": "confirmacao",
+      "model": "claude-haiku-5-5",
+      "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+      "prompt_version": "v4",
+      "removed_fields": [
+        "model_outputs.p_cal",
+        "model_outputs.base_choice",
+        "model_outputs.band",
+        "model_outputs.evr",
+        "model_outputs.guardrail",
+        "model_outputs.guardrail_reason"
+      ],
+      "timestamp": "2026-11-05T07:11:23.448025+00:00",
+      "updated_at": "2026-11-05T07:12:30.141469+00:00",
+      "n_review_pairs": 12,
+      "n_reviewed": 12,
+      "n_errors": 0,
+      "complete": true,
+      "workers": 4,
+      "elapsed_s": 66.69,
+      "metadata": {
+        "provider": "Anthropic Messages API",
+        "model_exact": "claude-haiku-5-5",
+        "max_tokens": 2500,
+        "temperature_sent": false,
+        "extended_thinking": false,
+        "max_retries": 5,
+        "retry_delay_s": 3,
+        "timeout_s": 120,
+        "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+        "prompt_version": "v4",
+        "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "free_response_fields_saved": false,
+        "checkpoint": "every completed pair + durable per-call usage journal"
+      },
+      "transport": {
+        "calls": 27,
+        "http_errors": 0,
+        "response_parse_errors": 0,
+        "error_statuses": {},
+        "input_tokens": 86943,
+        "output_tokens": 47616,
+        "cache_read_input_tokens": 0,
+        "cache_creation_input_tokens": 0,
+        "max_request_input_tokens": 4199
+      },
+      "cost_estimate_usd": 0.0325023,
+      "cost_note": "Estimate only: standard/global USD/M input .10, output .50, cache read .01, cache write .125; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-02 (existing ablation).",
+      "run_sha256": "89dcbeb754b3bfeb59cfd68d42ba0f83d6439bec18237c265674c624fe310060",
+      "wall_seconds": 133.284
+    }
+  ],
+  "secret_audit": {
+    "timestamp": "2026-11-05T07:12:30.778643+00:00",
+    "files_scanned": 494,
+    "secret_matches": 0,
+    "free_response_fields_saved": false,
+    "dossiers_saved": false
+  },
+  "total_pairs": 242,
+  "wall_seconds": 1257.1538420999423,
+  "total_cost_estimate_usd": 0.6254985
+}
