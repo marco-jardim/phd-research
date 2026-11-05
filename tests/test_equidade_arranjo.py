@@ -113,11 +113,17 @@ def test_no_pair_identifiers_or_PII_in_any_generated_aggregate():
         assert sha256(ROOT / name) == value
 
 
-def test_original_equity_code_and_existing_chapter_tables_unchanged():
+def test_original_equity_analysis_unchanged_and_comparisons_labeled():
     assert sha256(ROOT / "scripts/equidade_v31.py") == sha256(SOURCE / "scripts/equidade_v31.py")
     assert sha256(ROOT / "scripts/qw3_fairness_analysis.py") == sha256(SOURCE / "scripts/qw3_fairness_analysis.py")
-    paths = ["scripts/equidade_v31.py", "scripts/qw3_fairness_analysis.py", "text/latex/estudo5_equidade.tex",
-             "text/latex/tables/tab_equidade_v31.tex", "text/latex/tables/tab_equidade_v31_rejeicoes_cascata.tex",
-             "text/latex/tables/tab_qw3_group_metrics.tex", "text/latex/tables/tab_qw3_fairness_rejections.tex"]
+    # S4a rewrites the chapter and presentation captions, not the legacy analysis.
+    paths = ["scripts/equidade_v31.py", "scripts/qw3_fairness_analysis.py",
+             "text/latex/tables/tab_qw3_fairness_rejections.tex"]
     assert subprocess.check_output(["git", "diff", "b09e979", "--", *paths], cwd=ROOT) == b""
     assert len(list((ROOT / "text/latex/tables").glob("tab_equidade_arranjo*.tex"))) == 7
+    chapter = (ROOT / "text/latex/estudo5_equidade.tex").read_text(encoding="utf-8")
+    assert r"\input{tables/tab_equidade_arranjo.tex}" in chapter
+    assert "decisão principal" in chapter and "comparação" in chapter
+    for mode in ("vigilancia", "confirmacao"):
+        table = ROOT / f"text/latex/tables/tab_equidade_arranjo_grupos_{mode}.tex"
+        assert "sobre a base inteira, comparação" in table.read_text(encoding="utf-8")

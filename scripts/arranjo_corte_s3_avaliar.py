@@ -23,8 +23,8 @@ from scripts import arranjo_corte_orl_gzcmd as posterior
 
 ARMS = ("corte_sozinho", "publicada", "B1", "humano_integral", "aposteriori",
         "P", "P-Platt", "A3", "P-PAR2-grey")
-NAMES = {"corte_sozinho": "(i) Corte", "publicada": "(ii) Publicada", "B1": "B1",
-         "humano_integral": "(iii) Humano integral", "aposteriori": "A posteriori",
+NAMES = {"corte_sozinho": "(i) Corte", "publicada": "Cascata sobre a base inteira", "B1": "B1",
+         "humano_integral": "(iii) Humano integral", "aposteriori": "A posteriori (sem registro prévio)",
          "P": "P", "P-Platt": "P-Platt", "A3": "A3", "P-PAR2-grey": "P-PAR2-grey"}
 
 
@@ -163,18 +163,18 @@ def integer(value):
 
 def render_tex(table, primary, path):
     caption = (
-        "Arranjo corte OpenRecLink e GZ-CMD v3.1, com Claude Haiku 5.5, prompt v4 "
+        "Arranjo sequencial do corte OpenRecLink e GZ-CMD v3.1, com Claude Haiku 5.5, instruções v4 "
         "e dossiê sem saídas do motor: aceitação automática, revisão e custo "
         "na base inteira e na área cinza. O gabarito contém 247 vínculos na base e "
-        "151 em $[5,9)$. PAR=1 é definido pelo corte, com viés de verificação; "
-        "as classes PAR=1 e PAR=2 também participam do ajuste supervisionado, "
+        "151 em $[5,9)$. PAR~=~1 é definido pelo corte, com viés de verificação; "
+        "as classes PAR~=~1 e PAR~=~2 também participam do ajuste supervisionado, "
         "com viés de incorporação. Predições fora da amostra por REFREC não "
         "equivalem a validação externa desse gabarito."
     )
     header = (r"Braço & $V_A$ & $S_A$ (IC 95\%) & FP (abaixo) & $V_N$ & $H$ ($V_H$) "
               r"& LLM & Chamadas & US\$ & $S_H$ (5\%) \\")
     lines = [r"% Gerada por scripts/arranjo_corte_s3_avaliar.py; não editar manualmente.",
-             r"\begingroup", r"\footnotesize", r"\setlength{\tabcolsep}{2pt}",
+             r"\begingroup", r"\scriptsize", r"\setlength{\tabcolsep}{2pt}",
              r"\begin{longtable}{lrrrrrrrrr}", r"\caption{" + caption + "}",
              r"\label{tab:cap8-arranjo-corte}\\", r"\toprule", header,
              r"\midrule", r"\endfirsthead", r"\toprule", header, r"\midrule", r"\endhead",
@@ -188,15 +188,16 @@ def render_tex(table, primary, path):
                 r = table.loc[table.modo.eq(mode) & table.braco.eq(arm) & table.faixa.eq(scope)].iloc[0]
                 cells = [NAMES[arm], integer(r.aceitos), interval(r.sens_auto, r.ic95_inf, r.ic95_sup),
                          f"{integer(r.fp)} ({integer(r.fp_abaixo)})", integer(r.perdidos),
-                         f"{integer(r.pares_humano)} ({integer(r.vinc_humano)})", integer(r.pares_llm),
+                         f"{'até ' if arm == 'humano_integral' and scope == 'TODAS' else ''}{integer(r.pares_humano)} ({integer(r.vinc_humano)})", integer(r.pares_llm),
                          integer(r.chamadas_llm), f"{r.custo_llm_usd:.4f}".replace(".", ","),
                          pct(r.sens_humano_05)]
                 lines.append(" & ".join(cells) + r" \\")
-            lines.append(r"\midrule")
+            if mode != MODES[-1] or scope != "[5,9)":
+                lines.append(r"\midrule")
     lines += [r"\end{longtable}",
               r"\noindent\parbox{\linewidth}{\footnotesize $V_A$: vínculos aceitos automaticamente, inclusive MATCH do modelo de linguagem (LLM); $V_N$: vínculos perdidos por NONMATCH; $H$: potenciais pares ao revisor humano, com vínculos $V_H$ entre parênteses. UNSURE do LLM segue ao humano uma única vez. LLM e humano se sobrepõem nesse encaminhamento, sem somar novamente sua carga humana. $S_A=V_A/n$; IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do gabarito. $S_H=(V_A+0{,}95V_H)/n$ é cenário de erro humano de 5\%, não resultado humano observado. Custos usam somente os registros de consumo dos potenciais pares selecionados por cada braço e faixa, com tarifas históricas por tokens, não faturas. O a posteriori reutiliza a cascata publicada sem recalibração. Fonte: \texttt{data/arranjo\_corte\_metricas.csv} e \texttt{data/arranjo\_corte\_par2.csv}.}",
               r"\begin{longtable}{lrrr}",
-              r"\caption{Partição dos 36 vínculos PAR=2 abaixo do corte. Cada célula mostra a contagem e seu IC de Wilson de 95\%, em porcentagem. As ressalvas sobre o gabarito e a dependência entre pares permanecem.}",
+              r"\caption{Partição dos 36 vínculos PAR~=~2 abaixo do corte. Cada célula mostra a contagem e seu IC de Wilson de 95\%, em porcentagem. As ressalvas sobre o gabarito e a dependência entre pares permanecem.}",
               r"\label{tab:cap8-arranjo-corte-par2}\\", r"\toprule",
               r"Braço & Aceitos (IC 95\%) & Humano (IC 95\%) & Perdidos (IC 95\%) \\",
               r"\midrule"]
@@ -208,7 +209,8 @@ def render_tex(table, primary, path):
             for name in ("aceitos", "humano", "perdidos"):
                 cells.append(f"{int(row[name])} [{pct(row[name + '_ic95_inf'])}; {pct(row[name + '_ic95_sup'])}]")
             lines.append(" & ".join(cells) + r" \\")
-        lines.append(r"\midrule")
+        if mode != MODES[-1]:
+            lines.append(r"\midrule")
     lines += [r"\bottomrule", r"\end{longtable}", r"\endgroup", ""]
     path.write_text("\n".join(lines), encoding="utf-8")
 
