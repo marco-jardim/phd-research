@@ -1,0 +1,35 @@
+% Gerada por scripts/tabelas_arranjo_editorial.py; não editar manualmente.
+\begin{table}[!ht]
+\centering\footnotesize
+\caption{Referência operacional, arranjo sequencial (resultado principal), cascatas sobre a base inteira (comparação) e cenários do Comparador de Registros (CdR), nos 61.696 potenciais pares e 247 vínculos. PAR~=~1 é definido pelo próprio corte do OpenRecLink (viés de verificação).}
+\label{tab:cap8-referencia}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+Estratégia & Modo & Pares ao humano & Pares ao LLM & Sens. automática (\%) & FP automáticos & Vínculos perdidos & Sens. com humano (\%) \\
+\midrule
+\multicolumn{8}{l}{\textit{Referência operacional}} \\
+OpenRecLink, corte isolado & ambos & 0 & 0 & 85,4 & 0 & 36 & n.a. \\
+Corte + revisão manual do serviço & ambos & cenário $\geq 2.156$ & 0 & 85,4 & 0 & 0 & 100,0 \\
+Corte + revisão humana integral (cenário) & ambos & 61.485 (teto) & 0 & 85,4 & 0 & 0 & 99,3 \\
+\midrule
+\multicolumn{8}{l}{\textit{Resultado principal}} \\
+Arranjo sequencial P & vigilância & 96 & 344 & 87,0 & 21 & 13 & 94,4 \\
+Arranjo sequencial P & confirmação & 17 & 41 & 88,7 & 4 & 27 & 89,0 \\
+\midrule
+\multicolumn{8}{l}{\textit{Comparação sobre a base inteira}} \\
+Cascata v3.1 & vigilância & 111 & 347 & 78,5 & 34 & 15 & 93,2 \\
+Cascata v3.1 & confirmação & 127 & 44 & 53,4 & 0 & 28 & 86,9 \\
+Cascata v3 & vigilância & 61 & 1.410 & 58,3 & 35 & 91 & 62,9 \\
+Cascata v3 & confirmação & 25 & 435 & 40,5 & 6 & 130 & 47,0 \\
+\midrule
+\multicolumn{8}{l}{\textit{Cenários hipotéticos do CdR}} \\
+CdR, corte da nota em 9 & ambos & 0 & 0 & 37,7 & 2 & 154 & n.a. \\
+CdR, limiar da nota em 8 & ambos & 0 & 0 & 51,4 & 70 & 120 & n.a. \\
+CdR, revisão humana da área cinza da nota & ambos & 21.620 & 0 & 37,7 & 2 & 3 & 95,7 \\
+\bottomrule
+\end{tabular}}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize (a) O corte aceita 211 vínculos; a revisão manual acrescenta 36. O volume examinado total e a ordem de revisão não foram registrados. Se a revisão tivesse seguido ordem decrescente do escore do OpenRecLink, o cenário exigiria pelo menos 2.156 potenciais pares, com limiar por passo, ou 2.522 com limiar global. A reconstrução é exploratória, \textit{post hoc} e não registrada, não carga histórica observada. (b) Os 100,0\% da linha corte + revisão manual decorrem da definição de PAR, não de acurácia observada. Zero FP acima do corte também decorre do \textit{label}. Em $[5,9)$ há 151 vínculos: 123 pelo corte e 28 pela revisão. Nessa faixa, o arranjo aceita 127 vínculos na vigilância e 127 na confirmação, incluindo 123 pelo corte em cada modo; a cascata sobre a base inteira aceita 113 e 65. (c) A revisão integral abaixo do corte é cenário de revisão de todos os 61.485 candidatos, não carga histórica medida. Sua sensibilidade é $(211+0{,}95\times36)/247$. (d) O arranjo corresponde ao braço P do registro interno versionado antes da avaliação com os \textit{labels} (S3), com emendas e suplemento. Seus FP estão abaixo do corte. Vínculos perdidos são apenas os classificados como não-vínculo, excluindo encaminhamentos pendentes. (e) A revisão da área cinza da nota do CdR é cenário com aceitação de notas $\geq9$ e descarte de notas $<5$, com sensibilidade $(93+0{,}95\times151)/247$. As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese. O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica. Fontes: \path{data/carga_abaixo_corte.csv}, \path{data/referencia_comparador_pos_orl.csv}, \path{data/arranjo_corte_metricas.csv} e \path{data/funil_gzcmd_final_metricas.csv} \cite{Jardim2026phdrepo}.
+}
+\end{table}

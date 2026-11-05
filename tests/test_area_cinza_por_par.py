@@ -1,11 +1,10 @@
-from pathlib import Path
-
 import pandas as pd
 import pytest
 
 from scripts.area_cinza_por_par import carregar, resumir
 from scripts.sensibilidade_gzcmd_por_par import identificar
 from scripts.sensibilidade_gzcmd_por_par import resumir as resumir_cascata
+from local_data import DATA_ROOT, requires_files
 
 
 def extrato(tmp_path):
@@ -72,9 +71,8 @@ def test_rejeita_par_invalido(tmp_path, value):
         carregar(path)
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
 def test_extrato_local_quando_disponivel():
-    path = Path(__file__).resolve().parents[1] / "data/COMPARADORSEMIDENT.csv"
-    if not path.exists():
-        pytest.skip("Extrato não versionado ausente")
+    path = DATA_ROOT / "data/COMPARADORSEMIDENT.csv"
     table = resumir(carregar(path))
     assert table.vinculos.tolist() == [2, 1, 123, 28, 86, 7]

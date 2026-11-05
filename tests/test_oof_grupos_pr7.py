@@ -8,6 +8,7 @@ import pytest
 
 from gzcmd.ml_oof import nested_oof_probabilities
 from gzcmd.runner import run_v3
+from local_data import DATA_ROOT, requires_files, requires_reviewer_sources
 
 
 @pytest.mark.parametrize("split_by", ["refrec", "comprec"])
@@ -85,9 +86,11 @@ def test_group_mode_changes_cache_identity_and_normalizes_header_metadata(tmp_pa
 
 
 @pytest.mark.parametrize("mode,expected", [("vigilancia", 1410), ("confirmacao", 435)])
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
+@requires_reviewer_sources()
 def test_legacy_v3_cohort_and_guards(mode, expected):
     root = Path(__file__).resolve().parents[1]
-    out, summary = run_v3(input_csv=root / "data/COMPARADORSEMIDENT.csv",
+    out, summary = run_v3(input_csv=DATA_ROOT / "data/COMPARADORSEMIDENT.csv",
                           config_path=root / "gzcmd/gzcmd_v3_config.yaml", mode=mode,
                           p_cal="fit_platt", policy_version="v3")
     assert summary.llm_used == expected
@@ -99,6 +102,7 @@ def test_legacy_v3_cohort_and_guards(mode, expected):
     assert set(pair_ids(out.loc[out.action.eq("LLM_REVIEW")])) == set(historic)
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
 def test_runner_honors_configured_split_by(monkeypatch):
     import gzcmd.runner as runner
     from gzcmd.config import load_config
@@ -108,9 +112,8 @@ def test_runner_honors_configured_split_by(monkeypatch):
     fit = Mock(side_effect=sentinel)
     monkeypatch.setattr(runner, "load_config", lambda _: cfg)
     monkeypatch.setattr(runner, "fit_xgb_oof", fit)
-    root = Path(__file__).resolve().parents[1]
     with pytest.raises(RuntimeError, match="stopped before fitting"):
-        runner.run_v3(input_csv=root / "data/COMPARADORSEMIDENT.csv", config_path="unused", mode="vigilancia")
+        runner.run_v3(input_csv=DATA_ROOT / "data/COMPARADORSEMIDENT.csv", config_path="unused", mode="vigilancia")
     assert fit.call_args.kwargs["split_by"] == "comprec"
 
 

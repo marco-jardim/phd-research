@@ -16,6 +16,7 @@ from gzcmd.config import load_config
 from gzcmd.provenance import sha256_file_normalized
 from gzcmd.runner import run_v3
 from scripts.funil_gzcmd_v2 import HAIKU_V4, artifact_paths, load_responses, safe_funnel
+from scripts.tabelas_arranjo_editorial import replace_once
 
 
 def command(script, *args):
@@ -44,12 +45,15 @@ def reestimate_and_export():
     (ROOT / "data/refrec_fechamento_metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
 
 
-def regenerate_cascade_table():
+def regenerate_cascade_table(output_path=None):
     table = pd.read_csv(ROOT / "data/funil_gzcmd_final.csv")
     metrics = pd.read_csv(ROOT / "data/funil_gzcmd_final_metricas.csv")
     order = [(mode, version) for mode in ("vigilancia", "confirmacao") for version in ("v3", "v3.1")]
     path = ROOT / "text/latex/tables/tab_cap8_cascata_v31.tex"
     lines = path.read_text(encoding="utf-8").splitlines()
+    captions = [line for line in lines if line.startswith(r"\caption{")]
+    if len(captions) != 1 or not captions[0].startswith(r"\caption{Cascata final observada por política e modo,"):
+        raise ValueError("Legenda histórica da cascata ausente ou ambígua")
 
     def number(value, decimals=0):
         return f"{value:,.{decimals}f}".replace(",", "_").replace(".", ",").replace("_", ".")
@@ -76,7 +80,7 @@ def regenerate_cascade_table():
         label = line.split(" & ")[0]
         values = None
         if line.startswith(r"\caption{") and "REFREC" not in line:
-            lines[index] = line.replace("Cascata final observada por política e modo,", "Cascata final observada por política e modo, com OOF por REFREC na v3.1,")
+            lines[index] = replace_once(line, "Cascata final observada por política e modo,", "Cascata final observada por política e modo, com OOF por REFREC na v3.1,")
             continue
         if label == "Universo avaliado":
             values = [cell(m, v, "TODAS", 0, "pares_revisados") for m, v in order]
@@ -102,7 +106,7 @@ def regenerate_cascade_table():
             values = [number(metrics.loc[metrics.modo.eq(m) & metrics.versao.eq(v)].iloc[0][field] * (100 if percent else 1), decimals) for m, v in order]
         if values is not None:
             lines[index] = label + " & " + " & ".join(values) + r" \\"
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (output_path or path).write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def finalize():

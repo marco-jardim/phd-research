@@ -11,17 +11,17 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[API] \textit{Application Programming Interface}. Interface de programação que define um conjunto padronizado de rotinas, protocolos e ferramentas para comunicação entre componentes de \textit{software}, permitindo integração modular entre sistemas.
 
-\item[Área cinza] Região de potenciais pares cuja nota final do Comparador de Registros situa-se em $[5, 9)$, na qual a classificação automática por limiar fixo não é confiável e a decisão exige revisão adicional.
+\item[Área cinza] No modelo de Fellegi e Sunter, região que a regra automática não decide, entre os limiares de aceitação e rejeição (Seção~\ref{sec:area-cinza}). Esse conceito dá nome ao GZ-CMD. Nos resultados desta tese, área cinza da nota designa os potenciais pares com nota final do Comparador de Registros em $[5,9)$. A região abaixo do corte do OpenRecLink, onde o arranjo decide, não coincide com essa faixa.
+
+\item[Arranjo sequencial] Aplicação do GZ-CMD depois do corte do OpenRecLink. Os potenciais pares com escore maior ou igual ao corte do respectivo passo são aceitos; a política v3.1, recalibrada apenas abaixo do corte, decide os demais. É o resultado principal do registro interno, não uma política superior à ordenação calibrada. A aplicação da política a todos os potenciais pares constitui a cascata sobre a base inteira, usada como comparação.
 
 \item[Blocagem] Estratégia de redução do espaço de comparação no \textit{linkage}, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a comparação exaustiva de todos os pares possíveis.
 
 \item[Calibração isotônica] Calibração por regressão monotônica não paramétrica das probabilidades de um classificador. No GZ-CMD, é ajustada fora da amostra (\textit{out-of-fold}), com partições agrupadas por registro de referência (REFREC), e é a referência de calibração da política v3.1.
 
-\item[Calibração sigmoidal] Forma de calibração probabilística equivalente ao \textit{Platt scaling}, usada para mapear escores não calibrados em probabilidades utilizáveis para tomada de decisão.
-
 \item[Cascata de decisão] Arquitetura de processamento em múltiplas etapas de custo crescente, na qual filtros computacionalmente baratos eliminam a maior parcela do volume nos estágios iniciais, reservando recursos onerosos para o subconjunto residual de maior incerteza.
 
-\item[Classificação] Tarefa de aprendizado supervisionado que atribui rótulos discretos (vínculo ou não-par) a instâncias com base em atributos preditores.
+\item[Classificação] Tarefa de aprendizado supervisionado que atribui \textit{labels} discretos (vínculo ou não-par) a instâncias com base em atributos preditores.
 
 \item[Claude Haiku 5.5] Modelo de linguagem de grande porte desenvolvido pela Anthropic (Estados Unidos). Com as instruções v4 e dossiê sem as saídas do motor, é o revisor de referência da política v3.1 do GZ-CMD, e suas proporções de erro por banda alimentam a política.
 
@@ -29,7 +29,9 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2024comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui subescores de endereço derivados dos critérios de \citeonline{Paiva2025comparador}, além dos de município.
 
-\item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore composto com um ou dois pontos de corte fixos, sem uso de atributos adicionais. Com dois cortes, resultam três regiões (vínculo, revisão e não-vínculo), como na regra de Fellegi e Sunter; a política v3.1 do GZ-CMD substitui os cortes por quatro ações (vínculo, não-vínculo, revisão por modelo de linguagem e revisão humana). Nesta tese, o corte do OpenRecLink usado pelo serviço é o comparador operacional de referência; o corte 9 da nota final do CdR é comparador hipotético; a revisão integral de $[5,9)$, aceitando-se automaticamente as notas $\geq9$ e descartando-se as notas $<5$, é outro cenário hipotético; e o corte 6,0 da nota é a referência histórica da análise de equidade.
+\item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para discutir orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido.
+
+\item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore com um ou dois pontos de corte fixos. Com dois cortes, resultam regiões de vínculo, revisão e não-vínculo, como na regra de Fellegi e Sunter. O comparador operacional desta tese é o corte do OpenRecLink, isolado ou seguido da revisão humana abaixo dele. No arranjo sequencial, esse corte é preservado, e a v3.1 decide abaixo dele entre vínculo, não-vínculo, LLM e revisor humano. O corte 9 da nota do CdR e a revisão integral de $[5,9)$ são cenários hipotéticos; o corte 6,0 é referência histórica da análise de equidade.
 
 \item[Deduplicação] Processo de identificação e remoção de registros duplicados referentes a um mesmo indivíduo dentro de uma única base de dados.
 
@@ -49,7 +51,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Expected loss}] Critério de decisão que estima, para cada ação possível, o custo esperado associado aos erros de classificação e ao custo de revisão, permitindo selecionar a alternativa de menor perda. Na política v3.1, comparam-se quatro ações, incluindo a revisão humana, de custo $C_H$.
 
-\item[\textit{Expected loss engine}] Componente decisório do GZ-CMD que substitui limiares fixos por minimização de \textit{expected loss} com custos assimétricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$ e, na v3.1, $C_H$), determinando para cada par qual ação tem a menor perda esperada.
+\item[\textit{Expected loss engine}] Componente decisório do GZ-CMD que substitui limiares fixos por minimização de \textit{expected loss} com custos assimétricos ($C_{FP}$, $C_{FN}$, $C_{LLM}$ e, na v3.1, $C_H$), determinando para cada par qual ação tem a menor \textit{expected loss}.
 
 \item[F$_1$-Score] Média harmônica entre precisão e sensibilidade, utilizada como métrica-síntese do desempenho de classificadores.
 
@@ -63,7 +65,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Gradient Boosting}] Família de algoritmos de aprendizado de máquina que constrói modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementações como XGBoost e LightGBM.
 
-\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano.
+\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. \textit{Framework} operacional proposto nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano. No arranjo sequencial, resultado principal do registro interno, é aplicado aos potenciais pares abaixo do corte do OpenRecLink.
 
 \item[\textit{Holdout} (conjunto de avaliação independente)] Subconjunto de dados reservado antes do treinamento e utilizado exclusivamente na etapa final de teste do classificador, após a validação cruzada, com vistas a estimar a capacidade de generalização em observações não utilizadas no ajuste.
 
@@ -83,11 +85,15 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli.
 
+\item[P] Braço da política de quatro ações que preserva o corte e recalibra probabilidades por regressão isotônica somente abaixo dele, ajustada fora da amostra. Principal por registro interno anterior à avaliação, não por superioridade observada.
+
 \item[\textit{Pipeline}] Sequência operacional de etapas analíticas e decisórias, desde a preparação dos dados até a geração de resultados.
 
-\item[\textit{Platt scaling}] Técnica de pós-processamento que ajusta os escores brutos de um classificador por meio de regressão logística (função sigmoide), convertendo-os em probabilidades calibradas. Na execução histórica v3, foi aplicada de forma supervisionada à nota final; o ajuste por momentos nas âncoras é uma variante avaliada como alternativa.
+\item[\textit{Platt scaling}] Técnica de pós-processamento que ajusta os escores brutos de um classificador por meio de regressão logística (função sigmoide), convertendo-os em probabilidades calibradas. Na execução histórica v3, foi aplicada de forma supervisionada à nota final; o ajuste sigmoide por momentos nas âncoras é uma alternativa distinta, não o ajuste supervisionado da nota nem o ajuste sobre logit de P-Platt.
 
 \item[Potencial par] Combinação de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para comparação detalhada.
+
+\item[P-Platt] Sensibilidade de P que substitui a isotônica restrita por \textit{Platt scaling} sobre o logit da probabilidade bruta. Não se confunde com o ajuste supervisionado da nota do CdR nem com o ajuste sigmoide por momentos nas âncoras.
 
 \item[Precisão] Proporção de pares classificados como verdadeiros que são efetivamente verdadeiros (\textit{Positive Predictive Value}).
 
@@ -95,7 +101,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Qwen3-VL-30B] Modelo de linguagem de grande porte desenvolvido pela Alibaba (China), avaliado no piloto de revisão assistida do GZ-CMD. No piloto com 517 pares, obteve F$_1$ de 0,500.
 
-\item[\textit{Random Forest}] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
+\item[Random Forest] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
 
 \item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 
@@ -112,6 +118,10 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 \item[Tuberculose (TB)] Doença infecciosa de notificação compulsória utilizada neste trabalho como condição marcadora para avaliação do \textit{linkage} de bases de dados.
 
 \item[Validação cruzada] Técnica de avaliação que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ partições e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com variância reduzida (\textit{cross-validation}, CV).
+
+\item[Viés de incorporação] Distorção possível quando as evidências avaliadas participam da construção da própria referência. Não se confunde com o uso de \textit{labels} de treinamento no ajuste supervisionado; sua magnitude não foi estimada nesta tese.
+
+\item[Viés de verificação] Distorção decorrente da seleção dos casos verificados. Se a revisão histórica seguiu o escore do OpenRecLink, os PAR~=~2 recuperados tenderiam a se concentrar no topo dessa ordem, favorecendo O1; a ordem não foi documentada. O3 e O4 também foram treinadas sobre esses mesmos \textit{labels}. Os PAR~=~1 não integram a comparação abaixo do corte.
 
 \item[Vínculo] Par de registros que se refere ao mesmo indivíduo, confirmado pelo corte do escore ou por revisão manual no padrão-ouro.
 
