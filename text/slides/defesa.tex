@@ -273,15 +273,16 @@ Falsos positivos (FP); humano e LLM em potenciais pares.
 \begin{tabular}{lrrrrrr}
 \toprule Decisão & Aceitos (\%) & FP & Perdidos & Humano & LLM & US\$ \\
 \midrule Corte isolado & 211 (85,4) & 0 & 36 & 0 & 0 & 0,00 \\
-\textbf{P, vigilância} & \textbf{215 (87,0)} & 21 & 13 & 96 & 344 & 0,94 \\
-\textbf{P, confirmação} & \textbf{219 (88,7)} & 4 & 27 & 17 & 41 & 0,11 \\
+\textbf{P, vigilância} & \textbf{211+4 (87,0)} & 21 & 13 & 96 & 344 & 0,94 \\
+\textbf{P, confirmação} & \textbf{211+8 (88,7)} & 4 & 27 & 17 & 41 & 0,11 \\
 \midrule Base inteira, vig. & 194 (78,5) & 34 & 15 & 111 & 347 & 0,92 \\
 Base inteira, conf. & 132 (53,4) & 0 & 28 & 127 & 44 & 0,12 \\
 \bottomrule
 \end{tabular}
 \end{center}
 IC 95\% de P: 82,3 a 90,7\% (vigilância); 84,1 a 92,0\% (confirmação).\par
-$215+13+19=247$; $219+27+1=247$ (aceitos, perdidos, ao humano).\par
+P: 211 pelo corte e 4/8 pela política. Fechamentos:\par
+$(211+4)+13+19=247$; $(211+8)+27+1=247$.\par
 Registro prévio: YAML versionado no repositório, não registro público. Acima do corte, 211 aceitos e zero FP por construção do rótulo.
 \fonte[]{data/arranjo\_corte\_metricas.csv, linhas 2, 4, 12, 22 e 30; custos sem pessoal e infraestrutura}
 \end{frame}
@@ -289,18 +290,20 @@ Registro prévio: YAML versionado no repositório, não registro público. Acima
 \begin{frame}{Estudo 4: o que a troca custa}
 \small
 \begin{center}
-\begin{tabular}{lrrr}
-\toprule Dos 36 vínculos com PAR~=~2 & Aceitos & Ao humano & Perdidos \\
-\midrule Vigilância & 4 & 19 & 13 \\
-Confirmação & 8 & 1 & 27 \\
+36 vínculos com PAR~=~2; cascata sobre a base inteira (comparação)\par\smallskip
+\begin{tabular}{lrrrrrr}
+\toprule & \multicolumn{2}{c}{Aceitos} & \multicolumn{2}{c}{Ao humano} & \multicolumn{2}{c}{Perdidos} \\
+& Arranjo & Cascata & Arranjo & Cascata & Arranjo & Cascata \\
+\midrule Vigilância & 4 & 10 & 19 & 17 & 13 & 9 \\
+Confirmação & 8 & 8 & 1 & 11 & 27 & 17 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Revisão integral de até 61.485 potenciais pares: 99,3\% projetados, contra 94,4\% e 89,0\% em P, sob erro humano de 5,0\%
+\itens{\setlength{\itemsep}{1pt}\item A vantagem global vem inteiramente dos 211 preservados pelo corte; nos 36 abaixo dele, P aceita menos ou empata e perde mais
+\item Revisão integral de até 61.485 potenciais pares: 99,3\% projetados, contra 94,4\% e 89,0\% em P, sob erro humano de 5,0\%
 \item Todas as aceitações abaixo do corte vieram do LLM: 25 na vigilância (4 vínculos e 21 FP); 12 na confirmação (8 e 4)
-\item Frente ao corte isolado, acréscimo automático de 4 e 8 vínculos, com 13 e 27 perdidos; os IC se sobrepõem ao do corte (80,5 a 89,3\%)
-\item A vigilância só tem maior sensibilidade com a revisão humana projetada; automaticamente, aceita menos que a confirmação}
-\fonte[]{data/arranjo\_corte\_par2.csv, linhas 7 e 16; data/arranjo\_corte\_metricas.csv, linhas 2, 8, 12 e 30; data/arranjo\_corte\_s1\_resumo.csv, P sem MATCH}
+\item Frente ao corte isolado, 4/8 vínculos adicionais, com 13/27 perdidos; os IC de P e do corte se sobrepõem}
+\fonte[]{data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_metricas.csv, linhas 2, 8, 12 e 30; data/arranjo\_corte\_s1\_resumo.csv, P sem MATCH}
 \end{frame}
 
 \begin{frame}{Estudo 4: revisor LLM e independência da evidência}
@@ -350,6 +353,7 @@ Cascata, base inteira (comparação) & 87,9\% & 84,0\% \\
 {\LARGE 42,5\% e 47,5\%}\par
 sensibilidade automática do arranjo no passo 11, vigilância e confirmação
 \end{center}
+% CONFERIR par_por_passo.csv
 \itens{\item A diferença por passo reflete sobretudo o corte e o rótulo: pelo menos 23 dos 36 vínculos com PAR~=~2 estão no passo 11
 \item Na vigilância, não aceitos por passo 11/6/9: 23/4/5; no passo 11, P fica abaixo da base inteira (comparação): 42,5 contra 45,0\%
 \item Passos 6 e 9: sensibilidade automática $\geq95{,}0\%$ nos dois modos
@@ -401,21 +405,22 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 
 % 28 e 29: conclusões
 \begin{frame}{Conclusões: decidir inclui reconhecer quando não automatizar}
+\small
 \begin{block}{Vigilância}
-P aceita 87,0\% dos vínculos (85,4\% pelo corte), com 21 FP. Encaminha 96 potenciais pares ao revisor humano, frente ao teto de até 61.485, mas perde 13 dos 36 vínculos da revisão.
+P aceita 211 vínculos pelo corte e 4 pela política: 87,0\% (85,4\% pelo corte), com 21 FP. Encaminha 96 potenciais pares ao revisor humano, frente ao teto de até 61.485, mas perde 13 dos 36 vínculos da revisão.
 \end{block}
 \begin{block}{Confirmação}
-P aceita 88,7\% (85,4\% pelo corte), com 4 FP e 17 encaminhamentos ao revisor humano. Deixa de recuperar 27 dos 36 vínculos da revisão.
+P aceita 211 vínculos pelo corte e 8 pela política: 88,7\% (85,4\% pelo corte), com 4 FP e 17 encaminhamentos ao revisor humano. Perde 27 dos 36 vínculos da revisão.
 \end{block}
-As projeções não substituem avaliação no serviço. A contribuição é governar a decisão e medir o que ela custa, não prometer automação integral.
-\fonte{estudo4\_gzcmd.tex, discussão; conclusao.tex}
+A vantagem global sobre a cascata vem inteiramente dos 211 preservados pelo corte, não de maior recuperação dos 36 abaixo dele. As projeções não substituem avaliação no serviço.
+\fonte[]{data/arranjo\_corte\_metricas.csv, linhas 2, 4, 12, 22 e 30; data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16}
 \end{frame}
 
 \begin{frame}{Contribuições e agenda de validação}
 \itens{\item CdR em Python documentado, com equivalência Java parcial avaliada
 \item Comparação de classificadores na base 1:249 e desempenho por faixa
 \item Balanceamento avaliado no Random Forest, com limites de protocolo explícitos
-\item GZ-CMD depois do corte: calibração, custos e revisão, com perdas documentadas
+\item GZ-CMD: a vantagem global sobre a cascata vem dos 211 preservados pelo corte, não de maior recuperação dos 36 abaixo dele
 \item Pacote 0.4.0 e Zenodo 3.0.1: v3.1 sobre a base inteira, não o arranjo; agregados do arranjo no repositório
 \item Próxima avaliação: referência independente, revisão humana observada e transferência externa}
 \fonte{conclusao.tex, contribuições e perspectivas; estudos 1 a 5}
@@ -624,7 +629,7 @@ Fechamento: $132+28+87=247$. Encaminhar não é perder o vínculo.
 \begin{tabular}{lrr}
 \toprule Braço & Vigilância & Confirmação \\
 & \multicolumn{2}{c}{Vínculos aceitos / FP / humano / LLM} \\
-\midrule P, principal & 215/21/96/344 & 219/4/17/41 \\
+\midrule P, principal & (211+4)/21/96/344 & (211+8)/4/17/41 \\
 P-Platt, análise de sensibilidade & 217/3/77/110 & 219/3/16/25 \\
 A3, análise de sensibilidade & 219/19/100/367 & 219/5/22/32 \\
 P-PAR2-grey, análise de sensibilidade & 211/21/116/265 & 217/0/22/18 \\
@@ -632,7 +637,7 @@ B1, ponte na base inteira & 194/40/115/374 & 131/4/131/70 \\
 A posteriori, sem registro prévio & 221/34/90/330 & 219/0/51/25 \\
 \bottomrule
 \end{tabular}
-\medskip\par P perde 13/27 vínculos. P-Platt mantém essas perdas, com 3 FP e US\$ 0,30 na vigilância, contra 21 FP e US\$ 0,94 de P.\par
+\medskip\par P: 211 pelo corte e 4/8 pela política; perde 13/27 vínculos. P-Platt mantém essas perdas, com 3 FP e US\$ 0,30 na vigilância, contra 21 FP e US\$ 0,94 de P.\par
 Na vigilância, o comparador a posteriori aceita 221 e perde 9 vínculos, contra 13 perdidos de P. Na confirmação, tem 0 FP e 17 perdidos, contra 4 e 27 de P, mas exige 51 encaminhamentos, contra 17. Não substitui P.
 \fonte[]{data/arranjo\_corte\_metricas.csv, linhas 6, 10, 12, 14, 16, 18, 24, 30, 32, 34 e 36; data/arranjo\_corte\_aposteriori.csv, linhas 4 e 12}
 \end{frame}
