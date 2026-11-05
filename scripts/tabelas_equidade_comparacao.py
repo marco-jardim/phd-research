@@ -55,7 +55,7 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
         if name != TABLES[0]:
             text = replace_once(text, r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
             text = replace_once(text, r"\end{tabular}", r"\end{tabular}}")
-        path.write_text(text, encoding="utf-8")
+        path.write_text(text, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

@@ -14,8 +14,16 @@ def ratio(value, denominator):
 
 def generate(root=ROOT, output=None):
     parameters = json.loads((root / "data/esforco_arranjo_parametros.json").read_text(encoding="utf-8"))
-    minutes = float(parameters["minutos_por_par"])
-    reference = int(parameters["revisoes_referencia"])
+    counts = pd.read_csv(root / "data/carga_abaixo_corte.csv")
+    hours_source = pd.read_csv(root / "data/carga_abaixo_corte_horas.csv")
+    count_row = counts.loc[counts.limiar.eq("por_passo") & counts.passo.eq("TOTAL")]
+    hours_row = hours_source.loc[hours_source.limiar.eq("por_passo")]
+    if len(count_row) != 1 or len(hours_row) != 1:
+        raise ValueError("Cenário por passo ausente ou ambíguo nos CSVs")
+    reference = int(count_row.iloc[0].pares_acima_limiar)
+    minutes = float(hours_row.iloc[0].minutos_por_par)
+    if int(hours_row.iloc[0].pares) != reference:
+        raise ValueError("CSV de horas diverge da contagem de pares")
     if minutes <= 0 or reference <= 0 or parameters["cenario"] is not True:
         raise ValueError("Hipóteses explícitas de esforço inválidas")
     same_load = pd.read_csv(root / "data/comparador_mesma_carga.csv")

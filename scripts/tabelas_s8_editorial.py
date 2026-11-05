@@ -15,19 +15,25 @@ def number(value, decimals=0):
     return f'{value:,.{decimals}f}'.replace(',', 'X').replace('.', '{,}').replace('X', '.')
 
 
-def same_load(data):
+def same_load(data, projections=None):
+    projections = projections if projections is not None else pd.read_csv(ROOT / 'data/comparador_mesma_carga_erro05.csv')
+    keys = ['modo', 'ordenacao', 'carga', 'k']
+    if projections.duplicated(keys).any():
+        raise ValueError('Projeção de erro humano ambígua')
+    data = data.merge(projections[keys + ['par2_topk_erro05']], on=keys, how='left', validate='one_to_one')
+    if data.par2_topk_erro05.isna().any():
+        raise ValueError('Projeção de erro humano ausente no CSV')
     lines = [r'\begin{table}[!htbp]', r'\centering\small',
              r'\caption{Ordenações abaixo do corte na mesma carga humana de P. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}',
              r'\label{tab:cap8-mesma-carga}', r'\begin{tabular}{llrrrr}', r'\toprule',
              r'Modo & Ordem & Revisões & PAR=2 & Com erro 5\% & $k$ para igualar P \\', r'\midrule']
     for mode, label in [('vigilancia', 'Vigilância'), ('confirmacao', 'Confirmação')]:
         for _, row in data.loc[data.modo.eq(mode) & data.carga.eq('K1_humana')].iterrows():
-            # Todas as recuperações destas ordenações vêm do revisor humano.
-            recovered05 = row.par2_topk * .95
+            recovered05 = row.par2_topk_erro05
             lines.append(f'{label} & {row.ordenacao.split("_")[0]} & {number(row.k)} & '
                          f'{number(row.par2_topk)} & {number(recovered05, 2)} & {number(row.k_min_equivalente_P)} ' + r'\\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: SCORE; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. A curva completa está em \path{data/comparador_mesma_carga_curva.csv}; os pontos e as projeções vêm de \path{data/comparador_mesma_carga.csv}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: SCORE; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. A curva completa está em \path{data/comparador_mesma_carga_curva.csv}; os pontos vêm de \path{data/comparador_mesma_carga.csv} e as projeções de \path{data/comparador_mesma_carga_erro05.csv}. O cenário de 5\% de erro considera somente falsos negativos entre vínculos revisados; não modela falsos positivos do revisor humano.}', r'\end{table}', ''])
 
 
 def effort(data):
@@ -43,7 +49,7 @@ def effort(data):
                  number(row.horas_por_vinculo_perdido, 2), number(row.horas_por_fp, 2)]
         lines.append(' & '.join(cells) + r' \\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana; K2: total humano e LLM de P convertido em orçamento humano para O3. n.a.: denominador FP zero. Recuperação pressupõe revisor perfeito; cenários com erro humano e razões de horas poupadas por erro constam de \path{data/esforco_arranjo.csv}. Análise exploratória, \textit{post hoc}, não registrada.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana; K2: total humano e LLM de P convertido em orçamento humano para O3. n.a.: denominador FP zero. Recuperação pressupõe revisor perfeito; cenários com erro humano e razões de horas poupadas por erro constam de \path{data/esforco_arranjo.csv}. O cenário de 5\% considera somente falsos negativos entre vínculos revisados e não modela FP do revisor humano. Análise exploratória, \textit{post hoc}, não registrada.}', r'\end{table}', ''])
 
 
 def generate(root=ROOT, output=None):
@@ -70,7 +76,7 @@ def generate(root=ROOT, output=None):
                 lines.append(line)
             text = '\n'.join(lines) + '\n'
         (output / (name + '.tex')).write_text(text, encoding='utf-8', newline='\n')
-    (output / 'tab_cap8_mesma_carga.tex').write_text(same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv')), encoding='utf-8', newline='\n')
+    (output / 'tab_cap8_mesma_carga.tex').write_text(same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv'), pd.read_csv(root / 'data/comparador_mesma_carga_erro05.csv')), encoding='utf-8', newline='\n')
     (output / 'tab_cap8_esforco.tex').write_text(effort(pd.read_csv(root / 'data/esforco_arranjo.csv')), encoding='utf-8', newline='\n')
 
 

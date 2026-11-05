@@ -4,7 +4,7 @@ As contagens desta análise foram produzidas depois da avaliação da S3 e não 
 
 ## Esforço humano hipotético
 
-`scripts/esforco_arranjo.py` produz `data/esforco_arranjo.csv` a partir de `data/comparador_mesma_carga.csv` e do campo explícito `minutos_por_par` de `data/esforco_arranjo_parametros.json`. Adotam-se 20 minutos por potencial par, hipótese presente nos comentários da configuração de custos e não uma duração medida no serviço. O cenário de referência, 2.156 revisões, pressupõe ordem decrescente de SCORE dentro de cada passo; não há fonte que documente essa ordem histórica.
+`scripts/esforco_arranjo.py` produz `data/esforco_arranjo.csv` a partir de `data/comparador_mesma_carga.csv`, lendo os minutos por par de `data/carga_abaixo_corte_horas.csv` e a referência de pares de `data/carga_abaixo_corte.csv`. Os valores de 20 minutos e 2.156 revisões não são mais fixados no gerador ou no teste. A duração continua sendo uma hipótese presente nos comentários da configuração de custos, não uma medida do serviço. O cenário de referência pressupõe ordem decrescente de SCORE dentro de cada passo; não há fonte que documente essa ordem histórica.
 
 K1 corresponde ao orçamento humano de P. K2 soma os potenciais pares encaminhados ao humano e ao LLM, sem converter chamadas ao LLM em horas de trabalho humano. P mantém suas decisões nas duas comparações; O3 utiliza o orçamento inteiro para revisão humana. Assim, na vigilância, P exige 96 revisões humanas nas duas cargas, enquanto O3 exige 96 em K1 e 440 em K2. Na confirmação, esses valores são 17 para P e 17 ou 58 para O3.
 
@@ -17,7 +17,7 @@ K1 corresponde ao orçamento humano de P. K2 soma os potenciais pares encaminhad
 | Confirmação | O3, K1 | 17 | 5,67 | 6 | 0 | 2.139 | 713,00 |
 | Confirmação | O3, K2 | 58 | 19,33 | 20 | 0 | 2.098 | 699,33 |
 
-Os vínculos recuperados são condicionais ao revisor humano perfeito: para P somam aceitação automática e encaminhamento humano; para O3 correspondem aos PAR=2 presentes nas primeiras posições da ordenação. Os FP de P são aceitações automáticas observadas contra o padrão-ouro, enquanto zero FP de O3 decorre da hipótese de revisão perfeita. A coluna `par2_recuperados_erro05` apresenta separadamente a projeção com 5% de erro humano, sem atribuir esse erro às aceitações automáticas de P.
+Os vínculos recuperados são condicionais ao revisor humano perfeito: para P somam aceitação automática e encaminhamento humano; para O3 correspondem aos PAR=2 presentes nas primeiras posições da ordenação. Os FP de P são aceitações automáticas observadas contra o padrão-ouro, enquanto zero FP de O3 decorre da hipótese de revisão perfeita. A coluna `par2_recuperados_erro05` apresenta separadamente a projeção com 5% de erro humano, sem atribuir esse erro às aceitações automáticas de P. Esse cenário trata somente de falsos negativos humanos: não modela FP do revisor humano e não permite atribuir zero FP à revisão imperfeita.
 
 `horas_por_vinculo_perdido` divide as horas de revisão pelo número de PAR=2 não recuperados. A coluna `horas_poupadas_por_vinculo_perdido` explicita a troca de esforço poupado por vínculo não recuperado frente aos 36 do padrão-ouro. As razões por FP seguem a mesma distinção; quando não há FP, a razão é indefinida e permanece vazia no CSV. Essas horas expressam ordem de grandeza, não medida de eficiência do serviço ou recomendação validada em dados novos.
 
@@ -39,9 +39,9 @@ A posição em relação ao limiar não comprova que o serviço tenha examinado 
 ## Evidência de implementação
 
 - M1 e M2: desvios documentados, sem edição dos testes fixados; teste complementar de hash exato do comparador e das taxas em `tests/test_s8c.py`.
-- M3: `scripts/tabelas_s8c_editorial.py` regenera quatro tabelas em `tables/editorial/`; as substituições editoriais exigem alvo único. A legenda histórica da cascata foi restaurada e é reproduzida pelo gerador. As tabelas antigas de comparação de equidade não foram restauradas porque seu teste está congelado no manifesto.
+- M3: `scripts/tabelas_s8c_editorial.py` regenera quatro tabelas em `tables/editorial/`; as substituições editoriais exigem alvo único. A restauração histórica da cascata é parcial: legenda e espaçamento não coincidem com o objeto de conteúdo `c958b85`, conforme o desvio C1 documentado. As tabelas antigas de comparação de equidade não foram restauradas porque seu teste está congelado no manifesto.
 - m3: respostas e journals privados da robustez e PDFs de verificação são ignorados, sem ignorar `tese.pdf` ou o script de preservação versionado. Nenhum `identity.json` da robustez estava versionado.
-- m5: o teste congelado da robustez permanece intacto. O teste novo observa os registros efetivamente recebidos pelo estimador no caminho de produção para duas réplicas numéricas, em vez de reaplicar o estimador às mesmas entradas. O contrato não congelado da S6a exige a qualificação completa do cenário nos dois idiomas.
-- m8: dependência histórica dos comentários documentada; o novo artefato de esforço usa campo explícito, sem modificar a configuração fixada.
+- m5: a versão atual do teste da robustez, fixada após a emenda 1, não foi editada na S8c nem na S8c.1; a emenda registra que os resultados já tinham sido produzidos quando os testes foram alterados. O teste novo observa os registros efetivamente recebidos pelo estimador no caminho de produção para duas réplicas numéricas, em vez de reaplicar o estimador às mesmas entradas. O contrato não congelado da S6a foi modificado pela S8a e atualmente confere definições de P e P-Platt, equidade por passo e a recomendação como não avaliada; já não exige a antiga frase completa sobre o cenário nos dois idiomas.
+- m8: dependência histórica dos comentários documentada; desde a S8c.1, o artefato de esforço usa os CSVs de carga e horas, sem modificar a configuração fixada.
 
 Cada um dos três scripts novos tem teste de regeneração em `tests/test_s8c.py`. A regeneração dos FP recebe `skipif` quando faltam extrato, políticas ou respostas privadas; esforço e tabelas são regenerados apenas dos artefatos versionados.

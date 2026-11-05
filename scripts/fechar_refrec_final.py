@@ -106,7 +106,7 @@ def regenerate_cascade_table(output_path=None):
             values = [number(metrics.loc[metrics.modo.eq(m) & metrics.versao.eq(v)].iloc[0][field] * (100 if percent else 1), decimals) for m, v in order]
         if values is not None:
             lines[index] = label + " & " + " & ".join(values) + r" \\"
-    (output_path or path).write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (output_path or path).write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def finalize():

@@ -22,12 +22,15 @@ def test_effort_regenerates_exactly_and_separates_human_from_LLM_budget(tmp_path
     table = effort(output=target)
     assert target.read_bytes() == (ROOT / "data/esforco_arranjo.csv").read_bytes()
     assert len(table) == 8
+    counts = pd.read_csv(ROOT / "data/carga_abaixo_corte.csv")
+    reference = counts.loc[counts.limiar.eq("por_passo") & counts.passo.eq("TOTAL"), "pares_acima_limiar"].item()
+    minutes = pd.read_csv(ROOT / "data/carga_abaixo_corte_horas.csv").set_index("limiar").loc["por_passo", "minutos_por_par"]
     same_load = pd.read_csv(ROOT / "data/comparador_mesma_carga.csv")
     for row in table.itertuples():
         assert row.cenario and row.exploratorio_post_hoc and not row.horas_medidas
-        assert row.horas == pytest.approx(row.revisoes / 3)
-        assert row.revisoes_poupadas == 2156 - row.revisoes
-        assert row.horas_poupadas == pytest.approx(row.revisoes_poupadas / 3)
+        assert row.horas == pytest.approx(row.revisoes * minutes / 60)
+        assert row.revisoes_poupadas == reference - row.revisoes
+        assert row.horas_poupadas == pytest.approx(row.revisoes_poupadas * minutes / 60)
         assert row.par2_recuperados + row.par2_nao_recuperados == 36
         assert row.horas_poupadas_por_vinculo_perdido == pytest.approx(row.horas_poupadas / row.par2_nao_recuperados)
         source = same_load.loc[same_load.modo.eq(row.modo) & same_load.carga.eq(row.carga)
