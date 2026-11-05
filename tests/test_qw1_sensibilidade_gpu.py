@@ -12,6 +12,7 @@ from sklearn.datasets import make_classification
 from sklearn.neural_network import MLPClassifier
 
 from scripts import qw1_sensibilidade_gpu as sens
+from local_data import DATA_ROOT
 
 
 def sintetico():
@@ -117,13 +118,13 @@ def test_parametros_MLP_e_arvores_preservados():
 
 
 @pytest.mark.skipif(
-    not (sens.ROOT / "data/COMPARADORSEMIDENT.csv").exists(),
+    not (DATA_ROOT / "data/COMPARADORSEMIDENT.csv").exists(),
     reason="extrato local ausente",
 )
 def test_matriz_58_e_alvo_iguais_ao_carregador_historico():
     from scripts.feature_engineering import load_data
 
-    path = sens.ROOT / "data/COMPARADORSEMIDENT.csv"
+    path = DATA_ROOT / "data/COMPARADORSEMIDENT.csv"
     X, y = sens.engineer_features(sens.carregar(path))
     historica, alvo = sens.engineer_features(load_data(path))
     pd.testing.assert_frame_equal(X.fillna(0), historica.fillna(0), check_dtype=False)

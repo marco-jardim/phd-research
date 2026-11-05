@@ -10,9 +10,10 @@ from gzcmd.arranjo_corte import sha256
 from scripts import equidade_v31 as legacy
 from scripts.equidade_arranjo import DECISIONS, SORT_KEYS, analyze
 from scripts.tabelas_equidade_comparacao import TABLES, generate
+from local_data import DATA_ROOT, requires_files, requires_history, requires_reviewer_sources
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = Path("D:/git/phd-research")
+SOURCE = DATA_ROOT
 
 
 def output(name):
@@ -41,7 +42,7 @@ def test_all_groups_account_for_the_whole_universe_including_missing_age():
 @pytest.mark.parametrize("name", list(SORT_KEYS))
 def test_published_cascade_reproduces_original_aggregate(name):
     actual = output(name)
-    expected = pd.read_csv(SOURCE / f"data/equidade_v31_{name}.csv")
+    expected = pd.read_csv(ROOT / f"data/equidade_v31_{name}.csv")
     actual = actual.loc[actual.decisao.isin(DECISIONS[2:])]
     expected = expected.loc[expected.decisao.isin(DECISIONS[2:])]
     assert list(actual.columns) == list(expected.columns)
@@ -114,13 +115,20 @@ def test_no_pair_identifiers_or_PII_in_any_generated_aggregate():
         assert sha256(ROOT / name) == value
 
 
-def test_original_equity_analysis_unchanged_and_comparisons_labeled():
+@requires_files(SOURCE / "scripts/equidade_v31.py", SOURCE / "scripts/qw3_fairness_analysis.py")
+def test_original_equity_analysis_unchanged():
     assert sha256(ROOT / "scripts/equidade_v31.py") == sha256(SOURCE / "scripts/equidade_v31.py")
     assert sha256(ROOT / "scripts/qw3_fairness_analysis.py") == sha256(SOURCE / "scripts/qw3_fairness_analysis.py")
-    # S4a rewrites the chapter and presentation captions, not the legacy analysis.
+
+
+@requires_history()
+def test_original_equity_history_unchanged():
     paths = ["scripts/equidade_v31.py", "scripts/qw3_fairness_analysis.py",
              "text/latex/tables/tab_qw3_fairness_rejections.tex"]
     assert subprocess.check_output(["git", "diff", "b09e979", "--", *paths], cwd=ROOT) == b""
+
+
+def test_comparisons_labeled():
     assert len(list((ROOT / "text/latex/tables").glob("tab_equidade_arranjo*.tex"))) == 7
     chapter = (ROOT / "text/latex/estudo5_equidade.tex").read_text(encoding="utf-8")
     assert r"\input{tables/tab_equidade_arranjo.tex}" in chapter
@@ -136,3 +144,16 @@ def test_versioned_historical_tables_equal_legacy_generation_with_labels(tmp_pat
     actual = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
     assert actual == (tmp_path / name).read_text(encoding="utf-8")
     assert "comparação" in actual
+
+
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", ROOT / ".local/arranjo_corte/oof.npz",
+                ROOT / ".local/arranjo_corte/policy_vigilancia_P.csv")
+@requires_reviewer_sources()
+def test_P_regenerates_all_equity_csvs_and_tables(tmp_path):
+    from scripts.equidade_arranjo import run
+    prereg = json.loads((ROOT / "data/arranjo_corte_metadata.json").read_text(encoding="utf-8"))["prereg_sha256"]
+    run(DATA_ROOT, prereg, output_root=tmp_path)
+    for path in (ROOT / "data").glob("equidade_arranjo_*.csv"):
+        assert path.read_bytes() == (tmp_path / "data" / path.name).read_bytes()
+    for path in (ROOT / "text/latex/tables").glob("tab_equidade_arranjo*.tex"):
+        assert path.read_bytes() == (tmp_path / "text/latex/tables" / path.name).read_bytes()

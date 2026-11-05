@@ -20,9 +20,10 @@ sys.path.insert(0, str(ROOT))
 from gzcmd.arranjo_corte import below_cutoff, sha256
 from gzcmd.ml_oof import pair_ids
 from scripts import equidade_v31 as legacy
-from scripts.arranjo_corte_s1_simular import LOCAL, MODES, load_raw, verify_prereg
+from scripts.arranjo_corte_s1_simular import LOCAL, MODES, load_raw
 from scripts.arranjo_corte_s2_suplementar import responses
 from scripts.arranjo_corte_s3_avaliar import build_frames, require
+from scripts.arranjo_paths import relative_path, verify_replay_prereg
 
 DECISIONS = ("arranjo_P_vigilancia", "arranjo_P_confirmacao",
              "cascata_v31_vigilancia", "cascata_v31_confirmacao")
@@ -76,7 +77,7 @@ def check_reference(outputs, data_root):
             actual[expected.columns].sort_values(keys).reset_index(drop=True),
             expected.sort_values(keys).reset_index(drop=True),
             check_dtype=False, rtol=1e-12, atol=1e-12)
-        references[str(path)] = sha256(path)
+        references[relative_path(path, ROOT, data_root)] = sha256(path)
     return references
 
 
@@ -149,8 +150,10 @@ def table_summary(glob, maximum, tests, path):
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def run(data_root, prereg_hash):
-    specification, prereg_commit = verify_prereg(data_root, prereg_hash)
+def run(data_root, prereg_hash, output_root=ROOT):
+    (output_root / "data").mkdir(parents=True, exist_ok=True)
+    (output_root / "text/latex/tables").mkdir(parents=True, exist_ok=True)
+    specification, prereg_commit = verify_replay_prereg(data_root, prereg_hash)
     s3 = json.loads((ROOT / "data/arranjo_corte_metadata.json").read_text(encoding="utf-8"))
     require(s3["prereg_sha256"] == prereg_hash, "S3 preregistration differs")
     require(sha256(ROOT / "data/arranjo_corte_taxas_crossfit.csv") == s3["frozen_rates_sha256"], "Frozen rates changed")
@@ -179,7 +182,7 @@ def run(data_root, prereg_hash):
         known, paths = responses(data_root, mode, include_supplement=True)
         finals, hashes, _ = build_frames(data_root, mode, base, known, summary, oof)
         policies.update(hashes)
-        response_sources[mode] = {str(p): sha256(p) for p in paths}
+        response_sources[mode] = {relative_path(p, ROOT, data_root): sha256(p) for p in paths}
         for decision, final in ((f"arranjo_P_{mode}", finals["P"]),
                                 (f"cascata_v31_{mode}", finals["publicada"])):
             g, gr, te = analyze(frame, decision, mode, final)
@@ -197,8 +200,8 @@ def run(data_root, prereg_hash):
     require(closed.n_total.eq(61696).all() and closed.n_true.eq(247).all(), "Subgroup accounting does not close")
     comparison = paired_groups(outputs["group_metrics"])
     for name, table in {**outputs, "cobertura": coverage_table, "comparacao": comparison}.items():
-        table.to_csv(ROOT / f"data/equidade_arranjo_{name}.csv", index=False)
-    tables = ROOT / "text/latex/tables"
+        table.to_csv(output_root / f"data/equidade_arranjo_{name}.csv", index=False)
+    tables = output_root / "text/latex/tables"
     table_summary(outputs["global"], outputs["maxdiff"], outputs["pairwise_tests"], tables / "tab_equidade_arranjo.tex")
     for mode in MODES:
         table_groups(outputs["group_metrics"], mode, tables / f"tab_equidade_arranjo_grupos_{mode}.tex")
@@ -222,15 +225,15 @@ def run(data_root, prereg_hash):
                 "registered_input_sha256": specification["sha256"], "policy_sha256": policies,
                 "response_sources_sha256": response_sources, "reference_sha256": references,
                 "code_sha256": {name: sha256(ROOT / name) for name in (
-                    "scripts/equidade_arranjo.py", "scripts/equidade_v31.py", "scripts/qw3_fairness_analysis.py",
+                    "scripts/equidade_arranjo.py", "scripts/arranjo_paths.py", "scripts/equidade_v31.py", "scripts/qw3_fairness_analysis.py",
                     "tests/test_equidade_arranjo.py")},
                 "published_reference_reproduced": True, "historical_corte6_predictions": 7452,
                 "missing_age_pairs": int(missing_age.n_total.sum()), "missing_age_links": int(missing_age.n_true.sum()),
                 "missing_group_rule": "Original inference excludes MISSING and groups with n<30; coverage CSV includes every group to close 61696/247",
                 "BH_rule": "Same legacy routine; correction per decision over finite p-values; no pooling across decisions",
                 "REFREC_dependence": "Pairwise tests do not adjust within-REFREC correlation; p-values may be optimistic",
-                "human_outcomes_observed": False, "chapter_tex_modified": False}
-    (ROOT / "data/equidade_arranjo_manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
+                "human_outcomes_observed": False}
+    (output_root / "data/equidade_arranjo_manifest.json").write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding="utf-8")
     display = comparison[["modo", "dimension", "group", "n_total", "n_true"]].copy()
     for method in ("P", "publicada"):
         for name in ("sens", "ppv"):

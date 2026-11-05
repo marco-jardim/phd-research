@@ -15,6 +15,7 @@ from gzcmd.arranjo_corte import (
 from gzcmd.config import load_config
 from gzcmd.ml_oof import nested_oof_probabilities, pair_ids
 from gzcmd.reliability import load_band_rates
+from local_data import DATA_ROOT, requires_files, requires_history, requires_reviewer_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -22,10 +23,11 @@ ROOT = Path(__file__).resolve().parents[1]
 class Model:
     def fit(self, frame, labels):
         self.fitted = set(frame.index)
+        self.offset = .01 * float(np.mean(labels)) + .01 * float(np.mean(frame.signal.to_numpy() * labels))
 
     def predict_proba(self, frame):
         assert self.fitted.isdisjoint(frame.index)
-        p = np.clip(frame.signal.to_numpy(), .001, .999)
+        p = .02 + .9 * frame.signal.to_numpy() + self.offset
         return np.column_stack([1 - p, p])
 
 
@@ -55,6 +57,7 @@ def test_all_mask_exactly_reproduces_nested_oof(monkeypatch):
     assert all(m["principal"] == "isotonic" for m in metadata)
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", DATA_ROOT / "data/pcal_ml_oof.csv")
 def test_actual_all_mask_matches_published_refrec_oof(monkeypatch):
     from gzcmd.arranjo_corte import LogitPlatt
 
@@ -63,13 +66,13 @@ def test_actual_all_mask_matches_published_refrec_oof(monkeypatch):
 
     monkeypatch.setattr(LogitPlatt, "fit", forbidden_platt)
     from scripts.arranjo_corte_s1_simular import load_raw
-    raw = load_raw(ROOT / "data/COMPARADORSEMIDENT.csv")
+    raw = load_raw(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
     x = numeric_features(raw)
     y = pd.to_numeric(raw.PAR).isin([1, 2]).astype(int).to_numpy()
     probabilities, fold, _ = nested_cutoff_probabilities(
         x, y, np.ones(len(y), dtype=bool), raw.REFREC.str.strip().to_numpy(),
         include_a3=False, include_platt=False)
-    expected = pd.read_csv(ROOT / "data/pcal_ml_oof.csv").set_index("pair_id").loc[pair_ids(raw)]
+    expected = pd.read_csv(DATA_ROOT / "data/pcal_ml_oof.csv").set_index("pair_id").loc[pair_ids(raw)]
     np.testing.assert_array_equal(fold, expected.fold.to_numpy())
     np.testing.assert_allclose(probabilities["P"], expected.p_cal_ml.to_numpy(), rtol=0, atol=1e-14)
 
@@ -104,9 +107,10 @@ def test_insufficient_par2_forces_principal_platt():
     assert all(m["principal"] == "platt" and m["calibration_par2"] < 10 for m in metadata)
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
 def test_real_cutoff_partition():
     from scripts.arranjo_corte_s1_simular import load_raw
-    raw = load_raw(ROOT / "data/COMPARADORSEMIDENT.csv")
+    raw = load_raw(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
     mask = below_cutoff(raw)
     assert int(mask.sum()) == 61485
     assert int((~mask).sum()) == 211
@@ -118,15 +122,19 @@ def test_real_cutoff_partition():
 
 
 @pytest.mark.parametrize("mode", ["vigilancia", "confirmacao"])
+@requires_reviewer_sources()
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv",
+                DATA_ROOT / "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+                DATA_ROOT / "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json")
 def test_single_fold_rates_equal_current_m3(mode):
     from scripts.arranjo_corte_s1_simular import cohort_sources, load_raw
     from gzcmd.bands import BandAssigner
-    raw = load_raw(ROOT / "data/COMPARADORSEMIDENT.csv")
+    raw = load_raw(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
     cfg = load_config(ROOT / "gzcmd/gzcmd_v3_config.yaml")
     decisions = {}
-    for source in cohort_sources(ROOT):
+    for source in cohort_sources(DATA_ROOT):
         if source["mode"] == mode:
-            run = json.loads((ROOT / source["path"]).read_text(encoding="utf-8"))
+            run = json.loads((DATA_ROOT / source["path"]).read_text(encoding="utf-8"))
             decisions.update({r["pair_id"]: r["decision"] for r in run["results"]})
     frame = pd.DataFrame({"pair_id": pair_ids(raw), "fold": 0,
                           "band": BandAssigner.from_config(cfg).assign(numeric_features(raw)["nota final"]),
@@ -183,6 +191,7 @@ def test_prereg_hash_mismatch_refuses_before_training():
         verify_prereg(ROOT, "wrong")
 
 
+@requires_history()
 def test_published_profile_code_unchanged():
     import subprocess
     protected = ["gzcmd/ml_oof.py", "gzcmd/runner.py", "gzcmd/calibration.py",

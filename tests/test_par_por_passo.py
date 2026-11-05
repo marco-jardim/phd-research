@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 
 from scripts.par_por_passo import aggregate, generate
+from local_data import DATA_ROOT, requires_files
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,8 +22,11 @@ def test_aggregation_counts_pending_once_and_has_no_pair_attributes():
         aggregate(frame, "vigilancia")
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv",
+                ROOT / ".local/arranjo_corte/policy_vigilancia_P.csv",
+                ROOT / ".local/arranjo_corte/policy_confirmacao_P.csv")
 def test_versioned_counts_reproduce_local_observed_decisions():
-    expected = generate(Path("D:/git/phd-research"))
+    expected = generate(DATA_ROOT)
     actual = pd.read_csv(ROOT / "data/par_por_passo.csv")
     pd.testing.assert_frame_equal(actual, expected)
 

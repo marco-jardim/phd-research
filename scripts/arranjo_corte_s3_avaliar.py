@@ -17,9 +17,10 @@ from gzcmd.arranjo_corte import below_cutoff, sha256, summarize_actions
 from gzcmd.intervals import wilson95
 from gzcmd.llm_usage_cost import PRICES_USD_PER_MILLION, selected_cost
 from gzcmd.ml_oof import pair_ids
-from scripts.arranjo_corte_s1_simular import LOCAL, MODES, load_raw, verify_prereg
+from scripts.arranjo_corte_s1_simular import LOCAL, MODES, load_raw
 from scripts.arranjo_corte_s2_suplementar import responses
 from scripts import arranjo_corte_orl_gzcmd as posterior
+from scripts.arranjo_paths import portable, relative_path, verify_replay_prereg
 
 ARMS = ("corte_sozinho", "publicada", "B1", "humano_integral", "aposteriori",
         "P", "P-Platt", "A3", "P-PAR2-grey")
@@ -215,8 +216,10 @@ def render_tex(table, primary, path):
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
-def evaluate(data_root, prereg_hash):
-    specification, commit = verify_prereg(data_root, prereg_hash)
+def evaluate(data_root, prereg_hash, output_root=ROOT):
+    (output_root / "data").mkdir(parents=True, exist_ok=True)
+    (output_root / "text/latex/tables").mkdir(parents=True, exist_ok=True)
+    specification, commit = verify_replay_prereg(data_root, prereg_hash)
     s1_meta = json.loads((ROOT / "data/arranjo_corte_s1_metadata.json").read_text(encoding="utf-8"))
     note = specification["amendments"][-1]
     require(note["original_S1_prereg_sha256"] == s1_meta["prereg_sha256"], "S1 preregistration lineage differs")
@@ -232,11 +235,9 @@ def evaluate(data_root, prereg_hash):
                          "nota": nota, "abaixo": below}).set_index("pair_id")
     require(int(base.y.sum()) == 247 and int(base.loc[base.nota.ge(5) & base.nota.lt(9), "y"].sum()) == 151,
             "Expected positive denominators 247/151 not reproduced")
-    require(sha256(ROOT / "scripts/arranjo_corte_orl_gzcmd.py") == sha256(data_root / "scripts/arranjo_corte_orl_gzcmd.py"),
-            "A posteriori script differs from the supplied original")
-    aposteriori = posterior.execute(LOCAL / "aposteriori_s3")
+    aposteriori = posterior.execute(LOCAL / "aposteriori_s3", data_root)
     posterior_metadata = json.loads((LOCAL / "aposteriori_s3/meta.json").read_text(encoding="utf-8"))
-    aposteriori.to_csv(ROOT / "data/arranjo_corte_aposteriori.csv", index=False)
+    aposteriori.to_csv(output_root / "data/arranjo_corte_aposteriori.csv", index=False)
     s1_summary = pd.read_csv(ROOT / "data/arranjo_corte_s1_resumo.csv")
     oof = np.load(LOCAL / "oof.npz", allow_pickle=False)
     rows, primary_rows, provenance, policies, input_hashes = [], [], [], {}, {}
@@ -246,7 +247,7 @@ def evaluate(data_root, prereg_hash):
         known, paths = responses(data_root, mode, include_supplement=True)
         frames, policy_hashes, published_path = build_frames(data_root, mode, base, known, s1_summary, oof)
         policies.update(policy_hashes)
-        input_hashes[str(published_path)] = sha256(published_path)
+        input_hashes[relative_path(published_path, ROOT, data_root)] = sha256(published_path)
         needed = set().union(*(set(f.index[f.action.eq("LLM_REVIEW")]) for f in frames.values()))
         costs, usage, sources = selected_usage(paths, needed)
         provenance.append({"modo": mode, "sources": sources})
@@ -270,9 +271,9 @@ def evaluate(data_root, prereg_hash):
                             and abs(result["custo_llm_usd"] - old.custo_llm_usd) < 1e-10,
                             "Independent a posteriori regeneration differs")
     table, primary = pd.DataFrame(rows), pd.DataFrame(primary_rows)
-    output = ROOT / "data/arranjo_corte_metricas.csv"
-    par2_output = ROOT / "data/arranjo_corte_par2.csv"
-    tex = ROOT / "text/latex/tables/tab_cap8_arranjo_corte.tex"
+    output = output_root / "data/arranjo_corte_metricas.csv"
+    par2_output = output_root / "data/arranjo_corte_par2.csv"
+    tex = output_root / "text/latex/tables/tab_cap8_arranjo_corte.tex"
     table.to_csv(output, index=False)
     primary.to_csv(par2_output, index=False)
     render_tex(table, primary, tex)
@@ -283,19 +284,21 @@ def evaluate(data_root, prereg_hash):
                 "registered_input_sha256": specification["sha256"], "published_input_sha256": input_hashes,
                 "aposteriori_regeneration": {key: posterior_metadata[key] for key in (
                     "conferencias", "cortes_SCORE_por_PASSO", "avisos_proveniencia", "fontes", "custos_journals")},
-                "cost_sources": provenance, "prices_usd_per_million": PRICES_USD_PER_MILLION,
+                "cost_sources": portable(provenance, ROOT, data_root), "prices_usd_per_million": PRICES_USD_PER_MILLION,
                 "cost_note": "Historical tariffs applied to recorded tokens of selected pairs only; not an invoice",
                 "human_outcomes_observed": False, "human_error_scenario": .05,
                 "verification_bias": "PAR=1 is defined by the ORL cutoff; results are conditional on the available reference",
                 "incorporation_bias": "Reference labels also participate in supervised calibration and reviewer-rate estimation; cross-fitting is not external gold-standard validation",
                 "wilson_note": "Descriptive 95% intervals; no correction for pair dependence or reference biases",
-                "new_responses_reestimate_rates": False, "chapter_tex_modified": False,
+                "new_responses_reestimate_rates": False,
+                "replay_verification": "Frozen numerical code/data match preregistration; registered test bytes verified at preregistration commit. Current audit tests may evolve; training/execution gates remain strict.",
                 "code_sha256": {name: sha256(ROOT / name) for name in (
                     "scripts/arranjo_corte_s3_avaliar.py", "scripts/arranjo_corte_orl_gzcmd.py",
-                    "scripts/arranjo_corte_s2_suplementar.py", "tests/test_arranjo_corte_s3.py")},
-                "output_sha256": {str(p.relative_to(ROOT)): sha256(p) for p in (
-                    output, par2_output, tex, ROOT / "data/arranjo_corte_aposteriori.csv")}}
-    (ROOT / "data/arranjo_corte_metadata.json").write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
+                    "scripts/arranjo_paths.py", "scripts/arranjo_corte_s2_suplementar.py",
+                    "tests/test_arranjo_corte_s3.py", "tests/test_arranjo_corte_leakage.py")},
+                "output_sha256": {p.relative_to(output_root).as_posix(): sha256(p) for p in (
+                    output, par2_output, tex, output_root / "data/arranjo_corte_aposteriori.csv")}}
+    (output_root / "data/arranjo_corte_metadata.json").write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding="utf-8")
     printable = table.copy()
     printable["sens_auto_IC95_pct"] = [interval(r.sens_auto, r.ic95_inf, r.ic95_sup) for r in table.itertuples()]
     printable["H_pares_vinc"] = [f"{r.pares_humano} ({r.vinc_humano})" for r in table.itertuples()]

@@ -1,0 +1,15 @@
+{
+  "source": "data/COMPARADORSEMIDENT.csv",
+  "source_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+  "script_sha256": "6bdff5c74c472d145bfc7ebf5d9e08c8ec023e82f86a31d91ba26ae8c99bfe8f",
+  "ordering_scale": "SCORE (OpenRecLink), not nota final (CdR)",
+  "SCORE_min_PAR2": -5.64846544302,
+  "nota_CdR_min_PAR2": 4.8,
+  "SCORE_min_PAR2_por_passo": {
+    "6": -5.64846544302,
+    "9": -4.35228276097,
+    "11": -5.64846544302
+  },
+  "interpretation": "Label-derived lower bound conditional on uninterrupted descending-score review (globally or within each step, respectively). Includes ties. Not an observed review log or an independent workload estimate; reviewers may have examined further pairs.",
+  "undefined_step_threshold": "Steps without PAR=2 contribute zero to the per-step lower bound."
+}
