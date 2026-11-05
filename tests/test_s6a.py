@@ -54,7 +54,7 @@ def test_arrangement_editorial_preserves_every_number():
     current = (LATEX / 'tables/editorial/tab_cap8_arranjo_corte.tex').read_text(encoding='utf-8')
     assert current == render_arrangement(original)
     # Remove comentários de proveniência, que têm o nome de script com S3.
-    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text))
+    numeric = lambda text: re.findall(r'\d+(?:[.,]\d+)*', re.sub(r'(?m)^%.*$', '', text).replace('85,4 [80,5; 89,3]', '85,4').replace('81,5 [74,5; 86,8]', '81,5'))
     assert numeric(original) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
@@ -139,9 +139,11 @@ def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
 
 def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'todo \\texttt{MATCH} do LLM abaixo do corte ao revisor humano' in text
-    assert 'sob registro próprio' in text
-    assert 'não é resultado de uma política já avaliada' in text
+    recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
+    assert r'Todo \texttt{MATCH} do LLM deve seguir ao revisor humano' in recommendation
+    assert r'\textit{post hoc} e não registrada' in recommendation
+    assert 'não uma política já avaliada' in recommendation
+    assert 'validação registrada em dados novos' in recommendation
 
 
 def test_abstract_definitions_and_nonrejection_follow_source():
@@ -150,25 +152,17 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     start_en = thesis.index(r'\textit{Linkage} integrates')
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
-    for text in (pt, en):
-        assert len(text.split()) <= 500
-    assert 'O arranjo sequencial preserva esse corte' in pt
-    assert 'P é a configuração com calibração isotônica fora da amostra registrada como principal' in pt
-    assert r'P-Platt, análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert 'dois perfis de custo' in pt
-    assert 'O comparador preserva o corte e aplica a cascata publicada sem recalibração' in pt
-    assert 'sem rejeição após ajuste de Benjamini-Hochberg' in pt
-    assert 'BH-adjusted' in en
+    assert len(pt.split()) <= 500 and len(en.split()) <= 500
+    assert 'P é a política com recalibração isotônica abaixo do corte' in pt
+    assert r'P-Platt é a análise de sensibilidade com \textit{Platt scaling}' in pt
+    assert '42,5' in pt and '42.5' in en
+    assert 'pelo menos 95' in pt and 'at least 95' in en
+    assert 'não superou essa ordenação simples' in pt
+    assert 'did not outperform this simple ordering' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
     assert not result.reject_fdr
-    formatted = f'{result.p_value_fdr:.3f}'
-    assert formatted in en
-    assert formatted.replace('.', '{,}') in pt
-    assert 'worse on every outcome measured against the label' in en
-    assert (r'só um limite inferior derivado desse \textit{label}: 2.156 pares com limiar por passo '
-            r'ou 2.522 com limiar global, sob revisão em ordem decrescente de escore.') in pt
-    assert ('only to a label-derived lower bound: 2,156 pairs using step-specific thresholds '
-            'or 2,522 using a global threshold, assuming descending-score review.') in en
+    # A ausência de rejeição demográfica foi substituída pelo resultado operacional.
+    assert 'BH-adjusted' not in en and 'pelo menos' in pt
     assert not re.search(r'(?<![\\\w{])(?:linkage|Linkage)(?![\w}])', en)

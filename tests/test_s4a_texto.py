@@ -17,35 +17,22 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     for text in (resumo, abstract):
         assert len(text.split()) <= 500
         assert len(text.split("\n\n")) == 4
-        assert "Zenodo" in text and "211" in text
         assert not re.search("—|–", text)
-    assert "211 vínculos" in resumo and r"PAR é o \textit{label} do padrão-ouro" in resumo
-    assert "1 indica aceitação pelo corte; 2, recuperação pela revisão manual" in resumo
-    assert "preregistered as principal in the repository, not in a public registry" in abstract
-    assert "61,696" in abstract and "85.4" in abstract and "86.3" in abstract
-    assert "Zenodo covers the whole-dataset cascade" in abstract
-    assert "arrangement is implemented in the thesis repository" in abstract
-    assert "13 and 27 lost PAR~=~2 links" in abstract and "without recalibration: it lost nine and 17" in abstract
-    assert "96 and 17 human referrals" in abstract
-    assert "86.3\\% for females (95\\% CI: 76.6 to 92.4)" in abstract
-    assert "93.3\\% for males (88.3 to 96.2)" in abstract
-    assert "13 e 27 PAR~=~2 perdidos" in resumo and "sem recalibração: perdeu nove e 17" in resumo
-    assert "vazamento de alvo e seleção de limiar no teste" in resumo
-    assert "oito contra oito" not in resumo and "eight versus eight" not in abstract
-    assert "quatro PAR~=~2 contra dez" in resumo
-    assert "four PAR~=~2 links versus ten" in abstract
-    for text in (resumo, abstract):
-        assert "P-Platt" in text and "Claude Haiku 5.5" in text
-        assert "16" in text and "75" in text and "36" in text
-        assert "24 óbitos" not in text and "24 additional deaths" not in text
-    assert "2.156" in resumo and "2.522" in resumo and "limite inferior" in resumo
-    assert "2,156" in abstract and "2,522" in abstract and "lower bound" in abstract
-    assert "intervalos sobrepostos" in resumo and "intervals overlapping" in abstract
-    assert "não sustentou essa dominância" in resumo and "did not sustain dominance" in abstract
-    assert "pior em todo desfecho medido contra" in resumo
-    assert "worse on every outcome measured against the label" in abstract
-    assert "só um limite inferior derivado" in resumo
-    assert "only to a label-derived lower bound" in abstract
+        assert "P-Platt" in text and "XGBoost" in text
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+    assert r"PAR é o \textit{label} da referência" in resumo
+    assert "registered internally before evaluation" in abstract
+    assert "preregistered" not in abstract
+    assert "ordenação calibrada recuperaria 22" in resumo
+    assert "ordering would recover 22" in abstract
+    assert "viés de verificação" in resumo and "incorporação" in resumo
+    assert "Verification bias" in abstract and "incorporation" in abstract
+    assert "intervalos sobrepostos" not in resumo and "intervals overlapping" not in abstract
+    assert "16,0" in resumo and "16.0" in abstract
+    assert "curva de esforço" in resumo and "effort-versus-recovered-links curve" in abstract
+    assert "orçamento humano" in resumo and "human budget" in abstract
+    assert "validação registrada em dados novos" in resumo
+    assert "registered validation on new data" in abstract
 
 
 def test_every_study5_input_table_is_referenced_in_chapter():
@@ -79,16 +66,12 @@ def test_final_editorial_contract_and_table_placement():
     for text in (discussion, limits):
         assert "vem inteiramente" not in text
         assert "quatro contra dez" not in text
-        assert r"\ref{tab:cap8-arranjo-corte-par2}" in text
+        assert r"\ref{sec:e4-mesma-carga}" in text or r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "permanece análise de sensibilidade" in conclusion
-    assert "permanece sensibilidade" not in conclusion
-    assert "cascata, apresentada como comparação" in conclusion
-    assert "78,5\\% e 53,4\\%" in conclusion
-    assert "34 e zero falsos positivos" in conclusion
-    assert "restrição de 0,2\\% foi inviável" in conclusion
-    assert "Claude Sonnet 5.5 acrescentou de dois a quatro vínculos" in conclusion
-    assert "vinte vezes maior por" in conclusion
+    assert "P e O3 recuperariam 23 e 22" in conclusion
+    assert "21 FP e utilizou 344" in conclusion
+    assert "revisor perfeito" in conclusion
+    assert "não constitui dominância" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     cutoff = chapter.index(r"\subsection{Comparação com o corte 6,0}")
     for mode in ("vigilancia", "confirmacao"):
@@ -107,11 +90,12 @@ def test_canonical_names_and_operational_area_cinza_definition():
         assert r"\textit{Random Forest}" not in text
     formal = (LATEX / "apendice_formalizacao.tex").read_text(encoding="utf-8")
     assert r"\textit{labels}" in formal
-    assert "Essas regiões não redefinem a área cinza operacional" in formal
+    assert "Essas regiões não redefinem a área cinza da nota" in formal
     assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
-        assert "Nos resultados desta tese" in text
-        assert r"\ref{sec:area-cinza}" in text
+        assert "área cinza da nota" in text
+        assert "área cinza" in text
     intro = (LATEX / "capitulo1.tex").read_text(encoding="utf-8")
-    assert "20 minutos por par, adotada no Estudo~4" in intro
+    assert "conversão em horas utiliza um parâmetro temporal" in intro
+    assert "não carga histórica medida" in intro

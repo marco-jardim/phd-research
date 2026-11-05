@@ -93,7 +93,7 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     assert len(old) == len(new)
     for original, current in zip(old, new):
         if original[0] == "Corte + revisão manual do serviço":
-            assert current[2] == "$\\geq " + bound + "$"
+            assert current[2] == "cenário $\\geq " + bound + "$"
             assert original[:2] == current[:2] and original[3:] == current[3:]
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
@@ -109,7 +109,8 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     # Limite por passo na célula e na nota, limite global na nota e identificação
     # do limiar 8 do Estudo 3 são os únicos números novos no arquivo inteiro.
     global_bound = f"{int(total.loc['global', 'pares_acima_limiar']):,}".replace(",", ".")
-    assert numbers(text) == numbers(original_text) + Counter([bound, bound, global_bound, "8", "3"])
+    # S3 explicita também a etapa anterior à qual o registro interno se refere.
+    assert numbers(text) == numbers(original_text) + Counter([bound, bound, global_bound, "8", "3", "3"])
     sources = [pd.read_csv(ROOT / "data" / name) for name in (
         "referencia_comparador_pos_orl.csv", "arranjo_corte_metricas.csv", "funil_gzcmd_final_metricas.csv")]
     carga.loc[carga.limiar.eq("por_passo") & carga.passo.eq("TOTAL"), "pares_acima_limiar"] = 1234
