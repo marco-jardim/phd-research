@@ -190,7 +190,7 @@ def scientific_requirements(csv_loader=read_csv):
         23: ["proporção de vínculos", "definida pelo corte", "FP abaixo do corte"],
         24: [r"Disparidade herdada do corte e do \textit{label}", "Benjamini-Hochberg: vigilância"],
         26: ["Respostas históricas reutilizadas", "conhecido antes do registro", "favoreceria O1",
-              "recalibração, braços e avaliação", "desvios de protocolo", "não generalização"],
+              "recalibração, braços e avaliação", "desvios de protocolo", "não de generalização"],
         28: ["perdas são de cobertura",
              "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
@@ -870,7 +870,7 @@ def test_script_s6_questions_and_provenance():
         "viés de incorporação",
         "somente com o Zenodo",
         "desvios de protocolo",
-        "robustez confirma",
+        "estabilidade confirma",
         "varredura de custos",
     ]:
         assert topic in questions

@@ -129,9 +129,12 @@ def test_hypothesis_bias_and_recommendation_are_not_claimed_as_validation():
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
     assert 'gerou a hipótese' in intro and 'A avaliação gerou a hipótese' in conclusion
     assert 'A tese sustenta' not in conclusion
-    for text in (intro, conclusion):
+    for text, expected in (
+        (intro, 'investigação do LLM como aceitador'),
+        (conclusion, 'A investigação do LLM distingue seu uso como aceitador e como filtro de descarte antes do revisor humano'),
+    ):
         assert 'Se a revisão' in text and 'O3 e O4 também' in text
-        assert 'investigação do LLM como aceitador' in text
+        assert expected in text
     assert 'O LLM pode atuar somente como filtro' in conclusion
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in conclusion
     assert 'restrito às ações revisor humano e não vínculo' in conclusion

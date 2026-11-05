@@ -104,4 +104,4 @@ def test_canonical_names_and_operational_area_cinza_definition():
         assert "área cinza" in text
     intro = (LATEX / "capitulo1.tex").read_text(encoding="utf-8")
     assert "conversão em horas utiliza um parâmetro temporal" in intro
-    assert "não carga histórica medida" in intro
+    assert "Nem as contagens nem as horas representam medidas do esforço histórico observado" in intro

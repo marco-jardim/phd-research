@@ -382,7 +382,7 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 \itens{\item Revisora única, sem classificação independente; corte incorporado ao \textit{label}. Se a revisão seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados
 \item Ordem histórica desconhecida: 2.156 revisões são cenário. Apenas 36 PAR~=~2; REFREC não separa COMPREC
 \item Respostas históricas reutilizadas; taxas de coortes mais fáceis e denominadores mínimos. Sensibilidade humana não medida; especificidade perfeita assumida, sem FP humanos
-\item Comparador \textit{a posteriori} conhecido antes do registro interno; código registrado ausente do git e desvios de protocolo. Registro: recalibração, braços e avaliação; robustez: estabilidade interna, não generalização}
+\item Comparador \textit{a posteriori} conhecido antes do registro interno; código registrado ausente do git e desvios de protocolo. Registro: recalibração, braços e avaliação; análise de estabilidade interna, não de generalização}
 \fonte[]{data/comparador\_mesma\_carga\_metadata.json; data/cenarios\_sensibilidade\_humana.csv; gzcmd/M\_arranjo\_corte\_desvios.md; reservas 45 a 48}
 \end{frame}
 
@@ -646,7 +646,7 @@ Na vigilância, P-Platt dominou P na avaliação original, como análise de sens
 FP frente ao limiar global do escore do OpenRecLink $-5{,}648$: vigilância, 17 acima ou iguais e 4 abaixo; confirmação, 4 acima ou iguais e 0 abaixo. Por passo: vigilância, 11 acima ou iguais e 10 abaixo; confirmação, 4 acima ou iguais e 0 abaixo.\par
 \fonte[]{data/arranjo\_corte\_metricas.csv, linhas 4 a 36; data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_perdas\_mecanismo.csv, linhas 2 a 4 e 50 a 52; data/fp\_arranjo\_por\_regiao.csv, totais; estudo4\_gzcmd.tex, cronologia}
 \end{frame}
-\begin{frame}{Backup: robustez com registro interno, não confirmatória}
+\begin{frame}{Backup: análise de estabilidade com registro interno, não confirmatória}
 \footnotesize
 Bloco numérico (N): \textit{threads}/semente; bloco de partição (R): partições. Estabilidade nos mesmos dados, não generalização.
 \begin{center}
@@ -663,7 +663,7 @@ P perde mais PAR~=~2 que o \textit{a posteriori}, conf. & 20/20 & 20/20 \\
 \itens{\item Dominância não sustentada. Vigilância: menos FP com P-Platt em 20/20 nos dois blocos, mas mediana de 1 a 2 vínculos perdidos a mais e menos encaminhamentos
 \item P, vigilância: bloco de partição (R), Jaccard mediano de lote LLM de 0,43 em relação à partição original; FP de 9 a 31 e perdas de 9 a 21. A réplica original é um ponto dessa distribuição
 \item Mudança máxima de probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R)
-\item Chamadas novas da robustez: 242 potenciais pares, US\$ 0,63; consumo estimado, não fatura}
+\item Chamadas novas da análise de estabilidade: 242 potenciais pares, US\$ 0,63; consumo estimado, não fatura}
 \fonte[]{data/robustez\_arranjo\_resumo.csv, linhas 2 a 12, 270, 278, 404, 488, 632, 652 e 654; data/robustez\_arranjo\_metadata.json, linhas 206 e 208; registro 3ade1c7}
 \end{frame}
 

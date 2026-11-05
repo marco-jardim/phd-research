@@ -35,7 +35,11 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
         text = (L / name).read_text(encoding='utf-8')
         assert 'ordem decrescente de uma probabilidade ou escore' in text
         assert 'Se a ordenação usar probabilidade aprendida' in text
-        assert 'a curva de esforço aplicada a este fluxo' in text
+        expected = {
+            'capitulo1.tex': 'a curva de esforço aplicada a este fluxo',
+            'conclusao.tex': 'Para escolher quanto revisar e em que ordem, a tese aplica a curva de esforço a esse fluxo',
+        }
+        assert expected[name] in text
         assert r'\citeonline{Sariyar2010recordlinkage}' in text
         assert 'dentro da variação de perdas' not in text
     text = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
