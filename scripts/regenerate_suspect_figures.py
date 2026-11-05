@@ -67,7 +67,7 @@ def regenerate_score_band_figures() -> None:
         color="#1f77b4",
         edgecolor="black",
         linewidth=0.3,
-        label="Total de pares candidatos",
+        label="Total de potenciais pares",
     )
     ax.bar(
         x,
@@ -76,7 +76,7 @@ def regenerate_score_band_figures() -> None:
         color="#d62728",
         edgecolor="black",
         linewidth=0.3,
-        label="Pares verdadeiros",
+        label="Vínculos",
     )
     ax.set_xticks(x)
     ax.set_xticklabels(bands, fontsize=9)
