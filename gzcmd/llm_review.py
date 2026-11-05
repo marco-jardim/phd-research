@@ -5,7 +5,8 @@ same model but slightly varied system prompts. If they agree, the consensus
 is accepted. If they disagree, an Arbiter agent receives both opinions and
 makes the final call.
 
-All calls go through the Fireworks REST API.
+The historical Fireworks transport is prohibited. New Anthropic runs use
+``gzcmd.anthropic_transport``; other explicit transports must override the caller.
 
 Usage::
 
@@ -491,6 +492,8 @@ class LLMReviewer:
         Returns (parsed_json, latency_s, prompt_tokens, completion_tokens).
         """
         model = model or self.model
+        if "fireworks" in self.base_url.lower() or "fireworks" in model.lower():
+            raise RuntimeError("Fireworks é proibido neste projeto")
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
