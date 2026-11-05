@@ -1,5 +1,6 @@
 """Contrato editorial S5 e proveniência da camada de apresentação."""
 from pathlib import Path
+import csv
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,3 +46,14 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     for path in [LATEX / name for name in ("capitulo1.tex", "capitulo3.tex", "conclusao.tex",
                                            "estudo4_gzcmd.tex", "tese.tex", "glossario.tex")]:
         assert not re.search("—|–", path.read_text(encoding="utf-8"))
+
+
+def test_small_band_warning_follows_csv_when_editorial_instruction_differs():
+    with (ROOT / "data/arranjo_corte_taxas_crossfit.csv").open(encoding="utf-8") as stream:
+        rates = list(csv.DictReader(stream))
+    folds = [int(row["fold"]) for row in rates if row["modo"] == "vigilancia"
+             and row["banda"] == "grey_low" and float(row["e_fn"]) == 1.0]
+    assert folds == [0, 1, 3, 4]
+    study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+    assert "quatro folds na vigilância" in study
+    assert r"\texttt{grey\_low} em dois folds" not in study
