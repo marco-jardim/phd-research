@@ -353,14 +353,13 @@ Cascata, base inteira (comparação) & 87,9\% & 84,0\% \\
 {\LARGE 42,5\% e 47,5\%}\par
 sensibilidade automática do arranjo no passo 11, vigilância e confirmação
 \end{center}
-% CONFERIR par_por_passo.csv
-\itens{\item A diferença por passo reflete sobretudo o corte e o rótulo: pelo menos 23 dos 36 vínculos com PAR~=~2 estão no passo 11
-\item Na vigilância, não aceitos por passo 11/6/9: 23/4/5; no passo 11, P fica abaixo da base inteira (comparação): 42,5 contra 45,0\%
-\item Passos 6 e 9: sensibilidade automática $\geq95{,}0\%$ nos dois modos
-\item Benjamini-Hochberg: 7 rejeições na vigilância e 3 na confirmação, todas em dimensões operacionais
-\item Base inteira (comparação): 9 e 1 rejeições, respectivamente
+\itens{\setlength{\itemsep}{1pt}\item Disparidade herdada do corte e do rótulo: corte isolado de 37,5\% no passo 11 (15/40), contra 95,0\% no passo 6 e 94,5\% no passo 9
+\item No passo 11 estão 25 dos 36 vínculos com PAR~=~2; P aceita 2 na vigilância e 4 na confirmação
+\item PAR~=~2 aceitos nos passos 6/9/11: 0/2/2 e 1/3/4. Nos passos 6 e 9, sensibilidade do arranjo $\geq95{,}0\%$ nos dois modos
+\item Vigilância no passo 11: P fica abaixo da base inteira (comparação), 42,5 contra 45,0\%
+\item Benjamini-Hochberg: 7/3 rejeições em P, contra 9/1 na base inteira, todas operacionais; a contagem não ordena equidade
 \item A equidade do processo completo depende da revisão ainda não observada}
-\fonte[]{data/equidade\_arranjo\_group\_metrics.csv, linhas 17 a 19, 41 e 65; data/equidade\_arranjo\_pairwise\_tests.csv, reject\_fdr}
+\fonte[]{data/par\_por\_passo.csv, linhas 5 a 28, 35, 44 e 53; data/equidade\_arranjo\_group\_metrics.csv, linhas 17 a 19, 41 e 65; data/equidade\_arranjo\_pairwise\_tests.csv, reject\_fdr}
 \end{frame}
 
 % 25: posicionamento
