@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
-      PHD_RESEARCH_DATA_ROOT: ${{ runner.temp }}/phd-research-private-data-unavailable
+      PHD_RESEARCH_DATA_ROOT: /__phd_research_private_data_unavailable__
 
     steps:
       - uses: actions/checkout@v4
