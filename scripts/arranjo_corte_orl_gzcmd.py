@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import math
-import os
+import tempfile
 from pathlib import Path
 import sys
 
@@ -22,6 +22,7 @@ if __package__ in (None, ""):
     sys.path.insert(0, str(ROOT))
 
 from gzcmd.llm_usage_cost import PRICES_USD_PER_MILLION, selected_cost
+from scripts.arranjo_paths import portable, relative_path
 
 
 def require(condition: bool, message: str) -> None:
@@ -117,8 +118,8 @@ def summarize(frame: pd.DataFrame, mode: str, arrangement: str,
     }
 
 
-def execute(out: Path) -> pd.DataFrame:
-    data = ROOT / "data"
+def execute(out: Path, data_root: Path = ROOT) -> pd.DataFrame:
+    data = data_root / "data"
     extract_path = data / "COMPARADORSEMIDENT.csv"
     metrics_path = data / "funil_gzcmd_final_metricas.csv"
     final_path = data / "funil_gzcmd_final.csv"
@@ -220,15 +221,15 @@ def execute(out: Path) -> pd.DataFrame:
     table.to_csv(out / "arranjo.csv", index=False)
     meta = {
         "gerado_em_utc": datetime.now(timezone.utc).isoformat(),
-        "script": str(Path(__file__).resolve()), "particionamento": "REFREC",
+        "script": relative_path(__file__, ROOT), "particionamento": "REFREC",
         "python": sys.version, "pandas": pd.__version__,
         "cortes_SCORE_por_PASSO": {str(key): float(value) for key, value in cutoffs.items()},
         "nao_pares_acima_corte": 0, "nao_pares_total": 61449,
         "conferencias": audit, "notas_metodologicas": notes,
-        "fontes": [{"caminho": str(path.resolve()), "sha256": sha256(path)} for path in dict.fromkeys(sources)],
-        "custos_journals": journal_sources, "tarifa_usd_por_milhao_tokens": PRICES_USD_PER_MILLION,
-        "avisos_proveniencia": provenance_warnings,
-        "saida": str((out / "arranjo.csv").resolve()),
+        "fontes": [{"caminho": relative_path(path, ROOT, data_root), "sha256": sha256(path)} for path in dict.fromkeys(sources)],
+        "custos_journals": portable(journal_sources, ROOT, data_root), "tarifa_usd_por_milhao_tokens": PRICES_USD_PER_MILLION,
+        "avisos_proveniencia": portable(provenance_warnings, ROOT, data_root),
+        "saida": "arranjo.csv",
     }
     (out / "meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print("CONFERÊNCIA REFREC:", json.dumps(audit, ensure_ascii=False))
@@ -268,7 +269,7 @@ def self_test() -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--self-test", action="store_true")
-    parser.add_argument("--out", type=Path, default=Path(os.environ["TEMP"]) / "arranjo")
+    parser.add_argument("--out", type=Path, default=Path(tempfile.gettempdir()) / "arranjo")
     args = parser.parse_args()
     if args.self_test:
         self_test()

@@ -1,6 +1,6 @@
 {
   "analysis_name": "estudo5_equidade_arranjo_P",
-  "created_utc": "2026-11-05T04:13:46.980308+00:00",
+  "created_utc": "2026-11-05T06:04:48.806504+00:00",
   "seed": "n/a: no random sampling, training, API calls or new thresholds",
   "rows": 61696,
   "links": 247,
@@ -73,31 +73,32 @@
   },
   "response_sources_sha256": {
     "vigilancia": {
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
-      "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\sprint3b\\anthropic_sem_mo_v4_arranjo_corte\\exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
-      "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\sprint3b\\anthropic_sem_mo_v4_arranjo_corte_supl\\exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337"
+      "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337"
     },
     "confirmacao": {
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
-      "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
-      "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\sprint3b\\anthropic_sem_mo_v4_arranjo_corte\\exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
-      "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\sprint3b\\anthropic_sem_mo_v4_arranjo_corte_supl\\exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c"
+      "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c"
     }
   },
   "reference_sha256": {
-    "D:\\git\\phd-research\\data\\equidade_v31_global.csv": "58845ca5331a8ac810693f4cf910e2378236bf1c92eefea76bc69a21f052119b",
-    "D:\\git\\phd-research\\data\\equidade_v31_group_metrics.csv": "8e6bd20bb4d2c5b9975a0b646b7c2a1023bd8f1dcec712d1b6a665d129944188",
-    "D:\\git\\phd-research\\data\\equidade_v31_pairwise_tests.csv": "90f6251ce04c5ad38f8953101e07ad0c296480bb9c57090dd1e7308d96c0a512",
-    "D:\\git\\phd-research\\data\\equidade_v31_maxdiff.csv": "9ac6e24a24f9137b8914ce9767d015c7cd994a407c8d152b67a298f309ea6143"
+    "data/equidade_v31_global.csv": "58845ca5331a8ac810693f4cf910e2378236bf1c92eefea76bc69a21f052119b",
+    "data/equidade_v31_group_metrics.csv": "8e6bd20bb4d2c5b9975a0b646b7c2a1023bd8f1dcec712d1b6a665d129944188",
+    "data/equidade_v31_pairwise_tests.csv": "90f6251ce04c5ad38f8953101e07ad0c296480bb9c57090dd1e7308d96c0a512",
+    "data/equidade_v31_maxdiff.csv": "9ac6e24a24f9137b8914ce9767d015c7cd994a407c8d152b67a298f309ea6143"
   },
   "code_sha256": {
-    "scripts/equidade_arranjo.py": "c19888eba0039211045eb306c90135b257b75d46ec01eb66f7c18fefe82342b9",
+    "scripts/equidade_arranjo.py": "58b1b89df714f7300d49b2a63ff5f695964c1dc237ee52167e66d8e4c4660d99",
+    "scripts/arranjo_paths.py": "c549e9d95e5ed88291c1ad812837d666a4b37ace3e336459976d0c832317a2ce",
     "scripts/equidade_v31.py": "361cb482ed2918217a825fd2131d9bae648a4077115246221a7db08d207b2883",
     "scripts/qw3_fairness_analysis.py": "ba83b37da3e473b27d666c4e3a5bc8f71096c3fdb9ed8625500f94325244d352",
-    "tests/test_equidade_arranjo.py": "795be938c247591dff37f7bd10fe3061d354fb4ded80c508a7fd9823997fe9ca"
+    "tests/test_equidade_arranjo.py": "f26a00f8e49a6cf4d065c78b58c6922696ee1c5682c0111a36b27785c2e763e9"
   },
   "published_reference_reproduced": true,
   "historical_corte6_predictions": 7452,
@@ -106,6 +107,5 @@
   "missing_group_rule": "Original inference excludes MISSING and groups with n<30; coverage CSV includes every group to close 61696/247",
   "BH_rule": "Same legacy routine; correction per decision over finite p-values; no pooling across decisions",
   "REFREC_dependence": "Pairwise tests do not adjust within-REFREC correlation; p-values may be optimistic",
-  "human_outcomes_observed": false,
-  "chapter_tex_modified": false
+  "human_outcomes_observed": false
 }

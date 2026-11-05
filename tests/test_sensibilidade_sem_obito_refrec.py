@@ -10,6 +10,9 @@ import pytest
 from scripts import sensibilidade_sem_obito_refrec as sens
 from scripts import gerar_tabela_sensibilidade as tabela
 from scripts.ablation_study import evaluate_configurations
+from local_data import DATA_ROOT
+
+EXTRATO = DATA_ROOT / "data/COMPARADORSEMIDENT.csv"
 
 
 def sintetico():
@@ -134,9 +137,9 @@ def test_artefatos_agregados_controle_e_tabela(tmp_path):
     assert not any(t in texto for t in ("—", "–", "---"))
 
 
-@pytest.mark.skipif(not sens.EXTRATO.exists(), reason="extrato local ausente")
+@pytest.mark.skipif(not EXTRATO.exists(), reason="extrato local ausente; set PHD_RESEARCH_DATA_ROOT")
 def test_csv_gerado_alinhado_ao_extrato_e_70_controles():
-    df = sens.carregar(sens.EXTRATO)
+    df = sens.carregar(EXTRATO)
     X, y = sens.engineer_features(df)
     cenarios = sens.montar_cenarios(df, X, y)
     res = pd.read_csv(sens.OUT).set_index("cenario")
@@ -145,5 +148,5 @@ def test_csv_gerado_alinhado_ao_extrato_e_70_controles():
         r = res.loc[nome]
         assert (r.n_treino, r.n_teste, r.vinculos_teste, r.n_atributos) == (
             len(tr), len(te), int(y.loc[te].sum()), matriz.shape[1])
-    assert meta["entrada_sha256"] == sens.sha256(sens.EXTRATO)
+    assert meta["entrada_sha256"] == sens.sha256(EXTRATO)
     sens.conferir_controle(pd.DataFrame(meta["cenarios"]["A"]["configuracoes_70"]), res.loc["A"])

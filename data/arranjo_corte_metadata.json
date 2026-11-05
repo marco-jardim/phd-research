@@ -1,6 +1,6 @@
 {
   "stage": "S3_observed_evaluation_no_API_calls",
-  "timestamp_utc": "2026-11-05T04:13:28.365118+00:00",
+  "timestamp_utc": "2026-11-05T06:04:31.537554+00:00",
   "prereg_commit": "d526c3fb3068d4e1b50df0571324915cb83c13e3",
   "prereg_sha256": "3f156cfe3c316cef63a3349f4d46608128cc28893f6691d314c508a3b183c278",
   "S1_prereg_commit": "7b40cfb3821b46e0eb402feb44f8e529dba801a3",
@@ -50,8 +50,8 @@
     "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao_journal/identity.json": "59e3a3682583cbfb9b13b4b6ccaa78bea632bb8a5192a264558e6f301e62d6f6"
   },
   "published_input_sha256": {
-    "D:\\git\\phd-research\\data\\funil_gzcmd_vigilancia.csv": "c68b9bcf940f3e4c04d1d5fe28ad93fba7e9e72116c10e42a2f17824e076328f",
-    "D:\\git\\phd-research\\data\\funil_gzcmd_confirmacao.csv": "63fcc8757df20cfc4471173ed659b74c854f80f05a0b942f7454607d5de0d025"
+    "data/funil_gzcmd_vigilancia.csv": "c68b9bcf940f3e4c04d1d5fe28ad93fba7e9e72116c10e42a2f17824e076328f",
+    "data/funil_gzcmd_confirmacao.csv": "63fcc8757df20cfc4471173ed659b74c854f80f05a0b942f7454607d5de0d025"
   },
   "aposteriori_regeneration": {
     "conferencias": {
@@ -82,42 +82,42 @@
     "avisos_proveniencia": [
       {
         "modo": "vigilancia",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "d30a30b710334874abad9ff24b9124c02b1fc33899393290d6d713f00fd776e1",
         "sha256_atual": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156"
       },
       {
         "modo": "vigilancia",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "e21baf47edfdd28c3937e9c9401c3b61dd806edcc20d0b1454bdb25a4b7f870c",
         "sha256_atual": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb"
       },
       {
         "modo": "vigilancia",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "cc68b8658866627aefc25d008bb7c978df53f554cd92425b0502eb695ffd468c",
         "sha256_atual": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029"
       },
       {
         "modo": "confirmacao",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "a952409dd45d8b755592d16a8919ac098f709d56a6d161a6def76d70af1c4980",
         "sha256_atual": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1"
       },
       {
         "modo": "confirmacao",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "b3aac9bf8d09765c95a135d907e063ecce8a47b906fbb7507e2c79fe7dd35747",
         "sha256_atual": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30"
       },
       {
         "modo": "confirmacao",
-        "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+        "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
         "aviso": "JSON do run mudou desde o funil. Journals dos selecionados e custo são conferidos separadamente.",
         "sha256_no_funil": "abc76bda740c23707ff95f674f7c32c1d87199fcec5f9a3c028e30bc804308f0",
         "sha256_atual": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717"
@@ -125,67 +125,67 @@
     ],
     "fontes": [
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\COMPARADORSEMIDENT.csv",
+        "caminho": "data/COMPARADORSEMIDENT.csv",
         "sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\funil_gzcmd_final_metricas.csv",
+        "caminho": "data/funil_gzcmd_final_metricas.csv",
         "sha256": "a67433f7772f3bd21a84966bccb53b22875f7524165cb5243d77b193610cb213"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\funil_gzcmd_final.csv",
+        "caminho": "data/funil_gzcmd_final.csv",
         "sha256": "7851e97dac214fdf702f4292c4abaddb17aee67675a944651c63366d9b7bbd5b"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\funil_gzcmd_final_metadata.json",
+        "caminho": "data/funil_gzcmd_final_metadata.json",
         "sha256": "421b0cf72620abe593100fa74c7896a0b03a89056ae01aef310ea016b2f6956a"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\scripts\\arranjo_corte_orl_gzcmd.py",
-        "sha256": "94cab542b5ddd9e4dc8bc63552596736026388772305172d82a80a506918898e"
+        "caminho": "scripts/arranjo_corte_orl_gzcmd.py",
+        "sha256": "cb2ce34194bfd4645a0ee61dfb852e0f31810481b2d57e86220d38da537390c4"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\gzcmd\\llm_usage_cost.py",
+        "caminho": "gzcmd/llm_usage_cost.py",
         "sha256": "880c6267237d646d9eff2dfe3a2badeeba0af45d47a742fd94d802dcbe782a16"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\gzcmd\\final_funnel.py",
+        "caminho": "gzcmd/final_funnel.py",
         "sha256": "375d5b50ad309739da03fa8bacfc042a16f586c6ed50a7f3701c4b5da343b9c0"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\gzcmd\\llm_dossier.py",
+        "caminho": "gzcmd/llm_dossier.py",
         "sha256": "a9cdf3f078507254cd05c4278eca992266f8d1ab783074a3a241605fc35e9589"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\funil_gzcmd_vigilancia.csv",
+        "caminho": "data/funil_gzcmd_vigilancia.csv",
         "sha256": "c68b9bcf940f3e4c04d1d5fe28ad93fba7e9e72116c10e42a2f17824e076328f"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_vigilancia.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
         "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_vigilancia.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
         "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_vigilancia.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
         "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029"
       },
       {
-        "caminho": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-arranjo\\data\\funil_gzcmd_confirmacao.csv",
+        "caminho": "data/funil_gzcmd_confirmacao.csv",
         "sha256": "63fcc8757df20cfc4471173ed659b74c854f80f05a0b942f7454607d5de0d025"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_confirmacao.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
         "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_confirmacao.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
         "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30"
       },
       {
-        "caminho": "D:\\git\\phd-research\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_confirmacao.json",
+        "caminho": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
         "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717"
       }
     ],
@@ -194,7 +194,7 @@
         "modo": "vigilancia",
         "sources": [
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
             "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
             "pares_selecionados": 157,
             "custo_usd_selecionados": 0.4121036,
@@ -202,7 +202,7 @@
             "custo_usd_run_completo_estimado": 3.785245
           },
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
             "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
             "pares_selecionados": 100,
             "custo_usd_selecionados": 0.2744422,
@@ -210,7 +210,7 @@
             "custo_usd_run_completo_estimado": 0.5890573
           },
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
             "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
             "pares_selecionados": 90,
             "custo_usd_selecionados": 0.2332863,
@@ -223,7 +223,7 @@
         "modo": "confirmacao",
         "sources": [
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
             "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
             "pares_selecionados": 24,
             "custo_usd_selecionados": 0.0705287,
@@ -231,7 +231,7 @@
             "custo_usd_run_completo_estimado": 1.163579
           },
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
             "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
             "pares_selecionados": 3,
             "custo_usd_selecionados": 0.0072045,
@@ -239,7 +239,7 @@
             "custo_usd_run_completo_estimado": 0.0180175
           },
           {
-            "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+            "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
             "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
             "pares_selecionados": 17,
             "custo_usd_selecionados": 0.0414602,
@@ -255,7 +255,7 @@
       "modo": "vigilancia",
       "sources": [
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
           "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
           "pares_selecionados": 211,
           "custo_usd_selecionados": 0.5609915,
@@ -263,7 +263,7 @@
           "custo_usd_run_completo_estimado": 3.785245
         },
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
           "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
           "pares_selecionados": 125,
           "custo_usd_selecionados": 0.3568965,
@@ -271,7 +271,7 @@
           "custo_usd_run_completo_estimado": 0.5890573
         },
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
           "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
           "pares_selecionados": 104,
           "custo_usd_selecionados": 0.2773294,
@@ -279,7 +279,7 @@
           "custo_usd_run_completo_estimado": 0.4120642
         },
         {
-          "source": "C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json",
           "sha256": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
           "pares_selecionados": 10,
           "custo_usd_selecionados": 0.0281188,
@@ -287,7 +287,7 @@
           "custo_usd_run_completo_estimado": 0.0281188
         },
         {
-          "source": "C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json",
           "sha256": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337",
           "pares_selecionados": 66,
           "custo_usd_selecionados": 0.1753665,
@@ -300,7 +300,7 @@
       "modo": "confirmacao",
       "sources": [
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
           "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
           "pares_selecionados": 53,
           "custo_usd_selecionados": 0.149167,
@@ -308,7 +308,7 @@
           "custo_usd_run_completo_estimado": 1.163579
         },
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
           "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
           "pares_selecionados": 3,
           "custo_usd_selecionados": 0.0072045,
@@ -316,7 +316,7 @@
           "custo_usd_run_completo_estimado": 0.0180175
         },
         {
-          "source": "D:/git/phd-research/data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
           "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
           "pares_selecionados": 17,
           "custo_usd_selecionados": 0.0414602,
@@ -324,7 +324,7 @@
           "custo_usd_run_completo_estimado": 0.0414602
         },
         {
-          "source": "C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json",
           "sha256": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
           "pares_selecionados": 14,
           "custo_usd_selecionados": 0.0347762,
@@ -332,7 +332,7 @@
           "custo_usd_run_completo_estimado": 0.0347762
         },
         {
-          "source": "C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json",
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json",
           "sha256": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c",
           "pares_selecionados": 3,
           "custo_usd_selecionados": 0.0065642,
@@ -355,17 +355,19 @@
   "incorporation_bias": "Reference labels also participate in supervised calibration and reviewer-rate estimation; cross-fitting is not external gold-standard validation",
   "wilson_note": "Descriptive 95% intervals; no correction for pair dependence or reference biases",
   "new_responses_reestimate_rates": false,
-  "chapter_tex_modified": false,
+  "replay_verification": "Frozen numerical code/data match preregistration; registered test bytes verified at preregistration commit. Current audit tests may evolve; training/execution gates remain strict.",
   "code_sha256": {
-    "scripts/arranjo_corte_s3_avaliar.py": "cfeeb20361982f9d3d5c56c72a2fe296396f5ee1d6d6892ac70da033ed793b5a",
-    "scripts/arranjo_corte_orl_gzcmd.py": "94cab542b5ddd9e4dc8bc63552596736026388772305172d82a80a506918898e",
+    "scripts/arranjo_corte_s3_avaliar.py": "883f6560b4c7e8347be47617d8c52072d66ed4ae635982afaac512c4648ef662",
+    "scripts/arranjo_corte_orl_gzcmd.py": "cb2ce34194bfd4645a0ee61dfb852e0f31810481b2d57e86220d38da537390c4",
+    "scripts/arranjo_paths.py": "c549e9d95e5ed88291c1ad812837d666a4b37ace3e336459976d0c832317a2ce",
     "scripts/arranjo_corte_s2_suplementar.py": "723165f1f3db74bd0a3bfa0ceb226b880554145474d82918f24d397d81d43dc3",
-    "tests/test_arranjo_corte_s3.py": "bc39c580d19fae224c52f3ae17586bc323750f715a76cf5a9950491ca1f3d576"
+    "tests/test_arranjo_corte_s3.py": "c5580cbddf8a2b617ba9c241117a9cedf90f9c42cc2cff55a52f95eef02d2f0f",
+    "tests/test_arranjo_corte_leakage.py": "791306ad3173001662a0f5afa7038e312d0c04995f48ef92bd21d7b6cdb4c3d7"
   },
   "output_sha256": {
-    "data\\arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
-    "data\\arranjo_corte_par2.csv": "2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e",
-    "text\\latex\\tables\\tab_cap8_arranjo_corte.tex": "c533dab12e5089a0c0ecfe87da91de384106a93125f1fa5b127035530c7a6ccd",
-    "data\\arranjo_corte_aposteriori.csv": "bf29b96a32753b54bcedddf1503e39f8c8dbfa22bd071b70a7cff125599bc0c7"
+    "data/arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
+    "data/arranjo_corte_par2.csv": "2f762158f44c9d5ceaa04c5788878e51e6d0c22ea65700e064a0a82d652b9f0e",
+    "text/latex/tables/tab_cap8_arranjo_corte.tex": "c533dab12e5089a0c0ecfe87da91de384106a93125f1fa5b127035530c7a6ccd",
+    "data/arranjo_corte_aposteriori.csv": "bf29b96a32753b54bcedddf1503e39f8c8dbfa22bd071b70a7cff125599bc0c7"
   }
 }

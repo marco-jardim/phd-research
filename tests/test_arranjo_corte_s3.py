@@ -8,6 +8,7 @@ from gzcmd.arranjo_corte import sha256
 from gzcmd.intervals import wilson95
 from scripts.arranjo_corte_s2_suplementar import responses
 from scripts.arranjo_corte_s3_avaliar import ARMS, metrics, render_tex, replay
+from local_data import DATA_ROOT, assert_frozen_csv_hash, requires_files, requires_reviewer_sources
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -85,8 +86,12 @@ def test_aposteriori_reproduces_reference(mode, expected):
 
 
 @pytest.mark.parametrize("mode", ["vigilancia", "confirmacao"])
+@requires_reviewer_sources()
+@requires_files(ROOT / ".local/arranjo_corte/policy_vigilancia_P.csv",
+                ROOT / ".local/arranjo_corte/policy_confirmacao_P.csv",
+                DATA_ROOT / "data/funil_gzcmd_vigilancia.csv")
 def test_P_has_no_unanswered_llm_pair(mode):
-    known, _ = responses(Path("D:/git/phd-research"), mode, include_supplement=True)
+    known, _ = responses(DATA_ROOT, mode, include_supplement=True)
     policy = pd.read_csv(ROOT / f".local/arranjo_corte/policy_{mode}_P.csv")
     assert set(policy.loc[policy.action.eq("LLM_REVIEW"), "pair_id"]) <= known.keys()
     table, _ = load_tables()
@@ -124,7 +129,7 @@ def test_render_identifies_comparisons_and_has_no_trailing_midrule(tmp_path):
     assert tex == (ROOT / "text/latex/tables/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
 
 
-def test_aggregate_privacy_latex_and_exact_original_script():
+def test_aggregate_privacy_latex_and_auditable_comparator():
     table, primary = load_tables()
     forbidden = {"pair_id", "PAR", "TARGET", "y", "COMPREC", "REFREC"}
     assert not forbidden.intersection(table.columns)
@@ -133,8 +138,8 @@ def test_aggregate_privacy_latex_and_exact_original_script():
     assert tex.splitlines()[2:4] == [r"\scriptsize", r"\setlength{\tabcolsep}{2pt}"]
     assert all(value in tex for value in (r"\toprule", r"\bottomrule",
                                           r"\label{tab:cap8-arranjo-corte}", "verificação", "incorporação", "0{,}95"))
-    assert sha256(ROOT / "scripts/arranjo_corte_orl_gzcmd.py") == sha256(
-        Path("D:/git/phd-research/scripts/arranjo_corte_orl_gzcmd.py"))
+    import subprocess
+    assert subprocess.check_output(["git", "ls-files", "scripts/arranjo_corte_orl_gzcmd.py"], cwd=ROOT)
 
 
 def test_supplement_complete_and_rates_frozen():
@@ -142,9 +147,32 @@ def test_supplement_complete_and_rates_frozen():
     supplement = json.loads((ROOT / "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/execucao.json").read_text(encoding="utf-8"))
     assert supplement["total_pairs"] == 69
     assert all(r["complete"] and r["n_errors"] == 0 for r in supplement["runs"])
-    assert meta["frozen_rates_sha256"] == supplement["frozen_rates_sha256"] == sha256(
-        ROOT / "data/arranjo_corte_taxas_crossfit.csv")
+    assert meta["frozen_rates_sha256"] == supplement["frozen_rates_sha256"]
+    assert_frozen_csv_hash(ROOT / "data/arranjo_corte_taxas_crossfit.csv", meta["frozen_rates_sha256"])
     assert meta["new_responses_reestimate_rates"] is False
-    assert meta["chapter_tex_modified"] is False
+    assert "chapter_tex_modified" not in meta
     for name, value in meta["code_sha256"].items():
         assert sha256(ROOT / name) == value
+
+
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv", ROOT / ".local/arranjo_corte/oof.npz",
+                ROOT / ".local/arranjo_corte/policy_vigilancia_P.csv")
+@requires_reviewer_sources()
+def test_S3_regenerates_exact_csvs_and_table(tmp_path):
+    from scripts.arranjo_corte_s3_avaliar import evaluate
+    prereg = json.loads((ROOT / "data/arranjo_corte_metadata.json").read_text(encoding="utf-8"))["prereg_sha256"]
+    evaluate(DATA_ROOT, prereg, output_root=tmp_path)
+    for name in ("arranjo_corte_metricas.csv", "arranjo_corte_par2.csv", "arranjo_corte_aposteriori.csv"):
+        assert (tmp_path / "data" / name).read_bytes() == (ROOT / "data" / name).read_bytes()
+    table = "text/latex/tables/tab_cap8_arranjo_corte.tex"
+    assert (tmp_path / table).read_bytes() == (ROOT / table).read_bytes()
+
+
+def test_comparator_selftest_does_not_require_TEMP(monkeypatch):
+    import os
+    import subprocess
+    import sys
+    monkeypatch.delenv("TEMP", raising=False)
+    result = subprocess.run([sys.executable, "scripts/arranjo_corte_orl_gzcmd.py", "--self-test"],
+                            cwd=ROOT, env=os.environ.copy(), capture_output=True, text=True, check=True)
+    assert "SELF-TEST OK" in result.stdout

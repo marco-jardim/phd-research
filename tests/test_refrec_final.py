@@ -1,11 +1,10 @@
 import json
-from pathlib import Path
-
 import pandas as pd
 import pytest
 
 from gzcmd.config import load_config
 from scripts.avaliar_reruns_exp2 import load_supplemental_runs, make_latex
+from local_data import DATA_ROOT, requires_files
 
 
 def test_classifier_default_is_refrec_without_changing_legacy_costs():
@@ -50,9 +49,12 @@ def test_rerun_table_labels_adaptive_cohort_separately():
     assert "seleção distinta" in text
 
 
+@requires_files(DATA_ROOT / "data/funil_gzcmd_final_row.csv",
+                DATA_ROOT / "data/funil_gzcmd_final_metricas_row.csv",
+                DATA_ROOT / "text/latex/tables/tab_cap8_cascata_v31_row.tex")
 def test_cascade_table_is_regenerated_from_cells_not_old_counts(tmp_path, monkeypatch):
     from scripts import fechar_refrec_final as final
-    root = Path(__file__).resolve().parents[1]
+    root = DATA_ROOT
     data = tmp_path / "data"
     tables = tmp_path / "text/latex/tables"
     data.mkdir()
