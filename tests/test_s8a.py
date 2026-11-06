@@ -93,13 +93,16 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
 
 
 def test_order_is_unverified_and_cdr_exposure_not_transferred_to_three_steps():
-    data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
+    # Pedido C10 da banca: procedimentos de origem movidos para o apêndice.
+    data = ''.join((L / name).read_text(encoding='utf-8')
+                   for name in ('capitulo_dados.tex', 'apendice_linkage_origem.tex'))
     assert 'Não foram documentados ordem, limite ou regra de parada' in data
     assert 'Se ela tivesse seguido ordem decrescente de escore do OpenRecLink' in data
     assert 'não nos passos 6, 9 e 11' in data
     assert 'revisora única, sem classificação independente' in data
     assert 'p.~36 a~38' in data
-    assert 'parecer do CEP abrange' in data
+    # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
+    assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
 
 
 def test_cutoff_sensitivity_has_no_sampling_interval_in_editorial_table():

@@ -71,8 +71,9 @@ def main() -> None:
         "controle": control,
         "C_SITUENCE": summarize_situence(raw.loc[test.index[recovered], "C_SITUENCE"]),
     }
-    output = ROOT / "docs/reports/BANCA_B_encerramento_agregado.json"
-    output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output = ROOT / "data/banca_b_encerramento_agregado.json"
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
 

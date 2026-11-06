@@ -98,7 +98,9 @@ def test_editorial_order_and_limitations_remain_explicit():
     assert "fig_custo_computacional.pdf" not in text
     assert "fig:cap8-cascata-reducao" not in text
     cascade = (LATEX / "tables/editorial/tab_cap8_cascata_v31.tex").read_text(encoding="utf-8")
-    assert "tab:cap8-cascata-reducao" not in cascade
+    # Decisão do autor (fatia T): a tabela editorial é a saída do gerador, com o rótulo histórico único.
+    assert cascade.count(r"\label{tab:cap8-cascata-reducao}") == 1
+    assert r"\label{tab:cap8-cascata-reducao}" not in text
     for term in ("viés de verificação", "circularidade", r"\textit{post mortem}",
                  "checkout original do Windows", "depósito Zenodo com acesso restrito",
                  "reavaliação periódica dos LLM", "307{,}72", "122{,}72",
@@ -112,9 +114,11 @@ def test_editorial_order_and_limitations_remain_explicit():
 
 def test_arrangement_headings_identify_scope_without_changing_numeric_cells():
     text = (LATEX / "tables/editorial/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
-    assert "Vigilância (escopo: 61.696 pares)" in text
-    assert "Confirmação (escopo: 61.696 pares)" in text
-    assert "(i)" not in text and "(ii)" not in text
+    # Decisão do autor (fatia T): cabeçalhos e prefixos (i)/(ii) voltam ao original.
+    assert "Vigilância: base inteira" in text
+    assert "Confirmação: base inteira" in text
+    assert "escopo: 61.696 pares" not in text
+    assert "(i) Corte & 211 &" in text and "(ii) Humano integral &" in text
     from scripts.tabelas_arranjo_editorial import render_arrangement
     original = (LATEX / "tables/tab_cap8_arranjo_corte.tex").read_text(encoding="utf-8")
     assert text == render_arrangement(original)

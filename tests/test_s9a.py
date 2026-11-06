@@ -132,7 +132,8 @@ def test_ic_scope_and_filter_cost_are_explicit():
     assert 'Uma diferença pareada' not in study
     data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
     assert 'termo de consentimento' not in data
-    assert 'o parecer do CEP abrange' in data
+    # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
+    assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
     objectives = (L / 'capitulo3.tex').read_text(encoding='utf-8')
     assert r'\ref{ap:protocolo-busca}' in objectives
     assert 'Pacheco2008hierarchical,Rafael2024accuracy' in objectives

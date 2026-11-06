@@ -108,7 +108,7 @@ def test_encerramento_aggregate_is_complete_and_contains_no_pair_rows():
     summary = summarize_situence(pd.Series(["3", "4", "1", None, "x"]))
     assert summary == {"n": 5, "encerrados_obito_tb": 1, "encerrados_obito_outras_causas": 1,
                        "encerrados_obito_total": 2, "outros_encerramentos": 1, "ausentes_ou_nao_numericos": 2}
-    path = ROOT / "docs/reports/BANCA_B_encerramento_agregado.json"
+    path = ROOT / "data/banca_b_encerramento_agregado.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     assert set(data) == {"definicao", "entrada_sha256", "controle", "C_SITUENCE"}
     assert data["controle"] == {"test_n": 18509, "test_positivos": 74, "tp": 67, "fp": 3, "recuperados": 27}
