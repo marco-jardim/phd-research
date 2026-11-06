@@ -29,7 +29,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Classificação] Tarefa de aprendizado supervisionado que atribui \textit{labels} discretos (vínculo ou não par) a instâncias com base em atributos preditores.
 
-\item[Claude Haiku 5.5] Modelo de linguagem de grande porte desenvolvido pela Anthropic (Estados Unidos). Com as instruções v4 e dossiê sem as saídas do motor, é o revisor de referência da política v3.1 do GZ-CMD, e suas proporções de erro por banda alimentam a política.
+\item[Claude Haiku 5.5] Modelo de linguagem de grande porte desenvolvido pela Anthropic (Estados Unidos). Com as instruções v4 e dossiê sem as saídas do motor, é o revisor de referência da política v3.1 do GZ-CMD, e suas proporções de erro por faixa alimentam a política.
 
 \item[Claude Sonnet 5.5] Modelo de linguagem de grande porte da Anthropic, de custo por \textit{token} superior ao do Claude Haiku 5.5, avaliado nas mesmas coortes e dossiês. Suas respostas não alimentam as proporções da política.
 
@@ -37,7 +37,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical de origem encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
 
-\item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para escolha da ordenação e do ponto de parada segundo o orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido.
+\item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para escolha da ordenação e do ponto de parada segundo o orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido. Exige vínculos verificados; em dados novos, depende de amostra revisada de forma independente.
 
 \item[Decisão de limiar] Classificação de potenciais pares pela comparação do escore com um ou dois pontos de corte fixos. Com dois cortes, resultam regiões de vínculo, revisão e não-vínculo, como na regra de Fellegi e Sunter. O comparador operacional desta tese é o corte do OpenRecLink, isolado ou seguido da revisão humana abaixo dele. No arranjo sequencial, esse corte é preservado, e a v3.1 decide abaixo dele entre vínculo, não-vínculo, LLM e revisor humano. O corte 9 da nota do CdR e a revisão integral de $[5,9)$ são cenários hipotéticos; o corte 8 da nota pertence ao Estudo~3, e o corte 6,0 é referência histórica da análise de equidade.
 
@@ -49,7 +49,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Desbalanceamento de classes] Situação em que uma classe (tipicamente os vínculos) é muito menos frequente que a outra (não pares), podendo comprometer o desempenho de classificadores.
 
-\item[Dossiê de revisão] Representação estruturada de um potencial par, submetida ao módulo de revisão assistida por modelo de linguagem. Na versão v3, continha subescores, nota final, medidas contínuas de diferença de datas (MACD) e as saídas do motor (probabilidade calibrada, banda, valor esperado da revisão e códigos de guarda); na v4, as saídas do motor foram retiradas, por indício de ancoragem do revisor.
+\item[Dossiê de revisão] Representação estruturada de um potencial par, submetida ao módulo de revisão assistida por modelo de linguagem. Na versão v3, continha subescores, nota final, medidas contínuas de diferença de datas (MACD) e as saídas do motor (probabilidade calibrada, faixa, valor esperado da revisão e códigos de guarda); na v4, as saídas do motor foram retiradas, por indício de ancoragem do revisor.
 
 \item[\textit{Ensemble}] Abordagem que combina múltiplos classificadores para produzir uma decisão agregada, frequentemente superior ao desempenho individual de cada modelo.
 
@@ -91,7 +91,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[M8] Auditoria da blocagem que conferiu, no extrato, o número de linhas, os potenciais pares distintos e a repetição de pares entre passos (Seção~\ref{sec:blocagem-rendimento}).
 
-\item[MACD] Medidas Contínuas de Diferença de Datas. Atributos derivados que capturam diferenças temporais brutas (em dias) entre datas de nascimento e entre datas de óbito e notificação, complementando os subescores discretizados do Comparador de Registros.
+\item[MACD] Medidas Contínuas de Diferença de Datas. Atributos derivados das datas de nascimento: diferença absoluta em anos limitada a 20, coincidência de ano, mês e dia e sua média, proximidade de até 30 e de até 7 dias, interação entre nome idêntico e diferença de pelo menos cinco anos, e produto entre nome idêntico e diferença limitada em anos. Nome idêntico exige concordância dos fragmentos e proporção de fragmentos iguais de pelo menos 0,95. Não incluem diferenças entre óbito e notificação.
 
 \item[\texttt{MATCH}, \texttt{NONMATCH}, \texttt{UNSURE} e \texttt{DEFERRED}] Saídas da revisão assistida e do motor. \texttt{MATCH}: o revisor LLM classifica o potencial par como vínculo; \texttt{NONMATCH}: como não vínculo; \texttt{UNSURE}: declara a evidência inconclusiva, e o par é encaminhado ao revisor humano. \texttt{DEFERRED} é a marcação do pacote para potencial par encaminhado à revisão humana, não uma decisão final.
 
@@ -109,7 +109,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Potencial par] Combinação de dois registros, provenientes de bases distintas, que foram selecionados pela etapa de blocagem para comparação detalhada.
 
-\item[P-PAR2-grey] Análise de sensibilidade do arranjo sequencial que estima a proporção de falsos negativos do revisor somente com os PAR~=~2 e agrupa as quatro bandas da área cinza da nota $[5,9)$.
+\item[P-PAR2-grey] Análise de sensibilidade do arranjo sequencial que estima a proporção de falsos negativos do revisor somente com os PAR~=~2 e agrupa as quatro faixas da área cinza da nota $[5,9)$.
 
 \item[P-Platt] Análise de sensibilidade de P que substitui a isotônica restrita por \textit{Platt scaling} sobre o logit da probabilidade bruta. Não se confunde com o ajuste supervisionado da nota do CdR nem com o ajuste sigmoide por momentos nas âncoras.
 
@@ -123,7 +123,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Random Forest] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
 
-\item[Referência operacional] Classificação de referência dos potenciais pares no campo PAR, produto do corte do OpenRecLink e da revisão clerical abaixo dele, ambos do processo de \textit{linkage} de origem: PAR~=~1 para os vínculos definidos pelo corte, PAR~=~2 para os recuperados na revisão e PAR~=~0 para os demais. Não é referência validada de forma independente: os PAR~=~1 não passaram por validação independente, nenhum potencial par acima do corte é falso positivo por construção, e a ordem e a parada da revisão não foram documentadas (Seção~\ref{sec:padrao-ouro}).
+\item[Referência operacional] Classificação de referência dos potenciais pares no campo PAR, produto do corte do OpenRecLink e da revisão clerical abaixo dele, ambos do processo de \textit{linkage} de origem: PAR~=~1 para os vínculos definidos pelo corte, PAR~=~2 para os recuperados na revisão e PAR~=~0 para os demais, rejeitados na revisão ou não examinados. Não é referência validada de forma independente: os PAR~=~1 não passaram por validação independente, nenhum potencial par acima do corte é falso positivo por construção, e a ordem e a parada da revisão não foram documentadas (Seção~\ref{sec:padrao-ouro}).
 
 \item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 
@@ -149,10 +149,10 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Viés de incorporação] Distorção possível quando as evidências avaliadas participam da construção da própria referência. Não se confunde com o uso de \textit{labels} de treinamento no ajuste supervisionado; sua magnitude não foi estimada nesta tese.
 
-\item[Viés de verificação] Distorção decorrente da seleção dos casos verificados. Se a revisão histórica seguiu o escore do OpenRecLink, os PAR~=~2 recuperados tenderiam a se concentrar no topo dessa ordem, favorecendo O1; a ordem não foi documentada. O3 e O4 também foram treinadas sobre esses mesmos \textit{labels}. Os PAR~=~1 não integram a comparação abaixo do corte.
+\item[Viés de verificação] Distorção decorrente da seleção dos casos verificados. Se a revisão histórica seguiu o escore do OpenRecLink, os PAR~=~2 recuperados tenderiam a se concentrar no topo dessa ordem, favorecendo O1; a ordem não foi documentada. O3 e O4 também foram treinadas sobre esses mesmos \textit{labels}. Os PAR~=~1 não integram a comparação abaixo do corte. Sob a hipótese de trabalho, com nota e subescores do CdR disponíveis à revisora, o viés de verificação e de incorporação favoreceria O2 a O4, inclusive a ordenação por probabilidade da hipótese gerada; a direção dominante não é identificável, e a magnitude não foi estimada. Os 36 PAR~=~2 situam-se entre os 2.522 candidatos com escore $\geq -5{,}648$, padrão compatível com revisão restrita a uma faixa do escore, caso em que os candidatos abaixo dela têm PAR~=~0 sem exame (\path{data/carga_abaixo_corte.csv}).
 
 \item[Vigilância e confirmação] Modos operacionais que priorizam, respectivamente, a sensibilidade para evitar perdas de vínculos e o valor preditivo positivo para evitar falsos vínculos.
 
-\item[Vínculo] Par de registros que se refere ao mesmo indivíduo, definido pelo corte do escore ou por revisão manual na referência operacional.
+\item[Vínculo] Par de registros classificado como referente ao mesmo indivíduo na referência operacional, pelo corte do escore (PAR~=~1) ou pela revisão clerical de origem (PAR~=~2), sem validação independente.
 
 \end{description}
