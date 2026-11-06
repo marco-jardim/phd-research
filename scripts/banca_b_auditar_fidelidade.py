@@ -9,7 +9,8 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = "53c4a13"
+# SHA da história reescrita em 2026-11-06, correspondente à base antiga 53c4a13.
+BASE = "37da5da6c36fa8b0f67df5ca6ac1f07d65362059"
 LATEX = "text/latex/"
 
 
