@@ -14,7 +14,7 @@
 \setbeamersize{text margin left=8mm,text margin right=8mm}
 \newcommand{\fonte}[2][tese, ]{\vfill\par{\tiny\color{black!65}Fonte: #1#2.\par}}
 \newcommand{\itens}[1]{\begin{itemize}#1\end{itemize}}
-\title{Aprendizado de Máquina Aplicado ao Pós-Processamento do Relacionamento Probabilístico de Bases de Dados de Saúde}
+\title{Aprendizado de Máquina Aplicado ao Pós-Processamento do \textit{Linkage} Probabilístico de Bases de Dados de Saúde}
 \author{Marco Elisio Oliveira Jardim}
 \institute{IESC-UFRJ}
 \date{Defesa de doutorado, 2026}
@@ -93,8 +93,8 @@ Nota $\geq9$: 93 vínculos, 2 FP\par
 \end{block}
 \end{columns}
 \medskip Cenário exploratório: se a revisão tivesse seguido ordem decrescente do escore do OpenRecLink, seriam pelo menos 2.156 pares por passo, ou 2.522 com limiar global. Não é uma reconstrução histórica.\par
-\footnotesize A 20 min por par, o cenário por passo equivale a 718 h 40 min, não tempo observado.
-\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linhas 2 a 5; data/carga\_abaixo\_corte.csv, linhas 5 e 9; data/carga\_abaixo\_corte\_horas.csv, linha 3}
+\footnotesize A 20 min por par, os cenários equivalem a 718 h 40 min por passo e 840 h 40 min com limiar global, não tempo observado.
+\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linhas 2 a 5; data/carga\_abaixo\_corte.csv, linhas 5 e 9; data/carga\_abaixo\_corte\_horas.csv, linhas 2 e 3}
 \end{frame}
 
 \begin{frame}{As faixas se referem à nota final do CdR}
@@ -109,22 +109,22 @@ $s\geq9$ & 95 & 93 \\
 \end{tabular}
 \end{center}
 \itens{\item A nota do CdR não é o escore probabilístico do OpenRecLink
-\item Revisora única, sem classificação independente
+\item Revisora única, sem classificação independente; nota do CdR disponível a ela
 \item Oliveira (2026), Quadros 5 e 6: CdR no passo aberto, com 5 pares; não nos passos 6, 9 e 11
 \item PAR=2 por passo 6, 9 e 11: 4, 7 e 25; referência sujeita a viés de verificação e incorporação, sem isolar o efeito do CdR}
-\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linha 2; data/par\_por\_passo.csv; Oliveira (2026), p. 34 e 36 a 38}
+\fonte[]{data/referencia\_comparador\_pos\_orl.csv, linha 2; data/par\_por\_passo.csv; Oliveira (2026), p. 34 e 36 a 38; apendice\_linkage\_origem.tex}
 \end{frame}
 
 % 08: único frame com a menção ao referencial clássico
-\begin{frame}{Fellegi e Sunter: da comparação à decisão de limiar}
+\begin{frame}{Do escore probabilístico à decisão de limiar}
 \begin{center}
 Escore probabilístico do OpenRecLink\par $\downarrow$\par
 Potenciais pares exportados\par $\downarrow$\par
 Subescores e nota final do CdR\par $\downarrow$\par
 Decisão: vínculo, não vínculo ou revisão
 \end{center}
-A tese reorganiza a decisão posterior ao CdR. Não reestima os parâmetros de comparação nem reimplementa a blocagem do OpenRecLink.
-\fonte{capitulo\_dados.tex, ``Fontes de dados''; estudo1\_comparador.tex, método}
+\small Referencial do escore: modelo de Fellegi e Sunter; classificação por corte: decisão de limiar. \textit{Linkage} de origem no OpenRecLink original, em C, CdR e revisão clerical executados na origem; a tese recebeu o extrato pós-CdR. Reorganiza a decisão posterior ao CdR, sem reestimar os parâmetros de comparação nem reimplementar a blocagem do OpenRecLink.
+\fonte{capitulo\_dados.tex, ``Fontes de dados''; apendice\_linkage\_origem.tex; estudo1\_comparador.tex, método}
 \end{frame}
 
 % 09 e 10: estudo 1
@@ -247,7 +247,7 @@ Revisão assistida: dossiê sem saídas do motor; inconclusivos ao revisor human
 \bottomrule
 \end{tabular}
 \end{center}
-\textit{Grey-Zone} no nome: região que a regra automática não decide, não a faixa $[5,9)$ da nota. Taxas congeladas, sem realimentação; P reutiliza respostas históricas também usadas para estimá-las, não uma avaliação prospectiva.
+\textit{Grey-Zone} no nome: região que a regra automática não decide, não a faixa $[5,9)$ da nota. Proporções de erro do revisor congeladas, sem realimentação; P reutiliza respostas históricas também usadas para estimá-las, não uma avaliação prospectiva.
 \fonte[]{tese, estudo4\_gzcmd.tex, política v3.1; data/arranjo\_corte\_metadata.json, cost\_sources e incorporation\_bias}
 \end{frame}
 
@@ -304,7 +304,7 @@ P-Platt, vigilância & 4/7 & 57,1\% & 25,0 a 84,2\% \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Aceitador: 21 FP observados contra 9,06 previstos. Transferência de taxas e reutilização impede interpretação prospectiva
+\itens{\item Aceitador: 21 FP observados contra 9,06 previstos. A transferência das proporções, com reutilização, impede interpretação prospectiva
 \item Filtro antes do revisor humano, vigilância: 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas em k=96; recupera 13 PAR~=~2 contra 6 sem filtro na mesma carga
 \item VPN (valor preditivo negativo): 87,8\% em k=96; 78,0\% em k=58, na vigilância. Perdas por descarte: reserva 48}
 \begin{block}{Hipótese de uso, não política validada}
@@ -324,9 +324,9 @@ Confirmação & 29 / 9 & 29 / 9 & 29 / 9 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Sob a mesma hipótese de revisor perfeito dos dois lados, P recupera no máximo 1 vínculo a mais na mesma carga humana, ao custo adicional de 344 pares avaliados pelo LLM na vigilância e 41 na confirmação. Não é empate sem qualificação
+\itens{\item Sob a mesma hipótese de revisor perfeito dos dois lados, P recupera no máximo 1 vínculo a mais na mesma carga humana, ao custo adicional de 344 pares avaliados pelo LLM na vigilância e 41 na confirmação. Não é empate sem qualificação. Em revisões humanas equivalentes, vigilância: P 307,72; O3 125; P com MATCH ao humano 122,72
 \item Uma diferença de um vínculo em 36 não sustenta superioridade. P é principal porque foi registrado antes; P-Platt é análise de sensibilidade não confirmatória, sem dominância sustentada. Não se substitui o revisor humano pelo LLM}
-\fonte[]{data/comparador\_p\_match\_humano.csv, linhas 2 e 3; data/arranjo\_corte\_metricas.csv, linhas 12 e 30; data/robustez\_arranjo\_resumo.csv, linha 278}
+\fonte[]{data/comparador\_p\_match\_humano.csv, linhas 2 e 3; data/arranjo\_corte\_metricas.csv, linhas 12 e 30; data/custos\_equivalentes\_exploratorios.csv, linhas 2 a 4; data/robustez\_arranjo\_resumo.csv, linha 278}
 \end{frame}
 
 % 23 e 24: estudo 5
@@ -369,7 +369,7 @@ sensibilidade automática do arranjo no passo 11, vigilância e confirmação
 Pereira (2024) & Comparação supervisionada em pares do SUS \\
 Paiva (2025) & Base distinta, árvores de decisão, exclusão da região intermediária e balanceamento \\
 Lages (2026) & Classificação supervisionada, razão 1:5, validação independente \\
-Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão seletiva e equidade \\
+Esta tese & SIM e Sinan-TB, base 1:249; política com regras de guarda, \textit{expected loss} e revisão assistida por modelo de linguagem \\
 \bottomrule
 \end{tabular}
 \medskip\par A comparação empírica com Lages (2026) não foi realizada. Métricas entre estudos não estabelecem uma ordenação de superioridade.
@@ -381,14 +381,15 @@ Esta tese & Base 1:249, faixas do CdR, calibração agrupada, custos, revisão s
 \small
 \itens{\item Revisora única, sem classificação independente; corte incorporado ao \textit{label}. Se a revisão seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados
 \item Ordem histórica desconhecida: 2.156 revisões são cenário. Apenas 36 PAR~=~2; REFREC não separa COMPREC
-\item Respostas históricas reutilizadas; taxas de coortes mais fáceis e denominadores mínimos. Sensibilidade humana não medida; especificidade perfeita assumida, sem FP humanos
+\item Respostas históricas reutilizadas; proporções de coortes mais fáceis e denominadores mínimos. Sensibilidade humana não medida; especificidade perfeita assumida, sem FP humanos
 \item Comparador \textit{a posteriori} conhecido antes do registro interno; código registrado ausente do git e desvios de protocolo. Registro: recalibração, braços e avaliação; análise de estabilidade interna, não de generalização}
 \fonte[]{data/comparador\_mesma\_carga\_metadata.json; data/cenarios\_sensibilidade\_humana.csv; gzcmd/M\_arranjo\_corte\_desvios.md; reservas 45 a 48}
 \end{frame}
 
 \begin{frame}{Limitações: transferência e privacidade}
 \itens{\item Uma coorte municipal, sem validação externa do arranjo nem da cascata
-\item Dados pseudonimizados, não anônimos; APIs externas no processamento LLM
+\item Dados pseudonimizados, não anônimos; APIs externas no processamento LLM; para dados identificados, ambiente local
+\item Dados por potencial par em depósito de acesso restrito; público só agregado; MIT apenas para o código
 \item Exportação restrita com \texttt{pair\_id} por HMAC implementada, matriz não depositada
 \item Base legal: LGPD, arts. 7º, IV, 11, II, c, e 13; autor sem acesso aos registros nominais
 \item Projeto: CEP IESC-UFRJ, CAAE 43856720.1.0000.5286; CEP SMS-Rio, CAAE 43856720.1.3001.5279
@@ -419,9 +420,9 @@ Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
 \small
 \itens{\item Decomposição por PAR e curva de esforço: escolher a ordenação e o ponto de parada, sem alegar dominância universal
 \item Mesmo LLM: ruim como aceitador (VPP de 16,0\%), útil como filtro exploratório de NONMATCH (VPN de 87,8\% em k=96 e 78,0\% em k=58, vigilância). Falha de transferência e ancoragem
-\item Política auditável de quatro ações, CdR em Python, pacote e \textit{benchmark} abertos; resultado negativo com registro interno}
+\item Política auditável de quatro ações, CdR em Python, pacote de código aberto e \textit{benchmark} de acesso restrito; resultado negativo com registro interno}
 \begin{block}{Recomendação final como hipótese a validar}
-Preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore; escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. Se usar probabilidade aprendida, treinar na prevalência original: a subamostragem não melhorou a fila. Revisor humano no topo até o orçamento; restante como não vínculo. LLM apenas como filtro de NONMATCH antes do revisor humano, nunca aceitando sozinho. Adoção depende de validação registrada em dados novos.
+Preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore; escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. Se usar probabilidade aprendida, treinar na prevalência original: 1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22), 1:20 e 1:50 ficaram dentro da variação entre sementes e a isotônica piorou a calibração. Revisor humano no topo até o orçamento; restante como não vínculo. LLM apenas como filtro de NONMATCH antes do revisor humano, nunca aceitando sozinho. Adoção depende de validação registrada em dados novos.
 \end{block}
 \fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv}
 \end{frame}
@@ -680,7 +681,7 @@ P perde mais PAR~=~2 que o \textit{a posteriori}, conf. & 20/20 & 20/20 \\
 \bottomrule
 \end{tabular}
 \end{center}
-\itens{\item Exploratória. A subamostragem não melhorou a fila; 1:20 e 1:50 ficam dentro da variação entre sementes
+\itens{\item Exploratória. 1:1 e 1:5 pioram o topo (13 e 18,5 contra 22); 1:20 e 1:50 ficam dentro da variação entre sementes
 \item Brier mediano da isotônica piora em todas as proporções frente à prevalência original
 \item Com 1:1, quedas de cerca de 25 p.p. no passo 6 (4 PAR~=~2) e 33 p.p. no sexo masculino, sem demonstrar melhora de equidade}
 \fonte[]{data/subamostragem\_treino\_resumo.csv, população abaixo do corte, variante isotonic, métricas par2\_top\_96, brier e sens96; análise exploratória}

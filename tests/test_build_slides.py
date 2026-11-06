@@ -132,19 +132,19 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_thirty_three_short_answers():
+def test_script_has_forty_two_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 33
+    assert len(answers) == 42
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 34)
+        range(1, 43)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     counts = [len(answer.split()) for answer in answers]
-    recorded = re.search(r"São 33 respostas, com (.*?) palavras, respectivamente", source)[1]
+    recorded = re.search(r"São 42 respostas, com (.*?) palavras, respectivamente", source)[1]
     assert [int(n) for n in re.findall(r"\d+", recorded)] == counts
 
 
@@ -194,7 +194,8 @@ def scientific_requirements(csv_loader=read_csv):
         28: ["perdas são de cobertura",
              "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
-              "Se usar probabilidade aprendida", "a subamostragem não melhorou a fila",
+              "Se usar probabilidade aprendida", "1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22)",
+              "1:20 e 1:50 ficaram dentro da variação entre sementes", "isotônica piorou a calibração",
              "prevalência original", "Revisor humano no topo até o orçamento", "restante como não vínculo",
              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro interno",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
@@ -206,7 +207,8 @@ def scientific_requirements(csv_loader=read_csv):
         45: [],
         46: ["não confirmatória", "não generalização", "em relação à partição original",
               "A réplica original é um ponto dessa distribuição"],
-        47: ["Exploratória", "prevalência original", "Brier mediano", "sem demonstrar melhora de equidade"],
+        47: ["Exploratória", "prevalência original", "Brier mediano", "sem demonstrar melhora de equidade",
+             "1:1 e 1:5 pioram o topo (13 e 18,5 contra 22)"],
         48: ["MATCH e inconclusivos vão ao revisor humano", "Nunca aceita sozinho",
              "protocolo fixado antes dos desfechos", "respostas de datas diferentes", "Contagens iguais não significam todas as decisões iguais"],
         49: ["especificidade humana perfeita", "sem modelar FP humanos", "metadados na versão",
@@ -866,7 +868,7 @@ def test_script_s6_questions_and_provenance():
         f"VPP de {pt_percent(llm['VPP'], 0)}%",
         "vínculos perdidos",
         f"perder {pt_percent(lost['perdidos_proporcao'], 0)}%",
-        "taxas congeladas",
+        "proporções congeladas",
         "viés de incorporação",
         "somente com o Zenodo",
         "desvios de protocolo",
@@ -892,6 +894,51 @@ def test_script_s6_questions_and_provenance():
     assert "não houve varredura no arranjo" in questions.lower()
     assert "árvore compilada" in source
     assert re.search(r"SHA-256[^\n]*`[0-9a-f]{64}`", source)
+
+
+def thesis_title():
+    source = (ROOT / "text" / "latex" / "tese.tex").read_text(encoding="utf-8")
+    raw = re.search(r"\\Large \\bf (Aprendizado[^\n]*)\}$", source, re.M)[1]
+    for latex, char in (("\\'a", "á"), ("\\'o", "ó"), ("\\'i", "í"), ("\\'u", "ú"), ("\\\\", " ")):
+        raw = raw.replace(latex, char)
+    return " ".join(raw.split())
+
+
+def test_banca_e_title_terminology_and_new_answers():
+    source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
+    title = re.search(r"\\title\{(.*)\}$", source, re.M)[1]
+    assert " ".join(title.split()) == thesis_title()
+    assert r"\textit{Linkage} Probabilístico" in title
+    assert "Relacionamento Probabilístico" not in source
+    frame_titles = re.findall(r"\\begin\{frame\}\{([^\n]*)\}", source)
+    assert not any("Fellegi" in frame_title for frame_title in frame_titles)
+    assert "decisão de limiar" in slide_frames()[7]
+    assert not re.search(r"\btaxas?\b|estágio 1", source, re.I)
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    answers = {n: questions.split(f"### {n}.")[1].split("### ")[0] for n in range(34, 43)}
+    for number, fragments in {
+        34: ("0,954", "21.620 para 41 pares", "18 min", "calibração OOF"),
+        35: ("211 dos 247 vínculos (85,4%)", "preserva"),
+        36: ("homonímia", "gzcmd/guardrails.py", "exploratórios"),
+        37: ("README", "notebooks/README.md", "apendice_pacote.tex"),
+        38: ("Anthropic", "OpenCode Go", "Levanto", "Fireworks AI", "OpenAI", "Modal",
+             "ambiente local"),
+        39: ("retirado",),
+        40: ("Comparador de Registros", "sem interface gráfica"),
+        41: ("não consumiu a saída do OpenRecLink", "OpenRecLink original, em C",
+             "Daniela Medina Coeli Bastos", "extrato pós-CdR"),
+        42: ("LinkDataPop", "acesso restrito", "agregados", "MIT vale somente para o código"),
+    }.items():
+        for fragment in fragments:
+            assert fragment in answers[number], (number, fragment)
+    costs = {row["braco"]: row for row in read_csv("custos_equivalentes_exploratorios.csv")
+             if row["modo"] == "vigilancia"}
+    frame22 = slide_frames()[21].replace("{,}", ",")
+    for arm in ("P", "O3_recuperacao_equivalente", "P_MATCH_ao_humano"):
+        value = float(costs[arm]["subtotal_revisao_fp"])
+        text = pt_number(value, 2) if not value.is_integer() else integer(value)
+        assert text in frame22, arm
 
 
 def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabilidade():
