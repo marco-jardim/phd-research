@@ -13,7 +13,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[API] \textit{Application Programming Interface}. Interface de programação que define um conjunto padronizado de rotinas, protocolos e ferramentas para comunicação entre componentes de \textit{software}, permitindo integração modular entre sistemas.
 
-\item[Área cinza] No modelo de Fellegi e Sunter, região que a regra automática não decide, entre os limiares de aceitação e rejeição (Seção~\ref{sec:area-cinza}). Esse conceito dá nome ao GZ-CMD. Nos resultados desta tese, área cinza da nota designa os potenciais pares com nota final do Comparador de Registros em $[5,9)$. A região abaixo do corte do OpenRecLink, onde o arranjo decide, não coincide com essa faixa.
+\item[Área cinza] Termo usado nesta tese em três designações distintas, sempre qualificadas (Seção~\ref{sec:fontes-dados}). Região entre limiares: no modelo de Fellegi e Sunter, faixa que a regra automática não decide, entre os limiares de aceitação e rejeição (Seção~\ref{sec:area-cinza}); esse conceito dá nome ao GZ-CMD. Área cinza da nota: potenciais pares com nota final do Comparador de Registros em $[5,9)$. Região abaixo do corte: potenciais pares com escore do OpenRecLink inferior ao corte do respectivo passo, onde ocorreu a revisão clerical de origem e onde o arranjo sequencial decide; não coincide com a área cinza da nota.
 
 \item[Arranjo sequencial] Aplicação do GZ-CMD depois do corte do OpenRecLink. Os potenciais pares com escore maior ou igual ao corte do respectivo passo são aceitos; a política v3.1, recalibrada apenas abaixo do corte, decide os demais. É o resultado principal do registro interno, não uma política superior à ordenação calibrada. A aplicação da política a todos os potenciais pares constitui a cascata sobre a base inteira, usada como comparação.
 
@@ -33,9 +33,9 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Claude Sonnet 5.5] Modelo de linguagem de grande porte da Anthropic, de custo por \textit{token} superior ao do Claude Haiku 5.5, avaliado nas mesmas coortes e dossiês. Suas respostas não alimentam as proporções da política.
 
-\item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2024comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui subescores de endereço derivados dos critérios de \citeonline{Paiva2025comparador}, além dos de município.
+\item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2025comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui seis subescores de endereço, dos quais a igualdade da via retoma o critério de endereços iguais de Lucena e os demais derivam dos critérios acrescentados por \citeonline{Paiva2025comparador}, além de quatro subescores de município formulados pelo autor (Capítulo~\ref{cap:estudo1}).
 
-\item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical do serviço encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
+\item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical de origem encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
 
 \item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para escolha da ordenação e do ponto de parada segundo o orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido.
 
@@ -73,7 +73,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Gradient Boosting}] Família de algoritmos de aprendizado de máquina que constrói modelos sequenciais, cada um corrigindo erros do anterior, incluindo implementações como XGBoost e LightGBM.
 
-\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. Política de decisão por \textit{expected loss} com custos assimétricos proposta nesta tese para governança da incerteza no \textit{linkage} probabilístico. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano. No arranjo sequencial, resultado principal do registro interno, é aplicado aos potenciais pares abaixo do corte do OpenRecLink.
+\item[GZ-CMD] \textit{Grey-Zone Cost-based Mixture Deferral}. Política de decisão por \textit{expected loss} com custos assimétricos proposta nesta tese para governança da incerteza no \textit{linkage} probabilístico. No nome, \textit{Grey-Zone} remete à região entre limiares do modelo de Fellegi e Sunter, \textit{Cost-based} à decisão por custos e \textit{Mixture Deferral} à combinação, na mesma política, de decisões automáticas e de encaminhamentos a revisores distintos, o modelo de linguagem e o revisor humano. Na versão v3.1, integra classificação supervisionada com calibração isotônica fora da amostra agrupada por REFREC (a calibração por conjuntos âncora foi avaliada como alternativa), guardas pela nota final do CdR, decisão por \textit{expected loss} entre quatro ações e revisão assistida por modelo de linguagem, com os inconclusivos encaminhados ao revisor humano. No arranjo sequencial, resultado principal do registro interno, é aplicado aos potenciais pares abaixo do corte do OpenRecLink; na cascata sobre a base inteira, usada como comparação, a todos os potenciais pares.
 
 \item[\textit{Holdout} (conjunto de avaliação independente)] Subconjunto de dados reservado antes do treinamento e não utilizado no ajuste dos parâmetros do classificador. No Estudo~3, os limiares de decisão foram explorados nessa mesma partição de teste, que, por isso, não constitui avaliação independente dos limiares escolhidos; as estimativas correspondentes são otimistas.
 
@@ -97,9 +97,9 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[O1 a O4] Ordenações exploratórias dos potenciais pares abaixo do corte: O1 pelo escore do OpenRecLink, O2 pela nota final do CdR, O3 pela probabilidade calibrada OOF do classificador e O4 pela probabilidade recalibrada de P. Não se confundem com as consultas de busca bibliográfica, identificadas por Q1 a Q5 no Apêndice~\ref{ap:protocolo-busca}.
 
-\item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli. Nesta tese, designa a versão original, em C, usada por Daniela Medina Coeli Bastos no \textit{linkage} de origem; a tese não o executou.
+\item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli como sucessor do RecLink \cite{Camargo2000reclink}. Nesta tese, designa a versão original, em C, usada no \textit{linkage} de origem realizado no LinkDataPop; a tese não o executou.
 
-\item[Orçamento $k$] Número de potenciais pares selecionados para revisão em uma ordenação.
+\item[Orçamento $k$] Número de potenciais pares do topo de uma ordenação submetidos à revisão: revisão humana nas ordenações O1 a O4 e revisão pelo LLM no filtro de \texttt{NONMATCH}, em que a carga humana é o número $H$ de pares que o LLM não descartou.
 
 \item[P] Braço da política de quatro ações que preserva o corte e recalibra probabilidades por regressão isotônica somente abaixo dele, ajustada fora da amostra. Principal por registro interno anterior à avaliação, não por superioridade observada.
 
@@ -113,7 +113,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[P-Platt] Análise de sensibilidade de P que substitui a isotônica restrita por \textit{Platt scaling} sobre o logit da probabilidade bruta. Não se confunde com o ajuste supervisionado da nota do CdR nem com o ajuste sigmoide por momentos nas âncoras.
 
-\item[Precisão] Proporção de pares classificados como verdadeiros que são efetivamente verdadeiros (\textit{Positive Predictive Value}).
+\item[Precisão] Proporção de pares classificados como vínculos que são vínculos na referência; equivale ao valor preditivo positivo (\textit{Positive Predictive Value}).
 
 \item[Protocolo dual-agente] Protocolo de revisão assistida em que cada potencial par é avaliado independentemente por dois agentes de modelo de linguagem com instruções complementares (um direto e objetivo, outro cético), com arbitragem por terceiro agente em caso de discordância.
 
@@ -123,15 +123,15 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Random Forest] Algoritmo de aprendizado de máquina baseado em múltiplas árvores de decisão treinadas em subamostragens aleatórias dos dados.
 
-\item[Referência operacional] Classificação de referência dos potenciais pares no campo PAR, produto do corte do OpenRecLink e da revisão clerical do serviço abaixo dele: PAR~=~1 para os vínculos definidos pelo corte, PAR~=~2 para os recuperados na revisão e PAR~=~0 para os demais. Não é referência validada de forma independente: os PAR~=~1 não passaram por validação independente, nenhum potencial par acima do corte é falso positivo por construção, e a ordem e a parada da revisão não foram documentadas (Seção~\ref{sec:padrao-ouro}).
+\item[Referência operacional] Classificação de referência dos potenciais pares no campo PAR, produto do corte do OpenRecLink e da revisão clerical abaixo dele, ambos do processo de \textit{linkage} de origem: PAR~=~1 para os vínculos definidos pelo corte, PAR~=~2 para os recuperados na revisão e PAR~=~0 para os demais. Não é referência validada de forma independente: os PAR~=~1 não passaram por validação independente, nenhum potencial par acima do corte é falso positivo por construção, e a ordem e a parada da revisão não foram documentadas (Seção~\ref{sec:padrao-ouro}).
 
 \item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 
 \item[Relacionamento de registros] Ver \textit{Linkage}.
 
-\item[Resultado negativo com registro interno] Arranjo P, com registro interno anterior à avaliação, sem hipótese direcional nem critério de sucesso registrados; sua leitura como resultado negativo frente à referência do serviço é posterior à S3, e o registro não protege a escolha posterior do enquadramento nem transforma comparações exploratórias em confirmatórias.
+\item[Resultado negativo com registro interno] Arranjo P, com registro interno anterior à avaliação, sem hipótese direcional nem critério de sucesso registrados; sua leitura como resultado negativo frente à referência operacional é posterior à etapa S3, e o registro não protege a escolha posterior do enquadramento nem transforma comparações exploratórias em confirmatórias.
 
-\item[Revisão clerical] Revisão manual de potenciais pares por profissional do serviço, que decide se correspondem à mesma pessoa. No \textit{linkage} de origem, foi feita por revisora única na região abaixo do corte do OpenRecLink e originou os PAR~=~2.
+\item[Revisão clerical] Revisão manual de potenciais pares por revisor humano, que decide se correspondem à mesma pessoa. No \textit{linkage} de origem, foi feita por revisora única na região abaixo do corte do OpenRecLink e originou os PAR~=~2.
 
 \item[S1 a S3] Etapas da avaliação do arranjo sequencial no Estudo~4: S1, simulação sem chamadas a API; S2, chamadas ao LLM; S3, avaliação com os \textit{labels}. Não se confundem com as consultas S1 a S3 à SciELO do Apêndice~\ref{ap:protocolo-busca}.
 

@@ -12,6 +12,7 @@ from scripts.shap_por_familia import aggregate, duplicate_audit, family
 from scripts.feature_engineering import engineer_features, split_data
 from scripts.sensibilidade_sem_obito_refrec import carregar
 from scripts.review2_proveniencia import references
+from scripts.config_p_documental import generate as generate_config
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -116,3 +117,9 @@ def test_supplemental_provenance_reports_current_hashes_without_rewriting_histor
     for row in audit["fontes"]:
         assert hashlib.sha256((ROOT / row["fonte"]).read_bytes()).hexdigest() == row["sha256_atual"]
         assert row["identico"] == (row["sha256_atual"] == row["sha256_historico"])
+
+
+def test_documented_p_profile_is_reproducibly_generated(tmp_path):
+    output = tmp_path / "profile.yaml"
+    generate_config(output)
+    assert output.read_bytes() == (ROOT / "gzcmd/gzcmd_v31_p_config.yaml").read_bytes()
