@@ -1,0 +1,41 @@
+{
+  "denominador_minimo": 30,
+  "regra": "Excluir n1<30 ou n2<30 antes de BH por decisão",
+  "fonte": "equidade_arranjo_pairwise_tests.csv",
+  "treino_executado": false,
+  "geradores_historicos_preservados": true,
+  "comparacoes": [
+    {
+      "decisao": "arranjo_P_vigilancia",
+      "testes_antes": 58,
+      "testes_depois": 26,
+      "rejeicoes_antes": 7,
+      "rejeicoes_depois": 3,
+      "excluidos_denominador_menor_30": 32
+    },
+    {
+      "decisao": "arranjo_P_confirmacao",
+      "testes_antes": 58,
+      "testes_depois": 26,
+      "rejeicoes_antes": 3,
+      "rejeicoes_depois": 2,
+      "excluidos_denominador_menor_30": 32
+    },
+    {
+      "decisao": "cascata_v31_vigilancia",
+      "testes_antes": 58,
+      "testes_depois": 28,
+      "rejeicoes_antes": 9,
+      "rejeicoes_depois": 6,
+      "excluidos_denominador_menor_30": 30
+    },
+    {
+      "decisao": "cascata_v31_confirmacao",
+      "testes_antes": 58,
+      "testes_depois": 21,
+      "rejeicoes_antes": 1,
+      "rejeicoes_depois": 1,
+      "excluidos_denominador_menor_30": 37
+    }
+  ]
+}
