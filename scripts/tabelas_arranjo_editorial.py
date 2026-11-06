@@ -81,6 +81,8 @@ def render_reference(referencia, arranjo, cascata, carga):
     text = replace_once(text,
         r"Todas as sensibilidades com humano, salvo a revisão do serviço incorporada ao \textit{label}, usam erro hipotético de 5,0\%, não medido.",
         r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
+    text = text.replace("revisão manual do serviço", "revisão clerical de origem")
+    text = text.replace("revisão do serviço", "revisão clerical de origem")
     return text
 
 
@@ -137,7 +139,7 @@ def render_arrangement(historical):
 def render_anchors(historical):
     """Mantém as células; troca apenas o termo da legenda."""
     return replace_once(historical, "Validação dos conjuntos âncora contra o padrão-ouro",
-                        "Validação dos conjuntos âncora contra a referência operacional")
+                        "Validação dos conjuntos âncora contra a referência operacional").replace("vínculos verdadeiros", "vínculos")
 
 
 def generate(data_dir: Path, tables_dir: Path) -> None:

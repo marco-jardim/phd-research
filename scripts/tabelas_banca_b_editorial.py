@@ -184,6 +184,10 @@ def main() -> None:
                         r"gerado por \path{scripts/run_nb03_uniform.py}. "
                         r"A causa da diferença em relação ao caderno histórico não está documentada. N~=~número")
     table.write_text(text, encoding="utf-8", newline="\n")
+    tabela_qw1()
+
+
+def tabela_qw1() -> None:
     qw1 = ROOT / "text/latex/tables/tab_qw1_deep_learning.tex"
     note = (r"\par\footnotesize Fonte: \path{data/review2_qw1_resumo.csv}. "
             r"Teste interno por linha: 18.509 potenciais pares, 74 vínculos. "
@@ -192,6 +196,9 @@ def main() -> None:
             r"fora da tolerância absoluta de 0,01; a validação cruzada histórica não foi recalculada "
             r"(Apêndice~\ref{sec:sensibilidade-qw1}).")
     (OUT / qw1.name).write_text(qw1.read_text(encoding="utf-8").replace(
+        "O melhor resultado de cada coluna aparece em negrito.",
+        "O maior valor de cada coluna aparece em negrito, sem indicar diferença demonstrada."
+    ).replace(
         "avaliação independente", "avaliação interna").replace(
         "Avaliação independente", "Avaliação interna").replace(
         r"\end{table}", note + "\n" + r"\end{table}"

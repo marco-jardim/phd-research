@@ -70,8 +70,8 @@ def table(frame):
         lines.append(f"{labels[row.conjunto]} & {row.n:,} & {row.idade_n:,}".replace(",", ".")
                      + f" & {number(row.idade_media)} ({number(row.idade_dp)}); {number(row.idade_mediana)}"
                      + f" & {number(row.nota_media)} ({number(row.nota_dp)}); {number(row.nota_mediana)}"
-                     + f" & {row.sexo_masculino_n} ({number(row.sexo_masculino_pct)})"
-                     + f" & {row.sexo_feminino_n} ({number(row.sexo_feminino_pct)}) " + r"\\")
+                     + f" & {row.sexo_masculino_n:,}".replace(",", ".") + f" ({number(row.sexo_masculino_pct)})"
+                     + f" & {row.sexo_feminino_n:,}".replace(",", ".") + f" ({number(row.sexo_feminino_pct)}) " + r"\\")
     lines += [r"\bottomrule", r"\end{tabular}}",
               r"\par\footnotesize Fonte: \path{data/perfil_obitos_agregado.csv}, gerado por "
               r"\path{scripts/perfil_obitos_agregado.py}. Idade derivada das datas do SIM, em anos, "

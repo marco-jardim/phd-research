@@ -109,6 +109,8 @@ def historical_tables(out):
             text = re.sub(r"\\textbf\{([^{}]*)\}", r"\1", text)
         if name == "tab_score_bands.tex":
             text = text.replace(r"Total & Pares & \% Pares", r"Total & Vínculos & \% Vínculos")
+            text = re.sub(r"(?<![0-9])([0-9]+),([0-9]{2})(?![0-9])",
+                          lambda m: number(float(m[0].replace(",", ".")), 1), text)
         write(name, note(text, source), out)
 
 
@@ -164,7 +166,7 @@ def appendix_ablation():
             lines += [r"Média $\pm$ DP & n.a. & " + " & ".join(means) + r" \\", r"\bottomrule", r"\end{tabular}}",
                       r"\par\footnotesize Fonte: \path{" + source + "} e resumo no arquivo "
                       r"\path{data/ablation_comprec_" + suffix + r"_summary.csv}. "
-                      r"Cada teste contém 74 vínculos. $\beta=" + number(beta[0], 1) + r"$. "
+                      r"Cada teste contém 74 vínculos. $\beta=" + number(beta[0], 1).replace(",", "{,}") + r"$. "
                       r"Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.",
                       r"\end{table}", ""]
     return "\n".join(lines)

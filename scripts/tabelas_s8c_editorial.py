@@ -19,6 +19,7 @@ def generate(tables_dir=ROOT / "text/latex/tables/editorial"):
     text = replace_once(target.read_text(encoding="utf-8"),
                         "Cascata final observada por política e modo,",
                         "Cascata sobre a base inteira (comparação), por política e modo,")
+    text = text.replace("vínculos verdadeiros", "vínculos")
     target.write_text(text, encoding="utf-8", newline="\n")
 
 
