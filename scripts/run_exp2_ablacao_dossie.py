@@ -330,6 +330,19 @@ def audit_outputs(selected):
 
 
 def summarize(selected):
+    # D16: public replay uses aggregates; paired transitions already live in
+    # resumo.json. Identity-level checkpoints are private, never reconstructed
+    # from counts. Running an arm still requires the original private inputs.
+    if not any(OUT.glob("*_controle.json")):
+        aggregates = [json.loads(path.read_text(encoding="utf-8"))
+                      for path in sorted(OUT.glob("*_agregado.json"))]
+        if not aggregates:
+            raise FileNotFoundError("D16: faltam os agregados públicos da ablação")
+        print(json.dumps({"arms": aggregates,
+                          "paired_summary": json.loads((OUT / "resumo.json").read_text(encoding="utf-8"))},
+                         ensure_ascii=False, indent=2))
+        print("D16: resumo.json preserva as transições pareadas históricas; checkpoints por par são privados.")
+        return
     import pandas as pd
     rows, summaries = [], []
     for tag in ("deepseek", "haiku"):

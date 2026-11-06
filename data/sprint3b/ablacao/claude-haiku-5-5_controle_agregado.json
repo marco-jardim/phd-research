@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source_file": "claude-haiku-5-5_controle.json",
+  "source_sha256": "d74d0c95b3b065fc3e9daebcaa7bfddfacf5fcc35180997eabdf333a78232d40",
+  "model": "claude-haiku-5-5",
+  "mode": "vigilancia",
+  "arm": "controle",
+  "n_selected": 18,
+  "n_reviewed": 18,
+  "n_errors": 0,
+  "decisions": {
+    "MATCH": 0,
+    "NONMATCH": 9,
+    "UNSURE": 9
+  }
+}

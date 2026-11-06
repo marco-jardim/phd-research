@@ -367,3 +367,6 @@ text/slides/defesa_*.pdf
 # D8: seleção e resultados da ablação por par ficam somente locais.
 data/ablacao_dossie_pares.csv
 data/ablacao_dossie_resultado.csv
+# D16: private ablation checkpoints; only *_agregado.json is public.
+data/sprint3b/ablacao/*_controle.json
+data/sprint3b/ablacao/*_sem_pcal.json
