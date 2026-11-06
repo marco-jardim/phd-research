@@ -18,7 +18,7 @@ def gerar(res=None, destino=TEX):
     linhas = [r"% Gerado por scripts/gerar_tabela_sensibilidade.py de data/sensibilidade_sem_obito_refrec.csv",
               r"\begin{table}[htbp]", r"\centering\footnotesize",
               r"\setlength{\tabcolsep}{3pt}",
-              r"\caption{Sensibilidade da ablação e do impacto epidemiológico à retirada dos indicadores de óbito e à partição por REFREC.}",
+              r"\caption{Sensibilidade da ablação e da comparação de detecção de vínculos à retirada dos indicadores de óbito e à partição por REFREC.}",
               r"\label{tab:sensibilidade-2x2}", r"\begin{tabular}{lrrrrrrr}",
               r"\toprule",
               r"Cenário & $n$ teste & Vínculos & \shortstack{$F_1$ RF\\+SMOTE} & $F_1$ GB & \shortstack{$F_1$ XGB\\local} & \shortstack{VP/FP\\RF+SMOTE} & \shortstack{Recuperados/\\líquido} \\",

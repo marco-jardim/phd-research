@@ -78,7 +78,7 @@ def table(frame):
               r"restrita a 0 a 120; DP amostral. M e F usam o total do conjunto como denominador. "
               r"Nos grupos por registro, idade e sexo só são mantidos quando invariantes e completos "
               r"entre candidatos; a nota é a média por registro das notas dos pares, não atributo do óbito. "
-              r"COMPREC identifica o Sinan, REFREC o SIM. Ausências e ambiguidades constam do CSV. "
+              r"COMPREC identifica o Sinan, REFREC o SIM. Os óbitos REFREC têm ao menos um potencial par nos passos exportados. Ausências e ambiguidades constam do CSV. "
               r"Este perfil da base inteira não substitui o perfil dos vínculos recuperados no teste.",
               r"\end{table}", ""]
     return "\n".join(lines)
