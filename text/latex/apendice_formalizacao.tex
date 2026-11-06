@@ -54,7 +54,8 @@ Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um c
 
 \begin{proposition}[Afinidade da perda de revisão]
 \label{prop:review-loss-affine}
-Para $p\in[0,1]$, custos constantes $C_{FP},C_{FN},C_{LLM}>0$ e proporções condicionais constantes $e_{FP},e_{FN}\in[0,1]$, a perda de revisão é afim em $p$:
+{\sloppy
+Para $p\in[0,1]$, custos constantes $C_{FP},C_{FN},C_{LLM}>0$ e proporções condicionais constantes $e_{FP},e_{FN}\in[0,1]$, a perda de revisão é afim em $p$:\par}
 \[
 \mathcal{L}(a_R \mid p) = C_{LLM} + \underbrace{(1-p) \cdot e_{FP} \cdot C_{FP}}_{\text{Risco residual de FP}} + \underbrace{p \cdot e_{FN} \cdot C_{FN}}_{\text{Risco residual de FN}}
 \]

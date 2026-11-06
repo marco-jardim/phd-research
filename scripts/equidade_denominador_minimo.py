@@ -78,6 +78,9 @@ def generate(data, editorial):
             r"\path{data/equidade_arranjo_den30_pairwise_tests.csv}. "
             r"OR é razão de chances; as colunas de denominadores referem-se à métrica testada. "
             r"Família definida separadamente por decisão, após o filtro de denominador." + "\n" + r"\end{table}")
+        if decision in ("arranjo_P_vigilancia", "cascata_v31_vigilancia"):
+            text = text.replace(r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
+            text = text.replace(r"\end{tabular}", r"\end{tabular}}")
         path.write_text(text, encoding="utf-8", newline="\n")
     manifest = dict(denominador_minimo=30, regra="Excluir n1<30 ou n2<30 antes de BH por decisão",
                     fonte="equidade_arranjo_pairwise_tests.csv", treino_executado=False,

@@ -59,6 +59,12 @@ def test_equity_filters_before_bh_and_reproduces_aggregates(tmp_path):
     assert not list(editorial.glob("tab_equidade_arranjo_*.tex"))
     for path in editorial.glob("*.tex"):
         assert path.read_bytes() == (ROOT / "text/latex/tables/editorial" / path.name).read_bytes()
+    for decision in ("arranjo_P_vigilancia", "cascata_v31_vigilancia"):
+        rendered = (editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex").read_text(encoding="utf-8")
+        assert rendered.count(r"\resizebox{\linewidth}{!}{%") == 1
+        assert r"\end{tabular}}" in rendered
+        assert rendered.index(r"\caption{") < rendered.index(r"\resizebox{")
+        assert rendered.index(r"\end{tabular}}") < rendered.index(r"\par\footnotesize Fonte:")
 
 
 def test_par_aggregate_does_not_invent_prediction_membership():

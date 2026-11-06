@@ -188,7 +188,7 @@ As saídas distinguem \texttt{AUTO\_MATCH} e \texttt{AUTO\_NONMATCH}, resultante
 \subsection{Varredura de custos e capacidade de revisão na base inteira}
 \label{sec:e4-varredura-custos}
 
-A dependência das decisões em relação ao custo e à disponibilidade de revisão foi examinada em 60 cenários por modo, combinando $C_{LLM}\in\{0{,}005;0{,}05;0{,}25\}$, erro humano simétrico em $\{0;0{,}02;0{,}05;0{,}10\}$ e orçamento humano direto em $\{25;50;100;200;\infty\}$. Mantiveram-se as probabilidades OOF, as guardas, as proporções do revisor de referência e os limites LLM. A Figura~\ref{fig:cap8-varredura-custos} apresenta projeções condicionais a esses parâmetros, geradas a partir de \texttt{data/varredura\_custos\_vigilancia.csv} e \texttt{data/varredura\_custos\_confirmacao.csv}, não resultados de novas execuções de revisão \cite{Jardim2026phdrepo}.
+A dependência das decisões em relação ao custo e à disponibilidade de revisão foi examinada em 60 cenários por modo, combinando $C_{LLM}\in\{0{,}005;0{,}05;0{,}25\}$, erro humano simétrico em $\{0;0{,}02;0{,}05;0{,}10\}$ e orçamento humano direto em $\{25;50;100;200;\infty\}$. Mantiveram-se as probabilidades OOF, as guardas, as proporções do revisor de referência e os limites LLM. A Figura~\ref{fig:cap8-varredura-custos} apresenta projeções condicionais a esses parâmetros, geradas a partir de \path{data/varredura_custos_vigilancia.csv} e \path{data/varredura_custos_confirmacao.csv}, não resultados de novas execuções de revisão \cite{Jardim2026phdrepo}.
 
 \begin{figure}[!htbp]
 \centering
@@ -331,7 +331,10 @@ A análise de estabilidade teve registro interno próprio\footnote{Registro vers
 
 \subsection{Análises exploratórias posteriores ao registro}\label{sec:e4-exploratorias-metodo}
 
+{\sloppy
 As análises desta subseção são exploratórias e \textit{post hoc}, não substituem o braço P nem corrigem os vieses da referência. O comparador de mesma carga preserva o corte e ordena os candidatos abaixo dele pelo escore do OpenRecLink (O1), pela nota do CdR (O2), pela probabilidade isotônica OOF da base inteira (O3) ou pela probabilidade recalibrada de P (O4). Para os primeiros $k$ candidatos de cada fila, calcula a recuperação com revisor humano perfeito e, separadamente, sob omissão humana de 5\%; os artefatos são \path{data/comparador_mesma_carga.csv}, \path{data/comparador_mesma_carga_curva.csv} e \path{data/comparador_mesma_carga_erro05.csv}. A variante de P com decisões \texttt{MATCH} do LLM encaminhadas ao humano contabiliza a carga adicional sem imputar aceitação independente ao LLM (\path{data/comparador_p_match_humano.csv}). A conversão de esforço usa 20 minutos por par e o cenário de 2.156 revisões, não tempos ou carga observados no serviço (\path{data/esforco_arranjo.csv}). A comparação de custos em revisões humanas equivalentes combina carga humana, pares LLM e FP nas unidades da política, mantendo o caráter exploratório e o revisor perfeito (\path{scripts/banca_c_agregados.py}, \path{data/custos_equivalentes_exploratorios.csv}).
+
+\par}
 
 Os cenários de sensibilidade humana aplicam $s=0{,}95$, $0{,}99$ e $1{,}00$ aos vínculos encaminhados, com especificidade perfeita e sem decisões humanas observadas (\path{data/cenarios_sensibilidade_humana.csv}). O filtro LLM descarta somente \texttt{NONMATCH} e encaminha \texttt{MATCH} e \texttt{UNSURE} ao humano. Seu protocolo interno foi fixado antes dos desfechos, em \path{gzcmd/protocolo_filtro_llm.yaml} (\texttt{488af95}), com emenda \texttt{c931703} autorizando 83 pares novos para completar a cobertura até $k=125$ nos dois modos. A mistura de respostas antigas e novas de modelo estocástico, sem realimentar as proporções do revisor ou outros braços, não constitui validação prospectiva independente (\path{data/filtro_llm_metadata.json}). Avaliam-se somente os orçamentos com cobertura completa; $k=440$ informa cobertura, não recuperação projetada.
 
