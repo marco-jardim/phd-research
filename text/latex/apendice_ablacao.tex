@@ -1,8 +1,8 @@
-As tabelas deste apêndice descrevem a ablação histórica com partição por COMPREC, nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, $F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por banda da configuração (\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem selecionada para revisão simulada, não o número de respostas de um LLM. O $F_1$ esperado de 0,954 na vigilância com MACD não é desempenho observado de um LLM.
+As tabelas deste apêndice descrevem a ablação saneada com partição por COMPREC, nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, $F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração (\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem selecionada para revisão simulada, não o número de respostas de um LLM. O $F_1$ esperado não é desempenho observado de um LLM. O Random Forest calibrado usa somente os 29 subescores e a nota final, acrescidos das MACD no braço ativado, com política v3. O histórico, que incluía escore do OpenRecLink, situação de encerramento, identificadores e atributos duplicados, permanece em \path{data/ablation_comprec_macd.csv} e \path{data/ablation_comprec_nomacd.csv}; a comparação está em \path{data/exp1_vazamento_comparacao.csv}. As partições de teste se sobrepõem e não constituem cinco amostras independentes.
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação histórica com MACD ativado, modo confirmação: métricas esperadas.}
+\caption{Ablação saneada com MACD ativado, modo confirmação: métricas esperadas.}
 \label{tab:ablacao-comprec-confirmacao-macd-on}
 \small
 \resizebox{\textwidth}{!}{%
@@ -10,20 +10,20 @@ As tabelas deste apêndice descrevem a ablação histórica com partição por C
 \toprule
 Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\
 \midrule
-42 & 18.335 & 0,960 & 0,952 & 0,956 & 0,958 & 0,994 & 107 \\
-43 & 18.398 & 0,955 & 0,959 & 0,957 & 0,956 & 0,994 & 110 \\
-44 & 18.682 & 0,952 & 0,952 & 0,952 & 0,952 & 0,993 & 126 \\
-45 & 18.400 & 0,962 & 0,909 & 0,935 & 0,951 & 0,994 & 113 \\
-46 & 18.359 & 0,955 & 0,918 & 0,936 & 0,947 & 0,994 & 114 \\
-Média $\pm$ DP & n.a. & 0,957 $\pm$ 0,004 & 0,938 $\pm$ 0,023 & 0,947 $\pm$ 0,011 & 0,953 $\pm$ 0,004 & 0,994 $\pm$ 0,000 & 114,0 $\pm$ 7,2 \\
+42 & 18.335 & 0,952 & 0,887 & 0,918 & 0,938 & 0,992 & 143 \\
+43 & 18.398 & 0,944 & 0,936 & 0,940 & 0,942 & 0,992 & 150 \\
+44 & 18.682 & 0,951 & 0,870 & 0,909 & 0,933 & 0,993 & 124 \\
+45 & 18.400 & 0,954 & 0,871 & 0,910 & 0,936 & 0,992 & 140 \\
+46 & 18.359 & 0,953 & 0,860 & 0,904 & 0,933 & 0,992 & 146 \\
+Média $\pm$ DP & n.a. & 0,951 $\pm$ 0,004 & 0,885 $\pm$ 0,030 & 0,916 $\pm$ 0,014 & 0,937 $\pm$ 0,004 & 0,992 $\pm$ 0,001 & 140,6 $\pm$ 10,0 \\
 \bottomrule
 \end{tabular}}
-\par\footnotesize Fonte: \path{data/ablation_comprec_macd.csv} e resumo no arquivo \path{data/ablation_comprec_macd_summary.csv}. Cada teste contém 74 vínculos. $\beta=0{,}5$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
+\par\footnotesize Fonte: \path{data/ablation_comprec_macd_allowlist.csv} e resumo no arquivo \path{data/ablation_comprec_macd_allowlist_summary.csv}. Cada teste contém 74 vínculos. $\beta=0{,}5$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação histórica com MACD ativado, modo vigilância: métricas esperadas.}
+\caption{Ablação saneada com MACD ativado, modo vigilância: métricas esperadas.}
 \label{tab:ablacao-comprec-vigilancia-macd-on}
 \small
 \resizebox{\textwidth}{!}{%
@@ -31,20 +31,20 @@ Média $\pm$ DP & n.a. & 0,957 $\pm$ 0,004 & 0,938 $\pm$ 0,023 & 0,947 $\pm$ 0,0
 \toprule
 Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\
 \midrule
-42 & 18.335 & 0,948 & 0,976 & 0,962 & 0,971 & 0,994 & 105 \\
-43 & 18.398 & 0,940 & 0,972 & 0,956 & 0,965 & 0,994 & 112 \\
-44 & 18.682 & 0,940 & 0,963 & 0,952 & 0,958 & 0,993 & 125 \\
-45 & 18.400 & 0,954 & 0,953 & 0,953 & 0,953 & 0,994 & 103 \\
-46 & 18.359 & 0,951 & 0,944 & 0,947 & 0,945 & 0,994 & 102 \\
-Média $\pm$ DP & n.a. & 0,947 $\pm$ 0,006 & 0,962 $\pm$ 0,013 & 0,954 $\pm$ 0,005 & 0,959 $\pm$ 0,010 & 0,994 $\pm$ 0,000 & 109,4 $\pm$ 9,6 \\
+42 & 18.335 & 0,946 & 0,947 & 0,947 & 0,947 & 0,994 & 102 \\
+43 & 18.398 & 0,936 & 0,969 & 0,952 & 0,962 & 0,994 & 118 \\
+44 & 18.682 & 0,944 & 0,924 & 0,934 & 0,928 & 0,994 & 114 \\
+45 & 18.400 & 0,949 & 0,925 & 0,937 & 0,930 & 0,994 & 103 \\
+46 & 18.359 & 0,950 & 0,925 & 0,937 & 0,930 & 0,994 & 113 \\
+Média $\pm$ DP & n.a. & 0,945 $\pm$ 0,006 & 0,938 $\pm$ 0,020 & 0,941 $\pm$ 0,008 & 0,939 $\pm$ 0,015 & 0,994 $\pm$ 0,000 & 110,0 $\pm$ 7,1 \\
 \bottomrule
 \end{tabular}}
-\par\footnotesize Fonte: \path{data/ablation_comprec_macd.csv} e resumo no arquivo \path{data/ablation_comprec_macd_summary.csv}. Cada teste contém 74 vínculos. $\beta=2{,}0$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
+\par\footnotesize Fonte: \path{data/ablation_comprec_macd_allowlist.csv} e resumo no arquivo \path{data/ablation_comprec_macd_allowlist_summary.csv}. Cada teste contém 74 vínculos. $\beta=2{,}0$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação histórica com MACD desativado, modo confirmação: métricas esperadas.}
+\caption{Ablação saneada com MACD desativado, modo confirmação: métricas esperadas.}
 \label{tab:ablacao-comprec-confirmacao-macd-off}
 \small
 \resizebox{\textwidth}{!}{%
@@ -52,20 +52,20 @@ Média $\pm$ DP & n.a. & 0,947 $\pm$ 0,006 & 0,962 $\pm$ 0,013 & 0,954 $\pm$ 0,0
 \toprule
 Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\
 \midrule
-42 & 18.335 & 0,943 & 0,955 & 0,949 & 0,946 & 0,992 & 144 \\
-43 & 18.398 & 0,941 & 0,947 & 0,944 & 0,942 & 0,992 & 153 \\
-44 & 18.682 & 0,955 & 0,950 & 0,952 & 0,954 & 0,993 & 123 \\
-45 & 18.400 & 0,950 & 0,911 & 0,930 & 0,942 & 0,992 & 143 \\
-46 & 18.359 & 0,953 & 0,925 & 0,939 & 0,948 & 0,993 & 129 \\
-Média $\pm$ DP & n.a. & 0,949 $\pm$ 0,006 & 0,937 $\pm$ 0,019 & 0,943 $\pm$ 0,009 & 0,946 $\pm$ 0,005 & 0,992 $\pm$ 0,001 & 138,4 $\pm$ 12,2 \\
+42 & 18.335 & 0,923 & 0,912 & 0,917 & 0,921 & 0,989 & 193 \\
+43 & 18.398 & 0,843 & 0,928 & 0,883 & 0,859 & 0,985 & 267 \\
+44 & 18.682 & 0,914 & 0,906 & 0,910 & 0,912 & 0,989 & 203 \\
+45 & 18.400 & 0,915 & 0,895 & 0,905 & 0,911 & 0,989 & 197 \\
+46 & 18.359 & 0,910 & 0,908 & 0,909 & 0,910 & 0,988 & 217 \\
+Média $\pm$ DP & n.a. & 0,901 $\pm$ 0,033 & 0,910 $\pm$ 0,012 & 0,905 $\pm$ 0,013 & 0,902 $\pm$ 0,025 & 0,988 $\pm$ 0,002 & 215,4 $\pm$ 30,2 \\
 \bottomrule
 \end{tabular}}
-\par\footnotesize Fonte: \path{data/ablation_comprec_nomacd.csv} e resumo no arquivo \path{data/ablation_comprec_nomacd_summary.csv}. Cada teste contém 74 vínculos. $\beta=0{,}5$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
+\par\footnotesize Fonte: \path{data/ablation_comprec_nomacd_allowlist.csv} e resumo no arquivo \path{data/ablation_comprec_nomacd_allowlist_summary.csv}. Cada teste contém 74 vínculos. $\beta=0{,}5$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação histórica com MACD desativado, modo vigilância: métricas esperadas.}
+\caption{Ablação saneada com MACD desativado, modo vigilância: métricas esperadas.}
 \label{tab:ablacao-comprec-vigilancia-macd-off}
 \small
 \resizebox{\textwidth}{!}{%
@@ -73,13 +73,13 @@ Média $\pm$ DP & n.a. & 0,949 $\pm$ 0,006 & 0,937 $\pm$ 0,019 & 0,943 $\pm$ 0,0
 \toprule
 Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\
 \midrule
-42 & 18.335 & 0,927 & 0,976 & 0,951 & 0,966 & 0,993 & 135 \\
-43 & 18.398 & 0,922 & 0,974 & 0,947 & 0,963 & 0,992 & 141 \\
-44 & 18.682 & 0,944 & 0,960 & 0,952 & 0,956 & 0,993 & 124 \\
-45 & 18.400 & 0,939 & 0,967 & 0,953 & 0,961 & 0,993 & 125 \\
-46 & 18.359 & 0,941 & 0,944 & 0,942 & 0,943 & 0,994 & 115 \\
-Média $\pm$ DP & n.a. & 0,934 $\pm$ 0,009 & 0,964 $\pm$ 0,013 & 0,949 $\pm$ 0,004 & 0,958 $\pm$ 0,009 & 0,993 $\pm$ 0,001 & 128,0 $\pm$ 10,1 \\
+42 & 18.335 & 0,897 & 0,939 & 0,917 & 0,930 & 0,988 & 215 \\
+43 & 18.398 & 0,835 & 0,948 & 0,888 & 0,923 & 0,986 & 259 \\
+44 & 18.682 & 0,776 & 0,928 & 0,845 & 0,893 & 0,983 & 314 \\
+45 & 18.400 & 0,893 & 0,931 & 0,912 & 0,923 & 0,989 & 206 \\
+46 & 18.359 & 0,885 & 0,936 & 0,910 & 0,925 & 0,988 & 227 \\
+Média $\pm$ DP & n.a. & 0,857 $\pm$ 0,052 & 0,936 $\pm$ 0,008 & 0,894 $\pm$ 0,030 & 0,919 $\pm$ 0,015 & 0,987 $\pm$ 0,002 & 244,2 $\pm$ 43,9 \\
 \bottomrule
 \end{tabular}}
-\par\footnotesize Fonte: \path{data/ablation_comprec_nomacd.csv} e resumo no arquivo \path{data/ablation_comprec_nomacd_summary.csv}. Cada teste contém 74 vínculos. $\beta=2{,}0$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
+\par\footnotesize Fonte: \path{data/ablation_comprec_nomacd_allowlist.csv} e resumo no arquivo \path{data/ablation_comprec_nomacd_allowlist_summary.csv}. Cada teste contém 74 vínculos. $\beta=2{,}0$. Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.
 \end{table}
