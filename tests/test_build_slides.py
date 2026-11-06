@@ -892,3 +892,15 @@ def test_script_s6_questions_and_provenance():
     assert "não houve varredura no arranjo" in questions.lower()
     assert "árvore compilada" in source
     assert re.search(r"SHA-256[^\n]*`[0-9a-f]{64}`", source)
+
+
+def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabilidade():
+    source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
+    assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
+    verification = source.split("### Verificação técnica do build oficial", 1)[1].split(
+        "### Rastreabilidade dos números do arranjo", 1
+    )[0]
+    assert "as folhas da ficha correspondem às páginas físicas do PDF" in verification
+    assert "As 33 respostas têm no máximo 70 palavras, conforme contagem por espaços." in verification
+    assert "Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências." in verification
