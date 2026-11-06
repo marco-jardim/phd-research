@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 import yaml
 
+from local_data import DATA_ROOT, requires_files
 from scripts.fp_cardinalidade import counts
 from scripts.shap_por_familia import aggregate, duplicate_audit, family
 from scripts.feature_engineering import engineer_features, split_data
@@ -60,8 +61,9 @@ def test_family_rejects_unknown_or_duplicated_attributes():
         aggregate(pd.DataFrame({"feature": ["nota final"] * 2, "shap_mean_abs": [1, 2]}))
 
 
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
 def test_seed42_heldout_duplicate_groups_are_exact_and_reproducible():
-    X, y = engineer_features(carregar(DATA / "COMPARADORSEMIDENT.csv"))
+    X, y = engineer_features(carregar(DATA_ROOT / "data/COMPARADORSEMIDENT.csv"))
     _, heldout, _, labels = split_data(X, y, random_state=42)
     actual = duplicate_audit(heldout)
     published = json.loads((DATA / "atributos_duplicados.json").read_text(encoding="utf-8"))
