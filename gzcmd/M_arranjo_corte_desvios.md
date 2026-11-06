@@ -17,7 +17,7 @@ Na S8c, os arquivos com hashes fixados são preservados, e a apresentação pass
 
 A reprodução numérica deve ser descrita como concordância dentro de `1e-14`, com partições idênticas, não como identidade bit a bit. A análise de robustez, com registro prévio próprio, examina threads (`n_jobs`), sementes e partições. É não confirmatória e mede estabilidade nos mesmos dados, não generalização.
 
-Os cortes do OpenRecLink são o menor SCORE entre os PAR=1 de cada passo. Coincidem com Oliveira (2026) até a quarta casa decimal. São derivados do rótulo, não estimativas independentes dele.
+Os cortes do OpenRecLink são o menor SCORE entre os PAR=1 de cada passo. Coincidem com Oliveira (2026) até a quarta casa decimal. São derivados do rótulo, não estimativas independentes dele. Os valores são 7,02408276169 no passo 6, 7,84444860082 no passo 9 e 7,90191406713 no passo 11; não se trata de escolha prospectiva independente dos rótulos.
 
 As taxas do revisor têm denominadores pequenos. Em grey_low, e_fn foi 1,0 em quatro folds na vigilância (0, 1, 3 e 4), conforme `data/arranjo_corte_taxas_crossfit.csv`, linhas 2, 8, 20 e 26. Essa contagem corrige os dois folds mencionados na instrução editorial. P-PAR2-grey tem apenas dois ou três PAR=2 em algumas estimativas. Sua transferência para os pares selecionados abaixo do corte não foi validada em dados novos.
 
@@ -29,7 +29,7 @@ Consultar `prereg_arranjo_corte.yaml`, `M_arranjo_corte.md`, `prereg_robustez_ar
 
 ### M1: alteração do teste registrado
 
-O arquivo `tests/test_arranjo_corte.py`, cujo hash registrado começa por `8d30e41`, foi alterado no commit `893a2bb`; o hash da versão posterior começa por `1f5a0ef`. Não se trata, portanto, de preservação integral do código registrado. Na reprodução posterior da S3, `scripts/arranjo_paths.py` confere os bytes dos testes recuperados do commit de registro, em vez de exigir que os testes atuais sejam idênticos aos registrados. Os dados e o código numérico continuam sujeitos às verificações de identidade, mas essa opção distingue a reprodução da avaliação histórica de uma nova execução da S1. Para repetir a S1 com as identidades registradas deve-se utilizar o checkout de `d526c3f`, com os dados privados e as dependências correspondentes, não o estado atual da branch.
+O arquivo `tests/test_arranjo_corte.py`, cujo hash registrado começa por `8d30e41`, foi alterado no commit `893a2bb`; o hash da versão posterior começa por `1f5a0ef`. Não se trata, portanto, de preservação integral do código registrado. Na reprodução posterior da S3, `scripts/arranjo_paths.py` confere os bytes dos testes recuperados do commit de registro, em vez de exigir que os testes atuais sejam idênticos aos registrados. Os dados e o código numérico continuam sujeitos às verificações de identidade, mas essa opção distingue a reprodução da avaliação histórica de uma nova execução da S1. Um checkout novo de `d526c3f` não basta para repetir a S1: além dos dados privados e das dependências correspondentes, é necessária a cópia histórica do pré-registro com os bytes de finais de linha mistos do Windows. O blob Git em LF não recupera esses bytes e o gate de SHA-256 interrompe a execução, conforme `S10_eol_prereg.md`. O estado atual da branch tampouco constitui essa cópia histórica.
 
 ### M2: contratos substituídos na auditoria posterior
 

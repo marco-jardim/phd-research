@@ -9,7 +9,9 @@ parâmetros, sem ajustar modelos. O YAML deve ser commitado e enviado à branch
 antes de executar S1 com seu `--prereg-sha256`. Divergências no YAML, código,
 fontes ou commit interrompem a simulação. Emendas exigem consulta ao autor.
 
-Os cortes não são estimados dos rótulos: SCORE ≥ 7,02408276169 no passo 6,
+Os cortes são o menor SCORE observado entre os PAR=1 de cada passo e,
+portanto, são derivados do rótulo, não estimativas independentes dele.
+SCORE ≥ 7,02408276169 no passo 6,
 ≥ 7,84444860082 no passo 9 e ≥ 7,90191406713 no passo 11 aceita o potencial par.
 A conferência autorizada exige exatamente 211 PAR=1 acima e 61.485 abaixo,
 incluindo 36 PAR=2. O corte não usa a nota final do comparador.
@@ -67,6 +69,11 @@ humano ilimitado e erro humano de 5% já configurados. As taxas cross-fitted
 substituem o mapping do motor em memória antes da triagem por fold. A guarda
 de nota ≥9 exige a probabilidade recalibrada ≥0,9. O orçamento total por modo
 é conferido após reunir os folds; ultrapassagem exige decisão do autor.
+
+Não há restrição implementada de cardinalidade N:1 nem resolução de conflitos
+por margem entre probabilidades. A seção `consistency` da configuração é
+reservada, não implementada; seus valores não controlam decisões do motor.
+As taxas esperadas de FP não constituem uma restrição de unicidade de registros.
 
 ## Cache e dados privados
 
