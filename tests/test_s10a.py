@@ -29,7 +29,7 @@ def test_local_editorial_redundancies_and_number_forms():
         text = (L / name).read_text(encoding='utf-8')
         assert 'na vigilância, em $k=96$' in text
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
-        assert 'descartou 10 dos 23 vínculos' in text
+        assert 'descartou nove dos 22 vínculos' in text or '9 dos 22 PAR~=~2' in text
     study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'O2 recupera 9 PAR~=~2 com 11 revisões' in study
     assert 'no feminino, a queda é de 10 pontos' in study

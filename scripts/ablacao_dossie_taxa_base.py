@@ -1,8 +1,10 @@
 """Whole-cohort decision rates beside the selected 18-pair ablation arms.
 
 The complete historical cohort is 1,410 vigilance and 435 confirmation reviews.
-Supplementary cohorts are deliberately excluded. A sem_pcal 18-pair arm has no
-whole-cohort counterpart: do not relabel the sem_model_outputs cohort as such.
+Supplementary cohorts are deliberately excluded. The historical sem_pcal name
+denotes removal of model_outputs only, preserving every other dossier field.
+The selected arms use the original prompt; their aggregates do not record its
+version. Whole-cohort rates are descriptive, not a negative control.
 """
 from collections import Counter
 import hashlib
@@ -60,7 +62,7 @@ def generate(data: Path, output: Path | None = None) -> pd.DataFrame:
             row[f"taxa_{decision}"] = counts[decision] / counts["n"]
             row[f"controle_18_{decision}"] = control["decisions"][decision] if control else None
             row[f"sem_pcal_18_{decision}"] = ablated["decisions"][decision] if ablated else None
-        row["comparabilidade"] = "Taxa-base descritiva; sem_pcal remove proxies adicionais e não foi executado na coorte completa"
+        row["comparabilidade"] = "Taxa-base descritiva, não controle negativo; sem_pcal é nome histórico da retirada de model_outputs, demais campos preservados, prompt original; versão do prompt dos 18 não registrada nos agregados"
         summary = next((s for s in summaries if s["model"] == counts["model"]), None)
         for key in ("control_fn_to_match", "control_fn_to_unsure", "gained_match", "lost_match"):
             row[key] = summary[key] if summary else None

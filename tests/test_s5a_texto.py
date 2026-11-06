@@ -33,7 +33,8 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     objectives = (LATEX / "capitulo3.tex").read_text(encoding="utf-8")
     assert "potenciais pares não aceitos pelo corte" in objectives
     assert "Desenvolver e avaliar o GZ-CMD" in objectives
-    assert "prática do serviço (corte seguido de revisão manual)" in objectives
+    assert r"processo de \textit{linkage} de origem (corte seguido de revisão manual)" in objectives
+    assert "prática do serviço" not in objectives
     assert "origem do registro" not in objectives
     assert "O objetivo específico 4 mantém" not in objectives
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
@@ -42,6 +43,9 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     assert "ordem decrescente de uma probabilidade ou escore" in conclusion
     assert "validação registrada em dados novos" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
+    recommendation = conclusion.split(r"\label{sec:concl-recomendacoes}")[1].split(r"\section{Trabalhos futuros}")[0]
+    assert "recalibração isotônica" not in recommendation
+    assert "validação" in recommendation and "hipótese" in recommendation
     assert "quantifica-se o custo de revisão manual" not in conclusion
     assert "sem demonstrar manutenção integral" not in conclusion
     for path in [LATEX / name for name in ("capitulo1.tex", "capitulo3.tex", "conclusao.tex",

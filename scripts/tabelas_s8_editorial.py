@@ -54,7 +54,7 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
 
 def effort(data):
     lines = [r'\begin{table}[!htbp]', r'\centering\scriptsize',
-             r'\caption{Esforço hipotético com 20 minutos por par. Economia frente ao cenário de 2.156 revisões; horas são ordem de grandeza, não medida.}',
+             r'\caption{Cargas de revisão e conversão hipotética a 20 minutos por par. As colunas de horas poupadas usam um cenário de meta diferente, não uma economia observada.}',
              r'\label{tab:cap8-esforco}', r'\setlength{\tabcolsep}{3pt}',
              r'\resizebox{\linewidth}{!}{\begin{tabular}{lllrrrrrrr}', r'\toprule',
              r'Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & h poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\', r'\midrule']
@@ -65,7 +65,7 @@ def effort(data):
                  number(row.horas_poupadas_por_vinculo_perdido), number(row.horas_por_fp)]
         lines.append(' & '.join(cells) + r' \\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões não arredondadas e fontes temporais em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de P na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
 
 
 def generate(root=ROOT, output=None):

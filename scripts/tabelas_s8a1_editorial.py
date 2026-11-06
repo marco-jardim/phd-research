@@ -45,9 +45,29 @@ def llm_filter(data):
         r'Recuperação pressupõe revisor perfeito após o filtro. MATCH e UNSURE vão ao humano. Somente orçamentos com cobertura completa; topo 440 incompleto, não interpolado. Fontes: \path{data/filtro_llm.csv} e \path{data/filtro_llm_cobertura.csv}.')
 
 
-def human_sensitivity(data):
+def human_sensitivity(data, curve=None):
+    # Camada de apresentação: não altera os cenários históricos ou metadados.
+    # A fila O3 é comum; as cargas pertinentes à confirmação são 17/29/58.
+    curve = curve if curve is not None else pd.read_csv(ROOT / 'data/comparador_mesma_carga_curva.csv')
+    data = data.copy()
+    templates = data.loc[data.modo.eq('confirmacao') & data.estrategia.eq('O3') & data.k.eq(96)]
+    extra = []
+    for k in (17, 29, 58):
+        count = curve.loc[curve.ordenacao.eq('O3_p_cal_ml') & curve.k.eq(k), 'par2_topk']
+        if len(count) != 1:
+            raise ValueError('Ponto O3 ausente ou ambíguo')
+        for _, original in templates.iterrows():
+            row = original.copy()
+            row['k'] = row['revisoes_humanas'] = k
+            row['vinculos_ao_humano'] = int(count.iloc[0])
+            row['sensibilidade_total'] = (row['vinculos_aceitos_sem_humano'] + row['s'] * row['vinculos_ao_humano']) / row['vinculos_total']
+            extra.append(row)
+    if len(extra) != 9:
+        raise ValueError('Três cenários humanos de confirmação são necessários')
+    data = pd.concat([data, pd.DataFrame(extra)], ignore_index=True)
     selected = data.loc[data.estrategia.isin(['humano_integral', 'P', 'P_MATCH_ao_humano']) |
-        (data.estrategia.eq('O3') & data.k.isin([96, 125, 440])) |
+        (data.estrategia.eq('O3') & ((data.modo.eq('vigilancia') & data.k.isin([96, 125, 440])) |
+                                     (data.modo.eq('confirmacao') & data.k.isin([17, 29, 58])))) |
         (data.estrategia.eq('filtro_LLM') & data.k.isin([96, 125]))]
     labels = {'humano_integral': 'Integral', 'P': 'P', 'P_MATCH_ao_humano': r'P, MATCH ao humano',
               'O3': 'O3', 'filtro_LLM': 'Filtro'}
@@ -58,7 +78,7 @@ def human_sensitivity(data):
             number(group.iloc[0].revisoes_humanas), *[number(values.loc[s, 'sensibilidade_total'] * 100, 2) for s in (.95, .99, 1.)]])
     return table('Sensibilidade total em três cenários de sensibilidade humana $s$, não medida, com especificidade humana perfeita.',
         'tab:cap8-sensibilidade-humana', 'llrrrrr', r'Modo & Estratégia & $k$ & Humano & $s=0{,}95$ & $s=0{,}99$ & $s=1{,}00$', rows,
-        r'Percentuais sobre os vínculos da referência. $k$ do filtro é fila LLM, não humano. Não se modelam FP humanos. Todos os cenários, amplitude e comparações de ordem em \path{data/cenarios_sensibilidade_humana.csv}, \path{data/cenarios_sensibilidade_humana_amplitude.csv} e \path{data/cenarios_sensibilidade_humana_ordem.csv}.')
+        r'Percentuais sobre os vínculos da referência. $k$ do filtro é fila LLM, não humano. Não se modelam FP humanos. O3 na confirmação usa as cargas 17, 29 e 58, com contagens de \path{data/comparador_mesma_carga_curva.csv} e a fórmula $(211+sV_H)/247$, cálculo da tese na camada editorial. Demais cenários, amplitude e comparações de ordem em \path{data/cenarios_sensibilidade_humana.csv}, \path{data/cenarios_sensibilidade_humana_amplitude.csv} e \path{data/cenarios_sensibilidade_humana_ordem.csv}.')
 
 
 def generate(root=ROOT, output=None):
