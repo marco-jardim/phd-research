@@ -210,7 +210,7 @@ A consequência do falso vínculo recebe maior custo.
 \fonte{estudo3\_estrategias.tex, ``Dois pipelines''; tab:pareto-frontier}
 \end{frame}
 
-\begin{frame}{Estudo 3: impacto no conjunto de teste da ablação}
+\begin{frame}{Estudo 3: detecção no conjunto de teste da ablação}
 \begin{center}
 {\Huge 67 versus 43}\par vínculos detectados, RF+SMOTE versus nota $\geq8$\medskip\par
 {\LARGE +24 frente à nota $\geq8$ (comparador hipotético)}\par
@@ -218,7 +218,7 @@ A consequência do falso vínculo recebe maior custo.
 27 recuperados apenas pelo modelo, menos 3 apenas pelo limiar
 \end{center}
 Denominador: 74 vínculos no teste; nota $\geq8$ é comparador hipotético, não o corte do OpenRecLink de origem. Dos 27 recuperados, 25 são PAR=1 e 2 são PAR=2; correspondem a 24 registros distintos do SIM. Os 247 vínculos correspondem a 204 registros distintos. Não estima redução da subnotificação.
-\fonte[]{tab:impacto-epidemiologico; data/banca\_b\_recuperados\_por\_par.json; estudo3\_estrategias.tex, discussão do impacto}
+\fonte[]{tab:impacto-epidemiologico; data/banca\_b\_recuperados\_por\_par.json; estudo3\_estrategias.tex, discussão da detecção}
 \end{frame}
 
 \begin{frame}{Estudo 3: o que limita a interpretação do ganho}
@@ -262,7 +262,7 @@ L_H=C_H,\qquad L_N=pC_{FN},\qquad p\geq C_H/C_{FN}
 \end{center}
 \itens{\item Sob revisor perfeito, revisar quando o custo de revisão não excede o de perder o vínculo
 \item Com orçamento, enviar ao revisor humano os maiores valores de probabilidade calibrada até o ponto de parada
-\item Os pares restantes recebem não vínculo: GZ-CMD restrito às ações revisor humano e não vínculo}
+\item Restantes: não examinados; a regra de custo atribui não vínculo, não ausência de notificação. GZ-CMD restrito às ações revisor humano e não vínculo}
 \small A Proposição exige $p$ verdadeiro e calibrado, revisor perfeito e perdas aditivas; O1 e O2 não são probabilidades. Atribuir a falha às entradas é hipótese de trabalho, não isolamento causal nem dispensa de avaliar o critério em dados novos.
 \fonte[]{apendice\_formalizacao.tex, funções de perda; data/arranjo\_corte\_vpp\_llm.csv, linha 2; data/comparador\_p\_match\_humano.csv}
 \end{frame}
@@ -424,10 +424,10 @@ Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
 \begin{frame}{Contribuições e fluxo recomendado, a validar}
 \small
 \itens{\item Decomposição por PAR e curva de esforço: escolher a ordenação e o ponto de parada, sem alegar dominância universal
-\item Mesmo LLM: VPP de 16,0\% como aceitador; filtro exploratório com H=22 em uma réplica: VPN de 87,8\% em k=96 e 78,0\% em k=58; sensibilidade 59,1\%, 9 de 22 descartados. Não distingue ancoragem de abstenção
+\item Mesmo LLM: VPP de 16,0\% como aceitador; filtro com orçamento humano fixo (H=22 em uma réplica): VPN de 87,8\% em k=96 e 78,0\% em k=58; 9 de 22 descartados. Não distingue ancoragem de abstenção
 \item Política de quatro ações com registro de decisões, sem exercício independente de auditoria; CdR em Python, código aberto e \textit{benchmark} restrito}
 \begin{block}{Recomendação final como hipótese a validar}
-Preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore; escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Se usar probabilidade aprendida: 1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22); 1:20 e 1:50 são indistinguíveis da referência, com uma execução contra dez sementes. Brier mediano da isotônica piorou em todas as razões. Revisor humano no topo até o orçamento; restante como não vínculo. LLM apenas como filtro de NONMATCH com orçamento H=22, nunca aceitando sozinho. Adoção depende de validação registrada em dados novos.
+Preservar o corte. Abaixo, ordem decrescente de uma probabilidade ou escore; curva de esforço exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. Só avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos. Subamostragem: quadro 47.
 \end{block}
 \fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv}
 \end{frame}
@@ -548,7 +548,7 @@ Claude Haiku 5.5 & 0/9/9 & 7/11/0 \\
 \end{frame}
 
 \begin{frame}{Backup: instruções efetivas v3 e v4}
-\itens{\item v3: carregador interrompia o sistema no primeiro separador; política por bandas posterior ao separador não foi enviada
+\itens{\item v3: carregador interrompia o sistema no primeiro separador; política por faixas posterior ao separador não foi enviada
 \item v4: política de decisão pela evidência antes do separador
 \item Concordância forte e nascimento compatível sustentam vínculo
 \item Contradição forte não explicada sustenta não vínculo
@@ -569,7 +569,7 @@ L_H=C_H+(1-p)e_{FP,h}C_{FP}+p e_{FN,h}C_{FN}
 \[
 L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \]
-\itens{\item $u$: proporção de inconclusivos; $e$: erros condicionais por banda
+\itens{\item $u$: proporção de inconclusivos; $e$: erros condicionais por faixa
 \item Escolha de menor \textit{expected loss}, após guardas e sob orçamento
 \item $C_H=1$, $C_L=0{,}005$: revisões humanas equivalentes
 \item $e_{FP,h}=e_{FN,h}=0{,}05$: hipótese de cenário}
@@ -577,8 +577,8 @@ L_L=C_L+(1-p)e_{FP}C_{FP}+p e_{FN}C_{FN}+uL_H
 \end{frame}
 
 \begin{frame}{Backup: base inteira (comparação), sensibilidade e restrição}
-\itens{\item Exclusão dos lotes originais na estimação por banda: sensibilidade automática de 80,2\% e 52,6\%, com sobreposição residual
-\item Mesmos lotes com expectativas por banda: 82,2\% e 55,7\%, não resultados observados
+\itens{\item Exclusão dos lotes originais na estimação por faixa: sensibilidade automática de 80,2\% e 52,6\%, com sobreposição residual
+\item Mesmos lotes com expectativas por faixa: 82,2\% e 55,7\%, não resultados observados
 \item Restrição: $\sum_{i\in\mathcal M}(1-p_i)/|\mathcal M|\leq\alpha$
 \item Alvos de 0,1\% e 0,2\% inviáveis; mínimo de 0,61\% com as guardas fixas
 \item Dependência adaptativa impede chamar esses exercícios de validação prospectiva}
