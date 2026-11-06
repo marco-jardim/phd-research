@@ -91,7 +91,15 @@ def test_config_annotation_changes_no_historical_parameter():
     historical = subprocess.check_output(["git", "show", "eaf00b5:gzcmd/gzcmd_v3_config.yaml"], cwd=ROOT)
     current = (ROOT / "gzcmd/gzcmd_v3_config.yaml").read_text(encoding="utf-8")
     assert yaml.safe_load(historical) == yaml.safe_load(current)
-    assert "RESERVADO, NÃO IMPLEMENTADO" in current
+    documented = (ROOT / "gzcmd/gzcmd_v31_p_config.yaml").read_text(encoding="utf-8")
+    assert "RESERVADO, NÃO IMPLEMENTADO" in documented
+    profile = yaml.safe_load(documented)
+    assert profile["arranjo_P_protocolo"]["consumido_pelo_runner_generico"] is False
+    assert profile["evaluation"]["seeds"] == [42]
+    assert profile["evaluation"]["split_by"] == "refrec"
+    for model in profile["llm_review"]["model"].values():
+        assert model["max_tokens"] == 2500
+        assert "temperature" not in model
     assert yaml.safe_load(current)["guardrails"]["policy_version"] == "v3.1"
     assert yaml.safe_load(current)["calibration"]["p_cal"] == "ml_xgb"
 

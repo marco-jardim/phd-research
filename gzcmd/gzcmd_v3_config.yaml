@@ -1,12 +1,4 @@
 # GZ-CMD++ v3
-# Perfil misto: os seletores atuais são ml_xgb/v3.1; campos descritivos e
-# defaults históricos foram preservados. Não é a configuração completa de P.
-# P usa o protocolo S1/S2/S3 descrito em M_arranjo_corte.md; não basta carregar
-# este YAML. Para v3 histórica: run_v3(p_cal="platt", policy_version="v3").
-# Os defaults LLM 0.0/500 abaixo não são os parâmetros das chamadas do E4:
-# o experimento Haiku omitiu temperature e usou max_tokens=2500.
-# As mudanças de comentário não alteram parâmetros; hashes históricos dos bytes
-# anteriores continuam nos registros congelados, sem atualização retroativa.
 # Auto-calibrated probabilistic post-processing for probabilistic linkage
 # - No re-blocking
 # - Self-calibration (no human threshold tuning)
@@ -244,11 +236,10 @@ llm_review:
       high:      { e_fp: 0.01, e_fn: 0.03 }
 
 consistency:
-  # RESERVADO, NÃO IMPLEMENTADO: bloco não lido pelo motor/guardas.
-  # Não impõe cardinalidade N:1 nem envia conflitos ao LLM.
+  # Optional "assignment-lite" constraints
   enabled: true
   strategy: "top1_per_left_then_top1_per_right"
-  conflict_margin_delta: 0.03     # reservado, não implementado; sem efeito na decisão
+  conflict_margin_delta: 0.03     # if top-1 vs top-2 probabilities differ by less than this, send to LLM
 
 monitoring:
   drift:

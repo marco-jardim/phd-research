@@ -64,13 +64,17 @@ não implementada; não há restrição de cardinalidade N:1.
 
 Os valores de geração Haiku do YAML (temperature 0,0 e max_tokens 500) não
 documentam as chamadas do experimento descritas no E4, que omitem temperature
-e usam max_tokens 2.500. O YAML recebeu apenas comentários: seus parâmetros
-continuam idênticos aos de `eaf00b5`, conferidos por teste que compara os objetos
-YAML completos. Não foi criado outro YAML com nome de P porque o arquivo atual
-não é exclusivamente histórico e P depende do protocolo específico, não apenas
-de uma troca de configuração. Os fingerprints congelados continuam descrevendo
-os bytes anteriores; `scripts/review2_proveniencia.py` gera uma auditoria
-suplementar dessa diferença sem regravar metadados históricos.
+e usam max_tokens 2.500. O teste congelado exige que até os comentários do YAML
+original permaneçam idênticos. Por isso ele foi restaurado, sem modificar o
+teste ou seus hashes. `gzcmd_v31_p_config.yaml`, gerado por
+`scripts/config_p_documental.py`, documenta os parâmetros e marca
+`consistency`/`conflict_margin_delta` como reservados, não implementados.
+É um snapshot documental posterior, não o arquivo usado nos runs históricos
+nem uma implementação autônoma de P. Seu bloco `arranjo_P_protocolo` explicita
+as operações externas ao runner genérico; ele não é consumido por esse runner.
+P continua dependendo do protocolo específico, não apenas da troca de YAML.
+`scripts/review2_proveniencia.py` gera a auditoria dos fingerprints atuais
+ao lado dos históricos sem regravar manifestos congelados.
 
 ## FP e cardinalidade
 
