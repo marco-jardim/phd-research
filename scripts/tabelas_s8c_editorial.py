@@ -13,12 +13,13 @@ from scripts.tabelas_equidade_comparacao import generate as equity
 def generate(tables_dir=ROOT / "text/latex/tables/editorial"):
     if tables_dir.resolve() == (ROOT / "text/latex/tables").resolve():
         raise ValueError("Use tables/editorial; fontes históricas preservadas")
-    equity(ROOT / "data", tables_dir)
+    equity(ROOT / "data", tables_dir, editorial_notes=True)
     target = tables_dir / "tab_cap8_cascata_v31.tex"
     regenerate_cascade_table(output_path=target)
     text = replace_once(target.read_text(encoding="utf-8"),
                         "Cascata final observada por política e modo,",
                         "Cascata sobre a base inteira (comparação), por política e modo,")
+    text = text.replace("vínculos verdadeiros", "vínculos")
     target.write_text(text, encoding="utf-8", newline="\n")
 
 

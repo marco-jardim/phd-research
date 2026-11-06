@@ -1,0 +1,19 @@
+\begin{table}[htbp]
+\centering
+\caption{Soma descritiva da importância absoluta atribuída às famílias de atributos no Random Forest.}
+\label{tab:shap-importance}
+\begin{tabular}{lrrr}
+\toprule
+Família & Atributos & Soma & Proporção (\%) \\
+\midrule
+nome & 12 & 0,2041 & 38,5 \\
+nome da mãe & 9 & 0,0360 & 6,8 \\
+nascimento & 12 & 0,0750 & 14,2 \\
+endereço/município & 12 & 0,0083 & 1,6 \\
+nota e derivados & 2 & 0,0721 & 13,6 \\
+indicadores de óbito & 2 & 0,0041 & 0,8 \\
+outros & 9 & 0,1301 & 24,6 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Fonte: \path{data/shap_por_familia.csv}, derivado de \path{data/shap_importance.csv} por \path{scripts/shap_por_familia.py}. Importância histórica do RF com SMOTE, calculada em 2.000 potenciais pares da própria base de treinamento, não em teste independente. Escala de probabilidade quando o método é SHAP. A soma conta cada um dos 58 atributos uma vez e não recalcula SHAP conjunto. O gerador histórico admite substituir SHAP por Gini sem mudar o nome do arquivo; a proveniência do método não é certificada somente pelo CSV. A tabela não ordena atributos redundantes nem identifica efeitos causais.
+\end{table}

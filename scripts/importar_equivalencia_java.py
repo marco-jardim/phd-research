@@ -88,7 +88,7 @@ def render_table(rows: list[dict[str, str]]) -> str:
         r"\end{tabular}",
         r"\par\smallskip",
         r"\begin{minipage}{\textwidth}",
-        r"\footnotesize Nota: o lote não estima a concordância em dados reais. As tabelas de frequência são sintéticas e idênticas nos dois lados. Fonte: \path{tests/equivalencia/resultado_agregado.csv} do repositório do CdR, commit \texttt{0d5b411}, PR \#25 \cite{Jardim2024comparador}. Importação e geração: \path{scripts/importar_equivalencia_java.py} desta tese.",
+        r"\footnotesize Nota: o lote não estima a concordância em dados reais. As tabelas de frequência são sintéticas e idênticas nos dois lados. Fonte: \path{tests/equivalencia/resultado_agregado.csv} do repositório do CdR, commit \texttt{0d5b411}, PR \#25 \cite{Jardim2025comparador}. Importação e geração: \path{scripts/importar_equivalencia_java.py} desta tese.",
         r"\end{minipage}",
         r"\end{table}",
     ])

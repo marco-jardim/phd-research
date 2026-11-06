@@ -7,7 +7,7 @@
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 \REQUIRE Potenciais pares $P$, escore OpenRecLink, passo de blocagem, atributos do classificador, custos e orçamentos da v3.1
-\ENSURE Aceitações acima do corte e decisões auditáveis abaixo dele
+\ENSURE Aceitações acima do corte e decisões registradas abaixo dele
 \STATE \textbf{Fase 0: Corte por passo}
 \STATE Aceitar os potenciais pares com escore maior ou igual ao corte do respectivo passo
 \STATE Definir $P^{-}$ como os potenciais pares abaixo do corte
@@ -27,7 +27,7 @@
 
 % Sem float: permite quebra de página natural no algoritmo longo
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD (calibração por conjuntos âncora), com regras de guarda históricas, política de custo e trilha de auditoria. Não é a execução histórica v3, que usou \textit{Platt scaling} supervisionado da nota e as guardas indicadas na Fase 2; a versão v3.1 é descrita no Algoritmo seguinte.
+\noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD (calibração por conjuntos âncora), com regras de guarda históricas, política de custo e registro de decisões, sem exercício independente de auditoria das justificativas. Não é a execução histórica v3, que usou \textit{Platt scaling} supervisionado da nota e as guardas indicadas na Fase 2; a versão v3.1 é descrita no Algoritmo seguinte. As etapas de margem estreita e cardinalidade foram previstas, mas não implementadas (Seção~\ref{sec:e4-regras-guarda}).
 \label{alg:gzcmd-pipeline}
 
 \noindent\rule{\textwidth}{0.4pt}
@@ -111,7 +111,7 @@
 \ENDFOR
 
 \medskip
-\STATE \textbf{Fase 6: Consolidação e retorno auditável}
+\STATE \textbf{Fase 6: Consolidação e retorno com registro de decisões}
 \RETURN $\{(d_i, \mathit{razao}_i, \mathit{justificativa}_i)\}$ para todo par $i \in P$
 
 \end{algorithmic}
@@ -175,7 +175,7 @@
 \ENDFOR
 
 \medskip
-\STATE \textbf{Fase 6: Retorno auditável}
+\STATE \textbf{Fase 6: Retorno com registro de decisões}
 \RETURN $\{(d_i, \text{decisão final}, \text{código de razão})\}$ para todo par $i \in P$
 
 \end{algorithmic}

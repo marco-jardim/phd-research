@@ -3,6 +3,7 @@
 \caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 26 testes): Arranjo P (vigil.), denominadores de pelo menos 30. $\Delta$ em pontos percentuais (grupo A menos grupo B).}
 \label{tab:equidade-den30-arranjo-P-vigilancia}
 \small
+\resizebox{\linewidth}{!}{%
 \begin{tabular}{lllllrrr}
 \toprule
 Dimens\~ao & Tipo & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
@@ -11,5 +12,6 @@ Encerramento da notifica\c{c}\~ao & Operac. & VPP & Demais situa\c{c}\~oes & Enc
 Passo & Operac. & Sens. & 11 & 9 & $<$0{,}001 & $-$53{,}6 & 0{,}03 \\
 Passo & Operac. & Sens. & 11 & 6 & $<$0{,}001 & $-$52{,}5 & 0{,}04 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
+\par\footnotesize Fonte: \path{data/equidade_arranjo_den30_pairwise_tests.csv}. OR é razão de chances; as colunas de denominadores referem-se à métrica testada. Família definida separadamente por decisão, após o filtro de denominador.
 \end{table}

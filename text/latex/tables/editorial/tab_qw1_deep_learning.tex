@@ -1,9 +1,9 @@
 \begin{table}[htbp]
 \centering
 \caption{Desempenho dos classificadores na validação cruzada estratificada $5 \times 5$
-  e no conjunto de avaliação independente (\textit{holdout}, 30\%).
+  e no conjunto de avaliação interna (\textit{holdout}, 30\%).
   Valores de F1, precisão e sensibilidade referem-se à classe positiva (vínculo).
-  O melhor resultado de cada coluna aparece em negrito.}
+  O maior valor de cada coluna aparece em negrito, sem indicar diferença demonstrada.}
 \label{tab:qw1-deep-learning}
 \small
 \begin{tabular}{@{}l ccc c ccc@{}}
@@ -25,5 +25,5 @@ TabNet            & 0,821 $\pm$ 0,055 & 0,871 $\pm$ 0,090 & 0,789 $\pm$ 0,085
                   && 0,610 & 0,524 & 0,730 \\
 \bottomrule
 \end{tabular}
-\par\footnotesize Resultados históricos do QW1. No controle A0, o RF passou de $F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, fora da tolerância absoluta de 0,01; a validação cruzada histórica não foi recalculada (Apêndice~\ref{sec:sensibilidade-qw1}).
+\par\footnotesize Fonte: \path{data/review2_qw1_resumo.csv}. Teste interno por linha: 18.509 potenciais pares, 74 vínculos. Resultados históricos do QW1. No controle A0, o RF passou de $F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, fora da tolerância absoluta de 0,01; a validação cruzada histórica não foi recalculada (Apêndice~\ref{sec:sensibilidade-qw1}).
 \end{table}

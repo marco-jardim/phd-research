@@ -1,0 +1,8 @@
+familia,n_atributos,shap_mean_abs_soma,fracao_total,atributos
+nome,12,0.20409154757804812,0.38530242744612625,NOME prim frag igual | NOME qtd frag abrev | NOME qtd frag comuns | NOME qtd frag iguais | NOME qtd frag muito parec | NOME qtd frag raros | NOME ult frag igual | min_score_nome | nome_bom | nome_prim_ok | nome_squared | nome_total
+nome da mãe,9,0.0360409719649873,0.06804139686537919,NOMEMAE prim frag igual | NOMEMAE qtd frag abrev | NOMEMAE qtd frag comuns | NOMEMAE qtd frag iguais | NOMEMAE qtd frag muito parec | NOMEMAE qtd frag raros | NOMEMAE ult frag igual | mae_presente | mae_total
+nascimento,12,0.07501862198264767,0.14162691937314925,DTNASC dt ap 1digi | DTNASC dt iguais | DTNASC dt inv ano | DTNASC dt inv dia | DTNASC dt inv mes | diff_ano_nasc | diff_ano_ok | dtnasc_ok | dtnasc_parcial | dtnasc_squared | dtnasc_total | max_score_dtnasc
+endereço/município,12,0.008289645441199022,0.015649940181575863,CODMUNRES local igual | CODMUNRES local prox | CODMUNRES uf igual | ENDERECO compl prox | ENDERECO numero igual | ENDERECO texto prox | ENDERECO tokens jacc | ENDERECO via igual | ENDERECO via prox | endereco_total | local_ok | local_total
+nota e derivados,2,0.0720509389038891,0.13602425964664003,nota final | nota_squared
+indicadores de óbito,2,0.0041108127396423996,0.007760762981891566,obito_sinan | obito_tb
+outros,9,0.1300892905608018,0.24559429350523787,dtnasc_x_local | evidencias_positivas | nome_x_dtnasc | nome_x_endereco | nome_x_local | nome_x_mae | ratio_nome_mae | ratio_nome_nota | score_recall

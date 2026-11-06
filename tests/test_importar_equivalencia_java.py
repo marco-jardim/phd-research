@@ -59,6 +59,11 @@ def test_import_preserves_source_values_and_generates_table(tmp_path):
     assert r"\label{tab:equivalencia-java}" in table
     assert r"\footnotesize" in table
     assert "não estima a concordância em dados reais" in table
+    assert r"\cite{Jardim2025comparador}" in table
+    assert "Jardim2024comparador" not in table
+    assert "@misc{Jardim2025comparador," in (
+        ROOT / "text/latex/referencias.bib"
+    ).read_text(encoding="utf-8")
 
 
 @pytest.mark.parametrize(

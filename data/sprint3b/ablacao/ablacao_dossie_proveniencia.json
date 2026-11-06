@@ -1,0 +1,446 @@
+{
+  "schema_version": 1,
+  "arms": [
+    {
+      "source": "ablacao/claude-haiku-5-5_controle.json",
+      "source_sha256": "d74d0c95b3b065fc3e9daebcaa7bfddfacf5fcc35180997eabdf333a78232d40",
+      "model": "claude-haiku-5-5",
+      "prompt_version": null,
+      "prompt_sha": null,
+      "system_prompt_sha256": null,
+      "date": null,
+      "params": {}
+    },
+    {
+      "source": "ablacao/claude-haiku-5-5_sem_pcal.json",
+      "source_sha256": "76d68226172986aa16f95cfa03c5b994570d019063b4f34fb83957b03021f6ae",
+      "model": "claude-haiku-5-5",
+      "prompt_version": null,
+      "prompt_sha": null,
+      "system_prompt_sha256": null,
+      "date": null,
+      "params": {}
+    },
+    {
+      "source": "ablacao/deepseek-v4.1-flash_controle.json",
+      "source_sha256": "823827879bea632c4f1409cff4903290d1a958954b6e04404f65908fe6ba8ae5",
+      "model": "deepseek-v4.1-flash",
+      "prompt_version": null,
+      "prompt_sha": null,
+      "system_prompt_sha256": null,
+      "date": null,
+      "params": {}
+    },
+    {
+      "source": "ablacao/deepseek-v4.1-flash_sem_pcal.json",
+      "source_sha256": "253a051a2c608e4df1371729a26403620951eb6dbcce2a72075eebfca178a8ff",
+      "model": "deepseek-v4.1-flash",
+      "prompt_version": null,
+      "prompt_sha": null,
+      "system_prompt_sha256": null,
+      "date": null,
+      "params": {}
+    },
+    {
+      "source": "ablacao/kimi-k3_sem_pcal.json",
+      "source_sha256": "60a3c1da5d9ff39f2e6a4c8ee0def565d6af3ea3f86d6538ea2e7a045ae4de95",
+      "model": "kimi-k3",
+      "prompt_version": null,
+      "prompt_sha": null,
+      "system_prompt_sha256": null,
+      "date": null,
+      "params": {}
+    }
+  ],
+  "cohorts": {
+    "anthropic": [
+      {
+        "source": "anthropic/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "d42478a895b61f5138ca89ccbf66f4830c01cb997afff5cfe00b2ee3c4212362",
+        "model": "claude-haiku-5-5",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T15:12:55",
+        "params": {}
+      },
+      {
+        "source": "anthropic/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "7da01a537836e8587d5a7a42ab51292db7f254137f44fb3d5bfeb8ef29fd45f4",
+        "model": "claude-haiku-5-5",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T15:45:50",
+        "params": {}
+      }
+    ],
+    "anthropic_sem_mo": [
+      {
+        "source": "anthropic_sem_mo/auditoria.json",
+        "source_sha256": "fc85d83c2c6bb16df7e058b9c701293b70ba98445915a1d6a2f43d2253b4b3cc",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T00:29:30.994186+00:00",
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/comparacao.json",
+        "source_sha256": "c7373ace0c8e6218c55c3cd69bd4845fb180a79f3328d03f90509a7fb0e7721b",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/dossier_field_audit_confirmacao.json",
+        "source_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/dossier_field_audit_vigilancia.json",
+        "source_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/execucao.json",
+        "source_sha256": "1d12c99733695c8f332d94494f72201463df3811aff849e7743d92e0e3900973",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "c9f655874b18b0c7065ed94641e2752664b067b788829384db60a7c034224c62",
+        "model": "claude-haiku-5-5",
+        "prompt_version": null,
+        "prompt_sha": "53dac6b4739e52a50cc95d3c73abefdc1209eff3728cc6bd06522d6dcf31aeb9",
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T22:17:23.726808+00:00",
+        "params": {
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false
+        }
+      },
+      {
+        "source": "anthropic_sem_mo/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "279599f60ce08de3aa4779f665033a6f293f5898bb974ce27be4fe14a9305bae",
+        "model": "claude-haiku-5-5",
+        "prompt_version": null,
+        "prompt_sha": "53dac6b4739e52a50cc95d3c73abefdc1209eff3728cc6bd06522d6dcf31aeb9",
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T22:15:19.907216+00:00",
+        "params": {
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false
+        }
+      },
+      {
+        "source": "anthropic_sem_mo/fumaca_inspecao.json",
+        "source_sha256": "a4b31717a959b0e42bbc8cbb17afffb5a98c5ac186d7c941aabb91b511bb7fec",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T22:18:14.111407+00:00",
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/preco_referencia.json",
+        "source_sha256": "1ce69c2cfea47714f6f4dd89650f5906059a4751f65cc2b36c36cc061127c9e2",
+        "model": "claude-haiku-5-5",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/recuperacao_windows.json",
+        "source_sha256": "ad4158320e5bb39dd296cddc4eb2833d5cc0631e0593305b9cd343d7eb7b1977",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T23:37:48.526698+00:00",
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo/source_cohort_audit.json",
+        "source_sha256": "e22b490082173c96e9feafe34e2ea782345f0d6885d6673152bba70d193d74bb",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T23:39:14.202162+00:00",
+        "params": {}
+      }
+    ],
+    "anthropic_sem_mo_v4": [
+      {
+        "source": "anthropic_sem_mo_v4/dossier_field_audit_confirmacao.json",
+        "source_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo_v4/dossier_field_audit_vigilancia.json",
+        "source_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+        "model": "claude-haiku-5-5",
+        "prompt_version": "v4",
+        "prompt_sha": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:53:45.016014+00:00",
+        "params": {
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false
+        }
+      },
+      {
+        "source": "anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+        "model": "claude-haiku-5-5",
+        "prompt_version": "v4",
+        "prompt_sha": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:51:45.408616+00:00",
+        "params": {
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false
+        }
+      }
+    ],
+    "opencode_go": [
+      {
+        "source": "opencode_go/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "aa01c8edfca9c00cac652520e364a0562b3e78720450bd35d361220eb4e47301",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T13:57:10",
+        "params": {}
+      },
+      {
+        "source": "opencode_go/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "85380a675ae8e2074d7e1dd4d389fa1c157811eb512f1fdcf8877f720f63775a",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-02T14:04:40",
+        "params": {}
+      }
+    ],
+    "opencode_go_sem_mo": [
+      {
+        "source": "opencode_go_sem_mo/auditoria.json",
+        "source_sha256": "055022c149e8232888dd5afc843d010771156889fb871fe29795ffb1fbf612c3",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:35:08.132827+00:00",
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo/comparacao.json",
+        "source_sha256": "bb3a5ffda4a8ca91ba723212cf148c8293cabe5f9044cfb01e81f884a1baf802",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo/dossier_field_audit_confirmacao.json",
+        "source_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo/dossier_field_audit_vigilancia.json",
+        "source_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo/execucao.json",
+        "source_sha256": "95687ab842c5d0635a52248dbeb077d3898e9513f3c902e0f29b28c142e29710",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:34:38.358889+00:00",
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "b721df00d6cdc9d3091b041c5d15f6d7b14aa583045c272c316cc0347ed24350",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": null,
+        "prompt_sha": "53dac6b4739e52a50cc95d3c73abefdc1209eff3728cc6bd06522d6dcf31aeb9",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:21:10.208719+00:00",
+        "params": {
+          "temperature": 0.0,
+          "max_tokens": 800,
+          "top_p": 1.0,
+          "top_k": 1,
+          "thinking": {
+            "type": "disabled"
+          },
+          "temperature_sent": true,
+          "extended_thinking": false,
+          "reasoning_effort": "none"
+        }
+      },
+      {
+        "source": "opencode_go_sem_mo/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "4c7db671570f2c988fd2d51acebcbbbfd96db7ae0b39a1e39cc6d6e8ad365008",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": null,
+        "prompt_sha": "53dac6b4739e52a50cc95d3c73abefdc1209eff3728cc6bd06522d6dcf31aeb9",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T00:37:14.977209+00:00",
+        "params": {
+          "temperature": 0.0,
+          "max_tokens": 800,
+          "top_p": 1.0,
+          "top_k": 1,
+          "thinking": {
+            "type": "disabled"
+          },
+          "temperature_sent": true,
+          "extended_thinking": false,
+          "reasoning_effort": "none"
+        }
+      },
+      {
+        "source": "opencode_go_sem_mo/quota_probe.json",
+        "source_sha256": "151f01236b0b6939c980b4be09e16f5c7d04115f9fdeb457082c411e854ca189",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T00:36:03.376361+00:00",
+        "params": {}
+      }
+    ],
+    "opencode_go_sem_mo_v4": [
+      {
+        "source": "opencode_go_sem_mo_v4/dossier_field_audit_confirmacao.json",
+        "source_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo_v4/dossier_field_audit_vigilancia.json",
+        "source_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53",
+        "model": null,
+        "prompt_version": null,
+        "prompt_sha": null,
+        "system_prompt_sha256": null,
+        "date": null,
+        "params": {}
+      },
+      {
+        "source": "opencode_go_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+        "source_sha256": "65caa3c718ad48ce5cda7f0360aa99b1b2602908b3f9672830dabc378facd970",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": "v4",
+        "prompt_sha": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:53:43.951815+00:00",
+        "params": {
+          "temperature": 0.0,
+          "max_tokens": 800,
+          "top_p": 1.0,
+          "top_k": 1,
+          "thinking": {
+            "type": "disabled"
+          },
+          "temperature_sent": true,
+          "extended_thinking": false,
+          "reasoning_effort": "none"
+        }
+      },
+      {
+        "source": "opencode_go_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+        "source_sha256": "81bbdfb0df8c5da7883d8ed7d6c7e50affe31359c6b3a1784f7b442ac912ef03",
+        "model": "deepseek-v4.1-flash",
+        "prompt_version": "v4",
+        "prompt_sha": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "system_prompt_sha256": null,
+        "date": "2026-11-03T01:53:46.372771+00:00",
+        "params": {
+          "temperature": 0.0,
+          "max_tokens": 800,
+          "top_p": 1.0,
+          "top_k": 1,
+          "thinking": {
+            "type": "disabled"
+          },
+          "temperature_sent": true,
+          "extended_thinking": false,
+          "reasoning_effort": "none"
+        }
+      }
+    ]
+  },
+  "runner_history": {
+    "command": "git log -p --follow -- scripts/run_exp2_ablacao_dossie.py",
+    "sha256": "c3732acb061ed2109ff86b128fa0fc0a9d0c11a75528e60935b16a459efd83a3",
+    "finding": "O runner importa os revisores e declara prompt original, sem congelar sua versão no checkpoint. O histórico não certifica a instrução de cada execução."
+  },
+  "missing_metadata": "null indica campo não registrado; params vazio não significa defaults conhecidos",
+  "scope": "hashes de arquivos inteiros e metadados permitidos, sem identificadores por par"
+}

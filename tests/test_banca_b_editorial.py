@@ -136,5 +136,5 @@ def test_limiar_rules_and_comparator_neutrality_are_explicit():
     assert "itinerário terapêutico" not in e3
     assert "103 configurações experimentais, 70" in e3
     section = e3.split(r"\label{sec:e3-limiar-regras}")[1].split(r"\subsection{")[0]
-    for term in ("0{,}842", "0{,}610", "85,4", "prática do serviço e define PAR=1", r"\ref{cap:estudo4}"):
+    for term in ("0{,}842", "0{,}610", "85,4", r"processo de \textit{linkage} de origem e define PAR=1", r"\ref{cap:estudo4}"):
         assert term in section

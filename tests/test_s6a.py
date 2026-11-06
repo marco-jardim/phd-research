@@ -129,11 +129,12 @@ def test_phase_C_aggregates_and_table_regenerate_from_versioned_csvs(tmp_path):
 
 def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    for ref in ('8c16a41', '16d5876'):
+    # SHAs da história reescrita em 2026-11-06, com datas de autor preservadas.
+    for ref in ('10524d921a5faf2b473a6ff912df539d8fe90396', '49a6366b741d0dfdc34087a39bd838b08c49ca97'):
         stamp = subprocess.check_output(['git', 'show', '-s', '--format=%aI', ref], cwd=ROOT, text=True).strip()
         utc = datetime.fromisoformat(stamp).astimezone(timezone.utc)
         assert utc.strftime('%H:%M:%S UTC') in study
-    metadata = json.loads(subprocess.check_output(['git', 'show', '16d5876:data/arranjo_corte_metadata.json'], cwd=ROOT, text=True))
+    metadata = json.loads(subprocess.check_output(['git', 'show', '49a6366b741d0dfdc34087a39bd838b08c49ca97:data/arranjo_corte_metadata.json'], cwd=ROOT, text=True))
     assert datetime.fromisoformat(metadata['timestamp_utc']).strftime('%H:%M:%S UTC') in study
     assert '04:13 UTC' not in study
 

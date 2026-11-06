@@ -20,7 +20,11 @@ def test_perfil_editorial_preserva_celulas_e_fonte_historica(monkeypatch, tmp_pa
     assert generated == (TABLES / "editorial" / historical.name).read_bytes()
     source = original.decode("utf-8")
     current = generated.decode("utf-8")
-    assert re.findall(r"^.* & .*", current, re.M) == re.findall(r"^.* & .*", source, re.M)
+    expected = re.findall(r"^.* & .*", source, re.M)
+    assert re.findall(r"^.* & .*", current, re.M) == expected
+    assert "data/perfil_obitos_agregado.csv" in current
+    assert "data/epidemiological_profile.json" in current
+    assert "Valores históricos arredondados" in current
     assert "Perfil dos vínculos recuperados" in current
     assert "Versão editorial da tabela histórica; células preservadas." not in current
     assert r"\input{tables/editorial/tab_perfil_recuperados.tex}" in (

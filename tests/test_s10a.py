@@ -27,9 +27,15 @@ def test_local_editorial_redundancies_and_number_forms():
     assert recommendation.lower().count('nenhuma ordenação domina em todas as cargas') == 1
     for name in ('capitulo1.tex','conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        assert 'na vigilância, em $k=96$' in text
+        if name == 'capitulo1.tex':
+            assert 'na vigilância, em $k=96$' in text
+        else:
+            # W6 remete as limitações na seção de contribuições; a síntese
+            # mantém a carga e as perdas do filtro, sem repetir o parágrafo.
+            assert 'com 96 pares enviados ao LLM na vigilância' in text
+            assert r'As limitações do filtro são discutidas na Seção~\ref{sec:e4-filtro}' in text
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
-        assert 'descartou 10 dos 23 vínculos' in text
+        assert 'descartou nove dos 22 vínculos' in text or '9 dos 22 PAR~=~2' in text
     study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'O2 recupera 9 PAR~=~2 com 11 revisões' in study
     assert 'no feminino, a queda é de 10 pontos' in study

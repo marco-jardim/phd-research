@@ -57,6 +57,15 @@ def generate(data, editorial):
         cells = original.split(" & ")
         cells[7] = f"{100 * row.espec:.2f}".replace(".", "{,}")
         text = text.replace(original, " & ".join(cells), 1)
+    text = text.replace(r"\end{table}", r"\par\footnotesize Fonte: "
+                        r"\path{data/equidade_arranjo_global.csv}, "
+                        r"\path{data/equidade_arranjo_maxdiff.csv} e "
+                        r"\path{data/equidade_arranjo_den30_pairwise_tests.csv}. "
+                        r"Universo: 61.696 potenciais pares e 247 vínculos. Os denominadores são "
+                        r"os vínculos na sensibilidade e os positivos preditos no VPP. "
+                        r"As rejeições exigem pelo menos 30 observações em cada denominador, "
+                        r"antes de Benjamini-Hochberg por decisão. FN inclui vínculos encaminhados "
+                        r"ao revisor humano, não somente decisões de não vínculo." + "\n" + r"\end{table}")
     path.write_text(text, encoding="utf-8", newline="\n")
     for decision in historical.DECISIONS:
         path = editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex"
@@ -64,7 +73,15 @@ def generate(data, editorial):
             corrected, path, decisao=decision,
             label=f"tab:equidade-den30-{decision.replace('_', '-')}",
             descr=historical.LABELS[decision] + ", denominadores de pelo menos 30")
-        path.write_text(path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
+        text = path.read_text(encoding="utf-8").replace(
+            r"\end{table}", r"\par\footnotesize Fonte: "
+            r"\path{data/equidade_arranjo_den30_pairwise_tests.csv}. "
+            r"OR é razão de chances; as colunas de denominadores referem-se à métrica testada. "
+            r"Família definida separadamente por decisão, após o filtro de denominador." + "\n" + r"\end{table}")
+        if decision in ("arranjo_P_vigilancia", "cascata_v31_vigilancia"):
+            text = text.replace(r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
+            text = text.replace(r"\end{tabular}", r"\end{tabular}}")
+        path.write_text(text, encoding="utf-8", newline="\n")
     manifest = dict(denominador_minimo=30, regra="Excluir n1<30 ou n2<30 antes de BH por decisão",
                     fonte="equidade_arranjo_pairwise_tests.csv", treino_executado=False,
                     geradores_historicos_preservados=True, comparacoes=audit)

@@ -1,6 +1,6 @@
 \subsection{Calibração Probabilística por Âncoras}
 
-A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}).
+A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}). Neste apêndice, $s$ denota somente o escore bruto a calibrar, que, nas âncoras avaliadas nesta tese, é a nota final do CdR; não se confunde com a sensibilidade humana assumida nos cenários do Capítulo~\ref{cap:estudo4}, também denotada por $s$ naquele capítulo.
 
 Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada na forma logística de \citeonline{Platt1999}, distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
 
@@ -8,11 +8,11 @@ Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada n
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
 \]
 
-Para cenários de vigilância em que não se dispõe de \textit{labels} em tempo de execução para treinar essa calibração, propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}), cujos alvos podem ser fixados a priori ou medidos contra uma referência. No cenário principal desta tese, os alvos $r^+$ e $r^-$ foram medidos contra os \textit{labels} da referência operacional, de modo que o ajuste avaliado não é sem \textit{labels}. Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
+Para cenários de vigilância em que não se dispõe de \textit{labels} em tempo de execução para treinar essa calibração, propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}), cujos alvos podem ser fixados a priori ou medidos contra uma referência. No cenário de alvos medidos, avaliado nesta tese como alternativa de calibração, os alvos $r^+$ e $r^-$ foram medidos contra os \textit{labels} da referência operacional, de modo que esse ajuste não é sem \textit{labels}; a calibração da política v3.1 é a isotônica supervisionada (Capítulo~\ref{cap:estudo4}). Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
 
 \begin{enumerate}
 \item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$), assumindo-se uma probabilidade média alvo $r^+$ próxima de 1. Na base desta tese, $A^+$ contém 95 pares com pureza observada de 97,9\%, de onde $r^+ = 0{,}979$ (Tabela~\ref{tab:cap8-ancoras}).
-\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s < \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^-$ próxima de 0. Na base desta tese, $A^-$ contém 39.981 pares com três vínculos verdadeiros, de onde $r^- = 0{,}0001$.
+\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s < \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^-$ próxima de 0. Na base desta tese, $A^-$ contém 39.981 pares com três vínculos, prevalência que \path{scripts/validar_ancoras.py} arredonda a cinco casas decimais, de onde $r^- = 0{,}00008$. Na configuração do pacote (\path{gzcmd/gzcmd_v3_config.yaml}), os alvos a priori das âncoras são $0{,}98$ e $0{,}001$.
 \end{enumerate}
 
 Os alvos devem satisfazer $0<r^-<r^+<1$, pois uma sigmoide com parâmetros finitos não atinge os valores 0 e 1. Busca-se ajustar os parâmetros $\alpha$ e $\beta$ pelo sistema que iguala a média predita nos conjuntos âncora às proporções-alvo assumidas:
@@ -37,11 +37,11 @@ As equações restringem apenas duas médias preditas. Mantidas as distribuiçõ
 
 A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na área cinza depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
 
-\subsection{Função de Perda e Decisão em Quatro Ações}
+\subsection{Função de Perda, Decisão em Três Ações e Extensão a Quatro}
 
 O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente. As proposições desta seção cobrem essas três ações do desenho original; a política v3.1 acrescenta a revisão humana como quarta ação, com custo $C_H$ e perda $\mathcal{L}_H$ (Seção~\ref{sec:e4-politica-v31}), que não é objeto das proposições de três ações a seguir. A Proposição~\ref{prop:duas-acoes-orcamento}, ao final, trata separadamente da restrição às ações revisão humana e não vínculo.
 
-Sejam $C_{FP}>0$ e $C_{FN}>0$ os custos unitários de um falso positivo e de um falso negativo. Em vigilância epidemiológica, frequentemente $C_{FN} > C_{FP}$ (o custo de perder um óbito é maior que o de investigar um falso alarme) \cite{Sadinle2017}. A \textit{expected loss} $\mathcal{L}$ para cada ação, dada a probabilidade posterior $p\in[0,1]$, é definida como:
+Sejam $C_{FP}>0$ e $C_{FN}>0$ os custos unitários de um falso positivo e de um falso negativo. No modo vigilância desta tese, adota-se $C_{FN} > C_{FP}$, por hipótese de que perder o vínculo de um óbito custe mais que investigar um falso vínculo, embora um falso vínculo também possa levar ao encerramento indevido de um caso (Seção~\ref{sec:justificativas-especificas}); funções de perda com custos distintos para os dois tipos de erro de pareamento são formuladas por \citeonline{Sadinle2017}. A \textit{expected loss} $\mathcal{L}$ para cada ação, dada a probabilidade posterior $p\in[0,1]$, é definida como:
 
 \[
 \begin{aligned}
@@ -54,7 +54,8 @@ Para a ação de revisão (realizada por humano ou agente LLM), introduz-se um c
 
 \begin{proposition}[Afinidade da perda de revisão]
 \label{prop:review-loss-affine}
-Para $p\in[0,1]$, custos constantes $C_{FP},C_{FN},C_{LLM}>0$ e proporções condicionais constantes $e_{FP},e_{FN}\in[0,1]$, a perda de revisão é afim em $p$:
+{\sloppy
+Para $p\in[0,1]$, custos constantes $C_{FP},C_{FN},C_{LLM}>0$ e proporções condicionais constantes $e_{FP},e_{FN}\in[0,1]$, a perda de revisão é afim em $p$:\par}
 \[
 \mathcal{L}(a_R \mid p) = C_{LLM} + \underbrace{(1-p) \cdot e_{FP} \cdot C_{FP}}_{\text{Risco residual de FP}} + \underbrace{p \cdot e_{FN} \cdot C_{FN}}_{\text{Risco residual de FN}}
 \]

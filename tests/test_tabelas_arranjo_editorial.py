@@ -14,6 +14,7 @@ import pytest
 
 from scripts import equidade_arranjo as historical
 from scripts.tabelas_arranjo_editorial import generate, render_reference, step_ppv_note
+from scripts.tabelas_review2_w3 import equity_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
@@ -32,6 +33,7 @@ def numbers(text):
 def test_editorial_versions_reproduce_without_overwriting_historical(tmp_path):
     before = {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}
     generate(ROOT / "data", tmp_path)
+    equity_tables(tmp_path)
     assert len(list(tmp_path.glob("*.tex"))) == 10
     for path in tmp_path.glob("*.tex"):
         assert path.read_bytes() == (EDITORIAL / path.name).read_bytes()
@@ -78,7 +80,10 @@ def test_group_and_rejection_tables_preserve_all_cells_and_only_translate_note()
         current = path.read_text(encoding="utf-8")
         assert rows(original) == rows(current)
         if "grupos" in path.name:
-            assert current == original.replace("Grupos MISSING", "Grupos sem informação")
+            assert "ao menos 30 observações no denominador de cada métrica" in current
+            assert "antes de Benjamini-Hochberg" in current
+            assert r"\path{data/equidade_arranjo_group_metrics.csv}" in current
+            assert "como na análise anterior" not in current
         else:
             assert current == original
 
@@ -94,7 +99,8 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     for original, current in zip(old, new):
         if original[0] == "Corte + revisão manual do serviço":
             assert current[2] == "cenário $\\geq " + bound + "$"
-            assert original[:2] == current[:2] and original[3:] == current[3:]
+            assert current[0] == "Corte + revisão clerical de origem"
+            assert original[1] == current[1] and original[3:] == current[3:]
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
             assert original[:2] == current[:2] and original[3:] == current[3:]

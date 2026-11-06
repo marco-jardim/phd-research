@@ -4,6 +4,12 @@ The dossier contains linkage sub-scores, model outputs and an unsalted pair
 pseudonym. It excludes nominal source fields, not all personal data.
 It is the sole input the LLM sees, enforcing a strict information boundary.
 
+The historical extract supplies 14 of its 29 sub-scores to this dossier:
+three name, three mother-name, one birth-date, six address and one municipality
+score. Rare/common/very-similar/abbreviated name scores, approximate and inverted
+birth dates, and UF/proximity municipality scores are not sent. Do not add these
+fields retroactively: the historical v3/v4 runs depend on this boundary.
+
 Usage::
 
     from gzcmd.llm_dossier import build_dossier, build_dossiers
@@ -40,20 +46,15 @@ _NAME_COLS = [
     "NOME qtd frag iguais",
     "NOME prim frag igual",
     "NOME ult frag igual",
-    "NOME prim ult frag igual",
 ]
 
 _MOTHER_COLS = [
     "NOMEMAE qtd frag iguais",
     "NOMEMAE prim frag igual",
     "NOMEMAE ult frag igual",
-    "NOMEMAE prim ult frag igual",
 ]
 
 _DOB_COLS = [
-    "DTNASC ano igual",
-    "DTNASC mes igual",
-    "DTNASC dia igual",
     "DTNASC dt iguais",
 ]
 
