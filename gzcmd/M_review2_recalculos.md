@@ -64,9 +64,45 @@ não implementada; não há restrição de cardinalidade N:1.
 
 Os valores de geração Haiku do YAML (temperature 0,0 e max_tokens 500) não
 documentam as chamadas do experimento descritas no E4, que omitem temperature
-e usam max_tokens 2.500. O YAML histórico não foi regravado nesta etapa para
-não invalidar silenciosamente os fingerprints congelados. A criação de um
-perfil P executável e a conciliação de seus metadados permanecem pendentes.
+e usam max_tokens 2.500. O YAML recebeu apenas comentários: seus parâmetros
+continuam idênticos aos de `eaf00b5`, conferidos por teste que compara os objetos
+YAML completos. Não foi criado outro YAML com nome de P porque o arquivo atual
+não é exclusivamente histórico e P depende do protocolo específico, não apenas
+de uma troca de configuração. Os fingerprints congelados continuam descrevendo
+os bytes anteriores; `scripts/review2_proveniencia.py` gera uma auditoria
+suplementar dessa diferença sem regravar metadados históricos.
+
+## FP e cardinalidade
+
+`scripts/fp_cardinalidade.py` reconstitui somente as decisões finais de P a
+partir de suas duas políticas privadas arquivadas, verificadas contra os hashes
+da robustez, e das respostas históricas e S2 existentes. Não executa a política,
+treino ou chamadas de API. O extrato define os 211 PAR=1 acima do corte. Os
+checkpoints S2 e do suplemento precisam ser obtidos dos arquivos privados:
+somente auditorias e metadados estão versionados nesses diretórios.
+
+A saída `data/fp_cardinalidade.json` contém somente contagens e fingerprints de
+arquivos. Dos 21 FP de P na vigilância, nenhum repete COMPREC e um repete REFREC
+de PAR=1 já aceito acima do corte. Os outros 20 não repetem nenhum deles. Na
+confirmação, nenhum dos quatro FP repete COMPREC ou REFREC dessa referência.
+Isso não avalia conflitos entre novos FP nem implementa restrição de unicidade.
+
+## SHAP por família e redundância observada
+
+`scripts/shap_por_familia.py` soma a importância absoluta já publicada, sem
+treinar ou recalcular SHAP. Interações entre domínios, razões e `score_recall`
+ficam em outros, sem contagem dupla. A soma por família é descritiva, não um
+SHAP conjunto, e não identifica uma ordenação causal de atributos redundantes.
+
+A auditoria usa `engineer_features` e `split_data(random_state=42)`: 18.509
+linhas de teste, com 74 vínculos e 58 atributos nominais. Foram encontrados
+quatro pares de colunas exatamente iguais: nome inicial/indicador correspondente,
+igualdade da data/seu quadrado, município igual/indicador correspondente e
+`dtnasc_ok`/`max_score_dtnasc`. Restam 54 colunas distintas nesse teste, não uma
+estimativa de independência ou posto. As três transformações quadráticas são
+não decrescentes no suporte observado; a nota varia de 0,53 a 13,27 no teste.
+As fórmulas e os limites de generalização da igualdade amostral constam de
+`data/atributos_duplicados.json`.
 
 Um checkout novo não recupera os bytes mistos do pré-registro da S1;
 `S10_eol_prereg.md` é a referência para esse impedimento. Nenhum hash congelado
