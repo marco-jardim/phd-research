@@ -64,6 +64,7 @@ def render_reference(referencia, arranjo, cascata, carga):
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
         ("CdR, revisão humana da área cinza &", "CdR, revisão humana da área cinza da nota &"),
+        ("CdR, limiar da nota em 8 &", r"CdR, decisão de limiar (nota $\geq 8$) &"),
         ("A revisão da área cinza do CdR é cenário", "A revisão da área cinza da nota do CdR é cenário"),
         ("Zero FP acima do corte também decorre do rótulo.",
          r"Zero FP acima do corte também decorre do \textit{label}."),
@@ -128,7 +129,15 @@ def render_arrangement(historical):
         r"$S_H=(V_A+0{,}95V_H)/n$ exibe o cenário de sensibilidade humana 0,95, não resultado humano observado. Os três cenários, 0,95, 0,99 e 1,00, constam da Tabela~\ref{tab:cap8-sensibilidade-humana} e de \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     # Legenda curta no corpo e nota explicativa completa, sem truncar a legenda.
     text = replace_once(text, r"\caption{Arranjo sequencial", r"\caption[Arranjo sequencial: decisões, revisão e custo]{Arranjo sequencial")
+    text = replace_once(text, "As ressalvas sobre o padrão-ouro e a dependência entre pares permanecem.",
+                        "As ressalvas sobre a referência operacional e a dependência entre pares permanecem.")
     return text
+
+
+def render_anchors(historical):
+    """Mantém as células; troca apenas o termo da legenda."""
+    return replace_once(historical, "Validação dos conjuntos âncora contra o padrão-ouro",
+                        "Validação dos conjuntos âncora contra a referência operacional")
 
 
 def generate(data_dir: Path, tables_dir: Path) -> None:
@@ -147,7 +156,7 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
         cells[7] = replace_once(f"{100 * row.espec:.2f}", ".", "{,}")
         text = replace_once(text, original, " & ".join(cells))
     text = replace_once(text, "O gabarito compartilha o corte e os dados de treinamento",
-                        "O padrão-ouro compartilha o corte do escore OpenRecLink e os dados de treinamento")
+                        "A referência operacional compartilha o corte do escore OpenRecLink e os dados de treinamento")
     text = replace_once(text, "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
     text = replace_once(text, r"\end{minipage}", step_ppv_note(
         frames["maxdiff"], frames["group_metrics"], frames["pairwise_tests"]) + r"\end{minipage}")
@@ -167,6 +176,9 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
     name = "tab_cap8_arranjo_corte.tex"
     historical = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
     (tables_dir / name).write_text(render_arrangement(historical), encoding="utf-8", newline="\r\n")
+    name = "tab_cap8_ancoras.tex"
+    historical = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
+    (tables_dir / name).write_text(render_anchors(historical), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

@@ -1,4 +1,19 @@
 # S9c: byte/hash references; historical CRLF exceptions below take precedence.
+# Recomputações finais: saídas novas sempre LF, inclusive ao regenerar no Windows.
+scripts/banca_b_encerramento_agregado.py text eol=lf
+scripts/banca_b_recuperados_por_par.py text eol=lf
+scripts/banca_c_agregados.py text eol=lf
+scripts/equidade_denominador_minimo.py text eol=lf
+scripts/robustez_perda_ponderada.py text eol=lf
+tests/test_banca_c_agregados.py text eol=lf
+tests/test_recomputacoes_revisao_final.py text eol=lf
+data/banca_b_recuperados_por_par.json text eol=lf
+data/custos_equivalentes_exploratorios.csv text eol=lf
+data/robustez_perda_ponderada.csv text eol=lf
+data/equidade_arranjo_den30_pairwise_tests.csv text eol=lf
+data/equidade_arranjo_den30_rejeicoes.csv text eol=lf
+data/equidade_arranjo_den30_recomputacao.json text eol=lf
+text/latex/tables/editorial/tab_den30_equidade_arranjo*.tex text eol=lf
 .gitattributes text eol=lf
 *.py text eol=lf
 scripts/*.ps1 text eol=lf
@@ -15,9 +30,17 @@ gzcmd/*.yaml text eol=lf
 gzcmd/prereg_robustez_arranjo.yaml text eol=crlf
 gzcmd/execucao_robustez_arranjo.json text eol=crlf
 text/latex/apendice_prompts.tex text eol=lf
+text/latex/estudo3_estrategias.tex text eol=lf
 text/latex/tables/editorial/*.tex text eol=lf
+text/latex/tables/tab_perfil_recuperados.tex text eol=lf
 text/latex/tables/tab_cap8_ancoras*.tex text eol=lf
 text/latex/tables/tab_cap8_cascata_v31.tex text eol=lf
+text/latex/tables/tab_impacto_epidemiologico.tex text eol=lf
+text/latex/tables/tab_pareto_frontier.tex text eol=lf
+text/latex/tables/tab_qw1_deep_learning.tex text eol=lf
+text/latex/tables/tab_qw2_confusion.tex text eol=lf
+text/latex/tables/tab_qw2_llm_comparison.tex text eol=lf
+data/banca_b_encerramento_agregado.json text eol=lf
 text/latex/tables/tab_equivalencia_java.tex text eol=lf
 text/latex/tables/tab_sensibilidade_2x2.tex text eol=lf
 text/latex/tables/tab_sensibilidade_qw1.tex text eol=lf

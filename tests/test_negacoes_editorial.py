@@ -22,7 +22,7 @@ PARAGRAPHS = [
     ("estudo4_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A incompatibilidade geral entre paridade"),
-    ("estudo5_equidade.tex", "A construção do padrão-ouro limita a inferência"),
+    ("estudo5_equidade.tex", "A construção da referência operacional limita a inferência"),
     ("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais"),
     ("estudo1_comparador.tex", "As duas implementações não são equivalentes"),
 ]
@@ -50,7 +50,7 @@ EXPECTED_NEGATIONS = {
     "Na cascata v3.1 sobre a base inteira, Claude Sonnet": [0, 2],
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A incompatibilidade geral entre paridade": [0, 1, 0, 0, 1, 0],
-    "A construção do padrão-ouro limita a inferência": [0, 2, 2, 1, 0, 0, 0],
+    "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
     "O terceiro objetivo comparou estratégias operacionais": [0, 0, 0, 2, 1],
     "As duas implementações não são equivalentes": [1, 1, 3, 1, 0],
 }
@@ -125,15 +125,15 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "não demonstrou calibração absoluta na área cinza da nota" in calibration
     assert "não corrigiria o viés" in calibration
     assert "não de impossibilidade geral do método" in calibration
-    equity = paragraph("estudo5_equidade.tex", "A construção do padrão-ouro limita a inferência")
-    assert "a possibilidade de incorporação das evidências à referência não foi quantificada" in equity
-    assert r"O corte define PAR~=~1, com viés de verificação; a possibilidade de incorporação das evidências à referência não foi quantificada, e o uso documentado do CdR no passo aberto não comprova exposição nos passos exportados (Seção~\ref{sec:padrao-ouro})." in equity
-    assert "não comprova exposição nos passos exportados" in equity
+    equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")
+    assert "a possível incorporação dessas evidências à referência não foi quantificada" in equity
+    assert r"O corte define PAR~=~1, com viés de verificação; adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
+    assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
     conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")
     assert r"não fundamentam a adoção dos \textit{pipelines} avaliados" in conclusion
-    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico do arranjo." in conclusion
+    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico dessas estratégias." in conclusion
     assert "seu efeito não se transfere automaticamente ao XGBoost" in conclusion
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
@@ -141,14 +141,14 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 
 
 @pytest.mark.parametrize("filename,expected", [
-    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas taxas, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
+    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
     ("estudo2_classificadores.tex", "Para avaliar a estabilidade, a análise original utilizou validação cruzada estratificada com cinco partições da base completa, sem repetições."),
-    ("conclusao.tex", "A análise descreve a estabilidade interna entre réplicas, não validação em novos dados"),
-    ("estudo4_gzcmd.tex", "A análise descreve a estabilidade interna entre réplicas, não generalização"),
+    ("conclusao.tex", r"A análise de estabilidade descreve a estabilidade interna entre réplicas, não validação em novos dados \cite{Jardim2026phdrepo}."),
+    ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
     ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),
-    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, comparações exploratórias de mesma carga e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
+    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, que preserva os vínculos aceitos pelo corte e aplica o GZ-CMD aos demais potenciais pares, comparações exploratórias de mesma carga e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
 ])
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
     assert expected in (LATEX / filename).read_text(encoding="utf-8")

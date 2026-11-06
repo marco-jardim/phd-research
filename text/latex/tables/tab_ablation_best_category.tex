@@ -5,21 +5,21 @@
 \footnotesize
 \begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{3.2cm}c>{\raggedright\arraybackslash}p{3.2cm}c}
 \toprule
-\multirow{2}{*}{Categoria} & \multicolumn{2}{c}{Random Forest} & \multicolumn{2}{c}{XGBoost} \\
+\multirow{2}{*}{Categoria} & \multicolumn{2}{c}{Ablação original} & \multicolumn{2}{c}{XGBoost} \\
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
- & Configura\c{c}\~ao & F1 & Configura\c{c}\~ao & F1 \\
+ & Configuração & F1 & Configuração & F1 \\
 \midrule
-Decis\~ao de limiar & Nota final$\geq$8 & 0,610 & Nota final$\geq$8 & 0,610 \\
-Somente regras & Regras ($\geq$6) & 0,842 & Regras ($\geq$6) & 0,842 \\
-Somente ML & RF+SMOTE ($\geq$0,5) & 0,931 & XGBoost ($\geq$0,7) & \textbf{0,943} \\
-H\'ibrido AND & RF+SMOTE $\geq$0,5 + Regras$\geq$5 & 0,912 & XGBoost $\geq$0,5 + Regras$\geq$5 & 0,442 \\
-H\'ibrido OR & RF+SMOTE $\geq$0,7 + Regras$\geq$9 & 0,921 & XGBoost $\geq$0,7 + Regras$\geq$8 & 0,943 \\
-Cascata ML$\rightarrow$Regras & RF+SMOTE $\geq$0,5 $\rightarrow$ Regras$\geq$7 & 0,853 & XGBoost $\geq$0,3 $\rightarrow$ Regras$\geq$7 & 0,000$^{*}$ \\
-Cascata Regras$\rightarrow$ML & Regras$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0,5 & 0,912 & Regras$\geq$5 $\rightarrow$ XGBoost $\geq$0,5 & 0,442 \\
-Consenso ML & Consenso (limiar 0,7; 3 modelos) & 0,928 & Consenso (limiar 0,7; 3 modelos, incl. XGBoost) & 0,943 \\
-Consenso+Regras & Consenso AND Regras$\geq$6 & 0,896 & Consenso (limiar 0,5) AND Regras$\geq$6 & 0,150$^{\dagger}$ \\
+Decisão de limiar & Nota final$\geq$8 & 0,610 & Nota final$\geq$8 & 0,610 \\
+Somente regras & Somente regras ($\geq$6) & 0,842 & Somente regras ($\geq$6) & 0,842 \\
+Somente ML & Somente ML RF+SMOTE ($\geq$0,5) & 0,931 & Somente ML XGBoost ($\geq$0,7) & 0,943 \\
+Híbrido AND & Híbrido AND RF+SMOTE $\geq$0,5 + Regras$\geq$5 & 0,912 & Híbrido AND XGBoost $\geq$0,7 + Regras$\geq$5 & 0,896 \\
+Híbrido OR & Híbrido OR RF+SMOTE $\geq$0,7 + Regras$\geq$9 & 0,921 & Híbrido OR XGBoost $\geq$0,7 + Regras$\geq$8 & 0,958 \\
+Cascata ML$\rightarrow$Regras & Cascata RF+SMOTE $\geq$0,5 $\rightarrow$ Regras$\geq$7 & 0,853 & Cascata XGBoost $\geq$0,3 $\rightarrow$ Regras$\geq$7 & 0,825 \\
+Cascata Regras$\rightarrow$ML & Cascata Regras$\geq$5 $\rightarrow$ RF+SMOTE $\geq$0,5 & 0,912 & Cascata Regras$\geq$5 $\rightarrow$ XGBoost $\geq$0,7 & 0,896 \\
+Consenso ML & Consenso ML (limiar=0,7, 3 modelos) & 0,928 & Consenso ML XGBoost maioria (limiar=0,7, 3 modelos) & 0,943 \\
+Consenso+Regras & Consenso+Regras maioria(limiar=0,5) AND Regras$\geq$6 & 0,896 & Consenso+Regras XGBoost maioria (limiar=0,5) + Regras$\geq$6 & 0,896 \\
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: As configurações da coluna Random Forest provêm da ablação original; as configurações com XGBoost foram acrescentadas pelo fluxo Modal e não correspondem ao teste interno QW1. Os valores de decisão de limiar e somente regras, repetidos nas duas colunas, são referências da ablação original, não novas avaliações no fluxo Modal. As execuções utilizam testes internos de 30\% e semente 42, mas a identidade das linhas entre as partições não foi verificada. As implementações de regras diferem em critérios e pesos; os consensos originais utilizam RF, RF+SMOTE e GB, enquanto os acrescentados utilizam XGBoost, RF+SMOTE e GB. A seleção pelo maior $F_1$ nos testes é exploratória, não avaliação independente da escolha dos limiares. $^{*}$~No escore de regras do fluxo Modal, nenhum dos 74 vínculos do teste atinge $\geq 7$ (máximo observado: 6{,}5), resultando em TP=0 e FN=74 nas cascatas assinaladas. $^{\dagger}$~Nesse mesmo fluxo, apenas 6 positivos atingem escore de regras $\geq 6$, resultando em TP=6, FN=68 e sensibilidade de 0{,}081. Essas restrições não se estendem às regras da ablação original.
+\par\small Nota: A ablação original contém 70 configurações; o fluxo Modal acrescentou 33 com XGBoost, que não correspondem ao teste interno QW1. Decisão de limiar e somente regras são referências da ablação original, repetidas nas duas colunas. A pontuação de regras do fluxo Modal foi corrigida e os agregados foram recomputados localmente com as probabilidades persistidas, sem novo treinamento. A função de regras é agora a mesma da ablação original. Os consensos originais utilizam RF, RF+SMOTE e GB; os acrescentados utilizam XGBoost, RF+SMOTE e GB. Os testes usam proporção de 30\% e semente 42. A seleção do maior $F_1$ nos testes é exploratória, não avaliação independente da escolha dos limiares. Fonte: \path{data/ablation_results.csv}; auditoria: \path{data/qw1_modal_recompute_meta.json}.
 \end{table}

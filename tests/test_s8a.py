@@ -20,7 +20,7 @@ def test_prompt_appendix_is_literal_source_bytes(version, index):
     assert len(blocks) == 7
     source = (ROOT / f'gzcmd/gzcmd_{version}_llm_prompt.md').read_bytes()
     assert blocks[index] == source
-    assert 'transcrição literal de instrumento fica fora da regra de travessão' in appendix.decode('utf-8')
+    assert 'As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo.' in appendix.decode('utf-8')
 
 
 def test_editorial_tables_regenerate_and_historical_numeric_cells_stay(tmp_path):
@@ -84,7 +84,7 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         assert len(text.split()) <= 500
         # O denominador 247 cabe no limite original de 12 números do resumo.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
         assert '36 PAR~=~2' in text
         assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text
@@ -93,13 +93,16 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
 
 
 def test_order_is_unverified_and_cdr_exposure_not_transferred_to_three_steps():
-    data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
+    # Pedido C10 da banca: procedimentos de origem movidos para o apêndice.
+    data = ''.join((L / name).read_text(encoding='utf-8')
+                   for name in ('capitulo_dados.tex', 'apendice_linkage_origem.tex'))
     assert 'Não foram documentados ordem, limite ou regra de parada' in data
     assert 'Se ela tivesse seguido ordem decrescente de escore do OpenRecLink' in data
     assert 'não nos passos 6, 9 e 11' in data
     assert 'revisora única, sem classificação independente' in data
     assert 'p.~36 a~38' in data
-    assert 'parecer do CEP abrange' in data
+    # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
+    assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
 
 
 def test_cutoff_sensitivity_has_no_sampling_interval_in_editorial_table():

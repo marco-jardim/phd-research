@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 import subprocess
 
@@ -131,7 +132,7 @@ def test_original_equity_history_unchanged():
 def test_comparisons_labeled():
     assert len(list((ROOT / "text/latex/tables").glob("tab_equidade_arranjo*.tex"))) == 7
     chapter = (ROOT / "text/latex/estudo5_equidade.tex").read_text(encoding="utf-8")
-    assert r"\input{tables/tab_equidade_arranjo.tex}" in chapter
+    assert r"\input{tables/editorial/tab_den30_equidade_arranjo.tex}" in re.sub(r"(?m)^%.*$", "", chapter)
     assert "decisão principal" in chapter and "comparação" in chapter
     for mode in ("vigilancia", "confirmacao"):
         table = ROOT / f"text/latex/tables/tab_equidade_arranjo_grupos_{mode}.tex"

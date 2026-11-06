@@ -1,8 +1,13 @@
-"""Generate LaTeX tables from ablation study results for Cap5."""
+"""Gera as duas tabelas atuais da ablação; --legacy-extras usa o gerador histórico.
+
+As tabelas Pareto e de impacto atuais têm gerador editorial próprio em
+scripts.tabelas_banca_b_editorial; não devem ser sobrescritas pelo layout antigo.
+"""
 
 from __future__ import annotations
 
 import pandas as pd
+import sys
 from pathlib import Path
 
 DATA = Path(__file__).resolve().parent.parent / "data"
@@ -12,6 +17,19 @@ OUT.mkdir(parents=True, exist_ok=True)
 # ── Load data ────────────────────────────────────────────────────────
 abl = pd.read_csv(DATA / "ablation_results.csv")
 pareto = pd.read_csv(DATA / "pareto_grid.csv")
+
+if "--legacy-extras" not in sys.argv:
+    from generate_ablation_tables import generate
+    sys.path.insert(0, str(DATA.parent))
+    from scripts.tabelas_banca_b_editorial import tabela_pareto, tabela_impacto
+
+    generate(abl, OUT)
+    tabela_pareto(OUT / "tab_pareto_frontier.tex")
+    tabela_pareto()
+    tabela_impacto()
+    print("[OK] tab_ablation_best_category.tex; tab_ablation_top10.tex")
+    print("[OK] tab_pareto_frontier.tex (base e editorial); editorial/tab_impacto_epidemiologico.tex")
+    raise SystemExit(0)
 
 # ── Table 1: Best per category ───────────────────────────────────────
 CATEGORY_ORDER = [

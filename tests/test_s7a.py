@@ -47,7 +47,9 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
 
 
 def test_cutoffs_remain_three_points_not_a_confidence_interval():
-    text = (LATEX / 'capitulo_dados.tex').read_text(encoding='utf-8')
+    # Pedido C10 da banca: cortes movidos para o apêndice do linkage de origem.
+    text = ''.join((LATEX / name).read_text(encoding='utf-8')
+                   for name in ('capitulo_dados.tex', 'apendice_linkage_origem.tex'))
     assert '7,0240; 7,8444; 7,9019' in text
     assert '7,8444 a 7,9019' not in text
 

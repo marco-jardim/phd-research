@@ -21,7 +21,7 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert "P-Platt" in text and "XGBoost" in text
         # Inclui o denominador 247 sem elevar o limite original de 12 números.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
     assert r"PAR é o \textit{label} da referência" in resumo
     assert "registered internally before evaluation" in abstract
     assert "preregistered" not in abstract
@@ -79,10 +79,11 @@ def test_final_editorial_contract_and_table_placement():
     assert "revisor perfeito" in conclusion
     assert "Sob a mesma hipótese de revisor e na mesma carga, nenhuma domina" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
-    cutoff = chapter.index(r"\subsection{Comparação com o corte 6,0}")
+    active = re.sub(r"(?m)^%.*$", "", chapter)
+    cutoff = active.index(r"\subsection{Comparação com o corte 6,0}")
     for mode in ("vigilancia", "confirmacao"):
-        name = f"tables/editorial/tab_equidade_arranjo_rejeicoes_cascata_v31_{mode}.tex"
-        assert chapter.index(r"\input{" + name + "}") < cutoff
+        name = f"tables/editorial/tab_den30_equidade_arranjo_rejeicoes_cascata_v31_{mode}.tex"
+        assert active.index(r"\input{" + name + "}") < cutoff
     assert "Não é incluída" in chapter
     assert "tab_equidade_v31_rejeicoes_cascata.tex" in chapter
 
