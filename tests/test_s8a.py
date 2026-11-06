@@ -64,7 +64,7 @@ def test_fp_position_and_loss_qualification_follow_sources():
     for mode, expected in [('vigilancia', [17, 11]), ('confirmacao', [4, 4])]:
         assert above.loc[above.modo.eq(mode), 'FP'].tolist() == expected
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'não reproduz 13 e 27 dos 36 vínculos recuperados pelo serviço' in conclusion
+    assert 'não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem' in conclusion
     assert 'aceita 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in conclusion
     assert '4 e 8 são PAR~=~2' in conclusion
     assert 'pior em todo desfecho' not in conclusion

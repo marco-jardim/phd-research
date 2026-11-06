@@ -99,7 +99,8 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     for original, current in zip(old, new):
         if original[0] == "Corte + revisão manual do serviço":
             assert current[2] == "cenário $\\geq " + bound + "$"
-            assert original[:2] == current[:2] and original[3:] == current[3:]
+            assert current[0] == "Corte + revisão clerical de origem"
+            assert original[1] == current[1] and original[3:] == current[3:]
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
             assert original[:2] == current[:2] and original[3:] == current[3:]

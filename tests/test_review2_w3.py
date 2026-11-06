@@ -25,7 +25,7 @@ def test_ablation_appendix_is_generated_expected_not_llm_observation():
     assert text == tables.appendix_ablation()
     assert "sem chamadas a modelo de linguagem" in text
     assert "não é desempenho observado de um LLM" in text
-    assert r"$\beta=0,5$" in text and r"$\beta=2,0$" in text
+    assert r"$\beta=0{,}5$" in text and r"$\beta=2{,}0$" in text
     assert "107,0" not in text
     assert "107 \\" in text
     assert text.count("Cada teste contém 74 vínculos") == 4
