@@ -1,6 +1,10 @@
 from pathlib import Path
 import re
 
+import pandas as pd
+from local_data import DATA_ROOT, requires_files
+from scripts.referencia_pos_orl import carregar, resumo_extrato
+
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
 
@@ -107,3 +111,41 @@ def test_canonical_names_and_operational_area_cinza_definition():
     assert "conversão em horas utiliza um parâmetro temporal" in intro
     assert "Esses valores constituem cenário exploratório, não carga histórica medida." in intro
     assert "Sua conversão em horas utiliza um parâmetro temporal e fornece ordem de grandeza, sem medir esforço observado." in intro
+
+
+def test_notification_year_aggregates_are_portable_and_match_text():
+    frame = pd.read_csv(ROOT / "data/extrato_resumo.csv").set_index("metrica")["valor"]
+    assert frame["ano_notificacao_min"] == 2013
+    assert frame["ano_notificacao_max"] == 2022
+    assert frame["n_sem_ano_notificacao"] == 0
+    assert frame["n_vinculos_notificacao_2013_2018"] == 63
+    assert frame["n_vinculos_notificacao_2019_2022"] == 184
+    assert frame["n_vinculos_notificacao_2013_2018"] + frame["n_vinculos_notificacao_2019_2022"] == frame["n_par1"] + frame["n_par2"]
+    chapter = (LATEX / "capitulo_dados.tex").read_text(encoding="utf-8")
+    assert "entre 2013 e 2022" in chapter
+    assert "184 correspondem a notificações de 2019 a 2022 e 63" in chapter
+    assert "2 de janeiro" not in chapter and "30 de dezembro" not in chapter
+
+
+@requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")
+def test_notification_year_aggregates_reproduce_from_private_input():
+    generated = resumo_extrato(carregar(DATA_ROOT / "data/COMPARADORSEMIDENT.csv"))
+    published = pd.read_csv(ROOT / "data/extrato_resumo.csv")
+    pd.testing.assert_frame_equal(generated, published)
+
+
+def test_review3_scope_and_experiment1_caveats():
+    for name in ("estudo1_comparador.tex", "estudo2_classificadores.tex", "conclusao.tex", "apendice_sensibilidade.tex"):
+        text = (LATEX / name).read_text(encoding="utf-8")
+        assert "GZ-CMD v3.1" in text and "arranjo P" in text
+        assert r"\path{data/exp1_vazamento_comparacao.csv}" in text
+        assert "situação de encerramento" in text
+    text = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
+    for phrase in ("0,941", "0,916", r"55,0\%", r"34,7\%", "conjuntos de teste sobrepostos", "atributos restritos", "amostra revisada de forma independente", "não examinados", "API externa", "causa associada", "direção dominante não é identificável"):
+        assert phrase in text, phrase
+    objectives = (LATEX / "capitulo3.tex").read_text(encoding="utf-8")
+    assert "investigação desnecessária" in objectives
+    assert "sem investigação" not in objectives
+    for name in ("estudo5_equidade.tex", "conclusao.tex"):
+        assert "não detecta esse erro diferencial" in (LATEX / name).read_text(encoding="utf-8")
+    assert "e detecção de vínculos}" in (LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8")
