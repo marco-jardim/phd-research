@@ -132,20 +132,19 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_forty_two_short_answers():
+def test_script_has_fifty_two_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 42
+    assert len(answers) == 52
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 43)
+        range(1, 53)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
-    counts = [len(answer.split()) for answer in answers]
-    recorded = re.search(r"São 42 respostas, com (.*?) palavras, respectivamente", source)[1]
-    assert [int(n) for n in re.findall(r"\d+", recorded)] == counts
+    recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
+    assert int(recorded) == len(answers)
 
 
 def scientific_requirements(csv_loader=read_csv):
@@ -181,9 +180,9 @@ def scientific_requirements(csv_loader=read_csv):
              "Se a revisão histórica seguiu o escore", "favoreceria O1", "mesmos", "verificados"],
         21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
               "O LLM nunca aceita sozinho", "Filtro antes do revisor humano",
-             "validação registrada própria", "VPN (valor preditivo negativo)"],
-        22: ["principal porque foi registrado antes", "análise de sensibilidade", "não confirmatória",
-             "sem dominância sustentada", "hipótese de revisor perfeito dos dois lados",
+               "validação registrada própria", "VPN (valor preditivo negativo)"],
+         22: ["o registro fixou a isotônica como calibração padrão", "análise de sensibilidade", "não confirmatória",
+              "sem dominância sustentada", "Hipótese de revisor perfeito dos dois lados",
               "Não é empate sem qualificação", "Não se substitui o revisor humano pelo LLM",
               "LLM como aceitador não se paga abaixo do corte",
               "Uma diferença de um vínculo em 36 não sustenta superioridade"],
@@ -195,13 +194,13 @@ def scientific_requirements(csv_loader=read_csv):
              "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
               "Se usar probabilidade aprendida", "1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22)",
-               "1:20 e 1:50 ficaram dentro da variação entre sementes", "Brier mediano da isotônica piorou em todas as razões",
-             "prevalência original", "Revisor humano no topo até o orçamento", "restante como não vínculo",
+                "1:20 e 1:50 são indistinguíveis da referência", "Brier mediano da isotônica piorou em todas as razões",
+              "uma execução contra dez sementes", "Revisor humano no topo até o orçamento", "restante como não vínculo",
              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro interno",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
              "Falha de transferência", "ancoragem", "quatro ações", "benchmark"],
         30: ["cobertura do topo da fila", "não reproduz", "no máximo 1 vínculo",
-             "recomendações a validar", "filtro experimental, nunca aceitando sozinho"],
+             "recomendações a validar", "filtro experimental com H=22, nunca aceitando sozinho"],
         43: [],
         44: [],
         45: [],
@@ -334,7 +333,7 @@ def scientific_requirements(csv_loader=read_csv):
                         braco="P", metrica="delta_p_max")
         block_name = "numérico (N)" if block == "N" else "de partição (R)"
         requirements[46].append(f"{pt_number(delta['maximo'], 2)} no bloco {block_name}")
-    sex = one_row(csv_loader("equidade_arranjo_pairwise_tests.csv"),
+    sex = one_row(csv_loader("equidade_arranjo_den30_pairwise_tests.csv"),
                   decisao="arranjo_P_vigilancia", dimension="sexo", metric="ppv")
     requirements[23].extend((
         f"p_{{BH}}={pt_number(sex['p_value_fdr'], 3)}",
@@ -377,8 +376,9 @@ def scientific_requirements(csv_loader=read_csv):
         )
         for arm in ("P", "O3"):
             effort = one_row(csv_loader("esforco_arranjo.csv"), modo=mode, braco=arm, carga="K1_humana")
-            if arm == "P":
-                requirements[49].append(pt_number(effort['horas_poupadas'], 0))
+            if arm == "P" and mode == "vigilancia":
+                o1 = one_row(comparator, modo=mode, ordenacao="O1_SCORE", carga="K1_humana")
+                requirements[49].append(f"O1 requer {integer(o1['k_min_equivalente_P'])} revisões")
         p = principal[mode]
         mode_text = "vigilância" if mode == "vigilancia" else "confirmação"
         requirements[28].append(f"{integer(p['perdidos'])} {'vínculos na ' if mode == 'vigilancia' else 'na '}{mode_text}")
@@ -514,7 +514,7 @@ def test_slide_and_script_s7_terminology_and_attribution():
         assert not re.search(r"rótulos?|calibração sigmoidal", text, re.I)
         assert singular in text and plural in text
     speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
-    assert "porque foi registrado antes" in speech.split("### 22.")[1].split("### 23.")[0]
+    assert "o registro fixou a isotônica como calibração padrão" in speech.split("### 22.")[1].split("### 23.")[0]
     assert "na base S6a" not in speech
     assert "Preservar o corte pode reduzir a revisão" not in slide_frames()[29]
     assert "Preservar o corte pode reduzir a revisão" not in speech.split("### 30.")[1].split("### 31.")[0]
@@ -786,7 +786,8 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
             assert "Preservar o corte" in text or "preservar o corte" in text
             assert "probabilidade ou escore" in text
             assert "curva de esforço" in text and "orçamento humano" in text
-            assert "nenhuma ordenação domina" in text.lower()
+            assert "na vigilância, nenhuma ordenação domina" in text.lower()
+            assert "na confirmação, o2 domina fracamente p" in text.lower()
             assert "fila por p_cal_ml" not in text and r"\texttt{p\_cal\_ml}" not in text
     for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
         assert "não-vínculo" not in text
@@ -850,7 +851,8 @@ def test_slides_no_control_characters_and_definitions_before_results():
     frames = slide_frames()
     for definition in ("OOF: fora da amostra", "FP: falso positivo", "VPP: valor preditivo positivo", "O3:", "O4:"):
         assert definition in frames[3]
-    assert "nenhuma ordenação domina em todas as cargas" in frames[3]
+    assert "Na vigilância, nenhuma ordenação domina" in frames[3]
+    assert "na confirmação, O2 domina fracamente P" in frames[3]
     for row in read_csv("subamostragem_treino_resumo.csv"):
         if row["population"] == "below" and row["variant"] == "isotonic" and row["metric"] == "brier" and row["ratio"] != "original":
             assert float(row["median"]) > float(row["reference"])
@@ -893,7 +895,7 @@ def test_script_s6_questions_and_provenance():
         assert " e ".join(f"{integer(row['k'])}/{integer(row['n'])}" for row in rows) in answer11
     assert "não houve varredura no arranjo" in questions.lower()
     assert "árvore compilada" in source
-    assert re.search(r"SHA-256[^\n]*`[0-9a-f]{64}`", source)
+    assert "SHA-256 dos PDFs: a atualizar no build final" in source
 
 
 def thesis_title():
@@ -918,7 +920,8 @@ def test_banca_e_title_terminology_and_new_answers():
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
     answers = {n: questions.split(f"### {n}.")[1].split("### ")[0] for n in range(34, 43)}
     for number, fragments in {
-        34: ("0,954", "21.620 para 41 pares", "18 min", "calibração OOF"),
+        34: ("0,954", "21.620 para 41 pares", "18 min", "Platt ajustado no treino",
+             "esperado, não observado", "sem chamada a LLM"),
         35: ("211 dos 247 vínculos (85,4%)", "preserva"),
         36: ("homonímia", "gzcmd/guardrails.py", "exploratórios"),
         37: ("README", "notebooks/README.md", "apendice_pacote.tex"),
@@ -949,5 +952,5 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
         "### Rastreabilidade dos números do arranjo", 1
     )[0]
     assert "as folhas da ficha correspondem às páginas físicas do PDF" in verification
-    assert "As 33 respostas têm no máximo 70 palavras, conforme contagem por espaços." in verification
+    assert "As 52 respostas têm limite de 70 palavras, conforme contagem por espaços" in verification
     assert "Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências." in verification

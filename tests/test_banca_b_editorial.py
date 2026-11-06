@@ -24,7 +24,7 @@ def test_editorial_tables_regenerate_from_canonical_artifacts(tmp_path, monkeypa
     monkeypatch.setattr(tables.nb03, "OUT", tmp_path)
     tables.main()
     generated = list(tmp_path.glob("*.tex"))
-    assert len(generated) == 5
+    assert len(generated) == 6
     for path in generated:
         assert path.read_text(encoding="utf-8") == (LATEX / "tables/editorial" / path.name).read_text(encoding="utf-8")
     assert historical == {p.name: p.read_bytes() for p in (LATEX / "tables").glob("*.tex")}
@@ -58,7 +58,7 @@ def test_uniform_nb02_nb03_are_single_sources_with_documented_discrepancy():
     assert tables.d(gb["Precision"]) == "0,885"
     assert "sensibilidade de 0,932 e precisão de 0,885" in text
     assert "não são adotados como resultado desta seção" in text
-    assert "O XGBoost desta etapa utiliza 200 estimadores" in text
+    assert r"XGBoost \cite{Chen2016xgboost} com 200 estimadores" in text
 
 
 def test_qw1_nonreproduction_remains_adjacent_to_historical_results():
@@ -92,11 +92,11 @@ def test_results_and_limitations_are_in_their_requested_sections():
     e2, e3 = study(2), study(3)
     assert e2.index("A construção do vetor de atributos") < e2.index(r"\section{Resultados}")
     assert e2.index(r"\section{Resultados}") < e2.index(r"\input{tables/tab_desempenho_faixas.tex}") < e2.index(r"\section{Discussão}")
-    assert e3.index(r"\section{Resultados}") < e3.index("Denomina-se óbito detectado") < e3.index(r"\section{Discussão}")
-    assert e3.index("diferença líquida de 24") < e3.index(r"\section{Discussão}")
+    assert e3.index(r"\label{sec:e3-impacto-metodo}") < e3.index("Denomina-se vínculo detectado") < e3.index(r"\section{Resultados}")
+    assert e3.index(r"\section{Resultados}") < e3.index("A diferença resulta de 27 vínculos recuperados pelo RF+SMOTE") < e3.index(r"\section{Discussão}")
     assert e3.count(r"\subsection{Limitações}") == 1
     assert e3.rindex(r"\subsection{") == e3.index(r"\subsection{Limitações}")
-    paragraph = next(p for p in e3.split("\n\n") if "diferença líquida de 24" in p)
+    paragraph = next(p for p in e3.split("\n\n") if p.startswith("Contra a referência operacional, a leitura muda."))
     for term in ("vazamento de alvo", "partição foi por linha", "limiares foram explorados no teste",
                  "10 dos 27", "sete por tuberculose e três por outras causas", "seis apresentavam campo ausente"):
         assert term in paragraph
@@ -130,7 +130,7 @@ def test_limiar_rules_and_comparator_neutrality_are_explicit():
     assert "afastamento do Python em relação ao peso 0,8" in e1
     assert "núcleo metodológico" not in e1
     assert "não é o XGBoost de 300 estimadores" in e1
-    assert "o RF da figura não é o RF sem SMOTE do comparativo QW1" in e1
+    assert r"A Figura~\ref{fig:shap-summary} provém de \path{scripts/qw1_modal_unified_pipeline.py}: um RF+SMOTE com 150 árvores" in e1
     assert r"\ref{sec:e3-contribuicao-framework}" not in e1
     assert r"\ref{sec:proposta-estrategia}" not in study(2)
     assert "itinerário terapêutico" not in e3

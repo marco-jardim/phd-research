@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Comparação de métodos: óbitos detectados, perdidos, revisões e sensibilidade.}
+\caption{Comparação de métodos: vínculos detectados, perdidos, revisões e sensibilidade.}
 \label{tab:impacto-epidemiologico}
 \footnotesize
 \begin{tabular}{@{}lrrrrrl@{}}
@@ -21,5 +21,5 @@ XGBoost $\geq$0,5 & 66 & 8 & 67 & 0,99 & 0,89 & 89,2 \\
 XGBoost $\geq$0,7 & 66 & 8 & 66 & 1,00 & 0,89 & 89,2 \\
 \bottomrule
 \end{tabular}
-\par\footnotesize Fonte: \path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; Prec.: precisão; Sensib.: sensibilidade; \% Verd.: proporção dos vínculos do teste detectados. O custo por óbito detectado, representado na figura, não é coluna desta tabela. As linhas XGBoost provêm do fluxo Modal, não da ablação original.
+\par\footnotesize Fonte: \path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; Prec.: precisão; Sensib.: sensibilidade; \% Verd.: proporção dos vínculos do teste detectados. O custo por vínculo (inverso do VPP), representado na figura, não é coluna desta tabela. As linhas XGBoost provêm do fluxo Modal, não da ablação original.
 \end{table}

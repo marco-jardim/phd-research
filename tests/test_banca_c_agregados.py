@@ -30,7 +30,7 @@ def test_cost_aggregate_reproduces_and_reconciles_all_components(tmp_path):
     output = tmp_path / "costs.csv"
     write_csv(output, rows)
     assert output.read_bytes() == (DATA / "custos_equivalentes_exploratorios.csv").read_bytes()
-    assert len(rows) == 6
+    assert len(rows) == 12
     for row in rows:
         assert row["exploratorio_post_hoc"] and row["revisor_perfeito"]
         assert row["custo_humano"] == row["revisoes_humanas"] * row["C_H"]
@@ -41,8 +41,23 @@ def test_cost_aggregate_reproduces_and_reconciles_all_components(tmp_path):
     vigil = {r["braco"]: r for r in rows if r["modo"] == "vigilancia"}
     assert [vigil[k]["subtotal_revisao_fp"] for k in
             ("P", "O3_recuperacao_equivalente", "P_MATCH_ao_humano")] == [307.72, 125, 122.72]
-    assert {r["par2_recuperados"] for r in vigil.values()} == {23}
-    assert {r["custo_fn_comum"] for r in vigil.values()} == {650}
+    equivalent = [r for r in vigil.values() if "mesma_carga" not in r["braco"]]
+    assert {r["par2_recuperados"] for r in equivalent} == {23}
+    assert {r["custo_fn_comum"] for r in equivalent} == {650}
+
+
+def test_o2_costs_same_load_and_equal_recovery():
+    rows = equivalent_costs(DATA, config())
+    confirmation = {r["braco"]: r for r in rows if r["modo"] == "confirmacao"}
+    assert confirmation["O2_mesma_carga_humana_P"]["revisoes_humanas"] == 17
+    assert confirmation["O2_recuperacao_equivalente"]["revisoes_humanas"] == 11
+    for key in ("O2_mesma_carga_humana_P", "O2_recuperacao_equivalente"):
+        assert confirmation[key]["par2_recuperados"] == 9
+        assert confirmation[key]["fp"] == 0
+    vigilance = {r["braco"]: r for r in rows if r["modo"] == "vigilancia"}
+    assert vigilance["O2_recuperacao_equivalente"]["subtotal_revisao_fp"] == 4163
+    assert vigilance["O2_mesma_carga_humana_P"]["par2_recuperados"] == 12
+    assert vigilance["O2_mesma_carga_humana_P"]["par2_perdidos"] == 24
 
 
 def test_costs_are_read_from_policy_not_hardcoded():

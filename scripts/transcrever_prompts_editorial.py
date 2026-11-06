@@ -27,9 +27,9 @@ def role_payloads(root=ROOT):
 
 def generate(root=ROOT, output=None):
     output = output or root / 'text/latex/apendice_prompts.tex'
-    text = r'''As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo. A transcrição literal de instrumento fica fora da regra de travessão adotada para o texto autoral.
+    text = r'''As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo. Nos arquivos-base, a designação v3.1 corresponde à revisão interna das instruções v3; nesta tese, v3.1 designa somente a política de decisão, e as instruções do primeiro arquivo são chamadas v3.
 
-O carregador extrai a mensagem de sistema até a primeira separadora e a de usuário até a seguinte. Na v3, a política por banda está após a primeira separadora e não foi enviada; na v4, a política única pelos campos integra o sistema. Títulos, avisos e exemplos do arquivo-base não integram as mensagens enviadas. Os complementos de papel provêm de \path{gzcmd/llm_review.py}: dicionário de papéis, construção da mensagem efetiva do árbitro e instrução adicional do modo em lote. A instrução do árbitro genérico é distinguida da chamada efetivamente usada para arbitragem.
+O carregador extrai a mensagem de sistema até a primeira separadora e a de usuário até a seguinte. Na v3, a política por banda está após a primeira separadora e não foi enviada, embora a mensagem de usuário peça a aplicação da política de decisão adequada à banda; na v4, a política única pelos campos integra o sistema. Títulos, avisos e exemplos do arquivo-base não integram as mensagens enviadas. Os complementos de papel provêm de \path{gzcmd/llm_review.py}: dicionário de papéis, construção da mensagem efetiva do árbitro e instrução adicional do modo em lote. A instrução do árbitro genérico é distinguida da chamada efetivamente usada para arbitragem.
 
 '''.encode('utf-8')
     for version in ('v3', 'v4'):

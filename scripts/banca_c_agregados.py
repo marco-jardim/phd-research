@@ -38,7 +38,11 @@ def one(rows, **criteria):
 
 
 def equivalent_costs(data, config):
-    """Mesma recuperação por modo; custo de FN comum explícito, não escondido."""
+    """Custos por modo, em recuperação equivalente e na mesma carga humana.
+
+    O campo legado custo_fn_comum só é comum quando fn_igual_a_P é verdadeiro.
+    Nos outros cenários inclui as perdas adicionais, sem escondê-las no subtotal.
+    """
     arrangement = read_csv(data / "arranjo_corte_metricas.csv")
     rankings = read_csv(data / "comparador_mesma_carga.csv")
     human = read_csv(data / "comparador_p_match_humano.csv")
@@ -59,23 +63,35 @@ def equivalent_costs(data, config):
                               ("human_review", "llm_review", "false_positive",
                                "false_negative"))
         scenarios = [
-            ("P", int(p["pares_humano"]), int(p["pares_llm"]), int(p["fp"])),
+            ("P", int(p["pares_humano"]), int(p["pares_llm"]), int(p["fp"]), recovered),
             ("O3_recuperacao_equivalente", int(o3["k"]), 0,
-             int(o3["comparador_fp_revisor_perfeito"])),
+             int(o3["comparador_fp_revisor_perfeito"]), recovered),
             ("P_MATCH_ao_humano", int(match["P_revisoes_humanas_total"]),
-             int(p["pares_llm"]), int(match["P_FP_revisor_perfeito"])),
+             int(p["pares_llm"]), int(match["P_FP_revisor_perfeito"]), recovered),
         ]
-        for arm, h, llm, fp in scenarios:
+        for ranking in ("O2_CdR", "O3_p_cal_ml"):
+            for load, suffix in (("K1_humana", "mesma_carga_humana_P"),
+                                 ("k_min_equivalente_P", "recuperacao_equivalente")):
+                if ranking == "O3_p_cal_ml" and load == "k_min_equivalente_P":
+                    continue  # Linha O3 histórica já presente.
+                row = one(rankings, modo=mode, ordenacao=ranking, carga=load)
+                scenarios.append((ranking.split("_")[0] + "_" + suffix,
+                                  int(row["k"]), 0,
+                                  int(row["comparador_fp_revisor_perfeito"]),
+                                  int(row["par2_topk"])))
+        for arm, h, llm, fp, scenario_recovered in scenarios:
+            scenario_lost = lost + recovered - scenario_recovered
             human_cost, llm_cost, fp_cost = h * c_h, llm * c_l, fp * c_fp
             subtotal = human_cost + llm_cost + fp_cost
             output.append(dict(
-                modo=mode, braco=arm, par2_recuperados=recovered,
-                par2_perdidos=lost, revisoes_humanas=h, pares_llm=llm, fp=fp,
+                modo=mode, braco=arm, par2_recuperados=scenario_recovered,
+                par2_perdidos=scenario_lost, revisoes_humanas=h, pares_llm=llm, fp=fp,
                 C_H=c_h, C_LLM=c_l, C_FP=c_fp, C_FN=c_fn,
                 custo_humano=human_cost, custo_llm=llm_cost, custo_fp=fp_cost,
                 subtotal_revisao_fp=round(subtotal, 6),
-                custo_fn_comum=lost * c_fn,
-                perda_total=round(subtotal + lost * c_fn, 6),
+                custo_fn_comum=scenario_lost * c_fn,
+                fn_igual_a_P=scenario_lost == lost,
+                perda_total=round(subtotal + scenario_lost * c_fn, 6),
                 unidade="revisoes_humanas_equivalentes",
                 exploratorio_post_hoc=True, revisor_perfeito=True,
                 fontes="arranjo_corte_metricas.csv;comparador_mesma_carga.csv;"

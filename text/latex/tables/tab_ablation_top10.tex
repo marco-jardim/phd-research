@@ -1,24 +1,24 @@
 \begin{table}[htbp]
 \centering
-\caption{Dez configurações do estudo de ablação em ordenação exploratória por F1 nos respectivos testes.}
+\caption{Dez configurações do estudo de ablação com maior F1, em ordenação exploratória nos respectivos testes.}
 \label{tab:ablation-top10}
 \small
-\begin{tabular}{clccc}
+\begin{tabular}{cp{8cm}ccc}
 \toprule
 \# & Configuração & Precisão & Sensibilidade & F1 \\
 \midrule
-1 & Somente ML: XGBoost ($\geq$0,7) & 1,000 & 0,892 & \textbf{0,943} \\
-2 & Somente ML: XGBoost ($\geq$0,5) & 0,985 & 0,892 & 0,936 \\
-3 & Somente ML: XGBoost ($\geq$0,3) & 0,944 & 0,919 & 0,932 \\
-4 & Somente ML: RF+SMOTE ($\geq$0,5) & 0,957 & 0,905 & 0,931 \\
-5 & Consenso ML (limiar 0,7; 3 modelos) & 1,000 & 0,865 & 0,928 \\
-6 & Somente ML: RF+SMOTE ($\geq$0,3) & 0,869 & 0,986 & 0,924 \\
-7 & Consenso ML (limiar 0,5; 3 modelos) & 0,957 & 0,892 & 0,923 \\
-8 & Híbrido OR RF+SMOTE $\geq$0,7 + Regras$\geq$9 & 0,985 & 0,865 & 0,921 \\
-9 & Híbrido OR RF+SMOTE $\geq$0,7 + Regras$\geq$8 & 0,985 & 0,865 & 0,921 \\
-10 & Somente ML: RF+SMOTE ($\geq$0,7) & 0,985 & 0,865 & 0,921 \\
+1 & Híbrido OR XGBoost $\geq$0,7 + Regras$\geq$8 & 1,000 & 0,919 & 0,958 \\
+2 & Somente ML XGBoost ($\geq$0,7) & 1,000 & 0,892 & 0,943 \\
+3 & Híbrido OR XGBoost $\geq$0,7 + Regras$\geq$9 & 1,000 & 0,892 & 0,943 \\
+4 & Consenso ML XGBoost maioria (limiar=0,7, 3 modelos) & 1,000 & 0,892 & 0,943 \\
+5 & Somente ML XGBoost ($\geq$0,5) & 0,985 & 0,892 & 0,936 \\
+6 & Consenso ML XGBoost maioria (limiar=0,5, 3 modelos) & 0,985 & 0,892 & 0,936 \\
+7 & Somente ML XGBoost ($\geq$0,3) & 0,944 & 0,919 & 0,932 \\
+8 & Somente ML RF+SMOTE ($\geq$0,5) & 0,957 & 0,905 & 0,931 \\
+9 & Consenso ML (limiar=0,7, 3 modelos) & 1,000 & 0,865 & 0,928 \\
+10 & Somente ML RF+SMOTE ($\geq$0,3) & 0,869 & 0,986 & 0,924 \\
 \bottomrule
 \end{tabular}
 \vspace{2pt}
-\par\small Nota: As linhas 1 a 3 provêm dos acréscimos com XGBoost pelo fluxo Modal; as linhas 4 a 10 provêm da ablação original, cujo consenso utiliza RF, RF+SMOTE e GB. A tabela apresenta um recorte de configurações, não as dez primeiras de todas as linhas do artefato ampliado. A ordenação por $F_1$ foi obtida após avaliação de grades de limiares nos respectivos testes internos, sem conjunto intermediário de validação para essa escolha; não constitui seleção validada nem avaliação independente dos limiares. A coincidência de proporção de teste (30\%) e semente (42) não comprova identidade das linhas. Os resultados com XGBoost aqui apresentados não são os do teste interno QW1.
+\par\small Nota: As configurações identificadas por XGBoost provêm dos acréscimos do fluxo Modal, recomputados localmente após correção da pontuação de regras; as demais provêm da ablação original. Os resultados não são os do teste interno QW1. A tabela ordena as 103 configurações por $F_1$, com desempate pela ordem do artefato, e apresenta as dez primeiras. Os limiares foram explorados nos respectivos testes, sem avaliação independente de sua escolha. Fonte: \path{data/ablation_results.csv}.
 \end{table}

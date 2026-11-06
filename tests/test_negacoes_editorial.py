@@ -22,7 +22,7 @@ PARAGRAPHS = [
     ("estudo4_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A incompatibilidade geral entre paridade"),
-    ("estudo5_equidade.tex", "A construção do padrão-ouro limita a inferência"),
+    ("estudo5_equidade.tex", "A construção da referência operacional limita a inferência"),
     ("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais"),
     ("estudo1_comparador.tex", "As duas implementações não são equivalentes"),
 ]
@@ -50,7 +50,7 @@ EXPECTED_NEGATIONS = {
     "Na cascata v3.1 sobre a base inteira, Claude Sonnet": [0, 2],
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A incompatibilidade geral entre paridade": [0, 1, 0, 0, 1, 0],
-    "A construção do padrão-ouro limita a inferência": [0, 1, 2, 1, 0, 0, 0],
+    "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
     "O terceiro objetivo comparou estratégias operacionais": [0, 0, 0, 2, 1],
     "As duas implementações não são equivalentes": [1, 1, 3, 1, 0],
 }
@@ -125,10 +125,10 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "não demonstrou calibração absoluta na área cinza da nota" in calibration
     assert "não corrigiria o viés" in calibration
     assert "não de impossibilidade geral do método" in calibration
-    equity = paragraph("estudo5_equidade.tex", "A construção do padrão-ouro limita a inferência")
+    equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")
     assert "a possível incorporação dessas evidências à referência não foi quantificada" in equity
-    assert r"O corte define PAR~=~1, com viés de verificação; o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
-    assert "o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
+    assert r"O corte define PAR~=~1, com viés de verificação; adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
+    assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
     conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")

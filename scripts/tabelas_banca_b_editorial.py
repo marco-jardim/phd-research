@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 
 import pandas as pd
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 from scripts import gerar_tabelas_nb03_faixas as nb03
 
-ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "text/latex/tables/editorial"
 
 
@@ -24,7 +27,7 @@ def dominated(frame: pd.DataFrame, row: pd.Series) -> bool:
     ).any())
 
 
-def tabela_pareto() -> None:
+def tabela_pareto(destino: Path | None = None) -> None:
     grid = pd.read_csv(ROOT / "data/pareto_grid.csv")
     rf = grid[grid.ml_model.eq("RF+SMOTE")]
     # Representantes da tabela historica, sem escolher novos pontos no teste.
@@ -45,7 +48,8 @@ def tabela_pareto() -> None:
              r"\caption{Pontos exploratórios de RF+SMOTE e XGBoost no plano precisão $\times$ sensibilidade. "
              r"São dez pontos não dominados dentro de cada modelo (sete de RF+SMOTE e três de XGBoost); "
              r"os dois pontos dominados do XGBoost são mantidos e assinalados para documentar a grade histórica. "
-             r"Os protocolos e as implementações de regras diferem entre os modelos; os limiares foram "
+             r"Os protocolos diferem entre os modelos. A pontuação de regras do fluxo Modal foi corrigida "
+             r"para reutilizar a função da ablação original; os pontos XGBoost desta grade não aplicam esse filtro. Os limiares foram "
              r"explorados nos respectivos testes, sem avaliação independente de sua escolha.}",
              r"\label{tab:pareto-frontier}", r"\small",
              r"\begin{tabular}{lcccccc}", r"\toprule",
@@ -65,7 +69,7 @@ def tabela_pareto() -> None:
               r"$\theta_{\text{ML}}$: probabilidade mínima; $\theta_{\text{Regras}}$: escore mínimo de regras, "
               r"com zero indicando ausência desse filtro. XGBoost 0,50 e 0,90 são dominados por 0,70. "
               r"A contagem é por modelo, não da união entre protocolos distintos.", r"\end{table}", ""]
-    (OUT / "tab_pareto_frontier.tex").write_text("\n".join(lines), encoding="utf-8")
+    (destino or OUT / "tab_pareto_frontier.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def tabela_nb02() -> None:
@@ -85,13 +89,13 @@ def tabela_nb02() -> None:
               r"\path{data/nb02_results.json}, gerado por \path{scripts/run_nb02_uniform.py}. "
               r"A diferença em relação ao caderno histórico não tem causa documentada; "
               r"adota-se aqui apenas o artefato do script uniforme.", r"\end{table}", ""]
-    (OUT / "tab_nb02_recall.tex").write_text("\n".join(lines), encoding="utf-8")
+    (OUT / "tab_nb02_recall.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def tabela_impacto() -> None:
     data = pd.read_csv(ROOT / "data/epidemiological_impact.csv")
     lines = [r"\begin{table}[htbp]", r"\centering",
-             r"\caption{Comparação de métodos: óbitos detectados, perdidos, revisões e sensibilidade.}",
+             r"\caption{Comparação de métodos: vínculos detectados, perdidos, revisões e sensibilidade.}",
              r"\label{tab:impacto-epidemiologico}", r"\footnotesize",
              r"\begin{tabular}{@{}lrrrrrl@{}}", r"\toprule",
              r"Método & Det. & Perd. & Rev. & Prec. & Sensib. & \% Verd. \\", r"\midrule"]
@@ -106,9 +110,17 @@ def tabela_impacto() -> None:
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\footnotesize Fonte: "
               r"\path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; "
               r"Prec.: precisão; Sensib.: sensibilidade; \% Verd.: proporção dos vínculos do teste detectados. "
-              r"O custo por óbito detectado, representado na figura, não é coluna desta tabela. "
+              r"O custo por vínculo (inverso do VPP), representado na figura, não é coluna desta tabela. "
               r"As linhas XGBoost provêm do fluxo Modal, não da ablação original.", r"\end{table}", ""]
-    (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8")
+    (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
+
+
+def tabela_perfil_recuperados() -> None:
+    historical = ROOT / "text/latex/tables/tab_perfil_recuperados.tex"
+    text = historical.read_text(encoding="utf-8").replace(
+        "Perfil dos óbitos recuperados", "Perfil dos vínculos recuperados"
+    )
+    (OUT / historical.name).write_text(text, encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -116,6 +128,7 @@ def main() -> None:
     tabela_pareto()
     tabela_nb02()
     tabela_impacto()
+    tabela_perfil_recuperados()
     nb03.OUT = OUT
     nb03.tabela_nb03()
     table = OUT / "tab_nb03_precision.tex"
@@ -125,7 +138,7 @@ def main() -> None:
     text = text.replace(r"N~=~número", r"Fonte canônica: \path{data/nb03_results.json}, "
                         r"gerado por \path{scripts/run_nb03_uniform.py}. "
                         r"A causa da diferença em relação ao caderno histórico não está documentada. N~=~número")
-    table.write_text(text, encoding="utf-8")
+    table.write_text(text, encoding="utf-8", newline="\n")
     qw1 = ROOT / "text/latex/tables/tab_qw1_deep_learning.tex"
     note = (r"\par\footnotesize Resultados históricos do QW1. No controle A0, o RF passou de "
             r"$F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, "
@@ -133,7 +146,7 @@ def main() -> None:
             r"(Apêndice~\ref{sec:sensibilidade-qw1}).")
     (OUT / qw1.name).write_text(qw1.read_text(encoding="utf-8").replace(
         r"\end{table}", note + "\n" + r"\end{table}"
-    ), encoding="utf-8")
+    ), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
