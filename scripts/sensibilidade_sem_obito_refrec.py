@@ -228,5 +228,43 @@ def executar():
     return res
 
 
+def atualizar_proveniencia_sem_treino():
+    """Revalida agregados congelados e atualiza dependências, sem ajustar modelos.
+
+    Preserva datas, versões e métricas da execução original. Somente a correção
+    Modal e a fonte agregada podem mudar; a auditoria anterior fica registrada.
+    """
+    meta = json.loads(META.read_text(encoding="utf-8"))
+    assert meta["csv_sha256"] == sha256(OUT)
+    assert meta["entrada_sha256"] == sha256(EXTRATO)
+    res = pd.read_csv(OUT)
+    conferir_controle(pd.DataFrame(meta["cenarios"]["A"]["configuracoes_70"]), res.iloc[0])
+    allowed = {"scripts/sensibilidade_sem_obito_refrec.py",
+               "scripts/qw1_modal_unified_pipeline.py", "data/ablation_results.csv"}
+    for path, expected in meta["fontes_sha256"].items():
+        if path not in allowed:
+            assert sha256(ROOT / path) == expected, path
+    original = meta["fontes_sha256"].copy()
+    meta["fontes_sha256"] = {path: sha256(ROOT / path) for path in original}
+    meta["revalidacao_sem_treino"] = {
+        "data_utc": datetime.now(timezone.utc).isoformat(),
+        "fontes_sha256_anteriores": original,
+        "controle": "70 configurações originais preservadas; métricas não recalculadas",
+        "treinamento": False,
+    }
+    with META.open("w", encoding="utf-8", newline="\n") as arquivo:
+        json.dump(limpar_nan(meta), arquivo, ensure_ascii=False, indent=2, allow_nan=False)
+        arquivo.write("\n")
+    print("Proveniência revalidada sem treinamento: 70 controles; CSV e métricas preservados")
+
+
 if __name__ == "__main__":
-    executar()
+    import argparse
+
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--refresh-provenance-only", action="store_true")
+    args = parser.parse_args()
+    if args.refresh_provenance_only:
+        atualizar_proveniencia_sem_treino()
+    else:
+        executar()

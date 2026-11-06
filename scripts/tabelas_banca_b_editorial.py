@@ -24,7 +24,7 @@ def dominated(frame: pd.DataFrame, row: pd.Series) -> bool:
     ).any())
 
 
-def tabela_pareto() -> None:
+def tabela_pareto(destino: Path | None = None) -> None:
     grid = pd.read_csv(ROOT / "data/pareto_grid.csv")
     rf = grid[grid.ml_model.eq("RF+SMOTE")]
     # Representantes da tabela historica, sem escolher novos pontos no teste.
@@ -45,7 +45,8 @@ def tabela_pareto() -> None:
              r"\caption{Pontos exploratórios de RF+SMOTE e XGBoost no plano precisão $\times$ sensibilidade. "
              r"São dez pontos não dominados dentro de cada modelo (sete de RF+SMOTE e três de XGBoost); "
              r"os dois pontos dominados do XGBoost são mantidos e assinalados para documentar a grade histórica. "
-             r"Os protocolos e as implementações de regras diferem entre os modelos; os limiares foram "
+             r"Os protocolos diferem entre os modelos. A pontuação de regras do fluxo Modal foi corrigida "
+             r"para reutilizar a função da ablação original; os pontos XGBoost desta grade não aplicam esse filtro. Os limiares foram "
              r"explorados nos respectivos testes, sem avaliação independente de sua escolha.}",
              r"\label{tab:pareto-frontier}", r"\small",
              r"\begin{tabular}{lcccccc}", r"\toprule",
@@ -65,7 +66,7 @@ def tabela_pareto() -> None:
               r"$\theta_{\text{ML}}$: probabilidade mínima; $\theta_{\text{Regras}}$: escore mínimo de regras, "
               r"com zero indicando ausência desse filtro. XGBoost 0,50 e 0,90 são dominados por 0,70. "
               r"A contagem é por modelo, não da união entre protocolos distintos.", r"\end{table}", ""]
-    (OUT / "tab_pareto_frontier.tex").write_text("\n".join(lines), encoding="utf-8")
+    (destino or OUT / "tab_pareto_frontier.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def tabela_nb02() -> None:
@@ -108,7 +109,7 @@ def tabela_impacto() -> None:
               r"Prec.: precisão; Sensib.: sensibilidade; \% Verd.: proporção dos vínculos do teste detectados. "
               r"O custo por óbito detectado, representado na figura, não é coluna desta tabela. "
               r"As linhas XGBoost provêm do fluxo Modal, não da ablação original.", r"\end{table}", ""]
-    (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8")
+    (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def main() -> None:
