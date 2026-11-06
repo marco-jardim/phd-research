@@ -13,6 +13,8 @@ As cadeias equivalentes em sintaxe Scopus, a correspondência com as variantes P
 
 \section{Cadeias de busca}
 
+As consultas do OpenAlex são designadas Q1 a Q5 neste apêndice, correspondendo às chaves históricas O1 a O5 dos arquivos de coleta, que foram preservadas. Essa distinção evita confundi-las com as ordenações O1 a O4 do Estudo~4.
+
 A cadeia principal combina três blocos, em português e inglês, para o domínio do \textit{linkage}, o método de aprendizado e o contexto brasileiro:
 
 \begin{quote}
@@ -62,11 +64,11 @@ BVS/LILACS & B1, cadeia principal & 3\textsuperscript{c} & 0 \\
 BVS/LILACS & B2, ``record linkage'' e aprendizado de máquina, coleção completa & 71 & n.t. \\
 BVS/LILACS & B3, termos em português, somente LILACS & 1 & 0 \\
 BVS/LILACS & Cadeia ampliada & n.e. & n.e. \\
-OpenAlex & O1, cadeia principal, título e resumo & 7 & 3\textsuperscript{d} \\
-OpenAlex & O2, variante com \textit{classifier} e SUS, título e resumo & 13 & 3\textsuperscript{d} \\
-OpenAlex & O3, cadeia principal, parâmetro \texttt{search} & 2.115 & 3\textsuperscript{d} \\
-OpenAlex & O4, termos novos da cadeia ampliada, parâmetro \texttt{search} & 1.153 & 3\textsuperscript{d} \\
-OpenAlex & O5, cadeia ampliada, título e resumo & 11 & 3\textsuperscript{d} \\
+OpenAlex & Q1, cadeia principal, título e resumo & 7 & 3\textsuperscript{d} \\
+OpenAlex & Q2, variante com \textit{classifier} e SUS, título e resumo & 13 & 3\textsuperscript{d} \\
+OpenAlex & Q3, cadeia principal, parâmetro \texttt{search} & 2.115 & 3\textsuperscript{d} \\
+OpenAlex & Q4, termos novos da cadeia ampliada, parâmetro \texttt{search} & 1.153 & 3\textsuperscript{d} \\
+OpenAlex & Q5, cadeia ampliada, título e resumo & 11 & 3\textsuperscript{d} \\
 Consensus & C1, pedido com o critério de inclusão & 15\textsuperscript{e} & 1\textsuperscript{e} \\
 Item conhecido & Trabalho não recuperado por nenhuma cadeia & 0 & 1 \\
 Scopus & Sc1, cadeia principal, título, resumo e palavras-chave & 0 & 0 \\
@@ -86,7 +88,7 @@ Na cadeia principal do PubMed, os 73 registros recuperados não incluíam nenhum
 
 Na SciELO, a cadeia principal e as combinações com aprendizado de máquina não retornaram documentos. A busca ampla por ``record linkage'' recuperou 131 registros, e os 56 títulos únicos publicados a partir de 2010 tratavam de aplicações do método, de sua acurácia e de sua qualidade, ou de temas sem relação com a classificação de pares. Entre eles, \citeonline{Brustulin2018posprocessamento} incluíram uma etapa determinística de pós-processamento do \textit{linkage} probabilístico, e \citeonline{Girianelli2019interobservador} avaliaram a concordância entre revisores humanos na classificação de pares, sem classificador supervisionado. Na BVS, a cadeia principal recuperou três registros, e apenas um estava no período, um estudo de harmonização de registros eletrônicos para aprendizado federado que não classifica pares. A consulta restrita à LILACS retornou um estudo chileno de processamento de linguagem natural, e a consulta B2, com 71 registros na coleção completa, não foi triada individualmente nesta rodada. A cadeia ampliada não pôde ser executada na SciELO nem na BVS nesta rodada, pois os portais recusam requisições diretas e o navegador usado na primeira rodada deixou de estar disponível.
 
-No OpenAlex, as cinco consultas recuperaram, em conjunto, 3.060 registros únicos. Nas consultas em título e resumo (O1, O2 e O5), as triagens por título resultaram em três estudos que atendem ao critério, os mesmos recuperados pelas consultas em \texttt{search} (O3 e O4). Das 2.115 recuperações de O3, 1.894 foram excluídas por não terem termo de \textit{linkage} no título, 196 pelo filtro de palavras-chave sobre o resumo e 21 por leitura do título, e o mesmo padrão se repetiu em O4. A cadeia ampliada, portanto, não acrescentou nenhum estudo ao conjunto selecionado. Um quarto estudo, o trabalho de conclusão de curso de \citeonline{Paiva2025comparador}, não foi recuperado por nenhuma cadeia e foi incluído por ser conhecido previamente, o que indica que o conjunto selecionado depende em parte do conhecimento prévio do autor e que a cobertura das cadeias é incompleta.
+No OpenAlex, as cinco consultas recuperaram, em conjunto, 3.060 registros únicos. Nas consultas em título e resumo (Q1, Q2 e Q5), as triagens por título resultaram em três estudos que atendem ao critério, os mesmos recuperados pelas consultas em \texttt{search} (Q3 e Q4). Das 2.115 recuperações de Q3, 1.894 foram excluídas por não terem termo de \textit{linkage} no título, 196 pelo filtro de palavras-chave sobre o resumo e 21 por leitura do título, e o mesmo padrão se repetiu em Q4. A cadeia ampliada, portanto, não acrescentou nenhum estudo ao conjunto selecionado. Um quarto estudo, o trabalho de conclusão de curso de \citeonline{Paiva2025comparador}, não foi recuperado por nenhuma cadeia e foi incluído por ser conhecido previamente, o que indica que o conjunto selecionado depende em parte do conhecimento prévio do autor e que a cobertura das cadeias é incompleta.
 
 O Consensus listou quinze estudos: um brasileiro que atende integralmente ao critério, cinco brasileiros relacionados e nove internacionais relacionados, e não recuperou teses ou dissertações da Biblioteca Digital Brasileira de Teses e Dissertações. O agente classificou apenas \citeonline{Lages2026trauma} como estudo estrito, ao passo que \citeonline{Pereira2024supervised} e \citeonline{Pita2017trainable} aparecem entre os relacionados; a triagem deste apêndice, baseada nos resumos, mantém os dois como incluídos, o primeiro sem ressalva e o segundo com a ressalva de que o resumo não detalha a base brasileira. O número de estudos que atendem ao critério varia, portanto, de um a quatro conforme o rigor aplicado, sem que a conclusão de escassez se altere.
 
