@@ -132,15 +132,15 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_fifty_two_short_answers():
+def test_script_has_sixty_three_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 52
+    assert len(answers) == 63
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 53)
+        range(1, 64)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
@@ -184,23 +184,22 @@ def scientific_requirements(csv_loader=read_csv):
          22: ["o registro fixou a isotônica como calibração padrão", "análise de sensibilidade", "não confirmatória",
               "sem dominância sustentada", "Hipótese de revisor perfeito dos dois lados",
               "Não é empate sem qualificação", "Não se substitui o revisor humano pelo LLM",
-              "LLM como aceitador não se paga abaixo do corte",
+               "aceitação autônoma e revisão das aceitações", "a vantagem inverte",
               "Uma diferença de um vínculo em 36 não sustenta superioridade"],
         23: ["proporção de vínculos", "definida pelo corte", "FP abaixo do corte"],
         24: [r"Disparidade herdada do corte e do \textit{label}", "Benjamini-Hochberg: vigilância"],
         26: ["Respostas históricas reutilizadas", "conhecido antes do registro", "favoreceria O1",
               "recalibração, braços e avaliação", "desvios de protocolo", "não de generalização"],
         28: ["perdas são de cobertura",
-             "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
+             "os orçamentos são distintos", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
               "Se usar probabilidade aprendida", "1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22)",
                 "1:20 e 1:50 são indistinguíveis da referência", "Brier mediano da isotônica piorou em todas as razões",
               "uma execução contra dez sementes", "Revisor humano no topo até o orçamento", "restante como não vínculo",
-             "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro interno",
+              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro de decisões",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
-             "Falha de transferência", "ancoragem", "quatro ações", "benchmark"],
-        30: ["cobertura do topo da fila", "não reproduz", "no máximo 1 vínculo",
-             "recomendações a validar", "filtro experimental com H=22, nunca aceitando sozinho"],
+              "Não distingue ancoragem de abstenção", "quatro ações", "benchmark"],
+        30: ["Agradecimentos", "Discussão com a banca"],
         43: [],
         44: [],
         45: [],
@@ -265,12 +264,6 @@ def scientific_requirements(csv_loader=read_csv):
     cost_losses = one_row(
         mechanisms, modo="confirmacao", braco="P", mecanismo="AUTO_NONMATCH_custo"
     )
-    requirements[30].extend((
-        f"{integer(principal['vigilancia']['perdidos'])} vínculos na vigilância e "
-        f"{integer(principal['confirmacao']['perdidos'])} na confirmação",
-        f"{integer(principal['vigilancia']['fp'])} e "
-        f"{integer(principal['confirmacao']['fp'])} falsos positivos",
-    ))
     requirements[49].extend((
         f"{integer(cost_losses['vinculos_perdidos'])} perdas por AUTO\\_NONMATCH",
         "Sem varredura de custos no arranjo",
@@ -500,10 +493,11 @@ def test_slide_contract_rejects_changed_csv_dominance():
 
 
 def test_slide_final_message_rejects_missing_false_positives():
-    frame = slide_frames()[29]
-    frame = re.sub(r"\d+ e \d+ falsos positivos", "", frame)
-    with pytest.raises(AssertionError, match="falsos positivos"):
-        assert_fragments(frame, scientific_requirements()[30])
+    # Os resultados permanecem no quadro 19, não repetidos nos agradecimentos.
+    frame = slide_frames()[18]
+    frame = frame.replace("21 e 4 FP", "")
+    with pytest.raises(AssertionError, match="FP"):
+        assert_fragments(frame, scientific_requirements()[19])
 
 
 def test_slide_and_script_s7_terminology_and_attribution():
@@ -781,7 +775,7 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
     frames = slide_frames()
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
-    for number in (4, 28, 29, 30):
+    for number in (29,):
         for text in (frames[number - 1], speech.split(f"### {number}.")[1].split("### ")[0]):
             assert "Preservar o corte" in text or "preservar o corte" in text
             assert "probabilidade ou escore" in text
@@ -894,8 +888,8 @@ def test_script_s6_questions_and_provenance():
                 for block in ("N", "P")]
         assert " e ".join(f"{integer(row['k'])}/{integer(row['n'])}" for row in rows) in answer11
     assert "não houve varredura no arranjo" in questions.lower()
-    assert "árvore compilada" in source
-    assert "SHA-256 dos PDFs: a atualizar no build final" in source
+    for forbidden in ("árvore compilada", "SHA-256 dos PDFs: a atualizar", "revisão pela orientadora foi dispensada", "pq/banca-"):
+        assert forbidden not in source
 
 
 def thesis_title():
@@ -930,7 +924,7 @@ def test_banca_e_title_terminology_and_new_answers():
         39: ("retirado",),
         40: ("Comparador de Registros", "sem interface gráfica"),
         41: ("não consumiu a saída do OpenRecLink", "OpenRecLink original, em C",
-             "Daniela Medina Coeli Bastos", "extrato pós-CdR"),
+             "sem atribuição pessoal das etapas", "extrato pós-CdR"),
         42: ("LinkDataPop", "acesso restrito", "agregados", "MIT vale somente para o código"),
     }.items():
         for fragment in fragments:
@@ -948,9 +942,11 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
     assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
-    verification = source.split("### Verificação técnica do build oficial", 1)[1].split(
-        "### Rastreabilidade dos números do arranjo", 1
-    )[0]
-    assert "as folhas da ficha correspondem às páginas físicas do PDF" in verification
-    assert "As 52 respostas têm limite de 70 palavras, conforme contagem por espaços" in verification
-    assert "Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências." in verification
+    assert "### Rastreabilidade dos números do arranjo" in source
+    assert "São 63 respostas, com no máximo 70 palavras cada" in source
+    for forbidden in ("Verificação técnica do build oficial", "PDFs existentes não representam", "hashes a atualizar", "revisão pela orientadora foi dispensada"):
+        assert forbidden not in source
+    frames = slide_frames()
+    assert "Recomendação final como hipótese a validar" in frames[28]
+    for index in (3, 27, 29):
+        assert "escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano" not in frames[index]
