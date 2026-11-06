@@ -32,7 +32,7 @@ def numbers(text):
 def test_editorial_versions_reproduce_without_overwriting_historical(tmp_path):
     before = {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}
     generate(ROOT / "data", tmp_path)
-    assert len(list(tmp_path.glob("*.tex"))) == 9
+    assert len(list(tmp_path.glob("*.tex"))) == 10
     for path in tmp_path.glob("*.tex"):
         assert path.read_bytes() == (EDITORIAL / path.name).read_bytes()
     assert before == {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}

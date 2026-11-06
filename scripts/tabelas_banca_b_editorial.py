@@ -4,12 +4,15 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import sys
 
 import pandas as pd
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 from scripts import gerar_tabelas_nb03_faixas as nb03
 
-ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "text/latex/tables/editorial"
 
 
@@ -86,7 +89,7 @@ def tabela_nb02() -> None:
               r"\path{data/nb02_results.json}, gerado por \path{scripts/run_nb02_uniform.py}. "
               r"A diferença em relação ao caderno histórico não tem causa documentada; "
               r"adota-se aqui apenas o artefato do script uniforme.", r"\end{table}", ""]
-    (OUT / "tab_nb02_recall.tex").write_text("\n".join(lines), encoding="utf-8")
+    (OUT / "tab_nb02_recall.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
 def tabela_impacto() -> None:
@@ -116,10 +119,6 @@ def tabela_perfil_recuperados() -> None:
     historical = ROOT / "text/latex/tables/tab_perfil_recuperados.tex"
     text = historical.read_text(encoding="utf-8").replace(
         "Perfil dos óbitos recuperados", "Perfil dos vínculos recuperados"
-    ).replace(
-        r"\end{table}",
-        r"\par\footnotesize Versão editorial da tabela histórica; células preservadas."
-        "\n" + r"\end{table}",
     )
     (OUT / historical.name).write_text(text, encoding="utf-8", newline="\n")
 
@@ -139,7 +138,7 @@ def main() -> None:
     text = text.replace(r"N~=~número", r"Fonte canônica: \path{data/nb03_results.json}, "
                         r"gerado por \path{scripts/run_nb03_uniform.py}. "
                         r"A causa da diferença em relação ao caderno histórico não está documentada. N~=~número")
-    table.write_text(text, encoding="utf-8")
+    table.write_text(text, encoding="utf-8", newline="\n")
     qw1 = ROOT / "text/latex/tables/tab_qw1_deep_learning.tex"
     note = (r"\par\footnotesize Resultados históricos do QW1. No controle A0, o RF passou de "
             r"$F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, "
@@ -147,7 +146,7 @@ def main() -> None:
             r"(Apêndice~\ref{sec:sensibilidade-qw1}).")
     (OUT / qw1.name).write_text(qw1.read_text(encoding="utf-8").replace(
         r"\end{table}", note + "\n" + r"\end{table}"
-    ), encoding="utf-8")
+    ), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

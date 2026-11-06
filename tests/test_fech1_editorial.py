@@ -22,7 +22,7 @@ def test_perfil_editorial_preserva_celulas_e_fonte_historica(monkeypatch, tmp_pa
     current = generated.decode("utf-8")
     assert re.findall(r"^.* & .*", current, re.M) == re.findall(r"^.* & .*", source, re.M)
     assert "Perfil dos vínculos recuperados" in current
-    assert "Versão editorial da tabela histórica; células preservadas." in current
+    assert "Versão editorial da tabela histórica; células preservadas." not in current
     assert r"\input{tables/editorial/tab_perfil_recuperados.tex}" in (
         ROOT / "text/latex/estudo3_estrategias.tex"
     ).read_text(encoding="utf-8")

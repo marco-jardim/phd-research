@@ -181,7 +181,7 @@ def scientific_requirements(csv_loader=read_csv):
         21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
               "O LLM nunca aceita sozinho", "Filtro antes do revisor humano",
                "validação registrada própria", "VPN (valor preditivo negativo)"],
-         22: ["principal porque foi registrado antes", "análise de sensibilidade", "não confirmatória",
+         22: ["o registro fixou a isotônica como calibração padrão", "análise de sensibilidade", "não confirmatória",
               "sem dominância sustentada", "Hipótese de revisor perfeito dos dois lados",
               "Não é empate sem qualificação", "Não se substitui o revisor humano pelo LLM",
               "LLM como aceitador não se paga abaixo do corte",
@@ -514,7 +514,7 @@ def test_slide_and_script_s7_terminology_and_attribution():
         assert not re.search(r"rótulos?|calibração sigmoidal", text, re.I)
         assert singular in text and plural in text
     speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
-    assert "porque foi registrado antes" in speech.split("### 22.")[1].split("### 23.")[0]
+    assert "o registro fixou a isotônica como calibração padrão" in speech.split("### 22.")[1].split("### 23.")[0]
     assert "na base S6a" not in speech
     assert "Preservar o corte pode reduzir a revisão" not in slide_frames()[29]
     assert "Preservar o corte pode reduzir a revisão" not in speech.split("### 30.")[1].split("### 31.")[0]
@@ -920,7 +920,8 @@ def test_banca_e_title_terminology_and_new_answers():
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
     answers = {n: questions.split(f"### {n}.")[1].split("### ")[0] for n in range(34, 43)}
     for number, fragments in {
-        34: ("0,954", "21.620 para 41 pares", "18 min", "calibração OOF"),
+        34: ("0,954", "21.620 para 41 pares", "18 min", "Platt ajustado no treino",
+             "esperado, não observado", "sem chamada a LLM"),
         35: ("211 dos 247 vínculos (85,4%)", "preserva"),
         36: ("homonímia", "gzcmd/guardrails.py", "exploratórios"),
         37: ("README", "notebooks/README.md", "apendice_pacote.tex"),

@@ -6,12 +6,14 @@ os testes congelados que exigem as 58 comparações históricas por decisão.
 """
 import json
 from pathlib import Path
+import sys
 
 import pandas as pd
 
-from scripts import equidade_arranjo as historical
-
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts import equidade_arranjo as historical
 
 
 def recompute(source, minimum=30):
@@ -46,7 +48,15 @@ def generate(data, editorial):
         "tab:equidade-arranjo}", "tab:equidade-arranjo-den30}").replace(
         "preservando as omissões por denominador zero",
         "após excluir comparações com denominador menor que 30 em qualquer grupo")
-    text = text.replace("O gabarito compartilha", "O padrão-ouro compartilha")
+    text = text.replace("O gabarito compartilha", "A referência operacional compartilha").replace(
+        "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
+    # Especificidade com duas casas, como na tabela editorial principal e no texto do Estudo 4.
+    for decision, label in historical.LABELS.items():
+        row = glob.loc[glob.decisao.eq(decision)].iloc[0]
+        original = next(line for line in text.splitlines() if line.startswith(label + " &"))
+        cells = original.split(" & ")
+        cells[7] = f"{100 * row.espec:.2f}".replace(".", "{,}")
+        text = text.replace(original, " & ".join(cells), 1)
     path.write_text(text, encoding="utf-8", newline="\n")
     for decision in historical.DECISIONS:
         path = editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex"

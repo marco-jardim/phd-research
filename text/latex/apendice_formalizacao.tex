@@ -8,7 +8,7 @@ Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada n
 p_{cal}(s) = \frac{1}{1 + \exp\bigl(-(\alpha s + \beta)\bigr)}
 \]
 
-Para cenários de vigilância em que não se dispõe de \textit{labels} em tempo de execução para treinar essa calibração, propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}), cujos alvos podem ser fixados a priori ou medidos contra uma referência. Nesta tese, os alvos $r^+$ e $r^-$ foram medidos contra os \textit{labels} da referência operacional, de modo que o ajuste avaliado não é sem \textit{labels}. Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
+Para cenários de vigilância em que não se dispõe de \textit{labels} em tempo de execução para treinar essa calibração, propõe-se uma adaptação baseada em \textbf{conjuntos âncora} (\textit{anchor sets}), cujos alvos podem ser fixados a priori ou medidos contra uma referência. No cenário principal desta tese, os alvos $r^+$ e $r^-$ foram medidos contra os \textit{labels} da referência operacional, de modo que o ajuste avaliado não é sem \textit{labels}. Definem-se dois subconjuntos de alta confiança baseados em conhecimento de domínio e regras determinísticas estritas:
 
 \begin{enumerate}
 \item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$), assumindo-se uma probabilidade média alvo $r^+$ próxima de 1. Na base desta tese, $A^+$ contém 95 pares com pureza observada de 97,9\%, de onde $r^+ = 0{,}979$ (Tabela~\ref{tab:cap8-ancoras}).

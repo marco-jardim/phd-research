@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Base dos fontes desta apresentação: branch `pq/banca-2`, com edições locais sem commit; hash a registrar no fechamento. PDFs e hashes a atualizar no build final. A numeração corresponde aos quadros previstos, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
+Base dos fontes desta apresentação: tese na branch pq/banca-2 (hash registrado no PR). PDFs e hashes a atualizar no build final. A numeração corresponde aos quadros previstos, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
@@ -66,7 +66,7 @@ O GZ-CMD usa outro XGBoost, com 30 atributos e calibração isotônica aninhada,
 A vigilância atribui maior consequência à perda do vínculo, enquanto a confirmação atribui maior consequência ao falso vínculo. A fronteira permite explicitar esse compromisso, sem transformar os pontos explorados no teste em limiares validados para uso externo.
 
 ### 15. Impacto epidemiológico
-No teste da ablação, o RF+SMOTE detectou 67 vínculos e a nota 8, comparador hipotético, detectou 43, diferença líquida de 24, ou 55,8%. Dos 27 recuperados exclusivamente pelo modelo, 25 são PAR=1, já aceitos pelo corte do serviço, e dois são PAR=2. Os 27 correspondem a 24 registros distintos do SIM; os 247 vínculos do extrato, a 204. Não se estima redução da subnotificação. Fonte: `data/banca_b_recuperados_por_par.json`.
+No teste da ablação, o RF+SMOTE detectou 67 vínculos e a nota 8, comparador hipotético, detectou 43: são 24 a mais frente à nota 8, comparador hipotético. Dos 27 recuperados exclusivamente pelo modelo, 25 são PAR=1, já aceitos pelo corte do serviço, e dois são PAR=2. Os 27 correspondem a 24 registros distintos do SIM; os 247 vínculos do extrato, a 204. Não se estima redução da subnotificação. Fonte: `data/banca_b_recuperados_por_par.json`.
 
 ### 16. Limites do impacto
 Os indicadores derivados do encerramento por óbito constituem vazamento de alvo. A sensibilidade 2×2 foi executada: o F1 do RF+SMOTE passou de 0,931 para 0,938 sem óbito, mas caiu para 0,846 com REFREC. No QW1 local na GPU, o XGBoost passou de 0,937 para 0,878 com REFREC, sem substituir o resultado histórico de 0,920. O otimismo aparece sobretudo na partição por linha, embora mudem os vínculos e denominadores. O GZ-CMD já utiliza agrupamento por REFREC, sem indicadores de óbito; permanece possível dependência por COMPREC.
@@ -87,7 +87,7 @@ A curva de esforço relaciona revisões humanas e vínculos recuperados. O3 é a
 Como aceitador, o LLM teve VPP de 16,0% na vigilância, com 21 FP contra 9,06 previstos, análise *post hoc*. Como filtro de NONMATCH, em k=96 na vigilância são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra 6 sem filtro na mesma carga. O VPN é 87,8% em k=96 (IC 95%: 78,5 a 93,5); 78,0% em k=58. A sensibilidade do filtro é 59,1% (IC 95%: 38,7 a 76,7): descarta 9 dos 22 vínculos do topo. A vantagem é condicionada a H=22; na unidade de custo da tese, perde para O3 com 96 revisões. Na confirmação k=125, descarta 10 dos 23 vínculos. MATCH e inconclusivos vão ao humano, nunca à aceitação autônoma. É hipótese exploratória a validar, com protocolo fixado antes dos desfechos e respostas de datas diferentes. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex`, filtro.
 
 ### 22. O LLM como aceitador não se paga abaixo do corte
-P permanece principal porque foi registrado antes. Com MATCH ao humano, P usa 121 revisões para 23 vínculos na vigilância; O3 iguala em 125. Na confirmação, ambos recuperam nove em 29, mas O2 requer 11. Revisor perfeito é hipótese dos dois lados. Uma diferença de um vínculo em 36 não sustenta superioridade. Perdas totais, incluindo FN: vigilância, P 957,72, O3 775, P-MATCH 772,72, O2 1.296 (12 recuperados); confirmação, 957,2, 569, 569,2 e 551. Custos C_FP/C_FN: 10/50 e 100/20; C_H=1 e C_LLM=0,005. FP humano zero é hipótese assimétrica à política, não medida. P-Platt tem perda menor nos quatro cenários de estabilidade, sem justificar escolha retroativa. Fontes: `custos_equivalentes_exploratorios.csv:2-5,8-10,12`; `robustez_perda_ponderada.csv:2-9`.
+P permanece principal porque o registro fixou a isotônica como calibração padrão, com Platt previsto apenas para partições com menos de 10 PAR=2; P-Platt, também registrado como braço, passou a sensibilidade na emenda 3. Com MATCH ao humano, P usa 121 revisões para 23 vínculos na vigilância; O3 iguala em 125. Na confirmação, ambos recuperam nove em 29, mas O2 requer 11. Revisor perfeito é hipótese dos dois lados. Uma diferença de um vínculo em 36 não sustenta superioridade. Perdas totais, incluindo FN: vigilância, P 957,72, O3 775, P-MATCH 772,72, O2 1.296 (12 recuperados); confirmação, 957,2, 569, 569,2 e 551. Custos C_FP/C_FN: 10/50 e 100/20; C_H=1 e C_LLM=0,005. FP humano zero é hipótese assimétrica à política, não medida. P-Platt tem perda menor nos quatro cenários de estabilidade, sem justificar escolha retroativa. Fontes: `custos_equivalentes_exploratorios.csv:2-5,8-10,12`; `robustez_perda_ponderada.csv:2-9`.
 
 ### 23. Equidade por sexo
 No arranjo P de vigilância, o VPP é de 86,3% no sexo feminino e 93,3% no masculino, sem rejeição após Benjamini-Hochberg na família den30, p ajustado de 0,360 (`equidade_arranjo_den30_pairwise_tests.csv:3`). Na cascata sobre a base inteira (comparação), é de 87,9% e 84,0%. A aceitação do arranjo combina corte e respostas de vínculo do LLM; o encaminhamento humano conta como não aceito. Os 211 vínculos acima do corte são aceitos por construção. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR=2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo do corte. Ausência de rejeição não comprova equidade. Raça/cor não está disponível.
@@ -296,7 +296,7 @@ Fonte: `capitulo3.tex`, `sec:objetivos-especificos`; `data/comparador_mesma_carg
 
 ### 21. A análise de estabilidade confirma generalização e repetibilidade?
 
-Não. É análise interna não confirmatória, com respostas do LLM fixas. Em P na vigilância, no bloco de partição, Jaccard mediano de 0,43 em relação à partição original, FP de nove a 31 e perdas de nove a 21. P-Platt tem menor perda aplicada às medianas nos quatro cenários. A estabilidade confirma apenas aspectos internos; não valida generalização nem mede estocasticidade do revisor.
+Não. É análise interna não confirmatória, com respostas do LLM fixas. Em P na vigilância, no bloco de partição, Jaccard mediano de 0,43 em relação à partição original, FP de nove a 31 e perdas de nove a 21. P-Platt tem menor perda aplicada às medianas nos quatro cenários. A estabilidade descreve apenas aspectos internos; não valida generalização nem mede estocasticidade do revisor.
 
 Fonte: `data/robustez_arranjo_resumo.csv:270,278,654`; `data/robustez_arranjo_metadata.json`. Slide 46.
 
@@ -374,7 +374,7 @@ Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `data/comparador_p_match_humano.csv:2
 
 ### 34. O que aconteceu com os números da qualificação?
 
-O F1 de 0,954 vem da ablação do GZ-CMD v3, com MACD, partição por COMPREC e Platt ajustado no treino. A cascata v3 perdeu 91 vínculos, sensibilidade automática 58,3%. A comparação de 21.620 para 41 pares e os 18 min pertencem ao lote histórico de Kimi K2.5. A ablação não foi reavaliada com v3.1, calibração OOF e dossiê sem saídas do motor.
+O F1 de 0,954 é esperado, não observado: ablação do GZ-CMD v3, com MACD, partição por COMPREC, Platt ajustado no treino e proporções de erro por banda nos encaminhados, sem chamada a LLM. Com Claude Haiku 5.5 e instruções v4, a cascata v3 perdeu 91 vínculos, sensibilidade automática 58,3%. Os 21.620 para 41 pares e os 18 min são do lote histórico de Kimi K2.5. Sem reavaliação com v3.1.
 
 Fonte: `conclusao.tex:25`; `estudo4_gzcmd.tex:366,608`; `tables/editorial/tab_cap8_referencia.tex:23`; `data/exp2_latencias_revisores.csv`. Slides 19, 32 e 39.
 
@@ -434,7 +434,7 @@ Fonte: `conclusao.tex:3`; `estudo4_gzcmd.tex:622`; `apendice_formalizacao.tex`, 
 
 ### 44. O que o registro interno prova sem critério de sucesso?
 
-Documenta escolhas declaradas em determinada versão, não comprova hipótese nem prioridade científica com carimbo independente. Não havia critério de sucesso; o comparador era conhecido, o código original falta no git e houve emendas descritas como autorizadas pelo orquestrador em nome do autor. A leitura como resultado negativo é posterior. Seriam necessários protocolo público anterior aos resultados, código recuperável e autorizações verificáveis.
+Documenta escolhas declaradas em determinada versão, não comprova hipótese nem prioridade científica com carimbo independente. Não havia critério de sucesso; o comparador era conhecido, o código original falta no git e houve emendas registradas no arquivo de registro. A leitura como resultado negativo é posterior. Seriam necessários protocolo público anterior aos resultados, código recuperável e autorizações verificáveis.
 
 Fonte: `estudo4_gzcmd.tex:316,322,326,328,672`; `gzcmd/prereg_arranjo_corte.yaml:256-259,277`; `gzcmd/M_arranjo_corte_desvios.md`.
 
@@ -458,7 +458,7 @@ Fonte: `data/banca_b_recuperados_por_par.json`; `estudo3_estrategias.tex:99-101`
 
 ### 48. Os CAAE cobrem nuvem, APIs, depósito e dispensa de TCLE?
 
-O texto identifica o projeto e os pareceres, vincula o depósito restrito a solicitação e acordo de uso e declara ausência de autorização específica para transferência internacional. Isso não demonstra cobertura de cada envio à nuvem ou API. Não há no texto comprovação de dispensa de TCLE aplicável a essas operações. Seria preciso conferir pareceres integrais, protocolo, emendas e termos de transferência antes dessa afirmação.
+Os pareceres identificados no texto cobrem o projeto; o depósito restrito depende de solicitação e acordo de uso, e o texto declara ausência de autorização específica para transferência internacional. Não há cobertura documentada de cada envio à nuvem ou API, nem comprovação de dispensa de TCLE aplicável a essas operações.
 
 Fonte: `capitulo_dados.tex:27-33`; `sec:dados-acesso-etica`; `sec:dados-etica`.
 
@@ -482,7 +482,7 @@ Fonte: `data/banca_b_recuperados_por_par.json:2-3,26,37`; `estudo3_estrategias.t
 
 ### 52. Haneef (2022) trata de classificação de potenciais pares?
 
-O texto não permite afirmar isso. Haneef é citado para diretrizes metodológicas de aprendizado de máquina com dados vinculados, não como demonstração de classificação de potenciais pares. Seria necessário conferir o artigo integral, o objetivo da predição, a unidade de análise e se o método atua antes ou depois da formação dos vínculos. A citação não sustenta, sozinha, essa atribuição específica.
+Não. Haneef et al. (2022) é citado como diretriz para uso de aprendizado de máquina com dados vinculados na estimação de indicadores (capitulo3:12; capitulo_dados:115), não como estudo de classificação de potenciais pares.
 
 Fonte: `capitulo_dados.tex:115`; `capitulo3.tex:12`; chave bibliográfica `Haneef2022guidelines`.
 
@@ -508,7 +508,7 @@ Os fontes foram alinhados ao texto em revisão; não foi executada compilação 
 
 ### Verificação técnica do build oficial após a repassada final
 
-A ficha do fonte registra **`232 f.: il.`** (`text/latex/tese.tex:347`); a contagem física de **232 páginas** deverá ser confirmada no build final. Segue-se a convenção dos builds anteriores: as folhas da ficha correspondem às páginas físicas do PDF. Não se afirma que o PDF existente tenha sido recompilado.
+A ficha do fonte registra **`244 f.: il.`** (`text/latex/tese.tex:347`), conforme as **244 páginas** do build oficial deste fechamento. Segue-se a convenção dos builds anteriores: as folhas da ficha correspondem às páginas físicas do PDF. O relatório `docs/plans/RELATORIO_FECH2_2026-11-06.md` registra as saídas de compilação e suas verificações.
 
 Os fontes preveem **49 quadros**, com 30 principais e 19 de reserva. As entradas foram modificadas; paginação, legibilidade e transbordamentos aguardam build final. As 52 respostas têm limite de 70 palavras, conforme contagem por espaços; a verificação automática está pendente.
 
@@ -523,8 +523,8 @@ SHA-256 dos PDFs: a atualizar no build final. Relação dos arquivos, sem valida
 | Arquivo | Páginas | SHA-256 |
 | :-- | --: | :-- |
 | `text/slides/defesa.pdf` | 49 quadros previstos | a atualizar no build final |
-| `text/latex/tese.pdf` | 232, a confirmar | a atualizar no build final |
-| `text/pdf/tese.pdf` | 232, a confirmar | a atualizar no build final |
+| `text/latex/tese.pdf` | 244 | a atualizar no build final |
+| `text/pdf/tese.pdf` | 244 | a atualizar no build final |
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 

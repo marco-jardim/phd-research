@@ -61,7 +61,7 @@ P-PAR2-grey & 125 & 82,8 & 0 (0) & 22 & 22 (4) & 9 & 18 & 0,0209 & 85,3 \\
 \end{longtable}
 \noindent\parbox{\linewidth}{\footnotesize $V_A$: vínculos aceitos automaticamente, inclusive MATCH do modelo de linguagem (LLM); $V_N$: vínculos perdidos por NONMATCH; $H$: potenciais pares ao revisor humano, com vínculos $V_H$ entre parênteses. UNSURE do LLM segue ao humano uma única vez. LLM e humano se sobrepõem nesse encaminhamento, sem somar novamente sua carga humana. $S_A=V_A/n$; $S_H=(V_A+0{,}95V_H)/n$ exibe o cenário de sensibilidade humana 0,95, não resultado humano observado. Os três cenários, 0,95, 0,99 e 1,00, constam da Tabela~\ref{tab:cap8-sensibilidade-humana} e de \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese. Custos usam somente os registros de consumo dos potenciais pares selecionados por cada braço e faixa, com tarifas históricas por tokens, não faturas. O \textit{a posteriori} reutiliza a cascata sobre a base inteira sem recalibração. Fonte: \texttt{data/arranjo\_corte\_metricas.csv} e \texttt{data/arranjo\_corte\_par2.csv}.}
 \begin{longtable}{lrrr}
-\caption{Partição dos 36 vínculos PAR~=~2 abaixo do corte. Cada célula mostra a contagem e seu IC de Wilson de 95\%, em porcentagem. As ressalvas sobre o padrão-ouro e a dependência entre pares permanecem.}
+\caption{Partição dos 36 vínculos PAR~=~2 abaixo do corte. Cada célula mostra a contagem e seu IC de Wilson de 95\%, em porcentagem. As ressalvas sobre a referência operacional e a dependência entre pares permanecem.}
 \label{tab:cap8-arranjo-corte-par2}\\
 \toprule
 Braço & Aceitos (IC 95\%) & Humano (IC 95\%) & Perdidos (IC 95\%) \\

@@ -213,7 +213,8 @@ A consequência do falso vínculo recebe maior custo.
 \begin{frame}{Estudo 3: impacto no conjunto de teste da ablação}
 \begin{center}
 {\Huge 67 versus 43}\par vínculos detectados, RF+SMOTE versus nota $\geq8$\medskip\par
-{\LARGE +24 líquidos, +55,8\%}\par
+{\LARGE +24 frente à nota $\geq8$ (comparador hipotético)}\par
+25 dos 27 já aceitos pelo corte\par
 27 recuperados apenas pelo modelo, menos 3 apenas pelo limiar
 \end{center}
 Denominador: 74 vínculos no teste; nota $\geq8$ é comparador hipotético, não o corte do serviço. Dos 27 recuperados, 25 são PAR=1 e 2 são PAR=2; correspondem a 24 registros distintos do SIM. Os 247 vínculos correspondem a 204 registros distintos. Não estima redução da subnotificação.
@@ -328,7 +329,7 @@ Confirmação & 29 / 9 & 29 / 9 & 29 / 9 \\
 \scriptsize
 Perda total, incluindo FN: vigilância, P 957,72; O3 775; P-MATCH 772,72; O2 1.296 (12 recuperados). Confirmação: 957,2; 569; 569,2; 551, respectivamente. Custos $(C_{FP},C_{FN})$: (10,50) e (100,20); $C_H=1$, $C_{LLM}=0{,}005$. Subtotais na vigilância: 307,72; 125; 122,72. FP humano zero por hipótese.
 \itens{\item Hipótese de revisor perfeito dos dois lados: no máximo 1 vínculo a mais; 344 pares avaliados pelo LLM na vigilância e 41 na confirmação. Não é empate sem qualificação: O2 recupera 9 com 11 revisões na confirmação
-\item Uma diferença de um vínculo em 36 não sustenta superioridade. P é principal porque foi registrado antes; P-Platt: análise de sensibilidade não confirmatória, sem dominância sustentada de Pareto. Não se substitui o revisor humano pelo LLM}
+\item Uma diferença de um vínculo em 36 não sustenta superioridade. P é principal porque o registro fixou a isotônica como calibração padrão (Platt só com menos de 10 PAR~=~2); P-Platt passou a análise de sensibilidade não confirmatória na emenda 3, sem dominância sustentada de Pareto. Não se substitui o revisor humano pelo LLM}
 \fonte[]{data/comparador\_p\_match\_humano.csv:2,3; data/custos\_equivalentes\_exploratorios.csv:2 a 5,8 a 10,12; data/robustez\_perda\_ponderada.csv}
 \end{frame}
 
