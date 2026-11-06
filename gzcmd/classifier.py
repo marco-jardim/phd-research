@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import joblib
 import numpy as np
@@ -23,6 +23,21 @@ from sklearn.pipeline import Pipeline
 from .loader import COL_TARGET
 
 
+FeatureSet = Literal["historical", "allowlist"]
+COMPARATOR_FEATURES = (
+    "NOME prim frag igual", "NOME ult frag igual", "NOME qtd frag iguais",
+    "NOME qtd frag raros", "NOME qtd frag comuns", "NOME qtd frag muito parec",
+    "NOME qtd frag abrev", "NOMEMAE prim frag igual", "NOMEMAE ult frag igual",
+    "NOMEMAE qtd frag iguais", "NOMEMAE qtd frag raros", "NOMEMAE qtd frag comuns",
+    "NOMEMAE qtd frag muito parec", "NOMEMAE qtd frag abrev", "DTNASC dt iguais",
+    "DTNASC dt ap 1digi", "DTNASC dt inv dia", "DTNASC dt inv mes",
+    "DTNASC dt inv ano", "CODMUNRES uf igual", "CODMUNRES uf prox",
+    "CODMUNRES local igual", "CODMUNRES local prox", "ENDERECO via igual",
+    "ENDERECO via prox", "ENDERECO numero igual", "ENDERECO compl prox",
+    "ENDERECO texto prox", "ENDERECO tokens jacc", "nota final",
+)
+
+
 @dataclass(frozen=True)
 class ClassifierConfig:
     n_estimators: int = 200
@@ -33,8 +48,19 @@ class ClassifierConfig:
     calibration_cv: int = 5
 
 
-def get_feature_columns(df: pd.DataFrame) -> list[str]:
-    """Identify numeric feature columns for the classifier."""
+def get_feature_columns(
+    df: pd.DataFrame, *, feature_set: FeatureSet = "historical", macd_enabled: bool = True,
+) -> list[str]:
+    """Select numeric attributes; historical selection remains the default."""
+    if feature_set not in ("historical", "allowlist"):
+        raise ValueError("feature_set must be historical or allowlist")
+    if feature_set == "allowlist":
+        allowed = set(COMPARATOR_FEATURES)
+        return sorted(
+            c for c in df.columns
+            if (c in allowed or (macd_enabled and c.startswith("macd_")))
+            and pd.api.types.is_numeric_dtype(df[c])
+        )
     # Metadata and targets to exclude
     exclude = {
         "COMPREC",
@@ -74,8 +100,13 @@ def get_feature_columns(df: pd.DataFrame) -> list[str]:
 
 
 class GZCMDClassifier(BaseEstimator, ClassifierMixin):
-    def __init__(self, config: ClassifierConfig = ClassifierConfig()):
+    def __init__(
+        self, config: ClassifierConfig = ClassifierConfig(), *,
+        feature_set: FeatureSet = "historical", macd_enabled: bool = True,
+    ):
         self.config = config
+        self.feature_set = feature_set
+        self.macd_enabled = macd_enabled
         self.features_: list[str] | None = None
         self.pipeline_: Pipeline | None = None
 
@@ -85,7 +116,9 @@ class GZCMDClassifier(BaseEstimator, ClassifierMixin):
                 raise ValueError(f"Target column '{COL_TARGET}' not found in DataFrame")
             y = df[COL_TARGET]
 
-        self.features_ = get_feature_columns(df)
+        self.features_ = get_feature_columns(
+            df, feature_set=self.feature_set, macd_enabled=self.macd_enabled,
+        )
         X = df[self.features_]
 
         # Base RF model
@@ -142,6 +175,8 @@ class GZCMDClassifier(BaseEstimator, ClassifierMixin):
 
         state = {
             "config": self.config,
+            "feature_set": self.feature_set,
+            "macd_enabled": self.macd_enabled,
             "features": self.features_,
             "pipeline": self.pipeline_,
         }
@@ -150,7 +185,10 @@ class GZCMDClassifier(BaseEstimator, ClassifierMixin):
     @classmethod
     def load(cls, path: str | Path) -> "GZCMDClassifier":
         state = joblib.load(path)
-        clf = cls(config=state["config"])
+        clf = cls(
+            config=state["config"], feature_set=state.get("feature_set", "historical"),
+            macd_enabled=state.get("macd_enabled", True),
+        )
         clf.features_ = state["features"]
         clf.pipeline_ = state["pipeline"]
         return clf
