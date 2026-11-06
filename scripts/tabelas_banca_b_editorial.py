@@ -92,7 +92,7 @@ def tabela_nb02() -> None:
 def tabela_impacto() -> None:
     data = pd.read_csv(ROOT / "data/epidemiological_impact.csv")
     lines = [r"\begin{table}[htbp]", r"\centering",
-             r"\caption{Comparação de métodos: óbitos detectados, perdidos, revisões e sensibilidade.}",
+             r"\caption{Comparação de métodos: vínculos detectados, perdidos, revisões e sensibilidade.}",
              r"\label{tab:impacto-epidemiologico}", r"\footnotesize",
              r"\begin{tabular}{@{}lrrrrrl@{}}", r"\toprule",
              r"Método & Det. & Perd. & Rev. & Prec. & Sensib. & \% Verd. \\", r"\midrule"]
@@ -107,9 +107,21 @@ def tabela_impacto() -> None:
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\footnotesize Fonte: "
               r"\path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; "
               r"Prec.: precisão; Sensib.: sensibilidade; \% Verd.: proporção dos vínculos do teste detectados. "
-              r"O custo por óbito detectado, representado na figura, não é coluna desta tabela. "
+              r"O custo por vínculo (inverso do VPP), representado na figura, não é coluna desta tabela. "
               r"As linhas XGBoost provêm do fluxo Modal, não da ablação original.", r"\end{table}", ""]
     (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
+
+
+def tabela_perfil_recuperados() -> None:
+    historical = ROOT / "text/latex/tables/tab_perfil_recuperados.tex"
+    text = historical.read_text(encoding="utf-8").replace(
+        "Perfil dos óbitos recuperados", "Perfil dos vínculos recuperados"
+    ).replace(
+        r"\end{table}",
+        r"\par\footnotesize Versão editorial da tabela histórica; células preservadas."
+        "\n" + r"\end{table}",
+    )
+    (OUT / historical.name).write_text(text, encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -117,6 +129,7 @@ def main() -> None:
     tabela_pareto()
     tabela_nb02()
     tabela_impacto()
+    tabela_perfil_recuperados()
     nb03.OUT = OUT
     nb03.tabela_nb03()
     table = OUT / "tab_nb03_precision.tex"

@@ -63,7 +63,7 @@ def test_equity_numeric_cells_only_change_specificity_precision():
     text = (EDITORIAL / "tab_equidade_arranjo.tex").read_text(encoding="utf-8")
     assert "99{,}97" in text and "99{,}99" in text
     assert "não para os testes pareados de VPP" in text
-    assert "padrão-ouro" in text and "corte do escore OpenRecLink" in text
+    assert "referência operacional" in text and "corte do escore OpenRecLink" in text
     assert "gabarito" not in text and "corte SCORE" not in text
     # Os números novos da nota vêm dos denominadores e grupos dos CSVs.
     note = step_ppv_note(*[pd.read_csv(ROOT / "data" / f"equidade_arranjo_{name}.csv")

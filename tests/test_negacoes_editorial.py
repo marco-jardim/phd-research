@@ -127,8 +127,8 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "não de impossibilidade geral do método" in calibration
     equity = paragraph("estudo5_equidade.tex", "A construção do padrão-ouro limita a inferência")
     assert "a possível incorporação dessas evidências à referência não foi quantificada" in equity
-    assert r"O corte define PAR~=~1, com viés de verificação; o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
-    assert "o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
+    assert r"O corte define PAR~=~1, com viés de verificação; adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
+    assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
     conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")

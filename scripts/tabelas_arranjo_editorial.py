@@ -148,7 +148,7 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
         cells[7] = replace_once(f"{100 * row.espec:.2f}", ".", "{,}")
         text = replace_once(text, original, " & ".join(cells))
     text = replace_once(text, "O gabarito compartilha o corte e os dados de treinamento",
-                        "O padrão-ouro compartilha o corte do escore OpenRecLink e os dados de treinamento")
+                        "A referência operacional compartilha o corte do escore OpenRecLink e os dados de treinamento")
     text = replace_once(text, "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
     text = replace_once(text, r"\end{minipage}", step_ppv_note(
         frames["maxdiff"], frames["group_metrics"], frames["pairwise_tests"]) + r"\end{minipage}")

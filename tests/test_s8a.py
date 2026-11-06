@@ -20,7 +20,7 @@ def test_prompt_appendix_is_literal_source_bytes(version, index):
     assert len(blocks) == 7
     source = (ROOT / f'gzcmd/gzcmd_{version}_llm_prompt.md').read_bytes()
     assert blocks[index] == source
-    assert 'transcrição literal de instrumento fica fora da regra de travessão' in appendix.decode('utf-8')
+    assert 'As instruções de revisão são transcritas integralmente dos arquivos-base v3 e v4, sem edição ou quebra de linhas no conteúdo.' in appendix.decode('utf-8')
 
 
 def test_editorial_tables_regenerate_and_historical_numeric_cells_stay(tmp_path):
