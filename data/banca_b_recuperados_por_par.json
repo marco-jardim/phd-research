@@ -5,8 +5,71 @@
     "1": 211,
     "2": 36
   },
-  "treino_executado": false,
-  "status": "pendente_predicoes_historicas_RF_SMOTE",
-  "motivo": "Agregado 67 VP/3 FP/27 recuperados não identifica os integrantes; não treinar novamente.",
-  "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65"
+  "treino_executado": true,
+  "status": "completo",
+  "controle": {
+    "test_n": 18509,
+    "test_positivos": 74,
+    "tp": 67,
+    "fp": 3,
+    "recuperados": 27
+  },
+  "vp": {
+    "n": 67,
+    "por_par": {
+      "1": 62,
+      "2": 5
+    },
+    "acima_ou_no_corte_orl": 62,
+    "abaixo_corte_orl": 5,
+    "corte_desconhecido": 0,
+    "obitos_distintos": 60
+  },
+  "recuperados": {
+    "n": 27,
+    "por_par": {
+      "1": 25,
+      "2": 2
+    },
+    "acima_ou_no_corte_orl": 25,
+    "abaixo_corte_orl": 2,
+    "corte_desconhecido": 0,
+    "obitos_distintos": 24
+  },
+  "fp": {
+    "n": 3,
+    "por_par": {
+      "0": 3,
+      "1": 0,
+      "2": 0
+    },
+    "acima_ou_no_corte_orl": 0,
+    "abaixo_corte_orl": 3,
+    "corte_desconhecido": 0,
+    "obitos_distintos": 3
+  },
+  "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+  "seed": 42,
+  "fontes_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "scripts/banca_b_encerramento_agregado.py": "429867bfb3715c0d4fe81bfd02937a5c9d5ecb4ef0f228f49c89563c342c7aa5",
+    "scripts/banca_b_recuperados_por_par.py": "85f192fcca08e68ce26e71e2698bb62983fad0a07170c0fd1103f8d286f22d31",
+    "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163"
+  },
+  "cortes_orl_por_passo": {
+    "6": 7.024,
+    "9": 7.8444,
+    "11": 7.9019
+  },
+  "procedimento": "retreino_reproducao_ablacao_historica",
+  "parametros": {
+    "test_size": 0.3,
+    "sampling_strategy": 0.3,
+    "k_neighbors": 3,
+    "n_estimators": 150,
+    "max_depth": 12,
+    "n_jobs": -1,
+    "limiar": 0.5
+  },
+  "tempo_execucao_segundos": 12.728506
 }

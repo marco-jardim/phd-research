@@ -27,7 +27,7 @@ def recompute(source, minimum=30):
 def generate(data, editorial):
     source = pd.read_csv(data / "equidade_arranjo_pairwise_tests.csv")
     corrected = recompute(source)
-    corrected.to_csv(data / "equidade_arranjo_den30_pairwise_tests.csv", index=False)
+    corrected.to_csv(data / "equidade_arranjo_den30_pairwise_tests.csv", index=False, lineterminator="\n")
     audit = []
     for decision in historical.DECISIONS:
         before = source.loc[source.decisao.eq(decision)]
@@ -36,7 +36,7 @@ def generate(data, editorial):
                           rejeicoes_antes=int(before.reject_fdr.sum()),
                           rejeicoes_depois=int(after.reject_fdr.sum()),
                           excluidos_denominador_menor_30=len(before) - len(after)))
-    pd.DataFrame(audit).to_csv(data / "equidade_arranjo_den30_rejeicoes.csv", index=False)
+    pd.DataFrame(audit).to_csv(data / "equidade_arranjo_den30_rejeicoes.csv", index=False, lineterminator="\n")
     glob = pd.read_csv(data / "equidade_arranjo_global.csv")
     maximum = pd.read_csv(data / "equidade_arranjo_maxdiff.csv")
     editorial.mkdir(parents=True, exist_ok=True)
@@ -54,11 +54,12 @@ def generate(data, editorial):
             corrected, path, decisao=decision,
             label=f"tab:equidade-den30-{decision.replace('_', '-')}",
             descr=historical.LABELS[decision] + ", denominadores de pelo menos 30")
+        path.write_text(path.read_text(encoding="utf-8"), encoding="utf-8", newline="\n")
     manifest = dict(denominador_minimo=30, regra="Excluir n1<30 ou n2<30 antes de BH por decisão",
                     fonte="equidade_arranjo_pairwise_tests.csv", treino_executado=False,
                     geradores_historicos_preservados=True, comparacoes=audit)
     (data / "equidade_arranjo_den30_recomputacao.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(audit, ensure_ascii=False, indent=2))
     return corrected
 

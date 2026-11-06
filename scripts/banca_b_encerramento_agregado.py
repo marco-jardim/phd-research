@@ -33,15 +33,8 @@ def summarize_situence(values: pd.Series) -> dict[str, int]:
     }
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, required=True)
-    args = parser.parse_args()
-    pd.options.future.infer_string = False
-    raw = pd.read_csv(args.input, sep=";", dtype=str)
-    raw.columns = [c.split(",")[0] for c in raw.columns]
-    if "C_SITUENCE" not in raw:
-        raise ValueError("Extrato sem C_SITUENCE: contagem nao quantificada.")
+def historical_predictions(raw: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Reproduz o RF+SMOTE publicado; predições ficam apenas em memória."""
     numeric = raw.apply(
         lambda column: pd.to_numeric(column.str.replace(",", "."), errors="coerce")
     )
@@ -53,7 +46,8 @@ def main() -> None:
     rf = RandomForestClassifier(
         n_estimators=150, max_depth=12, random_state=42, n_jobs=-1
     ).fit(X_res, y_res)
-    positive = pd.Series(rf.predict_proba(test)[:, 1] >= 0.5, index=test.index)
+    probability = pd.Series(rf.predict_proba(test)[:, 1], index=test.index)
+    positive = probability.ge(0.5)
     recovered = positive & y_test.eq(1) & test["nota final"].lt(8)
     control = {
         "test_n": len(test),
@@ -65,11 +59,28 @@ def main() -> None:
     expected = {"test_n": 18509, "test_positivos": 74, "tp": 67, "fp": 3, "recuperados": 27}
     if control != expected:
         raise ValueError(f"Controle nao reproduzido: {control}; esperado: {expected}")
+    return pd.DataFrame({"probabilidade": probability}), control
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, required=True)
+    args = parser.parse_args()
+    pd.options.future.infer_string = False
+    raw = pd.read_csv(args.input, sep=";", dtype=str)
+    raw.columns = [c.split(",")[0] for c in raw.columns]
+    if "C_SITUENCE" not in raw:
+        raise ValueError("Extrato sem C_SITUENCE: contagem nao quantificada.")
+    predictions, control = historical_predictions(raw)
+    selected = raw.loc[predictions.index]
+    par = pd.to_numeric(selected.PAR, errors="raise")
+    nota = pd.to_numeric(selected["nota final"].str.replace(",", ".", regex=False), errors="raise")
+    recovered = predictions.probabilidade.ge(0.5) & par.isin([1, 2]) & nota.lt(8)
     result = {
         "definicao": "RF+SMOTE >=0.5, PAR=1 e nota final <8 no teste original",
         "entrada_sha256": hashlib.sha256(args.input.read_bytes()).hexdigest(),
         "controle": control,
-        "C_SITUENCE": summarize_situence(raw.loc[test.index[recovered], "C_SITUENCE"]),
+        "C_SITUENCE": summarize_situence(raw.loc[predictions.index[recovered], "C_SITUENCE"]),
     }
     output = ROOT / "data/banca_b_encerramento_agregado.json"
     with output.open("w", encoding="utf-8", newline="\n") as handle:

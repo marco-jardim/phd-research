@@ -1,12 +1,14 @@
-"""Contagens sem treino; predições históricas opcionais, nunca reconstruídas.
+"""Decompõe a ablação histórica, com retreino somente por opção explícita.
 
 --predictions: CSV privado com indice (índice original do extrato) e probabilidade
 para TODAS as linhas do teste RF+SMOTE original. Sem ele, reporta a lacuna.
+--retrain-historical: chama a mesma rotina publicada, com seed e controles fixos.
 """
 import argparse
 import hashlib
 import json
 from pathlib import Path
+from time import perf_counter
 
 import pandas as pd
 
@@ -43,7 +45,8 @@ def summarize(raw, predictions=None):
     if controls != dict(test_n=18509, test_positivos=74, tp=67, fp=3, recuperados=27):
         raise ValueError(f"Controle histórico não reproduzido: {controls}")
     result.update(status="completo", controle=controls)
-    for label, mask in (("vp", tp), ("recuperados", recovered)):
+    for label, mask in (("vp", tp), ("recuperados", recovered),
+                        ("fp", positive & y_test.eq(0))):
         idx = mask.index[mask]
         subset = numeric.loc[idx]
         thresholds = subset.PASSO.map(CUTS)
@@ -51,7 +54,7 @@ def summarize(raw, predictions=None):
             raise ValueError("Escore ORL ausente entre os vínculos selecionados")
         above = subset.SCORE.ge(thresholds)
         result[label] = {"n": len(idx), "por_par": {
-            str(p): int(subset.PAR.eq(p).sum()) for p in (1, 2)},
+            str(p): int(subset.PAR.eq(p).sum()) for p in ((0, 1, 2) if label == "fp" else (1, 2))},
             "acima_ou_no_corte_orl": int((above & thresholds.notna()).sum()),
             "abaixo_corte_orl": int((~above & thresholds.notna()).sum()),
             "corte_desconhecido": int(thresholds.isna().sum()),
@@ -60,19 +63,39 @@ def summarize(raw, predictions=None):
 
 
 def main():
+    started = perf_counter()
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=ROOT / "data/COMPARADORSEMIDENT.csv")
-    parser.add_argument("--predictions", type=Path)
+    source = parser.add_mutually_exclusive_group()
+    source.add_argument("--predictions", type=Path)
+    source.add_argument("--retrain-historical", action="store_true")
     args = parser.parse_args()
+    pd.options.future.infer_string = False
     raw = pd.read_csv(args.input, sep=";", dtype=str)
     raw.columns = [c.split(",")[0] for c in raw.columns]
     predictions = pd.read_csv(args.predictions, index_col="indice") if args.predictions else None
+    if args.retrain_historical:
+        from scripts.banca_b_encerramento_agregado import historical_predictions
+        predictions, _ = historical_predictions(raw)
     result = summarize(raw, predictions)
+    result["treino_executado"] = args.retrain_historical
     result["entrada_sha256"] = hashlib.sha256(args.input.read_bytes()).hexdigest()
+    result["seed"] = 42
+    result["fontes_sha256"] = {
+        "data/COMPARADORSEMIDENT.csv": result["entrada_sha256"],
+        **{name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in (
+            "scripts/banca_b_encerramento_agregado.py", "scripts/banca_b_recuperados_por_par.py",
+            "scripts/feature_engineering.py")}}
+    result["cortes_orl_por_passo"] = {str(step): cut for step, cut in CUTS.items()}
+    if args.retrain_historical:
+        result["procedimento"] = "retreino_reproducao_ablacao_historica"
+        result["parametros"] = dict(test_size=0.3, sampling_strategy=0.3, k_neighbors=3,
+                                     n_estimators=150, max_depth=12, n_jobs=-1, limiar=0.5)
     if args.predictions:
         result["predicoes_sha256"] = hashlib.sha256(args.predictions.read_bytes()).hexdigest()
+    result["tempo_execucao_segundos"] = round(perf_counter() - started, 6)
     text = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
-    (ROOT / "data/banca_b_recuperados_por_par.json").write_text(text, encoding="utf-8")
+    (ROOT / "data/banca_b_recuperados_por_par.json").write_text(text, encoding="utf-8", newline="\n")
     print(text)
 
 

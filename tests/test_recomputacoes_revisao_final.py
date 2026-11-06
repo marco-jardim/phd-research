@@ -1,4 +1,4 @@
-"""Recomputações determinísticas de agregados; nenhum treino ou chamada LLM."""
+"""Agregados reproduzidos; testes não retreinam nem chamam LLM."""
 import json
 from pathlib import Path
 
@@ -78,7 +78,9 @@ def test_par_aggregate_reproduces_available_private_source():
     raw = pd.read_csv(path, sep=";", dtype=str)
     raw.columns = [c.split(",")[0] for c in raw.columns]
     saved = json.loads((DATA / "banca_b_recuperados_por_par.json").read_text(encoding="utf-8"))
-    assert summarize(raw) == {k: v for k, v in saved.items() if k != "entrada_sha256"}
+    available = summarize(raw)
+    for key in ("vinculos", "obitos_distintos_247", "vinculos_por_par"):
+        assert available[key] == saved[key]
 
 
 def test_saved_predictions_are_controlled_and_only_counts_exported(monkeypatch):
@@ -108,6 +110,7 @@ def test_saved_predictions_are_controlled_and_only_counts_exported(monkeypatch):
     assert result["recuperados"]["acima_ou_no_corte_orl"] == 17
     assert result["recuperados"]["obitos_distintos"] == 27
     assert result["vp"]["por_par"] == {"1": 60, "2": 7}
+    assert result["fp"]["por_par"] == {"0": 3, "1": 0, "2": 0}
     assert "REFREC" not in json.dumps(result)
     with pytest.raises(ValueError, match="cobrir exatamente"):
         summarize(raw, predictions.iloc[:-1])
@@ -120,3 +123,39 @@ def test_new_csv_artifacts_contain_only_aggregate_columns():
     for name in ("robustez_perda_ponderada.csv", "equidade_arranjo_den30_pairwise_tests.csv",
                  "equidade_arranjo_den30_rejeicoes.csv"):
         assert not {"pair_id", "REFREC", "COMPREC", "NOME", "R_DTOBITO"}.intersection(read_csv(DATA / name)[0])
+
+
+def test_historical_retraining_aggregate_controls_and_metadata():
+    saved = json.loads((DATA / "banca_b_recuperados_por_par.json").read_text(encoding="utf-8"))
+    assert saved["status"] == "completo" and saved["treino_executado"]
+    assert saved["controle"] == dict(test_n=18509, test_positivos=74, tp=67, fp=3, recuperados=27)
+    assert saved["obitos_distintos_247"] == 204
+    assert saved["seed"] == 42 and saved["tempo_execucao_segundos"] > 0
+    assert saved["fp"]["por_par"] == {"0": 3, "1": 0, "2": 0}
+    assert saved["vp"]["por_par"] == {"1": 62, "2": 5}
+    assert saved["recuperados"]["por_par"] == {"1": 25, "2": 2}
+    assert [saved[group]["obitos_distintos"] for group in ("vp", "recuperados", "fp")] == [60, 24, 3]
+    assert saved["recuperados"]["acima_ou_no_corte_orl"] == 25
+    assert saved["recuperados"]["abaixo_corte_orl"] == 2
+    for group, n in (("vp", 67), ("recuperados", 27), ("fp", 3)):
+        row = saved[group]
+        assert row["n"] == n == sum(row["por_par"].values())
+        assert row["acima_ou_no_corte_orl"] + row["abaixo_corte_orl"] == n
+        assert row["corte_desconhecido"] == 0
+        assert 0 < row["obitos_distintos"] <= n
+    import hashlib
+    for name, digest in saved["fontes_sha256"].items():
+        if name == "data/COMPARADORSEMIDENT.csv" and not (ROOT / name).exists():
+            continue
+        assert hashlib.sha256((ROOT / name).read_bytes()).hexdigest() == digest
+
+
+def test_new_generated_aggregates_and_tables_use_lf():
+    paths = [DATA / name for name in (
+        "banca_b_recuperados_por_par.json", "custos_equivalentes_exploratorios.csv",
+        "robustez_perda_ponderada.csv", "equidade_arranjo_den30_pairwise_tests.csv",
+        "equidade_arranjo_den30_rejeicoes.csv", "equidade_arranjo_den30_recomputacao.json")]
+    paths += list((ROOT / "text/latex/tables/editorial").glob("tab_den30_equidade_arranjo*.tex"))
+    assert len(paths) == 11
+    for path in paths:
+        assert b"\r" not in path.read_bytes(), path.name
