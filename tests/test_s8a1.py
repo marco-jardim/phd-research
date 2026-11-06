@@ -131,7 +131,7 @@ def test_hypothesis_bias_and_recommendation_are_not_claimed_as_validation():
     assert 'A tese sustenta' not in conclusion
     for text, expected in (
         (intro, 'investigação do LLM como aceitador'),
-        (conclusion, 'A investigação do LLM distingue seu uso como aceitador e como filtro de descarte antes do revisor humano'),
+        (conclusion, 'a investigação do LLM como aceitador e como filtro de descarte antes do revisor humano, associada à investigação de sua ancoragem'),
     ):
         assert 'Se a revisão' in text and 'O3 e O4 também' in text
         assert expected in text
