@@ -99,7 +99,7 @@ A disparidade por passo é herdada do corte e do *label*, não um efeito isolado
 Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. A tese propõe sua composição operacional com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
 
 ### 26. Limitações de método
-A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, taxas com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O comparador *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade utiliza os mesmos dados e não avalia generalização.
+A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, taxas com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O comparador *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade mede estabilidade nos mesmos dados, não generalização.
 
 ### 27. Limitações de transferência e governança
 O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. O processamento LLM utilizou APIs externas. A exportação restrita com identificador de par por HMAC foi implementada em `scripts/export_matriz_desidentificada.py`, mas a matriz não foi depositada e não se afirma saneamento retroativo das execuções. A equivalência Java parcial foi executada; a comparação empírica com Lages não foi realizada.
@@ -390,27 +390,27 @@ Critérios editoriais: menção ao referencial clássico restrita ao slide 8; pr
 
 O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
-Compilação oficial da repassada geral do PR #52, autorizada pelo autor em 05/11/2026. A tese foi compilada inicialmente por `pwsh -NoProfile -File scripts/build_pdf.ps1`; como o log ainda solicitava nova passagem, executou-se `python scripts/build_pdf.py --jobname tese --outname tese`, que estabilizou em três passagens nesta execução final, com BibTeX, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Não há `.nlo`, portanto os scripts oficiais não executaram makeindex. Antes disso, o build separado `tese_repassada_geral` estabilizou em quatro passagens. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex, com `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-f-slides/.texdeps//;`. Foram usadas somente as dependências já existentes nesse worktree, sem novos downloads nesta retomada.
+Compilação oficial da repassada final do PR #52, autorizada pelo autor em 05/11/2026. A tese foi regenerada por `python scripts/build_pdf.py --jobname tese --outname tese`, com BibTeX e três passagens de pdflatex até estabilizar, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Não há `.nlo`, portanto o script oficial não executou makeindex. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex, com `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-f-slides/.texdeps//;`. Foram usadas somente as dependências já existentes nesse worktree.
 
-### Verificação técnica do build oficial após a repassada geral
+### Verificação técnica do build oficial após a repassada final
 
-A tese oficial manteve **224 páginas**, e a ficha permanece em **`224 f.: il.`**. Não foi necessária nova edição da ficha nesta etapa.
+A tese oficial manteve **224 páginas**, e a ficha permanece em **`224 f.: il.`**. Não foi necessária nova edição da ficha nesta etapa. Segue-se a convenção dos builds anteriores: as folhas da ficha correspondem às páginas físicas do PDF.
 
-Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. As entradas dos slides não foram modificadas nesta repassada; permanecem as três trocas terminológicas de robustez para estabilidade já existentes no PR #51. Não houve mudança de resultados, números ou fontes dos slides.
+Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. As entradas dos slides não foram modificadas nesta repassada; permanecem as três trocas terminológicas de robustez para estabilidade já existentes no PR #51. Não houve mudança de resultados, números ou fontes dos slides. As 33 respostas têm no máximo 70 palavras, conforme contagem por espaços.
 
 Os logs finais da tese e dos slides não contêm erros LaTeX, referências ou citações indefinidas, pedidos de nova passagem ou marcadores `??`, também ausentes no texto extraído dos PDFs. Permanecem somente os cinco Overfull herdados na tese; nos slides não há Overfull. Não foi realizado novo ensaio presencial de projeção.
 
-Logs e evidências locais, não versionados: `.local/negacoes/oficial/tese.log`, `.local/negacoes/oficial/defesa.log`, `.local/negacoes/oficial/verificacao.json`, `.local/negacoes/build-oficial-geral.txt`, `.local/negacoes/build-oficial-estabilizacao.txt`, `.local/negacoes/build-slides-geral.txt` e `.local/negacoes/diff_final.md`.
+Logs e evidências locais, não versionados: `.local/negacoes/ultima-oficial/tese.log`, `.local/negacoes/ultima-oficial/defesa.log`, `.local/negacoes/ultima-oficial/verificacao.json`, `.local/negacoes/ultima-build-tese.txt`, `.local/negacoes/ultima-build-slides.txt` e `.local/negacoes/ultima-antes-depois.md`.
 
-*Commit* de origem antes das reversões gerais: `3d0286d744d4e02407c8ff5db52f888020f56ac6`. A árvore compilada final é a do commit de entrega, que inclui as reversões de prosa, os testes editoriais, este roteiro e os três PDFs oficiais. As dependências externas de TeX não fazem parte dessa árvore.
+*Commit* de origem antes da repassada final: `fdbe2bbef7c14133596b721d42aa642dc2301fa6`. A árvore compilada final é a do commit de entrega, que inclui as reversões de prosa, os testes editoriais, este roteiro e os três PDFs oficiais. As dependências externas de TeX não fazem parte dessa árvore. Em outra máquina, é necessário instalar Beamer, translator, PGF, babel com português e Latin Modern, ou disponibilizá-los em diretório local de dependências.
 
-SHA-256 do PDF oficial dos slides: `5b35a4365c17b94d8b6915c52c4aecb566e33f7025aa8fde19f94e7c7fbfec48`. Relação dos PDFs oficiais:
+SHA-256 do PDF oficial dos slides: `c053b5e3dda19f01ec5142f13c69b82316b4d169c64de1e3f27dc1e3adb9d79b`. Relação dos PDFs oficiais:
 
 | Arquivo | Páginas | SHA-256 |
 | :-- | --: | :-- |
-| `text/slides/defesa.pdf` | 49 | `5b35a4365c17b94d8b6915c52c4aecb566e33f7025aa8fde19f94e7c7fbfec48` |
-| `text/latex/tese.pdf` | 224 | `ed8ab87589b28048c3fc23f7a710362d993121ccffeb93a5074c5747432e6e34` |
-| `text/pdf/tese.pdf` | 224 | `ed8ab87589b28048c3fc23f7a710362d993121ccffeb93a5074c5747432e6e34` |
+| `text/slides/defesa.pdf` | 49 | `c053b5e3dda19f01ec5142f13c69b82316b4d169c64de1e3f27dc1e3adb9d79b` |
+| `text/latex/tese.pdf` | 224 | `06355073a822ba4c22dcd1f63f83bd7eda73f892386bfaa3f70de07a37956029` |
+| `text/pdf/tese.pdf` | 224 | `06355073a822ba4c22dcd1f63f83bd7eda73f892386bfaa3f70de07a37956029` |
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 
