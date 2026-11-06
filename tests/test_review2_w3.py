@@ -27,7 +27,15 @@ def test_ablation_appendix_is_generated_expected_not_llm_observation():
     assert "não é desempenho observado de um LLM" in text
     assert r"$\beta=0{,}5$" in text and r"$\beta=2{,}0$" in text
     assert "107,0" not in text
-    assert "107 \\" in text
+    for arm in ("macd", "nomacd"):
+        source = f"data/ablation_comprec_{arm}_allowlist.csv"
+        rows = pd.read_csv(ROOT / source, sep=";")
+        assert source in text
+        for count in rows["llm_used"]:
+            assert count == int(count)
+            assert f" & {int(count)} " + r"\\" in text
+            assert f" & {int(count)},0 " + r"\\" not in text
+        assert f"data/ablation_comprec_{arm}.csv" in text
     assert text.count("Cada teste contém 74 vínculos") == 4
 
 
