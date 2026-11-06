@@ -55,6 +55,8 @@ def test_equity_filters_before_bh_and_reproduces_aggregates(tmp_path):
         (tmp_path / path.name).write_bytes(path.read_bytes())
     editorial = tmp_path / "editorial"
     generate(tmp_path, editorial)
+    assert len(list(editorial.glob("tab_den30_equidade_arranjo*.tex"))) == 5
+    assert not list(editorial.glob("tab_equidade_arranjo_*.tex"))
     for path in editorial.glob("*.tex"):
         assert path.read_bytes() == (ROOT / "text/latex/tables/editorial" / path.name).read_bytes()
 

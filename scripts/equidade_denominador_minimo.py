@@ -40,7 +40,7 @@ def generate(data, editorial):
     glob = pd.read_csv(data / "equidade_arranjo_global.csv")
     maximum = pd.read_csv(data / "equidade_arranjo_maxdiff.csv")
     editorial.mkdir(parents=True, exist_ok=True)
-    path = editorial / "tab_equidade_arranjo_den30.tex"
+    path = editorial / "tab_den30_equidade_arranjo.tex"
     historical.table_summary(glob, maximum, corrected, path)
     text = path.read_text(encoding="utf-8").replace(
         "tab:equidade-arranjo}", "tab:equidade-arranjo-den30}").replace(
@@ -49,7 +49,7 @@ def generate(data, editorial):
     text = text.replace("O gabarito compartilha", "O padrão-ouro compartilha")
     path.write_text(text, encoding="utf-8", newline="\n")
     for decision in historical.DECISIONS:
-        path = editorial / f"tab_equidade_arranjo_den30_rejeicoes_{decision}.tex"
+        path = editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex"
         historical.legacy.tabela_rejeicoes(
             corrected, path, decisao=decision,
             label=f"tab:equidade-den30-{decision.replace('_', '-')}",
