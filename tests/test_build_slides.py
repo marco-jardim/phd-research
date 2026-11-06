@@ -737,7 +737,7 @@ def assert_budget_script(script, csv_loader=read_csv):
             f"deixando {vl['par2_nao_recuperados']} e {cl['par2_nao_recuperados']} fora") in sections[28]
     assert (f"Para igualar P, O3 requer {v3['k_min_equivalente_P']} e {c3['k_min_equivalente_P']}; "
             f"O4, {v4['k_min_equivalente_P']} e {c4['k_min_equivalente_P']}") in sections[28]
-    assert (f"Para igualar os {v3['P_par2_recuperados']} e {c3['P_par2_recuperados']} vínculos de P, "
+    assert (f"Para {v3['P_par2_recuperados']} e {c3['P_par2_recuperados']} vínculos, "
             f"O4 requer {v4['k_min_equivalente_P']} e {c4['k_min_equivalente_P']} revisões; "
             f"O3, {v3['k_min_equivalente_P']} e {c3['k_min_equivalente_P']}") in answer20
     assert (f"Em {v3['k']} e {c3['k']} revisões, O3 deixa {vl['par2_nao_recuperados']} e "
@@ -1010,3 +1010,28 @@ def test_review3_ethics_and_residual_terminology():
     for source in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
         assert not re.search(r"\bbandas?\b|auditável|impacto epidemiológico|vínculos verdadeiros", source, re.I)
     assert len(slide_frames()[28].split("\\fonte")[0].split()) <= 210
+
+
+def test_k3_hypothesis_and_prospective_margin_in_both_targets():
+    frames = slide_frames()
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    assert "probabilidade calibrada do classificador (O3)" in frames[3]
+    assert "recuperação de P" in frames[3]
+    assert "escore do OpenRecLink (O1)" in frames[3]
+    assert "probabilidade ou escore" not in frames[3]
+    assert "pela revisão de menos pares na ordem escolhida, não pela política de quatro ações" in speech
+    answer20 = questions.split("### 20.")[1].split("### 21.")[0]
+    assert "Primária: probabilidade calibrada do classificador (O3)" in answer20
+    assert "recuperação de P, orçamento fixado antes dos desfechos" in answer20
+    answer43 = questions.split("### 43.")[1].split("### 44.")[0]
+    assert "Não atingir refuta a hipótese" in answer43
+    speech49 = speech.split("### 49.")[1]
+    for text in (frames[48].replace(r"\%", "%"), answer43, speech49):
+        for fragment in ("não testado", "outra coorte", "referência cega", "25% menos revisões",
+                         "limite inferior do IC 95%", "partições predefinidas", "nas duas metas",
+                         "dados à vista", "amplitude entre réplicas"):
+            assert fragment in text
+    for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
+        assert "2/36" not in text and "5,6 p.p." not in text

@@ -33,7 +33,7 @@ A tuberculose é uma condição marcadora, e a vinculação entre notificações
 A pergunta operacional é como concentrar a revisão nos potenciais pares com maior probabilidade de vínculo, sem tratar menor esforço como melhora de acurácia. Primeiro se define o corte do OpenRecLink; depois, comparam-se ordenações sob o mesmo orçamento humano. A curva de esforço permite ao serviço explicitar a recuperação e os erros associados a cada orçamento.
 
 ### 4. Hipótese gerada nesta avaliação
-A hipótese gerada nesta avaliação é que a ordenação por probabilidade ou escore pode reduzir a revisão para uma mesma recuperação frente a O1, o escore do OpenRecLink, não que a política seja superior. Exige validação registrada em dados novos. LLM designa modelo de linguagem de grande porte; CdR, Comparador de Registros; OOF, fora da amostra; FP, falso positivo; VPP, valor preditivo positivo. P usa isotônica; O3 é a probabilidade calibrada OOF e O4 a recalibrada de P, com o mesmo XGBoost. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: nove vínculos com 11 revisões, sem FP nem LLM. As comparações com corte único e duas fronteiras também são internas, não recomendações validadas.
+A hipótese gerada nesta avaliação é que, abaixo do corte, ordenar pela probabilidade calibrada fora da amostra do classificador (O3) pode atingir a recuperação de P com menos revisões que a ordenação pelo escore do OpenRecLink (O1), pela revisão de menos pares na ordem escolhida, não pela política de quatro ações. A comparação com a probabilidade recalibrada de P (O4) é secundária, com o mesmo XGBoost. A meta é a recuperação de P no orçamento fixado antes dos desfechos, nos dois modos. A ordenação pela nota final do CdR (O2) não integra a hipótese: na confirmação, recupera nove vínculos com 11 revisões, sem FP nem LLM. LLM designa modelo de linguagem de grande porte; CdR, Comparador de Registros; OOF, fora da amostra; FP, falso positivo; VPP, valor preditivo positivo. P usa isotônica. Exige validação registrada em dados novos.
 
 ### 5. Fontes e blocagem
 Foram analisados 61.696 potenciais pares e 247 vínculos, com razão aproximada de 1:249, gerados em três passos exportados do OpenRecLink. O passo ampliado concentra o volume, mas não a maioria dos vínculos; a avaliação está condicionada ao extrato, e não estima a sensibilidade de toda a blocagem nas bases de origem.
@@ -168,7 +168,7 @@ A subamostragem é exploratória. Na isotônica, a mediana do topo 96 cai de 22 
 Na vigilância, em k=96 são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra seis sem filtro, apenas sob H=22. VPN: 87,8% em k=96; 78,0% em k=58. Sensibilidade 59,1% (IC 38,7 a 76,7), com nove dos 22 vínculos descartados. Na unidade de custo, filtro 1.172,5 contra O3 796 com 96 revisões. Na confirmação, k=125 descarta 10 dos 23 vínculos. As decisões dos PAR=2 coincidem entre modos nesse topo; há seis diferenças nos não vínculos. Protocolo fixado antes dos desfechos, respostas de datas diferentes; exploração, não validação. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex:578`.
 
 ### 49. Backup: mecanismos, cenários e registro interno
-Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos de 95%, 99% e 100% não são medidas e não modelam FP humanos. O registro interno antecede a S3 em 49 minutos; os horários e a versão dos metadados permanecem documentados na reserva.
+Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos não medem seu erro nem modelam FP humanos. O registro interno antecede a S3 em 49 minutos. O critério prospectivo, não testado, exige outra coorte, referência cega e ordenação e orçamento prévios. A ordenação primária, pela probabilidade calibrada do classificador (O3), deve atingir a recuperação de P com pelo menos 25% menos revisões que a ordenação pelo escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. A margem foi fixada com os dados à vista: reduções de 75,0% e 43,1%. A nota final do CdR (O2) fica fora da hipótese. Ganho das quatro ações exige diferença superior à amplitude entre réplicas. Fontes: `data/comparador_mesma_carga.csv`; `data/robustez_arranjo_resumo.csv`.
 
 ## Perguntas prováveis
 
@@ -290,7 +290,7 @@ Fonte: `gzcmd/prereg_arranjo_corte.yaml`, emendas e suplemento; `data/arranjo_co
 
 ### 20. Como escolher a ordenação e o ponto de parada?
 
-Para igualar os 23 e 9 vínculos de P, O4 requer 106 e 27 revisões; O3, 125 e 29. Em 96 e 17 revisões, O3 deixa 14 e 30 dos 36 fora. Para os 36, O1 requer 2.521 e O3, 23.443. Na confirmação, O2 requer 11 para nove. Preservar o corte; escolher fila e parada pela curva conforme o orçamento humano. Hipótese a validar.
+Primária: probabilidade calibrada do classificador (O3); secundária: probabilidade recalibrada de P (O4); referência: escore do OpenRecLink (O1). Meta: recuperação de P, orçamento fixado antes dos desfechos. Para 23 e 9 vínculos, O4 requer 106 e 27 revisões; O3, 125 e 29. Em 96 e 17 revisões, O3 deixa 14 e 30 dos 36 fora. Para os 36, O1 requer 2.521 e O3, 23.443.
 
 Fonte: `capitulo3.tex`, `sec:objetivos-especificos`; `data/comparador_mesma_carga.csv`. Slides 20 e 28.
 
@@ -428,7 +428,7 @@ Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`
 
 ### 43. O que falsificaria a hipótese central?
 
-Critério prospectivo, não testado: coorte nova, referência cega e orçamento prévios. Vigilância prioriza sensibilidade: probabilidade inferior à nota por 2/36 (5,6 p.p.) ou sem reduzir revisão frente a O1 refuta concentração. Duas ações usam O3; quatro refutam ausência de ganho material se atingirem margem e excederem amplitude entre réplicas predefinidas. P ganha um/três vínculos (vigilância/confirmação); perdas variam de 9 a 21 e de 21 a 29.
+Prospectivo, não testado: outra coorte, referência cega, ordenação e orçamento prévios. Probabilidade calibrada (O3) deve atingir recuperação de P com pelo menos 25% menos revisões que escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. Não atingir refuta a hipótese. Margem fixada com dados à vista. Quatro ações: ganho acima da amplitude entre réplicas, 9 a 21 e 21 a 29 perdas.
 
 Fonte: `conclusao.tex`, abertura; `estudo4_gzcmd.tex`, Discussão (`sec:e4-discussao`); `data/comparador_mesma_carga.csv` como referência de desenvolvimento, não teste do critério.
 
