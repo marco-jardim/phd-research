@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Referência versionada anterior à repassada geral: `3d0286d744d4e02407c8ff5db52f888020f56ac6`. A árvore compilada final inclui as reversões de prosa e os PDFs regenerados no commit de entrega; esse hash anterior não identifica as fontes finais. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
+Commit final dos fontes LaTeX e dos PDFs desta repassada: `e6b626dcf1e4f5f46f29c1e66c5e19d564d8dca0`. O commit documental subsequente apenas registra esta referência no cabeçalho, sem alterar as entradas compiladas ou os PDFs. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
