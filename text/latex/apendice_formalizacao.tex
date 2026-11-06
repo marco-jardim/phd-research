@@ -125,7 +125,7 @@ C_{LLM}^* = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{F
 abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Como $C_{LLM}>0$, isso requer também $e_{FP}+e_{FN}<1$. Quando $C_{LLM} \ge C_{LLM}^*$, nenhuma revisão é estritamente ótima e toda decisão é automática pela convenção de desempate. O fator $H$ corresponde à metade da média harmônica dos custos de erro; o limiar multiplica esse fator por $(1-e_{FP}-e_{FN})$, de modo que maiores proporções de erro residual reduzem o custo justificável para revisão.
 \end{corollary}
 
-\textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Para o modo Vigilância com $C_{FN}/C_{FP} = 5$ e $C_{FP} = 1$, o limiar resulta em $C_{LLM}^* = 5/6 \approx 0{,}83$, indicando que a revisão é justificável desde que seu custo unitário seja inferior a 83\% do custo do falso positivo.
+\textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Na escala da vigilância da tese, com $C_{FP}=10$ e $C_{FN}=50$ (\path{gzcmd/gzcmd_v3_config.yaml}), o limiar é $C_{LLM}^*=500/60\approx8{,}33$, cálculo da tese. Normalizando ambos os custos por $C_{FP}$, obtém-se $5/6\approx0{,}83$: a revisão é justificável com custo inferior a 83,3\% do custo do falso positivo. O valor normalizado não é o custo na escala original da política.
 
 \subsection{Relaxamento das Hipóteses de Fellegi e Sunter}
 
