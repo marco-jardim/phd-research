@@ -428,7 +428,7 @@ Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`
 
 ### 43. O que falsificaria a hipótese central?
 
-O resultado formal vale sob p verdadeiro, revisor perfeito e perdas aditivas; não é hipótese empírica sobre qualquer escore. A hipótese de aplicação seria contrariada se, em dados novos, a probabilidade estimada não concentrasse vínculos no topo ou não reduzisse a carga para a mesma recuperação frente a O1. Exige referência cega e independente, orçamento e critério fixados antes da avaliação.
+Em dados novos, a hipótese cai se, na mesma carga humana, a ordenação por probabilidade recuperar menos vínculos que a ordenação pela nota do CdR ou pela nota calibrada; ou se a política de quatro ações recuperar mais vínculos que a ordenação com duas ações. Superar o escore do OpenRecLink é condição necessária, não suficiente. Referência cega e independente, orçamento e critério devem ser fixados antes da avaliação.
 
 Fonte: `conclusao.tex:3`; `estudo4_gzcmd.tex:622`; `apendice_formalizacao.tex`, Proposição de duas ações.
 
