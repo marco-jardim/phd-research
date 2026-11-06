@@ -140,17 +140,31 @@ def tabela_perfil_recuperados() -> None:
     text = historical.read_text(encoding="utf-8").replace(
         "Perfil dos óbitos recuperados", "Perfil dos vínculos recuperados"
     )
-    text = "\n".join(line for line in text.splitlines()
-                     if not line.startswith(("Idade (", "Sexo masculino", "Nota final (média)"))) + "\n"
+    profile = pd.read_csv(ROOT / "data/perfil_obitos_agregado.csv").set_index("conjunto")
+    recovered, found = profile.loc["recuperados"], profile.loc["ja_encontrados"]
+    replacements = {
+        "Idade (": "Idade (média $\\pm$ DP) & " + " & ".join(
+            f"{d(row.idade_media, 1)} $\\pm$ {d(row.idade_dp, 1)}" for row in (recovered, found)) + r" \\",
+        "Sexo masculino": "Sexo masculino (\\%) & " + " & ".join(
+            f"{int(row.sexo_masculino_n)} ({d(row.sexo_masculino_pct, 1)}" + r"\%)"
+            for row in (recovered, found)) + r" \\",
+        "Nota final (média)": "Nota final (média) & " + " & ".join(
+            d(row.nota_media, 2) for row in (recovered, found)) + r" \\",
+    }
+    text = "\n".join(next((value for prefix, value in replacements.items() if line.startswith(prefix)), line)
+                     for line in text.splitlines()) + "\n"
     text = text.replace(r"\end{table}", r"\par\footnotesize Fonte: \path{data/epidemiological_impact.csv} "
                         r"e \path{data/banca_b_recuperados_por_par.json}, produzidos por "
                         r"\path{scripts/epidemiological_impact.py} e \path{scripts/banca_b_recuperados_por_par.py}. "
                         r"Teste com 18.509 potenciais pares e 74 vínculos. As colunas descrevem 27 vínculos "
                         r"exclusivos do RF+SMOTE e 40 comuns à nota e ao modelo; os três exclusivos da nota "
                         r"não integram o perfil. As faixas da nota decorrem dessa definição, não explicam a recuperação. "
-                        r"As médias de idade e da nota e a distribuição por sexo não são apresentadas porque "
-                        r"não há agregado versionado que permita "
-                        r"conferir esses resumos sem o extrato privado." + "\n" + r"\end{table}")
+                        r"Médias de idade e nota e distribuição por sexo: \path{data/perfil_obitos_agregado.csv}, "
+                        r"linhas do teste importadas do agregado histórico versionado "
+                        r"\path{data/epidemiological_profile.json}, produzido por "
+                        r"\path{scripts/epidemiological_impact.py}. Idade derivada de R\_DTNASC e R\_DTOBITO; "
+                        r"sexo lido de R\_SEXO. Idade disponível nos 27 e 40 vínculos; DP amostral. "
+                        r"Valores históricos arredondados; medianas e DP da nota não foram registrados." + "\n" + r"\end{table}")
     (OUT / historical.name).write_text(text, encoding="utf-8", newline="\n")
 
 
