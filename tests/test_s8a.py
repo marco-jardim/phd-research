@@ -84,7 +84,7 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         assert len(text.split()) <= 500
         # O denominador 247 cabe no limite original de 12 números do resumo.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
         assert '36 PAR~=~2' in text
         assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text

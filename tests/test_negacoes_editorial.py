@@ -133,7 +133,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
     conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")
     assert r"não fundamentam a adoção dos \textit{pipelines} avaliados" in conclusion
-    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico do arranjo." in conclusion
+    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico dessas estratégias." in conclusion
     assert "seu efeito não se transfere automaticamente ao XGBoost" in conclusion
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator

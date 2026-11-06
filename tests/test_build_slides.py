@@ -195,7 +195,7 @@ def scientific_requirements(csv_loader=read_csv):
              "O serviço decide se aceita a troca", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
               "Se usar probabilidade aprendida", "1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22)",
-              "1:20 e 1:50 ficaram dentro da variação entre sementes", "isotônica piorou a calibração",
+               "1:20 e 1:50 ficaram dentro da variação entre sementes", "Brier mediano da isotônica piorou em todas as razões",
              "prevalência original", "Revisor humano no topo até o orçamento", "restante como não vínculo",
              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro interno",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",

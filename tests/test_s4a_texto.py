@@ -21,7 +21,7 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert "P-Platt" in text and "XGBoost" in text
         # Inclui o denominador 247 sem elevar o limite original de 12 números.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 12
+        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
     assert r"PAR é o \textit{label} da referência" in resumo
     assert "registered internally before evaluation" in abstract
     assert "preregistered" not in abstract

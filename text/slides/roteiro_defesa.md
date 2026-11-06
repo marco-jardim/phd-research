@@ -108,7 +108,7 @@ O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, n
 As perdas são de cobertura, não de erro humano. Os cenários de sensibilidade humana de 95%, 99% e 100%, com especificidade perfeita assumida, têm amplitudes máximas de 0,53 p.p. nas estratégias de carga reduzida e 0,73 p.p. na revisão integral. Sob revisor perfeito, P recupera 23 e 9 dos 36, não reproduzindo 13 e 27, mas aceita 21 e 4 FP. Em 96 e 17 revisões, O3 recupera 22 e 6, deixando 14 e 30 fora. Para igualar P, O3 requer 125 e 29; O4, 106 e 27. Para os 36, O1 requer 2.521 e O3, 23.443. Preservar o corte; escolher probabilidade ou escore e ponto de parada pela curva de esforço conforme o orçamento humano. Nenhuma ordenação domina em todas as cargas. Horas e cenário de carga ficam na reserva 49. Fonte: `comparador_mesma_carga.csv:2,22,27,32,37`; `cenarios_sensibilidade_humana.csv:3,21`.
 
 ### 29. Contribuições e recomendação final
-As contribuições são a decomposição por PAR; a curva de esforço como instrumento de escolha da ordenação e do ponto de parada; a investigação do mesmo LLM como aceitador ruim e filtro potencial; a política auditável de quatro ações, o CdR em Python, o pacote de código aberto e o *benchmark* de acesso restrito; e o resultado negativo com registro interno. A hipótese final é preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore, escolhendo a ordenação e o ponto de parada pela curva de esforço conforme o orçamento humano; nenhuma ordenação domina em todas as cargas. Se a ordenação for por probabilidade aprendida, treinar na prevalência original: 1:1 e 1:5 pioraram o topo da fila (13 e 18,5 contra 22 no topo 96), 1:20 e 1:50 ficaram dentro da variação entre sementes e a isotônica piorou a calibração. O restante recebe não vínculo. O LLM pode entrar apenas como filtro de NONMATCH antes da revisão, nunca como aceitador autônomo. A adoção exige validação registrada em dados novos.
+As contribuições são a decomposição por PAR; a curva de esforço como instrumento de escolha da ordenação e do ponto de parada; a investigação do mesmo LLM como aceitador ruim e filtro potencial; a política auditável de quatro ações, o CdR em Python, o pacote de código aberto e o *benchmark* de acesso restrito; e o resultado negativo com registro interno. A hipótese final é preservar o corte. Abaixo dele, revisar em ordem decrescente de uma probabilidade ou escore, escolhendo a ordenação e o ponto de parada pela curva de esforço conforme o orçamento humano; nenhuma ordenação domina em todas as cargas. Se a ordenação for por probabilidade aprendida, treinar na prevalência original: 1:1 e 1:5 pioraram o topo da fila (13 e 18,5 contra 22 no topo 96), 1:20 e 1:50 ficaram dentro da variação entre sementes e o Brier mediano da isotônica piorou em todas as razões. O restante recebe não vínculo. O LLM pode entrar apenas como filtro de NONMATCH antes da revisão, nunca como aceitador autônomo. A adoção exige validação registrada em dados novos.
 
 ### 30. Agradecimentos
 Agradece-se à orientação, à banca e à equipe responsável pelo processamento e pela revisão. As perdas são sobretudo de cobertura. P não reproduz 13 vínculos na vigilância e 27 na confirmação, com 21 e 4 FP. Na mesma carga humana, o LLM acrescenta no máximo 1 vínculo, sem justificar seu uso como substituto do revisor humano. A hipótese gerada é preservar o corte, escolher probabilidade ou escore e ponto de parada pela curva de esforço conforme o orçamento humano; nenhuma ordenação domina em todas as cargas. Se usar probabilidade aprendida, treinar na prevalência original. O restante recebe não vínculo. O filtro de NONMATCH permanece experimental, nunca aceitando vínculos sozinho.
@@ -172,7 +172,7 @@ Os mecanismos da política original são distintos do erro do revisor humano: gu
 
 ## Perguntas prováveis
 
-São 42 respostas, com 60, 58, 58, 61, 69, 63, 60, 68, 57, 70, 63, 62, 55, 55, 57, 61, 57, 62, 58, 67, 65, 60, 58, 52, 55, 61, 59, 60, 63, 55, 61, 65, 57, 69, 58, 66, 48, 58, 41, 52, 58 e 65 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. As respostas 34 a 42 atendem à revisão pós-qualificação: números da qualificação, corte, homonímia, manual, provedores externos, cuidado terapêutico, interface, OpenRecLink e acesso aos dados. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
+São 42 respostas, com 60, 58, 58, 61, 67, 63, 60, 68, 57, 70, 63, 62, 55, 55, 57, 61, 57, 62, 58, 67, 65, 60, 58, 52, 63, 61, 59, 60, 63, 55, 61, 65, 57, 69, 58, 64, 48, 58, 41, 52, 58 e 64 palavras, respectivamente, sem contar pergunta e fonte. A primeira reúne a pertinência do probabilístico e o escopo do módulo Python, incluindo a equivalência Java. As respostas 34 a 42 atendem à revisão pós-qualificação: números da qualificação, corte, homonímia, manual, provedores externos, cuidado terapêutico, interface, OpenRecLink e acesso aos dados. Mantém-se o limite de 70 palavras, para duração estimada de até 30 segundos. As fontes usam identificadores da tese e CSVs, sem depender da paginação.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -200,7 +200,7 @@ Fonte: `capitulo2.tex`, `tab:posicionamento`; `tab:qw1-deep-learning`; `tab:abla
 
 ### 5. Como foi construído o padrão-ouro?
 
-Daniela Medina Coeli Bastos executou o *linkage* no OpenRecLink original, em C, o CdR e a revisão clerical, sem segunda classificação independente nem kappa; o pré-processamento atribuído a Luís Guilherme Buteri Alves na qualificação não tem fonte primária. Dos 247 vínculos, 211 vieram do corte e 36 da revisão. A nota do CdR estava disponível à revisora. A referência incorpora o corte e limita a sensibilidade aos pares exportados.
+Daniela Medina Coeli Bastos executou o *linkage* no OpenRecLink original, em C, o CdR e a revisão clerical, sem classificação independente nem kappa. Luís Guilherme Buteri Alves realizou o pré-processamento segundo relato à época da qualificação, não documentado na monografia. Dos 247 vínculos, 211 vieram do corte e 36 da revisão. A nota estava disponível à revisora; a referência incorpora o corte e limita-se aos pares exportados.
 
 Fonte: `capitulo_dados.tex`, Padrão-ouro (`sec:padrao-ouro`); `apendice_linkage_origem.tex` (`ap:linkage-origem`). Slides 6 e 7.
 
@@ -320,7 +320,7 @@ Fonte: `data/comparador_p_match_humano.csv:2,3`. Slide 22.
 
 ### 25. Há fonte para a ordem histórica de revisão?
 
-Não. Oliveira (2026, p. 34) informa revisão manual da área cinza, sem descrever ordem, limite ou parada. Ordem decrescente de escore do OpenRecLink é hipótese. Portanto, 2.156 e 2.522 são cenários, não reconstrução histórica. Na fonte de origem, o CdR é documentado no passo aberto, com 5 pares; no extrato, foi executado antes da revisão.
+Não. Oliveira (2026, p. 34) informa revisão manual da área cinza, sem ordem, limite ou parada. Ordem decrescente do escore do OpenRecLink é hipótese: 2.156 e 2.522 são cenários, não reconstrução histórica. Na monografia, o CdR é documentado no passo aberto, com 5 pares, não nos passos 6, 9 e 11; no extrato desta tese, segundo a epidemiologista, foi executado antes da revisão.
 
 Fonte: `capitulo_dados.tex`, discussão de Oliveira, Quadros 5 e 6; `data/carga_abaixo_corte.csv:5,9`. Slides 6 e 7.
 
@@ -386,9 +386,9 @@ Fonte: `data/arranjo_corte_metricas.csv:2`; `capitulo1.tex` e `capitulo3.tex`, j
 
 ### 36. Há penalização de nome comum? O aprendizado de máquina é só exploração?
 
-Não há penalização isolada de nome comum. Os subescores do CdR medem raridade ou comunalidade dos fragmentos do nome, usados como atributos pelo classificador. A guarda de homonímia da v3, ausente da v3.1, encaminha à revisão, sem excluir, pares com nota ≥ 7, subescores de nascimento e endereço nulos e diferença de anos maior que 5. Os resultados com limiares escolhidos no teste são declarados exploratórios.
+Sim. No CdR, a proporção de fragmentos comuns do primeiro registro entra com sinal negativo, penalizando a composição do nome, sem medir concordância. Separadamente, a guarda de homonímia da v3, ausente da v3.1, encaminha à revisão, sem excluir, pares com nota ≥ 7, subescores de nascimento e endereço nulos e diferença de anos maior que 5. Resultados com limiares escolhidos no teste são exploratórios.
 
-Fonte: `gzcmd/guardrails.py:134-170`; `gzcmd/gzcmd_v3_config.yaml:131-132`; `estudo4_gzcmd.tex`, regras de guarda (`sec:e4-regras-guarda`); `capitulo2.tex`, critérios de Lucena; `estudo3_estrategias.tex`, Limitações (`sec:e3-limitacoes`). Slides 9, 11 e 13.
+Fonte: `estudo1_comparador.tex:23,39,95`, penalidade por fragmentos comuns; `gzcmd/guardrails.py:108-116,134-170`; `gzcmd/gzcmd_v3_config.yaml:131-132`; `estudo4_gzcmd.tex`, regras de guarda (`sec:e4-regras-guarda`); `capitulo2.tex`, critérios de Lucena; `estudo3_estrategias.tex`, Limitações (`sec:e3-limitacoes`). Slides 9, 11 e 13.
 
 ### 37. Existe manual de uso?
 
@@ -422,7 +422,7 @@ Fonte: `apendice_linkage_origem.tex` (`ap:linkage-origem`); `data/proveniencia_o
 
 ### 42. Os dados são públicos? Qual é a posição do autor?
 
-O autor integra o LinkDataPop, do IESC-UFRJ, no projeto aprovado sob os CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279. Os dados por potencial par não são públicos: o depósito Zenodo é de acesso restrito, mediante solicitação e acordo de uso. O público limita-se aos resultados agregados dos CSVs do repositório. A licença MIT vale somente para o código. A alteração do registro no Zenodo é pendência do autor.
+O autor integra o LinkDataPop, do IESC-UFRJ, no projeto aprovado sob os CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279. O depósito Zenodo, em todas as versões, já é público com arquivos restritos: metadados e DOI públicos, arquivos sob permissão de acesso restrito, mediante solicitação e acordo de uso. Dados por par não são públicos; o público limita-se aos agregados. A licença MIT vale somente para o código.
 
 Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`); `apendice_pacote.tex`. Slides 27 e 42.
 
@@ -516,7 +516,7 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | Mudança máxima da probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R) | `robustez_arranjo_resumo.csv:632,652` |
 | Estabilidade: 242 potenciais pares novos, US$ 0,6255, arredondados para US$ 0,63 | `robustez_arranjo_metadata.json:206,208` |
 | Revisões humanas equivalentes na vigilância, sob revisor perfeito: P 307,72; O3 125; P com MATCH ao humano 122,72 | `custos_equivalentes_exploratorios.csv:2-4` |
-| Consumo novo anterior: US$ 0,2448; somado a US$ 0,6255 da análise de estabilidade, sem representar fatura | `arranjo_corte_metadata.json:285,293,330,338`, soma dos custos novos de S2 e suplemento; `robustez_arranjo_metadata.json:208` |
+| Execuções novas: US$ 1,13 (0,2448 do arranjo inicial + 0,6255 da análise de estabilidade + 0,2633 do filtro LLM = 1,1336), sem representar fatura e sem pessoal e infraestrutura | `arranjo_corte_metadata.json:285,293,330,338`, soma dos custos novos de S2 e suplemento; `robustez_arranjo_metadata.json:208`; `filtro_llm_metadata.json:171`, `new_execution.total_cost_estimate_usd`; `estudo4_gzcmd.tex:539` |
 
 Os resultados históricos de v3, dos estudos 1 a 3 e da restrição na base inteira foram mantidos com as remissões que já constavam dos slides. Não são resultados novos do arranjo, nem foram reestimados nesta fatia.
 
