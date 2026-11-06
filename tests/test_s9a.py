@@ -37,7 +37,7 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
         assert 'Se a ordenação usar probabilidade aprendida' in text
         expected = {
             'capitulo1.tex': 'a curva de esforço aplicada a este fluxo',
-            'conclusao.tex': 'Para escolher quanto revisar e em que ordem, a tese aplica a curva de esforço a esse fluxo',
+            'conclusao.tex': 'a curva de esforço aplicada a este fluxo como instrumento de escolha da ordenação e do ponto de parada',
         }
         assert expected[name] in text
         assert r'\citeonline{Sariyar2010recordlinkage}' in text

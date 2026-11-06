@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-Base versionada do build oficial pós-PR48: `7ecd34ad839317668af59c87d313f884330d287c`. Esse *commit* identifica a árvore compilada dos slides, cujas entradas não foram alteradas neste build; os hashes dos PDFs oficiais estão na verificação técnica. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
+Referência versionada anterior à repassada geral: `3d0286d744d4e02407c8ff5db52f888020f56ac6`. A árvore compilada final inclui as reversões de prosa e os PDFs regenerados no commit de entrega; esse hash anterior não identifica as fontes finais. A numeração corresponde aos quadros do PDF, sem sobreposições: 30 principais e 19 de reserva, estes fora dos 40 minutos. O tempo é estimativa, não duração medida. O ensaio foi descartado por decisão do autor em 04/11/2026.
 
 ## Cronometragem
 
@@ -390,27 +390,27 @@ Critérios editoriais: menção ao referencial clássico restrita ao slide 8; pr
 
 O ensaio foi descartado pelo autor em 04/11/2026. A revisão pela orientadora foi dispensada, conforme a auditoria privada. Os testes automáticos verificam estrutura e compilação, não constituem evidência de teste presencial de projeção.
 
-Compilação oficial da lista final de revisão linguística do PR #51, autorizada pelo autor. A tese foi compilada por `python scripts/build_pdf.py --jobname tese --outname tese`, com BibTeX e três passagens de pdflatex, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex. Ambos usaram `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-arranjo/.texdeps//;`, o mesmo do PR #50.
+Compilação oficial da repassada geral do PR #52, autorizada pelo autor em 05/11/2026. A tese foi compilada inicialmente por `pwsh -NoProfile -File scripts/build_pdf.ps1`; como o log ainda solicitava nova passagem, executou-se `python scripts/build_pdf.py --jobname tese --outname tese`, que estabilizou em três passagens nesta execução final, com BibTeX, gerando `text/latex/tese.pdf` e a cópia idêntica `text/pdf/tese.pdf`. Não há `.nlo`, portanto os scripts oficiais não executaram makeindex. Antes disso, o build separado `tese_repassada_geral` estabilizou em quatro passagens. Os slides foram regenerados por `python text/slides/build_slides.py`, em duas passagens de pdflatex, com `TEXINPUTS=C:/Users/Marquinho/.local/share/opencode/worktree/d66565/pq-f-slides/.texdeps//;`. Foram usadas somente as dependências já existentes nesse worktree, sem novos downloads nesta retomada.
 
-### Verificação técnica do build oficial após ajuste do refrão
+### Verificação técnica do build oficial após a repassada geral
 
-A tese oficial manteve **224 páginas**, e a ficha permanece em **`224 f.: il.`**. Não foi necessária nova edição da ficha nesta etapa. O build estabilizou em três passagens; não há `.nlo`, portanto o script oficial não executou makeindex.
+A tese oficial manteve **224 páginas**, e a ficha permanece em **`224 f.: il.`**. Não foi necessária nova edição da ficha nesta etapa.
 
-Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. Suas únicas alterações de entrada nesta etapa são as três ocorrências terminológicas de robustez para estabilidade, nos locais indicados pelo autor. Não houve mudança de resultados, números ou fontes. O roteiro foi harmonizado no mesmo conceito, preservando os nomes dos arquivos `robustez_*`.
+Os slides têm **49 páginas**, com 30 quadros principais e 19 de reserva. As entradas dos slides não foram modificadas nesta repassada; permanecem as três trocas terminológicas de robustez para estabilidade já existentes no PR #51. Não houve mudança de resultados, números ou fontes dos slides.
 
-Os logs finais da tese e dos slides não contêm erros LaTeX, referências ou citações indefinidas, pedidos de nova passagem ou marcadores `??`, também ausentes no texto extraído dos PDFs. Permanecem somente os cinco Overfull herdados na tese, com larguras idênticas ao baseline; nos slides não há Overfull. Não foi realizado novo ensaio presencial de projeção.
+Os logs finais da tese e dos slides não contêm erros LaTeX, referências ou citações indefinidas, pedidos de nova passagem ou marcadores `??`, também ausentes no texto extraído dos PDFs. Permanecem somente os cinco Overfull herdados na tese; nos slides não há Overfull. Não foi realizado novo ensaio presencial de projeção.
 
-Logs e evidências locais, não versionados: `.local/linguistica/refrao/tese.log`, `.local/linguistica/refrao/defesa.log`, stdout/stderr dos scripts oficiais e `.local/linguistica/refrao/verificacao.json`.
+Logs e evidências locais, não versionados: `.local/negacoes/oficial/tese.log`, `.local/negacoes/oficial/defesa.log`, `.local/negacoes/oficial/verificacao.json`, `.local/negacoes/build-oficial-geral.txt`, `.local/negacoes/build-oficial-estabilizacao.txt`, `.local/negacoes/build-slides-geral.txt` e `.local/negacoes/diff_final.md`.
 
-*Commit* da árvore compilada antes das alterações desta lista: `4fb0b3aa60dbcf01e78ce1796a3a03b637883164`. O commit de entrega inclui os ajustes de prosa, as três ocorrências dos slides, o roteiro, o teste editorial de terminologia e os PDFs oficiais. As dependências externas de TeX não fazem parte dessa árvore.
+*Commit* de origem antes das reversões gerais: `3d0286d744d4e02407c8ff5db52f888020f56ac6`. A árvore compilada final é a do commit de entrega, que inclui as reversões de prosa, os testes editoriais, este roteiro e os três PDFs oficiais. As dependências externas de TeX não fazem parte dessa árvore.
 
-SHA-256 do PDF oficial dos slides: `599f535d6ca546dbb1ed99d119751a7c51a6dc9d0a6cecb3a486347945d4d927`. Relação dos PDFs oficiais:
+SHA-256 do PDF oficial dos slides: `5b35a4365c17b94d8b6915c52c4aecb566e33f7025aa8fde19f94e7c7fbfec48`. Relação dos PDFs oficiais:
 
 | Arquivo | Páginas | SHA-256 |
 | :-- | --: | :-- |
-| `text/slides/defesa.pdf` | 49 | `599f535d6ca546dbb1ed99d119751a7c51a6dc9d0a6cecb3a486347945d4d927` |
-| `text/latex/tese.pdf` | 224 | `deecf0562aef89d671d7de52c93ae4033c8cb808690593de8fe680c8759050bc` |
-| `text/pdf/tese.pdf` | 224 | `deecf0562aef89d671d7de52c93ae4033c8cb808690593de8fe680c8759050bc` |
+| `text/slides/defesa.pdf` | 49 | `5b35a4365c17b94d8b6915c52c4aecb566e33f7025aa8fde19f94e7c7fbfec48` |
+| `text/latex/tese.pdf` | 224 | `ed8ab87589b28048c3fc23f7a710362d993121ccffeb93a5074c5747432e6e34` |
+| `text/pdf/tese.pdf` | 224 | `ed8ab87589b28048c3fc23f7a710362d993121ccffeb93a5074c5747432e6e34` |
 
 Os identificadores da tese servem como remissões ao texto em revisão paralela. Os números novos ou alterados do arranjo e da equidade têm como fonte os CSVs agregados abaixo.
 
