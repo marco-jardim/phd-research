@@ -64,6 +64,7 @@ def render_reference(referencia, arranjo, cascata, carga):
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
         ("CdR, revisão humana da área cinza &", "CdR, revisão humana da área cinza da nota &"),
+        ("CdR, limiar da nota em 8 &", r"CdR, decisão de limiar (nota $\geq 8$) &"),
         ("A revisão da área cinza do CdR é cenário", "A revisão da área cinza da nota do CdR é cenário"),
         ("Zero FP acima do corte também decorre do rótulo.",
          r"Zero FP acima do corte também decorre do \textit{label}."),
@@ -87,15 +88,23 @@ def render_arrangement(historical):
     """Mantém todas as células; explicita o teto e os termos na apresentação."""
     lines = []
     for line in historical.splitlines():
+        if "Vigilância: base inteira" in line:
+            line = replace_once(line, "Vigilância: base inteira", "Vigilância (escopo: 61.696 pares)")
+        if "Confirmação: base inteira" in line:
+            line = replace_once(line, "Confirmação: base inteira", "Confirmação (escopo: 61.696 pares)")
+        if line.startswith("(i) Corte &"):
+            line = replace_once(line, "(i) Corte &", "Corte &")
+        if line.startswith("(ii) Humano integral &"):
+            line = replace_once(line, "(ii) Humano integral &", "Humano integral &")
         if "scripts/arranjo_corte_s3_avaliar.py" in line:
             line = replace_once(line, "scripts/arranjo_corte_s3_avaliar.py", "scripts/tabelas_arranjo_editorial.py")
         if "até 61.485 (36)" in line:
             line = replace_once(line, "até 61.485 (36)", "61.485 (teto; 36)")
         if "21.497 (28)" in line:
             line = replace_once(line, "21.497 (28)", "21.497 (teto; 28)")
-        if line.startswith("(i) Corte & 211 &"):
+        if line.startswith("Corte & 211 &"):
             line = replace_once(line, "85,4 [80,5; 89,3]", "85,4")
-        if line.startswith("(i) Corte & 123 &"):
+        if line.startswith("Corte & 123 &"):
             line = replace_once(line, "81,5 [74,5; 86,8]", "81,5")
         if " & " in line and len(line.split(" & ")) == 10 and not line.startswith("Braço &"):
             cells = line.split(" & ")

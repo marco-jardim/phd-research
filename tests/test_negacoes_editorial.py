@@ -141,10 +141,10 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 
 
 @pytest.mark.parametrize("filename,expected", [
-    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas taxas, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
+    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
     ("estudo2_classificadores.tex", "Para avaliar a estabilidade, a análise original utilizou validação cruzada estratificada com cinco partições da base completa, sem repetições."),
     ("conclusao.tex", "A análise descreve a estabilidade interna entre réplicas, não validação em novos dados"),
-    ("estudo4_gzcmd.tex", "A análise descreve a estabilidade interna entre réplicas, não generalização"),
+    ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
     ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),

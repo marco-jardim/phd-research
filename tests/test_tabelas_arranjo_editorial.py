@@ -101,6 +101,9 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
         elif original[0] == "CdR, revisão humana da área cinza":
             assert current[0] == "CdR, revisão humana da área cinza da nota"
             assert original[1:] == current[1:]
+        elif original[0] == "CdR, limiar da nota em 8":
+            assert current[0] == r"CdR, decisão de limiar (nota $\geq 8$)"
+            assert original[1:] == current[1:]
         else:
             assert original == current
     text = (EDITORIAL / "tab_cap8_referencia.tex").read_text(encoding="utf-8")
