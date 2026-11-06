@@ -63,7 +63,7 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
     assert "Nos dados atuais, que não testam o critério" in study
     for name in ("defesa.tex", "roteiro_defesa.md"):
         slides = (ROOT / "text/slides" / name).read_text(encoding="utf-8")
-        assert "Duas ações usam O3" in slides
+        assert "Ganho das quatro ações sobre duas ações (O3)" in slides
         assert "de 9 a 21 e de 21 a 29" in slides
 
 
