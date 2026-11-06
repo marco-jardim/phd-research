@@ -19,7 +19,7 @@ TABLES = ("tab_equidade_v31.tex", "tab_equidade_v31_rejeicoes_cascata.tex",
           "tab_qw3_group_metrics.tex")
 
 
-def generate(data_dir: Path, tables_dir: Path) -> None:
+def generate(data_dir: Path, tables_dir: Path, *, editorial_notes: bool = False) -> None:
     """Reproduz o contrato histórico congelado em diretório separado.
 
     As versões existentes em tables/ não são saídas literais de equidade_v31;
@@ -55,9 +55,20 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
         if name != TABLES[0]:
             text = replace_once(text, r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
             text = replace_once(text, r"\end{tabular}", r"\end{tabular}}")
+        source = (r"\par\footnotesize Fonte: \path{data/equidade_v31_global.csv}, "
+                  r"\path{data/equidade_v31_group_metrics.csv}, "
+                  r"\path{data/equidade_v31_pairwise_tests.csv} e "
+                  r"\path{data/equidade_v31_maxdiff.csv}. Universo: 61.696 potenciais pares, "
+                  r"247 vínculos; a cobertura por dimensão pode ser menor. "
+                  r"A contagem de rejeições usa a família histórica sem filtro por denominador; "
+                  r"as diferenças máximas exigem denominadores de pelo menos 30. São critérios "
+                  r"distintos, não uma única família filtrada. OR é razão de chances. "
+                  r"Os grupos históricos do nome contêm empates, não quatro grupos de mesmo tamanho.")
+        if editorial_notes:
+            text = replace_once(text, r"\end{table}", source + "\n" + r"\end{table}")
         path.write_text(text, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":
-    generate(ROOT / "data", ROOT / "text/latex/tables/editorial")
+    generate(ROOT / "data", ROOT / "text/latex/tables/editorial", editorial_notes=True)
     print("Regeneradas:", ", ".join(TABLES))
