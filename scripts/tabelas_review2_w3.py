@@ -146,6 +146,11 @@ def appendix_ablation():
              r"\path{data/ablation_comprec_macd.csv} e \path{data/ablation_comprec_nomacd.csv}; "
              r"a comparação está em \path{data/exp1_vazamento_comparacao.csv}. "
              r"As partições de teste se sobrepõem e não constituem cinco amostras independentes.", ""]
+    historical = pd.read_csv(ROOT / "data/ablation_comprec_macd.csv", sep=";")
+    historical_f1 = historical.loc[historical["mode"].eq("vigilancia"), "exp_f1"].mean()
+    lines[0] += (r" O $F_1$ esperado de " + number(historical_f1)
+                 + r" na vigilância com MACD pertence à versão anterior com vazamento, "
+                 r"não à seleção saneada nem ao desempenho observado de um LLM.")
     columns = ["exp_precision", "exp_recall", "exp_f1", "exp_fbeta", "auto_coverage", "llm_used"]
     for suffix, state in (("macd", "ativado"), ("nomacd", "desativado")):
         source = f"data/ablation_comprec_{suffix}_allowlist.csv"
