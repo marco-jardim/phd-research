@@ -95,24 +95,42 @@ def test_nine_keys_are_unique_have_exact_dois_and_are_cited(name):
         assert len(entries) == 1, key
         assert bib.lower().count(doi.lower()) == 1, (key, "DOI duplicado")
         assert re.search(r"doi\s*=\s*\{" + re.escape(doi) + r"\}", entries[0])
-        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", study())
+        # W11a separou o registro da v4 das propostas de continuidade da conclusão.
+        cited_text = ((LATEX / "conclusao.tex").read_text(encoding="utf-8")
+                      if key == "Fisch2024stratppi" else study())
+        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", cited_text)
     fisch = next(entry for key, entry in blocks if key == "Fisch2024stratppi")
     assert "preprint" in fisch and "arXiv" in fisch
     gienapp = next(entry for key, entry in blocks if key == "Gienapp2025relevance")
     assert re.search(r"year\s*=\s*\{2026\}", gienapp)  # ano verificado no DOI, chave mantida
 
 
-def test_primary_criterion_is_preserved_and_secondary_is_future_registration():
+def test_primary_criterion_is_preserved_and_secondary_is_registered_candidate():
     paragraph = next(p for p in study().split("\n\n")
                      if p.startswith("Como critério prospectivo de falsificação"))
     assert r"pelo menos 25\% menos revisões que O1" in paragraph
     assert r"limite inferior do intervalo de 95\% entre partições predefinidas" in paragraph
     assert "os 23 PAR~=~2 da vigilância e os nove da confirmação" in paragraph
     assert "Nenhuma dessas avaliações foi realizada" in paragraph
-    assert "Para a coorte nova, serão registradas a priori comparações secundárias" in paragraph
-    for key in ("Fisch2024stratppi", "Callaghan2020stopping", "Lewis2021certifying",
+    for phrase in ("A comparação primária é entre a ordenação pela probabilidade calibrada do classificador (O3)",
+                   "e a ordenação pelo escore do OpenRecLink (O1)",
+                   "Para a coorte nova, o registro da v4 candidata",
+                   r"\path{gzcmd/M_v4_candidata.md}",
+                   r"\path{data/v4_candidata_registro.json}",
+                   "fixa F4 e CM como filas secundárias",
+                   "exclui LLM como evidência, dossiê v5 e encaminhamento conformal",
+                   "mantendo referência cega por amostragem estratificada",
+                   "o método de parada com garantia de recuperação permanece pendente de escolha antes da coorte"):
+        assert phrase in paragraph
+    for key in ("Callaghan2020stopping", "Lewis2021certifying",
                 "DiNunzio2026stopping", "Lam2026clerical"):
         assert key in paragraph
+    conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
+    continuity = next(p for p in conclusion.split("\n\n") if "Fisch2024stratppi" in p)
+    for phrase in (r"correção dos \textit{labels} de LLM por amostra humana estratificada",
+                   r"\cite{Fisch2024stratppi}", "permanecem propostas de continuidade",
+                   "distintas das comparações fixadas no registro da v4 candidata"):
+        assert phrase in continuity
 
 
 def test_ablation_keeps_generated_values_with_exact_editorial_glosses():
