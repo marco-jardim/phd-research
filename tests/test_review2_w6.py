@@ -165,9 +165,17 @@ def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
         "O4": ("probabilidade recalibrada de P",),
     }
     for name in ("conclusao.tex", "tese.tex"):
-        for paragraph in text(name).split("\n\n"):
+        source = text(name)
+        for code in set(re.findall(r"\bO[1-4]\b", source)):
+            assert any(term in source for term in definitions[code]), (name, code)
+        for paragraph in source.split("\n\n"):
             for code in set(re.findall(r"\bO[1-4]\b", paragraph)):
-                assert any(term in paragraph for term in definitions[code]), (name, code, paragraph)
+                terms = definitions[code]
+                if code == "O3":
+                    # W10a usa a forma curta no cenário de erro da referência;
+                    # a definição completa fora da amostra continua obrigatória.
+                    terms += ("ordenação pela probabilidade calibrada (O3)",)
+                assert any(term in paragraph for term in terms), (name, code, paragraph)
 
 
 def test_macd_birth_and_identical_name_definition_agree_with_glossary():
