@@ -56,8 +56,8 @@ def transform(name, text):
         text = text.replace("nota final do CdR ($v$)", "nota final do Comparador de Registros (CdR), $v$")
         text = text.replace("área cinza ($5", "área cinza da nota do CdR ($5")
     text = text.replace("sensibilidade com \\textit{Platt scaling}", "análise de sensibilidade de P com \\textit{Platt scaling}")
-    text = text.replace("Numérico ($k/20$)", "Numérico (réplicas/20)")
-    text = text.replace("Partição ($k/20$)", "Partição (réplicas/20)")
+    text = text.replace("Numérico ($k/20$)", "Numérico")
+    text = text.replace("Partição ($k/20$)", "Partição")
     text = text.replace("O3: \\texttt{p\\_cal\\_ml}", "O3: probabilidade calibrada do classificador na base inteira")
     text = text.replace("As chaves S1 a S4 nos artefatos são históricas, não as etapas do protocolo. ", "")
     text = text.replace("P97,5", "percentil 97,5").replace("P10 a P90", "percentis 10 a 90")
@@ -76,7 +76,9 @@ def transform(name, text):
         "tab_cap8_mesma_carga": P + PAR2 + "$k$: número de revisões humanas na ordenação. CdR: Comparador de Registros.",
         "tab_cap8_esforco": P + PAR2 + "O3: ordenação pela probabilidade calibrada do classificador na base inteira. A meta de recuperar os 36 vínculos é cenário, não carga observada.",
         "tab_cap8_fusao_robustez": FUSION,
-        "tab_cap8_robustez_arranjo": P + "P-Platt: análise de sensibilidade de P com \\textit{Platt scaling} abaixo do corte.",
+        "tab_cap8_robustez_arranjo": P + "P-Platt: análise de sensibilidade de P com \\textit{Platt scaling} abaixo do corte. "
+            "Numérico e Partição: réplicas com dominância de P-Platt sobre P, em 20 reexecuções de cada bloco. "
+            "Inversa: réplicas com dominância de P sobre P-Platt nos blocos numérico e de partição, respectivamente.",
         "tab_cap8_filtro_llm": PAR2 + "NONMATCH: decisão de não vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pela probabilidade calibrada com o mesmo número de revisões humanas após o filtro. O topo de 440 pares não teve todas as respostas.",
         "tab_cap8_subamostragem": "A ordenação usa a probabilidade calibrada do classificador. A linha de referência corresponde ao treino sem subamostragem, não à referência operacional de vínculos.",
         "tab_cap8_ancoras": "Conjuntos âncora: potenciais pares de nota extrema usados para calibrar. CdR: Comparador de Registros.",

@@ -37,6 +37,10 @@ def test_editorial_tables_regenerate_and_historical_numeric_cells_stay(tmp_path)
     robust = (tmp_path / 'tab_cap8_robustez_arranjo.tex').read_text(encoding='utf-8')
     assert 'Numérico' in robust and 'Partição' in robust
     assert 'P ($k/20$)' not in robust
+    assert 'Modo & Numérico & Partição & Inversa (num.; part.) & Classificação' in robust
+    assert '(réplicas/20)' not in robust
+    assert 'em 20 reexecuções de cada bloco' in robust
+    assert 'Inversa: réplicas com dominância de P sobre P-Platt' in robust
 
 
 def test_same_load_rows_and_effort_are_generated_from_versioned_artifacts():
