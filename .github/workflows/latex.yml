@@ -2,10 +2,10 @@ name: Compilar tese (LaTeX)
 
 on:
   push:
-    branches: [main, pos-qualificacao]
+    branches: [main, pos-qualificacao, pq/revisao-2-redacao]
     paths: ['text/latex/**', '.github/workflows/latex.yml']
   pull_request:
-    branches: [main, pos-qualificacao]
+    branches: [main, pos-qualificacao, pq/revisao-2-redacao]
     paths: ['text/latex/**', '.github/workflows/latex.yml']
   workflow_dispatch:
 

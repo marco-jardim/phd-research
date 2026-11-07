@@ -2,9 +2,9 @@ name: Testes Python (pytest)
 
 on:
   push:
-    branches: [pos-qualificacao]
+    branches: [pos-qualificacao, pq/revisao-2-redacao]
   pull_request:
-    branches: [pos-qualificacao]
+    branches: [pos-qualificacao, pq/revisao-2-redacao]
   workflow_dispatch:
 
 jobs:
