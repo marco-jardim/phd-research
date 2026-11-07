@@ -109,7 +109,7 @@ def test_review3_decision_counts_bias_and_pair_loss_limits_are_explicit():
     assert "A direção dominante não é identificável" in study
     assert "2.522 candidatos" in study and r"-5{,}648" in study
     assert "As perdas são contadas por potencial par" in study
-    assert "sem reconstituir os candidatos" in study
+    assert "Não se reconstituiu a geração de candidatos sob decisões alternativas da política" in study
     assert r"\mathcal{L}_H(p)=6-4p" in study
     assert r"$p>0{,}25$" in study and "229 para 121" in study
     assert "as métricas OOF não incorporam essa seleção" in study

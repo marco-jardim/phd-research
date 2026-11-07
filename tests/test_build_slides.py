@@ -195,7 +195,7 @@ def scientific_requirements(csv_loader=read_csv):
              "os orçamentos são distintos", "95", "99", "100", "especificidade humana é assumida perfeita"],
         29: ["Preservar o corte", "ordem decrescente", "fusão RRF", "referência cega",
               "Subamostragem: quadro 47", "Revisor humano no topo até o orçamento", "restantes não examinados",
-              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro de decisões",
+              "LLM apenas como filtro de NONMATCH", "sem aceitar sozinho", "registro de decisões",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
               "Não distingue ancoragem de abstenção", "quatro ações", "benchmark",
               "orçamento humano fixo (H=22 em uma réplica)", "amostra independente verificada",
@@ -782,7 +782,7 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
             assert "Preservar o corte" in text or "preservar o corte" in text
             assert "fusão RRF" in text and "referência cega" in text
             assert "curva de esforço" in text and "orçamento humano" in text
-            assert "na vigilância, nenhuma ordenação domina" in text.lower()
+            assert "na vigilância, entre o1 a o4 e p, nenhuma ordenação domina" in text.lower()
             assert "na confirmação, o2 domina fracamente p" in text.lower()
             assert "fila por p_cal_ml" not in text and r"\texttt{p\_cal\_ml}" not in text
     for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
@@ -847,7 +847,7 @@ def test_slides_no_control_characters_and_definitions_before_results():
     frames = slide_frames()
     for definition in ("OOF: fora da amostra", "FP: falso positivo", "VPP: valor preditivo positivo", "O3:", "O4:"):
         assert definition in frames[3]
-    assert "Na vigilância, nenhuma ordenação domina" in frames[3]
+    assert "Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina" in frames[3]
     assert "na confirmação, O2 domina fracamente P" in frames[3]
     for row in read_csv("subamostragem_treino_resumo.csv"):
         if row["population"] == "below" and row["variant"] == "isotonic" and row["metric"] == "brier" and row["ratio"] != "original":
@@ -917,7 +917,7 @@ def test_banca_e_title_terminology_and_new_answers():
     answers = {n: questions.split(f"### {n}.")[1].split("### ")[0] for n in range(34, 43)}
     for number, fragments in {
         34: ("Random Forest", "sigmoide interna", "COMPREC", "SCORE e identificadores",
-             "vazamento corrigido", "esperado, não observado", "Não houve chamada a LLM"),
+             "vazamento reduzido pela seleção restrita", "esperado, não observado", "Não houve chamada a LLM"),
         35: ("211 dos 247 vínculos (85,4%)", "preserva"),
         36: ("homonímia", "gzcmd/guardrails.py", "exploratórios"),
         37: ("README", "notebooks/README.md", "apendice_pacote.tex"),

@@ -81,7 +81,7 @@ def test_final_editorial_contract_and_table_placement():
     assert "21 e 4 foram rejeitados ou não examinados" in conclusion
     assert "344 potenciais pares avaliados pelo LLM" in conclusion
     assert "revisor perfeito" in conclusion
-    assert "Sob a mesma hipótese de revisor e na mesma carga, nenhuma domina" in conclusion
+    assert "Sob a mesma hipótese de revisor e na mesma carga, entre O1 a O4 e P, nenhuma domina" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     active = re.sub(r"(?m)^%.*$", "", chapter)
     cutoff = active.index(r"\subsection{Comparação com o corte 6,0}")
@@ -147,5 +147,8 @@ def test_review3_scope_and_experiment1_caveats():
     assert "investigação desnecessária" in objectives
     assert "sem investigação" not in objectives
     for name in ("estudo5_equidade.tex", "conclusao.tex"):
-        assert "não detecta esse erro diferencial" in (LATEX / name).read_text(encoding="utf-8")
+        source = (LATEX / name).read_text(encoding="utf-8")
+        assert "não detecta" in source
+        assert "nem compara óbitos vinculados e não vinculados" in source
+        assert "Soundex do primeiro e do último fragmentos do nome" in source
     assert "e detecção de vínculos}" in (LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8")

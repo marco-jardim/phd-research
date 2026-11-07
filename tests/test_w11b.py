@@ -1,6 +1,7 @@
 """Contratos W11b: síntese exploratória com números dos agregados públicos."""
 
 import csv
+import json
 from pathlib import Path
 import re
 
@@ -47,7 +48,9 @@ def test_person_propagation_is_limited_to_published_recovery():
     row, = [r for r in rows("propagacao_pessoa.csv")
             if r["regra"] == "R1_UNIAO" and r["passo"] == "TOTAL"]
     assert int(row["par2"]) == int(row["propagados"]) == 2
-    assert "dois vínculos recuperados, alcance restrito" in answer(87)
+    assert "Propagação por pessoa: dois vínculos" in answer(87)
+    assert "propagação por pessoa recuperou somente dois vínculos, com alcance restrito" in text(
+        "text/latex/conclusao.tex")
 
 
 def test_llm_evidence_vpp_and_caution_track_same_baseline():
@@ -65,12 +68,30 @@ def test_llm_evidence_vpp_and_caution_track_same_baseline():
         assert phrase in conclusion
 
 
-def test_expanded_dossier_uses_qualitative_fallback_without_public_number():
-    body = answer(87).split("Dossiê ampliado:", 1)[1].split("São explorações", 1)[0]
-    assert "o critério de utilidade pré-registrado não foi atingido" in body
-    assert not re.search(r"\d", body)
-    assert "a ampliação não demonstrou melhora uniforme da decisão" in text(
-        "text/latex/conclusao.tex")
+def test_expanded_dossier_numbers_and_failed_criterion_follow_public_artifacts():
+    metadata = json.loads(text("data/probe_dossie_v5_metadata.json"))
+    utility = metadata["utility"]
+    assert utility["FP_S1_retirados_validos"] == 3 < 5
+    assert utility["PAR2_S2_adicionais"] == 2 < 3
+    assert utility["VPP_S1"] == pytest.approx(4 / 18)
+    assert utility["VPP_S1"] < 0.35
+    assert utility["useful"] is False
+    body = answer(87).split("Dossiê ampliado:", 1)[1]
+    for fragment in ("três dos 21 FP retirados (mínimo cinco)",
+                     "dois PAR=2 recuperados (mínimo três)",
+                     "VPP de 22,2% (mínimo 35,0%)", "critério não atingido"):
+        assert fragment in body
+    aggregate = rows("probe_dossie_v5_agregado.csv")
+    s1, = [r for r in aggregate if r["modo"] == "vigilancia"
+           and r["estrato"] == "S1" and r["passada"] == "v5"]
+    assert (int(s1["VP"]), int(s1["MATCH"])) == (4, 18)
+    assert float(s1["VPP"]) == utility["VPP_S1"]
+    conclusion = text("text/latex/conclusao.tex")
+    for fragment in ("três dos 21 FP", "mínimo de cinco", "dois foram recuperados",
+                     "mínimo de três", r"22,2\% (quatro vínculos em 18)", r"35,0\%",
+                     "nenhuma condição do critério de utilidade pré-registrado foi atingida",
+                     f'{metadata["pares_sem_decisao"]} pares ficaram sem decisão completa'):
+        assert fragment in conclusion
 
 
 def test_v4_candidate_is_prospective_and_does_not_replace_approved_recommendation():
@@ -107,7 +128,7 @@ def test_protocol_backup_mentions_v4_without_expanding_final_recommendation():
     frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}",
                         text("text/slides/defesa.tex"), re.S)
     assert len(frames) == 50
-    assert frames[-2].startswith("{Backup: Protocolo da coorte nova (1/2)}")
+    assert frames[-2].startswith("{Backup: mecanismos, cenários humanos e registro interno}")
     assert frames[-1].startswith("{Backup: Protocolo da coorte nova (2/2)}")
     assert "v4 candidata:" in frames[-1]
     assert "secundárias pré-registradas para a coorte nova" in frames[-1]

@@ -109,7 +109,7 @@ def test_reference_turning_points_and_remaining_losses_match_csv():
                     if r["model"] == "claude-haiku-5-5" and r["modo"] == "vigilancia"
                     and r["estrato"] == "TOTAL_AMOSTRA" and r["passada"] == "historico")
     fraction = (0.5 * float(baseline["MATCH"]) - float(baseline["VP"])) / float(baseline["FP"])
-    assert pt(100 * fraction, 2) + "%" in script
+    assert pt(100 * fraction, 1) + "%" in script
     metrics = rows("vies_referencia.csv")
     for metric in ("O3-O1_margem25_64", "F4-O1_revisoes_25", "F4-O1_revisoes_100"):
         scenarios = [r for r in metrics if r["metrica"] == metric]

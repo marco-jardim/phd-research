@@ -160,8 +160,8 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     assert r'P-Platt é a análise de sensibilidade com \textit{Platt scaling}' in pt
     assert '42,5' in pt and '42.5' in en
     assert 'pelo menos 95' in pt and 'at least 95' in en
-    assert 'nenhuma estratégia domina' in pt
-    assert 'no strategy dominates' in en
+    assert 'nenhuma das estratégias de decisão comparadas domina' in pt
+    assert 'none of the compared decision strategies dominates' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
