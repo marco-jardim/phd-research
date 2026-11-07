@@ -36,6 +36,11 @@ def test_prompt_roles_and_batch_instruction_match_frozen_source(tmp_path):
     assert target.read_bytes() == (L / 'apendice_prompts.tex').read_bytes()
     blocks = re.findall(rb'\\begin\{verbatim\}\r?\n(.*?)\\end\{verbatim\}', target.read_bytes(), re.S)
     assert len(blocks) == 7
+    for block, version in zip(blocks[:2], ('v3', 'v4')):
+        assert block == (ROOT / f'gzcmd/gzcmd_{version}_llm_prompt.md').read_bytes()
+    prose = re.sub(rb'\\begin\{verbatim\}.*?\\end\{verbatim\}', b'', target.read_bytes(), flags=re.S)
+    assert not re.search(rb'\bbanda\b', prose)
+    assert 'política por faixa' in prose.decode('utf-8')
     for block, (_, payload) in zip(blocks[2:], role_payloads()):
         assert block == payload.encode('utf-8') + b'\n'
     module = ast.parse((ROOT / 'gzcmd/llm_review.py').read_text(encoding='utf-8'))
