@@ -71,12 +71,12 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
 
 
 def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
-    from scripts.tabelas_review2_w3 import appendix_ablation
+    from test_w9a import expected_ablation_appendix
 
     study = text("estudo4_gzcmd.tex")
     section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\subsection{Experimento 2:")[0]
     appendix = text("apendice_ablacao.tex")
-    assert appendix == appendix_ablation()
+    assert appendix == expected_ablation_appendix()
     for arm in ("macd", "nomacd"):
         source = f"data/ablation_comprec_{arm}_allowlist_summary.csv"
         assert source in section

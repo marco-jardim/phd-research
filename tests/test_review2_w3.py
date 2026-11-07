@@ -21,8 +21,10 @@ def test_editorial_w3_regenerates_without_changing_historical(tmp_path):
 
 
 def test_ablation_appendix_is_generated_expected_not_llm_observation():
+    from test_w9a import expected_ablation_appendix
+
     text = (LATEX / "apendice_ablacao.tex").read_text(encoding="utf-8")
-    assert text == tables.appendix_ablation()
+    assert text == expected_ablation_appendix()
     assert "sem chamadas a modelo de linguagem" in text
     assert "não é desempenho observado de um LLM" in text
     assert r"$\beta=0{,}5$" in text and r"$\beta=2{,}0$" in text
