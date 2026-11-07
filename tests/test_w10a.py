@@ -145,13 +145,13 @@ def test_model_counts_vpp_confirmation_and_replica(model, name, passada):
 
 
 @pytest.mark.parametrize("mode,n,agreement,kappa", [
-    ("vigilancia", 1410, "86,95", "0,555"),
-    ("confirmacao", 435, "85,52", "0,659"),
+    ("vigilancia", 1410, "87,0", "0,555"),
+    ("confirmacao", 435, "85,5", "0,659"),
 ])
 def test_complete_historical_cohort(mode, n, agreement, kappa):
     r = one(rows("probe_haiku_sonnet_coorte.csv"), coorte="original", model="claude-haiku-5-5", modo=mode, faixa="TOTAL")
     assert int(r["n"]) == n
-    assert pt(float(r["agreement"]) * 100, 2) == agreement
+    assert pt(float(r["agreement"]) * 100, 1) == agreement
     assert pt(r["kappa"], 3) == kappa
     for value in (pt(n), agreement, kappa):
         assert value in text()

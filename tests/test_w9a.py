@@ -13,7 +13,7 @@ KEYS = {
     "Rahman2019bandits": "10.1145/3308558.3313675",
     "Fisch2024stratppi": "10.48550/arxiv.2406.04291",
     "Alaofi2026llmrelevance": "10.1145/3788872",
-    "Gienapp2025relevance": "10.1145/3805712.3809713",
+    "Gienapp2026relevance": "10.1145/3805712.3809713",
     "Callaghan2020stopping": "10.1186/s13643-020-01521-4",
     "Lewis2021certifying": "10.1145/3459637.3482415",
     "Lam2026clerical": "10.23889/ijpds.v11i5.3595",
@@ -101,8 +101,8 @@ def test_nine_keys_are_unique_have_exact_dois_and_are_cited(name):
         assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", cited_text)
     fisch = next(entry for key, entry in blocks if key == "Fisch2024stratppi")
     assert "preprint" in fisch and "arXiv" in fisch
-    gienapp = next(entry for key, entry in blocks if key == "Gienapp2025relevance")
-    assert re.search(r"year\s*=\s*\{2026\}", gienapp)  # ano verificado no DOI, chave mantida
+    gienapp = next(entry for key, entry in blocks if key == "Gienapp2026relevance")
+    assert re.search(r"year\s*=\s*\{2026\}", gienapp)  # chave e ano coerentes com o DOI
 
 
 def test_primary_criterion_is_preserved_and_secondary_is_registered_candidate():
