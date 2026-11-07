@@ -31,23 +31,20 @@ def study():
 
 
 def expected_ablation_appendix():
-    """Preserva igualdade integral com o gerador, salvo glosas exatas autorizadas."""
+    """Preserva igualdade integral; W13a incorporou as glosas ao gerador."""
     from scripts.tabelas_review2_w3 import appendix_ablation
 
     expected = appendix_ablation()
     for state in ("ativado", "desativado"):
         for mode, error in (("confirmação", "positivo"), ("vigilância", "negativo")):
-            old = f"Ablação saneada com MACD {state}, modo {mode}: métricas esperadas."
-            gloss = ("Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento"
-                     if state == "ativado" else
-                     "sem os atributos derivados do nascimento denominados Medidas Contínuas de Diferença de Datas")
-            new = (f"Ablação saneada com MACD {state} ({gloss}), no modo {mode} "
-                   f"(maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.")
-            assert expected.count(old) == 1
-            expected = expected.replace(old, new)
+            caption = ("Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), "
+                       f"MACD {state} (Medidas Contínuas de Diferença de Datas de nascimento), modo {mode} "
+                       f"(maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.")
+            assert expected.count(caption) == 1
     gloss = ("MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
              "v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).\n\n")
-    return gloss + expected
+    assert expected.startswith(gloss)
+    return expected
 
 
 def test_sensibilidade_text_matches_csv_by_variant_and_metric():
@@ -155,7 +152,7 @@ def test_census_first_mentions_and_captions_are_self_contained():
     for label, phrases in {
         "tab:cap8-revisao-desempenho": ("Experimento 2 (Exp2, revisão assistida)",
                                        "incluindo as saídas decisórias do motor", "versão histórica que solicita"),
-        "tab:cap8-robustez-arranjo": ("P-Platt (sensibilidade", "P (arranjo principal", "reexecuções com outra"),
+        "tab:cap8-robustez-arranjo": ("P-Platt (análise de sensibilidade de P com", "P (arranjo principal", "reexecuções com outra"),
         "fig:cap8-curva-esforco": ("O1 ordena", "O2, pela nota", "O3, pela probabilidade", "O4, pela probabilidade",
                                   "P é o arranjo principal", "sem falso positivo humano"),
     }.items():

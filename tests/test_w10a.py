@@ -118,7 +118,7 @@ def test_threshold_precision_and_ties_match_metadata():
 def test_f3_recovers_25_at_96():
     r = one(rows("fusao_filas.csv"), fila="F3", metrica="par2_top_96")
     assert float(r["media"]) == 25
-    assert "F3 recupera 25 PAR~=~2 com 96 revisões" in text()
+    assert "F3 (fusão por posição recíproca de O3, O1 e O3 com MACD) recupera 25 PAR~=~2 com 96 revisões" in text()
 
 
 @pytest.mark.parametrize("model,name,passada", MODELS)

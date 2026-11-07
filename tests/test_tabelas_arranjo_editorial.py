@@ -19,6 +19,9 @@ from scripts.tabelas_review2_w3 import equity_tables
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
 EDITORIAL = TABLES / "editorial"
+EQUITY_GLOSS = ("P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
+                "CdR: Comparador de Registros. REFREC identifica o registro do SIM. "
+                "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
 
 
 def rows(text):
@@ -71,6 +74,7 @@ def test_equity_numeric_cells_only_change_specificity_precision():
     note = step_ppv_note(*[pd.read_csv(ROOT / "data" / f"equidade_arranjo_{name}.csv")
                            for name in ("maxdiff", "group_metrics", "pairwise_tests")])
     allowed_numbers.update(numbers(note))
+    allowed_numbers.update(numbers(EQUITY_GLOSS))
     assert numbers(editorial_text) == +allowed_numbers
 
 
@@ -78,14 +82,16 @@ def test_group_and_rejection_tables_preserve_all_cells_and_only_translate_note()
     for path in EDITORIAL.glob("tab_equidade_arranjo_*.tex"):
         original = (TABLES / path.name).read_text(encoding="utf-8")
         current = path.read_text(encoding="utf-8")
-        assert rows(original) == rows(current)
+        renamed = original.replace("grupo A menos grupo B", "grupo 1 menos grupo 2").replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2")
+        assert rows(renamed) == rows(current)
         if "grupos" in path.name:
             assert "ao menos 30 observações no denominador de cada métrica" in current
             assert "antes de Benjamini-Hochberg" in current
             assert r"\path{data/equidade_arranjo_group_metrics.csv}" in current
             assert "como na análise anterior" not in current
         else:
-            assert current == original
+            expected = renamed.replace(r"\end{table}", r"\par\footnotesize " + EQUITY_GLOSS + "\n" + r"\end{table}")
+            assert current == expected
 
 
 def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
@@ -118,7 +124,7 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     # As células permanecem intactas; a nota agora explicita os três cenários S9.
     global_bound = f"{int(total.loc['global', 'pares_acima_limiar']):,}".replace(",", ".")
     # S3 explicita também a etapa anterior à qual o registro interno se refere.
-    assert numbers(text) == numbers(original_text) + Counter([bound, bound, global_bound, "8", "8", "3", "3", "0,95", "0,95", "0,99", "1,00"]) - Counter(["5,0"])
+    assert numbers(text) == numbers(original_text) + Counter([bound, bound, global_bound, "8", "8", "3", "3", "0,95", "0,95", "0,99", "1,00", "2", "5,9"]) - Counter(["5,0"])
     assert r"\path{data/cenarios_sensibilidade_humana.csv}" in text
     assert "sensibilidade humana 0,95, não medida" in text
     sources = [pd.read_csv(ROOT / "data" / name) for name in (

@@ -81,7 +81,9 @@ def test_bayesian_evidence_compares_original_and_posterior_counts():
 @pytest.mark.parametrize("name", ["estudo1_comparador.tex", "estudo2_classificadores.tex", "apendice_sensibilidade.tex"])
 def test_experiment_one_has_study_scope_and_separating_comma(name):
     body = text(name)
-    assert "Experimento~1 do Estudo~4 (ablação das MACD no GZ-CMD)" in body
+    expansion = ("Medidas Contínuas de Diferença de Datas de nascimento, MACD, "
+                 if name == "estudo1_comparador.tex" else "MACD ")
+    assert "Experimento~1 do Estudo~4 (ablação das " + expansion + "no GZ-CMD)" in body
     assert not re.search(r"isotônica(?:\)| \(Capítulo~\\ref\{cap:estudo4\}\)) (?:utilizam|que não utilizam)", body)
 
 
