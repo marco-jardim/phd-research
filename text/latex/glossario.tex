@@ -35,6 +35,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2025comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui seis subescores de endereço, dos quais a igualdade da via retoma o critério de endereços iguais de Lucena e os demais derivam dos critérios acrescentados por \citeonline{Paiva2025comparador}, além de quatro subescores de município formulados pelo autor (Capítulo~\ref{cap:estudo1}).
 
+\item[Contexto por óbito (atributos)] Atributos que descrevem a concorrência entre candidatos associados ao mesmo registro de óbito: quantidade de candidatos, posição pela nota final, diferenças para a melhor e a segunda nota e indicador de melhor candidato. São calculados sem o desfecho, usando os identificadores apenas como chaves de agrupamento, e não se confundem com indicadores de encerramento por óbito. A exploração inclui atributos análogos por registro do Sinan e não demonstra generalização para bases novas (\path{data/contexto_obito_spec.json}).
+
 \item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem, etapa de geração de candidatos por chaves comuns (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical de origem encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
 
 \item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para escolha da ordenação e do ponto de parada segundo o orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido. Exige vínculos verificados; em dados novos, depende de amostra revisada de forma independente.
@@ -91,6 +93,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\textit{Linkage} probabilístico] Estratégia de \textit{linkage} fundamentada na teoria de Fellegi e Sunter, que atribui pesos aos campos comparados e calcula um escore composto para classificar pares.
 
+\item[LLM como evidência] Uso da resposta do modelo de linguagem de grande porte para atualizar a probabilidade do classificador por uma razão de verossimilhança estimada fora do \textit{fold} avaliado, em vez de adotar sua resposta como decisão final. Na exploração desta tese, a cobertura selecionada das respostas e o reaproveitamento de probabilidades fora da amostra não constituem validação aninhada integral nem garantem calibração da probabilidade atualizada (\path{data/llm_evidencia_metadata.json}).
+
 \item[M8] Auditoria da blocagem que conferiu, no extrato, o número de linhas, os potenciais pares distintos e a repetição de pares entre passos (Seção~\ref{sec:blocagem-rendimento}).
 
 \item[MACD] Medidas Contínuas de Diferença de Datas. Atributos derivados das datas de nascimento: diferença absoluta em anos limitada a 20, coincidência de ano, mês e dia e sua média, proximidade de até 30 e de até 7 dias, interação entre nome idêntico e diferença de pelo menos cinco anos, e produto entre nome idêntico e diferença limitada em anos. Nome idêntico exige concordância dos fragmentos e proporção de fragmentos iguais de pelo menos 0,95. Não incluem diferenças entre óbito e notificação.
@@ -146,6 +150,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 \item[\textit{Stacking}] Técnica de \textit{ensemble} que utiliza as saídas de múltiplos classificadores de base como atributos de entrada para um meta-classificador.
 
 \item[Tuberculose (TB)] Doença infecciosa de notificação compulsória utilizada neste trabalho como condição marcadora para avaliação do \textit{linkage} de bases de dados.
+
+\item[v4 candidata] Registro prospectivo das comparações para uma coorte nova: ordenação pela probabilidade calibrada frente ao escore do OpenRecLink como comparação primária, F4 e fila com contexto e MACD como secundárias. Não é uma política já validada nem substitui o perfil histórico ou o arranjo avaliado nesta tese (\path{gzcmd/M_v4_candidata.md}).
 
 \item[Validação cruzada] Técnica de avaliação que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ partições e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com variância reduzida (\textit{cross-validation}, CV).
 
