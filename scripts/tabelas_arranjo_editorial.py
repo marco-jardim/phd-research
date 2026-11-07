@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo as equity
 from scripts import tabela_referencia_arranjo as reference
+from scripts.tabelas_persona_editorial import transform
 
 
 def replace_once(text, old, new):
@@ -83,7 +84,7 @@ def render_reference(referencia, arranjo, cascata, carga):
         r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     text = text.replace("revisão manual do serviço", "revisão clerical de origem")
     text = text.replace("revisão do serviço", "revisão clerical de origem")
-    return text
+    return transform("tab_cap8_referencia", text)
 
 
 def render_arrangement(historical):
@@ -133,13 +134,13 @@ def render_arrangement(historical):
     text = replace_once(text, r"\caption{Arranjo sequencial", r"\caption[Arranjo sequencial: decisões, revisão e custo]{Arranjo sequencial")
     text = replace_once(text, "As ressalvas sobre o padrão-ouro e a dependência entre pares permanecem.",
                         "As ressalvas sobre a referência operacional e a dependência entre pares permanecem.")
-    return text
+    return transform("tab_cap8_arranjo_corte", text)
 
 
 def render_anchors(historical):
     """Mantém as células; troca apenas o termo da legenda."""
-    return replace_once(historical, "Validação dos conjuntos âncora contra o padrão-ouro",
-                        "Validação dos conjuntos âncora contra a referência operacional").replace("vínculos verdadeiros", "vínculos")
+    return transform("tab_cap8_ancoras", replace_once(historical, "Validação dos conjuntos âncora contra o padrão-ouro",
+                        "Validação dos conjuntos âncora contra a referência operacional").replace("vínculos verdadeiros", "vínculos"))
 
 
 def generate(data_dir: Path, tables_dir: Path) -> None:
@@ -162,15 +163,16 @@ def generate(data_dir: Path, tables_dir: Path) -> None:
     text = replace_once(text, "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
     text = replace_once(text, r"\end{minipage}", step_ppv_note(
         frames["maxdiff"], frames["group_metrics"], frames["pairwise_tests"]) + r"\end{minipage}")
-    target.write_text(text, encoding="utf-8", newline="\r\n")
+    target.write_text(transform(target.name, text), encoding="utf-8", newline="\r\n")
     for mode in ("vigilancia", "confirmacao"):
         target = tables_dir / f"tab_equidade_arranjo_grupos_{mode}.tex"
         equity.table_groups(frames["group_metrics"], mode, target)
         text = replace_once(target.read_text(encoding="utf-8"), "Grupos MISSING", "Grupos sem informação")
-        target.write_text(text, encoding="utf-8", newline="\r\n")
+        target.write_text(transform(target.name, text), encoding="utf-8", newline="\r\n")
     for decision in equity.DECISIONS:
         name = f"tab_equidade_arranjo_rejeicoes_{decision}.tex"
-        (tables_dir / name).write_bytes((ROOT / "text/latex/tables" / name).read_bytes())
+        text = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
+        (tables_dir / name).write_text(transform(name, text), encoding="utf-8", newline="\r\n")
     sources = [pd.read_csv(data_dir / name) for name in (
         "referencia_comparador_pos_orl.csv", "arranjo_corte_metricas.csv",
         "funil_gzcmd_final_metricas.csv", "carga_abaixo_corte.csv")]

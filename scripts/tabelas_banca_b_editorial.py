@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts import gerar_tabelas_nb03_faixas as nb03
+from scripts.tabelas_persona_editorial import transform
 
 OUT = ROOT / "text/latex/tables/editorial"
 
@@ -75,7 +76,7 @@ def tabela_pareto(destino: Path | None = None) -> None:
               r"XGBoost 0,30 e 0,70; não dominado nesta tabela não significa não dominado nesse conjunto. "
               r"Teste: 18.509 potenciais pares, 74 vínculos. Fonte: \path{data/pareto_grid.csv} e "
               r"\path{data/ablation_results.csv}.", r"\end{table}", ""]
-    (destino or OUT / "tab_pareto_frontier.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    (destino or OUT / "tab_pareto_frontier.tex").write_text(transform("tab_pareto_frontier", "\n".join(lines)), encoding="utf-8", newline="\n")
 
 
 def tabela_nb02() -> None:
@@ -96,7 +97,7 @@ def tabela_nb02() -> None:
               r"\path{data/nb02_results.json}, gerado por \path{scripts/run_nb02_uniform.py}. "
               r"A diferença em relação ao caderno histórico não tem causa documentada; "
               r"adota-se aqui apenas o artefato do script uniforme.", r"\end{table}", ""]
-    (OUT / "tab_nb02_recall.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    (OUT / "tab_nb02_recall.tex").write_text(transform("tab_nb02_recall", "\n".join(lines)), encoding="utf-8", newline="\n")
 
 
 def tabela_impacto() -> None:
@@ -165,7 +166,7 @@ def tabela_perfil_recuperados() -> None:
                         r"\path{scripts/epidemiological_impact.py}. Idade derivada de R\_DTNASC e R\_DTOBITO; "
                         r"sexo lido de R\_SEXO. Idade disponível nos 27 e 40 vínculos; DP amostral. "
                         r"Valores históricos arredondados; medianas e DP da nota não foram registrados." + "\n" + r"\end{table}")
-    (OUT / historical.name).write_text(text, encoding="utf-8", newline="\n")
+    (OUT / historical.name).write_text(transform(historical.name, text), encoding="utf-8", newline="\n")
 
 
 def main() -> None:
@@ -183,7 +184,7 @@ def main() -> None:
     text = text.replace(r"N~=~número", r"Fonte canônica: \path{data/nb03_results.json}, "
                         r"gerado por \path{scripts/run_nb03_uniform.py}. "
                         r"A causa da diferença em relação ao caderno histórico não está documentada. N~=~número")
-    table.write_text(text, encoding="utf-8", newline="\n")
+    table.write_text(transform(table.name, text), encoding="utf-8", newline="\n")
     tabela_qw1()
 
 
@@ -195,14 +196,15 @@ def tabela_qw1() -> None:
             r"$F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, "
             r"fora da tolerância absoluta de 0,01; a validação cruzada histórica não foi recalculada "
             r"(Apêndice~\ref{sec:sensibilidade-qw1}).")
-    (OUT / qw1.name).write_text(qw1.read_text(encoding="utf-8").replace(
+    text = qw1.read_text(encoding="utf-8").replace(
         "O melhor resultado de cada coluna aparece em negrito.",
         "O maior valor de cada coluna aparece em negrito, sem indicar diferença demonstrada."
     ).replace(
         "avaliação independente", "avaliação interna").replace(
         "Avaliação independente", "Avaliação interna").replace(
         r"\end{table}", note + "\n" + r"\end{table}"
-    ), encoding="utf-8", newline="\n")
+    )
+    (OUT / qw1.name).write_text(transform(qw1.name, text), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

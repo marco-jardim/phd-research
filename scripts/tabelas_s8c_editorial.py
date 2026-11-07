@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.fechar_refrec_final import regenerate_cascade_table
 from scripts.tabelas_arranjo_editorial import replace_once
 from scripts.tabelas_equidade_comparacao import generate as equity
+from scripts.tabelas_persona_editorial import transform
 
 
 def generate(tables_dir=ROOT / "text/latex/tables/editorial"):
@@ -20,7 +21,7 @@ def generate(tables_dir=ROOT / "text/latex/tables/editorial"):
                         "Cascata final observada por política e modo,",
                         "Cascata sobre a base inteira (comparação), por política e modo,")
     text = text.replace("vínculos verdadeiros", "vínculos")
-    target.write_text(text, encoding="utf-8", newline="\n")
+    target.write_text(transform(target.name, text), encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

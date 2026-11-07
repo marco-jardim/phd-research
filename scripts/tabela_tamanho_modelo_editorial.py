@@ -80,7 +80,6 @@ def render(data_dir=ROOT / "data"):
         f"V2: {sizes['S2']} PAR~=~2 não aceitos por ele; "
         f"V3: {sizes['S3']} PAR~=~0 com decisões discordantes entre Haiku e Sonnet; "
         f"V4: amostra de {sizes['S4']} dos {metadata['s4_population']} potenciais pares restantes da vigilância. "
-        r"As chaves S1 a S4 nos artefatos são históricas, não as etapas do protocolo. "
         r"$n$ indica resultados disponíveis, não tamanho original do estrato; ausências não são UNSURE. "
         r"Haiku e Sonnet: passada histórica; Opus e Fable: passada principal. "
         r"$\kappa$ entre a passada de referência e uma réplica, nos casos completos comuns: "
@@ -91,7 +90,8 @@ def render(data_dir=ROOT / "data"):
         r"Não são comparação controlada de tarifas nem fatura.",
         r"\end{table}",
     ]
-    return "\n".join(lines) + "\n"
+    from scripts.tabelas_persona_editorial import transform
+    return transform("tab_cap8_tamanho_modelo", "\n".join(lines) + "\n")
 
 
 def generate(destination=OUTPUT, data_dir=ROOT / "data"):

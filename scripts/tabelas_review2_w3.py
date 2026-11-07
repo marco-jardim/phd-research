@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo, generate_ablation_tables
+from scripts.tabelas_persona_editorial import transform
 
 OUT = ROOT / "text/latex/tables/editorial"
 
@@ -45,7 +46,7 @@ def write(name, text, out):
         "tab_equidade_arranjo_grupos_confirmacao.tex",
         "tab_equidade_arranjo_grupos_vigilancia.tex",
     } else "\n"
-    (out / name).write_text(text, encoding="utf-8", newline=newline)
+    (out / name).write_text(transform(name, text), encoding="utf-8", newline=newline)
 
 
 def shap_families(out):
@@ -133,7 +134,9 @@ def equity_tables(out):
 
 
 def appendix_ablation():
-    lines = [r"As tabelas deste apêndice descrevem a ablação saneada com partição por COMPREC, "
+    lines = [r"MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
+             r"v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).",
+             "", r"As tabelas deste apêndice descrevem a ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), "
              r"nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta "
              r"cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, "
              r"$F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração "
@@ -148,7 +151,7 @@ def appendix_ablation():
              r"As partições de teste se sobrepõem e não constituem cinco amostras independentes.", ""]
     historical = pd.read_csv(ROOT / "data/ablation_comprec_macd.csv", sep=";")
     historical_f1 = historical.loc[historical["mode"].eq("vigilancia"), "exp_f1"].mean()
-    lines[0] += (r" O $F_1$ esperado de " + number(historical_f1)
+    lines[2] += (r" O $F_1$ esperado de " + number(historical_f1)
                  + r" na vigilância com MACD pertence à versão anterior com vazamento, "
                  r"não à seleção saneada nem ao desempenho observado de um LLM.")
     columns = ["exp_precision", "exp_recall", "exp_f1", "exp_fbeta", "auto_coverage", "llm_used"]
@@ -163,8 +166,9 @@ def appendix_ablation():
                 raise ValueError("Ablação saneada deve ter cinco sementes e beta constante")
             row_summary = summary.loc[summary.Config.str.startswith(mode + " |")].iloc[0]
             tag = "on" if suffix == "macd" else "off"
+            error = "positivo" if mode == "confirmacao" else "negativo"
             lines += [r"\begin{table}[htbp]", r"\centering",
-                      rf"\caption{{Ablação saneada com MACD {state}, modo {label}: métricas esperadas.}}",
+                      rf"\caption{{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD {state} (Medidas Contínuas de Diferença de Datas de nascimento), modo {label} (maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.}}",
                       rf"\label{{tab:ablacao-comprec-{mode}-macd-{tag}}}", r"\small",
                       r"\resizebox{\textwidth}{!}{%", r"\begin{tabular}{lrrrrrrr}", r"\toprule",
                       r"Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\",

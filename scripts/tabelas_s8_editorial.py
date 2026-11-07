@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts.tabelas_arranjo_editorial import replace_once
+from scripts.tabelas_persona_editorial import transform
 
 
 def number(value, decimals=0):
@@ -91,9 +92,10 @@ def generate(root=ROOT, output=None):
                     line = replace_once(line, 'Supervisionada (Platt,', r'Supervisionada (\textit{Platt scaling},')
                 lines.append(line)
             text = '\n'.join(lines) + '\n'
-        (output / (name + '.tex')).write_text(text, encoding='utf-8', newline='\n')
-    (output / 'tab_cap8_mesma_carga.tex').write_text(same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv'), pd.read_csv(root / 'data/comparador_mesma_carga_erro05.csv'), pd.read_csv(root / 'data/comparador_p_match_humano.csv'), pd.read_csv(root / 'data/cenarios_sensibilidade_humana.csv'), pd.read_csv(root / 'data/arranjo_corte_metricas.csv')), encoding='utf-8', newline='\n')
-    (output / 'tab_cap8_esforco.tex').write_text(effort(pd.read_csv(root / 'data/esforco_arranjo.csv')), encoding='utf-8', newline='\n')
+        (output / (name + '.tex')).write_text(transform(name, text), encoding='utf-8', newline='\n')
+    text = same_load(pd.read_csv(root / 'data/comparador_mesma_carga.csv'), pd.read_csv(root / 'data/comparador_mesma_carga_erro05.csv'), pd.read_csv(root / 'data/comparador_p_match_humano.csv'), pd.read_csv(root / 'data/cenarios_sensibilidade_humana.csv'), pd.read_csv(root / 'data/arranjo_corte_metricas.csv'))
+    (output / 'tab_cap8_mesma_carga.tex').write_text(transform('tab_cap8_mesma_carga', text), encoding='utf-8', newline='\n')
+    (output / 'tab_cap8_esforco.tex').write_text(transform('tab_cap8_esforco', effort(pd.read_csv(root / 'data/esforco_arranjo.csv'))), encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':

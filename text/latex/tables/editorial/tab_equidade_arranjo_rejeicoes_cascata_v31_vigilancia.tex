@@ -1,11 +1,11 @@
 \begin{table}[htbp]
 \centering
-\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 58 testes): Base inteira v3.1 (vigil., comparação), aceitação automática. $\Delta$ em pontos percentuais (grupo A menos grupo B).}
+\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 58 testes): Base inteira v3.1 (vigil., comparação), aceitação automática. $\Delta$ em pontos percentuais (grupo 1 menos grupo 2).}
 \label{tab:equidade-arranjo-rejeicoes-cascata-v31-vigilancia}
 \footnotesize\setlength{\tabcolsep}{3pt}
 \begin{tabular}{lllllrrr}
 \toprule
-Dimens\~ao & Tipo & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
+Dimens\~ao & Tipo & M\'etrica & Grupo 1 & Grupo 2 & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
 \midrule
 Encerramento da notifica\c{c}\~ao & Operac. & VPP & Demais situa\c{c}\~oes & Encerrada por \'obito & 0{,}049 & $-$12{,}7 & 0{,}32 \\
 Nome (quartis) & Operac. & VPP & Q3 & Q4 & 0{,}008 & $-$33{,}3 & 0{,}16 \\
@@ -18,4 +18,5 @@ Passo & Operac. & Sens. & 11 & 6 & 0{,}007 & $-$31{,}2 & 0{,}25 \\
 Passo & Operac. & Sens. & 6 & 9 & 0{,}034 & $-$14{,}3 & 0{,}34 \\
 \bottomrule
 \end{tabular}
-\par\smallskip{\footnotesize BH por decisão, com omissão dos valores indefinidos por denominador zero. Os testes não corrigem a dependência entre potenciais pares que compartilham REFREC.}\end{table}
+\par\smallskip{\footnotesize BH por decisão, com omissão dos valores indefinidos por denominador zero. Os testes não corrigem a dependência entre potenciais pares que compartilham REFREC.}\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
+\end{table}
