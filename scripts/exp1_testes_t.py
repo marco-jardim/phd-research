@@ -19,9 +19,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 METRICAS = ["exp_f1", "exp_precision", "exp_recall", "review_selected"]
 
 
-def comparar(raiz: Path = RAIZ) -> pd.DataFrame:
-    on = pd.read_csv(raiz / "data" / "ablation_comprec_macd.csv", sep=";")
-    off = pd.read_csv(raiz / "data" / "ablation_comprec_nomacd.csv", sep=";")
+def comparar(
+    raiz: Path = RAIZ, *, on_path: Path | None = None, off_path: Path | None = None,
+) -> pd.DataFrame:
+    on = pd.read_csv(on_path or raiz / "data" / "ablation_comprec_macd.csv", sep=";")
+    off = pd.read_csv(off_path or raiz / "data" / "ablation_comprec_nomacd.csv", sep=";")
     linhas = []
     for modo in sorted(on["mode"].unique()):
         a = on[on["mode"] == modo].sort_values("seed").reset_index(drop=True)
@@ -56,8 +58,10 @@ def comparar(raiz: Path = RAIZ) -> pd.DataFrame:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(RAIZ / "data" / "exp1_testes_t.csv"))
+    ap.add_argument("--on", type=Path, default=None)
+    ap.add_argument("--off", type=Path, default=None)
     args = ap.parse_args()
-    df = comparar()
+    df = comparar(on_path=args.on, off_path=args.off)
     df.to_csv(args.out, index=False, float_format="%.6g")
     with pd.option_context("display.width", 200, "display.max_columns", 20):
         print(df.round(4).to_string(index=False))

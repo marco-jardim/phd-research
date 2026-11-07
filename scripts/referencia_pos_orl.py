@@ -49,6 +49,8 @@ def carregar(csv: Path) -> pd.DataFrame:
             "comprec": df[COL_COMPREC],
             "refrec": df[COL_REFREC],
             "ano_obito": df["R_DTOBITO"].str[-4:],
+            # O Sinan usa AAAAMMDD; o SIM acima usa DDMMAAAA.
+            "ano_notificacao": df["C_DTNOTI"].str[:4],
         }
     )
 
@@ -114,6 +116,7 @@ def linha_orl(d: pd.DataFrame, total_vinculos: int) -> tuple[list[dict], dict]:
 def resumo_extrato(d: pd.DataFrame) -> pd.DataFrame:
     """Contagens agregadas do extrato (sem linhas por par, sem datas individuais)."""
     anos = pd.to_numeric(d["ano_obito"], errors="coerce")
+    anos_notificacao = pd.to_numeric(d["ano_notificacao"], errors="coerce")
     itens = {
         "n_pares_candidatos": len(d),
         "n_notificacoes_comprec_distintos": d["comprec"].nunique(),
@@ -125,6 +128,15 @@ def resumo_extrato(d: pd.DataFrame) -> pd.DataFrame:
         "ano_obito_min": int(anos.min()),
         "ano_obito_max": int(anos.max()),
         "n_sem_data_obito": int(anos.isna().sum()),
+        "ano_notificacao_min": int(anos_notificacao.min()),
+        "ano_notificacao_max": int(anos_notificacao.max()),
+        "n_sem_ano_notificacao": int(anos_notificacao.isna().sum()),
+        "n_vinculos_notificacao_2013_2018": int(
+            (d["vinculo"] & anos_notificacao.between(2013, 2018)).sum()
+        ),
+        "n_vinculos_notificacao_2019_2022": int(
+            (d["vinculo"] & anos_notificacao.between(2019, 2022)).sum()
+        ),
     }
     for ano, n in anos.value_counts().sort_index().items():
         itens[f"n_pares_ano_obito_{int(ano)}"] = int(n)

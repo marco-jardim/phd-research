@@ -1,0 +1,28 @@
+\begin{table}[!htbp]
+\centering
+\caption{Sensibilidade exploratória \textit{post hoc} da fusão: diferenças de revisões no \textit{bootstrap} e esforço dentro da faixa operacional. Valores negativos favorecem F4.}
+\label{tab:cap8-fusao-robustez}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Comparação & Meta & Mediana & IC 95\% \\
+\midrule
+F4 menos O1 & 9 & $-38$ & $-61$ a $-18$ \\
+F4 menos O1 & 23 & $-274$ & $-995$ a $+40$ \\
+F4 menos O1 & 36 & $-1.203$ & $-2.049$ a $-63$ \\
+F4 menos O3 & 9 & $-17$ & $-44$ a $0$ \\
+F4 menos O3 & 23 & $-25$ & $-402$ a $+59$ \\
+F4 menos O3 & 36 & $-1.928$ & $-24.718$ a $+440$ \\
+\midrule
+\multicolumn{4}{l}{Revisões na faixa de 2.522 candidatos e 36 PAR~=~2} \\
+Fila & Meta 9 & Meta 23 & Meta 36 \\
+\midrule
+O1 & 51 & 501 & 2.521 \\
+O3 & 12 & 47 & 1.330 \\
+F4 & 10 & 87 & 840 \\
+F3 & 10 & 38 & 493 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Fonte: \path{data/fusao_robustez_bootstrap.csv} e \path{data/fusao_robustez_faixa.csv}. Medianas e limites arredondados ao inteiro mais próximo. Reamostragem agrupada por óbito (2.000 réplicas), sem reajuste do classificador, com probabilidades fora da amostra e referência fixas. Metas de 9, 23 e 36 quando há pelo menos 36 PAR~=~2; nas demais réplicas, teto de 25\%, 64\% e 100\% do total, mudando o estimando. Filas e fusão recalculadas dentro da faixa.
+\par\footnotesize F4: fusão por posição recíproca de O1 (escore do OpenRecLink) e O3 (probabilidade calibrada); F3: mesma combinação acrescida de O3 com MACD (Medidas Contínuas de Diferença de Datas de nascimento).
+\end{table}

@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo as historical
+from scripts.tabelas_persona_editorial import transform
 
 
 def recompute(source, minimum=30):
@@ -66,7 +67,7 @@ def generate(data, editorial):
                         r"As rejeições exigem pelo menos 30 observações em cada denominador, "
                         r"antes de Benjamini-Hochberg por decisão. FN inclui vínculos encaminhados "
                         r"ao revisor humano, não somente decisões de não vínculo." + "\n" + r"\end{table}")
-    path.write_text(text, encoding="utf-8", newline="\n")
+    path.write_text(transform(path.name, text), encoding="utf-8", newline="\n")
     for decision in historical.DECISIONS:
         path = editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex"
         historical.legacy.tabela_rejeicoes(
@@ -81,7 +82,7 @@ def generate(data, editorial):
         if decision in ("arranjo_P_vigilancia", "cascata_v31_vigilancia"):
             text = text.replace(r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")
             text = text.replace(r"\end{tabular}", r"\end{tabular}}")
-        path.write_text(text, encoding="utf-8", newline="\n")
+        path.write_text(transform(path.name, text), encoding="utf-8", newline="\n")
     manifest = dict(denominador_minimo=30, regra="Excluir n1<30 ou n2<30 antes de BH por decisão",
                     fonte="equidade_arranjo_pairwise_tests.csv", treino_executado=False,
                     geradores_historicos_preservados=True, comparacoes=audit)

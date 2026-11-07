@@ -40,7 +40,15 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "pior em todo desfecho" not in conclusion
     assert "não reproduz 13 e 27 dos 36" in conclusion
-    assert "ordem decrescente de uma probabilidade ou escore" in conclusion
+    assert "Recomenda-se a fusão como ordenação da fila de revisão" in conclusion
+    assert "sua vantagem sobre a probabilidade calibrada não foi demonstrada" in conclusion
+    assert "coorte nova com referência cega" in conclusion
+    hypothesis = conclusion.split("\n\n")[1]
+    assert "probabilidade calibrada fora da amostra do classificador (O3)" in hypothesis
+    assert r"25\% menos revisões que O1" in hypothesis
+    assert "limite inferior" in hypothesis
+    assert "em cada uma das duas metas" in hypothesis
+    assert "$2/36$" not in hypothesis
     assert "validação registrada em dados novos" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
     recommendation = conclusion.split(r"\label{sec:concl-recomendacoes}")[1].split(r"\section{Trabalhos futuros}")[0]

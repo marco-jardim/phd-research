@@ -18,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo, generate_ablation_tables
+from scripts.tabelas_persona_editorial import transform
 
 OUT = ROOT / "text/latex/tables/editorial"
 
@@ -45,7 +46,7 @@ def write(name, text, out):
         "tab_equidade_arranjo_grupos_confirmacao.tex",
         "tab_equidade_arranjo_grupos_vigilancia.tex",
     } else "\n"
-    (out / name).write_text(text, encoding="utf-8", newline=newline)
+    (out / name).write_text(transform(name, text), encoding="utf-8", newline=newline)
 
 
 def shap_families(out):
@@ -133,27 +134,41 @@ def equity_tables(out):
 
 
 def appendix_ablation():
-    lines = [r"As tabelas deste apêndice descrevem a ablação histórica com partição por COMPREC, "
+    lines = [r"MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
+             r"v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).",
+             "", r"As tabelas deste apêndice descrevem a ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), "
              r"nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta "
              r"cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, "
-             r"$F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por banda da configuração "
+             r"$F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração "
              r"(\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem "
              r"selecionada para revisão simulada, não o número de respostas de um LLM. "
-             r"O $F_1$ esperado de 0,954 na vigilância com MACD não é desempenho observado de um LLM.", ""]
+             r"O $F_1$ esperado não é desempenho observado de um LLM. "
+             r"O Random Forest calibrado usa somente os 29 subescores e a nota final, acrescidos das MACD "
+             r"no braço ativado, com política v3. O histórico, que incluía escore do OpenRecLink, "
+             r"situação de encerramento, identificadores e atributos duplicados, permanece em "
+             r"\path{data/ablation_comprec_macd.csv} e \path{data/ablation_comprec_nomacd.csv}; "
+             r"a comparação está em \path{data/exp1_vazamento_comparacao.csv}. "
+             r"As partições de teste se sobrepõem e não constituem cinco amostras independentes.", ""]
+    historical = pd.read_csv(ROOT / "data/ablation_comprec_macd.csv", sep=";")
+    historical_f1 = historical.loc[historical["mode"].eq("vigilancia"), "exp_f1"].mean()
+    lines[2] += (r" O $F_1$ esperado de " + number(historical_f1)
+                 + r" na vigilância com MACD pertence à versão anterior com vazamento, "
+                 r"não à seleção saneada nem ao desempenho observado de um LLM.")
     columns = ["exp_precision", "exp_recall", "exp_f1", "exp_fbeta", "auto_coverage", "llm_used"]
     for suffix, state in (("macd", "ativado"), ("nomacd", "desativado")):
-        source = f"data/ablation_comprec_{suffix}.csv"
+        source = f"data/ablation_comprec_{suffix}_allowlist.csv"
         frame = pd.read_csv(ROOT / source, sep=";")
-        summary = pd.read_csv(ROOT / f"data/ablation_comprec_{suffix}_summary.csv", sep=";")
+        summary = pd.read_csv(ROOT / f"data/ablation_comprec_{suffix}_allowlist_summary.csv", sep=";")
         for mode, label in (("confirmacao", "confirmação"), ("vigilancia", "vigilância")):
             group = frame.loc[frame["mode"].eq(mode)].sort_values("seed")
             beta = group.beta.unique()
             if len(beta) != 1 or len(group) != 5:
-                raise ValueError("Ablação histórica deve ter cinco sementes e beta constante")
+                raise ValueError("Ablação saneada deve ter cinco sementes e beta constante")
             row_summary = summary.loc[summary.Config.str.startswith(mode + " |")].iloc[0]
             tag = "on" if suffix == "macd" else "off"
+            error = "positivo" if mode == "confirmacao" else "negativo"
             lines += [r"\begin{table}[htbp]", r"\centering",
-                      rf"\caption{{Ablação histórica com MACD {state}, modo {label}: métricas esperadas.}}",
+                      rf"\caption{{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD {state} (Medidas Contínuas de Diferença de Datas de nascimento), modo {label} (maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.}}",
                       rf"\label{{tab:ablacao-comprec-{mode}-macd-{tag}}}", r"\small",
                       r"\resizebox{\textwidth}{!}{%", r"\begin{tabular}{lrrrrrrr}", r"\toprule",
                       r"Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\",
@@ -165,7 +180,7 @@ def appendix_ablation():
                      + number(row_summary[c + "_std"], 1 if c == "llm_used" else 3) for c in columns]
             lines += [r"Média $\pm$ DP & n.a. & " + " & ".join(means) + r" \\", r"\bottomrule", r"\end{tabular}}",
                       r"\par\footnotesize Fonte: \path{" + source + "} e resumo no arquivo "
-                      r"\path{data/ablation_comprec_" + suffix + r"_summary.csv}. "
+                      r"\path{data/ablation_comprec_" + suffix + r"_allowlist_summary.csv}. "
                       r"Cada teste contém 74 vínculos. $\beta=" + number(beta[0], 1).replace(",", "{,}") + r"$. "
                       r"Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.",
                       r"\end{table}", ""]

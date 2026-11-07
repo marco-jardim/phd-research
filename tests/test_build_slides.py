@@ -94,7 +94,7 @@ def test_slide_structure_and_editorial_contract():
     assert main.count(r"\begin{frame}") == 30
     backup_frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", backup, re.S)
     assert backup_frames
-    assert len(backup_frames) == 19
+    assert len(backup_frames) == 20
     assert len(backup_frames) == backup.count(r"\begin{frame}")
     for frame in backup_frames:
         title = re.match(r"\{Backup:\s*([^{}]+)\}", frame)
@@ -132,15 +132,15 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_sixty_three_short_answers():
+def test_script_has_eighty_nine_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 63
+    assert len(answers) == 89
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 64)
+        range(1, 90)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
@@ -175,7 +175,8 @@ def scientific_requirements(csv_loader=read_csv):
              "A nota do CdR não é o escore probabilístico do OpenRecLink"],
         13: ["OOF", "REFREC", "A política v3.1 compara custos, não usa esse corte único"],
         19: [r"S3 (avaliação com os \textit{labels})"],
-        18: [r"p\geq C_H/C_{FN}", "Os pares restantes recebem não vínculo", "restrito às ações revisor humano e não vínculo"],
+        18: [r"p\geq C_H/C_{FN}", "Restantes: não examinados", "não ausência de notificação",
+             "restrito às ações revisor humano e não vínculo"],
         20: ["figures/curva_esforco.pgf", "não registrada", "Revisor perfeito é hipótese dos dois lados",
              "Se a revisão histórica seguiu o escore", "favoreceria O1", "mesmos", "verificados"],
         21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
@@ -192,13 +193,14 @@ def scientific_requirements(csv_loader=read_csv):
               "recalibração, braços e avaliação", "desvios de protocolo", "não de generalização"],
         28: ["perdas são de cobertura",
              "os orçamentos são distintos", "95", "99", "100", "especificidade humana é assumida perfeita"],
-        29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
-              "Se usar probabilidade aprendida", "1:1 e 1:5 pioraram o topo (13 e 18,5 contra 22)",
-                "1:20 e 1:50 são indistinguíveis da referência", "Brier mediano da isotônica piorou em todas as razões",
-              "uma execução contra dez sementes", "Revisor humano no topo até o orçamento", "restante como não vínculo",
-              "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro de decisões",
+        29: ["Preservar o corte", "ordem decrescente", "fusão RRF", "referência cega",
+              "Subamostragem: quadro 47", "Revisor humano no topo até o orçamento", "restantes não examinados",
+              "LLM apenas como filtro de NONMATCH", "sem aceitar sozinho", "registro de decisões",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
-              "Não distingue ancoragem de abstenção", "quatro ações", "benchmark"],
+              "Não distingue ancoragem de abstenção", "quatro ações", "benchmark",
+              "orçamento humano fixo (H=22 em uma réplica)", "amostra independente verificada",
+              "permanecem na investigação", "duplicações não estimadas", "nas condições avaliadas",
+              "API externa", "ambiente controlado não avaliado"],
         30: ["Agradecimentos", "Discussão com a banca"],
         43: [],
         44: [],
@@ -308,7 +310,7 @@ def scientific_requirements(csv_loader=read_csv):
         ]
         short = "vig." if mode == "vigilancia" else "conf."
         requirements[46].append(
-            rf"P perde mais PAR~=~2 que o \textit{{a posteriori}}, {short} & " + " & ".join(fractions)
+            rf"P perde mais PAR~=~2 que o braço \textit{{a posteriori}}, {short} & " + " & ".join(fractions)
         )
     fp = one_row(robustness, tipo="desfecho", modo="vigilancia", bloco="P",
                  braco="P", faixa="TODAS", metrica="fp_abaixo")
@@ -735,7 +737,7 @@ def assert_budget_script(script, csv_loader=read_csv):
             f"deixando {vl['par2_nao_recuperados']} e {cl['par2_nao_recuperados']} fora") in sections[28]
     assert (f"Para igualar P, O3 requer {v3['k_min_equivalente_P']} e {c3['k_min_equivalente_P']}; "
             f"O4, {v4['k_min_equivalente_P']} e {c4['k_min_equivalente_P']}") in sections[28]
-    assert (f"Para igualar os {v3['P_par2_recuperados']} e {c3['P_par2_recuperados']} vínculos de P, "
+    assert (f"Para {v3['P_par2_recuperados']} e {c3['P_par2_recuperados']} vínculos, "
             f"O4 requer {v4['k_min_equivalente_P']} e {c4['k_min_equivalente_P']} revisões; "
             f"O3, {v3['k_min_equivalente_P']} e {c3['k_min_equivalente_P']}") in answer20
     assert (f"Em {v3['k']} e {c3['k']} revisões, O3 deixa {vl['par2_nao_recuperados']} e "
@@ -778,9 +780,9 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
     for number in (29,):
         for text in (frames[number - 1], speech.split(f"### {number}.")[1].split("### ")[0]):
             assert "Preservar o corte" in text or "preservar o corte" in text
-            assert "probabilidade ou escore" in text
+            assert "fusão RRF" in text and "referência cega" in text
             assert "curva de esforço" in text and "orçamento humano" in text
-            assert "na vigilância, nenhuma ordenação domina" in text.lower()
+            assert "na vigilância, entre o1 a o4 e p, nenhuma ordenação domina" in text.lower()
             assert "na confirmação, o2 domina fracamente p" in text.lower()
             assert "fila por p_cal_ml" not in text and r"\texttt{p\_cal\_ml}" not in text
     for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
@@ -845,7 +847,7 @@ def test_slides_no_control_characters_and_definitions_before_results():
     frames = slide_frames()
     for definition in ("OOF: fora da amostra", "FP: falso positivo", "VPP: valor preditivo positivo", "O3:", "O4:"):
         assert definition in frames[3]
-    assert "Na vigilância, nenhuma ordenação domina" in frames[3]
+    assert "Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina" in frames[3]
     assert "na confirmação, O2 domina fracamente P" in frames[3]
     for row in read_csv("subamostragem_treino_resumo.csv"):
         if row["population"] == "below" and row["variant"] == "isotonic" and row["metric"] == "brier" and row["ratio"] != "original":
@@ -914,8 +916,8 @@ def test_banca_e_title_terminology_and_new_answers():
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
     answers = {n: questions.split(f"### {n}.")[1].split("### ")[0] for n in range(34, 43)}
     for number, fragments in {
-        34: ("0,954", "21.620 para 41 pares", "18 min", "Platt ajustado no treino",
-             "esperado, não observado", "sem chamada a LLM"),
+        34: ("Random Forest", "sigmoide interna", "COMPREC", "SCORE e identificadores",
+             "vazamento reduzido pela seleção restrita", "esperado, não observado", "Não houve chamada a LLM"),
         35: ("211 dos 247 vínculos (85,4%)", "preserva"),
         36: ("homonímia", "gzcmd/guardrails.py", "exploratórios"),
         37: ("README", "notebooks/README.md", "apendice_pacote.tex"),
@@ -943,10 +945,94 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
     assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
     assert "### Rastreabilidade dos números do arranjo" in source
-    assert "São 63 respostas, com no máximo 70 palavras cada" in source
+    assert "São 89 respostas, com no máximo 70 palavras cada" in source
     for forbidden in ("Verificação técnica do build oficial", "PDFs existentes não representam", "hashes a atualizar", "revisão pela orientadora foi dispensada"):
         assert forbidden not in source
     frames = slide_frames()
     assert "Recomendação final como hipótese a validar" in frames[28]
     for index in (3, 27, 29):
         assert "escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano" not in frames[index]
+
+
+def test_review3_slides_do_not_reuse_leaked_experiment1_result():
+    source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
+    assert not re.search(r"0(?:,|\{,\}|\.)954", source)
+
+
+def test_review3_experiment1_answer_tracks_sanitized_csv():
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    answer = script.split("## Perguntas prováveis")[1].split("### 34.")[1].split("### 35.")[0]
+    rows = read_csv("exp1_vazamento_comparacao.csv")
+    for mode in ("vigilancia", "confirmacao"):
+        f1 = one_row(rows, mode=mode, arm="macd", metric="exp_f1")
+        reduction = one_row(rows, mode=mode, arm="on_vs_off", metric="review_reduction_percent")
+        assert pt_number(f1["allowlist_mean"], 3) in answer
+        assert pt_number(reduction["allowlist_mean"]) + "%" in answer
+        assert pt_number(reduction["historical_mean"]) + "%" in answer
+    assert "data/exp1_vazamento_comparacao.csv" in answer
+    assert "Platt ajustado no treino" not in answer
+
+
+@pytest.mark.parametrize("number,fragments", [
+    (64, ("investigação desnecessária", "notificação pós-óbito duplicada", "19 dos 21")),
+    (65, ("Não estimado nesta tese", "2019 a 2022", "não a um ciclo anual")),
+    (66, ("Não estimado nesta tese", "outro vínculo aceito", "REFREC")),
+    (67, ("205 dos 959", "21,4%", "1.515", "não estima subnotificação")),
+    (68, ("causa associada", "TB-HIV", "ao menos um potencial par")),
+    (69, ("universo fixo", "Não se reconstruíram", "não foi estimado nesta tese")),
+    (70, ("critério de escolha não foi informado", "2.549", "Não se demonstrou")),
+    (71, ("Soundex", "não vinculados", "não detecta")),
+    (72, ("23 PAR=2", "2.521", "23.443", "4.163")),
+    (73, ("discordâncias", "não examinados", "Dez dos 21", "subestimado")),
+    (74, ("responsabilidade não é transferida", "nem autoriza excluir a investigação")),
+    (75, ("200 árvores", "profundidade 10", "100 atributos", "91 sem", "39 e 30")),
+    (76, ("não foi estimada no arranjo", "p>0,25", "229 para 121", "87,7%")),
+    (77, ("se sobrepõem", "não torna as rodadas independentes", "otimistas")),
+    (78, ("duas ações", "não comprova", "quatro ações", "por faixa")),
+    (79, ("injustas e evitáveis", "não comprova equidade", "normativa não foi estimada")),
+    (80, ("não foi avaliado nesta tese no arranjo recalibrado", "55,0%", "não se transfere", "trabalho futuro",
+          "46/118/3.040", "29/125/23.443", "0,283 para 0,261", "post hoc")),
+])
+def test_review3_questions_cover_unanswered_limits(number, fragments):
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    section = questions.split(f"### {number}.")[1].split("### ")[0]
+    for fragment in fragments:
+        assert fragment in section
+    assert "Fonte:" in section
+
+
+def test_review3_ethics_and_residual_terminology():
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    for number in (8, 48):
+        section = questions.split(f"### {number}.")[1].split("### ")[0]
+        assert "não foi objeto de análise específica nos pareceres" in section
+    for source in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
+        assert not re.search(r"\bbandas?\b|auditável|impacto epidemiológico|vínculos verdadeiros", source, re.I)
+    assert len(slide_frames()[28].split("\\fonte")[0].split()) <= 210
+
+
+def test_k3_hypothesis_and_prospective_margin_in_both_targets():
+    frames = slide_frames()
+    script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
+    speech = script.split("## Fala-guia por slide")[1].split("## Perguntas prováveis")[0]
+    questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
+    assert "probabilidade calibrada do classificador (O3)" in frames[3]
+    assert "recuperação de P" in frames[3]
+    assert "escore do OpenRecLink (O1)" in frames[3]
+    assert "probabilidade ou escore" not in frames[3]
+    assert "pela revisão de menos pares na ordem escolhida, não pela política de quatro ações" in speech
+    answer20 = questions.split("### 20.")[1].split("### 21.")[0]
+    assert "Primária: probabilidade calibrada do classificador (O3)" in answer20
+    assert "recuperação de P, orçamento fixado antes dos desfechos" in answer20
+    answer43 = questions.split("### 43.")[1].split("### 44.")[0]
+    assert "Não atingir refuta a hipótese" in answer43
+    speech50 = speech.split("### 50.")[1].split("### ")[0]
+    for text in (frames[49].replace(r"\%", "%"), answer43, speech50):
+        for fragment in ("não testado", "outra coorte", "referência cega", "25% menos revisões",
+                         "limite inferior do IC 95%", "partições predefinidas", "nas duas metas",
+                         "dados à vista", "amplitude entre réplicas"):
+            assert fragment in text
+    for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
+        assert "2/36" not in text and "5,6 p.p." not in text

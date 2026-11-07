@@ -60,7 +60,8 @@ def render(rows: list[dict]) -> str:
     lines += [r"\bottomrule", r"\end{tabular}",
               r"\par\smallskip\parbox{\linewidth}{\footnotesize Fonte: \path{data/dossie_campos_enviados.csv}, cabeçalho do extrato e auditorias históricas v4 dos dois modos. O escore municipal é enviado como \texttt{municipality}. Compostos, indicadores e nota final não integram os 29 subescores deste quadro.}",
               r"\end{table}", ""]
-    return "\n".join(lines)
+    from scripts.tabelas_persona_editorial import transform
+    return transform("tab_dossie_campos", "\n".join(lines))
 
 
 def generate(extract: Path, audits: Path, output: Path, table: Path) -> None:

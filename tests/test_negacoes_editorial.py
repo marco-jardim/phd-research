@@ -127,6 +127,10 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "não de impossibilidade geral do método" in calibration
     equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")
     assert "a possível incorporação dessas evidências à referência não foi quantificada" in equity
+    # A glosa editorial não muda a ressalva: conferir o período integral após
+    # normalizar apenas a expansão explícita do nome do comparador.
+    assert "CdR (Comparador de Registros)" in equity
+    equity = equity.replace("CdR (Comparador de Registros)", "CdR")
     assert r"O corte define PAR~=~1, com viés de verificação; adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora, e a possível incorporação dessas evidências à referência não foi quantificada (Seção~\ref{sec:padrao-ouro})." in equity
     assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
@@ -148,7 +152,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
     ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),
-    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, que preserva os vínculos aceitos pelo corte e aplica o GZ-CMD aos demais potenciais pares, comparações exploratórias de mesma carga e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
+    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, que preserva os vínculos aceitos pelo corte e aplica o GZ-CMD aos demais potenciais pares, comparações exploratórias com o mesmo número de revisões humanas e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
 ])
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
     assert expected in (LATEX / filename).read_text(encoding="utf-8")

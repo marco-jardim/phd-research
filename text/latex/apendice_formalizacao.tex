@@ -1,5 +1,7 @@
 \subsection{Calibração Probabilística por Âncoras}
 
+CdR designa o Comparador de Registros; v3.1 identifica a política de quatro ações, com revisão humana distinta da revisão por modelo de linguagem de grande porte (LLM).
+
 A pontuação bruta $s \in \mathbb{R}$ gerada por ferramentas de \textit{linkage} (relacionamento de registros), como o somatório de pesos no OpenRecLink ou a saída de decisão de um classificador \textit{ensemble}, não constitui, inerentemente, uma probabilidade bem calibrada. Para permitir decisões baseadas em risco, busca-se estimar $p = P(y=1\mid s)$, onde $y=1$ denota um vínculo (\textit{match}). Neste apêndice, $s$ denota somente o escore bruto a calibrar, que, nas âncoras avaliadas nesta tese, é a nota final do CdR; não se confunde com a sensibilidade humana assumida nos cenários do Capítulo~\ref{cap:estudo4}, também denotada por $s$ naquele capítulo.
 
 Adota-se uma função sigmoide com ajuste por momentos nas âncoras, inspirada na forma logística de \citeonline{Platt1999}, distinto do ajuste supervisionado por máxima verossimilhança, aos escores:
@@ -35,9 +37,11 @@ As duas restrições de média sobre $A^+$ e $A^-$ não garantem que $p_{cal}(s)
 As equações restringem apenas duas médias preditas. Mantidas as distribuições e as proporções nas âncoras, podem existir diferentes funções $P(y=1\mid s)$ na região intermediária que satisfazem as mesmas restrições. Essas funções não precisam coincidir com a sigmoide ajustada. Mudanças temporais nessa região também não são controladas pelas duas médias.
 \end{proof}
 
-A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na área cinza depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
+A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na região intermediária dos escores depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
 
 \subsection{Função de Perda, Decisão em Três Ações e Extensão a Quatro}
+
+Na extensão v3.1 (política de quatro ações), a revisão humana é distinta da revisão por modelo de linguagem de grande porte (LLM).
 
 O \textit{framework} GZ-CMD estende a decisão binária tradicional para uma lógica de custo-benefício assimétrico. Definem-se três ações possíveis $\mathcal{A} = \{a_M, a_N, a_R\}$, correspondendo a vincular (\textit{Match}), não vincular (\textit{Non-match}) e revisar (\textit{Review}), respectivamente. As proposições desta seção cobrem essas três ações do desenho original; a política v3.1 acrescenta a revisão humana como quarta ação, com custo $C_H$ e perda $\mathcal{L}_H$ (Seção~\ref{sec:e4-politica-v31}), que não é objeto das proposições de três ações a seguir. A Proposição~\ref{prop:duas-acoes-orcamento}, ao final, trata separadamente da restrição às ações revisão humana e não vínculo.
 
@@ -83,7 +87,7 @@ EVR(p) = \min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p)) - \mathcal{L}(a_R\
 
 Sem restrição orçamentária ou regras de guarda adicionais, um par deve ser encaminhado para revisão se, e somente se, $EVR(p) > 0$. Intuitivamente, isso ocorre quando a incerteza do modelo (proximidade de $p$ em relação ao limiar de decisão) é alta o suficiente para que o custo da informação adicional ($C_{LLM}$) seja compensado pela mitigação do risco de erro.
 
-Em cenários com orçamento de revisão fixo $B$ (número máximo de pares revisáveis), os candidatos à revisão são ordenados por $EVR(p)$ decrescente, selecionando-se os $k$ primeiros tal que $\sum_{i=1}^k \mathbb{I}(a_i=a_R) \le B$.
+Em cenários com orçamento de revisão fixo $B$ (número máximo de pares revisáveis), os candidatos com $EVR(p)>0$ são ordenados por $EVR(p)$ decrescente, selecionando-se o maior prefixo de tamanho $k$ que respeite $\sum_{i=1}^k \mathbb{I}(a_i=a_R) \le B$.
 
 \subsubsection{Propriedades geométricas do EVR}
 
@@ -110,7 +114,7 @@ Pela continuidade e concavidade, o conjunto $\{p:EVR(p)>0\}$ é vazio ou um inte
 
 \begin{corollary}[Limiar crítico de custo de revisão]
 \label{cor:cllm-critical}
-Sob as hipóteses da Proposição~\ref{prop:evr-concavity}, defina-se $H=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. A região de revisão estritamente ótima é não vazia se, e somente se, $EVR(p^*) > 0$. Calculando-se o máximo explicitamente:
+Sob as hipóteses da Proposição~\ref{prop:evr-concavity}, defina-se $\bar C=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. A região de revisão estritamente ótima é não vazia se, e somente se, $EVR(p^*) > 0$. Calculando-se o máximo explicitamente:
 
 \[
 EVR(p^*) = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN}) - C_{LLM}
@@ -122,10 +126,10 @@ Portanto, existe um limiar crítico de custo de revisão:
 C_{LLM}^* = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN})
 \]
 
-abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Como $C_{LLM}>0$, isso requer também $e_{FP}+e_{FN}<1$. Quando $C_{LLM} \ge C_{LLM}^*$, nenhuma revisão é estritamente ótima e toda decisão é automática pela convenção de desempate. O fator $H$ corresponde à metade da média harmônica dos custos de erro; o limiar multiplica esse fator por $(1-e_{FP}-e_{FN})$, de modo que maiores proporções de erro residual reduzem o custo justificável para revisão.
+abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Como $C_{LLM}>0$, isso requer também $e_{FP}+e_{FN}<1$. Quando $C_{LLM} \ge C_{LLM}^*$, nenhuma revisão é estritamente ótima e toda decisão é automática pela convenção de desempate. O fator $\bar C$ corresponde à metade da média harmônica dos custos de erro; o limiar multiplica esse fator por $(1-e_{FP}-e_{FN})$, de modo que maiores proporções de erro residual reduzem o custo justificável para revisão.
 \end{corollary}
 
-\textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Para o modo Vigilância com $C_{FN}/C_{FP} = 5$ e $C_{FP} = 1$, o limiar resulta em $C_{LLM}^* = 5/6 \approx 0{,}83$, indicando que a revisão é justificável desde que seu custo unitário seja inferior a 83\% do custo do falso positivo.
+\textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Na escala da vigilância da tese, com $C_{FP}=10$ e $C_{FN}=50$ (\path{gzcmd/gzcmd_v3_config.yaml}), o limiar é $C_{LLM}^*=500/60\approx8{,}33$, cálculo da tese. Normalizando ambos os custos por $C_{FP}$, obtém-se $5/6\approx0{,}83$: a revisão é justificável com custo inferior a 83,3\% do custo do falso positivo. O valor normalizado não é o custo na escala original da política.
 
 \subsection{Relaxamento das Hipóteses de Fellegi e Sunter}
 

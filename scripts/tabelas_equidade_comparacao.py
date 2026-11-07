@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_v31 as legacy
 from scripts.tabelas_arranjo_editorial import replace_once
+from scripts.tabelas_persona_editorial import transform
 
 TABLES = ("tab_equidade_v31.tex", "tab_equidade_v31_rejeicoes_cascata.tex",
           "tab_qw3_group_metrics.tex")
@@ -66,7 +67,7 @@ def generate(data_dir: Path, tables_dir: Path, *, editorial_notes: bool = False)
                   r"Os grupos históricos do nome contêm empates, não quatro grupos de mesmo tamanho.")
         if editorial_notes:
             text = replace_once(text, r"\end{table}", source + "\n" + r"\end{table}")
-        path.write_text(text, encoding="utf-8", newline="\n")
+        path.write_text(transform(name, text) if editorial_notes else text, encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

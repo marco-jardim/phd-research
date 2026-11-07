@@ -1,107 +1,102 @@
 \label{apendice:gzcmd}
 
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1, resultado principal do Capítulo~\ref{cap:estudo4}.
+\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1 (política de quatro ações: vínculo, não vínculo, revisão por modelo de linguagem e revisão humana), resultado principal do Capítulo~\ref{cap:estudo4}.
 \label{alg:gzcmd-arranjo}
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
-\REQUIRE Potenciais pares $P$, escore OpenRecLink, passo de blocagem, atributos do classificador, custos e orçamentos da v3.1
+\REQUIRE Potenciais pares $\mathcal{U}$, escore OpenRecLink, passo de blocagem, atributos do classificador, custos e orçamentos da v3.1
 \ENSURE Aceitações acima do corte e decisões registradas abaixo dele
 \STATE \textbf{Fase 0: Corte por passo}
 \STATE Aceitar os potenciais pares com escore maior ou igual ao corte do respectivo passo
-\STATE Definir $P^{-}$ como os potenciais pares abaixo do corte
+\STATE Definir $\mathcal{U}^{-}$ como os potenciais pares abaixo do corte
 \STATE \textbf{Fase 1: Recalibração sem os \textit{labels} externos}
 \STATE Particionar por REFREC; ajustar o XGBoost na base inteira de treinamento
-\STATE Ajustar a isotônica apenas nas probabilidades internas fora da amostra de $P^{-}$ do treinamento
-\STATE Aplicar a calibração à partição externa de $P^{-}$
+\STATE Ajustar a isotônica apenas nas probabilidades internas fora da amostra de $\mathcal{U}^{-}$ do treinamento
+\STATE Aplicar a calibração à partição externa de $\mathcal{U}^{-}$
 \STATE Estimar as proporções de erro e inconclusivos do revisor por validação cruzada nas partições externas; congelá-las antes das chamadas novas
 \STATE \textbf{Fases 2 a 6: Política abaixo do corte}
-\STATE Aplicar as fases 2 a 6 do Algoritmo~\ref{alg:gzcmd-v31} somente a $P^{-}$, usando a probabilidade recalibrada também na guarda superior
+\STATE Aplicar as fases 2 a 6 do Algoritmo~\ref{alg:gzcmd-v31} somente a $\mathcal{U}^{-}$, usando a probabilidade recalibrada também na guarda superior
 \STATE Reutilizar respostas apenas quando coincidirem modo, potencial par, modelo, instruções e dossiê
 \STATE Manter os inconclusivos do LLM como encaminhamentos humanos pendentes
-\RETURN Aceitações do corte e decisões de $P^{-}$, sem imputar acertos humanos
+\RETURN Aceitações do corte e decisões de $\mathcal{U}^{-}$, sem imputar acertos humanos
 \end{algorithmic}
 \noindent\rule{\textwidth}{0.4pt}
 \bigskip
 
 % Sem float: permite quebra de página natural no algoritmo longo
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD (calibração por conjuntos âncora), com regras de guarda históricas, política de custo e registro de decisões, sem exercício independente de auditoria das justificativas. Não é a execução histórica v3, que usou \textit{Platt scaling} supervisionado da nota e as guardas indicadas na Fase 2; a versão v3.1 é descrita no Algoritmo seguinte. As etapas de margem estreita e cardinalidade foram previstas, mas não implementadas (Seção~\ref{sec:e4-regras-guarda}).
+\noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD com alternativa de calibração por conjuntos âncora, guardas e triagem da política v3, conforme \path{gzcmd/guardrails.py} e \path{gzcmd/gzcmd_v3_policy_engine.py}, e registro de decisões, sem exercício independente de auditoria das justificativas. A revisão histórica usou \textit{Platt scaling} supervisionado da nota; o Experimento~1 (ablação das Medidas Contínuas de Diferença de Datas de nascimento, MACD) usou Random Forest calibrado por sigmoide. Essas execuções não usaram a Fase~1 por âncoras. A versão v3.1 é descrita no Algoritmo seguinte. As etapas de margem estreita e cardinalidade foram previstas, mas não implementadas e não integram as etapas abaixo (Seção~\ref{sec:e4-regras-guarda}).
 \label{alg:gzcmd-pipeline}
+A política v3 distingue vínculo, não vínculo e revisão por modelo de linguagem de grande porte (LLM); v3.1 acrescenta a revisão humana como ação distinta. EVR designa o valor esperado da revisão, e CdR, o Comparador de Registros.
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 
-\REQUIRE \parbox[t]{0.85\linewidth}{Conjunto de potenciais pares $P$ com escores brutos $\{s_i\}$;
+\REQUIRE \parbox[t]{0.85\linewidth}{Conjunto de potenciais pares $\mathcal{U}$ com escores brutos $\{s_i\}$;
   parâmetros $(C_{FP}, C_{FN}, C_{LLM}, e_{FP}, e_{FN})$;
   conjuntos âncora $A^+$ e $A^-$; orçamento de revisão $B$.}
 \ENSURE \parbox[t]{0.85\linewidth}{Decisão $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{review}\}$ para cada par $i$,
-  com campos de auditoria $(\mathit{razao}_i, \mathit{justificativa}_i)$.}
+  com campos de registro $(\mathit{razao}_i, \mathit{justificativa}_i)$.}
 
 \medskip
 \STATE \textbf{Fase 1: Calibração por âncoras}
 \STATE Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^+] = r^+$
 \STATE Estimar $(\alpha,\beta)$ impondo $\mathbb{E}[\sigma(\alpha s + \beta) \mid s \in A^-] = r^-$
-\FORALL{par $i \in P$}
+\FORALL{par $i \in \mathcal{U}$}
     \STATE $p_i \leftarrow \sigma(\alpha\, s_i + \beta)$
 \ENDFOR
 
 \medskip
 \STATE \textbf{Fase 2: Regras de guarda determinísticas (versão v3)}
-\FORALL{par $i \in P$}
-    \IF{nota final do CdR $v_i \geq 10$ \AND exigências de consistência satisfeitas}
-        \STATE $d_i \leftarrow \textsc{always\_match}$; \quad \textbf{continuar} para o próximo par
-    \ENDIF
-    \IF{nota final do CdR $v_i < 3$}
-        \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad \textbf{continuar} para o próximo par
-    \ENDIF
-    \IF{$v_i \geq 7$ \AND subescores de data de nascimento (ano, mês, dia e data) todos nulos \AND diferença de anos de nascimento $> 5$ \AND subescores de endereço todos nulos}
-        \STATE $d_i \leftarrow \textsc{review}$; \quad $\mathit{razao}_i \leftarrow \texttt{homonimia\_risk}$ \COMMENT{limiares \texttt{homonimia\_min\_nota} e \texttt{homonimia\_year\_gap}; Seção~\ref{sec:e4-regras-guarda}}
-    \ENDIF
-    \IF{$(\mathit{data\_obito}_i - \mathit{data\_diagnostico}_i) < -180$ dias}
-        \STATE $d_i \leftarrow \textsc{nonmatch}$; \quad $\mathit{razao}_i \leftarrow \texttt{FILTRO\_TEMPORAL}$
+\FORALL{par $i \in \mathcal{U}$}
+    \STATE Inicializar indicador de revisão forçada $f_i \leftarrow 0$
+    \IF{$(\mathit{data\_obito}_i - \mathit{data\_diagnostico}_i) < -180$ dias, com ambas as datas disponíveis}
+        \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad $\mathit{razao}_i \leftarrow \texttt{temporal\_filter}$
         \STATE \textbf{continuar} para o próximo par
     \ENDIF
-    \IF{par $i$ compete com par $j$ pelo mesmo registro Sinan-TB}
-        \STATE $\Delta p \leftarrow |p_i - p_j|$
-        \IF{$\Delta p < 0{,}05$}
-            \STATE Marcar ambos como candidatos a \textsc{review}; \quad $\mathit{razao}_i \leftarrow \texttt{MARGEM\_ESTREITA}$
-        \ELSE
-            \STATE Manter apenas o par com maior $p_i$; descartar o outro por cardinalidade
-        \ENDIF
+    \IF{nota final do Comparador de Registros (CdR) $v_i < 3$}
+        \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad \textbf{continuar} para o próximo par
+    \ENDIF
+    \IF{$v_i \geq 7$ \AND indicadores de nascimento e endereço nulos \AND diferença conhecida de anos de nascimento $>5$}
+        \STATE $f_i \leftarrow 1$; \quad $\mathit{razao}_i \leftarrow \texttt{homonimia\_risk}$ \COMMENT{indicadores e tratamento de faltantes da Seção~\ref{sec:e4-regras-guarda}}
+        \STATE \textbf{continuar} para o próximo par
+    \ENDIF
+    \IF{$v_i \geq 10$ \AND concordância forte de nome, nascimento e município}
+        \STATE $d_i \leftarrow \textsc{always\_match}$ \COMMENT{critérios de \path{gzcmd/guardrails.py}}
     \ENDIF
 \ENDFOR
 
 \medskip
 \STATE \textbf{Fase 3: \textit{Expected loss engine}}
-\FORALL{par $i$ ainda não resolvido}
+\FORALL{par $i$ sem guarda de aceitação ou rejeição}
     \STATE $L_M \leftarrow (1-p_i)\cdot C_{FP}$; \quad $L_N \leftarrow p_i\cdot C_{FN}$
     \STATE $L_R \leftarrow C_{LLM} + (1-p_i)\,e_{FP}\,C_{FP} + p_i\,e_{FN}\,C_{FN}$
-    \STATE $\mathit{EVR}_i \leftarrow \min(L_M, L_N) - L_R$
-    \IF{$L_M \leq L_N$ \AND $L_M \leq L_R$}
+    \STATE $\mathit{EVR}_i \leftarrow \min(L_M, L_N) - L_R$ \COMMENT{valor esperado da revisão}
+    \IF{$L_M \leq L_N$}
         \STATE $d_i \leftarrow \textsc{match}$
-    \ELSIF{$L_N \leq L_M$ \AND $L_N \leq L_R$}
-        \STATE $d_i \leftarrow \textsc{nonmatch}$
     \ELSE
-        \STATE $d_i \leftarrow \textsc{review}$ \COMMENT{candidato à triagem orçamentária}
+        \STATE $d_i \leftarrow \textsc{nonmatch}$
     \ENDIF
+    \STATE Usar $(t_M,t_N)=(0{,}85;0{,}15)$ na vigilância e $(0{,}95;0{,}10)$ na confirmação
+    \STATE $c_i \leftarrow (d_i=\textsc{match}\ \AND\ p_i<t_M)\ \OR\ (d_i=\textsc{nonmatch}\ \AND\ p_i>t_N)$
+    \STATE Marcar pedido de revisão se $f_i=1$, $c_i=1$ ou $\mathit{EVR}_i>0$
     \STATE Registrar $(L_M, L_N, L_R, \mathit{EVR}_i)$ e código de razão preliminar
 \ENDFOR
 
 \medskip
 \STATE \textbf{Fase 4: Triagem sob restrição de orçamento}
-\STATE Ordenar candidatos a \textsc{review} por $\mathit{EVR}_i$ em ordem decrescente
-\STATE Selecionar os $k$ primeiros candidatos com $k \leq B$ para revisão assistida
-\FORALL{candidato excedente com posição $> B$}
-    \STATE $d_i \leftarrow \arg\min(L_M, L_N)$; \quad $\mathit{razao}_i \leftarrow \texttt{ORCAMENTO\_EXCEDIDO}$
-\ENDFOR
+\STATE Excluir da seleção as guardas de aceitação e rejeição
+\STATE Selecionar primeiro os pares com $f_i=1$, depois os com $c_i=1$, depois os com $\mathit{EVR}_i>0$, sem selecionar o mesmo par novamente
+\STATE Dentro de cada prioridade, ordenar por $\mathit{EVR}_i$ decrescente até esgotar o orçamento restante $B$
+\STATE Atribuir $d_i\leftarrow\textsc{review}$ apenas aos selecionados; os excedentes conservam a decisão automática de base, sem código adicional de razão
 
 \medskip
 \STATE \textbf{Fase 5: Revisão assistida por LLM em protocolo dual}
 \FORALL{par $i$ com $d_i = \textsc{review}$}
     \STATE Montar dossiê JSON com subescores, $p_{\mathit{cal}}$ e códigos de guarda \COMMENT{dossiê com as saídas do motor; a v3.1 usa dossiê sem elas}
-    \STATE Submeter ao Agente Objetivo e ao Agente Cético, de forma independente
+    \STATE Submeter ao Agente A e ao Agente B em chamadas separadas, com o mesmo modelo e dossiê
     \IF{há consenso entre os dois agentes}
         \STATE Adotar decisão consensual como decisão final
     \ELSE
@@ -112,7 +107,7 @@
 
 \medskip
 \STATE \textbf{Fase 6: Consolidação e retorno com registro de decisões}
-\RETURN $\{(d_i, \mathit{razao}_i, \mathit{justificativa}_i)\}$ para todo par $i \in P$
+\RETURN $\{(d_i, \mathit{razao}_i, \mathit{justificativa}_i)\}$ para todo par $i \in \mathcal{U}$
 
 \end{algorithmic}
 \noindent\rule{\textwidth}{0.4pt}
@@ -120,27 +115,28 @@
 \bigskip
 % Algoritmo da política v3.1 (quatro ações)
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD, com probabilidades OOF agrupadas por REFREC, guardas da nota, quatro ações por \textit{expected loss}, revisão assistida por LLM com dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
+\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD (quatro ações: vínculo, não vínculo, revisão por modelo de linguagem de grande porte, LLM, e revisão humana), com probabilidades fora da amostra (OOF) agrupadas por REFREC, guardas da nota e decisão por \textit{expected loss}, dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
 \label{alg:gzcmd-v31}
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
 
-\REQUIRE \parbox[t]{0.85\linewidth}{Potenciais pares $P$ com nota final $v_i$ e 29 subescores $x_i$; \textit{labels} apenas no treinamento;
+\REQUIRE \parbox[t]{0.85\linewidth}{Potenciais pares $\mathcal{U}$ com nota final $v_i$ e 29 subescores $x_i$; \textit{labels} apenas no treinamento;
   custos $(C_{FP}, C_{FN}, C_H, C_{LLM})$; erro humano hipotético $(e_{FP,h}, e_{FN,h})$;
-  proporções de erro e de inconclusivos do revisor LLM por modo e banda $(e_{FP}, e_{FN}, u)$; orçamentos de revisão LLM e humana.}
+  proporções de erro e de inconclusivos do revisor LLM por modo e faixa $(e_{FP}, e_{FN}, u)$; orçamentos de revisão LLM e humana.}
 \ENSURE \parbox[t]{0.85\linewidth}{Ação $d_i \in \{\textsc{match}, \textsc{nonmatch}, \textsc{llm}, \textsc{humano}\}$ para cada par $i$;
   decisão final do LLM $\in \{\textsc{match}, \textsc{nonmatch}, \textsc{unsure}\}$, com \textsc{unsure} encaminhado ao revisor humano.}
 
 \medskip
 \STATE \textbf{Fase 1: Probabilidade fora da amostra}
-\STATE Particionar $P$ em cinco partições externas agrupadas por REFREC (semente 42); em cada uma, cinco partições internas, também agrupadas
+\STATE Particionar $\mathcal{U}$ em cinco partições externas agrupadas por REFREC (semente 42); em cada uma, cinco partições internas, também agrupadas
 \STATE Ajustar o XGBoost nas partições internas e a regressão isotônica sobre suas probabilidades fora da amostra
-\STATE $p_i \leftarrow$ probabilidade isotônica do par $i$ na partição externa de teste
+\STATE Reajustar o XGBoost em todo o treinamento externo e pontuar o teste externo
+\STATE $p_i \leftarrow$ calibração isotônica do escore desse modelo no teste externo, sem acesso aos \textit{labels} desse teste
 
 \medskip
 \STATE \textbf{Fase 2: Guardas da nota}
-\FORALL{par $i \in P$}
+\FORALL{par $i \in \mathcal{U}$}
     \IF{$v_i < 5$}
         \STATE $d_i \leftarrow \textsc{always\_nonmatch}$
     \ELSIF{$v_i \geq 9$ \AND $p_i \geq 0{,}9$}
@@ -167,8 +163,8 @@
 \medskip
 \STATE \textbf{Fase 5: Revisão assistida por LLM}
 \FORALL{par $i$ com $d_i = \textsc{llm}$}
-    \STATE Montar dossiê com subescores, nota e MACD, sem as saídas do motor ($p_{\mathit{cal}}$, banda, EVR e códigos de guarda)
-    \STATE Submeter aos dois agentes (instruções v4) e, se discordarem, ao árbitro
+    \STATE Montar dossiê com 14 dos 29 subescores, nota e Medidas Contínuas de Diferença de Datas (MACD), sem as saídas do motor ($p_{\mathit{cal}}$, faixa, valor esperado da revisão (EVR) e códigos de guarda)
+    \STATE Submeter aos dois agentes (instruções v4, versão sem solicitação das saídas do motor) e, se discordarem, ao árbitro
     \IF{decisão final $= \textsc{unsure}$}
         \STATE Encaminhar o par ao revisor humano
     \ENDIF
@@ -176,7 +172,7 @@
 
 \medskip
 \STATE \textbf{Fase 6: Retorno com registro de decisões}
-\RETURN $\{(d_i, \text{decisão final}, \text{código de razão})\}$ para todo par $i \in P$
+\RETURN $\{(d_i, \text{decisão final}, \text{código de razão})\}$ para todo par $i \in \mathcal{U}$
 
 \end{algorithmic}
 \noindent\rule{\textwidth}{0.4pt}

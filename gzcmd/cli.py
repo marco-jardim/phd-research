@@ -150,6 +150,13 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Disable MACD feature engineering",
     )
+    ev.add_argument("--policy-version", choices=["v3", "v3.1"], default=None,
+                    help="Policy override (default: YAML); v3 restores historical thresholds")
+    ev.add_argument(
+        "--feature-allowlist",
+        action="store_true",
+        help="Restrict ml_rf to 30 comparator attributes plus enabled MACD attributes",
+    )
     ev.add_argument(
         "--metrics-out",
         default="",
@@ -262,6 +269,8 @@ def main(argv: list[str] | None = None) -> int:
             group_stratify=group_stratify,
             calibration=calibration,
             macd_enabled=not args.no_macd,
+            feature_set="allowlist" if args.feature_allowlist else "historical",
+            policy_version=args.policy_version,
         )
 
         print(f"runs={len(runs)}")

@@ -16,8 +16,8 @@
   "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
   "csv_sha256": "e6154b4261f38140c1eed259e8761d313cffde828245aad085766c7e4210ddc2",
   "fontes_sha256": {
-    "scripts/sensibilidade_sem_obito_refrec.py": "4bad51d94b0553885e7bd7a6eefe6c40c082e08c5ef1fbe0182b82dfe9163ddc",
-    "scripts/gerar_tabela_sensibilidade.py": "3dbdaca06e9e5b06e3e55b89ca3573332cc70d33998cfe1656bfcb99b12a9378",
+    "scripts/sensibilidade_sem_obito_refrec.py": "a6a27c65ccf5245ba180bd36f351869bcd9416fd35ebfd446b8171d55b1a1bc9",
+    "scripts/gerar_tabela_sensibilidade.py": "9f6c67b324cd3dce7053bfe60eaa8f2fa2d9562fe65cc64ce6e5c63da976d7d1",
     "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163",
     "scripts/ablation_study.py": "82e5750bed474629a8b751f2474d30a3e33a4a6e3af579196980e85bbd963fa0",
     "scripts/epidemiological_impact.py": "190537b948587ca38fc214ecc8aa4778613d76ba5a20c587c8fdf092f038d70d",
@@ -4306,16 +4306,16 @@
     }
   },
   "revalidacao_sem_treino": {
-    "data_utc": "2026-11-06T13:06:29.632897+00:00",
+    "data_utc": "2026-11-07T00:12:23.831115+00:00",
     "fontes_sha256_anteriores": {
-      "scripts/sensibilidade_sem_obito_refrec.py": "46a2a3f8de276261fc69dcb9da5164727bbb66130848c254fb434778c5997215",
+      "scripts/sensibilidade_sem_obito_refrec.py": "4bad51d94b0553885e7bd7a6eefe6c40c082e08c5ef1fbe0182b82dfe9163ddc",
       "scripts/gerar_tabela_sensibilidade.py": "3dbdaca06e9e5b06e3e55b89ca3573332cc70d33998cfe1656bfcb99b12a9378",
       "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163",
       "scripts/ablation_study.py": "82e5750bed474629a8b751f2474d30a3e33a4a6e3af579196980e85bbd963fa0",
       "scripts/epidemiological_impact.py": "190537b948587ca38fc214ecc8aa4778613d76ba5a20c587c8fdf092f038d70d",
-      "scripts/qw1_modal_unified_pipeline.py": "ae7fd9517cb2d303318908cadae2aeb63f0d448143b9f3040dcf6a1fab267340",
+      "scripts/qw1_modal_unified_pipeline.py": "2c75eb2f1b182d646f3d769bc66e8d6a3de631efd477fa213627f0cdd9b9e95a",
       "gzcmd/splitting.py": "1fdcbe4487b788ad8b6cdb9e35814341d7d258c92a42fffad4527e78deb3377b",
-      "data/ablation_results.csv": "5903ce48dac13fbe4642537d2f359ef7c37c56ec10a090d20d0b8ef82c1f0502"
+      "data/ablation_results.csv": "0d5e9699b6276e4969620c7a33e1acf4e3f3854dfca1a8a10c52f3ac3558dd75"
     },
     "controle": "70 configurações originais preservadas; métricas não recalculadas",
     "treinamento": false

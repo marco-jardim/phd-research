@@ -1,0 +1,85 @@
+{
+  "n": 17,
+  "par2": 16,
+  "nota_CdR": {
+    "minimo": 5.47,
+    "mediana": 5.8,
+    "maximo": 10.51
+  },
+  "score_OpenRecLink": {
+    "minimo": -2.38142910663,
+    "mediana": 2.38142910663,
+    "maximo": 7.84444860082
+  },
+  "filas": {
+    "O1": {
+      "posicao_media": 152.76470588235293,
+      "no_top17": 3
+    },
+    "O3": {
+      "posicao_media": 29.941176470588236,
+      "no_top17": 7
+    }
+  },
+  "empates": {
+    "O1": {
+      "blocos_empatados": 65,
+      "pares_em_empates": 61468,
+      "par2_em_empates": 34,
+      "top17_em_empates": 16,
+      "posicao_relativa_media_par2_em_empates": 0.531157501745737
+    },
+    "O3": {
+      "blocos_empatados": 54,
+      "pares_em_empates": 61472,
+      "par2_em_empates": 33,
+      "top17_em_empates": 14,
+      "posicao_relativa_media_par2_em_empates": 0.4950944689022148
+    },
+    "F4_RRF": {
+      "blocos_empatados": 1,
+      "pares_em_empates": 2,
+      "par2_em_empates": 0,
+      "top17_em_empates": 0,
+      "posicao_relativa_media_par2_em_empates": null
+    }
+  },
+  "ordem": {
+    "desempate_efetivo": "hash lexical SHA-256, não índice de linha/PAR/COMPREC",
+    "PAR_monotono_extrato": false,
+    "COMPREC_monotono_extrato": false,
+    "spearman_indice_PAR_extrato": -0.05837404908539801,
+    "spearman_indice_COMPREC_extrato": 0.021832370508819778,
+    "correlacao_indice_PAR2_abaixo": -0.023838342938945118,
+    "correlacao_rank_hash_PAR2_abaixo": -0.0017159372428164066
+  },
+  "desempate_aleatorio": {
+    "seed": 20261108,
+    "repeticoes": 200,
+    "regra": "mesma prioridade aleatória independente em empates O1/O3 e RRF; nenhum rótulo",
+    "quantis": "P2,5, mediana, P97,5 lineares (sensibilidade, não IC)",
+    "metricas": {
+      "par2_top17": {
+        "p025": 16.0,
+        "mediana": 16.0,
+        "p975": 16.0
+      },
+      "revisoes_9": {
+        "p025": 10.0,
+        "mediana": 10.0,
+        "p975": 10.0
+      },
+      "revisoes_23": {
+        "p025": 108.0,
+        "mediana": 112.0,
+        "p975": 116.0
+      },
+      "revisoes_36": {
+        "p025": 1310.0,
+        "mediana": 1355.0,
+        "p975": 1396.025
+      }
+    },
+    "proporcao_top17_menos_16": 0.0
+  }
+}

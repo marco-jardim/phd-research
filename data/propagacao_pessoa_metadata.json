@@ -1,0 +1,181 @@
+{
+  "analysis": "A_exploratoria_post_hoc_propagacao_pessoa_Sinan",
+  "registered": false,
+  "cpu_only": true,
+  "llm_calls": 0,
+  "model_fits": 0,
+  "person_headers": [
+    "C_IDPESSOA,C,10,0",
+    "C_NOVOIDPESSOA,C,10,0"
+  ],
+  "columns_used": [
+    "COMPREC",
+    "REFREC",
+    "PAR",
+    "PASSO",
+    "SCORE",
+    "C_IDLINHA",
+    "R_IDLINHA",
+    "C_IDPESSOA",
+    "C_NOVOIDPESSOA"
+  ],
+  "normalization": "strip; preserve literal string/leading zeroes; empty/NA missing; no imputation; zero is nonempty",
+  "cardinality_universe": "unique (PASSO, COMPREC) local notification records in candidate extract; not unique people or the entire Sinan population",
+  "identifier_scope_audit": {
+    "COMPREC_distintos": 19388,
+    "PASSO_COMPREC_distintos": 20004,
+    "C_IDLINHA_distintos": 17643,
+    "COMPREC_com_multiplos_C_IDLINHA": 606,
+    "REFREC_com_multiplos_R_IDLINHA": 0,
+    "warning": "COMPREC reused across steps; cardinality scoped by PASSO. R1/R2 keep literal REFREC/COMPREC as requested; R1 requires different literal COMPREC. Not external ID validation."
+  },
+  "reliability_universe": "PAR=1 above ORL cutoff; distinct REFREC/COMPREC; missing IDs cannot count as agreement",
+  "rules": {
+    "R1": "one-hop from PAR1 above cutoff; same REFREC, same nonempty ID in same column, distinct COMPREC",
+    "R1_UNIAO": "OR of R1 columns; no cross-column equality, transitive closure or fallback filling",
+    "R2": "same REFREC as any PAR1 above cutoff, no person condition",
+    "precision": "PAR2 / all propagated below cutoff; operational reference, not adjudicated truth; null if none",
+    "blocking": "destination pair PASSO; seeds from all steps"
+  },
+  "baseline": {
+    "above_PAR1": 211,
+    "below": 61485,
+    "below_PAR2": 36,
+    "P_FP": {
+      "vigilancia": 21,
+      "confirmacao": 4
+    }
+  },
+  "identifier_diagnostics": {
+    "C_IDPESSOA": {
+      "pares_total": 61696,
+      "pares_nao_vazios": 61696,
+      "completude_pares_pct": 100.0,
+      "notificacoes_total": 20004,
+      "notificacoes_nao_vazias": 20004,
+      "completude_notificacoes_pct": 100.0,
+      "pessoas_distintas": 15256,
+      "notificacoes_por_pessoa_media": 1.3112218143681174,
+      "notificacoes_por_pessoa_max": 26,
+      "histograma_notificacoes_por_pessoa": {
+        "1": 11786,
+        "2": 2797,
+        "3": 356,
+        "4": 213,
+        "5": 32,
+        "6": 43,
+        "8": 15,
+        "9": 3,
+        "10": 5,
+        "12": 4,
+        "15": 1,
+        "26": 1
+      },
+      "refrec_multiplos_comprec": 18,
+      "refrec_multiplos_id_completo": 18,
+      "refrec_multiplos_id_unico": 13,
+      "proporcao_refrec_multiplos_id_unico": 0.7222222222222222,
+      "proporcao_refrec_multiplos_id_unico_completos": 0.7222222222222222,
+      "pessoas_com_vinculo_aceito": 188,
+      "pessoas_aceitas_refrec_unico": 188,
+      "proporcao_pessoas_aceitas_refrec_unico": 1.0,
+      "pessoas_multiplos_comprec_aceitos": 16,
+      "pessoas_multiplos_comprec_refrec_unico": 16,
+      "proporcao_pessoas_multiplos_comprec_refrec_unico": 1.0,
+      "por_C_IDLINHA": {
+        "notificacoes_total": 17643,
+        "notificacoes_nao_vazias": 17643,
+        "completude_pct": 100.0,
+        "notificacoes_id_ambiguo_excluidas_cardinalidade": 0,
+        "pessoas_distintas_sem_ambiguidade": 15256,
+        "notificacoes_por_pessoa_media": 1.156463030938647,
+        "histograma_notificacoes_por_pessoa": {
+          "1": 13465,
+          "2": 1409,
+          "3": 253,
+          "4": 77,
+          "5": 34,
+          "6": 13,
+          "8": 2,
+          "9": 1,
+          "10": 2
+        }
+      }
+    },
+    "C_NOVOIDPESSOA": {
+      "pares_total": 61696,
+      "pares_nao_vazios": 8,
+      "completude_pares_pct": 0.012966804979253113,
+      "notificacoes_total": 20004,
+      "notificacoes_nao_vazias": 8,
+      "completude_notificacoes_pct": 0.03999200159968006,
+      "pessoas_distintas": 8,
+      "notificacoes_por_pessoa_media": 1.0,
+      "notificacoes_por_pessoa_max": 1,
+      "histograma_notificacoes_por_pessoa": {
+        "1": 8
+      },
+      "refrec_multiplos_comprec": 18,
+      "refrec_multiplos_id_completo": 0,
+      "refrec_multiplos_id_unico": 0,
+      "proporcao_refrec_multiplos_id_unico": 0.0,
+      "proporcao_refrec_multiplos_id_unico_completos": null,
+      "pessoas_com_vinculo_aceito": 4,
+      "pessoas_aceitas_refrec_unico": 4,
+      "proporcao_pessoas_aceitas_refrec_unico": 1.0,
+      "pessoas_multiplos_comprec_aceitos": 0,
+      "pessoas_multiplos_comprec_refrec_unico": 0,
+      "proporcao_pessoas_multiplos_comprec_refrec_unico": null,
+      "por_C_IDLINHA": {
+        "notificacoes_total": 17643,
+        "notificacoes_nao_vazias": 8,
+        "completude_pct": 0.04534376239868503,
+        "notificacoes_id_ambiguo_excluidas_cardinalidade": 0,
+        "pessoas_distintas_sem_ambiguidade": 8,
+        "notificacoes_por_pessoa_media": 1.0,
+        "histograma_notificacoes_por_pessoa": {
+          "1": 8
+        }
+      }
+    }
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    ".local/arranjo_corte/policy_vigilancia_P.csv": "cd697d0ca0eba041fc23afecebcf8b7c1a51db0523e23145f3cd48ab89a79c79",
+    "responses/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+    "responses/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+    "responses/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+    "responses/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
+    "responses/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337",
+    ".local/arranjo_corte/policy_confirmacao_P.csv": "b836f6bf50f7b4e20bcdf1e0e5c3664099a4c2669c7fa088ec89f9d96953a30d",
+    "responses/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+    "responses/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+    "responses/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+    "responses/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
+    "responses/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c",
+    "data/fp_cardinalidade.json": "d7edf216fc88100e8ebdd6984d0d61280154a9f8c76d4ef0aec1cd50aefae666",
+    "data/robustez_arranjo_metadata.json": "10beb42cb9d48b20677f1f116617bda316761d5ae6d5215656aeae6fccd4b8d6",
+    "data/arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
+    "data/fp_arranjo_por_regiao.csv": "f78a04e3fbb92c4aa8e14b1902d80fc9b767d840ff4f7a28a8999ff5c3ee4b2f",
+    "data/par_por_passo.csv": "101ffe242d5475f4bcee404ba951f6764108775632e2230d346f4d105f161207",
+    "data/fusao_filas.csv": "c9d3603680251c2741ccc253ca1cf6df2876805da2df9bfc74e044f46627d069"
+  },
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1"
+  },
+  "code_sha256_lf": {
+    "scripts/propagacao_pessoa.py": "0aa4ce32152a1895b023308a7f96ac5a2d4a3abb0c58824b76bd944996d13752",
+    "scripts/vies_referencia.py": "ef2b4b7ccab2b7927c9f1f1ec8f35bf2b22e5c49d4654e52a047c26920bc718b",
+    "scripts/fp_cardinalidade.py": "0c318a3669c4b6466cdaeacff3f1cdf43bb705e4f9f73bbf6fc99d2ba59648d2",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "scripts/arranjo_corte_s2_suplementar.py": "723165f1f3db74bd0a3bfa0ceb226b880554145474d82918f24d397d81d43dc3",
+    "gzcmd/loader.py": "6a9302f7324aac9149c3abba74fbd5fb5d9c4d7e376f058609fe956311eeb473",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8"
+  },
+  "output_sha256": {
+    "data/propagacao_pessoa.csv": "6b68c5d699de07c8fea05faef38dea07dc8dd267c3180932f50ce271ec234718"
+  }
+}

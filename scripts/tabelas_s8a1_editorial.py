@@ -6,6 +6,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.tabelas_s8_editorial import number
+from scripts.tabelas_persona_editorial import transform
 
 
 def table(caption, label, columns, header, rows, note):
@@ -91,7 +92,7 @@ def generate(root=ROOT, output=None):
         ('tab_cap8_filtro_llm', llm_filter, 'filtro_llm'),
         ('tab_cap8_sensibilidade_humana', human_sensitivity, 'cenarios_sensibilidade_humana'),
     ):
-        (output / (name+'.tex')).write_text(renderer(pd.read_csv(root / ('data/'+source+'.csv'))), encoding='utf-8', newline='\n')
+        (output / (name+'.tex')).write_text(transform(name, renderer(pd.read_csv(root / ('data/'+source+'.csv')))), encoding='utf-8', newline='\n')
 
 
 if __name__ == '__main__':

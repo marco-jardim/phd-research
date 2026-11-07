@@ -17,17 +17,26 @@ def text(name):
 
 
 def test_falsification_is_prospective_with_explicit_margin_not_point_differences():
-    for source in (text("estudo4_gzcmd.tex"), text("conclusao.tex"),
-                   (ROOT / "text/slides/defesa.tex").read_text(encoding="utf-8")):
+    for source in (text("estudo4_gzcmd.tex"), text("conclusao.tex")):
         normalized = source.replace("{,}", ",")
         assert "prospectivo" in normalized
         assert "outra coorte ou período" in normalized
-        assert "5,6" in normalized and "2/36" in normalized
+        assert r"25\%" in normalized and "limite inferior" in normalized
+        assert "2/36" not in normalized and "5,6 pontos percentuais" not in normalized
         assert "réplicas predefinidas" in normalized or "réplicas de partição predefinidas" in normalized
         assert "referência cega" in normalized.lower()
         assert "nota calibrada" not in normalized
-    assert "não foi testado" in text("conclusao.tex")
-    assert "nenhuma dessas avaliações foi realizada" in text("estudo4_gzcmd.tex")
+    slides = (ROOT / "text/slides/defesa.tex").read_text(encoding="utf-8")
+    assert (r"pelo menos 25\% menos revisões que O1 (limite inferior do IC 95\% "
+            r"entre partições predefinidas), nas duas metas") in slides
+    assert "Critério prospectivo, não testado" in slides
+    assert "referência cega" in slides
+    assert "Margem fixada com os dados à vista" in slides
+    assert "outra coorte" in slides
+    assert "2/36" not in slides and "5,6 pontos percentuais" not in slides
+    assert ("não foi testado" in text("conclusao.tex")
+            or "não foi estimada nem testada" in text("conclusao.tex"))
+    assert "nenhuma dessas avaliações foi realizada" in text("estudo4_gzcmd.tex").lower()
 
 
 def test_dossier_coverage_matches_aggregate_and_no_auditability_is_claimed():
@@ -59,6 +68,85 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
     assert "versão do prompt não está registrada" in study
     assert "proxies adicionais" not in study
     assert "unidade é a revisão" in study
+
+
+def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
+    from test_w9a import expected_ablation_appendix
+
+    study = text("estudo4_gzcmd.tex")
+    section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\subsection{Experimento 2:")[0]
+    appendix = text("apendice_ablacao.tex")
+    assert appendix == expected_ablation_appendix()
+    for arm in ("macd", "nomacd"):
+        source = f"data/ablation_comprec_{arm}_allowlist_summary.csv"
+        assert source in section
+        summary = pd.read_csv(ROOT / source, sep=";")
+        for _, row in summary.iterrows():
+            for metric in ("exp_precision", "exp_recall", "exp_f1", "exp_fbeta"):
+                value = f"{row[metric + '_mean']:.3f}\\pm{row[metric + '_std']:.3f}".replace(".", ",")
+                assert value in section
+        assert f"data/ablation_comprec_{arm}.csv" in section
+        assert f"data/ablation_comprec_{arm}_allowlist.csv" in appendix
+    assert "200 árvores" in section and "profundidade máxima 10" in section
+    assert "pesos balanceados" in section and "validação cruzada interna" in section
+    assert "29 subescores e à nota final" in section
+    assert "se sobrepõem" in section and "otimistas" in section
+    assert "não pode ser atribuída somente ao escore" in section
+    assert "0,954" in section
+    historical = pd.read_csv(ROOT / "data/ablation_comprec_macd.csv", sep=";")
+    historical_f1 = historical.loc[historical["mode"].eq("vigilancia"), "exp_f1"].mean()
+    formatted_f1 = f"{historical_f1:.3f}".replace(".", ",")
+    assert (r"O $F_1$ esperado de " + formatted_f1
+            + " na vigilância com MACD pertence à versão anterior com vazamento") in appendix
+
+
+def test_review3_decision_counts_bias_and_pair_loss_limits_are_explicit():
+    study = text("estudo4_gzcmd.tex")
+    assert "1.774" in study and "459 decisões agrupadas" in study
+    assert "não potenciais pares independentes" in study
+    assert "data/taxas_erro_revisor_por_banda.csv" in study
+    assert "por_faixa.csv" not in study and r"por\_faixa.csv" not in study
+    assert "A direção dominante não é identificável" in study
+    assert "2.522 candidatos" in study and r"-5{,}648" in study
+    assert "As perdas são contadas por potencial par" in study
+    assert "Não se reconstituiu a geração de candidatos sob decisões alternativas da política" in study
+    assert r"\mathcal{L}_H(p)=6-4p" in study
+    assert r"$p>0{,}25$" in study and "229 para 121" in study
+    assert "as métricas OOF não incorporam essa seleção" in study
+
+
+def test_haiku_thinking_audit_does_not_treat_missing_counters_as_zero():
+    from scripts.auditar_thinking_haiku import thinking_values, token_summary
+
+    missing = token_summary(list(thinking_values({"transport": {"calls": 3, "output_tokens": 90}})))
+    assert missing["status"] == "não registrado"
+    assert missing["n_contadores_registrados"] == 0
+    assert missing["n_chamadas_thinking_tokens_maior_zero"] is None
+    assert missing["soma_thinking_tokens"] is None
+    assert missing["media_thinking_tokens"] is None
+    present = list(thinking_values([
+        {"usage": {"output_tokens_details": {"thinking_tokens": 8}}},
+        {"usage": {"output_tokens_details": {"thinking_tokens": 0}}},
+    ]))
+    assert present == [8, 0]
+    assert token_summary(present)["n_contadores_maior_zero"] == 1
+    assert token_summary(present)["soma_thinking_tokens"] == 8
+    assert token_summary(present)["media_thinking_tokens"] == 4
+    with pytest.raises(ValueError, match="Contador thinking_tokens inválido"):
+        list(thinking_values({"thinking_tokens": -1}))
+
+
+def test_review3_algorithm_guard_order_and_review_priority_follow_code():
+    source = text("apendice_algoritmo.tex")
+    historical = source.split(r"\textbf{Fase 2: Regras de guarda determinísticas (versão v3)}")[1].split(r"\label{alg:gzcmd-v31}")[0]
+    assert historical.index(r"temporal\_filter") < historical.index(r"$v_i < 3$")
+    assert historical.index(r"homonimia\_risk") < historical.index(r"$v_i \geq 10$")
+    assert "primeiro os pares com $f_i=1$" in historical
+    assert "depois os com $c_i=1$" in historical
+    assert "FILTRO\\_TEMPORAL" not in source and "ORCAMENTO\\_EXCEDIDO" not in source
+    assert "em chamadas separadas, com o mesmo modelo e dossiê" in source
+    assert "Reajustar o XGBoost em todo o treinamento externo" in source
+    assert "14 dos 29 subescores" in source
 
 
 def test_cardinality_counts_do_not_imply_an_implemented_rule():

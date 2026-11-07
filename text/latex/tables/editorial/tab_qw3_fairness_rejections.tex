@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 58 testes): XGBoost com limiar de sensibilidade equivalente ao corte 6{,}0 da nota final do CdR. $\Delta$ em pontos percentuais (grupo 1 menos grupo 2).}
+\label{tab:qw3-fairness-rejections}
+\footnotesize\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lllllrrr}
+\toprule
+Dimens\~ao & Tipo & M\'etrica & Grupo 1 & Grupo 2 & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
+\midrule
+Sexo & Demogr. & VPP & F & M & $<$0{,}001 & $+$22{,}4 & 5{,}56 \\
+Ano do \'obito & Operac. & VPP & 2019 & 2022 & 0{,}024 & $-$19{,}5 & 0{,}33 \\
+Encerramento da notifica\c{c}\~ao & Operac. & VPP & Demais situa\c{c}\~oes & Encerrada por \'obito & $<$0{,}001 & $-$29{,}2 & 0{,}10 \\
+Munic\'ipio & Operac. & VPP & Capital (RJ) & Demais & 0{,}046 & $-$25{,}5 & 0{,}07 \\
+Nome (quartis) & Operac. & VPP & Q3 & Q4 & $<$0{,}001 & $-$37{,}0 & 0{,}19 \\
+Nome (quartis) & Operac. & Sens. & Q3 & Q4 & $<$0{,}001 & $-$33{,}2 & 0{,}08 \\
+Nome (quartis) & Operac. & Sens. & Q2 & Q4 & 0{,}020 & $-$95{,}1 & 0{,}01 \\
+Passo & Operac. & VPP & 11 & 9 & $<$0{,}001 & $-$63{,}1 & 0{,}01 \\
+Passo & Operac. & VPP & 11 & 6 & $<$0{,}001 & $-$48{,}8 & 0{,}10 \\
+Passo & Operac. & VPP & 6 & 9 & $<$0{,}001 & $-$14{,}3 & 0{,}09 \\
+Passo & Operac. & Sens. & 11 & 9 & 0{,}002 & $-$21{,}1 & 0{,}12 \\
+Passo & Operac. & Sens. & 11 & 6 & 0{,}041 & $-$17{,}5 & 0{,}24 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
+\end{table}

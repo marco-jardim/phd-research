@@ -1,12 +1,12 @@
 \begin{table}[htbp]
 \centering
-\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 28 testes): Base inteira v3.1 (vigil., comparação), denominadores de pelo menos 30. $\Delta$ em pontos percentuais (grupo A menos grupo B).}
+\caption{Rejei\c{c}\~oes da hip\'otese de paridade (Benjamini-Hochberg, $\alpha = 0{,}05$, 28 testes): Base inteira v3.1 (vigil., comparação), denominadores de pelo menos 30. $\Delta$ em pontos percentuais (grupo 1 menos grupo 2).}
 \label{tab:equidade-den30-cascata-v31-vigilancia}
 \small
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lllllrrr}
 \toprule
-Dimens\~ao & Tipo & M\'etrica & Grupo A & Grupo B & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
+Dimens\~ao & Tipo & M\'etrica & Grupo 1 & Grupo 2 & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
 \midrule
 Encerramento da notifica\c{c}\~ao & Operac. & VPP & Demais situa\c{c}\~oes & Encerrada por \'obito & 0{,}038 & $-$12{,}7 & 0{,}32 \\
 Passo & Operac. & VPP & 11 & 9 & $<$0{,}001 & $-$42{,}0 & 0{,}09 \\
@@ -17,4 +17,5 @@ Passo & Operac. & Sens. & 6 & 9 & 0{,}028 & $-$14{,}3 & 0{,}34 \\
 \bottomrule
 \end{tabular}}
 \par\footnotesize Fonte: \path{data/equidade_arranjo_den30_pairwise_tests.csv}. OR é razão de chances; as colunas de denominadores referem-se à métrica testada. Família definida separadamente por decisão, após o filtro de denominador.
+\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
 \end{table}

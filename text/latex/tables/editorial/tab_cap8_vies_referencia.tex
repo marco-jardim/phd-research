@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering
+\caption{Pontos de virada das conclusões sob erro hipotético da referência operacional, análise exploratória \textit{post hoc}.}
+\label{tab:cap8-vies-referencia}
+\small
+\begin{tabular}{p{0.25\linewidth}p{0.65\linewidth}}
+\toprule
+Conclusão & Sensibilidade ao erro da referência \\
+\midrule
+C1: VPP do LLM inferior a 50\% na vigilância & Igualdade em 40,5\% dos FP reclassificados uniformemente como vínculos, sem retirada de PAR~=~2; primeira virada na grade: 50\%. \\
+C2: 13 e 27 perdas & Primeira mudança na grade com 5\% dos PAR~=~2 retirados; com 20\%, perdas esperadas de 10,4 e 21,6. \\
+C3: margem de 25\% de O3 frente a O1, meta de 23 dos 36 PAR~=~2 (64\%) & Sem virada pela mediana nos 100 cenários da vigilância; percentil 97,5 cruza zero em um cenário. \\
+C4: F4 exige menos revisões que O1, metas nominais de 25\% e 100\% & Sem virada na grade, nos dois modos. \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Fonte: \path{data/vies_referencia_viradas.csv} e \path{data/vies_referencia.csv}. C1 contínua: $(0{,}5\times25-4)/21$, solução algébrica, não prevalência estimada de erro. C2: $13\times0{,}8$ e $27\times0{,}8$, sob retirada uniforme. Para C3 e C4, as metas são recalculadas após a mudança da referência; mantêm-se as filas, sem retreinamento. Medianas e percentis descrevem 1.000 sorteios por cenário, não intervalos de confiança inferenciais. C1 não é critério de segurança para aceitação autônoma.
+\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. C1: VPP de P inferior a 50\%; C2: perdas de PAR~=~2 de P; C3: margem de O3 frente a O1 na meta de 23 vínculos; C4: vantagem de F4 frente a O1. O1: escore do OpenRecLink; O3: probabilidade calibrada. F4: fusão por posição recíproca de O1 (escore do OpenRecLink) e O3 (probabilidade calibrada); F3: mesma combinação acrescida de O3 com MACD (Medidas Contínuas de Diferença de Datas de nascimento).
+\end{table}

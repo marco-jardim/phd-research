@@ -1,0 +1,149 @@
+{
+  "analysis": "C_exploratory_post_hoc",
+  "registered": false,
+  "timestamp": "2026-11-07T01:31:43.669570+00:00",
+  "cpu_only": true,
+  "api_calls": 0,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/llm_evidencia.py --data-root D:/git/phd-research",
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1",
+    "sklearn": "1.8.0"
+  },
+  "seed": 42,
+  "n_folds": 5,
+  "folds_reproduced": true,
+  "split_by": "REFREC",
+  "laplace_alpha": 1.0,
+  "edges": [
+    0.0,
+    0.01,
+    0.05,
+    0.1,
+    0.5,
+    1.0
+  ],
+  "rrf_k": 60,
+  "definitions_fixed_before_outcomes": true,
+  "endpoints": "finite RV leaves p=0 and p=1 unchanged, no clipping",
+  "universe": {
+    "below_cutoff": 61485,
+    "PAR2": 36,
+    "PAR1": 211
+  },
+  "empty_class_fallback": "RV=1",
+  "unanswered": "exact original O3",
+  "deduplication": "oldest run timestamp; lexical source; first row; no per-response timestamp",
+  "training_population": "all answered PAR in {1,2} vs others; exclude evaluated fold",
+  "coverage": {
+    "vigilancia": {
+      "abaixo_com_resposta": 1651,
+      "par2_com_resposta": 21,
+      "par1_com_resposta": 123,
+      "fracao_par2": 0.5833333333333334
+    },
+    "confirmacao": {
+      "abaixo_com_resposta": 357,
+      "par2_com_resposta": 15,
+      "par1_com_resposta": 102,
+      "fracao_par2": 0.4166666666666667
+    }
+  },
+  "sources": [
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_vigilancia.json",
+      "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+      "modo": "vigilancia",
+      "timestamp": "2026-11-03T01:51:45.408616+00:00",
+      "n": 1410
+    },
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_vigilancia.json",
+      "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+      "modo": "vigilancia",
+      "timestamp": "2026-11-03T03:58:32.368564+00:00",
+      "n": 209
+    },
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_vigilancia.json",
+      "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+      "modo": "vigilancia",
+      "timestamp": "2026-11-03T12:59:46.226174+00:00",
+      "n": 155
+    },
+    {
+      "modo": "vigilancia",
+      "unique_responses": 1774,
+      "conflicting_pairs": 0
+    },
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4\\exp2_llm_sync_confirmacao.json",
+      "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+      "modo": "confirmacao",
+      "timestamp": "2026-11-03T01:53:45.016014+00:00",
+      "n": 435
+    },
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4_lote31\\exp2_llm_sync_confirmacao.json",
+      "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+      "modo": "confirmacao",
+      "timestamp": "2026-11-03T03:58:33.145323+00:00",
+      "n": 7
+    },
+    {
+      "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+      "resolved_path": "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\sprint3b\\anthropic_sem_mo_v4_lote31_refrec\\exp2_llm_sync_confirmacao.json",
+      "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+      "modo": "confirmacao",
+      "timestamp": "2026-11-03T12:59:46.648838+00:00",
+      "n": 17
+    },
+    {
+      "modo": "confirmacao",
+      "unique_responses": 459,
+      "conflicting_pairs": 0
+    }
+  ],
+  "missing_sources": [
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json"
+  ],
+  "source_set_complete": false,
+  "limitations": [
+    "policy-selected nonrandom coverage",
+    "post hoc",
+    "service verification bias",
+    "reused OOF training scores are not fully nested stacking validation",
+    "updated probabilities are not independently calibrated"
+  ],
+  "input_sha256": {
+    "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "D:\\git\\phd-research\\data\\pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "D:\\git\\phd-research\\data\\pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\data\\arranjo_corte_vpp_llm.csv": "97ff6c04b2a1afd79f4c46c9d3837faa2daa433c45a9005fc2cc94063c8afb2f",
+    "C:\\Users\\Marquinho\\.local\\share\\opencode\\worktree\\d66565\\pq-banca-4\\gzcmd\\gzcmd_v4_llm_prompt.md": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56"
+  },
+  "code_sha256": {
+    "scripts/llm_evidencia.py": "06bce0752a0afcce4526b84221564f9a321c5bc1d331cc9bfbdab97f08e85cdf",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "scripts/fusao_filas.py": "8f41b556e8eee6f84ae294ee05dd9ee20cc8b26df24bb416457c35130c314ecd",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5"
+  },
+  "output_sha256": {
+    "llm_evidencia.csv": "bd7fca518d42b08d696495b6a22b52178a643a81b4e5e867eddff3b7e3fa9691",
+    "llm_evidencia_rv.csv": "eff2e0bd1056da28ee197b8bdfc2527f45d0c243be5a0b1bbe2c7a48dbd1e7de"
+  }
+}

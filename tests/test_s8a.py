@@ -37,6 +37,10 @@ def test_editorial_tables_regenerate_and_historical_numeric_cells_stay(tmp_path)
     robust = (tmp_path / 'tab_cap8_robustez_arranjo.tex').read_text(encoding='utf-8')
     assert 'Numérico' in robust and 'Partição' in robust
     assert 'P ($k/20$)' not in robust
+    assert 'Modo & Numérico & Partição & Inversa (num.; part.) & Classificação' in robust
+    assert '(réplicas/20)' not in robust
+    assert 'em 20 reexecuções de cada bloco' in robust
+    assert 'Inversa: réplicas com dominância de P sobre P-Platt' in robust
 
 
 def test_same_load_rows_and_effort_are_generated_from_versioned_artifacts():
@@ -74,9 +78,22 @@ def test_fp_position_and_loss_qualification_follow_sources():
 def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        for term in ('curva de esforço', 'decomposição por PAR', 'ancoragem', 'resultado negativo',
-                     'registro interno', 'ordem decrescente', 'orçamento humano'):
+        for term in ('curva de esforço', 'separação entre vínculos aceitos pelo corte e recuperados na revisão', 'ancoragem', 'resultado negativo',
+                     'registro interno', 'orçamento humano'):
             assert term in text, (name, term)
+        if name == 'capitulo1.tex':
+            assert 'ordem decrescente' in text
+        else:
+            # W10a substituiu a recomendação genérica pela fusão exploratória,
+            # sem dispensar validação independente nem parada por orçamento.
+            for term in (
+                'Recomenda-se a fusão como ordenação da fila de revisão',
+                'no lugar da ordenação pelo escore do OpenRecLink',
+                'a validar em coorte nova com referência cega',
+                'sua vantagem sobre a probabilidade calibrada não foi demonstrada',
+                'escolhe-se o ponto de parada pela curva de esforço conforme o orçamento humano',
+            ):
+                assert term in text, (name, term)
     thesis = (L / 'tese.tex').read_text(encoding='utf-8')
     for prefix in (r'O \textit{linkage} integra', r'Linkage integrates'):
         i = thesis.index(prefix)

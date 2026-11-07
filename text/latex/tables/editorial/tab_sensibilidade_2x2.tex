@@ -1,0 +1,21 @@
+% Gerado por scripts/gerar_tabela_sensibilidade.py de data/sensibilidade_sem_obito_refrec.csv
+\begin{table}[htbp]
+\centering\footnotesize
+\setlength{\tabcolsep}{3pt}
+\caption{Sensibilidade da ablação e da comparação de detecção de vínculos à retirada dos indicadores de óbito e à partição por REFREC.}
+\label{tab:sensibilidade-2x2}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Cenário & $n$ teste & Vínculos & \shortstack{$F_1$ RF\\+SMOTE} & $F_1$ GB & \shortstack{$F_1$ XGB\\local} & \shortstack{VP/FP\\RF+SMOTE} & \shortstack{Recuperados/\\líquido} \\
+\midrule
+A: linha/58 & 18.509 & 74 & 0,931 & 0,870 & 0,931 & 67/3 & 27/24 \\
+B: linha/56 & 18.509 & 74 & 0,938 & 0,867 & 0,931 & 68/3 & 27/25 \\
+C: REFREC/58 & 18.304 & 72 & 0,846 & 0,824 & 0,869 & 63/14 & 28/25 \\
+D: REFREC/56 & 18.304 & 72 & 0,846 & 0,816 & 0,875 & 63/14 & 28/25 \\
+\bottomrule
+\end{tabular}
+\par\smallskip\begin{minipage}{\textwidth}\footnotesize
+Nota: RF: Random Forest; GB: Gradient Boosting; XGB: XGBoost local (CPU), não o resultado do fluxo Modal. O limiar de probabilidade de 0,5 e a nota $\geq 8$ são os da ablação. Recuperados são os vínculos encontrados pelo RF+SMOTE e não pela nota; líquido é a diferença entre as detecções. Com agrupamento por REFREC, o denominador e os vínculos avaliados mudam. 56 atributos excluem \texttt{obito\_tb} e \texttt{obito\_sinan}. Fonte: \texttt{data/sensibilidade\_sem\_obito\_refrec.csv}.
+\end{minipage}
+\par\footnotesize REFREC identifica o registro do SIM. A e B: partição por linha, com e sem indicadores de óbito; C e D: partição por REFREC, com e sem esses indicadores.
+\end{table}

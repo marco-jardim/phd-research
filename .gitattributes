@@ -55,6 +55,9 @@ text/latex/tables/tab_sensibilidade_2x2.tex text eol=lf
 text/latex/tables/tab_sensibilidade_qw1.tex text eol=lf
 text/latex/tables/tab_cap8_referencia.tex text eol=crlf
 text/latex/tables/tab_cap8_reruns.tex text eol=lf
+text/latex/tables/tab_cap8_ablacao_dossie.tex text eol=lf
+text/latex/tables/tab_cap8_revisores.tex text eol=lf
+text/latex/tables/tab_qw3_fairness_rejections_corte6.tex text eol=lf
 text/latex/tables/tab_desempenho_faixas.tex text eol=lf
 text/latex/tables/tab_e4_desempenho_faixas_oof.tex text eol=lf
 text/latex/tables/tab_equidade_v31.tex text eol=crlf
@@ -142,3 +145,8 @@ data/sprint3b/ablacao/ablacao_dossie_proveniencia.json text eol=lf
 data/ablacao_teste_composicao.csv text eol=lf
 data/perfil_obitos_agregado.csv text eol=lf
 text/latex/tables/editorial/tab_perfil_obitos_agregado.tex text eol=lf
+
+# Fusao exploratoria W9: referencias auditadas por bytes, checkout sempre LF.
+data/fusao_filas_metadata.json text eol=lf
+data/fusao_robustez_metadata.json text eol=lf
+data/fusao_robustez_topo.json text eol=lf

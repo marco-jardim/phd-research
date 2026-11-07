@@ -144,7 +144,8 @@ def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
     assert 'hipótese exploratória a validar em dados novos' in recommendation
-    assert 'nunca deve aceitar vínculos sozinho' in recommendation
+    assert 'nas condições avaliadas, não deve aceitar vínculos sozinho' in recommendation
+    assert 'posição de precaução, não estimativa transferível' in recommendation
     assert 'validação registrada em dados novos' in recommendation
 
 
@@ -155,12 +156,12 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
     assert len(pt.split()) <= 500 and len(en.split()) <= 500
-    assert 'P é a política com recalibração isotônica abaixo do corte' in pt
-    assert r'P-Platt é a análise de sensibilidade com \textit{Platt scaling}' in pt
+    assert 'P preserva o corte e decide abaixo dele com recalibração isotônica' in pt
+    assert r'P-Platt é análise de sensibilidade com \textit{Platt scaling}' in pt
     assert '42,5' in pt and '42.5' in en
     assert 'pelo menos 95' in pt and 'at least 95' in en
-    assert 'nenhuma estratégia domina' in pt
-    assert 'neither strategy dominates' in en
+    assert 'nenhuma das estratégias comparadas é melhor em todos os desfechos' in pt
+    assert 'none of the compared decision strategies dominates' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]

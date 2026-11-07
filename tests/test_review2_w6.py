@@ -56,14 +56,20 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
                             & stability.metrica.eq("perdidos") & stability.modo.eq(mode)].iloc[0]
         assert (row.minimo, row.maximo) == (low, high)
     study = text("estudo4_gzcmd.tex")
-    assert "fixada antes dos desfechos" in study
-    assert "maior prioridade à sensibilidade" in study
-    assert "2,8 p.p." in study and "8,3 p.p." in study
-    assert "de 9 a 21 na vigilância e de 21 a 29 na confirmação" in study
-    assert "Nos dados atuais, que não testam o critério" in study
+    criterion = next(paragraph for paragraph in study.split("\n\n")
+                     if paragraph.startswith("Como critério prospectivo de falsificação"))
+    assert "ordenação e orçamento humano definidos antes de examinar os novos desfechos" in criterion
+    assert "referência cega independente" in criterion
+    assert r"pelo menos 25\% menos revisões que O1" in criterion
+    assert r"limite inferior do intervalo de 95\% entre partições predefinidas" in criterion
+    assert "em cada uma das duas metas" in criterion
+    assert "os 23 PAR~=~2 da vigilância e os nove da confirmação" in criterion
+    assert "P supera O3 por um vínculo na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
+    assert "de 9 a 21 perdas na vigilância e de 21 a 29 na confirmação" in criterion
+    assert "Nenhuma dessas avaliações foi realizada" in criterion
     for name in ("defesa.tex", "roteiro_defesa.md"):
         slides = (ROOT / "text/slides" / name).read_text(encoding="utf-8")
-        assert "Duas ações usam O3" in slides
+        assert "Ganho das quatro ações sobre duas ações (O3)" in slides
         assert "de 9 a 21 e de 21 a 29" in slides
 
 
@@ -74,7 +80,9 @@ def test_f1_comparison_has_false_positives_and_explicit_calculation():
     assert "abaixo da variação" not in conclusion
     for name in ("estudo3_estrategias.tex", "conclusao.tex"):
         source = text(name)
-        assert "cálculo da tese: XGBoost e Random Forest entre os controles A e A0" in source
+        assert re.search(r"XGBoost e Random Forest entre os controles A(?: \([^)]*\))? e A0", source)
+        assert "cálculo da tese" in source or "calculada na tese" in source
+        assert "partição original do comparativo" in source
         assert r"\ref{sec:sensibilidade-qw1}" in source
 
 
@@ -148,3 +156,48 @@ def test_remaining_editorial_caveats_and_reductions():
     roteiro = (ROOT / "text/slides/roteiro_defesa.md").read_text(encoding="utf-8")
     assert "capitulo_dados.tex:115" not in roteiro
     assert "não identificada nos originais nem nos agregados" in roteiro
+
+
+def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
+    definitions = {
+        "O1": ("escore do OpenRecLink",),
+        "O2": ("nota final do CdR", "nota do CdR"),
+        "O3": ("probabilidade calibrada fora da amostra do classificador",
+               "probabilidade isotônica fora da amostra"),
+        "O4": ("probabilidade recalibrada de P",),
+    }
+    for name in ("conclusao.tex", "tese.tex"):
+        source = text(name)
+        for code in set(re.findall(r"\bO[1-4]\b", source)):
+            assert any(term in source for term in definitions[code]), (name, code)
+        for paragraph in source.split("\n\n"):
+            for code in set(re.findall(r"\bO[1-4]\b", paragraph)):
+                terms = definitions[code]
+                if code == "O3":
+                    # W10a usa a forma curta no cenário de erro da referência;
+                    # a definição completa fora da amostra continua obrigatória.
+                    terms += ("ordenação pela probabilidade calibrada (O3)",)
+                assert any(term in paragraph for term in terms), (name, code, paragraph)
+
+
+def test_macd_birth_and_identical_name_definition_agree_with_glossary():
+    study = next(paragraph for paragraph in text("estudo4_gzcmd.tex").split("\n\n")
+                 if paragraph.startswith("As Medidas Contínuas de Diferença de Datas"))
+    glossary = next(line for line in text("glossario.tex").splitlines()
+                    if line.startswith(r"\item[MACD]"))
+    for source in (study, glossary):
+        assert "atributos derivados das datas de nascimento" in source.lower()
+        assert "nome idêntico" in source
+        assert "Nome idêntico exige concordância dos fragmentos e proporção de fragmentos iguais de pelo menos 0,95" in source
+        assert "pelo menos cinco anos" in source
+        assert "Não incluem diferença" in source and "óbito e notificação" in source
+
+
+def test_haiku_default_reasoning_is_not_described_as_disabled():
+    study = text("estudo4_gzcmd.tex")
+    clause = study.split(r"Claude Haiku 5.5 utilizou \texttt{max\_tokens}=2500", 1)[1].split("Sua geração", 1)[0]
+    assert "na configuração padrão do modelo, sem configuração explícita de raciocínio" in clause
+    assert "a API aplica raciocínio adaptativo por padrão" in clause
+    assert "os registros não discriminam tokens de raciocínio" in clause
+    for obsolete in ("sem raciocínio", "sem thinking", "sem pensamento estendido"):
+        assert obsolete not in clause

@@ -4,7 +4,7 @@
 \label{tab:cv-5fold}
 \begin{tabular}{lccc}
 \toprule
-Configura\c{c}\~ao & F1 & Precis\~ao & Sensibilidade \\
+Configura\c{c}\~ao & F$_1$ & Precis\~ao & Sensibilidade \\
 \midrule
 XGBoost $\geq$0,5 & 0,924 $\pm$ 0,030 & 0,951 $\pm$ 0,036 & 0,901 $\pm$ 0,048 \\
 RF+SMOTE $\geq$0,5 & 0,916 $\pm$ 0,026 & 0,929 $\pm$ 0,022 & 0,903 $\pm$ 0,041 \\
@@ -19,4 +19,5 @@ Decisão de limiar $\geq$8 & 0,571 $\pm$ 0,057 & 0,649 $\pm$ 0,074 & 0,515 $\pm$
 \vspace{2pt}
 \par\small Nota: As linhas sem XGBoost provêm da análise original de estabilidade, com cinco partições estratificadas da base completa, sem cinco repetições. A linha de XGBoost foi importada do resumo QW1, com cinco repetições de cinco partições ($5 \times 5$, 25 avaliações) na parcela de treinamento de 70\% da base. São protocolos internos distintos, ambos com semente 42; sua reunião na tabela não estabelece comparação sob as mesmas partições nem validação externa. A validação cruzada descreve a variabilidade interna e não torna independente a avaliação dos limiares explorados no teste da ablação.
 \par\footnotesize Fonte: \path{data/cv_5fold_results.csv} e resumo histórico QW1 em \path{data/review2_qw1_resumo.csv}. Cinco partições da base com 61.696 potenciais pares e 247 vínculos na análise original; no QW1, 25 avaliações nos 70\% de treinamento. Os desvios-padrão não são erros-padrão de contrastes pareados. Não se destaca uma configuração.
+\par\footnotesize QW1: comparação de classificadores tabulares. Validação cruzada: avaliações com alternância das partições de treinamento e validação.
 \end{table}
