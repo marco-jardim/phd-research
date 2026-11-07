@@ -424,11 +424,11 @@ Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
 
 \begin{frame}{Contribuições e fluxo recomendado, a validar}
 \small
-\itens{\item Decomposição por PAR e curva de esforço: escolher a ordenação e o ponto de parada, sem alegar dominância universal
-\item Mesmo LLM: VPP de 16,0\% como aceitador; filtro com orçamento humano fixo (H=22 em uma réplica): VPN de 87,8\% em k=96 e 78,0\% em k=58; 9 de 22 descartados. Não distingue ancoragem de abstenção
-\item Política de quatro ações com registro de decisões, sem exercício independente de auditoria; CdR em Python, código aberto e \textit{benchmark} restrito}
+\itens{\item Decomposição por PAR e curva de esforço: ordenação e parada, sem dominância universal
+\item Mesmo LLM: aceitador, VPP 16,0\%; filtro com orçamento humano fixo (H=22 em uma réplica): VPN 87,8\% em k=96 e 78,0\% em k=58; 9 de 22 descartados. Não distingue ancoragem de abstenção
+\item Política de quatro ações, registro de decisões, sem auditoria independente; CdR em Python, código aberto e \textit{benchmark} restrito}
 \begin{block}{Recomendação final como hipótese a validar}
-Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probabilidade calibrada, no lugar do escore isolado; vantagem sobre a probabilidade não demonstrada, a validar com referência cega. Curva de esforço exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. Só avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos. Subamostragem: quadro 47.
+Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probabilidade calibrada, substituindo o escore isolado; vantagem sobre a probabilidade não demonstrada, a validar com referência cega. Exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. API externa; ambiente controlado não avaliado. Exige validação registrada em dados novos. Subamostragem: quadro 47.
 \end{block}
 \fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv; data/fusao\_robustez\_bootstrap.csv}
 \end{frame}
@@ -442,7 +442,7 @@ Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probab
 \end{frame}
 
 \appendix
-% 31 a 49: backup, fora dos 40 minutos
+% 31 a 50: backup, fora dos 40 minutos
 \begin{frame}{Backup: base inteira (comparação), síntese visual}
 \centering
 \includegraphics[width=\textwidth,height=.72\textheight,keepaspectratio]{../latex/figures/fig_cap8_cascata_v31.png}
@@ -710,7 +710,7 @@ Confirmação, 125 & 22 & 13 & 6 & 90,3\% & 10 de 23 \\
 \fonte[]{data/filtro\_llm.csv, linhas 5, 7 e 13; data/filtro\_llm\_concordancia\_modos.csv, linhas 18 e 19; data/filtro\_llm\_metadata.json; data/cenarios\_sensibilidade\_humana.csv}
 \end{frame}
 
-\begin{frame}{Backup: mecanismos, cenários humanos e registro interno}
+\begin{frame}{Backup: Protocolo da coorte nova (1/2)}
 \small
 PAR~=~2, aceitos / ao revisor humano / perdidos: arranjo e cascata sobre a base inteira.\par
 \begin{tabular}{lrrrrrr}
@@ -720,16 +720,20 @@ Modo & P & Cascata & P & Cascata & P & Cascata \\
 Vigilância & 4 & 10 & 19 & 17 & 13 & 9 \\
 Confirmação & 8 & 8 & 1 & 11 & 27 & 17 \\
 \end{tabular}
-\par\smallskip Horas são ordem de grandeza, não medida. Para 23 vínculos na vigilância, O1 requer 501 revisões, O3 125 e P 96 mais 344 pares LLM; a comparação com 2.156 revisões usa meta diferente.\par
-P perde 13 e 27 dos 36 PAR~=~2 (36,1\% e 75,0\%). Guarda/custo/LLM: 1/6/6 na vigilância; 1/22/4 na confirmação. $C_{FP}=5C_{FN}$ na confirmação, com 22 perdas por AUTO\_NONMATCH. Sem varredura de custos no arranjo.\par
+\par\smallskip Horas são ordem de grandeza, não medida. Vigilância, 23 vínculos: O1 requer 501 revisões; O3, 125; P, 96 mais 344 pares LLM. As 2.156 revisões usam outra meta.\par
+P perde 13 e 27 dos 36 PAR~=~2 (36,1\% e 75,0\%). Guarda/custo/LLM: 1/6/6 na vigilância; 1/22/4 na confirmação ($C_{FP}=5C_{FN}$, 22 perdas por AUTO\_NONMATCH). Sem varredura de custos no arranjo.\par
 
 \par\smallskip
-Sensibilidade humana: cenários de 95\%, 99\% e 100\%; não medida. Os cenários assumem especificidade humana perfeita, sem modelar FP humanos. Amplitudes máximas: 0,53 p.p. nas cargas reduzidas e 0,73 p.p. na revisão integral, limites por construção.\par\smallskip
-Registro interno 49 min antes da S3 (avaliação com os \textit{labels}): 01:22:17 e 02:11:52 UTC (metadados na versão \texttt{16d5876}), em 05/11/2026. \textit{Commit} da S3: 02:17:13 UTC.
+Sensibilidade humana não medida: cenários de 95\%, 99\% e 100\%, especificidade humana perfeita, sem modelar FP humanos. Amplitudes máximas, limites por construção: 0,53 p.p. nas cargas reduzidas; 0,73 p.p. na revisão integral.\par\smallskip
+Registro interno 49 min antes da S3 (avaliação com os \textit{labels}): 01:22:17 e 02:11:52 UTC (metadados na versão \texttt{16d5876}), 05/11/2026; \textit{commit} S3: 02:17:13 UTC.
+\fonte[]{data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_perdas\_mecanismo.csv, linhas 2 a 4 e 50 a 52; data/esforco\_arranjo.csv, linhas 2 e 6; data/cenarios\_sensibilidade\_humana.csv; data/comparador\_mesma\_carga.csv; estudo4\_gzcmd.tex, cronologia}
+\end{frame}
 
-\par\smallskip Critério prospectivo, não testado: em outra coorte, com ordenação e orçamento prévios e referência cega, a hipótese é refutada se O3 não atingir a recuperação de P com pelo menos 25\% menos revisões que O1 (limite inferior do IC 95\% entre partições predefinidas), nas duas metas. Margem fixada com os dados à vista (reduções de 75,0\% e 43,1\%). A nota do CdR (O2) fica fora: vence na confirmação (11 revisões), perde na vigilância (4.163). Ganho das quatro ações sobre duas ações (O3) exige diferença acima da amplitude entre réplicas (de 9 a 21 e de 21 a 29 perdas).
+\begin{frame}{Backup: Protocolo da coorte nova (2/2)}
+\small
+Critério prospectivo, não testado: outra coorte, ordenação e orçamento prévios, referência cega. Refuta-se a hipótese se O3 não atingir a recuperação de P com pelo menos 25\% menos revisões que O1 (limite inferior do IC 95\% entre partições predefinidas), nas duas metas. Margem fixada com os dados à vista (reduções de 75,0\% e 43,1\%). O2 fica fora: vence na confirmação (11 revisões), perde na vigilância (4.163). Ganho das quatro ações sobre duas ações (O3) exige diferença acima da amplitude entre réplicas (de 9 a 21 e de 21 a 29 perdas).
 
 \par\smallskip v4 candidata: comparação primária preservada; F4 e fila com contexto e MACD como secundárias pré-registradas para a coorte nova.
-\fonte[]{data/arranjo\_corte\_par2.csv, linhas 3, 7, 12 e 16; data/arranjo\_corte\_perdas\_mecanismo.csv, linhas 2 a 4 e 50 a 52; data/esforco\_arranjo.csv, linhas 2 e 6; data/cenarios\_sensibilidade\_humana.csv; data/comparador\_mesma\_carga.csv; estudo4\_gzcmd.tex, cronologia; gzcmd/M\_v4\_candidata.md}
+\fonte[]{data/comparador\_mesma\_carga.csv; data/robustez\_arranjo\_resumo.csv; gzcmd/M\_v4\_candidata.md}
 \end{frame}
 \end{document}

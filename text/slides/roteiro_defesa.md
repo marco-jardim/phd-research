@@ -1,6 +1,6 @@
 # Roteiro da defesa
 
-A apresentação tem 30 quadros principais e 19 de reserva, estes fora dos 40 minutos. Os tempos orientam a distribuição da fala, não representam duração medida.
+A apresentação tem 30 quadros principais e 20 de reserva, estes fora dos 40 minutos. Os tempos orientam a distribuição da fala, não representam duração medida.
 
 ## Cronometragem
 
@@ -169,8 +169,11 @@ A subamostragem é exploratória. Na isotônica, a mediana do topo 96 cai de 22 
 ### 48. Backup: filtro de NONMATCH
 Na vigilância, em k=96 são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra seis sem filtro, apenas sob H=22. VPN: 87,8% em k=96; 78,0% em k=58. Sensibilidade 59,1% (IC 38,7 a 76,7), com nove dos 22 vínculos descartados. Na unidade de custo, filtro 1.172,5 contra O3 796 com 96 revisões. Na confirmação, k=125 descarta 10 dos 23 vínculos. As decisões dos PAR=2 coincidem entre modos nesse topo; há seis diferenças nos não vínculos. Protocolo fixado antes dos desfechos, respostas de datas diferentes; exploração, não validação. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex:578`.
 
-### 49. Backup: mecanismos, cenários e registro interno
-Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos não medem seu erro nem modelam FP humanos. O registro interno antecede a S3 em 49 minutos. O critério prospectivo, não testado, exige outra coorte, referência cega e ordenação e orçamento prévios. A ordenação primária, pela probabilidade calibrada do classificador (O3), deve atingir a recuperação de P com pelo menos 25% menos revisões que a ordenação pelo escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. A margem foi fixada com os dados à vista: reduções de 75,0% e 43,1%. A nota final do CdR (O2) fica fora da hipótese. Ganho das quatro ações sobre duas ações (O3) exige diferença acima da amplitude entre réplicas (de 9 a 21 e de 21 a 29 perdas). Fontes: `data/comparador_mesma_carga.csv`; `data/robustez_arranjo_resumo.csv`.
+### 49. Backup: Protocolo da coorte nova (1/2)
+Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos não medem seu erro nem modelam FP humanos. O registro interno antecede a S3 em 49 minutos. Fontes: `data/arranjo_corte_perdas_mecanismo.csv`; `data/cenarios_sensibilidade_humana.csv`; `estudo4_gzcmd.tex`, cronologia.
+
+### 50. Backup: Protocolo da coorte nova (2/2)
+O critério prospectivo, não testado, exige outra coorte, referência cega e ordenação e orçamento prévios. A ordenação primária, pela probabilidade calibrada do classificador (O3), deve atingir a recuperação de P com pelo menos 25% menos revisões que a ordenação pelo escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. A margem foi fixada com os dados à vista: reduções de 75,0% e 43,1%. A nota final do CdR (O2) fica fora da hipótese. Ganho das quatro ações sobre duas ações (O3) exige diferença acima da amplitude entre réplicas (de 9 a 21 e de 21 a 29 perdas). A v4 candidata preserva a comparação primária; F4 e fila com contexto e MACD são secundárias pré-registradas para a coorte nova. Fontes: `data/comparador_mesma_carga.csv`; `data/robustez_arranjo_resumo.csv`; `gzcmd/M_v4_candidata.md`.
 
 ## Perguntas prováveis
 

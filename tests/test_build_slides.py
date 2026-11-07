@@ -94,7 +94,7 @@ def test_slide_structure_and_editorial_contract():
     assert main.count(r"\begin{frame}") == 30
     backup_frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", backup, re.S)
     assert backup_frames
-    assert len(backup_frames) == 19
+    assert len(backup_frames) == 20
     assert len(backup_frames) == backup.count(r"\begin{frame}")
     for frame in backup_frames:
         title = re.match(r"\{Backup:\s*([^{}]+)\}", frame)
@@ -1028,8 +1028,8 @@ def test_k3_hypothesis_and_prospective_margin_in_both_targets():
     assert "recuperação de P, orçamento fixado antes dos desfechos" in answer20
     answer43 = questions.split("### 43.")[1].split("### 44.")[0]
     assert "Não atingir refuta a hipótese" in answer43
-    speech49 = speech.split("### 49.")[1]
-    for text in (frames[48].replace(r"\%", "%"), answer43, speech49):
+    speech50 = speech.split("### 50.")[1].split("### ")[0]
+    for text in (frames[49].replace(r"\%", "%"), answer43, speech50):
         for fragment in ("não testado", "outra coorte", "referência cega", "25% menos revisões",
                          "limite inferior do IC 95%", "partições predefinidas", "nas duas metas",
                          "dados à vista", "amplitude entre réplicas"):

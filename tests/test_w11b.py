@@ -106,7 +106,9 @@ def test_new_answers_are_short_and_follow_style(number):
 def test_protocol_backup_mentions_v4_without_expanding_final_recommendation():
     frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}",
                         text("text/slides/defesa.tex"), re.S)
-    assert len(frames) == 49
+    assert len(frames) == 50
+    assert frames[-2].startswith("{Backup: Protocolo da coorte nova (1/2)}")
+    assert frames[-1].startswith("{Backup: Protocolo da coorte nova (2/2)}")
     assert "v4 candidata:" in frames[-1]
     assert "secundárias pré-registradas para a coorte nova" in frames[-1]
     assert len(frames[28].split(r"\fonte")[0].split()) <= 210
