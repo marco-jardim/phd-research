@@ -14,7 +14,7 @@ def test_abstracts_recommend_fusion_without_changing_hypothesis_or_limits():
         assert "OpenRecLink" in body
     for fragment in ("não da política de decisão", "fusão por posição recíproca",
                      "coorte nova com referência cega", "sua vantagem sobre a probabilidade calibrada não foi demonstrada",
-                     "nenhuma das estratégias de decisão comparadas domina"):
+                     "nenhuma das estratégias comparadas é melhor em todos os desfechos"):
         assert fragment in pt
     for fragment in ("not from the decision policy", "reciprocal rank fusion",
                      "new cohort with a blinded reference", "its advantage over the calibrated probability was not demonstrated",

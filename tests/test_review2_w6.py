@@ -80,7 +80,7 @@ def test_f1_comparison_has_false_positives_and_explicit_calculation():
     assert "abaixo da variação" not in conclusion
     for name in ("estudo3_estrategias.tex", "conclusao.tex"):
         source = text(name)
-        assert "XGBoost e Random Forest entre os controles A e A0" in source
+        assert re.search(r"XGBoost e Random Forest entre os controles A(?: \([^)]*\))? e A0", source)
         assert "cálculo da tese" in source or "calculada na tese" in source
         assert "partição original do comparativo" in source
         assert r"\ref{sec:sensibilidade-qw1}" in source

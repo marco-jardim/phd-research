@@ -74,7 +74,7 @@ def test_fp_position_and_loss_qualification_follow_sources():
 def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        for term in ('curva de esforço', 'decomposição por PAR', 'ancoragem', 'resultado negativo',
+        for term in ('curva de esforço', 'separação entre vínculos aceitos pelo corte e recuperados na revisão', 'ancoragem', 'resultado negativo',
                      'registro interno', 'orçamento humano'):
             assert term in text, (name, term)
         if name == 'capitulo1.tex':

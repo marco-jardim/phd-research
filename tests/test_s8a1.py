@@ -143,7 +143,7 @@ def test_hypothesis_bias_and_recommendation_are_not_claimed_as_validation():
     assert 'O LLM pode atuar somente como filtro' in conclusion
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in conclusion
     assert 'Os potenciais pares fora do orçamento não são examinados e devem ser registrados como não examinados' in conclusion
-    assert 'a regra de duas ações atribui-lhes não vínculo por custo' in conclusion
+    assert 'a regra de duas ações (revisar ou não vincular) atribui-lhes não vínculo por custo' in conclusion
     assert 'não equivale a óbito não notificado' in conclusion
     assert 'validação registrada em dados novos' in conclusion
 

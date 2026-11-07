@@ -29,11 +29,11 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     assert r"PAR é o \textit{label} da referência" in resumo
     assert "registered internally before evaluation" in abstract
     assert "preregistered" not in abstract
-    assert "Sob a mesma hipótese de revisor perfeito" in resumo
+    assert "Supondo revisor perfeito e o mesmo número de revisões humanas" in resumo
     assert "nove com 29 revisões" in resumo
     assert "the same perfect-reviewer assumption" in abstract
     assert "nine with 29 reviews" in abstract
-    assert "verificação seletiva" in resumo and "incorporação" in resumo
+    assert "verificação seletiva" in resumo.lower() and "incorporação" in resumo
     assert "Selective verification" in abstract and "incorporation" in abstract
     assert "intervalos sobrepostos" not in resumo and "intervals overlapping" not in abstract
     assert "16,0" in resumo and "16.0" in abstract

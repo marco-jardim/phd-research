@@ -310,7 +310,7 @@ def scientific_requirements(csv_loader=read_csv):
         ]
         short = "vig." if mode == "vigilancia" else "conf."
         requirements[46].append(
-            rf"P perde mais PAR~=~2 que o \textit{{a posteriori}}, {short} & " + " & ".join(fractions)
+            rf"P perde mais PAR~=~2 que o braço \textit{{a posteriori}}, {short} & " + " & ".join(fractions)
         )
     fp = one_row(robustness, tipo="desfecho", modo="vigilancia", bloco="P",
                  braco="P", faixa="TODAS", metrica="fp_abaixo")
