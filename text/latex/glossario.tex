@@ -29,7 +29,11 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Classificação] Tarefa de aprendizado supervisionado que atribui \textit{labels} discretos (vínculo ou não par) a instâncias com base em atributos preditores.
 
+\item[Claude Fable 5.1] Modelo de linguagem de grande porte da Anthropic, examinado como alternativa ao Claude Haiku 5.5 nos mesmos dossiês selecionados, sem alimentar as proporções da política.
+
 \item[Claude Haiku 5.5] Modelo de linguagem de grande porte desenvolvido pela Anthropic (Estados Unidos). Com as instruções v4 e dossiê sem as saídas do motor, é o revisor de referência da política v3.1 do GZ-CMD, e suas proporções de erro por faixa alimentam a política.
+
+\item[Claude Opus 5.5] Modelo de linguagem de grande porte da Anthropic, examinado como alternativa ao Claude Haiku 5.5 nos mesmos dossiês selecionados, sem alimentar as proporções da política.
 
 \item[Claude Sonnet 5.5] Modelo de linguagem de grande porte da Anthropic, de custo por \textit{token} superior ao do Claude Haiku 5.5, avaliado nas mesmas coortes e dossiês. Suas respostas não alimentam as proporções da política.
 
@@ -151,7 +155,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Tuberculose (TB)] Doença infecciosa de notificação compulsória utilizada neste trabalho como condição marcadora para avaliação do \textit{linkage} de bases de dados.
 
-\item[v4 candidata] Registro prospectivo das comparações para uma coorte nova: ordenação pela probabilidade calibrada frente ao escore do OpenRecLink como comparação primária, F4 e fila com contexto e MACD como secundárias. Não é uma política já validada nem substitui o perfil histórico ou o arranjo avaliado nesta tese (\path{gzcmd/M_v4_candidata.md}).
+\item[v4 candidata] Registro prospectivo das comparações para uma coorte nova: ordenação pela probabilidade calibrada frente ao escore do OpenRecLink como comparação primária, F4 (fusão por posição recíproca das ordenações pelo escore do OpenRecLink e pela probabilidade calibrada) e fila com contexto e MACD como secundárias. Não é uma política já validada nem substitui o perfil histórico ou o arranjo avaliado nesta tese (\path{gzcmd/M_v4_candidata.md}).
 
 \item[Validação cruzada] Técnica de avaliação que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ partições e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com variância reduzida (\textit{cross-validation}, CV).
 
