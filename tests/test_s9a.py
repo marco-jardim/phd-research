@@ -33,7 +33,8 @@ def test_dal_pozzolo_case_with_project_bibliography_style(tmp_path):
 def test_recommendation_does_not_fix_a_learned_probability_order():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        assert 'ordem decrescente de uma probabilidade ou escore' in text
+        assert 'fusão por posição recíproca' in text
+        assert 'referência cega' in text
         assert 'Se a ordenação usar probabilidade aprendida' in text
         expected = {
             'capitulo1.tex': 'a curva de esforço aplicada a este fluxo',

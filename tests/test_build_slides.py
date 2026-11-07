@@ -132,15 +132,15 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_eighty_three_short_answers():
+def test_script_has_eighty_six_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 83
+    assert len(answers) == 86
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 84)
+        range(1, 87)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
@@ -193,7 +193,7 @@ def scientific_requirements(csv_loader=read_csv):
               "recalibração, braços e avaliação", "desvios de protocolo", "não de generalização"],
         28: ["perdas são de cobertura",
              "os orçamentos são distintos", "95", "99", "100", "especificidade humana é assumida perfeita"],
-        29: ["Preservar o corte", "ordem decrescente", "uma probabilidade ou escore",
+        29: ["Preservar o corte", "ordem decrescente", "fusão RRF", "referência cega",
               "Subamostragem: quadro 47", "Revisor humano no topo até o orçamento", "restantes não examinados",
               "LLM apenas como filtro de NONMATCH", "nunca aceitando sozinho", "registro de decisões",
              "validação registrada em dados novos", "Decomposição por PAR", "curva de esforço",
@@ -780,7 +780,7 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
     for number in (29,):
         for text in (frames[number - 1], speech.split(f"### {number}.")[1].split("### ")[0]):
             assert "Preservar o corte" in text or "preservar o corte" in text
-            assert "probabilidade ou escore" in text
+            assert "fusão RRF" in text and "referência cega" in text
             assert "curva de esforço" in text and "orçamento humano" in text
             assert "na vigilância, nenhuma ordenação domina" in text.lower()
             assert "na confirmação, o2 domina fracamente p" in text.lower()
@@ -945,7 +945,7 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
     assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
     assert "### Rastreabilidade dos números do arranjo" in source
-    assert "São 83 respostas, com no máximo 70 palavras cada" in source
+    assert "São 86 respostas, com no máximo 70 palavras cada" in source
     for forbidden in ("Verificação técnica do build oficial", "PDFs existentes não representam", "hashes a atualizar", "revisão pela orientadora foi dispensada"):
         assert forbidden not in source
     frames = slide_frames()
