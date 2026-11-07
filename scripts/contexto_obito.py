@@ -220,7 +220,8 @@ def record_estimate_stop(out, spec, estimate, *, report_path=None):
 
 
 def write_report(table, metadata):
-    wide = table.pivot(index="variante", columns="metrica", values="valor").loc[list(VARIANTS)]
+    available = [name for name in VARIANTS if name in set(table.variante)]
+    wide = table.pivot(index="variante", columns="metrica", values="valor").loc[available]
     lines = ["# B: atributos de contexto por óbito", "", "## Delimitação", "",
              "Análise exploratória post hoc, em CPU, sem LLM e sem ajuste de hiperparâmetros. "
              "Não altera a hipótese O3 versus O1 nem sua margem de 25%. Revisor perfeito, "
@@ -245,6 +246,9 @@ def write_report(table, metadata):
         lines.append("| " + name + " | " + " | ".join(cells) + " |")
     lines += ["", "## Leitura curta", ""]
     for before, after in (("O3", "O3_contexto"), ("O3_MACD", "O3_contexto_MACD"), ("F4", "F4_contexto")):
+        if after not in wide.index:
+            lines.append(f"- {after}: não executada, conforme a regra de projeção do orçamento de CPU.")
+            continue
         a, b = wide.loc[before], wide.loc[after]
         top = "; ".join(f"k={k}: {int(a[f'par2_top_{k}'])} para {int(b[f'par2_top_{k}'])}" for k in (17, 58, 96, 125))
         tail = "; ".join(f"{t} PAR=2: {int(a[f'revisoes_{t}']):,} para {int(b[f'revisoes_{t}']):,}".replace(",", ".") for t in TARGETS)
@@ -260,62 +264,110 @@ def write_report(table, metadata):
               "## Reprodução e proveniência", "",
               "Mesmas funções importadas de sensibilidade_o3_macd e fusao_filas, partições aninhadas "
               "5×5 por REFREC, seed 42, seeds internas 43 a 47 e calibração isotônica. "
-              "O controle foi reajustado e validado antes das variantes. O1, O3, O3+MACD e F4 "
-              "reproduziram as curvas completas existentes; resumos foram comparados aos dois CSVs de referência.", "",
+              "O controle foi reajustado e validado antes das variantes. O1, O3 e F4 "
+              "reproduziram as curvas completas existentes. O3+MACD foi importada dos agregados "
+              "de referência, sem reajuste; todos os resumos foram comparados aos dois CSVs de referência.", "",
               "```json", json.dumps(metadata["control_reproduction"], indent=2), "```", "",
               "Artefatos: data/contexto_obito.csv, data/contexto_obito_curva.csv, "
               "data/contexto_obito_spec.json e data/contexto_obito_metadata.json. "
               "Somente agregados, sem identificadores ou valores individuais. A especificação foi gravada "
               "antes do carregamento dos dados e dos fits; isso não constitui pré-registro.", "",
               "Comando: `" + metadata["command"] + "`", "",
-              f"Estimativa conservadora: {metadata['estimate']['estimated_minutes']:.2f} min; "
-              f"tempo real: {metadata['elapsed_seconds']:.1f} s. Hashes, versões e parâmetros nos metadados."]
+              f"Estimativa conservadora de parede: {metadata['estimate']['estimated_minutes']:.2f} min; "
+              f"CPU projetada: {metadata['estimate']['projected_total_cpu_minutes']:.2f} min. "
+              f"Tempo real de parede: {metadata['elapsed_seconds']:.1f} s; "
+              f"CPU real: {metadata['cpu_seconds']:.1f} s; teto autorizado: {metadata['cpu_limit_minutes']:.0f} min.", "",
+              "Ordem: controle O3, O3+contexto, checkpoint agregado com F4', e somente depois "
+              "O3+contexto+MACD quando couber no orçamento. O checkpoint da primeira variante consta "
+              "de data/contexto_obito_etapa1.json. Hashes, versões, tempos por variante e decisão "
+              "de orçamento constam dos metadados."]
     path = ROOT / "docs/plans/RELATORIO_B_CONTEXTO_2026-11-07.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
-def generate(data_root=ROOT, out=ROOT / "data", *, estimate_only=False):
+def estimate_plan(data, cpu_limit_minutes):
+    """Pilotos originais, com medida explícita de CPU de cada matriz."""
+    wall, cpu = {}, {}
+    for name, x in data["x"].items():
+        start = time.process_time()
+        original = estimate_minutes({"x": {name: x}, "y": data["y"], "groups": data["groups"]})
+        cpu[name] = time.process_time() - start
+        wall[name] = original["pilot_seconds"][0]
+    planned = ("O3_controle", "O3_contexto", "O3_contexto_MACD")
+    projected_cpu = sum(cpu[name] for name in planned) * 30 * 3 / 60 + sum(cpu.values()) / 60
+    return {"pilot_seconds": list(wall.values()), "pilot_wall_by_matrix": wall,
+            "pilot_cpu_by_matrix": cpu, "pilot_fits": len(cpu), "model_fits": 90,
+            "safety_factor": 3, "estimated_minutes": max(wall.values()) * 90 * 3 / 60,
+            "projected_total_cpu_minutes": projected_cpu,
+            "include_context_macd": projected_cpu <= cpu_limit_minutes}
+
+
+def stored_macd():
+    """Referência agregada já calculada, sem refit nem cache de valores por par."""
+    reference = pd.read_csv(ROOT / "data/sensibilidade_o3_macd.csv")
+    fusion = pd.read_csv(ROOT / "data/fusao_filas.csv")
+    values = reference.loc[reference.variante.eq("O3_MACD")].set_index("metrica").valor.to_dict()
+    values["par2_top_125"] = float(fusion.loc[
+        fusion.fila.eq("O3_MACD") & fusion.metrica.eq("par2_top_125"), "media"].item())
+    rows = pd.DataFrame([{"variante": "O3_MACD", "metrica": m, "valor": values[m]} for m in METRICS])
+    curves = pd.read_csv(ROOT / "data/fusao_filas_curva.csv")
+    curves = curves.loc[curves.fila.eq("O3_MACD"), ["fila", "k", "par2_acumulados"]].rename(columns={"fila": "variante"})
+    return rows, curves
+
+
+def save_outputs(out, table, curves, metadata):
+    table.to_csv(out / f"{PREFIX}.csv", index=False, lineterminator="\n")
+    curves.to_csv(out / f"{PREFIX}_curva.csv", index=False, lineterminator="\n")
+    metadata["output_sha256"] = {f"{PREFIX}{suffix}": sha256(out / f"{PREFIX}{suffix}")
+                                 for suffix in (".csv", "_curva.csv", "_spec.json")}
+    if (out / f"{PREFIX}_etapa1.json").exists():
+        metadata["output_sha256"][f"{PREFIX}_etapa1.json"] = sha256(out / f"{PREFIX}_etapa1.json")
+    write_json(out / f"{PREFIX}_metadata.json", metadata)
+
+
+def generate(data_root=ROOT, out=ROOT / "data", *, estimate_only=False, cpu_limit_minutes=45):
     import sklearn
     import xgboost
 
     start = time.perf_counter()
+    cpu_start = time.process_time()
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
-    spec = {"fixed_before_data_and_fits_utc": datetime.now(timezone.utc).isoformat(),
-            "registered": False, "definition": DEFINITION}
-    write_json(out / f"{PREFIX}_spec.json", spec)
+    spec_path = out / f"{PREFIX}_spec.json"
+    if spec_path.exists():
+        spec = json.loads(spec_path.read_text(encoding="utf-8"))
+        if spec["definition"] != DEFINITION:
+            raise RuntimeError("Especificação anterior divergiu; não substituir após observar resultados")
+    else:
+        spec = {"fixed_before_data_and_fits_utc": datetime.now(timezone.utc).isoformat(),
+                "registered": False, "definition": DEFINITION}
+        write_json(spec_path, spec)
     data = prepare(data_root)
     expected = data["original_meta"]["fingerprint"]
     if sklearn.__version__ != expected["sklearn"] or xgboost.__version__ != expected["xgboost"]:
         raise RuntimeError("Versões divergem de O3 original")
     augment(data)
-    estimate = estimate_minutes(data)
-    # A função original estima 60 fits; aqui são quatro matrizes, 120 fits.
-    estimate.update(model_fits=120, pilot_fits=4,
-                    estimated_minutes=max(estimate["pilot_seconds"]) * 120 * 3 / 60)
+    estimate = estimate_plan(data, cpu_limit_minutes)
     print("Estimativa antes da execução completa: " + json.dumps(estimate), flush=True)
-    if estimate["estimated_minutes"] > 45:
-        record_estimate_stop(out, spec, estimate)
-        raise RuntimeError("Estimativa superior a 45 minutos; execução interrompida")
     if estimate_only:
         return None
+    timings = {}
+    t, c = time.perf_counter(), time.process_time()
     p, folds, reproduction = strict_control(data)
+    timings["O3_controle"] = {"wall_seconds": time.perf_counter() - t, "cpu_seconds": time.process_time() - c}
     scores = {"O1": numeric(data["raw"].SCORE).to_numpy(), "O3": p}
-    for variant in ("O3_MACD", "O3_contexto", "O3_contexto_MACD"):
-        t = time.perf_counter()
-        scores[variant], current_folds = nested_oof_probabilities(
-            data["x"][variant], data["y"], split_by="refrec", groups=data["groups"])
-        if not np.array_equal(folds, current_folds):
-            raise ValueError("Partições das variantes divergem")
-        print(f"{variant}: {time.perf_counter() - t:.1f} s", flush=True)
-        if variant == "O3_MACD":
-            scores["F4"] = fused_scores(data["ids"], data["below"], [scores["O1"], p])
-            baseline_table, baseline_curves = summarize(data, scores)
-            references = verify_references(baseline_table, baseline_curves)
-            print("O1/O3/O3_MACD/F4: curvas e referências reproduzidas antes das variantes.", flush=True)
-    scores["F4_contexto"] = fused_scores(data["ids"], data["below"], [scores["O1"], scores["O3_contexto"]])
-    table, curves = summarize(data, {name: scores[name] for name in VARIANTS})
+    scores["F4"] = fused_scores(data["ids"], data["below"], [scores["O1"], p])
+    macd_table, macd_curves = stored_macd()
+
+    def summarize_with_reference():
+        table, curves = summarize(data, scores)
+        return (pd.concat([table, macd_table], ignore_index=True),
+                pd.concat([curves, macd_curves], ignore_index=True))
+
+    baseline_table, baseline_curves = summarize_with_reference()
+    references = verify_references(baseline_table, baseline_curves)
+    print("O1/O3/F4 reproduzidos; referência agregada O3_MACD verificada, sem refit.", flush=True)
     inputs = ("data/COMPARADORSEMIDENT.csv", "data/pcal_ml_oof.csv", "data/pcal_ml_oof.json")
     refs = ("data/sensibilidade_o3_macd.csv", "data/fusao_filas.csv", "data/fusao_filas_curva.csv",
             "data/ablation_comprec_allowlist_metadata.json")
@@ -323,7 +375,7 @@ def generate(data_root=ROOT, out=ROOT / "data", *, estimate_only=False):
              "scripts/fusao_filas.py", "scripts/comparador_mesma_carga.py", "gzcmd/ml_oof.py",
              "gzcmd/loader.py", "gzcmd/arranjo_corte.py")
     metadata = {
-        "status": "completed",
+        "status": "control_verified",
         "analysis": "B_contexto_obito_exploratory_post_hoc", "registered": False,
         "date_utc": datetime.now(timezone.utc).isoformat(), "cpu_only": True, "llm_calls": 0,
         "definition": DEFINITION, "specification": spec,
@@ -344,14 +396,58 @@ def generate(data_root=ROOT, out=ROOT / "data", *, estimate_only=False):
                          **{n: sha256(ROOT / n) for n in refs}},
         "code_sha256": {n: sha256(ROOT / n) for n in codes},
         "estimate": estimate, "elapsed_seconds": time.perf_counter() - start,
+        "cpu_seconds": time.process_time() - cpu_start, "cpu_limit_minutes": cpu_limit_minutes,
+        "runtime_authorization": "Continuação autorizada além de 45 min, teto de 150 min de CPU",
+        "timings": timings, "execution_order": [], "checkpoints": [],
+        "reference_macd": "stored aggregate metrics and curve, no refit",
         "command": " ".join([sys.executable, *sys.argv]),
         "limitation": "Verification bias favors O1; full-universe unlabeled context; COMPREC can span REFREC folds; post hoc.",
     }
-    table.to_csv(out / f"{PREFIX}.csv", index=False, lineterminator="\n")
-    curves.to_csv(out / f"{PREFIX}_curva.csv", index=False, lineterminator="\n")
-    metadata["output_sha256"] = {f"{PREFIX}{suffix}": sha256(out / f"{PREFIX}{suffix}")
-                                 for suffix in (".csv", "_curva.csv", "_spec.json")}
-    write_json(out / f"{PREFIX}_metadata.json", metadata)
+    reserve = max(estimate["pilot_cpu_by_matrix"].values()) * 3
+
+    def check_budget(*_):
+        if time.process_time() - cpu_start + reserve >= cpu_limit_minutes * 60:
+            raise RuntimeError("Orçamento de CPU esgotado; checkpoint anterior preservado")
+
+    for variant in ("O3_contexto", "O3_contexto_MACD"):
+        if variant == "O3_contexto_MACD":
+            projection = ((time.process_time() - cpu_start)
+                          + estimate["pilot_cpu_by_matrix"][variant] * 30 * 3) / 60
+            metadata["context_macd_projection_cpu_minutes"] = projection
+            if not estimate["include_context_macd"] or projection > cpu_limit_minutes:
+                metadata["skipped_variants"] = {variant: "Projeção total superior ao teto de CPU"}
+                break
+        check_budget()
+        metadata["execution_order"].append({"variant": variant, "started_utc": datetime.now(timezone.utc).isoformat()})
+        t, c = time.perf_counter(), time.process_time()
+
+        def budgeted_classifier(y, seed):
+            check_budget()
+            return _classifier(y, seed)
+
+        scores[variant], current_folds = nested_oof_probabilities(
+            data["x"][variant], data["y"], split_by="refrec", groups=data["groups"],
+            model_factory=budgeted_classifier, audit=check_budget)
+        if not np.array_equal(folds, current_folds):
+            raise ValueError("Partições das variantes divergem")
+        timings[variant] = {"wall_seconds": time.perf_counter() - t, "cpu_seconds": time.process_time() - c}
+        if variant == "O3_contexto":
+            scores["F4_contexto"] = fused_scores(data["ids"], data["below"], [scores["O1"], scores[variant]])
+        table, curves = summarize_with_reference()
+        metadata.update(status="partial_context_completed", date_utc=datetime.now(timezone.utc).isoformat(),
+                        elapsed_seconds=time.perf_counter() - start, cpu_seconds=time.process_time() - cpu_start)
+        if variant == "O3_contexto":
+            checkpoint = {"completed_utc": metadata["date_utc"], "variant": variant,
+                          "control_reproduction": reproduction, "metrics": table.to_dict(orient="records"),
+                          "cpu_seconds": metadata["cpu_seconds"], "elapsed_seconds": metadata["elapsed_seconds"]}
+            write_json(out / f"{PREFIX}_etapa1.json", checkpoint)
+            metadata["checkpoints"].append({"path": f"{PREFIX}_etapa1.json", "completed_utc": checkpoint["completed_utc"]})
+        save_outputs(out, table, curves, metadata)
+        print(f"Checkpoint {variant}: parede={timings[variant]['wall_seconds']:.1f} s; "
+              f"CPU={timings[variant]['cpu_seconds']:.1f} s", flush=True)
+    metadata.update(status="completed", date_utc=datetime.now(timezone.utc).isoformat(),
+                    elapsed_seconds=time.perf_counter() - start, cpu_seconds=time.process_time() - cpu_start)
+    save_outputs(out, table, curves, metadata)
     write_report(table, metadata)
     print(table.pivot(index="variante", columns="metrica", values="valor").to_string(), flush=True)
     print(f"Concluído em {metadata['elapsed_seconds']:.1f} s", flush=True)
@@ -363,5 +459,6 @@ if __name__ == "__main__":
     parser.add_argument("--data-root", type=Path, default=ROOT)
     parser.add_argument("--out", type=Path, default=ROOT / "data")
     parser.add_argument("--estimate-only", action="store_true")
+    parser.add_argument("--cpu-limit-minutes", type=float, default=45)
     args = parser.parse_args()
-    generate(args.data_root, args.out, estimate_only=args.estimate_only)
+    generate(args.data_root, args.out, estimate_only=args.estimate_only, cpu_limit_minutes=args.cpu_limit_minutes)

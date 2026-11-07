@@ -127,7 +127,8 @@ def test_fixed_specification_features_and_portable_output_contracts():
     curve = pd.read_csv(root / "data/contexto_obito_curva.csv")
     assert list(table) == ["variante", "metrica", "valor"]
     assert list(curve) == ["variante", "k", "par2_acumulados"]
-    assert set(table.variante) == set(analysis.VARIANTS)
+    expected_variants = set(analysis.VARIANTS) - set(meta.get("skipped_variants", {}))
+    assert set(table.variante) == expected_variants
     assert not table.duplicated(["variante", "metrica"]).any()
     assert meta["seed"] == 42 and meta["inner_seeds"] == [43, 44, 45, 46, 47]
     assert meta["split_by"] == "refrec" and meta["folds"] == 5
@@ -135,11 +136,22 @@ def test_fixed_specification_features_and_portable_output_contracts():
     assert meta["control_reproduction"]["folds_identical"]
     assert meta["control_reproduction"]["queues_identical"]
     assert meta["baseline_reproduction"]["passed"]
-    assert meta["estimate"]["model_fits"] == 120 and meta["estimate"]["estimated_minutes"] <= 45
+    assert meta["estimate"]["model_fits"] == 90
+    assert meta["cpu_seconds"] <= meta["cpu_limit_minutes"] * 60
+    assert meta["reference_macd"].startswith("stored aggregate")
+    assert meta["execution_order"][0]["variant"] == "O3_contexto"
+    checkpoint = json.loads((root / "data/contexto_obito_etapa1.json").read_text(encoding="utf-8"))
+    assert checkpoint["variant"] == "O3_contexto"
+    assert "O3_contexto_MACD" not in {r["variante"] for r in checkpoint["metrics"]}
+    assert "F4_contexto" in {r["variante"] for r in checkpoint["metrics"]}
+    if "O3_contexto_MACD" not in meta.get("skipped_variants", {}):
+        assert checkpoint["completed_utc"] < meta["execution_order"][1]["started_utc"]
+    else:
+        assert not meta["estimate"]["include_context_macd"] or meta["context_macd_projection_cpu_minutes"] > meta["cpu_limit_minutes"]
     assert [len(meta["features"][n]) for n in ("O3_controle", "O3_MACD", "O3_contexto", "O3_contexto_MACD")] == [30, 39, 40, 49]
     assert meta["features"]["O3_contexto"] == meta["features"]["O3_controle"] + list(analysis.CONTEXT_FEATURES)
     assert meta["features"]["O3_contexto_MACD"] == meta["features"]["O3_MACD"] + list(analysis.CONTEXT_FEATURES)
-    for name in analysis.VARIANTS:
+    for name in expected_variants:
         values = table.loc[table.variante.eq(name)].set_index("metrica").valor
         counts = curve.loc[curve.variante.eq(name)].sort_values("k")
         assert set(values.index) == set(analysis.METRICS)
@@ -167,3 +179,17 @@ def test_runtime_stop_records_no_fabricated_metrics(tmp_path):
     assert not (tmp_path / "contexto_obito_curva.csv").exists()
     report = (tmp_path / "report.md").read_text(encoding="utf-8")
     assert "Não calculado" in report and "48,000000" in report
+
+
+@pytest.mark.parametrize("limit,include_macd", [(30, False), (40, True)])
+def test_cpu_projection_preserves_priority_context_before_optional_macd(monkeypatch, limit, include_macd):
+    clocks = iter([0., 2., 2., 6., 6., 16., 16., 26.])
+    monkeypatch.setattr(analysis.time, "process_time", lambda: next(clocks))
+    monkeypatch.setattr(analysis, "estimate_minutes", lambda data: {"pilot_seconds": [2.]})
+    data = {"x": {n: pd.DataFrame() for n in ("O3_controle", "O3_MACD", "O3_contexto", "O3_contexto_MACD")},
+            "y": np.array([0, 1]), "groups": np.array(["a", "b"])}
+    plan = analysis.estimate_plan(data, limit)
+    assert plan["model_fits"] == 90
+    assert plan["projected_total_cpu_minutes"] == pytest.approx((2 + 10 + 10) * 30 * 3 / 60 + 26 / 60)
+    assert plan["include_context_macd"] == include_macd
+    assert list(plan["pilot_cpu_by_matrix"]) == list(data["x"])
