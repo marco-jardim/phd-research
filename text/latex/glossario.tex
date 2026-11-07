@@ -5,6 +5,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \begin{description}
 
+\item[Ablação restrita] Comparação com e sem MACD (medidas contínuas de diferença de datas), mantendo como atributos apenas os subescores do CdR, a nota final e, no braço correspondente, as MACD. Exclui escore do OpenRecLink, identificadores numéricos e encerramento por óbito (Seção~\ref{sec:e4-exp1}).
+
 \item[A3] Análise de sensibilidade do arranjo sequencial que restringe também o ajuste do classificador ao treinamento abaixo do corte do OpenRecLink.
 
 \item[Acurácia] Proporção de classificações corretas (verdadeiros positivos e verdadeiros negativos) em relação ao total de pares avaliados.
@@ -21,11 +23,19 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Blocagem] Estratégia de redução do espaço de comparação no \textit{linkage}, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a comparação exaustiva de todos os pares possíveis.
 
+\item[Braço \textit{a posteriori}] Cascata publicada aplicada abaixo do corte do OpenRecLink, sem recalibração. É comparação exploratória, conhecida antes do registro interno do arranjo sequencial, não outro comparador de registros.
+
 \item[Brier] Escore de Brier: média do erro quadrático entre a probabilidade estimada e a classe binária de referência; valores menores indicam melhor acurácia probabilística.
+
+\item[C e CM] Ordenações exploratórias pela probabilidade calibrada do classificador acrescido de atributos de contexto por óbito e por registro do Sinan: C sem MACD e CM com MACD (medidas contínuas de diferença de datas). Os identificadores são apenas chaves de agrupamento, não atributos preditores (\path{data/contexto_obito_spec.json}).
+
+\item[C1 a C4 (pontos de virada)] Conclusões examinadas nos cenários de erro da referência: C1, VPP do LLM inferior à metade na vigilância; C2, manutenção literal das perdas de P (arranjo que preserva o corte e decide abaixo dele) nos dois modos; C3, manutenção da margem de redução de revisões da ordenação pela probabilidade calibrada do classificador (O3) frente ao escore do OpenRecLink (O1) na meta de vigilância; C4, vantagem da fusão dessas duas filas (F4) frente a O1 nas metas de confirmação e de recuperação integral. O ponto de virada é a primeira mudança na grade de cenários, não estimativa do erro real (\path{data/vies_referencia_metadata.json}).
 
 \item[Calibração isotônica] Calibração por regressão monotônica não paramétrica das probabilidades de um classificador. No GZ-CMD, é ajustada fora da amostra (\textit{out-of-fold}), com partições agrupadas por registro de referência (REFREC), e é a referência de calibração da política v3.1.
 
 \item[Cascata de decisão] Arquitetura de processamento em múltiplas etapas de custo crescente, na qual filtros computacionalmente baratos eliminam a maior parcela do volume nos estágios iniciais, reservando recursos onerosos para o subconjunto residual de maior incerteza.
+
+\item[Cenários A a D e controle A0] Controle da comparação de classificadores tabulares (QW1): A e B usam partição por linha; C e D, partição agrupada por REFREC (registro do SIM). A e C incluem indicadores de encerramento por óbito; B e D os excluem. A0 preserva a partição original do QW1, com os indicadores. Não são os braços A3 e B1 do arranjo sequencial (Apêndice~\ref{sec:sensibilidade-qw1}).
 
 \item[Classificação] Tarefa de aprendizado supervisionado que atribui \textit{labels} discretos (vínculo ou não par) a instâncias com base em atributos preditores.
 
@@ -69,6 +79,10 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[F$_1$-Score] Média harmônica entre precisão e sensibilidade, utilizada como métrica-síntese do desempenho de classificadores.
 
+\item[F1 a F4 (fusões de filas)] F1 intercala O3 (probabilidade calibrada fora da amostra) e O1 (escore do OpenRecLink); F2 intercala essas filas com O3 acrescida de MACD (medidas contínuas de diferença de datas). F3 combina as três por posição recíproca; F4 combina somente O1 e O3 por posição recíproca. Não se confundem com a métrica F$_1$-Score (\path{data/fusao_filas_metadata.json}).
+
+\item[Fluxo Modal] Execução em nuvem que acrescentou o XGBoost à ablação de classificadores e regras, distinta do protocolo QW1 de comparação de classificadores tabulares (Capítulo~\ref{cap:estudo1}).
+
 \item[\textit{Framework}] Estrutura metodológica para organização reprodutível de componentes, etapas e critérios de decisão em um processo analítico.
 
 \item[Fronteira de Pareto] Conjunto de configurações para as quais não é possível melhorar uma métrica (ex.: sensibilidade) sem degradar outra (ex.: precisão). Nesta tese, é uma análise exploratória, que não indica uma melhor combinação única de classificador e estratégia de reamostragem.
@@ -101,11 +115,19 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[M8] Auditoria da blocagem que conferiu, no extrato, o número de linhas, os potenciais pares distintos e a repetição de pares entre passos (Seção~\ref{sec:blocagem-rendimento}).
 
+\item[Meta de recuperação] Quantidade de vínculos que se pretende recuperar pela revisão dos primeiros potenciais pares de uma fila. Na curva de esforço, determina o número mínimo de revisões necessário, sob a hipótese de revisor perfeito; não é orçamento humano.
+
 \item[MACD] Medidas Contínuas de Diferença de Datas. Atributos derivados das datas de nascimento: diferença absoluta em anos limitada a 20, coincidência de ano, mês e dia e sua média, proximidade de até 30 e de até 7 dias, interação entre nome idêntico e diferença de pelo menos cinco anos, e produto entre nome idêntico e diferença limitada em anos. Nome idêntico exige concordância dos fragmentos e proporção de fragmentos iguais de pelo menos 0,95. Não incluem diferenças entre óbito e notificação.
 
 \item[\texttt{MATCH}, \texttt{NONMATCH}, \texttt{UNSURE} e \texttt{DEFERRED}] Saídas da revisão assistida e do motor. \texttt{MATCH}: o revisor LLM classifica o potencial par como vínculo; \texttt{NONMATCH}: como não vínculo; \texttt{UNSURE}: declara a evidência inconclusiva, e o par é encaminhado ao revisor humano. \texttt{DEFERRED} é a marcação do pacote para potencial par encaminhado à revisão humana, não uma decisão final.
 
 \item[O1 a O4] Ordenações exploratórias dos potenciais pares abaixo do corte: O1 pelo escore do OpenRecLink, O2 pela nota final do CdR, O3 pela probabilidade calibrada OOF do classificador e O4 pela probabilidade recalibrada de P, arranjo que preserva o corte e decide abaixo dele. Não se confundem com as consultas de busca bibliográfica, identificadas por OA1 a OA5 no Apêndice~\ref{ap:protocolo-busca}.
+
+\item[NB01] Comparação inicial de classificadores em partição única de treinamento e teste, anterior ao protocolo QW1 (Capítulo~\ref{cap:estudo2}).
+
+\item[NB02] Experimento da estratégia de máxima sensibilidade, com pesos de classe e limiares orientados à recuperação de vínculos (Capítulo~\ref{cap:estudo3}).
+
+\item[NB03] Experimento da estratégia de máxima precisão, com regras e combinação de classificadores orientadas ao valor preditivo positivo (Capítulo~\ref{cap:estudo3}).
 
 \item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli como sucessor do RecLink \cite{Camargo2000reclink}. Nesta tese, designa a versão original, em C, usada no \textit{linkage} de origem realizado no LinkDataPop; a tese não o executou.
 
@@ -137,11 +159,17 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Regras de guarda] Filtros determinísticos aplicados antes da comparação de custos. Na versão histórica v3, incluíam filtro temporal (diferença entre óbito e diagnóstico superior a 180 dias), nota final $\geq 10$ (com exigências de consistência) ou $<3$ e filtro de homonímia. Na v3.1, são apenas a nota final $<5$ (não-vínculo) e a nota $\geq 9$ com probabilidade calibrada $\geq 0{,}9$ (vínculo).
 
+\item[Regra de duas ações] Decisão entre revisar e não vincular. Sob orçamento humano fixo e revisor perfeito, revisam-se os potenciais pares prioritários; os restantes recebem não vínculo por custo, sem que isso demonstre ausência de vínculo (Proposição~\ref{prop:duas-acoes-orcamento}).
+
 \item[Relacionamento de registros] Ver \textit{Linkage}.
 
 \item[Resultado negativo com registro interno] Arranjo P, com registro interno anterior à avaliação, sem hipótese direcional nem critério de sucesso registrados; sua leitura como resultado negativo frente à referência operacional é posterior à etapa S3, e o registro não protege a escolha posterior do enquadramento nem transforma comparações exploratórias em confirmatórias.
 
 \item[Revisão clerical] Revisão manual de potenciais pares por revisor humano, que decide se correspondem à mesma pessoa. No \textit{linkage} de origem, foi feita por revisora única na região abaixo do corte do OpenRecLink e originou os PAR~=~2.
+
+\item[Revisor de referência] Modelo de linguagem adotado para estimar as proporções de erro que alimentam a política: Claude Haiku 5.5, com instruções v4 e dossiê sem as saídas do motor. Não é revisor humano nem referência operacional independente.
+
+\item[Revisor perfeito] Hipótese de que toda revisão simulada recupera o vínculo quando existente e não produz falso positivo. É limite hipotético de recuperação, não desempenho observado de revisor humano ou de modelo de linguagem.
 
 \item[S1 a S3] Etapas da avaliação do arranjo sequencial no Estudo~4: S1, simulação sem chamadas a API; S2, chamadas ao LLM; S3, avaliação com os \textit{labels}. Não se confundem com as consultas SC1 a SC3 à SciELO do Apêndice~\ref{ap:protocolo-busca}.
 
@@ -158,6 +186,8 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 \item[v4 candidata] Registro prospectivo das comparações para uma coorte nova: ordenação pela probabilidade calibrada frente ao escore do OpenRecLink como comparação primária, F4 (fusão por posição recíproca das ordenações pelo escore do OpenRecLink e pela probabilidade calibrada) e fila com contexto e MACD como secundárias. Não é uma política já validada nem substitui o perfil histórico ou o arranjo avaliado nesta tese (\path{gzcmd/M_v4_candidata.md}).
 
 \item[Validação cruzada] Técnica de avaliação que particiona os dados em $k$ subconjuntos (\textit{folds}), treinando o modelo em $k{-}1$ partições e avaliando na restante, repetindo o processo $k$ vezes para obter estimativas de desempenho com variância reduzida (\textit{cross-validation}, CV).
+
+\item[V1 a V4 (estratos de vigilância)] Subconjuntos da comparação de modelos de linguagem: V1, aceitações históricas do Claude Haiku 5.5; V2, vínculos PAR~=~2 não aceitos por ele; V3, potenciais pares PAR~=~0 não aceitos pelo Haiku e aceitos pelo Claude Sonnet 5.5; V4, amostra dos demais potenciais pares. Não se confundem com versões das instruções ou da política (Seção~\ref{sec:e4-tamanho-modelo}).
 
 \item[Viés de incorporação] Distorção possível quando as evidências avaliadas participam da construção da própria referência. Não se confunde com o uso de \textit{labels} de treinamento no ajuste supervisionado; sua magnitude não foi estimada nesta tese.
 
