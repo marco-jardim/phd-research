@@ -132,15 +132,15 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_eighty_short_answers():
+def test_script_has_eighty_three_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 80
+    assert len(answers) == 83
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 81)
+        range(1, 84)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
@@ -945,7 +945,7 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
     assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
     assert "### Rastreabilidade dos números do arranjo" in source
-    assert "São 80 respostas, com no máximo 70 palavras cada" in source
+    assert "São 83 respostas, com no máximo 70 palavras cada" in source
     for forbidden in ("Verificação técnica do build oficial", "PDFs existentes não representam", "hashes a atualizar", "revisão pela orientadora foi dispensada"):
         assert forbidden not in source
     frames = slide_frames()
@@ -990,7 +990,8 @@ def test_review3_experiment1_answer_tracks_sanitized_csv():
     (77, ("se sobrepõem", "não torna as rodadas independentes", "otimistas")),
     (78, ("duas ações", "não comprova", "quatro ações", "por faixa")),
     (79, ("injustas e evitáveis", "não comprova equidade", "normativa não foi estimada")),
-    (80, ("Não foi avaliado nesta tese", "55,0%", "não se transfere", "trabalho futuro")),
+    (80, ("não foi avaliado nesta tese no arranjo recalibrado", "55,0%", "não se transfere", "trabalho futuro",
+          "46/118/3.040", "29/125/23.443", "0,283 para 0,261", "post hoc")),
 ])
 def test_review3_questions_cover_unanswered_limits(number, fragments):
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
