@@ -1,7 +1,7 @@
 \label{apendice:gzcmd}
 
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1, resultado principal do Capítulo~\ref{cap:estudo4}.
+\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1 (política de quatro ações: vínculo, não vínculo, revisão por modelo de linguagem e revisão humana), resultado principal do Capítulo~\ref{cap:estudo4}.
 \label{alg:gzcmd-arranjo}
 
 \noindent\rule{\textwidth}{0.4pt}
@@ -29,6 +29,7 @@
 \refstepcounter{algorithm}%
 \noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD com alternativa de calibração por conjuntos âncora, guardas e triagem da política v3, conforme \path{gzcmd/guardrails.py} e \path{gzcmd/gzcmd_v3_policy_engine.py}, e registro de decisões, sem exercício independente de auditoria das justificativas. A revisão histórica usou \textit{Platt scaling} supervisionado da nota; o Experimento~1 usou Random Forest calibrado por sigmoide. Essas execuções não usaram a Fase~1 por âncoras. A versão v3.1 é descrita no Algoritmo seguinte. As etapas de margem estreita e cardinalidade foram previstas, mas não implementadas e não integram as etapas abaixo (Seção~\ref{sec:e4-regras-guarda}).
 \label{alg:gzcmd-pipeline}
+A política v3 distingue vínculo, não vínculo e revisão por modelo de linguagem de grande porte (LLM); v3.1 acrescenta a revisão humana como ação distinta. EVR designa o valor esperado da revisão, e CdR, o Comparador de Registros.
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
@@ -55,7 +56,7 @@
         \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad $\mathit{razao}_i \leftarrow \texttt{temporal\_filter}$
         \STATE \textbf{continuar} para o próximo par
     \ENDIF
-    \IF{nota final do CdR $v_i < 3$}
+    \IF{nota final do Comparador de Registros (CdR) $v_i < 3$}
         \STATE $d_i \leftarrow \textsc{always\_nonmatch}$; \quad \textbf{continuar} para o próximo par
     \ENDIF
     \IF{$v_i \geq 7$ \AND indicadores de nascimento e endereço nulos \AND diferença conhecida de anos de nascimento $>5$}
@@ -72,7 +73,7 @@
 \FORALL{par $i$ sem guarda de aceitação ou rejeição}
     \STATE $L_M \leftarrow (1-p_i)\cdot C_{FP}$; \quad $L_N \leftarrow p_i\cdot C_{FN}$
     \STATE $L_R \leftarrow C_{LLM} + (1-p_i)\,e_{FP}\,C_{FP} + p_i\,e_{FN}\,C_{FN}$
-    \STATE $\mathit{EVR}_i \leftarrow \min(L_M, L_N) - L_R$
+    \STATE $\mathit{EVR}_i \leftarrow \min(L_M, L_N) - L_R$ \COMMENT{valor esperado da revisão}
     \IF{$L_M \leq L_N$}
         \STATE $d_i \leftarrow \textsc{match}$
     \ELSE
@@ -114,7 +115,7 @@
 \bigskip
 % Algoritmo da política v3.1 (quatro ações)
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD, com probabilidades OOF agrupadas por REFREC, guardas da nota, quatro ações por \textit{expected loss}, revisão assistida por LLM com dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
+\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD (quatro ações: vínculo, não vínculo, revisão por modelo de linguagem de grande porte, LLM, e revisão humana), com probabilidades fora da amostra (OOF) agrupadas por REFREC, guardas da nota e decisão por \textit{expected loss}, dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
 \label{alg:gzcmd-v31}
 
 \noindent\rule{\textwidth}{0.4pt}
@@ -162,8 +163,8 @@
 \medskip
 \STATE \textbf{Fase 5: Revisão assistida por LLM}
 \FORALL{par $i$ com $d_i = \textsc{llm}$}
-    \STATE Montar dossiê com 14 dos 29 subescores, nota e MACD, sem as saídas do motor ($p_{\mathit{cal}}$, faixa, EVR e códigos de guarda)
-    \STATE Submeter aos dois agentes (instruções v4) e, se discordarem, ao árbitro
+    \STATE Montar dossiê com 14 dos 29 subescores, nota e Medidas Contínuas de Diferença de Datas (MACD), sem as saídas do motor ($p_{\mathit{cal}}$, faixa, valor esperado da revisão (EVR) e códigos de guarda)
+    \STATE Submeter aos dois agentes (instruções v4, versão sem solicitação das saídas do motor) e, se discordarem, ao árbitro
     \IF{decisão final $= \textsc{unsure}$}
         \STATE Encaminhar o par ao revisor humano
     \ENDIF
