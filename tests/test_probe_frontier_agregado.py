@@ -115,11 +115,17 @@ META = json.loads((ROOT / "data/probe_frontier_metadata.json").read_text(encodin
                 *(DATA_ROOT / Path(r["path"]).parent /
                   ("dossier_field_audit_" + Path(r["path"]).stem.removeprefix("exp2_llm_sync_") + ".json")
                   for r in META["historical_sources"]))
-def test_private_regeneration(tmp_path):
+@pytest.mark.parametrize("reference", [
+    "aggregates",
+    pytest.param("report", marks=requires_files(ROOT / "docs/plans" / probe.REPORT)),
+])
+def test_private_regeneration(tmp_path, reference):
     (tmp_path / "gzcmd").mkdir()
     (tmp_path / "gzcmd/gzcmd_v4_llm_prompt.md").write_bytes(
         (ROOT / "gzcmd/gzcmd_v4_llm_prompt.md").read_bytes())
     probe.generate(DATA_ROOT, tmp_path)
-    for name in (*probe.ARTIFACTS, "probe_frontier_metadata.json"):
-        assert (tmp_path / "data" / name).read_bytes() == (ROOT / "data" / name).read_bytes()
-    assert (tmp_path / "docs/plans" / probe.REPORT).read_bytes() == (ROOT / "docs/plans" / probe.REPORT).read_bytes()
+    if reference == "aggregates":
+        for name in (*probe.ARTIFACTS, "probe_frontier_metadata.json"):
+            assert (tmp_path / "data" / name).read_bytes() == (ROOT / "data" / name).read_bytes()
+    else:
+        assert (tmp_path / "docs/plans" / probe.REPORT).read_bytes() == (ROOT / "docs/plans" / probe.REPORT).read_bytes()
