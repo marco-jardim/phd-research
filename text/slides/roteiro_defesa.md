@@ -172,7 +172,7 @@ Os mecanismos da política original são distintos do erro do revisor humano: gu
 
 ## Perguntas prováveis
 
-São 80 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
+São 83 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -650,9 +650,27 @@ Fonte: `estudo5_equidade.tex`, objetivo e limitações; `data/equidade_arranjo_d
 
 ### 80. Por que v3.1 e P não usam MACD no calibrador se o E1 saneado reduz 55% das revisões?
 
-Não foi avaliado nesta tese. O E1 saneado compara MACD no Random Forest calibrado da política histórica v3, com partições por COMPREC e erro esperado por faixa. A v3.1 e P usam XGBoost, outro agrupamento e recalibração abaixo do corte. A redução de 55,0% não se transfere automaticamente a essa cadeia. Incluir MACD e comparar fora da amostra é trabalho futuro.
+Na sensibilidade *post hoc*, MACD, medidas contínuas de diferença de datas, exigiram 46/118/3.040 revisões para nove/23/36 vínculos, contra 29/125/23.443 sem elas; a precisão média (AP) caiu de 0,283 para 0,261. Não há melhora uniforme nem substituição retrospectiva da fila. A redução de 55,0% do E1 não se transfere: não foi avaliado nesta tese no arranjo recalibrado. Validar essa extensão continua como trabalho futuro.
 
 Fonte: `data/exp1_vazamento_comparacao.csv`; `data/pcal_ml_oof.json`; `data/arranjo_corte_metadata.json`.
+
+### 81. Combinar as ordenações não seria melhor?
+
+Na sensibilidade *post hoc*, a fusão por posições recíprocas (RRF) recuperou os mesmos 36 vínculos com 1.777 revisões ao combinar três ordenações (F3) e 1.387 ao combinar escore do OpenRecLink e probabilidade calibrada (F4), contra 2.521 pelo escore sozinho. Com F3, 23 vínculos exigiram 64 revisões. São resultados sob revisor perfeito, nos mesmos dados, sujeitos a viés de verificação; não constituem validação independente.
+
+Fonte: `data/fusao_filas.csv`, F3/F4/O1; definições em `data/fusao_filas_metadata.json`.
+
+### 82. O algoritmo consegue escolher a ordenação sozinho?
+
+A fila adaptativa aprende com as próprias revisões, sem consultar respostas futuras. Para recuperar 23 vínculos, a média foi de 96,38 revisões, com percentis P10 a P90 de 85 a 114, contra 125 pela probabilidade calibrada. Esses percentis descrevem repetições, não intervalos de confiança. Explorar ordenações menos produtivas também consome revisões; a vantagem depende da meta e requer validação, pois a análise é *post hoc* e presume revisor perfeito.
+
+Fonte: `data/fusao_filas.csv`, A1/A2, `revisoes_23`; `data/fusao_filas_metadata.json`.
+
+### 83. Dá para dispensar o revisor humano?
+
+Não como conclusão desta tese. Uma operação sem revisor humano no *linkage* seria possível apenas sem encerramento automático: vínculos prováveis seguiriam à investigação do óbito pela vigilância, com validação humana pontual por amostra. A responsabilidade do serviço permanece, e essa operação não foi avaliada. A coorte nova deve avaliar a referência amostral, a correção dos *labels* de LLM e a regra de parada antes de qualquer adoção.
+
+Fonte: `text/latex/conclusao.tex`, seção Trabalhos futuros; proposta não avaliada.
 
 ## Figuras e critérios
 
