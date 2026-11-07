@@ -1,0 +1,324 @@
+{
+  "schema_version": 1,
+  "status": "exploratório post hoc",
+  "models": {
+    "claude-haiku-5-5": "Claude Haiku 5.5",
+    "claude-sonnet-5-5": "Claude Sonnet 5.5",
+    "claude-opus-5-5": "Claude Opus 5.5",
+    "claude-fable-5-1": "Claude Fable 5.1"
+  },
+  "data_nominal": "2026-11-07",
+  "inicio_utc": "2026-11-06T23:34:11.572322+00:00",
+  "fim_usage_utc": "2026-11-07T00:14:51.265846+00:00",
+  "prompt_file": "gzcmd/gzcmd_v4_llm_prompt.md",
+  "prompt_version": "v4",
+  "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+  "parameters": {
+    "max_tokens": 2500,
+    "temperature": "não enviado",
+    "thinking": "não configurado",
+    "reasoning": "raciocínio adaptativo padrão da API",
+    "cannot_disable_thinking": [
+      "claude-opus-5-5",
+      "claude-fable-5-1"
+    ]
+  },
+  "protocol": "A+B independentes; consenso com maior confiança; árbitro no desacordo",
+  "seed": 20261107,
+  "strata": {
+    "S1": 25,
+    "S2": 13,
+    "S3": 24,
+    "S4": 88,
+    "C": 41
+  },
+  "vigilancia_population": 344,
+  "s4_population": 282,
+  "s4_weight": 3.2045454545454546,
+  "transport": [
+    "Batch API",
+    "piloto direto"
+  ],
+  "budget_usd": 90,
+  "spent_usd": 44.4403321,
+  "outstanding_reservations_usd": 0,
+  "source_sha256": {
+    "resultados_agregados.csv": "274e68565551352e59066fa89f6ed5ba575f688c7e508ba3fb078c87b3d90e8c",
+    "concordancias_agregadas.csv": "ca76776d117d10661ef98d835bfb9533e2cb4b342707be0e4783b4f03d361a4c",
+    "execucao_agregada.json": "e5c7d038f2af37fbeb08a5d78c9da61357e0042a88764c15d7dd816521d89428",
+    "PREREG.md": "7217292e6aa5dcc9fdf1afe0bb60b4ea9b659dd4dbdbe84afdb6ef717e3fe403",
+    "ENCERRAMENTO.md": "59b79d563c62cdc07f6493e53ed1dba8ed23bcc4065225b738a15ba8b7e071a2",
+    "custo.json": "86fb65cae90edda72609541b5b24f69bd2ed62c3c2f63fe4a7c3ab08e7f4d196"
+  },
+  "historical_sources": [
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+      "timestamp": "2026-11-03T01:51:45.408616+00:00",
+      "audit_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+      "timestamp": "2026-11-03T01:53:45.016014+00:00",
+      "audit_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+      "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+      "timestamp": "2026-11-03T03:58:32.368564+00:00",
+      "audit_sha256": "571852da4764305130cb71af364b1f3782b25f5ea6861d04e65a73a554264e09"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+      "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+      "timestamp": "2026-11-03T03:58:33.145323+00:00",
+      "audit_sha256": "1b7b0aaf72a695f8e30e62986a26413d3fa237c1cd3a49e29bb2beddb23b4fa2"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+      "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+      "timestamp": "2026-11-03T12:59:46.226174+00:00",
+      "audit_sha256": "eb522c329b2473fc3de856ffd15b213a71df3c95a0c6eba45a14326189775948"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+      "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+      "timestamp": "2026-11-03T12:59:46.648838+00:00",
+      "audit_sha256": "c6898391899ee70efd43fb9af8739a565989089fac8e1b884cb8cfd4d030c789"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "sha256": "6104875cd1a6d54070b923c78745eda4736f62fb41e08ee3fcdbb4b4d536ec71",
+      "timestamp": "2026-11-03T13:01:54.511796+00:00",
+      "audit_sha256": "817131ad1c7dc606205c458d587ecee9708e516ada1e5065d2d71346d4e76a53"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "sha256": "e7626085537378cd5d72241371547d173b55313f68f525311e1f9428a42354d7",
+      "timestamp": "2026-11-03T13:03:32.040924+00:00",
+      "audit_sha256": "ef1a054d4b189e95d9a5d1831d11347ef3ae64e17b8c18744e7e5773117e2b00"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4_lote31_complemento/exp2_llm_sync_vigilancia.json",
+      "sha256": "9f116a2d37342b22bf481378d8c5264bb669c3d959cd4cfd9c3f02043802a927",
+      "timestamp": "2026-11-03T15:42:03.974652+00:00",
+      "audit_sha256": "49ca3f51daa31566488ff36097cb13f1afcc0d02db88b6606175052c009c043d"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4_lote31_complemento/exp2_llm_sync_confirmacao.json",
+      "sha256": "faef64cb23b59211e7c9559922ceac03c3ae38883034d5c95e7941a495ed169d",
+      "timestamp": "2026-11-03T15:42:04.737150+00:00",
+      "audit_sha256": "c1ac991817c31742c9761fa66c4c5050c6c9da1c4e3de29811a14a351026e21c"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+      "sha256": "61f4e9f8d5f423c29c4f0356678e2a35a503ebbb5afeac3c0d21154211dac157",
+      "timestamp": "2026-11-03T14:45:03.600044+00:00",
+      "audit_sha256": "eb522c329b2473fc3de856ffd15b213a71df3c95a0c6eba45a14326189775948"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sonnet_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+      "sha256": "c274d768e8c721867c5b318509390e7bb4991c188a9d48d4797f9b1f6af28ee3",
+      "timestamp": "2026-11-03T14:42:37.392767+00:00",
+      "audit_sha256": "c6898391899ee70efd43fb9af8739a565989089fac8e1b884cb8cfd4d030c789"
+    }
+  ],
+  "labels_source": "data/COMPARADORSEMIDENT.csv",
+  "labels_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+  "coorte_cobertura": [
+    {
+      "coorte": "original",
+      "modo": "vigilancia",
+      "n_haiku": 1410,
+      "n_sonnet": 1410,
+      "n_comum": 1410
+    },
+    {
+      "coorte": "original",
+      "modo": "confirmacao",
+      "n_haiku": 435,
+      "n_sonnet": 435,
+      "n_comum": 435
+    },
+    {
+      "coorte": "uniao_historica",
+      "modo": "vigilancia",
+      "n_haiku": 1774,
+      "n_sonnet": 1665,
+      "n_comum": 1665
+    },
+    {
+      "coorte": "uniao_historica",
+      "modo": "confirmacao",
+      "n_haiku": 459,
+      "n_sonnet": 455,
+      "n_comum": 455
+    }
+  ],
+  "runs": [
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "passada": "historico",
+      "complete": true,
+      "elapsed_s": null,
+      "cost_usd": null,
+      "n_expected": 150,
+      "n_analisavel": 150,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "modo": "vigilancia",
+      "passada": "historico",
+      "complete": false,
+      "elapsed_s": null,
+      "cost_usd": null,
+      "n_expected": 150,
+      "n_analisavel": 139,
+      "n_sem_resultado": 11
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "confirmacao",
+      "passada": "historico",
+      "complete": true,
+      "elapsed_s": null,
+      "cost_usd": null,
+      "n_expected": 41,
+      "n_analisavel": 41,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-sonnet-5-5",
+      "modo": "confirmacao",
+      "passada": "historico",
+      "complete": false,
+      "elapsed_s": null,
+      "cost_usd": null,
+      "n_expected": 41,
+      "n_analisavel": 33,
+      "n_sem_resultado": 8
+    },
+    {
+      "model": "claude-fable-5-1",
+      "modo": "confirmacao",
+      "passada": "principal",
+      "complete": true,
+      "elapsed_s": 942.327,
+      "cost_usd": 4.06579,
+      "n_expected": 41,
+      "n_analisavel": 41,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-fable-5-1",
+      "modo": "vigilancia",
+      "passada": "principal",
+      "complete": true,
+      "elapsed_s": 870.31,
+      "cost_usd": 15.81578,
+      "n_expected": 150,
+      "n_analisavel": 150,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-fable-5-1",
+      "modo": "confirmacao",
+      "passada": "replica",
+      "complete": true,
+      "elapsed_s": 1158.803,
+      "cost_usd": 4.046565,
+      "n_expected": 41,
+      "n_analisavel": 41,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-fable-5-1",
+      "modo": "vigilancia",
+      "passada": "replica",
+      "complete": true,
+      "elapsed_s": 1055.776,
+      "cost_usd": 7.17968,
+      "n_expected": 62,
+      "n_analisavel": 62,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "confirmacao",
+      "passada": "replica_historico",
+      "complete": false,
+      "elapsed_s": 129.199,
+      "cost_usd": 0.0529166,
+      "n_expected": 41,
+      "n_analisavel": 38,
+      "n_sem_resultado": 3
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "passada": "replica_historico",
+      "complete": false,
+      "elapsed_s": 1342.011,
+      "cost_usd": 0.1933725,
+      "n_expected": 150,
+      "n_analisavel": 137,
+      "n_sem_resultado": 13
+    },
+    {
+      "model": "claude-opus-5-5",
+      "modo": "confirmacao",
+      "passada": "principal",
+      "complete": true,
+      "elapsed_s": 477.745,
+      "cost_usd": 1.457662,
+      "n_expected": 41,
+      "n_analisavel": 41,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-opus-5-5",
+      "modo": "vigilancia",
+      "passada": "principal",
+      "complete": true,
+      "elapsed_s": 406.555,
+      "cost_usd": 5.357422,
+      "n_expected": 150,
+      "n_analisavel": 150,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-opus-5-5",
+      "modo": "confirmacao",
+      "passada": "replica",
+      "complete": true,
+      "elapsed_s": 750.865,
+      "cost_usd": 1.448836,
+      "n_expected": 41,
+      "n_analisavel": 41,
+      "n_sem_resultado": 0
+    },
+    {
+      "model": "claude-opus-5-5",
+      "modo": "vigilancia",
+      "passada": "replica",
+      "complete": true,
+      "elapsed_s": 588.511,
+      "cost_usd": 2.378612,
+      "n_expected": 62,
+      "n_analisavel": 62,
+      "n_sem_resultado": 0
+    }
+  ],
+  "historical_selection": "original + lote31; exclui intervenções arranjo/robustez/filtro",
+  "privacy": "CSV: somente enums fechados e números; sem identificadores ou valores de campo",
+  "cost_denominator": "decisões finais válidas por passada, incluindo pilotos; não pares únicos",
+  "output_sha256": {
+    "probe_frontier_agregado.csv": "9d74adb09ae263eafdbde20356a64dbe1eb74326338e8b480950dbbea36bd233",
+    "probe_frontier_concordancias.csv": "9e2af8e3e290286b7c939e0d3094b55f7d3b067dca5e7d903be9da337b93c3a9",
+    "probe_frontier_custos.csv": "8615b4d96bfc628c64f01417a623f1a52abd502d6f788b48268d04d28ec573b1",
+    "probe_haiku_sonnet_coorte.csv": "1fd40834da5e7e6e4ae83e5b28c4f466ea9f2208f97e83329dc114651f064ccf"
+  }
+}
