@@ -36,7 +36,7 @@
   \usepackage{setspace}%
   \onehalfspacing
 }{}
-% ---------- Traduções pt-BR manuais (fallback se babel-portuges ausente) ------
+% Traduções pt-BR manuais (fallback se babel-portuges ausente)
 % Usa \AtBeginDocument para garantir que sobrescreve o babel[english].
 \AtBeginDocument{%
   \ifcsname l@brazilian\endcsname
@@ -57,7 +57,7 @@
   \renewcommand{\indexname}{Índice Remissivo}%
   \renewcommand{\abstractname}{Resumo}%
 }
-% ----------------------------------------------------------------------------
+% Fim das traduções manuais
 % Optional packages (keep build working on minimal TeX installs)
 \makeatletter
 \newcommand{\maybeusepackage}[2][]{%
@@ -68,7 +68,7 @@
 \maybeusepackage[ruled,chapter]{algorithm}
 \usepackage{makeidx}
 \maybeusepackage{subfig}
-% amsmath and amssymb loaded by newtxmath — do not reload (Bbbk clash)
+% amsmath and amssymb loaded by newtxmath; do not reload (Bbbk clash)
 %\usepackage{amsmath}
 %\usepackage{amssymb}
 % amsthm moved before newtxmath (line 17) to avoid \openbox clash
@@ -92,7 +92,7 @@
 \maybeusepackage{slashed}
 \usepackage[plainpages=false, pdfpagelabels, pagebackref=true, pdftex]{hyperref}
 % ABNT citations (must come after hyperref)
-\usepackage[alf,abnt-emphasize=bf]{abntex2cite} % ABNT citations
+\usepackage[alf,abnt-emphasize=bf,abnt-nbr10520=1988,abnt-and-type=e]{abntex2cite} % ABNT citations (chamadas em caixa baixa, "e" entre autores; ver livro de mudanças T3)
 % Compatibility helper: abntex2cite does not provide \citeyearpar
 % (used in the text as a year-only parenthetical citation)
 \providecommand{\citeyearpar}[1]{(\citeyear{#1})}
@@ -125,7 +125,7 @@
 \newtheorem{proposition}{Proposição}
 \newtheorem{corollary}{Corolário}
 
-% --- Tradução de rótulos para português ---
+% Tradução de rótulos para português
 \floatname{algorithm}{Algoritmo}                    % "Algorithm" → "Algoritmo"
 \renewcommand{\algorithmicrequire}{\textbf{Entrada:}} % "Require" → "Entrada:"
 \renewcommand{\algorithmicensure}{\textbf{Saída:}}    % "Ensure" → "Saída:"
@@ -177,7 +177,7 @@
 
 % custom packages
 %\usepackage{natbib}
-\graphicspath{{./fig_doc/}} % If your image is in a subfolder
+\graphicspath{{./fig_doc/}{../../figures/}} % Figuras locais e da raiz do projeto
 
 
 \renewcommand{\nomname}{Lista de Símbolos}
@@ -195,14 +195,14 @@
 \nomenclature{framework}{Estrutura metodol\'ogica para organiza\c{c}\~ao reprodut\'ivel de componentes e crit\'erios de decis\~ao}
 \nomenclature{pipeline}{Sequ\^encia operacional de etapas anal\'iticas e decis\'orias}
 \nomenclature{holdout}{Conjunto de avalia\c{c}\~ao independente reservado para teste final do classificador}
-\nomenclature{RF}{Floresta Aleat\'oria (\textit{Random Forest})}
+\nomenclature{RF}{Random Forest}
 \nomenclature{XGBoost}{\textit{Extreme Gradient Boosting}}
 \nomenclature{LightGBM}{\textit{Light Gradient Boosting Machine}}
 \nomenclature{SVM}{M\'aquina de Vetores de Suporte (\textit{Support Vector Machine})}
 \nomenclature{MLP}{Perceptron Multicamadas (\textit{Multilayer Perceptron})}
 \nomenclature{SMOTE}{\textit{Synthetic Minority Over-sampling Technique}}
 \nomenclature{AUC-ROC}{\'Area sob a Curva ROC (\textit{Area Under the ROC Curve})}
-\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Revoca\c{c}\~ao}
+\nomenclature{AUC-PR}{\'Area sob a Curva Precis\~ao-Sensibilidade}
 \nomenclature{KDD}{Descoberta de Conhecimento em Bases de Dados (\textit{Knowledge Discovery in Databases})}
 \nomenclature{LGPD}{Lei Geral de Prote\c{c}\~ao de Dados}
 
@@ -219,7 +219,7 @@
 \setlength{\belowcaptionskip}{0.0cm}
 % \setlength{\baselineskip}{24pt}  % Substituído por setspace \onehalfspacing (ABNT)
 
-% --- Estilos de página (definição global, restaurados em \mainmatter) ---
+% Estilos de página (definição global, restaurados em \mainmatter)
 \pagestyle{fancy}
 \lhead{}
 \chead{}
@@ -230,13 +230,13 @@
 
 \fancypagestyle{plain}
 {
-	\fancyhf{}
-	\lhead{}
-	\chead{}
-	\rhead{\thepage}
-	\lfoot{}
-	\cfoot{}
-	\rfoot{}
+    \fancyhf{}
+    \lhead{}
+    \chead{}
+    \rhead{\thepage}
+    \lfoot{}
+    \cfoot{}
+    \rfoot{}
 }
 
 \renewcommand{\headrulewidth}{0pt}
@@ -244,7 +244,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Capa %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ABNT NBR 14724: Capa (obrigatório) — instituição, autor, título, cidade, ano.
+% ABNT NBR 14724: Capa (obrigatório): instituição, autor, título, cidade, ano.
 
 \frontmatter
 
@@ -268,7 +268,7 @@
 
 \vspace{30pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
@@ -287,7 +287,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Folha de Rosto %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ABNT NBR 14724: Folha de rosto (obrigatório) — autor, título,
+% ABNT NBR 14724: Folha de rosto (obrigatório): autor, título,
 % natureza do trabalho, orientador, cidade, ano.
 
 \newpage
@@ -300,12 +300,12 @@
 
 \vspace{40pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{50pt}
 
 \begin{flushright}
-\parbox{10.3cm}{Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).\par
+\parbox{10.3cm}{Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos em Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro (UFRJ), como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).\par
 \vspace{18pt}\par
 {\large \bf Orientadora: Rejane Sobrino Pinheiro}\par
 \vspace{12pt}\par}
@@ -342,15 +342,15 @@ Jardim, Marco Elisio Oliveira
 % VER http://biblioteca.if.ufrj.br/wp-uploads/2014/09/tutorial-ficha-catalografica.pdf
 % VER TAMBÉM http://biblioteca.if.ufrj.br/servicos-produtos/ficha-catalografica/
 % O código Cutter é gerado pela biblioteca no momento do depósito.
-\hspace{1,59cm} Aprendizado de m\'aquina aplicado ao p\'os-processamento do relacionamento probabil\'{\i}stico de bases de dados de sa\'ude / Marco Elisio Oliveira Jardim. -- Rio de Janeiro, 2026.
+\hspace{1,59cm} Aprendizado de M\'aquina Aplicado ao P\'os-Processamento do \textit{Linkage} Probabil\'istico de Bases de Dados de Sa\'ude / Marco Elisio Oliveira Jardim. -{}- Rio de Janeiro, 2026.
 
-\hspace{1cm} 122 f.: il.
+\hspace{1cm} 276 f.: il.
 
 \hspace{1cm} Orientadora: Rejane Sobrino Pinheiro.
 
-\hspace{1cm} Tese (Doutorado em Sa\'ude Coletiva) -- Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva, 2026.
+\hspace{1cm} Tese (Doutorado em Sa\'ude Coletiva) - Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva, 2026.
 
-\hspace{1cm} 1. \textit{Linkage} probabil\'{\i}stico. 2. Aprendizado de m\'aquina. 3. Desbalanceamento de classes. 4. P\'os-processamento. 5. Tuberculose. 6. Mortalidade. 7. Vigil\^ancia em sa\'ude. 8. Modelos de linguagem. 9. Zona cinzenta. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva. III. T\'{\i}tulo.
+\hspace{1cm} 1. \textit{Linkage} probabil\'{\i}stico. 2. Aprendizado de m\'aquina. 3. Desbalanceamento de classes. 4. P\'os-processamento. 5. Tuberculose. 6. Mortalidade. 7. Vigil\^ancia em sa\'ude. 8. Modelos de linguagem. 9. \'Area cinza. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Federal do Rio de Janeiro, Instituto de Estudos em Sa\'ude Coletiva, Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva. III. T\'{\i}tulo.
 
 \bigskip
 \end{minipage}
@@ -380,11 +380,11 @@ Jardim, Marco Elisio Oliveira
 
 \vspace{20pt}
 
-{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'istico de Bases\\de Dados de Sa\'ude}
+{\Large \bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'istico de Bases\\de Dados de Sa\'ude}
 
 \vspace{25pt}
 
-\parbox{12cm}{\centering Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos de Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro -- UFRJ, como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).}
+\parbox{12cm}{\centering Tese de Doutorado apresentada ao Programa de P\'os-Gradua\c{c}\~ao em Sa\'ude Coletiva do Instituto de Estudos em Sa\'ude Coletiva da Universidade Federal do Rio de Janeiro (UFRJ), como parte dos requisitos necess\'arios \`a obten\c{c}\~ao do t\'itulo de Doutor em Ci\^encias (Sa\'ude Coletiva).}
 
 \vspace{25pt}
 
@@ -401,27 +401,28 @@ IESC/UFRJ
 
 \vspace{25pt}
 
+% RASCUNHO: composição da banca a confirmar pelo autor
 \rule{10cm}{0.5pt}\\
-{[NOME\_DO\_EXAMINADOR\_1]}\\
-{[INSTITUIÇÃO\_1]}
+Prof.\textsuperscript{a} Dr.\textsuperscript{a} Claudia Medina Coeli\\
+IESC/UFRJ
 
 \vspace{25pt}
 
 \rule{10cm}{0.5pt}\\
-{[NOME\_DO\_EXAMINADOR\_2]}\\
-{[INSTITUIÇÃO\_2]}
+Prof. Dr. Kenneth Rochel de Camargo Jr.\\
+IESC/UFRJ
 
 \vspace{25pt}
 
 \rule{10cm}{0.5pt}\\
-{[NOME\_DO\_EXAMINADOR\_3]}\\
-{[INSTITUIÇÃO\_3]}
+Prof.\textsuperscript{a} Dr.\textsuperscript{a} Valéria Menezes Bastos\\
+UFRJ
 
 \vspace{25pt}
 
 \rule{10cm}{0.5pt}\\
-{[NOME\_DO\_EXAMINADOR\_4]}\\
-{[INSTITUIÇÃO\_4]}
+Prof.\textsuperscript{a} Dr.\textsuperscript{a} Myrian Christina de Aragão Costa\\
+NTT/COPPE/UFRJ
 
 \end{center}
 
@@ -466,26 +467,33 @@ mais justo e integral.}
 
 \vspace*{40pt}
 
-À minha orientadora, Professora Rejane Sobrino Pinheiro, agradeço pela
-confiança depositada neste trabalho, pela orientação rigorosa e generosa ao
-longo de todos estes anos e pelo exemplo de dedicação à pesquisa em saúde
-pública. Sua capacidade de acolher ideias e, ao mesmo tempo, exigir o melhor
-de cada análise foi determinante para que esta tese chegasse a bom termo.
+Rejane Sobrino Pinheiro, minha orientadora, entendeu o que me faz brilhar os
+olhos na computação e na ciência de dados: os desafios muito difíceis.
+Acolheu esse entusiasmo e me direcionou para obter resultados. Agradeço
+também pelo suporte quando as adversidades da vida de pai e trabalhador
+atravessavam os compromissos acadêmicos.
 
-À minha esposa, Joyce, companheira de todas as horas, agradeço pelo amor
-incondicional, pela paciência com as noites de estudo e pela serenidade que
-manteve nosso lar de pé nos momentos em que esta jornada pareceu longa
-demais. Sem o seu apoio, nada disto teria sido possível.
+À Daniela Medina Coeli Bastos, do LinkDataPop, agradeço pela preparação do
+extrato pós-CdR e pela revisão clerical que deu origem à referência operacional deste
+trabalho. A Luís Guilherme Buteri Alves, pelo pré-processamento.
+A Claudia Medina Coeli e Kenneth Rochel de Camargo Jr., do
+IESC/UFRJ, pela criação e manutenção do OpenRecLink. Agradeço aos amigos
+do laboratório por compartilharem esse percurso.
 
-Aos meus filhos, José Antônio e Marco, agradeço por serem a razão mais
-concreta de seguir adiante. Cada sorriso de vocês renovou a energia
-necessária para mais uma página, mais um experimento, mais um dia de
-trabalho.
+A Valéria Menezes Bastos, professora do curso de Ciência da Computação da
+UFRJ, agradeço pela orientação na graduação e pelo apoio à minha vida
+acadêmica desde o início. À CAPES, pelo fomento por meio do Programa
+CAPES-Epidemias, processo 88887.514702/2020-00.
 
-A todas as pessoas que, de forma direta ou indireta, contribuíram para esta
-caminhada, colegas de pesquisa, professores, amigos e familiares,
-registro aqui minha gratidão sincera. Cada conversa, sugestão e palavra de
-incentivo deixou marca neste trabalho e em quem o escreveu.
+Joyce, minha esposa, preparava pratos e pães enquanto eu estudava, cuidava
+das crianças e me encorajava. Foi também uma revisora perspicaz deste
+texto.
+
+José Antônio e Marco muitas vezes estiveram no meu colo enquanto eu
+escrevia, programava ou rodava simulações. Perguntavam o que eu estava
+fazendo, e eu tentava explicar um assunto tão complexo para crianças tão
+pequenas. Agradeço por essas perguntas: explicar a tese para eles foi o
+problema mais difícil deste doutorado, e continua em aberto.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -522,28 +530,28 @@ a sociedade muda.''}\\[6pt]
 \begin{center}
 {\LARGE\bf Resumo}\\
 \vspace{15pt}
-{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do Relacionamento Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
+{\Large\bf Aprendizado de M\'aquina Aplicado ao P\'os-Processamento\\do \textit{Linkage} Probabil\'{\i}stico de Bases de Dados de Sa\'ude}\\
 \vspace{6pt}
 {\bf Marco Elisio Oliveira Jardim}\\
 \vspace{12pt}
 {\bf Orientadora: Rejane Sobrino Pinheiro}\\
 % {\bf Coorientador: }\\
 \vspace{20pt}
-\parbox{14cm}{Resumo da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).}
+\parbox{14cm}{Resumo da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro (UFRJ), como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).}
 \end{center}
 \vspace*{35pt}
 
-O \textit{linkage} de bases de dados, processo de identificação e vinculação de registros que se referem a um mesmo indivíduo em sistemas de informação distintos, constitui etapa estratégica da vigilância epidemiológica no Brasil. Esse processo viabiliza a integração de dados dispersos pelos Sistemas de Informação em Saúde e a produção de indicadores de desempenho inacessíveis por um único sistema isolado. O modelo de decisão de Fellegi e Sunter distribui os pares candidatos gerados pelo processo de blocagem em três regiões: pares aceitos, pares rejeitados e faixa intermediária de indecisão. Essa faixa, denominada zona cinzenta (\textit{grey zone}), reúne potenciais pares sem evidência suficiente para classificação automatizada e demanda revisão manual, procedimento dispendioso, pouco escalável e sujeito à variabilidade entre avaliadores. Essa limitação é particularmente aguda no \textit{linkage} probabilístico entre o Sistema de Informação sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação para tuberculose (Sinan-TB). Nesse cenário, a tuberculose, condição marcadora da qualidade do cuidado em saúde, apresenta subnotificação expressiva de óbitos nos sistemas de vigilância brasileiros, comprometendo a estimação da carga real da doença e a avaliação da efetividade dos programas de controle.
+O \textit{linkage} integra sistemas sem identificador comum. A hipótese \textit{post hoc}, a validar, propõe menos revisões pela probabilidade calibrada do classificador que pelo escore do OpenRecLink, para a recuperação obtida por P (corte preservado) abaixo desse corte. O ganho decorreria da ordenação, não da política de decisão.
 
-Foi proposto e avaliado um \textit{framework} (estrutura metodológica) configurável de pós-processamento, fundamentado em aprendizado de máquina (\textit{machine learning}), para a classificação automatizada de pares situados na zona cinzenta do \textit{linkage} probabilístico SIM--Sinan-TB no município do Rio de Janeiro, referentes a notificações de 2013 a 2022 e registros do SIM referentes a óbitos de 2019 a 2022. A base experimental compreendeu 61.696 pares candidatos gerados pelo OpenRecLink e pontuados por comparador de registros que produz 29 subescores de similaridade campo a campo e um escore agregado, com padrão-ouro de 247 pares verdadeiros, configurando razão de desbalanceamento de aproximadamente 1:249. O estudo de ablação comparou seis classificadores supervisionados, Regressão Logística, Floresta Aleatória (Random Forest), XGBoost, LightGBM, Máquina de Vetores de Suporte e Perceptron Multicamadas, combinados com nove estratégias de balanceamento de classes, SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek e variantes de ponderação, totalizando 70 configurações experimentais. Em etapa subsequente, cinco classificadores foram retidos para comparação aprofundada, incorporando o TabNet como representante do aprendizado profundo tabular (\textit{deep learning}).
+Utilizaram-se 61.696 potenciais pares dos Sistemas de Informação sobre Mortalidade e de Agravos de Notificação para tuberculose no Rio de Janeiro, com óbitos de 2019 a 2022. Reimplementou-se o comparador; avaliaram-se classificadores, estratégias e equidade. Nos estudos de classificadores e de estratégias, indicadores de encerramento por óbito introduziram vazamento. PAR é o \textit{label} da referência: um, aceito pelo corte; dois, recuperado na revisão clerical abaixo dele; zero, demais (36 PAR~=~2). Vigilância prioriza sensibilidade; confirmação, VPP (valor preditivo positivo). P preserva o corte e decide abaixo dele com recalibração isotônica (ajuste monotônico das probabilidades); P-Platt é análise de sensibilidade com \textit{Platt scaling}, no mesmo XGBoost fora da amostra. P teve registro interno pré-avaliação, sem critério de sucesso nem proteção contra reenquadramento. Verificação seletiva e possível incorporação das evidências do comparador à referência limitam a interpretação.
 
-A Floresta Aleatória com SMOTE e limiar de classificação de 0,5 alcançou $F_1 = 0{,}931$, contra $F_1 = 0{,}610$ do limiar convencional $\geq 8$ aplicado ao escore agregado, ganho de 32 pontos percentuais pelo pós-processamento supervisionado. O XGBoost apresentou desempenho equivalente ou superior ($F_1 = 0{,}943$ no conjunto de avaliação independente; $0{,}924 \pm 0{,}030$ na validação cruzada com cinco partições), sendo adotado como classificador padrão do \textit{framework}. A análise de sensibilidade ao desbalanceamento de classes demonstrou que os classificadores mantiveram $F_1$ entre 0,880 e 0,918 nas nove estratégias avaliadas, evidenciando robustez à escolha do método de reamostragem. A interpretação por valores SHAP identificou o escore agregado, a contagem de nomes coincidentes e o indicador de nome exato como atributos de maior poder discriminatório, com o nome da mãe predominando nas decisões sobre pares situados na zona cinzenta. A análise de equidade, fundamentada no critério de \textit{equalized odds}, demonstrou homogeneidade da taxa de verdadeiros positivos entre os subgrupos demográficos e de similaridade avaliados, com disparidades de valor preditivo positivo atribuíveis a diferenças de prevalência entre subgrupos, e não a viés discriminatório do classificador. Do ponto de vista epidemiológico, a abordagem de máxima sensibilidade recuperou 24 óbitos adicionais por tuberculose, incremento de 55,8\% sobre o limiar convencional, a um custo operacional de aproximadamente 1,0 revisão manual por óbito detectado.
+Na vigilância, P aceitou automaticamente 215 dos 247 vínculos, com 21 falsos positivos (FP) e 96 revisões humanas pendentes. Supondo revisor perfeito e o mesmo número de revisões humanas, nenhuma das estratégias comparadas é melhor em todos os desfechos. Com o \texttt{MATCH} (decisão de vínculo) ao humano, P recuperaria no máximo um vínculo adicional frente à ordenação pela probabilidade calibrada, com 344 pares avaliados pelo modelo de linguagem de grande porte (LLM); na confirmação, ambos recuperariam nove com 29 revisões, e a ordenação pela nota do comparador os iguala com menos revisões, sem LLM. Como filtro de \texttt{NONMATCH} (decisão de não vínculo), com 22 revisões humanas, o LLM recupera mais vínculos que a ordenação sem filtro, mas descarta nove vínculos entre os primeiros pares da fila. A sensibilidade automática de P foi de 42,5\% na vigilância no passo de blocagem 11 (etapa de geração de candidatos), contra pelo menos 95\% nos demais, disparidade herdada do corte.
 
-O \textit{framework} configurável disponibiliza duas sequências operacionais (\textit{pipelines}) pré-configuradas: uma orientada à vigilância, com prioridade à sensibilidade, e outra à confirmação de alta confiabilidade, com prioridade à precisão. Ambas são articuladas por uma fronteira de Pareto que permite ao gestor ou pesquisador calibrar explicitamente o equilíbrio entre sensibilidade e especificidade conforme a finalidade do \textit{linkage}. Como extensão operacional, foi proposto o \textit{Grey-Zone Cost-based Mixture Deferral} (GZ-CMD), \textit{framework} auto-calibrável. Sua arquitetura integra calibração probabilística por conjuntos âncora (\textit{Platt scaling}), política de decisão em três vias fundamentada em \textit{expected loss} com custos assimétricos e revisão assistida por modelo de linguagem de grande porte, em arquitetura de duplo agente com árbitro. No modo vigilância, o GZ-CMD alcançou $F_1 = 0{,}954$; no modo confirmação, precisão de 0,957 ($F_1 = 0{,}942$). A cascata completa, composta por limiares Fellegi--Sunter, regras de guarda determinísticas (filtros rígidos de consistência), \textit{expected loss engine} e revisão \textit{dual-agent} por modelo de linguagem, reduziu a revisão clerical humana de 21.620 para 41 pares (redução de 99,8\%, aproximadamente três ordens de grandeza). No modo vigilância, o tempo total de processamento foi de 18 minutos. Os artefatos produzidos, incluindo o comparador de registros em código aberto, o GZ-CMD como pacote Python distribuível e um \textit{benchmark} anonimizado preparado para depósito em repositório de dados científicos, foram disponibilizados para viabilizar a reprodutibilidade e a auditabilidade dos protocolos propostos.
+Contribuições: separação entre vínculos aceitos pelo corte e recuperados na revisão, curva de esforço, influência das saídas do motor na resposta do LLM (ancoragem), código público e resultado com registro interno, interpretado como negativo. O VPP de 16,0\% do LLM e os FP previstos/observados são \textit{post hoc}; o filtro é exploratório. Recomenda-se preservar o corte e, abaixo dele, ordenar a fila pela fusão por posição recíproca do escore do OpenRecLink com a probabilidade calibrada, no lugar do escore isolado, a validar em coorte nova com referência cega; sua vantagem sobre a probabilidade calibrada não foi demonstrada. O ponto de parada da revisão segue curva de esforço e orçamento humano. Se a ordenação usar probabilidade aprendida, evitar subamostragem intensa dos negativos, que degradou a fila. O LLM não deve aceitar sozinho; o filtro exige validação em ambiente controlado. Pares fora do orçamento ficam não examinados, não óbitos não notificados; a curva exige amostra verificada independente. Exige validação registrada em dados novos.
 
 \vspace{15pt}
 
-\textbf{Palavras-chave:} \textit{Linkage} probabilístico. Aprendizado de máquina. Desbalanceamento de classes. Pós-processamento. Tuberculose. Mortalidade. Vigilância em saúde. Modelos de linguagem. Zona cinzenta.
+\textbf{Palavras-chave:} \textit{Linkage} probabilístico. Aprendizado de máquina. Desbalanceamento de classes. Pós-processamento. Tuberculose. Mortalidade. Vigilância em saúde. Modelos de linguagem. Área cinza.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -566,17 +574,17 @@ O \textit{framework} configurável disponibiliza duas sequências operacionais (
 {\bf Advisor: Rejane Sobrino Pinheiro}\\
 %{\bf Coorientador: }\\
 \vspace{20pt}
-\parbox{14cm}{\emph{Abstract} da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro - UFRJ, como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).} % ATENÇÃO: esse trecho fica em português mesmo!
+\parbox{14cm}{\emph{Abstract} da Tese de Doutorado apresentada ao Programa de Pós-Graduação em Saúde Coletiva do Instituto de Estudos em Saúde Coletiva da Universidade Federal do Rio de Janeiro (UFRJ), como parte dos requisitos necessários à obtenção do título de Doutor em Ciências (Saúde Coletiva).} % ATENÇÃO: esse trecho fica em português mesmo!
 \end{center}
 \vspace*{35pt}
 
-Probabilistic record linkage of health databases enables the integration of individual records dispersed across multiple information systems, constituting an indispensable resource for epidemiological surveillance in Brazil. Classification of the candidate pairs generated by this process remains, however, dependent on fixed thresholds applied to aggregate similarity scores, yielding an indecision band (the grey zone) whose undecidable pairs require manual clerical review, a procedure that is time-consuming, poorly scalable, and subject to inter-rater variability. This limitation is particularly critical in probabilistic linkage between the Mortality Information System (SIM) and the Tuberculosis Notifiable Diseases Information System (Sinan-TB). Tuberculosis is a tracer condition for quality of healthcare and remains substantially underreported in Brazilian surveillance systems, compromising the assessment of control programme effectiveness and the estimation of the true disease burden.
+Linkage integrates systems without a common identifier. A post hoc hypothesis, requiring validation, was generated: ordering potential pairs below the OpenRecLink cut-off by the classifier's calibrated probability reaches the recovery obtained by P (preserved cut-off) with fewer reviews than ordering by the OpenRecLink score. Gains would come from ordering, not from the decision policy.
 
-A configurable machine learning post-processing framework was proposed and evaluated for the automated classification of grey-zone pairs produced by probabilistic record linkage of the SIM and Sinan-TB in the city of Rio de Janeiro, covering the period from 2013 to 2022 and SIM records covering deaths from 2019 to 2022. The experimental dataset comprised 61,696 candidate pairs generated by OpenRecLink and scored by a record comparator producing 29 field-level similarity sub-scores and an aggregate score, against a gold standard of 247 true pairs (class imbalance ratio approximately 1:249). An ablation study compared six supervised classifiers (Logistic Regression, Random Forest, XGBoost, LightGBM, Support Vector Machine, and Multilayer Perceptron) combined with nine class-balancing strategies (SMOTE, Borderline-SMOTE, ADASYN, SMOTE-Tomek, class weighting, and variants), yielding 70 experimental configurations. Five classifiers were subsequently retained for an extended comparison that incorporated TabNet as a representative of tabular deep learning.
+The 61,696 potential pairs came from the Mortality and Notifiable Diseases Information Systems for tuberculosis in Rio de Janeiro, with deaths from 2019 to 2022. The record comparator was reimplemented; classifiers, strategies and equity were evaluated. Death-closure indicators introduced target leakage (predictors anticipating the outcome) in the classifier and strategy studies. PAR is the reference label: one, accepted by the cut-off; two, recovered by clerical review below it; zero, others. The 36 PAR~=~2 came from that review. Surveillance prioritizes sensitivity; confirmation, positive predictive value (PPV). P preserves the cut-off and decides below it using isotonic recalibration (monotonic probability adjustment); P-Platt is the sensitivity analysis using Platt scaling, with the same out-of-fold XGBoost. P was registered internally before evaluation, without success criterion or protection against reframing. Selective verification and possible incorporation of comparator evidence into the reference limit interpretation.
 
-Supervised post-processing achieved a 32 percentage-point improvement over the conventional threshold: Random Forest with SMOTE at classification threshold 0.5 attained $F_1 = 0.931$, compared with $F_1 = 0.610$ for the fixed threshold $\geq 8$ applied to the aggregate score. XGBoost exhibited equivalent or superior performance ($F_1 = 0.943$ on the independent evaluation set; $0.924 \pm 0.030$ in five-fold cross-validation) and was adopted as the framework's default classifier. Sensitivity analysis across the nine balancing strategies demonstrated that classifiers maintained $F_1$ in the range 0.880--0.918, indicating robustness to the choice of resampling method. SHAP-based interpretation identified the aggregate score, the number of matching names, and the exact-name indicator as the features of highest discriminative power, with mother's name predominating in grey-zone decisions. A fairness analysis grounded in the equalized-odds criterion revealed homogeneous true positive rates across demographic and similarity subgroups, with positive predictive value disparities attributable to between-subgroup prevalence differences rather than discriminatory model bias. From an epidemiological standpoint, the maximum-recall pipeline recovered 24 additional tuberculosis deaths ($+$55.8\%), at an operational cost of approximately 1.0 manual review per detected death.
+In surveillance, P automatically accepted 215/247 links, with 21 false positives (FP) and 96 human referrals. Under the same perfect-reviewer assumption and human workload, none of the compared decision strategies dominates. Sending large language model (LLM) \texttt{MATCH} (link decisions) to humans, P would recover at most one additional link over ordering by calibrated probability, with 344 LLM-reviewed pairs; in confirmation both would recover nine with 29 reviews, and ordering by the comparator score matches them with fewer reviews and no LLM. As a \texttt{NONMATCH} (non-link decisions) filter, with 22 human reviews, it recovers more links than unfiltered ordering but discards nine links from the queue head. P's automatic sensitivity was 42.5\% in surveillance blocking step 11 (candidate-generation stage) versus at least 95\% elsewhere, a disparity inherited from the cut-off.
 
-The configurable framework delivers two pre-configured operational pipelines, one oriented to surveillance (prioritizing sensitivity) and another to high-confidence confirmation (prioritizing precision). These pipelines are articulated through a Pareto frontier, enabling health managers and researchers to explicitly calibrate the trade-off between sensitivity and specificity according to the application objective. As an operational extension, the Grey-Zone Cost-based Mixture Deferral (GZ-CMD) was proposed as a self-calibrating framework. It integrates anchor-based probabilistic calibration (Platt scaling), a three-way expected-loss decision policy with asymmetric misclassification costs, and large language model-assisted review under a dual-agent arbitration architecture. In surveillance mode, GZ-CMD achieved $F_1 = 0.954$; in confirmation mode, precision of 0.957 ($F_1 = 0.942$). The full filtering cascade, comprising Fellegi--Sunter thresholds, deterministic guardrails (rigid consistency filters), an expected-loss engine, and dual-agent LLM review, reduced the human clerical review workload from 21,620 to 41 pairs (99.8\% reduction, approximately three orders of magnitude). Total pipeline processing time was approximately 18 minutes in surveillance mode. Study artifacts, including an open-source record comparator, the GZ-CMD distributable Python package, and an anonymized benchmark dataset prepared for deposit in a scientific data repository, were released to support the reproducibility and generalizability of the proposed approaches.
+Contributions: separating links accepted by the cut-off from those recovered by review, the effort-versus-recovered-links curve, investigation of LLM acceptance, filtering and influence of engine outputs on LLM responses (anchoring), public code and an internally registered result, subsequently interpreted as negative. LLM PPV of 16.0\% and expected-versus-observed FP are post hoc; filtering is exploratory. Recommendation: preserve the cut-off and, below it, order the queue by reciprocal rank fusion of the OpenRecLink score and the calibrated probability instead of the score alone, to be validated in a new cohort with a blinded reference; its advantage over the calibrated probability was not demonstrated. Stopping is chosen from the effort curve and human budget. If ordering uses learned probabilities, avoid heavy undersampling of negatives, which degraded the queue. Under these conditions, LLMs should not accept links alone; filtering requires validation in a controlled environment. Out-of-budget pairs remain unexamined, not equivalent to unnotified deaths; the curve requires an independently verified sample. Requires registered validation on new data.
 
 \vspace{15pt}
 
@@ -616,27 +624,29 @@ The configurable framework delivers two pre-configured operational pipelines, on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Restaurar estilo de página numerado para a parte textual ----------
+% Restaurar estilo de página numerado para a parte textual
 \fancypagestyle{plain}{%
-	\fancyhf{}
-	\lhead{}
-	\chead{}
-	\rhead{\thepage}
-	\lfoot{}
-	\cfoot{}
-	\rfoot{}
+    \fancyhf{}
+    \lhead{}
+    \chead{}
+    \rhead{\thepage}
+    \lfoot{}
+    \cfoot{}
+    \rfoot{}
 }
 \pagestyle{fancy}
 
 \mainmatter
-\input{capitulo1.tex}  % Introdução (NEW)
-\input{capitulo2.tex}  % Referencial Teórico (NEW)
-\input{capitulo3.tex}  % Justificativa e objetivos (was Cap2+Cap3)
-\input{capitulo5.tex}  % Método (was Cap4)
-\input{capitulo6.tex}  % Resultados (was Cap5)
-\input{capitulo_gzcmd}  % GZ-CMD Framework
-\input{capitulo7.tex}  % Discussão (was Cap6)
-\input{capitulo8.tex}  % Conclusões (was Cap7)
+\input{capitulo1.tex}  % Introdução
+\input{capitulo2.tex}  % Referencial teórico
+\input{capitulo3.tex}  % Justificativa e objetivos
+\input{capitulo_dados.tex}  % Fontes de dados e linkage de origem (E3)
+\input{estudo1_comparador.tex}  % Estudo 1 (objetivo 1): comparador de registros
+\input{estudo2_classificadores.tex}  % Estudo 2 (objetivo 2): estimador de probabilidade
+\input{estudo3_estrategias.tex}  % Estudo 3 (objetivo 3): estratégias operacionais e impacto
+\input{estudo4_gzcmd.tex}  % Estudo 4 (objetivo 4): GZ-CMD e revisão assistida
+\input{estudo5_equidade.tex}  % Estudo 5 (objetivo 5): equidade das decisões
+\input{conclusao.tex}  % Conclusão
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -662,7 +672,11 @@ The configurable framework delivers two pre-configured operational pipelines, on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% Apêndices %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \appendix
+\input{apendice_linkage_origem.tex}
 \input{apendicea.tex}
+\input{apendice_busca.tex}
+\input{apendice_pacote.tex}
+\input{apendice_sensibilidade.tex}
 %\input{apendiceb.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

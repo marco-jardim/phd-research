@@ -1,0 +1,25 @@
+\begin{table}[htbp]
+\centering
+\caption{Dez configurações do estudo de ablação com maior F$_1$, em ordenação exploratória nos respectivos testes.}
+\label{tab:ablation-top10}
+\small
+\begin{tabular}{cp{8cm}ccc}
+\toprule
+\# & Configuração & Precisão & Sensibilidade & F$_1$ \\
+\midrule
+1 & Híbrido OR XGBoost $\geq$0,7 + Regras$\geq$8 & 1,000 & 0,919 & 0,958 \\
+2 & Somente ML XGBoost ($\geq$0,7) & 1,000 & 0,892 & 0,943 \\
+3 & Híbrido OR XGBoost $\geq$0,7 + Regras$\geq$9 & 1,000 & 0,892 & 0,943 \\
+4 & Consenso ML XGBoost maioria (limiar=0,7, 3 modelos) & 1,000 & 0,892 & 0,943 \\
+5 & Somente ML XGBoost ($\geq$0,5) & 0,985 & 0,892 & 0,936 \\
+6 & Consenso ML XGBoost maioria (limiar=0,5, 3 modelos) & 0,985 & 0,892 & 0,936 \\
+7 & Somente ML XGBoost ($\geq$0,3) & 0,944 & 0,919 & 0,932 \\
+8 & Somente ML RF+SMOTE ($\geq$0,5) & 0,957 & 0,905 & 0,931 \\
+9 & Consenso ML (limiar=0,7, 3 modelos) & 1,000 & 0,865 & 0,928 \\
+10 & Somente ML RF+SMOTE ($\geq$0,3) & 0,869 & 0,986 & 0,924 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}
+\par\small Nota: As configurações identificadas por XGBoost provêm dos acréscimos do fluxo Modal, recomputados localmente após correção da pontuação de regras; as demais provêm da ablação original. Os resultados não são os do teste interno QW1 (comparação de classificadores tabulares). A tabela ordena as 103 configurações por $F_1$, com desempate pela ordem do artefato, e apresenta as dez primeiras. Os limiares foram explorados nos respectivos testes, sem avaliação independente de sua escolha. Fonte: \path{data/ablation_results.csv}.
+\par\footnotesize Teste com 18.509 potenciais pares e 74 vínculos. OR é união; AND é interseção. Os limiares de regras 8 e 9 empatam no Híbrido OR do RF+SMOTE; apresenta-se 8, como na validação cruzada. A ordenação pelo $F_1$ não demonstra diferença entre as dez primeiras configurações nem equivalência estatística.
+\end{table}

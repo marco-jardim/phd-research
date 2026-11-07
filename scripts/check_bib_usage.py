@@ -16,7 +16,10 @@ cite_pattern = re.compile(r"\\cite\w*\{([^}]+)\}")
 cited_keys: set[str] = set()
 for match in cite_pattern.findall(all_tex):
     for key in match.split(","):
-        cited_keys.add(key.strip())
+        key = key.strip()
+        # Arguments in citation wrapper definitions are not bibliography keys.
+        if not re.fullmatch(r"#[1-9]", key):
+            cited_keys.add(key)
 
 orphan = sorted(bib_keys - cited_keys)
 phantom = sorted(cited_keys - bib_keys)

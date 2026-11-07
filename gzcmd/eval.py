@@ -16,7 +16,7 @@ from .calibration import (
     predict_platt,
     predict_stub,
 )
-from .classifier import GZCMDClassifier
+from .classifier import FeatureSet, GZCMDClassifier
 from .config import GZCMDConfig, load_config
 from .guardrails import apply_guardrails
 from .loader import LoadConfig, load_comparador_csv
@@ -140,8 +140,11 @@ def evaluate_v3_dataframe(
     calibration: CalibrationMethod,
     macd_enabled: bool,
     guardrails_enabled: bool = True,
+    feature_set: FeatureSet = "historical",
+    policy_version: str | None = None,
 ) -> pd.DataFrame:
     work = df.copy()
+    legacy_override = policy_version == "v3" and cfg.guardrails.policy_version == "v3.1"
     y_all = _ensure_binary_target(work)
 
     nota = _coerce_nota(work)
@@ -160,10 +163,11 @@ def evaluate_v3_dataframe(
         g = apply_guardrails(
             work,
             temporal_days=cfg.guardrails.temporal_days,
-            nota_always_match=cfg.guardrails.nota_always_match,
-            nota_always_nonmatch=cfg.guardrails.nota_always_nonmatch,
+            nota_always_match=10.0 if legacy_override else cfg.guardrails.nota_always_match,
+            nota_always_nonmatch=3.0 if legacy_override else cfg.guardrails.nota_always_nonmatch,
             homonimia_min_nota=cfg.guardrails.homonimia_min_nota,
             homonimia_year_gap=cfg.guardrails.homonimia_year_gap,
+            policy_version=policy_version or "v3",
         )
         work["guardrail"] = g.guardrail
     else:
@@ -209,14 +213,16 @@ def evaluate_v3_dataframe(
                     clip_max=cfg.calibration.clip_max,
                 )
             elif calibration == "ml_rf":
-                clf = GZCMDClassifier()
+                clf = GZCMDClassifier(feature_set=feature_set, macd_enabled=macd_enabled)
                 clf.fit(train)
                 probs = clf.predict_proba(test)[:, 1]
                 test["p_cal"] = probs
             else:
                 raise ValueError("calibration must be one of: platt, stub, ml_rf")
 
-            engine = build_engine_from_config(cfg, mode=str(mode), llm_used=0)
+            engine = build_engine_from_config(
+                cfg, mode=str(mode), llm_used=0, policy_version=policy_version,
+            )
             out = engine.triage(test)
 
             yt = _ensure_binary_target(out).to_numpy(dtype=np.int8)
@@ -290,6 +296,8 @@ def evaluate_v3_csv(
     calibration: CalibrationMethod,
     macd_enabled: bool,
     guardrails_enabled: bool = True,
+    feature_set: FeatureSet = "historical",
+    policy_version: str | None = None,
 ) -> pd.DataFrame:
     cfg = load_config(config_path)
     df = load_comparador_csv(Path(input_csv), cfg=LoadConfig(macd_enabled=macd_enabled))
@@ -315,4 +323,6 @@ def evaluate_v3_csv(
         calibration=calibration,
         macd_enabled=macd_enabled,
         guardrails_enabled=guardrails_enabled,
+        feature_set=feature_set,
+        policy_version=policy_version,
     )

@@ -1,0 +1,16 @@
+{
+  "expected_FP": "Sum frozen e_fp over reference nonlinks sent to LLM, before observing LLM decisions. Not sum over acceptances.",
+  "rate_sources": {
+    "crossfit": "data/arranjo_corte_taxas_crossfit.csv",
+    "P-PAR2-grey": "data/arranjo_corte_s1_metadata.json:sensitivity_PAR2_grey_rates",
+    "aposteriori": "gzcmd/error_rates_by_band_v4.yaml"
+  },
+  "frozen_rates_sha256": "d0876836394b2513135995df3fc6e21621a2e162806bd8dd88b6fe54fb931172",
+  "code_sha256": {
+    "scripts/arranjo_corte_diagnosticos.py": "f757f23e0d1020f8fd0b5b40f69c51c3a24adeb20a09cd838f8f14f419c25b62",
+    "scripts/arranjo_corte_s3_avaliar.py": "883f6560b4c7e8347be47617d8c52072d66ed4ae635982afaac512c4648ef662"
+  },
+  "scope": "Below ORL cutoff only; acceptance is action=LLM_REVIEW and final=MATCH. Wilson 95% conditional on reference; not external validation.",
+  "mechanisms": "Mutually exclusive partition of all below-cutoff pairs, including nonlinks and PAR=2. nota<5 guard takes precedence over cost; remaining engine NONMATCH is Bayesian cost rejection. Human is UNSURE/DEFERRED, not a lost link.",
+  "zero_acceptances": "Undefined VPP and Wilson bounds encoded as empty CSV cells."
+}

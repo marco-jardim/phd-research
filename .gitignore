@@ -80,6 +80,11 @@ target/
 
 # Data (local only)
 /data/COMPARADORSEMIDENT.csv
+data/export/
+
+# S1 verification builds
+text/latex/tese_s1*
+text/pdf/tese_s1*
 
 
 # IPython
@@ -212,11 +217,14 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# Private modules (full-text fetcher — never push)
+# Private modules (full-text fetcher, never push)
 scripts/ref_audit/private/
 scripts/ref_audit/data/fulltext/
 
-docs/
+docs/*
+!docs/support_text/
+docs/support_text/*
+!docs/support_text/scopus_T6_instrucoes.md
 
 # LaTeX build artifacts
 *.aux
@@ -301,3 +309,64 @@ text/latex/render_pgf_to_png.py
 
 *.zip
 AGENTS.md
+
+# Extracoes locais (Drive/Colab), nunca versionar
+.local/
+opencode.json
+PLAN.md
+
+# Artefatos por par distribuídos exclusivamente pelo depósito Zenodo
+data/funil_gzcmd_vigilancia*.csv
+data/funil_gzcmd_confirmacao*.csv
+data/funil_gzcmd_antes_*.csv
+data/pcal_ml_oof.csv
+data/pcal_ml_oof*.csv
+data/pcal_ml_oof_*.json
+!data/pcal_ml_oof_grupos_metricas.csv
+data/*_row.*
+data/m7/*_row.*
+text/latex/figures/*_row.*
+text/latex/tables/*_row.tex
+data/*_m3v3*
+text/latex/figures/*_m3v3.*
+data/ancoras_ml_margens_oof.csv
+
+# Rótulos por par (gabarito) distribuídos pelo Zenodo v3.0.0, DOI 10.5281/zenodo.23928226
+data/exp2_comparacao_revisores_confirmacao.csv
+data/exp2_comparacao_revisores_vigilancia.csv
+data/exp2_tres_revisores_confirmacao.csv
+data/exp2_tres_revisores_vigilancia.csv
+data/exp2_gabarito_por_par.csv
+data/sprint3b/anthropic/gabarito_confirmacao_haiku.csv
+data/sprint3b/opencode_go/gabarito_confirmacao_deepseek.csv
+data/sprint3b/opencode_go_kimi/gabarito_confirmacao_kimi_k3.csv
+
+# Trabalho local e artefatos de build de revisão (M21)
+data/sprint3b/opencode_server/
+*.parcial*.json
+resume_sem_erros.json
+text/latex/tese_rev_*
+text/pdf/tese_rev_*
+Claude.json
+
+# Arranjo corte: novos resultados e journals por par ficam somente locais.
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_*.json
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/*_journal/
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_*.json
+data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/*_journal/
+
+# Robustez: respostas e journals por par permanecem locais; agregados são versionados.
+data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_*.json
+data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/*_journal/
+
+# Builds de verificação com jobname alternativo; tese.pdf continua elegível.
+text/latex/tese_*.pdf
+text/pdf/tese_*.pdf
+text/slides/defesa_*.pdf
+
+# D8: seleção e resultados da ablação por par ficam somente locais.
+data/ablacao_dossie_pares.csv
+data/ablacao_dossie_resultado.csv
+# D16: private ablation checkpoints; only *_agregado.json is public.
+data/sprint3b/ablacao/*_controle.json
+data/sprint3b/ablacao/*_sem_pcal.json

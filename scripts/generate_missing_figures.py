@@ -76,7 +76,7 @@ def _tex(s: str) -> str:
 # ═══════════════════════════════════════════════════════════════════════
 def fig_score_bands() -> None:
     print("1/7  Score band distribution...", end=" ", flush=True)
-    df = pd.read_csv(DATA / "COMPARADORSEMIDENT.csv", sep=";")
+    df = pd.read_csv(DATA / "COMPARADORSEMIDENT.csv", sep=";", dtype=str)
     # clean nota final
     if df["nota final"].dtype == object:
         df["nota final"] = (
@@ -87,7 +87,7 @@ def fig_score_bands() -> None:
             .str.replace(",", ".", regex=False)
             .astype(float)
         )
-    df["target"] = df["PAR"].isin([1, 2]).astype(int)
+    df["target"] = pd.to_numeric(df["PAR"], errors="coerce").isin([1, 2]).astype(int)
 
     edges = [0, 3, 5, 6, 7, 8, 9, 10, 15]
     labels = ["0-3", "3-5", "5-6", "6-7", "7-8", "8-9", "9-10", "10+"]
@@ -111,7 +111,7 @@ def fig_score_bands() -> None:
     ax1.bar(x + w / 2, pairs.values, w, color=COLORS["pair"], alpha=0.8, label="Pares")
     ax1.set_xticks(x)
     ax1.set_xticklabels(labels, fontsize=9)
-    ax1.set_xlabel("Faixa de escore")
+    ax1.set_xlabel("Nota final do comparador")
     ax1.set_ylabel("Frequência")
     ax1.set_title("(a) Contagem absoluta")
     ax1.set_yscale("log")
@@ -122,13 +122,13 @@ def fig_score_bands() -> None:
     ax2.bar(x, pct.values, color=COLORS["pair"], alpha=0.8)
     ax2.set_xticks(x)
     ax2.set_xticklabels(labels, fontsize=9)
-    ax2.set_xlabel("Faixa de escore")
+    ax2.set_xlabel("Nota final do comparador")
     ax2.set_ylabel("% pares verdadeiros")
     ax2.set_title("(b) Proporção de pares por faixa")
     ax2.yaxis.set_major_formatter(mticker.PercentFormatter())
 
     fig.suptitle(
-        "Distribuição dos registros por faixa de escore do OpenRecLink",
+        "Distribuição dos potenciais pares por nota final do comparador",
         fontsize=12,
         y=1.02,
     )
@@ -141,13 +141,14 @@ def fig_score_bands() -> None:
     for lab in labels:
         t = int(total.get(lab, 0))
         p = int(pairs.get(lab, 0))
-        pctv = f"{pct.get(lab, 0):.2f}"
-        rows.append(f"    {lab} & {t:,} & {p} & {pctv}\\% \\\\")
+        pctv = f"{pct.get(lab, 0):.2f}".replace(".", ",")
+        total_pt = f"{t:,}".replace(",", ".")
+        rows.append(f"    {lab} & {total_pt} & {p} & {pctv}\\% \\\\")
 
     tex = (
         "\\begin{table}[htbp]\n"
         "\\centering\n"
-        "\\caption{Distribuição dos pares candidatos por faixa de escore do OpenRecLink}\n"
+        "\\caption{Distribuição dos potenciais pares por nota final do comparador}\n"
         "\\label{tab:score-bands}\n"
         "\\begin{tabular}{lrrr}\n"
         "\\toprule\n"
@@ -157,6 +158,7 @@ def fig_score_bands() -> None:
         "\\end{tabular}\n"
         "\\end{table}\n"
     )
+    tex = tex.replace("Faixa de escore &", "Nota final do comparador &")
     (TAB / "tab_score_bands.tex").write_text(tex, encoding="utf-8")
     print("OK")
 
@@ -579,6 +581,7 @@ def fig_feature_heatmap() -> None:
     all_bands = sorted(pivot.columns.tolist())
     band_order_candidates = [
         ["baixo (0-5)", "cinza-baixo (5-6)", "cinza-médio (6-7)", "cinza-alto (7-8)"],
+        ["baixo (0-5)", "cinza-baixo (5-6)", "cinza-medio (6-7)", "cinza-alto (7-8)"],
         ["baixo(0-5)", "cinza-inferior(5-7)", "cinza-superior(7-8)", "alto(8+)"],
     ]
     band_order = all_bands  # fallback
@@ -596,6 +599,7 @@ def fig_feature_heatmap() -> None:
         "baixo (0-5)": "Baixo\n(0-5)",
         "cinza-baixo (5-6)": "Cinza baixo\n(5-6)",
         "cinza-médio (6-7)": "Cinza médio\n(6-7)",
+        "cinza-medio (6-7)": "Cinza médio\n(6-7)",
         "cinza-alto (7-8)": "Cinza alto\n(7-8)",
         "baixo(0-5)": "Baixo\n(0-5)",
         "cinza-inferior(5-7)": "Cinza inf.\n(5-7)",

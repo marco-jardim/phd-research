@@ -1,0 +1,3690 @@
+{
+  "mode": "vigilancia",
+  "model": "claude-sonnet-5-5",
+  "dossier_sha256": {
+    "1ae72b8659189115": "eddc892c241ed1282e28264e5c3283eb537bb79dc000fd3daad6d41008bde7f5",
+    "2102c12eaf4f0c56": "02aaf6f88b72f2f7b78f570ae0099bae4a98ddd0cc70b5c866f7796feedb5ab3",
+    "7c0f64a0d6caa255": "a55877b4acc9543512d210a209c1f6fc356e68d6045bfb07b6aaedb6b86241c9",
+    "f68d84260a2582dc": "5ad36fc0d0a88d1accc77d0fe7b61f3846050b6758914361a91a736af58fcbc6",
+    "692b35be963d55f3": "cedbc1705efbed57231606343ee8561c97fcc89d2eb9e1ba900487d737155f7b",
+    "75e9b217f8062119": "e82962bd39d0e963ae5c40ce63c17516dccdeb505ca9a3041fe26b0c5ad0c885",
+    "ec62198eb6aaae77": "2d146dfda222d31638f9d5c22b7a27172771be4aef34634ee1b4e446896d7f23",
+    "415b33624eb36b60": "295f8088cad7815b0321472eb5f5eec1ec6be99bfefd2b5021912044452019ef",
+    "d2fcae20e1e483e0": "afdef63d1caf9a303cd627d732e4376f3ba996c71b338234b407b5cd0a28a71d",
+    "f6ab9580a20bb230": "4a932206199ce1df8ea19982e7595fbb49af6cf04b4c40baccc1ea9492050c0f",
+    "379924a14d06aa80": "e81019e09f35fb8cbec3ce2b0cb376d4bc233c70ff4feae0abf92deff4044a74",
+    "79f07c72107e05d7": "d5d7860f7c097c3de12ad2087ce42a68ab46e6368864958bd69930adeb5c61bd",
+    "95554584b19bd885": "0cf1640e6c718468294abfc55f5aebfa82355bfe0ebbf47f87a25c003a48b250",
+    "074b2f1ac37a8ef5": "3c816499ccdc93421ed47f935070408bf7d6f4796a8777116c7b0a7fa787bc01",
+    "0c53287d5ea178a5": "9b206b51aaee14f2883e9c8d7304efeba0cdf1d488b85b0a2eb4699ae518dea6",
+    "cb9f830d353cc411": "bf7042b317bfcd9baea57bc16851e0998c46ec78866501897c330e292aa261b5",
+    "9b442ea09828f0c1": "c7bdd7875d507a3645532a62d1ecf388afe51efbc3ebde30bd7967d0d1aa7025",
+    "2a08564ffe298e5f": "2f07f835b2a48174ba2848a14b8337d80d8138d4dd99ffd3cb31c4033484a555",
+    "1039f2d23b96c14c": "0faf72c9950de5cbcbeef6ccf58f7579736f5435725bdd384b4024ac93123c26",
+    "6d6d79437f47dae5": "9a15922fae63ab89634b3a12d4005d899c4ba841eb76f7c0392347a288ff815c",
+    "4c81528690399673": "e5a53eac0b5cfb4956bb5d11d38bd1440fce7df1cf5d6d8e947a03e59af0fb90",
+    "e5b0185caf31d76a": "b4e5c8a4fe7568fc87b7cdd5befbc21c4fc315da77f6ff8c2f72fc0b88c97941",
+    "a7a8c7a0f91369f8": "3aa4c2e8f71f15d2abb01126585aa9ff06a5419b921e7b05eef4f7d30f475507",
+    "8f869078c00d2332": "ccbed15fe80dedeb0ddf5fb43a87e3224c3cc95350de4a45a9b1986bcb4b5a8f",
+    "6289300f93513a36": "85d88292f997e2d194c483eaa9afdf1314330f596c57a2184ef5374846d5bef0",
+    "869ef29a883045f0": "1cb4673d2f0795e7cb5f076b5d4bdf6913af067af8f907d5abb66a8e65a49f43",
+    "1669c2e95951b2a7": "40d99323c99213bc35a76e5e0360c56fda56c3808f557ec2f2e723a1360517fb",
+    "2d314a7002d08907": "ed035aafeca258a503be3cb07360700a12f4373bda69372d4660caf779a6b2cd",
+    "45c583bdb31bcf7b": "d137e595394902a0d8165e9cf5916f356f908a04326ab4f1e62d64e1398212f7",
+    "85c2645fb9bf5ada": "35df466e0cd940a1cd878e604a5876f09c13ea081f8b89298dab6e534ebf7e56",
+    "486ac8c7b040522b": "7e98cfd3d40953a5307b7660b7e002d17f56176a7feaaea6018fdfe9ed120975",
+    "772f7a8463ad6341": "ef477972e6140814ebf1ea5dce0dee538e62d406afdb8b78b8d878e25d899166",
+    "e8de81a1b64f098c": "42dce61ed8649c096886fd396677f0b7a34b46875e605ca39fc45adf142c3731",
+    "fa58783c8e31bd42": "121a96b9c8a1813e604e2fe1499226ebd60b4988f9328be62586099d156067b2",
+    "685455a3cf037471": "effc2e7b2dbf47c031e49f70ef354c8fb04c684f3cceb0188d498c4225dcde04",
+    "53bacf9807ab5c25": "af5c40b7261f40d465b0abf0df03c0bf5d45cdeb1ee9b022614d1c4a4b75ea91",
+    "53fa7b664d907b79": "e80f76e15c4ba9c0841096b0eb171ad297a518601246b089792f1355d83106a8",
+    "b484742f71d4af19": "649936b420b07f920d2ba5e5454b376567dc8adcd7e3ce47f9cd80a041cc8637",
+    "d928406b3983b210": "a84bd60178c2c06d98bf94e396d2f064b99adef2464cc995de433eee90fe53fa",
+    "4a23b5ebb0a2f657": "80d85282774c882dc8161839fd3668bfb258e488e03d0eb7e3037869e3d964cb",
+    "e7a59c4c45b52ee2": "0b11d53ceb62899c7bc64246d231dec0575860e6f1f312e99e53bf4097878235",
+    "06fa12d820298398": "38639375e4bbde86665695541f786d688e612c3207f74950a22abd95b0344413",
+    "3ded37a8667c6f66": "9db2a8e4f6d231c17d3f2de0981f6f9522e881b52d281ee070a4af0cb944c522",
+    "560234e43dbf827e": "45c514996dcb1c80ba30dac89ed690eea12fd037cc9b1a6cb6cebfe9e8009f02",
+    "7ad22b8f03e9849e": "0d7575f63ce4974b5a440da73936dbf7dda1fa5b05acad64f0c1b84b966512f5",
+    "25b0fbf204d365a7": "02dcdf0aeae8299bde5790f41a7ab2c8ca5705c410a1773aec363a7c52c3cebf",
+    "1c65943bef708d1b": "ce9b1d7adf069e13658cd683f90775ad2a5641cba6c17409725126ca91327a86",
+    "1253e9b07c5e7351": "fa30a37eaac2d4f59730adf061cd7ae2140eb2bf988035e27b03be946e60ffd9",
+    "46b1b04bb17ad507": "27a00429bc3411b59eb5a0c360c9952fc66400e0851983f7ddc4bbbb578331c5",
+    "9bbb407f2512e604": "9b5ee7350710a5def462c02c1d85095d98acade13db009f709ba2b0486812f74",
+    "582a24111f17d3d0": "14c6b0b40836f3cc52204bc4badf2ec9f390ffe77085d5f39cb259bd46912181",
+    "70eb36ea9a8dd655": "fbab4973ed2d9c0b14d15c03a1a062aa44bd961c79e7379790994416d918d9a1",
+    "d125d834811641d4": "ce6a256eeada8c0f0476f9bdf890d09b3094c893f54f6d7de30515b06f701447",
+    "4438171aadf5c17a": "96af621acf2e99af00957608ec6d51f3c78014101650668d0f4b23bc28c2558a",
+    "1c78aba8716e4315": "94a86fab99b70870b5966fdda0a77d85ccce5d2b15703675abbe5636374e8d3b",
+    "3bf93710ee0b5038": "21d7a498f2da6dccb9fbb2235a4ba1e42ca2cb83df1ac5cebad6a0f5eb30ee53",
+    "838684f31165ec1f": "6d93a0ce4170e05207867ba448145c7b26f92a584d5e3dbfd419e76bf2611e3d",
+    "332cd2af3c9cd276": "948ee41bb6a7fb0c3b7544cd190a1f092c9537445bca9bdd6b2d8bf049dfd1ab",
+    "2a1a3b71262deeda": "c8dbf5636cac2b975935844e06308864084639cc1d58bac8fcd4efc3b58b3d4d",
+    "1da030b3b9494b1f": "24ed69f172573d0990699cf0ed496c44d7d398f1987a4a3558a336aa049c3dd1",
+    "6cc094d7b186eba6": "49b418bd1acf721ddcc636811370401fc180bd3c99376bb421df6532aa7ee809",
+    "c4cbcbefbb546294": "15b23fabcf14dd12294f19ae1eaa547afa54b54c2f713fffe67109ca8e050b13",
+    "302bbdab33f43d3b": "0d63bfbc9173049603ba748e7750b31e0487223317ea8e7f8ee8c9520f934a19",
+    "101dd0672becf0e0": "d5ffe769690211ecca4db08978ae3ab75cf52d1a2a4ea1bcb9875c5f925dae43",
+    "7a2735c652966db4": "bd58470af91de61e150319179ccc4b15ab06d9c47b56353172e12b7901d362b1",
+    "c6ff915cf75ed092": "337c0bb8f467eb77b47ee4212178efc5bd946c106d39b2b4c4117c3224187aaf",
+    "25dc20b5b52a1db9": "3ed053dc8044c7cfa59711247f89485ac40a26bda06dc8a419d8122d90e93218",
+    "10e2c9966a0ea4a5": "188f3f07b639ed62a5ab075f4511a22b4bc71cb58b4d6951732e75efd7f87900",
+    "db26d4753d7d5f68": "ddf43fd464288a1c63c55e2c45aed2f4e7a3303ac81a99adb04cb62bfe0c4987",
+    "7b64a753f03e4b88": "ee6225bdd85ba2dfc347d2a7cae309f0adbc6dcc82a587cd628b58c9bb25bd12",
+    "2a05edff3cc84c76": "bb4d1eeac3405ee52c87b197c8d0a600a66fa6e37c7bd848c8a56b0540de642d",
+    "8e9d46987d05cd60": "50bb229968cfe509a09b6604d60f987983e2bad48509262a7be1c7aa103cf288",
+    "1008b85f3a87f8dc": "2cfd9ec8aa4eba592ae3e08d4554efed22220ff4717e0c024f6ebdf141a9f2a8",
+    "bdec91f67f883a4c": "9fea0081dd4980d9a61fe07c664819eeb6d2dcc0f92e4782810c9fc739c80656",
+    "a27be51e56cf6fea": "c1472a248eefe1e635b2e82a154aae6b3a2764a3a9c58714b10eaee751b56de8",
+    "02434f6d800f1714": "7513b9411681524ff24ade04f4b3ebbb30c8adf374a2e6b532a222297246fbd6",
+    "ef898fe32a798aa2": "2b4a974153aeb647a0c9e55d1f39792b80b5797f88a40e7e777324001be55881",
+    "7499407abc293984": "66d5eee11c6252322a27e906f342a23168ca9149cb7e0c99c29dd2a77f99cbf6",
+    "e6ce44c626a7a799": "0547341af1102de1866d3e2a3cd413b3bc29a8bb41d1958324ff0ca5b5b9b3ba",
+    "eb21fabd55748175": "d32b01f9a51aa9bbefa3b5706685b87053ecb6f376055f5acf96c434904b920e",
+    "789a65317bdf4ad3": "92029cfe52fe185931c94384b88f40300633af67d7d631d7be98f1ede75c6998",
+    "7d0a1852be6c1552": "081dc89b0f49e53f12badc6d87b2615cde2a2481d83068d4f1ef0c93ae41212e",
+    "c40183ef9c82e53c": "36b9691e6d1e8061bf0f2abfc0a7e5f7b85c3be936f83803197e832030c88d9a",
+    "55e114e14b223709": "b83af36a21adf9117a7347787b978094d9794a4146babe3f533c7e9528f426dc",
+    "c0e4c1b221cac52c": "fda623b18edfd9aaebb35668883f778a953747d748791875e8e3aca07fc440dc",
+    "673a20399b7050e3": "1ae2c63ff96b308b4c31ef52fb9a370c5cd19de7d380dcca4739330bdfb16daa",
+    "f34b5adf18847945": "b8b2fa67eb1614d9d93776b94f9dd3399332db4d3f77de5e98ceca381c48706f",
+    "ba2b78a24d04dd66": "c01801c6f1ec4b2d42c45856b12aa716e923c3917b03448f2b1dccc4b257273c",
+    "93e9fc42a4a904fb": "9a58fcfd68b282bbc961ddd7d2244f93723672437c206537425004db7d5745a5",
+    "943f40cd8e80695b": "e386cb491f2cf4a59c7978dfb7da32aeaef885f2140a9fa5c26dc1547c6da6bd",
+    "b6071496bd03ab2b": "57c6511661cb002f1aa16622dd8c8764c60e937d373063c9141a3e4f692df3e0",
+    "56c69a752625d08e": "5b2aeec41fc8a9e2981463d5cfcbc993e3dcddb5d2435492ad63ead4e4f71e03",
+    "70cead94eb6730b5": "39fc4a0de66c758edcbb4cdd23a26059adbda388b40cf992ee07c352c52bcb08",
+    "cf82db9d52e18a14": "8501834a6e67286b5bb0b9a99a5111b917115991ebfe90313a689516cd26646f",
+    "732869b6f741a146": "14856fc1d2791f357ea0930f6475aab780896911f0df4779d78aff982b4ebe5c",
+    "8f6b656dd0304ec2": "432c1d09c001d175be657177add89981cef37b2b5e6b0b29c6a96e6f15faa072",
+    "fa56c55b1375b1f3": "5b4a70e11d244b6bb4f5d19d6ff6ce110af9c8c08650e666a14c2f0d7afced49",
+    "7c666b15b19b4c46": "474445abea08078c34ed445858b5930067e1d01ae2fa79d624cd26b9ab65a49d",
+    "9dc6bef4fd089236": "25e50aa31cc4dd09c86cb781f0dbd0863302b666dcd5b188985319c7572dcd76",
+    "e9da9531ccfd01d1": "039c1809af9cd64787908de0738e84fe6a2b4264c455eebd275bcf655c83c472",
+    "14d854490914186f": "84e8638e7684933e558589d68de96f31f2c3fc4387009701eb451d58c8d1967f",
+    "d8f6cd5a0d8158fa": "75bcfd3903dd27861b9afc3d9fcc1fc6f57338f949b3ed44f545c018538f6e55",
+    "6988b363192074f7": "6669bc1412c5d62e05d5bb4bac02f832a72e2784d0ac11d01b51a391ca125c7d",
+    "a9d933c4f61a0c65": "2268fb071aff1d771c78629b0062262516951c1750060bf5540341d0ff1e61d6",
+    "0f91f9c007349aee": "b4edb6fc2ec5f41e3a9550a15c46eaca9989afe9d86f6ef00db86f5d8d4faa85",
+    "e2c7c00f8200d13e": "de0a42c5d3dd7addca799ff727d7765318291cc8412a7783c376e6366e9c522c",
+    "1dd836182999da75": "c820e746456268cc91c2979337e760699edd32ee2a8a3815f5dc5d6434504952",
+    "e6be647bdc7d8e66": "995389452035ce557b583c0cd15146c60a6499e5d067a77e7015929c210b38e8",
+    "52a830db15fe5033": "c6ea52c787f33e8ec9caee868641540e8c2111fb2715dbe427c6dcdc31b81ddd",
+    "b5decd4c3d579ccb": "bcd65f636af26f8d484d36307dde0bdc30abf984874b2a4e4e82c5776be7070d",
+    "4519280444ecb87b": "62de7b9fe0357616deac2ba52f7e0803006cf0cf935f18cb1da88b1630dff4ca",
+    "3bf9392eba08963e": "09d1ed003a56659de6732bd10373d50dcbf2791ba31ae4ed28e371e4e0078c0f",
+    "98bbb9a4149372b9": "36ed98b711efeb00533843ad869e81d408dedd90fed52f3e0e5d2f77fe2170d9",
+    "a7aee34067daf9d1": "8a8d106b8b0b7030172ce8728de6bdb8f16874ac66fe57302005a1e2411b577b",
+    "9df3aaf058315dcc": "b5d7c2946c11480bb2ab218a59b8eebd817c28f0bc27c4318f73c77a1d17962e",
+    "89b64885e8f01354": "738045ba8e1a72e36857d4e16b16741307d6ce6a1158e90acee3badb96a62684",
+    "237dd79361715d04": "46f6675bbc8ed45d4cb01d62297e2c26e4f6b4e5ac0e9a6581527eeb845b026f",
+    "eccc49a39dd4a587": "23e8f4fc54c4a5e7c711e240f1f433ffaab5db4c0c02a065c3659f0fe04cc4cb",
+    "ad23350ab9666bdb": "8da73871e6d83f411fac2502a30828537c678348e80853c826a82ed68e43fbfb",
+    "6f613c6c492fa57b": "34465ac49515f4946e7981c415fdb4d34eb485b8e1add659d4b849fa31fb2906",
+    "b4c92583865cb284": "080b1549e2cf92c4e2e8b4bee137e2e6e9f4bde01cf0905522863306d9d10ad4",
+    "92ad96d54528ff9f": "b4eac03d8028b98de5f57d34dd304273528e5ab0797cd36f468fc8a64dd9fd76",
+    "b2ee01fac021bdcb": "421252c1b527cd65ba74bbdca2ee032294579a8a487db9d787bb2c8e39c430fd",
+    "ea3c35d5a1f366ef": "50d1fd8cf63078f2eef12b9a90213962dcb3ef118663a6accbc9eb404fb926c2",
+    "c9c5da949cec209c": "2c5285f3aff92c84d64e8ca44a84e4c2391636fb87777076cd48d92e85a99ad8",
+    "95b734f1950a59a4": "985aa05d896b3b62717ac0e23b8a6cd0e8109950f1e818362f6f72b0bb08e602",
+    "0599999897251edd": "9f51e194f3d1352fe117bc691d6f99aa6e1cb8a8666acecebb998dc6a6feb9fe",
+    "e87e2a8794faa846": "bdeb0ead3e61ec9ddb60e9448d4089cbee0b6842b34713d159f3c1f48193a5e0",
+    "b0338a9e8926c917": "af751b2d2cdfc5f387e17b108a098678076007f725fc3b45f3024e7d3c0b5316",
+    "6304a5bb27d279a9": "24a72a3993fd25c5327d675c77a2e665ba01e69082e217d5b78ae2e6817a1656",
+    "080e45f2bc682415": "464d978992a698375bde668dd44106cfcd8875bd3cdb640e189a9915b1524aee",
+    "cafd0b4ad80a94a0": "90e80fd2bfabf6d12a6ad99f2de656c81089cf9eaaa89c88fd20e05af95790ab",
+    "845011e49e04a163": "476ef2a45f533551436d8b89859bb2820502953886ce8298331667bc1b5b5d2b",
+    "0c4c291803ed7d30": "952ef1207375d336e215b6e730ff53f5df1d02489d026f0eded9835e0a9f2604",
+    "2d9d2c52446df2b2": "7ec2313bbdfcd6eb831bf1b1bec1e9ae5298ea66f75b60b2cbe78a58fe80c205",
+    "13ee70cae3ad9a2e": "dc0b96d92f88526e2369e89f5b2ecdc933156ac3f84507111ff20df1c15e6552",
+    "b6f71442cf17841c": "0b735d74d7a32eda31b97aef26300886982b735055919726cedf8cb8e398e6b5",
+    "16ae178a52da8463": "5a1b97af74a8a07a680a2a72042ff087523bd36be9522db8e819255dd423b7e2",
+    "c34324203aba946d": "7e803b9b21908e5253a546493dc1d58b9600d0898e34fa355163045609e9971f",
+    "0712f5575e08aa25": "c3e7d1a49ac25c8078bdac33c0e7b691fe3944a404188d7f372549d1a3482419",
+    "963e8c23a6fdbf08": "a118eba9495913e0f5881e84f82fa723db2fc009018726b52904efb9caceab11",
+    "77eaa0b1d72684ef": "b24a1d7c395b0dad5adbb325c2c7de1fd929bb9924309610a058aafbd9f4bfb3",
+    "9bcfc8a9023f8bf5": "ab9bfec03c4c91bcf63b829fad89db99658a09f6c796055c40a708d7d233df80",
+    "ac583c60b1388333": "749f7f71138afb11f944323b8779649e806d2781a29abe1a13cace102a288313",
+    "9cc566a6fb01f01a": "e8e31e91240c9c13b854da235bcc225ef460daf67c16b3e36ae73e1feb0dae31",
+    "8d00aba1eb510033": "e225faca2df9e05068a2f53baaf1c9fa2c8fa305832bf64e527d1c16a8284072",
+    "78f2ea6a1d289761": "b213f639b4d5ee3f05b2be7702e4ec3fe2dfa2668c1bd9681a2c4b92cc9c1472",
+    "76ffc601ead46957": "4fb569563485ce6453f46430e5a9a6e39cfa1af831d785eee289d8fb674c8680",
+    "f215ff397619f8ac": "4938c383d14de7ddd5b6b818f9ffc93644e7f0369217cf824cfb3d14c5db6c88",
+    "f4ebed11d476a507": "4494ade1108d229a19bb612ba1450c67e948ef831610875a546543f21034ad33",
+    "d9e34a69b58154d2": "9a26105d2fbe8dc8d4fb1fbd5d73466c9e18a2140ea8294ad0df019367270fb7",
+    "8aea9382a793a7cc": "868425eb9020ce2716200f5346d5cd64c5be823c31e84ec6439cab25044b56e8",
+    "2c7cf9d68db0c572": "362136e7e1a2c417377136f3965f31e04f32d5993bbcc4204610582e1594cb54",
+    "d3edffe8d34db6ca": "dea175e20375ff1fdaebef3a7b8f24f5571753ae990201af59dc683b50b4af89",
+    "ea0d94c368ad5513": "f2660d391c0bb1a23a17b7371e694ca11ef26c85c58b80690d7561dd1ac3e252"
+  },
+  "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+  "prompt_version": "v4",
+  "selected_pair_ids": [
+    "1ae72b8659189115",
+    "2102c12eaf4f0c56",
+    "7c0f64a0d6caa255",
+    "f68d84260a2582dc",
+    "692b35be963d55f3",
+    "75e9b217f8062119",
+    "ec62198eb6aaae77",
+    "415b33624eb36b60",
+    "d2fcae20e1e483e0",
+    "f6ab9580a20bb230",
+    "379924a14d06aa80",
+    "79f07c72107e05d7",
+    "95554584b19bd885",
+    "074b2f1ac37a8ef5",
+    "0c53287d5ea178a5",
+    "cb9f830d353cc411",
+    "9b442ea09828f0c1",
+    "2a08564ffe298e5f",
+    "1039f2d23b96c14c",
+    "6d6d79437f47dae5",
+    "4c81528690399673",
+    "e5b0185caf31d76a",
+    "a7a8c7a0f91369f8",
+    "8f869078c00d2332",
+    "6289300f93513a36",
+    "869ef29a883045f0",
+    "1669c2e95951b2a7",
+    "2d314a7002d08907",
+    "45c583bdb31bcf7b",
+    "85c2645fb9bf5ada",
+    "486ac8c7b040522b",
+    "772f7a8463ad6341",
+    "e8de81a1b64f098c",
+    "fa58783c8e31bd42",
+    "685455a3cf037471",
+    "53bacf9807ab5c25",
+    "53fa7b664d907b79",
+    "b484742f71d4af19",
+    "d928406b3983b210",
+    "4a23b5ebb0a2f657",
+    "e7a59c4c45b52ee2",
+    "06fa12d820298398",
+    "3ded37a8667c6f66",
+    "560234e43dbf827e",
+    "7ad22b8f03e9849e",
+    "25b0fbf204d365a7",
+    "1c65943bef708d1b",
+    "1253e9b07c5e7351",
+    "46b1b04bb17ad507",
+    "9bbb407f2512e604",
+    "582a24111f17d3d0",
+    "70eb36ea9a8dd655",
+    "d125d834811641d4",
+    "4438171aadf5c17a",
+    "1c78aba8716e4315",
+    "3bf93710ee0b5038",
+    "838684f31165ec1f",
+    "332cd2af3c9cd276",
+    "2a1a3b71262deeda",
+    "1da030b3b9494b1f",
+    "6cc094d7b186eba6",
+    "c4cbcbefbb546294",
+    "302bbdab33f43d3b",
+    "101dd0672becf0e0",
+    "7a2735c652966db4",
+    "c6ff915cf75ed092",
+    "25dc20b5b52a1db9",
+    "10e2c9966a0ea4a5",
+    "db26d4753d7d5f68",
+    "7b64a753f03e4b88",
+    "2a05edff3cc84c76",
+    "8e9d46987d05cd60",
+    "1008b85f3a87f8dc",
+    "bdec91f67f883a4c",
+    "a27be51e56cf6fea",
+    "02434f6d800f1714",
+    "ef898fe32a798aa2",
+    "7499407abc293984",
+    "e6ce44c626a7a799",
+    "eb21fabd55748175",
+    "789a65317bdf4ad3",
+    "7d0a1852be6c1552",
+    "c40183ef9c82e53c",
+    "55e114e14b223709",
+    "c0e4c1b221cac52c",
+    "673a20399b7050e3",
+    "f34b5adf18847945",
+    "ba2b78a24d04dd66",
+    "93e9fc42a4a904fb",
+    "943f40cd8e80695b",
+    "b6071496bd03ab2b",
+    "56c69a752625d08e",
+    "70cead94eb6730b5",
+    "cf82db9d52e18a14",
+    "732869b6f741a146",
+    "8f6b656dd0304ec2",
+    "fa56c55b1375b1f3",
+    "7c666b15b19b4c46",
+    "9dc6bef4fd089236",
+    "e9da9531ccfd01d1",
+    "14d854490914186f",
+    "d8f6cd5a0d8158fa",
+    "6988b363192074f7",
+    "a9d933c4f61a0c65",
+    "0f91f9c007349aee",
+    "e2c7c00f8200d13e",
+    "1dd836182999da75",
+    "e6be647bdc7d8e66",
+    "52a830db15fe5033",
+    "b5decd4c3d579ccb",
+    "4519280444ecb87b",
+    "3bf9392eba08963e",
+    "98bbb9a4149372b9",
+    "a7aee34067daf9d1",
+    "9df3aaf058315dcc",
+    "89b64885e8f01354",
+    "237dd79361715d04",
+    "eccc49a39dd4a587",
+    "ad23350ab9666bdb",
+    "6f613c6c492fa57b",
+    "b4c92583865cb284",
+    "92ad96d54528ff9f",
+    "b2ee01fac021bdcb",
+    "ea3c35d5a1f366ef",
+    "c9c5da949cec209c",
+    "95b734f1950a59a4",
+    "0599999897251edd",
+    "e87e2a8794faa846",
+    "b0338a9e8926c917",
+    "6304a5bb27d279a9",
+    "080e45f2bc682415",
+    "cafd0b4ad80a94a0",
+    "845011e49e04a163",
+    "0c4c291803ed7d30",
+    "2d9d2c52446df2b2",
+    "13ee70cae3ad9a2e",
+    "b6f71442cf17841c",
+    "16ae178a52da8463",
+    "c34324203aba946d",
+    "0712f5575e08aa25",
+    "963e8c23a6fdbf08",
+    "77eaa0b1d72684ef",
+    "9bcfc8a9023f8bf5",
+    "ac583c60b1388333",
+    "9cc566a6fb01f01a",
+    "8d00aba1eb510033",
+    "78f2ea6a1d289761",
+    "76ffc601ead46957",
+    "f215ff397619f8ac",
+    "f4ebed11d476a507",
+    "d9e34a69b58154d2",
+    "8aea9382a793a7cc",
+    "2c7cf9d68db0c572",
+    "d3edffe8d34db6ca",
+    "ea0d94c368ad5513"
+  ],
+  "source_sha256": "a5fd361806c464ea48e0f50e0dde2cb5e0e340a7edbad3d8cb0c08042eb2bedb",
+  "cohort": "v31_lot",
+  "experiment": "exp2_llm_sync",
+  "timestamp": "2026-11-03T14:45:03.600044+00:00",
+  "n_review_pairs": 155,
+  "workers": 4,
+  "removed_fields": [
+    "model_outputs.p_cal",
+    "model_outputs.base_choice",
+    "model_outputs.band",
+    "model_outputs.evr",
+    "model_outputs.guardrail",
+    "model_outputs.guardrail_reason"
+  ],
+  "elapsed_s": 558.07,
+  "metadata": {
+    "provider": "Anthropic Messages API",
+    "model_exact": "claude-sonnet-5-5",
+    "max_tokens": 2500,
+    "temperature_sent": false,
+    "extended_thinking": false,
+    "max_retries": 5,
+    "retry_delay_s": 3,
+    "timeout_s": 120,
+    "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+    "prompt_version": "v4",
+    "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "free_response_fields_saved": false,
+    "checkpoint": "every completed pair + durable per-call usage journal"
+  },
+  "results": [
+    {
+      "pair_id": "1ae72b8659189115",
+      "decision": "NONMATCH",
+      "confidence": 0.62,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.44,
+      "total_tokens": 8512
+    },
+    {
+      "pair_id": "2102c12eaf4f0c56",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.68,
+      "total_tokens": 7948
+    },
+    {
+      "pair_id": "7c0f64a0d6caa255",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.21,
+      "total_tokens": 8694
+    },
+    {
+      "pair_id": "f68d84260a2582dc",
+      "decision": "NONMATCH",
+      "confidence": 0.62,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 20.91,
+      "total_tokens": 8900
+    },
+    {
+      "pair_id": "692b35be963d55f3",
+      "decision": "NONMATCH",
+      "confidence": 0.62,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 21.07,
+      "total_tokens": 8969
+    },
+    {
+      "pair_id": "75e9b217f8062119",
+      "decision": "NONMATCH",
+      "confidence": 0.66,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.05,
+      "total_tokens": 8566
+    },
+    {
+      "pair_id": "ec62198eb6aaae77",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.02,
+      "total_tokens": 8661
+    },
+    {
+      "pair_id": "415b33624eb36b60",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 18.31,
+      "total_tokens": 8685
+    },
+    {
+      "pair_id": "d2fcae20e1e483e0",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 20.57,
+      "total_tokens": 9011
+    },
+    {
+      "pair_id": "f6ab9580a20bb230",
+      "decision": "NONMATCH",
+      "confidence": 0.6,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "arbiter",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 28.75,
+      "total_tokens": 14297,
+      "arbiter_decision": "NONMATCH"
+    },
+    {
+      "pair_id": "379924a14d06aa80",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.98,
+      "total_tokens": 7984
+    },
+    {
+      "pair_id": "79f07c72107e05d7",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.42,
+      "total_tokens": 7582
+    },
+    {
+      "pair_id": "95554584b19bd885",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.25,
+      "total_tokens": 7642
+    },
+    {
+      "pair_id": "074b2f1ac37a8ef5",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.79,
+      "total_tokens": 7868
+    },
+    {
+      "pair_id": "0c53287d5ea178a5",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.37,
+      "total_tokens": 7169
+    },
+    {
+      "pair_id": "cb9f830d353cc411",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.85,
+      "total_tokens": 8354
+    },
+    {
+      "pair_id": "9b442ea09828f0c1",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.57,
+      "total_tokens": 8176
+    },
+    {
+      "pair_id": "2a08564ffe298e5f",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.91,
+      "total_tokens": 7608
+    },
+    {
+      "pair_id": "1039f2d23b96c14c",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.82,
+      "total_tokens": 7875
+    },
+    {
+      "pair_id": "6d6d79437f47dae5",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "LOW_SCORE_ANCHOR",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.21,
+      "total_tokens": 7695
+    },
+    {
+      "pair_id": "4c81528690399673",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.37,
+      "total_tokens": 7219
+    },
+    {
+      "pair_id": "e5b0185caf31d76a",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.86,
+      "total_tokens": 8287
+    },
+    {
+      "pair_id": "a7a8c7a0f91369f8",
+      "decision": "NONMATCH",
+      "confidence": 0.62,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.65,
+      "total_tokens": 8710
+    },
+    {
+      "pair_id": "8f869078c00d2332",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 13.15,
+      "total_tokens": 7940
+    },
+    {
+      "pair_id": "6289300f93513a36",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.03,
+      "total_tokens": 7875
+    },
+    {
+      "pair_id": "869ef29a883045f0",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.77,
+      "total_tokens": 7601
+    },
+    {
+      "pair_id": "1669c2e95951b2a7",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.43,
+      "total_tokens": 7685
+    },
+    {
+      "pair_id": "2d314a7002d08907",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 9.47,
+      "total_tokens": 7592
+    },
+    {
+      "pair_id": "45c583bdb31bcf7b",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 10.93,
+      "total_tokens": 7831
+    },
+    {
+      "pair_id": "85c2645fb9bf5ada",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 10.34,
+      "total_tokens": 7656
+    },
+    {
+      "pair_id": "486ac8c7b040522b",
+      "decision": "NONMATCH",
+      "confidence": 0.77,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.55,
+      "total_tokens": 8384
+    },
+    {
+      "pair_id": "772f7a8463ad6341",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 18.43,
+      "total_tokens": 8507
+    },
+    {
+      "pair_id": "e8de81a1b64f098c",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 15.94,
+      "total_tokens": 8433
+    },
+    {
+      "pair_id": "fa58783c8e31bd42",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.2,
+      "total_tokens": 7993
+    },
+    {
+      "pair_id": "685455a3cf037471",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 21.97,
+      "total_tokens": 8988
+    },
+    {
+      "pair_id": "53bacf9807ab5c25",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.72,
+      "total_tokens": 7154
+    },
+    {
+      "pair_id": "53fa7b664d907b79",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 9.35,
+      "total_tokens": 7292
+    },
+    {
+      "pair_id": "b484742f71d4af19",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 19.38,
+      "total_tokens": 8851
+    },
+    {
+      "pair_id": "d928406b3983b210",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.17,
+      "total_tokens": 7302
+    },
+    {
+      "pair_id": "4a23b5ebb0a2f657",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.01,
+      "total_tokens": 7200
+    },
+    {
+      "pair_id": "e7a59c4c45b52ee2",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.84,
+      "total_tokens": 7239
+    },
+    {
+      "pair_id": "06fa12d820298398",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.61,
+      "total_tokens": 7875
+    },
+    {
+      "pair_id": "3ded37a8667c6f66",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.09,
+      "total_tokens": 7721
+    },
+    {
+      "pair_id": "560234e43dbf827e",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "arbiter",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.14,
+      "total_tokens": 12979,
+      "arbiter_decision": "NONMATCH"
+    },
+    {
+      "pair_id": "7ad22b8f03e9849e",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "NAME_WEAK",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.25,
+      "total_tokens": 7589
+    },
+    {
+      "pair_id": "25b0fbf204d365a7",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.75,
+      "total_tokens": 8551
+    },
+    {
+      "pair_id": "1c65943bef708d1b",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.63,
+      "total_tokens": 7795
+    },
+    {
+      "pair_id": "1253e9b07c5e7351",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.37,
+      "total_tokens": 8433
+    },
+    {
+      "pair_id": "46b1b04bb17ad507",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.17,
+      "total_tokens": 7660
+    },
+    {
+      "pair_id": "9bbb407f2512e604",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "NAME_WEAK",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.47,
+      "total_tokens": 7242
+    },
+    {
+      "pair_id": "582a24111f17d3d0",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 12.16,
+      "total_tokens": 7834
+    },
+    {
+      "pair_id": "70eb36ea9a8dd655",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 14.0,
+      "total_tokens": 8130
+    },
+    {
+      "pair_id": "d125d834811641d4",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 8.47,
+      "total_tokens": 7061
+    },
+    {
+      "pair_id": "4438171aadf5c17a",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.32,
+      "total_tokens": 7142
+    },
+    {
+      "pair_id": "1c78aba8716e4315",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.49,
+      "total_tokens": 7164
+    },
+    {
+      "pair_id": "3bf93710ee0b5038",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.34,
+      "total_tokens": 7686
+    },
+    {
+      "pair_id": "838684f31165ec1f",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.89,
+      "total_tokens": 7187
+    },
+    {
+      "pair_id": "332cd2af3c9cd276",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.51,
+      "total_tokens": 7261
+    },
+    {
+      "pair_id": "2a1a3b71262deeda",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.65,
+      "total_tokens": 7282
+    },
+    {
+      "pair_id": "1da030b3b9494b1f",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.26,
+      "total_tokens": 7568
+    },
+    {
+      "pair_id": "6cc094d7b186eba6",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 9.83,
+      "total_tokens": 7333
+    },
+    {
+      "pair_id": "c4cbcbefbb546294",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.84,
+      "total_tokens": 7166
+    },
+    {
+      "pair_id": "302bbdab33f43d3b",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.1,
+      "total_tokens": 7185
+    },
+    {
+      "pair_id": "101dd0672becf0e0",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.06,
+      "total_tokens": 7257
+    },
+    {
+      "pair_id": "7a2735c652966db4",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.26,
+      "total_tokens": 7870
+    },
+    {
+      "pair_id": "c6ff915cf75ed092",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.69,
+      "total_tokens": 7157
+    },
+    {
+      "pair_id": "25dc20b5b52a1db9",
+      "decision": "NONMATCH",
+      "confidence": 0.77,
+      "reason_codes": [
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.63,
+      "total_tokens": 8605
+    },
+    {
+      "pair_id": "10e2c9966a0ea4a5",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.92,
+      "total_tokens": 8691
+    },
+    {
+      "pair_id": "db26d4753d7d5f68",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.42,
+      "total_tokens": 8412
+    },
+    {
+      "pair_id": "7b64a753f03e4b88",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.3,
+      "total_tokens": 8520
+    },
+    {
+      "pair_id": "2a05edff3cc84c76",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.38,
+      "total_tokens": 7709
+    },
+    {
+      "pair_id": "8e9d46987d05cd60",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.92,
+      "total_tokens": 8519
+    },
+    {
+      "pair_id": "1008b85f3a87f8dc",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.34,
+      "total_tokens": 7798
+    },
+    {
+      "pair_id": "bdec91f67f883a4c",
+      "decision": "NONMATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.92,
+      "total_tokens": 8143
+    },
+    {
+      "pair_id": "a27be51e56cf6fea",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.15,
+      "total_tokens": 8320
+    },
+    {
+      "pair_id": "02434f6d800f1714",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.74,
+      "total_tokens": 8149
+    },
+    {
+      "pair_id": "ef898fe32a798aa2",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.65,
+      "total_tokens": 7758
+    },
+    {
+      "pair_id": "7499407abc293984",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 20.19,
+      "total_tokens": 8670
+    },
+    {
+      "pair_id": "e6ce44c626a7a799",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.62,
+      "total_tokens": 7678
+    },
+    {
+      "pair_id": "eb21fabd55748175",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.49,
+      "total_tokens": 8559
+    },
+    {
+      "pair_id": "789a65317bdf4ad3",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 9.29,
+      "total_tokens": 7284
+    },
+    {
+      "pair_id": "7d0a1852be6c1552",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.39,
+      "total_tokens": 7816
+    },
+    {
+      "pair_id": "c40183ef9c82e53c",
+      "decision": "MATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 18.89,
+      "total_tokens": 8743
+    },
+    {
+      "pair_id": "55e114e14b223709",
+      "decision": "MATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 20.07,
+      "total_tokens": 8866
+    },
+    {
+      "pair_id": "c0e4c1b221cac52c",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "CONFLICTING_SIGNALS",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.62,
+      "total_tokens": 8420
+    },
+    {
+      "pair_id": "673a20399b7050e3",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "arbiter",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 22.78,
+      "total_tokens": 13543,
+      "arbiter_decision": "NONMATCH"
+    },
+    {
+      "pair_id": "f34b5adf18847945",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "CONFLICTING_SIGNALS",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 17.84,
+      "total_tokens": 8517
+    },
+    {
+      "pair_id": "ba2b78a24d04dd66",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MOTHER_STRONG",
+        "MUNICIPALITY_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.22,
+      "total_tokens": 8671
+    },
+    {
+      "pair_id": "93e9fc42a4a904fb",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 9.75,
+      "total_tokens": 7550
+    },
+    {
+      "pair_id": "943f40cd8e80695b",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 14.83,
+      "total_tokens": 8288
+    },
+    {
+      "pair_id": "b6071496bd03ab2b",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.03,
+      "total_tokens": 7258
+    },
+    {
+      "pair_id": "56c69a752625d08e",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 18.03,
+      "total_tokens": 8749
+    },
+    {
+      "pair_id": "70cead94eb6730b5",
+      "decision": "UNSURE",
+      "confidence": 0.5,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 17.57,
+      "total_tokens": 8524
+    },
+    {
+      "pair_id": "cf82db9d52e18a14",
+      "decision": "NONMATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.58,
+      "total_tokens": 8342
+    },
+    {
+      "pair_id": "732869b6f741a146",
+      "decision": "MATCH",
+      "confidence": 0.66,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 19.39,
+      "total_tokens": 8886
+    },
+    {
+      "pair_id": "8f6b656dd0304ec2",
+      "decision": "MATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 17.64,
+      "total_tokens": 8517
+    },
+    {
+      "pair_id": "fa56c55b1375b1f3",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.82,
+      "total_tokens": 8374
+    },
+    {
+      "pair_id": "7c666b15b19b4c46",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.19,
+      "total_tokens": 8312
+    },
+    {
+      "pair_id": "9dc6bef4fd089236",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.96,
+      "total_tokens": 7691
+    },
+    {
+      "pair_id": "e9da9531ccfd01d1",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 14.33,
+      "total_tokens": 8091
+    },
+    {
+      "pair_id": "14d854490914186f",
+      "decision": "MATCH",
+      "confidence": 0.9,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 14.34,
+      "total_tokens": 7960
+    },
+    {
+      "pair_id": "d8f6cd5a0d8158fa",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 18.65,
+      "total_tokens": 8735
+    },
+    {
+      "pair_id": "6988b363192074f7",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.49,
+      "total_tokens": 7658
+    },
+    {
+      "pair_id": "a9d933c4f61a0c65",
+      "decision": "MATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 17.22,
+      "total_tokens": 8504
+    },
+    {
+      "pair_id": "0f91f9c007349aee",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_WEAK",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.47,
+      "total_tokens": 7882
+    },
+    {
+      "pair_id": "e2c7c00f8200d13e",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.49,
+      "total_tokens": 8299
+    },
+    {
+      "pair_id": "1dd836182999da75",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.37,
+      "total_tokens": 7687
+    },
+    {
+      "pair_id": "e6be647bdc7d8e66",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.33,
+      "total_tokens": 8016
+    },
+    {
+      "pair_id": "52a830db15fe5033",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.19,
+      "total_tokens": 7926
+    },
+    {
+      "pair_id": "b5decd4c3d579ccb",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 13.25,
+      "total_tokens": 7864
+    },
+    {
+      "pair_id": "4519280444ecb87b",
+      "decision": "NONMATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.53,
+      "total_tokens": 8345
+    },
+    {
+      "pair_id": "3bf9392eba08963e",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.1,
+      "total_tokens": 8292
+    },
+    {
+      "pair_id": "98bbb9a4149372b9",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.66,
+      "total_tokens": 8479
+    },
+    {
+      "pair_id": "a7aee34067daf9d1",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.06,
+      "total_tokens": 7887
+    },
+    {
+      "pair_id": "9df3aaf058315dcc",
+      "decision": "NONMATCH",
+      "confidence": 0.75,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.71,
+      "total_tokens": 8546
+    },
+    {
+      "pair_id": "89b64885e8f01354",
+      "decision": "NONMATCH",
+      "confidence": 0.75,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.14,
+      "total_tokens": 8513
+    },
+    {
+      "pair_id": "237dd79361715d04",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.17,
+      "total_tokens": 8359
+    },
+    {
+      "pair_id": "eccc49a39dd4a587",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.95,
+      "total_tokens": 7810
+    },
+    {
+      "pair_id": "ad23350ab9666bdb",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 18.45,
+      "total_tokens": 8675
+    },
+    {
+      "pair_id": "6f613c6c492fa57b",
+      "decision": "NONMATCH",
+      "confidence": 0.78,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.0,
+      "total_tokens": 8424
+    },
+    {
+      "pair_id": "b4c92583865cb284",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.42,
+      "total_tokens": 8381
+    },
+    {
+      "pair_id": "92ad96d54528ff9f",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.01,
+      "total_tokens": 8562
+    },
+    {
+      "pair_id": "b2ee01fac021bdcb",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.71,
+      "total_tokens": 7876
+    },
+    {
+      "pair_id": "ea3c35d5a1f366ef",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 19.31,
+      "total_tokens": 8768
+    },
+    {
+      "pair_id": "c9c5da949cec209c",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.04,
+      "total_tokens": 8528
+    },
+    {
+      "pair_id": "95b734f1950a59a4",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.84,
+      "total_tokens": 8112
+    },
+    {
+      "pair_id": "0599999897251edd",
+      "decision": "NONMATCH",
+      "confidence": 0.72,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.92,
+      "total_tokens": 8276
+    },
+    {
+      "pair_id": "e87e2a8794faa846",
+      "decision": "MATCH",
+      "confidence": 0.88,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 11.88,
+      "total_tokens": 7725
+    },
+    {
+      "pair_id": "b0338a9e8926c917",
+      "decision": "MATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": true
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "MATCH",
+      "agent_b_decision": "MATCH",
+      "total_latency_s": 10.69,
+      "total_tokens": 7669
+    },
+    {
+      "pair_id": "6304a5bb27d279a9",
+      "decision": "NONMATCH",
+      "confidence": 0.77,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.54,
+      "total_tokens": 8479
+    },
+    {
+      "pair_id": "080e45f2bc682415",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.47,
+      "total_tokens": 7737
+    },
+    {
+      "pair_id": "cafd0b4ad80a94a0",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.28,
+      "total_tokens": 8253
+    },
+    {
+      "pair_id": "845011e49e04a163",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.19,
+      "total_tokens": 7467
+    },
+    {
+      "pair_id": "0c4c291803ed7d30",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.49,
+      "total_tokens": 8437
+    },
+    {
+      "pair_id": "2d9d2c52446df2b2",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.28,
+      "total_tokens": 8527
+    },
+    {
+      "pair_id": "13ee70cae3ad9a2e",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.5,
+      "total_tokens": 8430
+    },
+    {
+      "pair_id": "b6f71442cf17841c",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.79,
+      "total_tokens": 7066
+    },
+    {
+      "pair_id": "16ae178a52da8463",
+      "decision": "NONMATCH",
+      "confidence": 0.7,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 17.52,
+      "total_tokens": 8628
+    },
+    {
+      "pair_id": "c34324203aba946d",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.34,
+      "total_tokens": 7579
+    },
+    {
+      "pair_id": "0712f5575e08aa25",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.72,
+      "total_tokens": 7865
+    },
+    {
+      "pair_id": "963e8c23a6fdbf08",
+      "decision": "NONMATCH",
+      "confidence": 0.82,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.87,
+      "total_tokens": 7634
+    },
+    {
+      "pair_id": "77eaa0b1d72684ef",
+      "decision": "NONMATCH",
+      "confidence": 0.68,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 21.02,
+      "total_tokens": 8938
+    },
+    {
+      "pair_id": "9bcfc8a9023f8bf5",
+      "decision": "NONMATCH",
+      "confidence": 0.75,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 16.08,
+      "total_tokens": 8416
+    },
+    {
+      "pair_id": "ac583c60b1388333",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.62,
+      "total_tokens": 7850
+    },
+    {
+      "pair_id": "9cc566a6fb01f01a",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 11.3,
+      "total_tokens": 7734
+    },
+    {
+      "pair_id": "8d00aba1eb510033",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 8.11,
+      "total_tokens": 7214
+    },
+    {
+      "pair_id": "78f2ea6a1d289761",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 15.16,
+      "total_tokens": 8208
+    },
+    {
+      "pair_id": "76ffc601ead46957",
+      "decision": "NONMATCH",
+      "confidence": 0.74,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "CONFLICTING_SIGNALS",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.11,
+      "total_tokens": 7734
+    },
+    {
+      "pair_id": "f215ff397619f8ac",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 7.91,
+      "total_tokens": 7180
+    },
+    {
+      "pair_id": "f4ebed11d476a507",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 14.46,
+      "total_tokens": 8140
+    },
+    {
+      "pair_id": "d9e34a69b58154d2",
+      "decision": "NONMATCH",
+      "confidence": 0.85,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.22,
+      "total_tokens": 7854
+    },
+    {
+      "pair_id": "8aea9382a793a7cc",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 13.18,
+      "total_tokens": 8016
+    },
+    {
+      "pair_id": "2c7cf9d68db0c572",
+      "decision": "UNSURE",
+      "confidence": 0.55,
+      "reason_codes": [
+        "NAME_STRONG",
+        "MUNICIPALITY_STRONG",
+        "MOTHER_MISSING",
+        "INSUFFICIENT_EVIDENCE"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": true,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "UNSURE",
+      "agent_b_decision": "UNSURE",
+      "total_latency_s": 18.36,
+      "total_tokens": 8700
+    },
+    {
+      "pair_id": "d3edffe8d34db6ca",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "NAME_STRONG",
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "ADDRESS_WEAK",
+        "CONFLICTING_SIGNALS"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 10.9,
+      "total_tokens": 7684
+    },
+    {
+      "pair_id": "ea0d94c368ad5513",
+      "decision": "NONMATCH",
+      "confidence": 0.8,
+      "reason_codes": [
+        "DOB_WEAK",
+        "MOTHER_MISSING",
+        "MUNICIPALITY_STRONG",
+        "ADDRESS_WEAK"
+      ],
+      "quality_flags": {
+        "pii_leak_detected": false,
+        "insufficient_evidence": false,
+        "inconsistent_input": false
+      },
+      "protocol": "consensus",
+      "agent_a_decision": "NONMATCH",
+      "agent_b_decision": "NONMATCH",
+      "total_latency_s": 12.63,
+      "total_tokens": 7768
+    }
+  ],
+  "errors": [],
+  "failed_pair_ids": [],
+  "n_reviewed": 155,
+  "n_errors": 0,
+  "complete": true,
+  "updated_at": "2026-11-03T14:54:21.658790+00:00",
+  "transport": {
+    "calls": 313,
+    "http_errors": 0,
+    "response_parse_errors": 0,
+    "error_statuses": {},
+    "input_tokens": 986866,
+    "output_tokens": 274466,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 0,
+    "max_request_input_tokens": 4339
+  },
+  "cost_estimate_usd": 4.718392,
+  "cost_note": "Estimate only: standard/global USD/M for Claude Sonnet 5.5 input 2, output 10, cache read 0.10, cache write (5m) 2.50; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-03.",
+  "metrics": {
+    "mode": "vigilancia",
+    "n_reviewed": 155,
+    "n_errors": 0,
+    "total_elapsed_s": 558.07,
+    "decisions": {
+      "NONMATCH": 124,
+      "UNSURE": 11,
+      "MATCH": 20
+    },
+    "protocols": {
+      "consensus": 152,
+      "arbiter": 3
+    }
+  }
+}

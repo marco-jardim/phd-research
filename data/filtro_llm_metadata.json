@@ -1,0 +1,317 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "post_hoc": true,
+  "registered": "internal",
+  "date": "2026-11-05",
+  "protocol_commit": "c931703a4cd1e21328e202edb487198646eac72d",
+  "protocol_sha256": "80f9ba41c00412d94f00dce9a7afad3a99c609034335259599588e01f3152dd4",
+  "api_calls": 0,
+  "model_fits": 0,
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/comparador_mesma_carga_curva.csv": "f22da3c1971777c6c44cc2de1beed0d2d17afbd981c55e5030f3c78f04dc4d9c",
+    "gzcmd/error_rates_by_band_v4.yaml": "0c48024b94de9bd2c3299fd0c21640a1e8a7f0733a424c59d6250ba30ae778b1",
+    "gzcmd/prereg_arranjo_corte.yaml": "3f156cfe3c316cef63a3349f4d46608128cc28893f6691d314c508a3b183c278",
+    "gzcmd/gzcmd_v4_llm_prompt.md": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "gzcmd/arranjo_robustez.py": "7b67cfa669415f39fdd7089abaea4495cf7145096dccc9789f8f0d68cbcf9498",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5",
+    "gzcmd/llm_dossier.py": "a9cdf3f078507254cd05c4278eca992266f8d1ab783074a3a241605fc35e9589",
+    "gzcmd/loader.py": "6a9302f7324aac9149c3abba74fbd5fb5d9c4d7e376f058609fe956311eeb473",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "scripts/arranjo_corte_s1_simular.py": "9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "scripts/run_exp2_ablacao_dossie.py": "f94d3e1bb4d22687ae5e8dcf47a12596e875703aff7adf6b70c9d1679ca34ce7",
+    "scripts/run_exp2_sem_model_outputs.py": "f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae",
+    "gzcmd/llm_usage_cost.py": "880c6267237d646d9eff2dfe3a2badeeba0af45d47a742fd94d802dcbe782a16",
+    "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+    "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json": "eac7b67c63a38e40cf9e40d0d780c9223b43aaf0f3bc61c462fb12b90be1e329",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json": "89dcbeb754b3bfeb59cfd68d42ba0f83d6439bec18237c265674c624fe310060",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia_journal/identity.json": "8f764d0ca9cb762ff9199fa58eea51e62ea0233a50ea09cfb77f7c39284445af",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao_journal/identity.json": "964af5a58b81fd2c98c83d0591eb4619f769ba2dcf05b2de084fd2d648c98407",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia_journal/identity.json": "82db37d399b724e1557b11c85c56af28f8934f36326f9a3485bcbae84e8ef6e0",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao_journal/identity.json": "3fee763fd85f1fd036820d5ebf7fce65ebaf7dce97814cc1c3c265ed50753cc4",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia_journal/identity.json": "4d1a279819f15165a8c91db2bfa3cc34c783d7542c78d233ef6ea626711a179f",
+    "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao_journal/identity.json": "510ebf820bf576b00178057043dda9320ca4afefca9129ac6d0a4ec1cdaafe7c"
+  },
+  "analysis_api_calls": 0,
+  "authorized_new_api_calls": 201,
+  "new_input_sha256": {
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/execucao.json": "7574fe8d299fa00af55c8437df2a0414cf0252875510886f6bc0c46d24d049d8",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/auditoria.json": "547a9a4191a6d6eae3f2eb1952ea4f584c3ba240650830e395be3c11919f1f51",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json": "dfaef60fee7fbc372d46be0ce57645a9721f103c3c3f2cbe8369be3361454752",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/dossier_field_audit_vigilancia.json": "2bd58a59a3b5a9d2c0baf5eeef6968896f9538229425f5ea365fe7cccb0775e1",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia_journal/identity.json": "e378c7cad4d7566968b95adf0f409c84e67143a25a50f17044c3626d9536f70e",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json": "a72566eae9661e8b81774cf894141e18c2741c92ea14fc7cd31a2e4dadf5ad84",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/dossier_field_audit_confirmacao.json": "397ed85be7712085dea5c5ed9961b26f71283df53044f0132d2b69d3cbe85e0f",
+    "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao_journal/identity.json": "318534c21792f2608cd786b4a8d188c6f230ea853e197b6170c8d97979ac345e"
+  },
+  "new_execution": {
+    "stage": "filtro_llm_authorized_pending_only",
+    "amendment_commit": "c931703a4cd1e21328e202edb487198646eac72d",
+    "protocol_sha256": "80f9ba41c00412d94f00dce9a7afad3a99c609034335259599588e01f3152dd4",
+    "runs": [
+      {
+        "mode": "vigilancia",
+        "model": "claude-haiku-5-5",
+        "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "prompt_version": "v4",
+        "removed_fields": [
+          "model_outputs.p_cal",
+          "model_outputs.base_choice",
+          "model_outputs.band",
+          "model_outputs.evr",
+          "model_outputs.guardrail",
+          "model_outputs.guardrail_reason"
+        ],
+        "timestamp": "2026-11-05T16:10:49.837517+00:00",
+        "updated_at": "2026-11-05T16:12:33.138837+00:00",
+        "n_review_pairs": 12,
+        "n_reviewed": 12,
+        "n_errors": 0,
+        "complete": true,
+        "workers": 4,
+        "elapsed_s": 103.3,
+        "metadata": {
+          "provider": "Anthropic Messages API",
+          "model_exact": "claude-haiku-5-5",
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false,
+          "max_retries": 5,
+          "retry_delay_s": 3,
+          "timeout_s": 120,
+          "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+          "prompt_version": "v4",
+          "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+          "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+          "free_response_fields_saved": false,
+          "checkpoint": "every completed pair + durable per-call usage journal"
+        },
+        "transport": {
+          "calls": 32,
+          "http_errors": 0,
+          "response_parse_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 104486,
+          "output_tokens": 65048,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "max_request_input_tokens": 4214
+        },
+        "cost_estimate_usd": 0.0429726,
+        "cost_note": "Estimate only: standard/global USD/M input .10, output .50, cache read .01, cache write .125; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-02 (existing ablation).",
+        "run_sha256": "dfaef60fee7fbc372d46be0ce57645a9721f103c3c3f2cbe8369be3361454752"
+      },
+      {
+        "mode": "confirmacao",
+        "model": "claude-haiku-5-5",
+        "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+        "prompt_version": "v4",
+        "removed_fields": [
+          "model_outputs.p_cal",
+          "model_outputs.base_choice",
+          "model_outputs.band",
+          "model_outputs.evr",
+          "model_outputs.guardrail",
+          "model_outputs.guardrail_reason"
+        ],
+        "timestamp": "2026-11-05T16:14:18.670349+00:00",
+        "updated_at": "2026-11-05T16:21:08.696060+00:00",
+        "n_review_pairs": 71,
+        "n_reviewed": 71,
+        "n_errors": 0,
+        "complete": true,
+        "workers": 4,
+        "elapsed_s": 410.03,
+        "metadata": {
+          "provider": "Anthropic Messages API",
+          "model_exact": "claude-haiku-5-5",
+          "max_tokens": 2500,
+          "temperature_sent": false,
+          "extended_thinking": false,
+          "max_retries": 5,
+          "retry_delay_s": 3,
+          "timeout_s": 120,
+          "protocol": "unchanged Agent-A + Agent-B + arbiter on disagreement",
+          "prompt_version": "v4",
+          "prompt_file_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+          "prompt_sha256": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+          "free_response_fields_saved": false,
+          "checkpoint": "every completed pair + durable per-call usage journal"
+        },
+        "transport": {
+          "calls": 169,
+          "http_errors": 0,
+          "response_parse_errors": 0,
+          "error_statuses": {},
+          "input_tokens": 540666,
+          "output_tokens": 332621,
+          "cache_read_input_tokens": 0,
+          "cache_creation_input_tokens": 0,
+          "max_request_input_tokens": 4222
+        },
+        "cost_estimate_usd": 0.2203771,
+        "cost_note": "Estimate only: standard/global USD/M input .10, output .50, cache read .01, cache write .125; not invoice. Source: platform.claude.com/docs/en/about-claude/pricing, 2026-11-02 (existing ablation).",
+        "run_sha256": "a72566eae9661e8b81774cf894141e18c2741c92ea14fc7cd31a2e4dadf5ad84"
+      }
+    ],
+    "total_pairs": 83,
+    "total_api_calls": 201,
+    "total_cost_estimate_usd": 0.2633497,
+    "frozen_rates_sha256": "d0876836394b2513135995df3fc6e21621a2e162806bd8dd88b6fe54fb931172",
+    "new_responses_reestimate_rates": false,
+    "new_responses_feed_other_arms": false,
+    "temporal_stochastic_limitation": "As respostas novas têm outra data de execução e o modelo é estocástico; o filtro mistura respostas antigas e novas. Não é uma avaliação prospectiva independente."
+  },
+  "new_responses_reestimate_rates": false,
+  "new_responses_feed_other_arms": false,
+  "response_audit": {
+    "vigilancia": {
+      "valid_cached_pairs": 2092,
+      "conflicting_pairs_all_sources": 0,
+      "embedded_identity_cohorts": 3,
+      "sources": [
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+          "responses": 1410,
+          "sha256": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+          "responses": 209,
+          "sha256": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+          "responses": 155,
+          "sha256": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json",
+          "responses": 10,
+          "sha256": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json",
+          "responses": 66,
+          "sha256": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_vigilancia.json",
+          "responses": 230,
+          "sha256": "eac7b67c63a38e40cf9e40d0d780c9223b43aaf0f3bc61c462fb12b90be1e329"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_vigilancia.json",
+          "responses": 12,
+          "sha256": "dfaef60fee7fbc372d46be0ce57645a9721f103c3c3f2cbe8369be3361454752"
+        }
+      ]
+    },
+    "confirmacao": {
+      "valid_cached_pairs": 559,
+      "conflicting_pairs_all_sources": 0,
+      "embedded_identity_cohorts": 3,
+      "sources": [
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+          "responses": 435,
+          "sha256": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+          "responses": 7,
+          "sha256": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+          "responses": 17,
+          "sha256": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json",
+          "responses": 14,
+          "sha256": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json",
+          "responses": 3,
+          "sha256": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_arranjo_robustez/exp2_llm_sync_confirmacao.json",
+          "responses": 12,
+          "sha256": "89dcbeb754b3bfeb59cfd68d42ba0f83d6439bec18237c265674c624fe310060"
+        },
+        {
+          "source": "data/sprint3b/anthropic_sem_mo_v4_filtro_llm/exp2_llm_sync_confirmacao.json",
+          "responses": 71,
+          "sha256": "a72566eae9661e8b81774cf894141e18c2741c92ea14fc7cd31a2e4dadf5ad84"
+        }
+      ]
+    }
+  },
+  "pending": {
+    "vigilancia": {
+      "pending_unique_k_le125": 0,
+      "estimated_usd_no_cache": 0.0
+    },
+    "confirmacao": {
+      "pending_unique_k_le125": 0,
+      "estimated_usd_no_cache": 0.0
+    }
+  },
+  "stop_rule_triggered": false,
+  "interpretation": {
+    "vigilancia": "ajuda",
+    "confirmacao": "ajuda"
+  },
+  "evaluated_k": {
+    "vigilancia": [
+      17,
+      29,
+      58,
+      96,
+      121,
+      125
+    ],
+    "confirmacao": [
+      17,
+      29,
+      58,
+      96,
+      121,
+      125
+    ]
+  },
+  "limitations": [
+    "Respostas do LLM também alimentaram as taxas do revisor e o braço P; análise não independente, exploratória e post hoc.",
+    "Rótulos PAR=2 são oriundos da revisão do serviço; não se trata de validação independente.",
+    "Apenas modo/k com cobertura completa são avaliados; classificação é restrita aos k avaliados.",
+    "As respostas novas têm outra data de execução e o modelo é estocástico; o filtro mistura respostas antigas e novas. Não é uma avaliação prospectiva independente."
+  ],
+  "response_reuse_warning": "As respostas históricas do LLM também alimentaram as taxas do revisor e o braço P. As respostas novas autorizadas não alimentam taxas nem outros braços.",
+  "human_review": "Perfeito; erro de 5% é cenário, não desfecho observado; sem FP hipotéticos.",
+  "wilson": "IC 95% descritivo; sem correção de dependência entre pares; n=0 indefinido.",
+  "coverage_blinding": "Fila sem PAR; dossiês só com features via loader canônico, sem ajuste/model_outputs; cobertura persistida antes dos rótulos.",
+  "code_sha256_lf": {
+    "scripts/filtro_llm.py": "190c599e04a55b4c10e4e9801f06ce971b9da203efba0f13ed843f16ea5df190",
+    "scripts/filtro_llm_executar.py": "b884df01c7678b8d7b79619dd86d5f145ce651a68ad18759a06c2a35dbd74b7e",
+    "tests/test_filtro_llm.py": "ec8365d43638719535bf09d9f7a8bf066c9eef72863a18a2b501236151235c11"
+  },
+  "output_sha256": {
+    "filtro_llm_cobertura.csv": "a3aa9798f79addaef220be646a8d2d1cd40158c654aab50ad28b83d5b8dfa60b",
+    "filtro_llm.csv": "35414587035068bad019eeae268cab9daf1f2ac046a07e76b7776488e7a0f836"
+  }
+}

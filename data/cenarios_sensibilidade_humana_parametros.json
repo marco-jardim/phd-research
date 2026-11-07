@@ -1,0 +1,9 @@
+{
+  "sensibilidades_humanas": [0.95, 0.99, 1.0],
+  "especificidade_humana_assumida": 1.0,
+  "fonte_s": "cenario (config gzcmd_v3: 0,05; nao medido)",
+  "O3_revisoes": [96, 121, 125, 440],
+  "filtro_k_min": 17,
+  "filtro_k_max": 125,
+  "interpretacao": "Sensibilidade humana não medida. Cenários de falsos negativos humanos, sem modelo de FP humanos. Usam-se apenas os pontos disponíveis nos CSVs, sem interpolação ou nova avaliação de modelos."
+}

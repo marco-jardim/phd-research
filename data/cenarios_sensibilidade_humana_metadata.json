@@ -1,0 +1,26 @@
+{
+  "analysis": "exploratory_sensitivity_scenarios",
+  "registered": false,
+  "human_sensitivity_measured": false,
+  "human_specificity_assumed": 1.0,
+  "human_FP_modeled": false,
+  "formula": "(accepted_without_human + s * links_sent_to_human) / total_links",
+  "automatic_FP_note": "Human specificity is assumed perfect, not automatic-decision specificity. P's observed automatic false positives are not changed by varying human sensitivity.",
+  "inputs_sha256": {
+    "data/arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
+    "data/comparador_p_match_humano.csv": "4ace424a4c5fc7b4c5020818d3fd1121db20c9f305d7e4a80a5fd25617f20d53",
+    "data/comparador_mesma_carga_curva.csv": "f22da3c1971777c6c44cc2de1beed0d2d17afbd981c55e5030f3c78f04dc4d9c",
+    "data/filtro_llm.csv": "35414587035068bad019eeae268cab9daf1f2ac046a07e76b7776488e7a0f836",
+    "data/cenarios_sensibilidade_humana_parametros.json": "d85e229fab19c7c8a37f7676d89ee5dc25c4ed63e839db92664ecb4cafdce501"
+  },
+  "max_amplitude_pp": 0.7287449392712642,
+  "max_amplitude_excluding_integral_pp": 0.5263157894736858,
+  "strict_reversals": 0,
+  "ties_change": 3,
+  "same_human_workload_strict_reversals": 0,
+  "same_human_workload_ties_change": 0,
+  "ordering_note": "Strict reversals and changing ties are reported separately. Comparisons across unequal human workloads are not resource-adjusted dominance claims.",
+  "filter_note": "Only versioned k points in the requested interval are used; no interpolation. k is the LLM queue size, not the number H of human reviews.",
+  "api_calls": 0,
+  "model_fits": 0
+}

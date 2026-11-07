@@ -1,0 +1,86 @@
+{
+  "seed": 42,
+  "sources": [
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json",
+      "sha256": "d30a30b710334874abad9ff24b9124c02b1fc33899393290d6d713f00fd776e1"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json",
+      "sha256": "e21baf47edfdd28c3937e9c9401c3b61dd806edcc20d0b1454bdb25a4b7f870c"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json",
+      "sha256": "cc68b8658866627aefc25d008bb7c978df53f554cd92425b0502eb695ffd468c"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json",
+      "sha256": "a952409dd45d8b755592d16a8919ac098f709d56a6d161a6def76d70af1c4980"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json",
+      "sha256": "b3aac9bf8d09765c95a135d907e063ecce8a47b906fbb7507e2c79fe7dd35747"
+    },
+    {
+      "path": "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json",
+      "sha256": "abc76bda740c23707ff95f674f7c32c1d87199fcec5f9a3c028e30bc804308f0"
+    }
+  ],
+  "rates_sha256": "9fc27bfe8a3f0cd92648a98586e915594295537a1aebd17c273c11a5771913d2",
+  "config_sha256": "a2bff114be251094b2c1739aed6036c84ba2dbe453b7d6c55cb586cdd89ee355",
+  "oof_sha256": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+  "leaveout": "mode-specific selected pair_ids excluded from all Haiku v4 reliability sources listed in YAML; no pooling",
+  "u_limitation": "marginal UNSURE approximates each class, clipped to 1-e_fn/1-e_fp",
+  "score_evidence": {
+    "generator": "scripts/generate_missing_figures.py",
+    "column": "nota final",
+    "coarse_counts": [
+      39981,
+      21620,
+      95
+    ],
+    "generator_sha256": "81d9f9d2186be4be46c7b8c696fad7dfc427a54d2a0d8f33bce086ccb1c4bbdc",
+    "bands": [
+      {
+        "band": "0-3",
+        "n": 5336,
+        "vinculos": 0
+      },
+      {
+        "band": "3-5",
+        "n": 34645,
+        "vinculos": 3
+      },
+      {
+        "band": "5-6",
+        "n": 14263,
+        "vinculos": 17
+      },
+      {
+        "band": "6-7",
+        "n": 6175,
+        "vinculos": 57
+      },
+      {
+        "band": "7-8",
+        "n": 1080,
+        "vinculos": 43
+      },
+      {
+        "band": "8-9",
+        "n": 102,
+        "vinculos": 34
+      },
+      {
+        "band": "9-10",
+        "n": 44,
+        "vinculos": 43
+      },
+      {
+        "band": "10+",
+        "n": 51,
+        "vinculos": 50
+      }
+    ]
+  }
+}

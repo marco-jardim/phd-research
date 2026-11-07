@@ -1,0 +1,925 @@
+{
+  "system": "You audit model parameters, not individual people. Return only valid JSON. Distinguish hypotheses from observed failure rates; no claim of exact specification from truncated trees.",
+  "prompt": {
+    "feature_dictionary": [
+      {
+        "name": "NOME prim frag igual",
+        "meaning": "NOME: igualdade do primeiro fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME ult frag igual",
+        "meaning": "NOME: igualdade do último fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag iguais",
+        "meaning": "NOME: contagem de fragmentos iguais",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag raros",
+        "meaning": "NOME: contagem de fragmentos raros coincidentes",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag comuns",
+        "meaning": "NOME: contagem de fragmentos comuns coincidentes",
+        "observed_range": [
+          -1.0,
+          -0.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag muito parec",
+        "meaning": "NOME: contagem de fragmentos muito parecidos",
+        "observed_range": [
+          0.2,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOME qtd frag abrev",
+        "meaning": "NOME: contagem de abreviações compatíveis",
+        "observed_range": [
+          0.0,
+          0.2
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE prim frag igual",
+        "meaning": "NOMEMAE: igualdade do primeiro fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE ult frag igual",
+        "meaning": "NOMEMAE: igualdade do último fragmento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag iguais",
+        "meaning": "NOMEMAE: contagem de fragmentos iguais",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag raros",
+        "meaning": "NOMEMAE: contagem de fragmentos raros coincidentes",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag comuns",
+        "meaning": "NOMEMAE: contagem de fragmentos comuns coincidentes",
+        "observed_range": [
+          -1.0,
+          -0.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag muito parec",
+        "meaning": "NOMEMAE: contagem de fragmentos muito parecidos",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "NOMEMAE qtd frag abrev",
+        "meaning": "NOMEMAE: contagem de abreviações compatíveis",
+        "observed_range": [
+          0.0,
+          0.33
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt iguais",
+        "meaning": "DTNASC: igualdade de nascimento",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt ap 1digi",
+        "meaning": "DTNASC: nascimento difere em aproximadamente um dígito",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv dia",
+        "meaning": "DTNASC: indicador de inversão envolvendo dia",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv mes",
+        "meaning": "DTNASC: indicador de inversão envolvendo mês",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "DTNASC dt inv ano",
+        "meaning": "DTNASC: indicador de inversão envolvendo ano",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES uf igual",
+        "meaning": "CODMUNRES: UF igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES uf prox",
+        "meaning": "CODMUNRES: proximidade de UF",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES local igual",
+        "meaning": "CODMUNRES: município igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "CODMUNRES local prox",
+        "meaning": "CODMUNRES: proximidade de município",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO via igual",
+        "meaning": "ENDERECO: via de endereço igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO via prox",
+        "meaning": "ENDERECO: proximidade da via",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO numero igual",
+        "meaning": "ENDERECO: número do endereço igual",
+        "observed_range": [
+          0.0,
+          1.0
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO compl prox",
+        "meaning": "ENDERECO: proximidade do complemento",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO texto prox",
+        "meaning": "ENDERECO: proximidade textual do endereço",
+        "observed_range": [
+          0.0,
+          0.8
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "ENDERECO tokens jacc",
+        "meaning": "ENDERECO: Jaccard de tokens de endereço",
+        "observed_range": [
+          0.0,
+          0.5
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      },
+      {
+        "name": "nota final",
+        "meaning": "nota composta do comparador",
+        "observed_range": [
+          0.53,
+          13.27
+        ],
+        "missing": "ausente convertido a zero pela allowlist M1; zero não distingue ausência de discordância"
+      }
+    ],
+    "heldout_folds": [
+      0,
+      1,
+      4
+    ],
+    "training": "Only the complementary persisted folds; no heldout outcomes or pair rows.",
+    "trees_total": 300,
+    "trees_included": [
+      {
+        "tree": 0,
+        "total_split_gain": 39643.5615892,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=29314.5312,cover=10247.0967\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=1732.89355,cover=4757.77051\n\t\t3:leaf=-0.0999749824,cover=3996\n\t\t4:[NOMEMAE qtd frag comuns<-0.200000003] yes=7,no=8,missing=8,gain=2095.75513,cover=761.770386\n\t\t\t7:leaf=-0.0997404307,cover=384.25\n\t\t\t8:[ENDERECO texto prox<0.0199999996] yes=13,no=14,missing=14,gain=281.472534,cover=377.520416\n\t\t\t\t13:[nota final<4.80000019] yes=21,no=22,missing=22,gain=193.150208,cover=353.270416\n\t\t\t\t\t21:leaf=-0.09375,cover=15\n\t\t\t\t\t22:[NOMEMAE qtd frag muito parec<0.159999996] yes=27,no=28,missing=28,gain=119.522034,cover=338.270416\n\t\t\t\t\t\t27:leaf=0.0900157467,cover=329.520416\n\t\t\t\t\t\t28:leaf=-0.0897435918,cover=8.75\n\t\t\t\t14:leaf=-0.0960396081,cover=24.25\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=3254.64062,cover=5489.32666\n\t\t5:[NOMEMAE qtd frag muito parec<0.159999996] yes=9,no=10,missing=10,gain=577.217102,cover=456.658173\n\t\t\t9:[NOME qtd frag raros<0.200000003] yes=15,no=16,missing=16,gain=27.8741608,cover=64.7040863\n\t\t\t\t15:leaf=-0.0666666701,cover=2\n\t\t\t\t16:leaf=0.0984302387,cover=62.7040825\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=17,no=18,missing=18,gain=798.797241,cover=391.954071\n\t\t\t\t17:leaf=-0.0996948928,cover=326.75\n\t\t\t\t18:[NOMEMAE qtd frag muito parec<0.800000012] yes=23,no=24,missing=24,gain=35.0305634,cover=65.2040863\n\t\t\t\t\t23:leaf=-0.0714285746,cover=2.5\n\t\t\t\t\t24:leaf=0.0984302387,cover=62.7040825\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=11,no=12,missing=12,gain=341.447266,cover=5032.66846\n\t\t\t11:leaf=-0.0957894772,cover=22.75\n\t\t\t12:[NOMEMAE qtd frag comuns<-0.670000017] yes=19,no=20,missing=20,gain=229.457031,cover=5009.91846\n\t\t\t\t19:leaf=-0.0938461572,cover=15.25\n\t\t\t\t20:[nota final<6.44999981] yes=25,no=26,missing=26,gain=55.6152344,cover=4994.66846\n\t\t\t\t\t25:[NOMEMAE qtd frag comuns<-0.200000003] yes=29,no=30,missing=30,gain=571.147949,cover=355.520416\n\t\t\t\t\t\t29:leaf=-0.0976190493,cover=41\n\t\t\t\t\t\t30:leaf=0.0990491956,cover=314.520416\n\t\t\t\t\t26:[nota final<7.80999994] yes=31,no=32,missing=32,gain=15.0097656,cover=4639.14795\n\t\t\t\t\t\t31:leaf=0.0932116732,cover=1752.01025\n\t\t\t\t\t\t32:leaf=0.0997749418,cover=2887.1377\n"
+      },
+      {
+        "tree": 1,
+        "total_split_gain": 35327.0687569,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=27257.0801,cover=9937.25879\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=1487.70117,cover=4650.34766\n\t\t3:[NOMEMAE qtd frag comuns<0] yes=7,no=8,missing=8,gain=86.1171875,cover=4506.48926\n\t\t\t7:leaf=-0.0952199474,cover=3955.11328\n\t\t\t8:[nota final<5.46999979] yes=15,no=16,missing=16,gain=641.222656,cover=551.376221\n\t\t\t\t15:leaf=-0.0953598619,cover=474.831757\n\t\t\t\t16:[nota final<5.48000002] yes=23,no=24,missing=24,gain=137.006958,cover=76.5444946\n\t\t\t\t\t23:[NOME qtd frag comuns<-0.25] yes=31,no=32,missing=32,gain=15.8137665,cover=64.3231049\n\t\t\t\t\t\t31:leaf=0.0927161425,cover=63.075985\n\t\t\t\t\t\t32:leaf=-0.0549606048,cover=1.24711752\n\t\t\t\t\t24:leaf=-0.0883494914,cover=12.2213936\n\t\t4:[NOMEMAE qtd frag comuns<0] yes=9,no=10,missing=10,gain=189.874634,cover=143.857956\n\t\t\t9:leaf=-0.0895447657,cover=15.7107334\n\t\t\t10:[NOMEMAE qtd frag raros<0.200000003] yes=17,no=18,missing=18,gain=22.1115417,cover=128.147217\n\t\t\t\t17:leaf=0.0930385515,cover=126.401581\n\t\t\t\t18:leaf=-0.060554117,cover=1.74563444\n\t2:[NOMEMAE qtd frag comuns<-0.670000017] yes=5,no=6,missing=6,gain=936.805664,cover=5286.91113\n\t\t5:[DTNASC dt ap 1digi<1] yes=11,no=12,missing=12,gain=660.810364,cover=191.999817\n\t\t\t11:leaf=-0.0945575759,cover=128.934235\n\t\t\t12:leaf=0.101711445,cover=63.0655899\n\t\t6:[nota final<6.73999977] yes=13,no=14,missing=14,gain=567.740234,cover=5094.91113\n\t\t\t13:[NOMEMAE qtd frag muito parec<0.159999996] yes=19,no=20,missing=20,gain=2049.46191,cover=1065.67273\n\t\t\t\t19:leaf=0.0945179462,cover=753.708069\n\t\t\t\t20:[nota final<6.67999983] yes=25,no=26,missing=26,gain=398.982117,cover=311.96463\n\t\t\t\t\t25:leaf=-0.0958296359,cover=213.982391\n\t\t\t\t\t26:[NOME qtd frag comuns<-0.600000024] yes=33,no=34,missing=34,gain=256.812164,cover=97.9822311\n\t\t\t\t\t\t33:leaf=-0.0929916725,cover=30.4252148\n\t\t\t\t\t\t34:leaf=0.079709366,cover=67.5570221\n\t\t\t14:[NOME qtd frag comuns<-0.75] yes=21,no=22,missing=22,gain=48.7451172,cover=4029.23853\n\t\t\t\t21:[ENDERECO texto prox<0.209999993] yes=27,no=28,missing=28,gain=381.275116,cover=218.592987\n\t\t\t\t\t27:leaf=-0.0968676656,cover=29.6811161\n\t\t\t\t\t28:leaf=0.0935469493,cover=188.911865\n\t\t\t\t22:[nota final<7.80999994] yes=29,no=30,missing=30,gain=14.234375,cover=3810.64551\n\t\t\t\t\t29:[NOMEMAE ult frag igual<1] yes=35,no=36,missing=36,gain=175.273682,cover=1239.92297\n\t\t\t\t\t\t35:leaf=0.0950940996,cover=1065.65308\n\t\t\t\t\t\t36:leaf=0.0406729393,cover=174.269958\n\t\t\t\t\t30:leaf=0.0947445184,cover=2570.72266\n"
+      },
+      {
+        "tree": 2,
+        "total_split_gain": 32348.104942600003,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=23368.9883,cover=9898.40625\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=1511.76172,cover=4713.84424\n\t\t3:leaf=-0.0911160707,cover=3966.875\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=1868.04077,cover=746.969116\n\t\t\t7:leaf=-0.0911923349,cover=379.765045\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=515.444153,cover=367.204041\n\t\t\t\t13:leaf=-0.0891935602,cover=45.566452\n\t\t\t\t14:[NOMEMAE qtd frag muito parec<0.159999996] yes=23,no=24,missing=24,gain=49.756958,cover=321.637604\n\t\t\t\t\t23:[nota final<4.51999998] yes=27,no=28,missing=28,gain=37.5499268,cover=317.671143\n\t\t\t\t\t\t27:leaf=-0.068347998,cover=2.97301435\n\t\t\t\t\t\t28:leaf=0.0930328742,cover=314.69812\n\t\t\t\t\t24:leaf=-0.0731681064,cover=3.96645761\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=2209.75977,cover=5184.56152\n\t\t5:[NOMEMAE qtd frag iguais<1] yes=9,no=10,missing=10,gain=847.199951,cover=505.179535\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=688.582642,cover=378.698608\n\t\t\t\t15:leaf=-0.091650337,cover=316.326874\n\t\t\t\t16:leaf=0.089073889,cover=62.3717384\n\t\t\t10:[nota final<7.40999985] yes=17,no=18,missing=18,gain=23.8339233,cover=126.480934\n\t\t\t\t17:leaf=-0.0616270415,cover=1.98547244\n\t\t\t\t18:leaf=0.0901096165,cover=124.495461\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=230.174805,cover=4679.38232\n\t\t\t11:[ENDERECO via prox<0.409999996] yes=19,no=20,missing=20,gain=554.547302,cover=183.961288\n\t\t\t\t19:leaf=-0.0936010182,cover=59.6789665\n\t\t\t\t20:leaf=0.0906174332,cover=124.282333\n\t\t\t12:[nota final<6.73999977] yes=21,no=22,missing=22,gain=34.2734375,cover=4495.4209\n\t\t\t\t21:[NOMEMAE qtd frag muito parec<0.479999989] yes=25,no=26,missing=26,gain=293.627441,cover=737.513245\n\t\t\t\t\t25:[NOMEMAE qtd frag comuns<-0.600000024] yes=29,no=30,missing=30,gain=114.563843,cover=713.168518\n\t\t\t\t\t\t29:leaf=-0.0831752867,cover=9.42101097\n\t\t\t\t\t\t30:leaf=0.0858460888,cover=703.747498\n\t\t\t\t\t26:leaf=-0.0903884992,cover=24.3447456\n\t\t\t\t22:leaf=0.0899476856,cover=3757.90771\n"
+      },
+      {
+        "tree": 3,
+        "total_split_gain": 29262.110306500002,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=19997.2383,cover=9817.94141\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=3075.5293,cover=4652.82617\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=729.68457,cover=4311.75244\n\t\t\t7:leaf=-0.0876007527,cover=4249.29004\n\t\t\t8:leaf=0.0835421532,cover=62.4621201\n\t\t4:[NOME qtd frag muito parec<0.479999989] yes=9,no=10,missing=10,gain=108.148254,cover=341.073914\n\t\t\t9:leaf=-0.0825350955,cover=10.3675413\n\t\t\t10:[NOME qtd frag comuns<-0.75] yes=15,no=16,missing=16,gain=72.3872681,cover=330.70636\n\t\t\t\t15:leaf=-0.0767216608,cover=6.86443663\n\t\t\t\t16:[NOMEMAE qtd frag iguais<0.330000013] yes=21,no=22,missing=22,gain=41.7014771,cover=323.841919\n\t\t\t\t\t21:leaf=-0.0697788671,cover=3.91957211\n\t\t\t\t\t22:[CODMUNRES local igual<1] yes=27,no=28,missing=28,gain=15.421936,cover=319.922363\n\t\t\t\t\t\t27:leaf=-0.0534601174,cover=1.47762787\n\t\t\t\t\t\t28:leaf=0.0820321441,cover=318.444733\n\t2:[NOME qtd frag comuns<-0.75] yes=5,no=6,missing=6,gain=1242.43652,cover=5165.11475\n\t\t5:[ENDERECO texto prox<0.239999995] yes=11,no=12,missing=12,gain=1319.96472,cover=432.533051\n\t\t\t11:leaf=-0.0882027671,cover=244.787247\n\t\t\t12:leaf=0.0876112431,cover=187.745819\n\t\t6:[NOME qtd frag comuns<-0.400000006] yes=13,no=14,missing=14,gain=293.717773,cover=4732.58154\n\t\t\t13:[NOMEMAE qtd frag iguais<1] yes=17,no=18,missing=18,gain=356.353394,cover=1206.8761\n\t\t\t\t17:[DTNASC dt iguais<1] yes=23,no=24,missing=24,gain=1322.3302,cover=712.675537\n\t\t\t\t\t23:[NOME qtd frag raros<0.330000013] yes=29,no=30,missing=30,gain=593.55011,cover=282.182159\n\t\t\t\t\t\t29:leaf=-0.0899437144,cover=219.991791\n\t\t\t\t\t\t30:leaf=0.0839841887,cover=62.1903725\n\t\t\t\t\t24:leaf=0.0876229703,cover=430.493378\n\t\t\t\t18:leaf=0.0878594294,cover=494.2005\n\t\t\t14:[NOME ult frag igual<1] yes=19,no=20,missing=20,gain=61.1953125,cover=3525.70557\n\t\t\t\t19:leaf=-0.0741301998,cover=5.39503479\n\t\t\t\t20:[NOME qtd frag raros<0.200000003] yes=25,no=26,missing=26,gain=12.8115234,cover=3520.31055\n\t\t\t\t\t25:[NOMEMAE qtd frag raros<0.200000003] yes=31,no=32,missing=32,gain=19.6396484,cover=1735.62256\n\t\t\t\t\t\t31:leaf=0.0809797645,cover=1733.89282\n\t\t\t\t\t\t32:leaf=-0.0618823953,cover=1.72971225\n\t\t\t\t\t26:leaf=0.0874675959,cover=1784.68799\n"
+      },
+      {
+        "tree": 4,
+        "total_split_gain": 26725.5805683,
+        "dump": "0:[NOME qtd frag iguais<0.75] yes=1,no=2,missing=2,gain=19689.6914,cover=9916.01562\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=2594.18555,cover=4889.88037\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=1304.60449,cover=4546.19873\n\t\t\t7:[NOME qtd frag raros<0.5] yes=13,no=14,missing=14,gain=647.195312,cover=4424.14258\n\t\t\t\t13:leaf=-0.0845950171,cover=4360.29541\n\t\t\t\t14:[NOME qtd frag muito parec<0.600000024] yes=21,no=22,missing=22,gain=21.2617798,cover=63.8471375\n\t\t\t\t\t21:leaf=-0.0587035716,cover=2.18373179\n\t\t\t\t\t22:leaf=0.0804571584,cover=61.6634064\n\t\t\t8:leaf=0.082925193,cover=122.056099\n\t\t4:[NOME qtd frag iguais<0.600000024] yes=9,no=10,missing=10,gain=231.348633,cover=343.681488\n\t\t\t9:leaf=-0.0851209834,cover=23.2556248\n\t\t\t10:[NOMEMAE qtd frag iguais<0.600000024] yes=15,no=16,missing=16,gain=81.1077881,cover=320.425873\n\t\t\t\t15:leaf=-0.0809701309,cover=7.3105607\n\t\t\t\t16:[DTNASC dt ap 1digi<1] yes=23,no=24,missing=24,gain=11.0776367,cover=313.115295\n\t\t\t\t\t23:[CODMUNRES local prox<0.5] yes=27,no=28,missing=28,gain=96.7857895,cover=69.945488\n\t\t\t\t\t\t27:leaf=-0.0832820609,cover=9.360919\n\t\t\t\t\t\t28:leaf=0.083098352,cover=60.584568\n\t\t\t\t\t24:leaf=0.0848382488,cover=243.169815\n\t2:[DTNASC dt iguais<1] yes=5,no=6,missing=6,gain=249.601562,cover=5026.13477\n\t\t5:[NOMEMAE qtd frag muito parec<0.800000012] yes=11,no=12,missing=12,gain=602.830811,cover=2599.80566\n\t\t\t11:[NOME qtd frag iguais<1] yes=17,no=18,missing=18,gain=595.082642,cover=1196.6106\n\t\t\t\t17:leaf=-0.0842556804,cover=93.6297379\n\t\t\t\t18:[NOMEMAE ult frag igual<1] yes=25,no=26,missing=26,gain=274.082031,cover=1102.98083\n\t\t\t\t\t25:[NOME qtd frag raros<0.200000003] yes=29,no=30,missing=30,gain=135.575439,cover=950.612061\n\t\t\t\t\t\t29:leaf=0.0433684625,cover=647.012756\n\t\t\t\t\t\t30:leaf=0.0840025172,cover=303.599335\n\t\t\t\t\t26:[NOMEMAE qtd frag iguais<0.5] yes=31,no=32,missing=32,gain=178.854294,cover=152.36879\n\t\t\t\t\t\t31:leaf=-0.0868050754,cover=55.1620827\n\t\t\t\t\t\t32:leaf=0.0250939857,cover=97.2067108\n\t\t\t12:[NOMEMAE qtd frag iguais<0.200000003] yes=19,no=20,missing=20,gain=12.2954102,cover=1403.19507\n\t\t\t\t19:leaf=-0.0463804305,cover=1.20938957\n\t\t\t\t20:leaf=0.0846561342,cover=1401.98572\n\t\t6:leaf=0.084667705,cover=2426.3291\n"
+      },
+      {
+        "tree": 5,
+        "total_split_gain": 25408.89521483,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=18785.4297,cover=9611.00391\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=1007.55078,cover=4488.96387\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=256.189453,cover=4352.35449\n\t\t\t7:leaf=-0.0815988928,cover=3806.83228\n\t\t\t8:[NOME qtd frag comuns<-0.400000006] yes=15,no=16,missing=16,gain=675.672119,cover=545.521912\n\t\t\t\t15:leaf=-0.0832288787,cover=369.050476\n\t\t\t\t16:[NOMEMAE qtd frag comuns<-0.200000003] yes=25,no=26,missing=26,gain=353.886322,cover=176.471451\n\t\t\t\t\t25:leaf=-0.0855316445,cover=44.2770767\n\t\t\t\t\t26:[NOME qtd frag comuns<-0.25] yes=33,no=34,missing=34,gain=57.4699402,cover=132.194382\n\t\t\t\t\t\t33:leaf=0.0831407234,cover=127.039062\n\t\t\t\t\t\t34:leaf=-0.0763896853,cover=5.15532017\n\t\t4:[NOME qtd frag muito parec<0.600000024] yes=9,no=10,missing=10,gain=133.043961,cover=136.609665\n\t\t\t9:leaf=-0.0772526786,cover=14.7879972\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=17,no=18,missing=18,gain=20.3289185,cover=121.821671\n\t\t\t\t17:leaf=-0.0595608614,cover=1.96733129\n\t\t\t\t18:leaf=0.0805100724,cover=119.85434\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=1833.90625,cover=5122.04004\n\t\t5:[DTNASC dt ap 1digi<1] yes=11,no=12,missing=12,gain=670.757568,cover=500.175629\n\t\t\t11:[NOMEMAE qtd frag muito parec<0.159999996] yes=19,no=20,missing=20,gain=524.973206,cover=378.728027\n\t\t\t\t19:[NOME qtd frag raros<0.200000003] yes=27,no=28,missing=28,gain=12.2100983,cover=60.8865051\n\t\t\t\t\t27:leaf=-0.0494118854,cover=1.23277271\n\t\t\t\t\t28:leaf=0.0805788264,cover=59.6537323\n\t\t\t\t20:leaf=-0.0821342468,cover=317.841522\n\t\t\t12:[NOMEMAE qtd frag muito parec<0.800000012] yes=21,no=22,missing=22,gain=21.9437866,cover=121.447609\n\t\t\t\t21:leaf=-0.0589538217,cover=2.18403959\n\t\t\t\t22:leaf=0.0811956674,cover=119.263573\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=13,no=14,missing=14,gain=231.417969,cover=4621.86426\n\t\t\t13:leaf=-0.0820750594,cover=21.9493694\n\t\t\t14:[NOME qtd frag comuns<-0.75] yes=23,no=24,missing=24,gain=116.279297,cover=4599.91504\n\t\t\t\t23:[ENDERECO texto prox<0.230000004] yes=29,no=30,missing=30,gain=474.959595,cover=236.117798\n\t\t\t\t\t29:leaf=-0.0858858451,cover=53.874321\n\t\t\t\t\t30:[nota final<7] yes=35,no=36,missing=36,gain=15.0096741,cover=182.243469\n\t\t\t\t\t\t35:leaf=-0.0578849725,cover=1.24772716\n\t\t\t\t\t\t36:leaf=0.0832088813,cover=180.995743\n\t\t\t\t24:[NOME qtd frag iguais<0.75] yes=31,no=32,missing=32,gain=9.30859375,cover=4363.79736\n\t\t\t\t\t31:[nota final<7.40999985] yes=37,no=38,missing=38,gain=205.442749,cover=322.948608\n\t\t\t\t\t\t37:leaf=-0.0888757557,cover=18.2475834\n\t\t\t\t\t\t38:leaf=0.0803528354,cover=304.701019\n\t\t\t\t\t32:[NOME qtd frag comuns<-0.400000006] yes=39,no=40,missing=40,gain=3.11523438,cover=4040.84863\n\t\t\t\t\t\t39:leaf=0.0777254105,cover=1291.18237\n\t\t\t\t\t\t40:leaf=0.0817536041,cover=2749.66626\n"
+      },
+      {
+        "tree": 6,
+        "total_split_gain": 21697.581534499997,
+        "dump": "0:[NOME qtd frag iguais<0.75] yes=1,no=2,missing=2,gain=15629.71,cover=8740.85742\n\t1:[NOMEMAE qtd frag iguais<1] yes=3,no=4,missing=4,gain=2105.38184,cover=4597.45703\n\t\t3:[NOME qtd frag raros<0.5] yes=7,no=8,missing=8,gain=533.222656,cover=4356.47998\n\t\t\t7:[NOME qtd frag muito parec<0.800000012] yes=13,no=14,missing=14,gain=110.442383,cover=4295.04053\n\t\t\t\t13:leaf=-0.079190895,cover=3964.42651\n\t\t\t\t14:[NOMEMAE qtd frag comuns<0] yes=21,no=22,missing=22,gain=344.823212,cover=330.614044\n\t\t\t\t\t21:leaf=-0.0811900124,cover=235.485245\n\t\t\t\t\t22:[nota final<5.11999989] yes=25,no=26,missing=26,gain=176.638809,cover=95.1287994\n\t\t\t\t\t\t25:leaf=-0.0777043849,cover=26.0477276\n\t\t\t\t\t\t26:leaf=0.0728858262,cover=69.0810699\n\t\t\t8:[NOME qtd frag muito parec<0.600000024] yes=15,no=16,missing=16,gain=18.5009995,cover=61.4390755\n\t\t\t\t15:leaf=-0.0552222505,cover=2.12665629\n\t\t\t\t16:leaf=0.0759681463,cover=59.3124161\n\t\t4:[nota final<7.80999994] yes=9,no=10,missing=10,gain=45.9578247,cover=240.977264\n\t\t\t9:leaf=-0.0691966563,cover=4.55902624\n\t\t\t10:leaf=0.0799139962,cover=236.418243\n\t2:[nota final<5.46999979] yes=5,no=6,missing=6,gain=1721.90088,cover=4143.40039\n\t\t5:leaf=-0.0816857144,cover=185.02565\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=314.03418,cover=3958.37451\n\t\t\t11:[ENDERECO texto prox<0.239999995] yes=17,no=18,missing=18,gain=520.749268,cover=204.341583\n\t\t\t\t17:leaf=-0.0812348723,cover=84.1378098\n\t\t\t\t18:leaf=0.0801226348,cover=120.203781\n\t\t\t12:[NOME qtd frag comuns<-0.400000006] yes=19,no=20,missing=20,gain=13.4287109,cover=3754.03296\n\t\t\t\t19:[nota final<6.13000011] yes=23,no=24,missing=24,gain=146.863037,cover=1109.10425\n\t\t\t\t\t23:leaf=-0.0764238685,cover=15.5977478\n\t\t\t\t\t24:[nota final<6.67999983] yes=27,no=28,missing=28,gain=15.9277344,cover=1093.50659\n\t\t\t\t\t\t27:leaf=0.0572625063,cover=134.027115\n\t\t\t\t\t\t28:leaf=0.0768376514,cover=959.479431\n\t\t\t\t20:leaf=0.0794151276,cover=2644.92871\n"
+      },
+      {
+        "tree": 7,
+        "total_split_gain": 20449.3811145,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=14872.6484,cover=8701.85645\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=738.015137,cover=4317.76221\n\t\t3:leaf=-0.0769074336,cover=3669.89526\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=1113.58447,cover=647.866943\n\t\t\t7:leaf=-0.0782180056,cover=356.148987\n\t\t\t8:[NOMEMAE qtd frag muito parec<0.159999996] yes=13,no=14,missing=14,gain=269.55835,cover=291.717926\n\t\t\t\t13:[nota final<5.07000017] yes=23,no=24,missing=24,gain=141.510071,cover=258.897949\n\t\t\t\t\t23:leaf=-0.0783763453,cover=14.2964401\n\t\t\t\t\t24:[ENDERECO via prox<0.0399999991] yes=31,no=32,missing=32,gain=28.1948853,cover=244.601501\n\t\t\t\t\t\t31:leaf=0.081297487,cover=241.958054\n\t\t\t\t\t\t32:leaf=-0.0649494603,cover=2.64344835\n\t\t\t\t14:leaf=-0.0799031556,cover=32.8199806\n\t2:[NOME qtd frag muito parec<0.639999986] yes=5,no=6,missing=6,gain=1332.98145,cover=4384.09424\n\t\t5:[NOMEMAE qtd frag muito parec<0.800000012] yes=9,no=10,missing=10,gain=593.17981,cover=539.806763\n\t\t\t9:[NOMEMAE qtd frag muito parec<0.159999996] yes=15,no=16,missing=16,gain=484.070251,cover=346.457672\n\t\t\t\t15:[ENDERECO via prox<0.0399999991] yes=25,no=26,missing=26,gain=13.7707977,cover=61.0862617\n\t\t\t\t\t25:leaf=0.0805348679,cover=59.6354485\n\t\t\t\t\t26:leaf=-0.0501216538,cover=1.45081353\n\t\t\t\t16:leaf=-0.0774907991,cover=285.371399\n\t\t\t10:[nota final<7.23999977] yes=17,no=18,missing=18,gain=126.701874,cover=193.349075\n\t\t\t\t17:leaf=-0.0770483613,cover=14.9752855\n\t\t\t\t18:[ENDERECO texto prox<0.0199999996] yes=27,no=28,missing=28,gain=19.950531,cover=178.373779\n\t\t\t\t\t27:leaf=-0.0596600436,cover=2.18964171\n\t\t\t\t\t28:[NOME qtd frag muito parec<0.479999989] yes=33,no=34,missing=34,gain=16.105957,cover=176.184143\n\t\t\t\t\t\t33:leaf=-0.0524907894,cover=1.87821078\n\t\t\t\t\t\t34:leaf=0.0742862225,cover=174.305923\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=117.147949,cover=3844.28735\n\t\t\t11:[NOMEMAE qtd frag iguais<0.75] yes=19,no=20,missing=20,gain=356.993164,cover=165.975449\n\t\t\t\t19:leaf=-0.0809723288,cover=48.8527031\n\t\t\t\t20:leaf=0.0786711872,cover=117.122742\n\t\t\t12:[nota final<7.07999992] yes=21,no=22,missing=22,gain=10.1123047,cover=3678.31201\n\t\t\t\t21:[NOMEMAE qtd frag muito parec<0.479999989] yes=29,no=30,missing=30,gain=167.050537,cover=1025.521\n\t\t\t\t\t29:[NOMEMAE qtd frag muito parec<0.159999996] yes=35,no=36,missing=36,gain=47.8051758,cover=1009.0744\n\t\t\t\t\t\t35:leaf=0.0771287382,cover=862.390015\n\t\t\t\t\t\t36:leaf=0.0456735417,cover=146.684418\n\t\t\t\t\t30:leaf=-0.0843537748,cover=16.4465942\n\t\t\t\t22:leaf=0.0764655247,cover=2652.79102\n"
+      },
+      {
+        "tree": 8,
+        "total_split_gain": 18329.78598469,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=13106.8154,cover=8279.86719\n\t1:[NOME qtd frag iguais<1] yes=3,no=4,missing=4,gain=702.375,cover=4186.18604\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=114.454102,cover=3847.07886\n\t\t\t7:leaf=-0.0749118477,cover=3555.16162\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=15,no=16,missing=16,gain=270.783386,cover=291.917084\n\t\t\t\t15:leaf=-0.0752022713,cover=197.773148\n\t\t\t\t16:[nota final<5.13000011] yes=25,no=26,missing=26,gain=150.248901,cover=94.1439438\n\t\t\t\t\t25:leaf=-0.0739028528,cover=25.6179485\n\t\t\t\t\t26:[nota final<5.13999987] yes=31,no=32,missing=32,gain=54.138237,cover=68.5259933\n\t\t\t\t\t\t31:leaf=0.0794207752,cover=62.8178558\n\t\t\t\t\t\t32:leaf=-0.0722468644,cover=5.70813751\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=9,no=10,missing=10,gain=793.252136,cover=339.107361\n\t\t\t9:leaf=-0.0774443522,cover=161.244171\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=17,no=18,missing=18,gain=34.0044556,cover=177.863205\n\t\t\t\t17:leaf=-0.0669209436,cover=3.4014504\n\t\t\t\t18:leaf=0.078370966,cover=174.461761\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=1568.90234,cover=4093.68115\n\t\t5:[NOMEMAE qtd frag muito parec<0.159999996] yes=11,no=12,missing=12,gain=328.362305,cover=411.672729\n\t\t\t11:[NOME qtd frag raros<0.200000003] yes=19,no=20,missing=20,gain=12.93367,cover=59.9295425\n\t\t\t\t19:leaf=-0.048926428,cover=1.4368639\n\t\t\t\t20:leaf=0.0780832022,cover=58.4926796\n\t\t\t12:[NOMEMAE qtd frag iguais<1] yes=21,no=22,missing=22,gain=399.623993,cover=351.743195\n\t\t\t\t21:leaf=-0.0752724409,cover=293.279327\n\t\t\t\t22:[NOMEMAE qtd frag comuns<-0.600000024] yes=27,no=28,missing=28,gain=20.0709534,cover=58.463871\n\t\t\t\t\t27:leaf=-0.0582866743,cover=2.3432467\n\t\t\t\t\t28:leaf=0.0731895715,cover=56.1206245\n\t\t6:[NOMEMAE qtd frag comuns<-0.670000017] yes=13,no=14,missing=14,gain=184.151367,cover=3682.00854\n\t\t\t13:leaf=-0.0805403665,cover=19.473978\n\t\t\t14:[NOME qtd frag iguais<0.600000024] yes=23,no=24,missing=24,gain=134.209961,cover=3662.53442\n\t\t\t\t23:leaf=-0.0743990168,cover=15.1234016\n\t\t\t\t24:[NOME qtd frag comuns<-0.75] yes=29,no=30,missing=30,gain=77.6728516,cover=3647.41113\n\t\t\t\t\t29:[ENDERECO texto prox<0.189999998] yes=33,no=34,missing=34,gain=369.500305,cover=222.92598\n\t\t\t\t\t\t33:leaf=-0.0781045556,cover=48.8319283\n\t\t\t\t\t\t34:leaf=0.0763591751,cover=174.09404\n\t\t\t\t\t30:[NOMEMAE ult frag igual<1] yes=35,no=36,missing=36,gain=8.28662109,cover=3424.48511\n\t\t\t\t\t\t35:leaf=0.0751581863,cover=2195.47876\n\t\t\t\t\t\t36:leaf=0.0694092363,cover=1229.00623\n"
+      },
+      {
+        "tree": 10,
+        "total_split_gain": 18121.36051947,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=13220.0137,cover=8809.9043\n\t1:[NOME qtd frag iguais<1] yes=3,no=4,missing=4,gain=606.291992,cover=3954.53003\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=99.8461914,cover=3630.1875\n\t\t\t7:leaf=-0.0714811608,cover=3349.35547\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=15,no=16,missing=16,gain=238.074677,cover=280.832184\n\t\t\t\t15:leaf=-0.0717360377,cover=190.673248\n\t\t\t\t16:[nota final<5.13000011] yes=25,no=26,missing=26,gain=124.621185,cover=90.1589432\n\t\t\t\t\t25:leaf=-0.0698552355,cover=23.7289467\n\t\t\t\t\t26:[nota final<5.13999987] yes=33,no=34,missing=34,gain=43.8651428,cover=66.4300003\n\t\t\t\t\t\t33:leaf=0.073531054,cover=61.1701813\n\t\t\t\t\t\t34:leaf=-0.0676711425,cover=5.25981712\n\t\t4:[NOMEMAE qtd frag comuns<-0.25] yes=9,no=10,missing=10,gain=513.936768,cover=324.342499\n\t\t\t9:leaf=-0.0733129084,cover=132.162842\n\t\t\t10:[nota final<5.46999979] yes=17,no=18,missing=18,gain=174.05719,cover=192.179657\n\t\t\t\t17:leaf=-0.0735317394,cover=22.6287823\n\t\t\t\t18:[ENDERECO via prox<0.0399999991] yes=27,no=28,missing=28,gain=21.2350159,cover=169.550873\n\t\t\t\t\t27:leaf=0.0740497261,cover=166.913849\n\t\t\t\t\t28:leaf=-0.0538196154,cover=2.6370213\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=1172.02881,cover=4855.37451\n\t\t5:[DTNASC dt ap 1digi<1] yes=11,no=12,missing=12,gain=451.730499,cover=441.180359\n\t\t\t11:[DTNASC dt iguais<1] yes=19,no=20,missing=20,gain=396.561707,cover=329.64917\n\t\t\t\t19:leaf=-0.0720789209,cover=273.230621\n\t\t\t\t20:leaf=0.0725870058,cover=56.4185448\n\t\t\t12:[NOMEMAE qtd frag muito parec<0.800000012] yes=21,no=22,missing=22,gain=23.4431,cover=111.531197\n\t\t\t\t21:leaf=-0.0568271764,cover=2.90927005\n\t\t\t\t22:leaf=0.072673142,cover=108.621933\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=13,no=14,missing=14,gain=162.655762,cover=4414.19385\n\t\t\t13:leaf=-0.0721626654,cover=19.9351501\n\t\t\t14:[NOMEMAE qtd frag comuns<-0.400000006] yes=23,no=24,missing=24,gain=40.2353516,cover=4394.25879\n\t\t\t\t23:[nota final<7.40999985] yes=29,no=30,missing=30,gain=618.140991,cover=840.374939\n\t\t\t\t\t29:leaf=-0.0850822479,cover=68.2555161\n\t\t\t\t\t30:[NOMEMAE qtd frag muito parec<0.800000012] yes=35,no=36,missing=36,gain=6.21020508,cover=772.119446\n\t\t\t\t\t\t35:leaf=0.0585809052,cover=113.957436\n\t\t\t\t\t\t36:leaf=0.0730742887,cover=658.161987\n\t\t\t\t24:[NOMEMAE qtd frag comuns<-0.25] yes=31,no=32,missing=32,gain=5.44042969,cover=3553.88379\n\t\t\t\t\t31:[nota final<6.82000017] yes=37,no=38,missing=38,gain=202.971802,cover=773.831116\n\t\t\t\t\t\t37:leaf=-0.0828696713,cover=21.3540306\n\t\t\t\t\t\t38:leaf=0.070673652,cover=752.477112\n\t\t\t\t\t32:leaf=0.0718749091,cover=2780.05273\n"
+      },
+      {
+        "tree": 9,
+        "total_split_gain": 17652.4611326,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=13103.1201,cover=8292.6875\n\t1:[NOMEMAE qtd frag comuns<0] yes=3,no=4,missing=4,gain=418.631348,cover=4026.2002\n\t\t3:leaf=-0.0732494444,cover=3441.2124\n\t\t4:[nota final<5.13000011] yes=7,no=8,missing=8,gain=843.587219,cover=584.987732\n\t\t\t7:leaf=-0.0732569546,cover=369.254456\n\t\t\t8:[ENDERECO texto prox<0.0199999996] yes=13,no=14,missing=14,gain=153.070312,cover=215.733307\n\t\t\t\t13:[NOMEMAE qtd frag muito parec<0.159999996] yes=23,no=24,missing=24,gain=74.6291199,cover=193.675095\n\t\t\t\t\t23:[NOME qtd frag comuns<-0.400000006] yes=31,no=32,missing=32,gain=31.3690796,cover=184.520325\n\t\t\t\t\t\t31:leaf=-0.0626243576,cover=3.51493311\n\t\t\t\t\t\t32:leaf=0.0751322061,cover=181.005386\n\t\t\t\t\t24:leaf=-0.0685919523,cover=9.15476894\n\t\t\t\t14:leaf=-0.0714890212,cover=22.0582161\n\t2:[nota final<6.73999977] yes=5,no=6,missing=6,gain=499.436523,cover=4266.4873\n\t\t5:[NOMEMAE qtd frag muito parec<0.159999996] yes=9,no=10,missing=10,gain=1290.526,cover=904.769714\n\t\t\t9:[ENDERECO via prox<0.150000006] yes=15,no=16,missing=16,gain=28.4350586,cover=556.329956\n\t\t\t\t15:leaf=0.0741095394,cover=553.978271\n\t\t\t\t16:leaf=-0.0773794204,cover=2.35168505\n\t\t\t10:[nota final<6.67999983] yes=17,no=18,missing=18,gain=226.299866,cover=348.439728\n\t\t\t\t17:leaf=-0.0755888522,cover=243.610199\n\t\t\t\t18:[NOME qtd frag comuns<-0.600000024] yes=25,no=26,missing=26,gain=194.33844,cover=104.829536\n\t\t\t\t\t25:leaf=-0.0726745799,cover=40.4711266\n\t\t\t\t\t26:[NOMEMAE qtd frag iguais<0.5] yes=33,no=34,missing=34,gain=12.7461548,cover=64.3584137\n\t\t\t\t\t\t33:leaf=-0.0506078415,cover=1.60827208\n\t\t\t\t\t\t34:leaf=0.0694541782,cover=62.7501373\n\t\t6:[NOMEMAE qtd frag comuns<-0.670000017] yes=11,no=12,missing=12,gain=113.922363,cover=3361.71777\n\t\t\t11:[DTNASC dt ap 1digi<1] yes=19,no=20,missing=20,gain=243.456543,cover=103.380257\n\t\t\t\t19:leaf=-0.0739420727,cover=42.9051323\n\t\t\t\t20:leaf=0.080244042,cover=60.4751205\n\t\t\t12:[NOME qtd frag comuns<-0.75] yes=21,no=22,missing=22,gain=37.3056641,cover=3258.3374\n\t\t\t\t21:[ENDERECO texto prox<0.289999992] yes=27,no=28,missing=28,gain=204.682068,cover=139.960175\n\t\t\t\t\t27:leaf=-0.0743727237,cover=28.3227787\n\t\t\t\t\t28:leaf=0.0742061511,cover=111.637398\n\t\t\t\t22:[nota final<7.40999985] yes=29,no=30,missing=30,gain=12.1728516,cover=3118.3772\n\t\t\t\t\t29:[NOMEMAE prim frag igual<1] yes=35,no=36,missing=36,gain=164.732422,cover=641.913391\n\t\t\t\t\t\t35:leaf=0.0686696842,cover=622.395691\n\t\t\t\t\t\t36:leaf=-0.0760352463,cover=19.5176983\n\t\t\t\t\t30:leaf=0.0724911988,cover=2476.46387\n"
+      },
+      {
+        "tree": 11,
+        "total_split_gain": 16356.92587551,
+        "dump": "0:[nota final<6.19999981] yes=1,no=2,missing=2,gain=12786.9854,cover=8455.9248\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=367.785156,cover=3832.53076\n\t\t3:leaf=-0.0700020641,cover=3293.78491\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=665.352539,cover=538.745728\n\t\t\t7:leaf=-0.0708943531,cover=321.903564\n\t\t\t8:[NOMEMAE qtd frag muito parec<0.159999996] yes=13,no=14,missing=14,gain=188.979691,cover=216.842148\n\t\t\t\t13:[nota final<5.07000017] yes=21,no=22,missing=22,gain=94.0966797,cover=186.347733\n\t\t\t\t\t21:leaf=-0.068633981,cover=12.2637339\n\t\t\t\t\t22:[ENDERECO via prox<0.0399999991] yes=27,no=28,missing=28,gain=23.1578674,cover=174.084\n\t\t\t\t\t\t27:leaf=0.0728489682,cover=171.635941\n\t\t\t\t\t\t28:leaf=-0.0635001734,cover=2.44805622\n\t\t\t\t14:leaf=-0.0715214163,cover=30.4944172\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=868.611816,cover=4623.39404\n\t\t5:[DTNASC dt ap 1digi<1] yes=9,no=10,missing=10,gain=391.847809,cover=388.306885\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=363.287537,cover=281.32309\n\t\t\t\t15:leaf=-0.0705778748,cover=226.773361\n\t\t\t\t16:leaf=0.0721729547,cover=54.5497169\n\t\t\t10:[NOMEMAE prim frag igual<1] yes=17,no=18,missing=18,gain=9.79469299,cover=106.983803\n\t\t\t\t17:leaf=-0.0424949676,cover=1.31776714\n\t\t\t\t18:leaf=0.0710366368,cover=105.666039\n\t\t6:[nota final<6.28000021] yes=11,no=12,missing=12,gain=143.947754,cover=4235.08691\n\t\t\t11:leaf=-0.0709047243,cover=18.2604694\n\t\t\t12:[NOME qtd frag comuns<-0.75] yes=19,no=20,missing=20,gain=66.418457,cover=4216.82666\n\t\t\t\t19:[nota final<7.80999994] yes=23,no=24,missing=24,gain=255.927322,cover=148.632294\n\t\t\t\t\t23:leaf=-0.0732181594,cover=39.9500732\n\t\t\t\t\t24:leaf=0.0733959898,cover=108.68222\n\t\t\t\t20:[nota final<6.73999977] yes=25,no=26,missing=26,gain=10.6391602,cover=4068.19409\n\t\t\t\t\t25:[NOMEMAE qtd frag muito parec<0.479999989] yes=29,no=30,missing=30,gain=118.758545,cover=620.37793\n\t\t\t\t\t\t29:leaf=0.0650755987,cover=605.271912\n\t\t\t\t\t\t30:leaf=-0.0733619556,cover=15.1060448\n\t\t\t\t\t26:[nota final<7.80999994] yes=31,no=32,missing=32,gain=1.33544922,cover=3447.81616\n\t\t\t\t\t\t31:leaf=0.0668996423,cover=1016.2771\n\t\t\t\t\t\t32:leaf=0.0702680871,cover=2431.53906\n"
+      },
+      {
+        "tree": 12,
+        "total_split_gain": 14963.00162212,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=10834.5215,cover=7942.35352\n\t1:[NOME qtd frag iguais<1] yes=3,no=4,missing=4,gain=541.539551,cover=3744.771\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=86.2563477,cover=3443.65649\n\t\t\t7:leaf=-0.0686448663,cover=3171.51343\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=15,no=16,missing=16,gain=203.221924,cover=272.143005\n\t\t\t\t15:leaf=-0.0687899515,cover=184.244125\n\t\t\t\t16:[nota final<5.13000011] yes=23,no=24,missing=24,gain=114.614578,cover=87.8988876\n\t\t\t\t\t23:leaf=-0.0673844516,cover=24.2432365\n\t\t\t\t\t24:[nota final<5.13999987] yes=27,no=28,missing=28,gain=38.5874023,cover=63.6556511\n\t\t\t\t\t\t27:leaf=0.0699018687,cover=58.6008301\n\t\t\t\t\t\t28:leaf=-0.0648621991,cover=5.05482197\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=9,no=10,missing=10,gain=580.685181,cover=301.114502\n\t\t\t9:leaf=-0.0703891441,cover=140.483292\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=17,no=18,missing=18,gain=20.4422913,cover=160.631195\n\t\t\t\t17:leaf=-0.0563727617,cover=2.53078985\n\t\t\t\t18:leaf=0.07066603,cover=158.100418\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=1444.25977,cover=4197.58252\n\t\t5:[ENDERECO tokens jacc<0.379999995] yes=11,no=12,missing=12,gain=344.726257,cover=318.624054\n\t\t\t11:leaf=-0.0691565499,cover=265.64679\n\t\t\t12:leaf=0.0695705339,cover=52.9772491\n\t\t6:[NOME qtd frag comuns<-0.75] yes=13,no=14,missing=14,gain=144.525879,cover=3878.95825\n\t\t\t13:[nota final<7.80999994] yes=19,no=20,missing=20,gain=221.266266,cover=105.077812\n\t\t\t\t19:leaf=-0.0711153671,cover=48.2924309\n\t\t\t\t20:leaf=0.0730948672,cover=56.7853851\n\t\t\t14:[NOME qtd frag iguais<0.600000024] yes=21,no=22,missing=22,gain=131.543945,cover=3773.88062\n\t\t\t\t21:leaf=-0.0693865344,cover=17.0218887\n\t\t\t\t22:[NOME qtd frag iguais<0.800000012] yes=25,no=26,missing=26,gain=11.6713867,cover=3756.85864\n\t\t\t\t\t25:[nota final<7.23999977] yes=29,no=30,missing=30,gain=243.340515,cover=444.293518\n\t\t\t\t\t\t29:leaf=-0.0835191235,cover=27.3608189\n\t\t\t\t\t\t30:leaf=0.0682559684,cover=416.932709\n\t\t\t\t\t26:[NOMEMAE ult frag igual<1] yes=31,no=32,missing=32,gain=1.79882812,cover=3312.56519\n\t\t\t\t\t\t31:leaf=0.0691834465,cover=2172.64258\n\t\t\t\t\t\t32:leaf=0.0656918436,cover=1139.92249\n"
+      },
+      {
+        "tree": 13,
+        "total_split_gain": 13419.1894003,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=9429.62109,cover=7530.79639\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=932.04248,cover=3557.31836\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=417.585449,cover=3374.44946\n\t\t\t7:leaf=-0.0674708337,cover=3319.27759\n\t\t\t8:leaf=0.0702844858,cover=55.1718292\n\t\t4:[NOME qtd frag iguais<0.75] yes=9,no=10,missing=10,gain=171.478073,cover=182.868958\n\t\t\t9:leaf=-0.068284452,cover=25.3355522\n\t\t\t10:leaf=0.0698986873,cover=157.533401\n\t2:[nota final<4.80000019] yes=5,no=6,missing=6,gain=1134.25781,cover=3973.47778\n\t\t5:leaf=-0.0679837391,cover=184.476364\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=392.740234,cover=3789.00122\n\t\t\t11:[nota final<7.80999994] yes=13,no=14,missing=14,gain=431.364319,cover=224.590149\n\t\t\t\t13:leaf=-0.0690348893,cover=121.372421\n\t\t\t\t14:leaf=0.0693873614,cover=103.217728\n\t\t\t12:[nota final<5.76000023] yes=15,no=16,missing=16,gain=81.5942383,cover=3564.41113\n\t\t\t\t15:[NOME qtd frag comuns<-0.400000006] yes=17,no=18,missing=18,gain=259.534821,cover=237.7323\n\t\t\t\t\t17:leaf=-0.0673896819,cover=48.9663811\n\t\t\t\t\t18:[NOMEMAE qtd frag muito parec<0.159999996] yes=21,no=22,missing=22,gain=100.739929,cover=188.765915\n\t\t\t\t\t\t21:leaf=0.0710626766,cover=175.065277\n\t\t\t\t\t\t22:leaf=-0.0661722049,cover=13.7006435\n\t\t\t\t16:[NOME qtd frag iguais<0.600000024] yes=19,no=20,missing=20,gain=47.3374023,cover=3326.67896\n\t\t\t\t\t19:leaf=-0.0654554516,cover=6.21095562\n\t\t\t\t\t20:[NOME qtd frag iguais<0.75] yes=23,no=24,missing=24,gain=20.8935547,cover=3320.46802\n\t\t\t\t\t\t23:leaf=0.049959138,cover=230.419998\n\t\t\t\t\t\t24:leaf=0.0661531836,cover=3090.04785\n"
+      },
+      {
+        "tree": 14,
+        "total_split_gain": 12861.057317499999,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=8344.62012,cover=7406.66797\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=1534.94678,cover=3551.54004\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=390.020508,cover=3266.05591\n\t\t\t7:leaf=-0.0663229078,cover=3212.27783\n\t\t\t8:leaf=0.0685094297,cover=53.7778854\n\t\t4:[NOME qtd frag muito parec<0.479999989] yes=9,no=10,missing=10,gain=45.6456909,cover=285.484222\n\t\t\t9:leaf=-0.0600804649,cover=7.38433409\n\t\t\t10:[NOME prim frag igual<1] yes=15,no=16,missing=16,gain=33.8784485,cover=278.099884\n\t\t\t\t15:leaf=-0.0575367026,cover=5.27298546\n\t\t\t\t16:[NOMEMAE qtd frag iguais<0.330000013] yes=23,no=24,missing=24,gain=19.0334778,cover=272.826904\n\t\t\t\t\t23:leaf=-0.0501982272,cover=3.01333046\n\t\t\t\t\t24:[NOMEMAE qtd frag comuns<-0.670000017] yes=31,no=32,missing=32,gain=14.5673828,cover=269.813568\n\t\t\t\t\t\t31:leaf=-0.0479272865,cover=2.21357417\n\t\t\t\t\t\t32:leaf=0.0649827868,cover=267.600006\n\t2:[NOMEMAE qtd frag comuns<-0.25] yes=5,no=6,missing=6,gain=313.972656,cover=3855.12817\n\t\t5:[NOMEMAE qtd frag iguais<0.600000024] yes=11,no=12,missing=12,gain=871.617188,cover=1631.26746\n\t\t\t11:[DTNASC dt iguais<1] yes=17,no=18,missing=18,gain=734.701904,cover=596.475159\n\t\t\t\t17:[NOMEMAE qtd frag iguais<0.5] yes=25,no=26,missing=26,gain=166.649902,cover=404.0849\n\t\t\t\t\t25:leaf=-0.0701391548,cover=299.568298\n\t\t\t\t\t26:[ENDERECO texto prox<0.0199999996] yes=33,no=34,missing=34,gain=92.0881348,cover=104.516579\n\t\t\t\t\t\t33:leaf=0.0300124437,cover=78.7802277\n\t\t\t\t\t\t34:leaf=-0.0772112831,cover=25.736351\n\t\t\t\t18:leaf=0.0672340915,cover=192.390289\n\t\t\t12:[NOME prim frag igual<1] yes=19,no=20,missing=20,gain=58.286377,cover=1034.79224\n\t\t\t\t19:leaf=-0.0651745126,cover=8.05518532\n\t\t\t\t20:[NOMEMAE qtd frag muito parec<0.800000012] yes=27,no=28,missing=28,gain=27.670166,cover=1026.73706\n\t\t\t\t\t27:[NOMEMAE qtd frag comuns<-0.600000024] yes=35,no=36,missing=36,gain=131.44928,cover=116.077827\n\t\t\t\t\t\t35:leaf=-0.0773820579,cover=18.9232483\n\t\t\t\t\t\t36:leaf=0.0638267174,cover=97.1545792\n\t\t\t\t\t28:leaf=0.0669150576,cover=910.659302\n\t\t6:[NOME ult frag igual<1] yes=13,no=14,missing=14,gain=31.0385742,cover=2223.8606\n\t\t\t13:leaf=-0.0552989505,cover=4.72074509\n\t\t\t14:[DTNASC dt iguais<1] yes=21,no=22,missing=22,gain=12.1330566,cover=2219.13989\n\t\t\t\t21:[NOMEMAE qtd frag comuns<0] yes=29,no=30,missing=30,gain=20.2994385,cover=793.830933\n\t\t\t\t\t29:leaf=-0.0579272099,cover=2.94834447\n\t\t\t\t\t30:[NOME qtd frag raros<0.200000003] yes=37,no=38,missing=38,gain=18.4382324,cover=790.882629\n\t\t\t\t\t\t37:leaf=0.054102283,cover=540.897888\n\t\t\t\t\t\t38:leaf=0.0711133927,cover=249.984711\n\t\t\t\t22:leaf=0.0672719255,cover=1425.30884\n"
+      },
+      {
+        "tree": 15,
+        "total_split_gain": 12505.339696340001,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=8965.88672,cover=7338.71289\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=686.392578,cover=3389.83105\n\t\t3:[NOME qtd frag comuns<-0] yes=7,no=8,missing=8,gain=213.439941,cover=3269.8728\n\t\t\t7:[NOMEMAE qtd frag comuns<0] yes=15,no=16,missing=16,gain=29.5063477,cover=3177.19678\n\t\t\t\t15:leaf=-0.0653099418,cover=2799.39404\n\t\t\t\t16:[nota final<5.46999979] yes=29,no=30,missing=30,gain=238.345581,cover=377.802795\n\t\t\t\t\t29:leaf=-0.0660588816,cover=324.85379\n\t\t\t\t\t30:[nota final<5.48000002] yes=39,no=40,missing=40,gain=37.8336754,cover=52.9490128\n\t\t\t\t\t\t39:leaf=0.0634702221,cover=46.442131\n\t\t\t\t\t\t40:leaf=-0.0587473996,cover=6.50687981\n\t\t\t8:[nota final<5.78000021] yes=17,no=18,missing=18,gain=156.420761,cover=92.6760101\n\t\t\t\t17:leaf=-0.0652109683,cover=37.057766\n\t\t\t\t18:[NOMEMAE qtd frag muito parec<0.159999996] yes=31,no=32,missing=32,gain=9.87607574,cover=55.618248\n\t\t\t\t\t31:leaf=0.0694587827,cover=54.1886826\n\t\t\t\t\t32:leaf=-0.0420915894,cover=1.42956543\n\t\t4:[NOME qtd frag muito parec<0.600000024] yes=9,no=10,missing=10,gain=85.8190002,cover=119.958244\n\t\t\t9:leaf=-0.0608714893,cover=12.383853\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=19,no=20,missing=20,gain=11.0766754,cover=107.574394\n\t\t\t\t19:leaf=-0.0417304747,cover=1.43281531\n\t\t\t\t20:[NOME prim frag igual<1] yes=33,no=34,missing=34,gain=2.23716736,cover=106.141579\n\t\t\t\t\t33:leaf=0.0844386593,cover=61.4536133\n\t\t\t\t\t34:leaf=0.063678287,cover=44.6879654\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=773.499512,cover=3948.88184\n\t\t5:[NOMEMAE qtd frag iguais<1] yes=11,no=12,missing=12,gain=369.846985,cover=394.499664\n\t\t\t11:[DTNASC dt iguais<1] yes=21,no=22,missing=22,gain=309.904602,cover=290.46109\n\t\t\t\t21:leaf=-0.065591909,cover=238.607178\n\t\t\t\t22:leaf=0.0683174431,cover=51.8539085\n\t\t\t12:[DTNASC dt ap 1digi<1] yes=23,no=24,missing=24,gain=8.33575439,cover=104.038574\n\t\t\t\t23:leaf=-0.0386084169,cover=1.21917045\n\t\t\t\t24:leaf=0.0695287213,cover=102.819397\n\t\t6:[NOME qtd frag comuns<-0.75] yes=13,no=14,missing=14,gain=72.6665039,cover=3554.38232\n\t\t\t13:[ENDERECO via prox<0.409999996] yes=25,no=26,missing=26,gain=251.662842,cover=149.434525\n\t\t\t\t25:leaf=-0.0674631894,cover=47.3951721\n\t\t\t\t26:leaf=0.0708411857,cover=102.039352\n\t\t\t14:[nota final<6.44999981] yes=27,no=28,missing=28,gain=15.7734375,cover=3404.94775\n\t\t\t\t27:[NOMEMAE qtd frag comuns<0] yes=35,no=36,missing=36,gain=190.527817,cover=218.780945\n\t\t\t\t\t35:leaf=-0.0741749033,cover=26.6596336\n\t\t\t\t\t36:leaf=0.0664889514,cover=192.121307\n\t\t\t\t28:[NOME qtd frag comuns<-0.400000006] yes=37,no=38,missing=38,gain=5.61328125,cover=3186.16675\n\t\t\t\t\t37:[nota final<6.5999999] yes=41,no=42,missing=42,gain=70.6744385,cover=878.195923\n\t\t\t\t\t\t41:leaf=-0.0821601525,cover=7.8710041\n\t\t\t\t\t\t42:leaf=0.0611085109,cover=870.324951\n\t\t\t\t\t38:leaf=0.0650609061,cover=2307.97095\n"
+      },
+      {
+        "tree": 16,
+        "total_split_gain": 11526.85493532,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=8261.4209,cover=7008.24658\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=642.34082,cover=3283.68677\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=131.271973,cover=3167.21558\n\t\t\t7:leaf=-0.0642582104,cover=2747.63135\n\t\t\t8:[NOME qtd frag comuns<-0.400000006] yes=15,no=16,missing=16,gain=310.641418,cover=419.584229\n\t\t\t\t15:leaf=-0.0651214048,cover=275.553131\n\t\t\t\t16:[NOMEMAE qtd frag comuns<-0.200000003] yes=25,no=26,missing=26,gain=167.214142,cover=144.031082\n\t\t\t\t\t25:leaf=-0.065924935,cover=36.5272141\n\t\t\t\t\t26:[NOME qtd frag comuns<-0.25] yes=35,no=36,missing=36,gain=35.0779877,cover=107.503876\n\t\t\t\t\t\t35:leaf=0.0628479347,cover=102.798088\n\t\t\t\t\t\t36:leaf=-0.0667725876,cover=4.7057848\n\t\t4:[NOME qtd frag muito parec<0.600000024] yes=9,no=10,missing=10,gain=71.267746,cover=116.4711\n\t\t\t9:leaf=-0.0594167002,cover=10.7802486\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=17,no=18,missing=18,gain=13.4316406,cover=105.690857\n\t\t\t\t17:leaf=-0.0449862145,cover=1.80851257\n\t\t\t\t18:[NOME prim frag igual<1] yes=27,no=28,missing=28,gain=1.9178772,cover=103.882339\n\t\t\t\t\t27:leaf=0.0814891234,cover=60.5527382\n\t\t\t\t\t28:leaf=0.061595954,cover=43.3296051\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=853.300293,cover=3724.56006\n\t\t5:[NOMEMAE qtd frag iguais<0.200000003] yes=11,no=12,missing=12,gain=189.311493,cover=328.901276\n\t\t\t11:[NOME qtd frag raros<0.200000003] yes=19,no=20,missing=20,gain=11.9347916,cover=52.0872803\n\t\t\t\t19:leaf=-0.0451593362,cover=1.81212449\n\t\t\t\t20:leaf=0.0672344193,cover=50.2751579\n\t\t\t12:[NOMEMAE qtd frag iguais<1] yes=21,no=22,missing=22,gain=274.599182,cover=276.813995\n\t\t\t\t21:leaf=-0.0644847974,cover=224.816345\n\t\t\t\t22:[NOMEMAE qtd frag comuns<-0.600000024] yes=29,no=30,missing=30,gain=12.4089127,cover=51.9976425\n\t\t\t\t\t29:leaf=-0.0469952002,cover=1.82937109\n\t\t\t\t\t30:leaf=0.0669512302,cover=50.1682701\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=13,no=14,missing=14,gain=110.589355,cover=3395.65869\n\t\t\t13:leaf=-0.065974921,cover=16.5108662\n\t\t\t14:[NOME qtd frag comuns<-0.75] yes=23,no=24,missing=24,gain=32.7670898,cover=3379.14795\n\t\t\t\t23:[ENDERECO texto prox<0.239999995] yes=31,no=32,missing=32,gain=238.154007,cover=195.063309\n\t\t\t\t\t31:leaf=-0.0654829517,cover=40.9732742\n\t\t\t\t\t32:[nota final<7] yes=37,no=38,missing=38,gain=11.9567261,cover=154.090042\n\t\t\t\t\t\t37:leaf=-0.0500738434,cover=1.42334056\n\t\t\t\t\t\t38:leaf=0.0703823417,cover=152.666702\n\t\t\t\t24:[NOME qtd frag iguais<0.75] yes=33,no=34,missing=34,gain=10.7714844,cover=3184.08472\n\t\t\t\t\t33:[nota final<7.40999985] yes=39,no=40,missing=40,gain=141.922897,cover=209.418564\n\t\t\t\t\t\t39:leaf=-0.0793080255,cover=18.3787842\n\t\t\t\t\t\t40:leaf=0.0631699041,cover=191.03978\n\t\t\t\t\t34:[NOMEMAE ult frag igual<1] yes=41,no=42,missing=42,gain=4.55419922,cover=2974.66602\n\t\t\t\t\t\t41:leaf=0.0645365492,cover=1910.22461\n\t\t\t\t\t\t42:leaf=0.059801694,cover=1064.44141\n"
+      },
+      {
+        "tree": 17,
+        "total_split_gain": 10415.65598551,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=7063.44287,cover=6693.62744\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=1024.56689,cover=3147.65161\n\t\t3:[NOME qtd frag raros<0.330000013] yes=7,no=8,missing=8,gain=255.486816,cover=2931.13281\n\t\t\t7:leaf=-0.0634301007,cover=2869.26929\n\t\t\t8:[NOMEMAE qtd frag comuns<0] yes=15,no=16,missing=16,gain=53.5678329,cover=61.8634949\n\t\t\t\t15:leaf=-0.0586816259,cover=10.7757759\n\t\t\t\t16:[NOME qtd frag iguais<0.400000006] yes=27,no=28,missing=28,gain=11.7507095,cover=51.087719\n\t\t\t\t\t27:leaf=-0.0433551185,cover=1.97060382\n\t\t\t\t\t28:leaf=0.0649823472,cover=49.117115\n\t\t4:[NOME qtd frag iguais<0.600000024] yes=9,no=10,missing=10,gain=95.9556885,cover=216.518631\n\t\t\t9:leaf=-0.0626914352,cover=16.2679272\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.670000017] yes=17,no=18,missing=18,gain=16.0936584,cover=200.250702\n\t\t\t\t17:leaf=-0.0485609286,cover=2.62608218\n\t\t\t\t18:[DTNASC dt ap 1digi<1] yes=29,no=30,missing=30,gain=6.2671814,cover=197.624634\n\t\t\t\t\t29:[NOMEMAE qtd frag comuns<-0.400000006] yes=39,no=40,missing=40,gain=35.5789337,cover=48.6643753\n\t\t\t\t\t\t39:leaf=-0.062670216,cover=5.89295053\n\t\t\t\t\t\t40:leaf=0.0608981326,cover=42.7714233\n\t\t\t\t\t30:leaf=0.0678670108,cover=148.960251\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=312.28833,cover=3545.97583\n\t\t5:[NOMEMAE qtd frag comuns<-0.25] yes=11,no=12,missing=12,gain=453.697449,cover=502.358002\n\t\t\t11:[DTNASC dt ap 1digi<1] yes=19,no=20,missing=20,gain=255.027756,cover=225.011246\n\t\t\t\t19:leaf=-0.0671156868,cover=178.036484\n\t\t\t\t20:leaf=0.0628555715,cover=46.9747696\n\t\t\t12:[ENDERECO via prox<0.100000001] yes=21,no=22,missing=22,gain=57.9195251,cover=277.346741\n\t\t\t\t21:[NOME qtd frag iguais<0.400000006] yes=31,no=32,missing=32,gain=25.9054871,cover=268.380402\n\t\t\t\t\t31:leaf=-0.0547401384,cover=4.13145971\n\t\t\t\t\t32:[NOME prim frag igual<1] yes=41,no=42,missing=42,gain=8.94696045,cover=264.248932\n\t\t\t\t\t\t41:leaf=0.0672236159,cover=199.160934\n\t\t\t\t\t\t42:leaf=0.0442741662,cover=65.0880051\n\t\t\t\t22:leaf=-0.0642717406,cover=8.96635532\n\t\t6:[ENDERECO texto prox<0.180000007] yes=13,no=14,missing=14,gain=81.5727539,cover=3043.61768\n\t\t\t13:[NOMEMAE qtd frag comuns<-0.400000006] yes=23,no=24,missing=24,gain=242.404053,cover=1573.55481\n\t\t\t\t23:[NOMEMAE qtd frag iguais<0.5] yes=33,no=34,missing=34,gain=211.312363,cover=268.507599\n\t\t\t\t\t33:leaf=-0.0649218187,cover=77.6066971\n\t\t\t\t\t34:[ENDERECO via prox<0.0399999991] yes=43,no=44,missing=44,gain=136.256836,cover=190.900909\n\t\t\t\t\t\t43:leaf=0.0481912717,cover=167.680618\n\t\t\t\t\t\t44:leaf=-0.0788249373,cover=23.2202911\n\t\t\t\t24:[ENDERECO via prox<0.170000002] yes=35,no=36,missing=36,gain=28.5583496,cover=1305.04724\n\t\t\t\t\t35:[NOME qtd frag raros<0.200000003] yes=45,no=46,missing=46,gain=17.5377197,cover=1300.72803\n\t\t\t\t\t\t45:leaf=0.0512208641,cover=708.399963\n\t\t\t\t\t\t46:leaf=0.0632901043,cover=592.328125\n\t\t\t\t\t36:leaf=-0.0618788116,cover=4.31916618\n\t\t\t14:[ENDERECO via prox<0.219999999] yes=25,no=26,missing=26,gain=14.5817871,cover=1470.06287\n\t\t\t\t25:leaf=-0.0630902499,cover=1.51022506\n\t\t\t\t26:[NOMEMAE qtd frag comuns<-0.800000012] yes=37,no=38,missing=38,gain=6.93603516,cover=1468.55261\n\t\t\t\t\t37:leaf=-0.0362743624,cover=1.12748587\n\t\t\t\t\t38:leaf=0.0641994104,cover=1467.42517\n"
+      },
+      {
+        "tree": 18,
+        "total_split_gain": 10406.196596029,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=7339.43896,cover=6595.60986\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=571.372803,cover=3083.72632\n\t\t3:[NOME qtd frag iguais<1] yes=7,no=8,missing=8,gain=240.256348,cover=2973.27905\n\t\t\t7:leaf=-0.0626687184,cover=2753.25049\n\t\t\t8:[NOME qtd frag comuns<-0.400000006] yes=15,no=16,missing=16,gain=348.410736,cover=220.028458\n\t\t\t\t15:leaf=-0.0646010488,cover=121.799057\n\t\t\t\t16:[NOMEMAE qtd frag comuns<-0.25] yes=27,no=28,missing=28,gain=23.5827026,cover=98.229393\n\t\t\t\t\t27:leaf=-0.0561939143,cover=3.38175941\n\t\t\t\t\t28:leaf=0.0661189333,cover=94.8476334\n\t\t4:[NOMEMAE qtd frag comuns<0] yes=9,no=10,missing=10,gain=63.7883911,cover=110.447266\n\t\t\t9:leaf=-0.0580853187,cover=10.1987829\n\t\t\t10:[NOME qtd frag iguais<0.400000006] yes=17,no=18,missing=18,gain=7.91516113,cover=100.248482\n\t\t\t\t17:leaf=-0.0355725065,cover=1.22270679\n\t\t\t\t18:[NOME prim frag igual<1] yes=29,no=30,missing=30,gain=0.850814819,cover=99.0257721\n\t\t\t\t\t29:leaf=0.0768414363,cover=58.510601\n\t\t\t\t\t30:leaf=0.0598547943,cover=40.5151711\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=494.311035,cover=3511.88379\n\t\t5:[nota final<7.40999985] yes=11,no=12,missing=12,gain=643.806396,cover=624.249939\n\t\t\t11:[DTNASC dt iguais<1] yes=19,no=20,missing=20,gain=266.5,cover=292.572144\n\t\t\t\t19:leaf=-0.0641009286,cover=245.274918\n\t\t\t\t20:leaf=0.0645306036,cover=47.2972221\n\t\t\t12:[DTNASC dt ap 1digi<1] yes=21,no=22,missing=22,gain=16.9925842,cover=331.677795\n\t\t\t\t21:[NOME prim frag igual<1] yes=31,no=32,missing=32,gain=112.4757,cover=100.406906\n\t\t\t\t\t31:leaf=0.0631105974,cover=84.9534454\n\t\t\t\t\t32:leaf=-0.0799945742,cover=15.4534578\n\t\t\t\t22:leaf=0.0660099015,cover=231.270874\n\t\t6:[NOME qtd frag comuns<-0.75] yes=13,no=14,missing=14,gain=23.4267578,cover=2887.63379\n\t\t\t13:[ENDERECO texto prox<0.239999995] yes=23,no=24,missing=24,gain=192.336639,cover=178.606033\n\t\t\t\t23:leaf=-0.063879095,cover=33.9507637\n\t\t\t\t24:leaf=0.0669673532,cover=144.655273\n\t\t\t14:[DTNASC dt iguais<1] yes=25,no=26,missing=26,gain=4.79492188,cover=2709.02783\n\t\t\t\t25:[nota final<6.28000021] yes=33,no=34,missing=34,gain=39.4573975,cover=1179.76831\n\t\t\t\t\t33:leaf=-0.0763734803,cover=4.601686\n\t\t\t\t\t34:[nota final<7.40999985] yes=35,no=36,missing=36,gain=16.479248,cover=1175.16663\n\t\t\t\t\t\t35:leaf=0.0482427739,cover=295.218109\n\t\t\t\t\t\t36:leaf=0.062437512,cover=879.948486\n\t\t\t\t26:leaf=0.0631798431,cover=1529.25952\n"
+      },
+      {
+        "tree": 19,
+        "total_split_gain": 9850.8675568,
+        "dump": "0:[nota final<6.19999981] yes=1,no=2,missing=2,gain=6941.4668,cover=6496.75342\n\t1:[NOMEMAE qtd frag comuns<0] yes=3,no=4,missing=4,gain=578.579834,cover=3040.15625\n\t\t3:leaf=-0.0618860722,cover=2489.61206\n\t\t4:[NOME qtd frag comuns<-0.330000013] yes=7,no=8,missing=8,gain=511.321747,cover=550.544067\n\t\t\t7:leaf=-0.0623304062,cover=228.323151\n\t\t\t8:[NOME qtd frag iguais<0.400000006] yes=13,no=14,missing=14,gain=209.795471,cover=322.220917\n\t\t\t\t13:leaf=-0.0609918125,cover=47.3635941\n\t\t\t\t14:[ENDERECO texto prox<0.0199999996] yes=21,no=22,missing=22,gain=74.4367981,cover=274.85733\n\t\t\t\t\t21:[NOMEMAE qtd frag muito parec<0.159999996] yes=25,no=26,missing=26,gain=19.846405,cover=261.914398\n\t\t\t\t\t\t25:leaf=0.0594977699,cover=258.480957\n\t\t\t\t\t\t26:leaf=-0.0507190302,cover=3.43346477\n\t\t\t\t\t22:leaf=-0.0615425967,cover=12.9429264\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=444.99585,cover=3456.59717\n\t\t5:[NOMEMAE qtd frag iguais<0.75] yes=9,no=10,missing=10,gain=510.454468,cover=483.142059\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=252.779037,cover=253.331161\n\t\t\t\t15:leaf=-0.0648207143,cover=207.805786\n\t\t\t\t16:leaf=0.0642310604,cover=45.525383\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.670000017] yes=17,no=18,missing=18,gain=36.2190552,cover=229.810913\n\t\t\t\t17:leaf=-0.0556993559,cover=5.72585058\n\t\t\t\t18:leaf=0.0644527078,cover=224.085052\n\t\t6:[nota final<6.28000021] yes=11,no=12,missing=12,gain=79.7016602,cover=2973.45508\n\t\t\t11:leaf=-0.0658420697,cover=11.9235249\n\t\t\t12:[NOME qtd frag comuns<-0.400000006] yes=19,no=20,missing=20,gain=10.2856445,cover=2961.53149\n\t\t\t\t19:[nota final<6.5999999] yes=23,no=24,missing=24,gain=29.5891113,cover=1054.8092\n\t\t\t\t\t23:[DTNASC dt iguais<1] yes=27,no=28,missing=28,gain=141.215988,cover=103.71595\n\t\t\t\t\t\t27:leaf=-0.074543789,cover=24.0217438\n\t\t\t\t\t\t28:leaf=0.0615809038,cover=79.6942062\n\t\t\t\t\t24:[NOMEMAE qtd frag iguais<1] yes=29,no=30,missing=30,gain=10.1796875,cover=951.093201\n\t\t\t\t\t\t29:leaf=0.051869601,cover=412.096893\n\t\t\t\t\t\t30:leaf=0.0629691705,cover=538.996277\n\t\t\t\t20:leaf=0.0620033927,cover=1906.72241\n"
+      },
+      {
+        "tree": 20,
+        "total_split_gain": 9459.7185437,
+        "dump": "0:[nota final<6.28000021] yes=1,no=2,missing=2,gain=6798.53369,cover=6194.02002\n\t1:[NOME qtd frag comuns<-0] yes=3,no=4,missing=4,gain=719.27002,cover=2895.27197\n\t\t3:[NOME qtd frag raros<0.330000013] yes=7,no=8,missing=8,gain=187.093506,cover=2705.27222\n\t\t\t7:leaf=-0.0613054447,cover=2661.73291\n\t\t\t8:[NOME qtd frag iguais<0.75] yes=15,no=16,missing=16,gain=27.9746513,cover=43.5392265\n\t\t\t\t15:leaf=-0.05279091,cover=5.85270786\n\t\t\t\t16:leaf=0.0581854358,cover=37.6865196\n\t\t4:[NOME qtd frag iguais<0.400000006] yes=9,no=10,missing=10,gain=94.9596252,cover=189.999695\n\t\t\t9:leaf=-0.0586131215,cover=20.5445595\n\t\t\t10:[NOMEMAE qtd frag muito parec<0.159999996] yes=17,no=18,missing=18,gain=44.4866638,cover=169.455139\n\t\t\t\t17:[nota final<4.71999979] yes=23,no=24,missing=24,gain=17.9880981,cover=161.597137\n\t\t\t\t\t23:leaf=-0.0483121462,cover=3.13408041\n\t\t\t\t\t24:[ENDERECO via prox<0.150000006] yes=31,no=32,missing=32,gain=13.558136,cover=158.463058\n\t\t\t\t\t\t31:leaf=0.0628865883,cover=156.861313\n\t\t\t\t\t\t32:leaf=-0.0583640598,cover=1.60174632\n\t\t\t\t18:leaf=-0.0576158278,cover=7.85800648\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=330.468506,cover=3298.74829\n\t\t5:[nota final<7.40999985] yes=11,no=12,missing=12,gain=649.235779,cover=487.236511\n\t\t\t11:leaf=-0.0627754182,cover=175.562622\n\t\t\t12:[DTNASC dt ap 1digi<1] yes=19,no=20,missing=20,gain=14.2365723,cover=311.67392\n\t\t\t\t19:[nota final<7.80999994] yes=25,no=26,missing=26,gain=59.0021858,cover=92.7597275\n\t\t\t\t\t25:leaf=-0.074001275,cover=9.31041718\n\t\t\t\t\t26:[NOME qtd frag comuns<-0.400000006] yes=33,no=34,missing=34,gain=12.0926437,cover=83.4493103\n\t\t\t\t\t\t33:leaf=-0.0516635962,cover=1.92734432\n\t\t\t\t\t\t34:leaf=0.0564549565,cover=81.521965\n\t\t\t\t20:leaf=0.064248167,cover=218.914185\n\t\t6:[NOME qtd frag comuns<-0.400000006] yes=13,no=14,missing=14,gain=15.2687988,cover=2811.51172\n\t\t\t13:[nota final<7] yes=21,no=22,missing=22,gain=59.9564209,cover=972.693359\n\t\t\t\t21:[DTNASC dt iguais<1] yes=27,no=28,missing=28,gain=327.617432,cover=200.31662\n\t\t\t\t\t27:[NOME qtd frag comuns<-0.670000017] yes=35,no=36,missing=36,gain=10.6079559,cover=42.4990196\n\t\t\t\t\t\t35:leaf=-0.0670707002,cover=24.7170506\n\t\t\t\t\t\t36:leaf=-0.12385352,cover=17.7819691\n\t\t\t\t\t28:leaf=0.0618215799,cover=157.817596\n\t\t\t\t22:[ENDERECO tokens jacc<0.109999999] yes=29,no=30,missing=30,gain=3.5378418,cover=772.376709\n\t\t\t\t\t29:[nota final<7.40999985] yes=37,no=38,missing=38,gain=73.8300171,cover=257.456635\n\t\t\t\t\t\t37:leaf=-0.0999836177,cover=6.70798302\n\t\t\t\t\t\t38:leaf=0.0583363958,cover=250.748657\n\t\t\t\t\t30:leaf=0.0623226278,cover=514.920105\n\t\t\t14:leaf=0.06131953,cover=1838.81848\n"
+      },
+      {
+        "tree": 21,
+        "total_split_gain": 8789.6034387,
+        "dump": "0:[nota final<6.44999981] yes=1,no=2,missing=2,gain=6147.58203,cover=5917.00098\n\t1:[NOMEMAE qtd frag comuns<0] yes=3,no=4,missing=4,gain=704.378174,cover=2952.26685\n\t\t3:leaf=-0.0606080666,cover=2382.95654\n\t\t4:[NOME qtd frag comuns<-0.330000013] yes=7,no=8,missing=8,gain=527.201294,cover=569.310242\n\t\t\t7:leaf=-0.0610144027,cover=211.970245\n\t\t\t8:[nota final<4.80000019] yes=13,no=14,missing=14,gain=206.748108,cover=357.340027\n\t\t\t\t13:leaf=-0.0596381091,cover=46.0493431\n\t\t\t\t14:[ENDERECO texto prox<0.0199999996] yes=19,no=20,missing=20,gain=77.2661438,cover=311.29068\n\t\t\t\t\t19:[NOMEMAE qtd frag muito parec<0.159999996] yes=25,no=26,missing=26,gain=28.9175415,cover=297.579437\n\t\t\t\t\t\t25:leaf=0.0604095571,cover=292.593628\n\t\t\t\t\t\t26:leaf=-0.0531770885,cover=4.98581028\n\t\t\t\t\t20:leaf=-0.0598886423,cover=13.7112284\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=227.10083,cover=2964.73438\n\t\t5:[nota final<7.80999994] yes=9,no=10,missing=10,gain=522.070618,cover=378.301758\n\t\t\t9:leaf=-0.0632162914,cover=131.40062\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=15,no=16,missing=16,gain=1.040802,cover=246.901138\n\t\t\t\t15:[NOMEMAE qtd frag comuns<-0.25] yes=21,no=22,missing=22,gain=36.3219757,cover=80.5940399\n\t\t\t\t\t21:leaf=-0.0746089295,cover=4.4674058\n\t\t\t\t\t22:leaf=0.0607321747,cover=76.1266327\n\t\t\t\t16:leaf=0.0630057231,cover=166.307098\n\t\t6:[NOMEMAE ult frag igual<1] yes=11,no=12,missing=12,gain=7.1418457,cover=2586.43262\n\t\t\t11:leaf=0.0606888533,cover=1638.1676\n\t\t\t12:[NOMEMAE qtd frag iguais<0.5] yes=17,no=18,missing=18,gain=155.414795,cover=948.264954\n\t\t\t\t17:leaf=-0.113563113,cover=12.6334534\n\t\t\t\t18:[nota final<7.80999994] yes=23,no=24,missing=24,gain=49.2005615,cover=935.631531\n\t\t\t\t\t23:[nota final<6.73000002] yes=27,no=28,missing=28,gain=99.2187195,cover=77.2225494\n\t\t\t\t\t\t27:leaf=0.045968134,cover=62.7395477\n\t\t\t\t\t\t28:leaf=-0.0952395126,cover=14.4829979\n\t\t\t\t\t24:leaf=0.060570728,cover=858.408997\n"
+      },
+      {
+        "tree": 22,
+        "total_split_gain": 8121.0989997,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=6048.47168,cover=5654.43066\n\t1:[NOME qtd frag iguais<1] yes=3,no=4,missing=4,gain=333.949707,cover=2591.9104\n\t\t3:leaf=-0.059945859,cover=2362.9646\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=330.24527,cover=228.945816\n\t\t\t7:leaf=-0.0613183267,cover=105.579117\n\t\t\t8:[ENDERECO via prox<0.0399999991] yes=13,no=14,missing=14,gain=10.8985748,cover=123.366707\n\t\t\t\t13:leaf=0.0604138672,cover=121.79847\n\t\t\t\t14:leaf=-0.0499762632,cover=1.5682385\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=506.104248,cover=3062.52002\n\t\t5:[DTNASC dt iguais<1] yes=9,no=10,missing=10,gain=140.016052,cover=255.911392\n\t\t\t9:[ENDERECO tokens jacc<0.379999995] yes=15,no=16,missing=16,gain=207.184326,cover=211.868301\n\t\t\t\t15:leaf=-0.0599250384,cover=168.086746\n\t\t\t\t16:leaf=0.0611682497,cover=43.7815552\n\t\t\t10:leaf=0.0623462163,cover=44.043087\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=11,no=12,missing=12,gain=74.09375,cover=2806.60864\n\t\t\t11:leaf=-0.0589909963,cover=13.2878828\n\t\t\t12:[NOME qtd frag comuns<-0.75] yes=17,no=18,missing=18,gain=30.0671387,cover=2793.3208\n\t\t\t\t17:[ENDERECO texto prox<0.239999995] yes=19,no=20,missing=20,gain=177.948746,cover=163.946365\n\t\t\t\t\t19:leaf=-0.0615622289,cover=36.2911224\n\t\t\t\t\t20:leaf=0.062653549,cover=127.655243\n\t\t\t\t18:[NOMEMAE ult frag igual<1] yes=21,no=22,missing=22,gain=11.2155762,cover=2629.37451\n\t\t\t\t\t21:leaf=0.0600527935,cover=1648.8894\n\t\t\t\t\t22:[NOMEMAE qtd frag iguais<0.5] yes=23,no=24,missing=24,gain=250.903931,cover=980.485107\n\t\t\t\t\t\t23:leaf=-0.0917784348,cover=28.2200069\n\t\t\t\t\t\t24:leaf=0.0572969578,cover=952.265076\n"
+      },
+      {
+        "tree": 23,
+        "total_split_gain": 7773.500085798,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=5164.40088,cover=5558.87109\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=533.271729,cover=2582.02368\n\t\t3:leaf=-0.0592471249,cover=2106.29175\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=564.113037,cover=475.731964\n\t\t\t7:leaf=-0.0600583255,cover=216.531281\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=152.361343,cover=259.200684\n\t\t\t\t13:leaf=-0.0596800856,cover=27.9339695\n\t\t\t\t14:[nota final<4.80000019] yes=23,no=24,missing=24,gain=15.5123596,cover=231.266708\n\t\t\t\t\t23:leaf=-0.0471140221,cover=2.52159524\n\t\t\t\t\t24:[nota final<5.13999987] yes=27,no=28,missing=28,gain=1.44836426,cover=228.745102\n\t\t\t\t\t\t27:leaf=0.0694922954,cover=110.051392\n\t\t\t\t\t\t28:leaf=0.0579522252,cover=118.69371\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=438.256592,cover=2976.84717\n\t\t5:[nota final<7.80999994] yes=9,no=10,missing=10,gain=218.734741,cover=304.687408\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=202.483368,cover=217.523911\n\t\t\t\t15:leaf=-0.0591783002,cover=174.98024\n\t\t\t\t16:leaf=0.0613936596,cover=42.5436707\n\t\t\t10:[NOME qtd frag comuns<-0.600000024] yes=17,no=18,missing=18,gain=11.2730408,cover=87.1634903\n\t\t\t\t17:leaf=0.0607636683,cover=85.1255341\n\t\t\t\t18:leaf=-0.0428366251,cover=2.037956\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=107.20752,cover=2672.15967\n\t\t\t11:[ENDERECO texto prox<0.550000012] yes=19,no=20,missing=20,gain=100.374123,cover=69.5622177\n\t\t\t\t19:leaf=-0.0615904629,cover=37.3262749\n\t\t\t\t20:leaf=0.0571522303,cover=32.2359428\n\t\t\t12:[NOME qtd frag iguais<0.600000024] yes=21,no=22,missing=22,gain=68.3457031,cover=2602.59741\n\t\t\t\t21:leaf=-0.0587422922,cover=12.0944014\n\t\t\t\t22:[NOMEMAE qtd frag comuns<-0.25] yes=25,no=26,missing=26,gain=13.6962891,cover=2590.50317\n\t\t\t\t\t25:[nota final<6.67999983] yes=29,no=30,missing=30,gain=181.592285,cover=976.599243\n\t\t\t\t\t\t29:leaf=-0.0731532201,cover=27.3685913\n\t\t\t\t\t\t30:leaf=0.0556041896,cover=949.230652\n\t\t\t\t\t26:[nota final<6.13999987] yes=31,no=32,missing=32,gain=0.428710938,cover=1613.90381\n\t\t\t\t\t\t31:leaf=0.0688825473,cover=52.5962143\n\t\t\t\t\t\t32:leaf=0.0594178252,cover=1561.30762\n"
+      },
+      {
+        "tree": 24,
+        "total_split_gain": 6992.575622829,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=4828.8335,cover=5227.30811\n\t1:[NOMEMAE qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=513.866211,cover=2374.96875\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=230.100586,cover=2236.75342\n\t\t\t7:leaf=-0.0587667711,cover=2195.13672\n\t\t\t8:leaf=0.0588626824,cover=41.6166306\n\t\t4:[NOME qtd frag iguais<0.600000024] yes=9,no=10,missing=10,gain=58.9321976,cover=138.215347\n\t\t\t9:leaf=-0.056425672,cover=12.808116\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.670000017] yes=15,no=16,missing=16,gain=12.198349,cover=125.407234\n\t\t\t\t15:leaf=-0.0436285734,cover=2.49521971\n\t\t\t\t16:[ENDERECO via prox<0.0399999991] yes=23,no=24,missing=24,gain=0.922439575,cover=122.91201\n\t\t\t\t\t23:[NOMEMAE prim frag igual<1] yes=33,no=34,missing=34,gain=8.4515686,cover=86.9955292\n\t\t\t\t\t\t33:leaf=-0.0467746109,cover=1.16618764\n\t\t\t\t\t\t34:leaf=0.0610789023,cover=85.8293457\n\t\t\t\t\t24:[DTNASC dt iguais<1] yes=35,no=36,missing=36,gain=19.6699562,cover=35.916481\n\t\t\t\t\t\t35:leaf=-0.0555730164,cover=3.57129526\n\t\t\t\t\t\t36:leaf=0.0572001934,cover=32.3451843\n\t2:[NOMEMAE qtd frag comuns<-0.25] yes=5,no=6,missing=6,gain=215.08374,cover=2852.3396\n\t\t5:[NOMEMAE qtd frag muito parec<0.800000012] yes=11,no=12,missing=12,gain=488.682831,cover=1118.13953\n\t\t\t11:[ENDERECO via prox<0.219999999] yes=17,no=18,missing=18,gain=261.896881,cover=485.245331\n\t\t\t\t17:[NOMEMAE qtd frag raros<0.200000003] yes=25,no=26,missing=26,gain=122.711304,cover=336.610321\n\t\t\t\t\t25:[NOMEMAE qtd frag muito parec<0.400000006] yes=37,no=38,missing=38,gain=44.7180328,cover=301.951416\n\t\t\t\t\t\t37:leaf=-0.0609071665,cover=168.206543\n\t\t\t\t\t\t38:leaf=-0.0219730791,cover=133.744888\n\t\t\t\t\t26:[NOMEMAE ult frag igual<1] yes=39,no=40,missing=40,gain=4.74708939,cover=34.6588936\n\t\t\t\t\t\t39:leaf=-0.0304850694,cover=1.00266099\n\t\t\t\t\t\t40:leaf=0.0577847026,cover=33.6562309\n\t\t\t\t18:[ENDERECO tokens jacc<0.119999997] yes=27,no=28,missing=28,gain=46.48526,cover=148.63501\n\t\t\t\t\t27:leaf=-0.0668922588,cover=7.79954767\n\t\t\t\t\t28:[NOME qtd frag iguais<0.75] yes=41,no=42,missing=42,gain=24.1350708,cover=140.835464\n\t\t\t\t\t\t41:leaf=-0.0563802905,cover=4.1545577\n\t\t\t\t\t\t42:leaf=0.0563004017,cover=136.680893\n\t\t\t12:[NOMEMAE ult frag igual<1] yes=19,no=20,missing=20,gain=7.08795166,cover=632.894287\n\t\t\t\t19:leaf=-0.0365882292,cover=1.3703593\n\t\t\t\t20:[NOME qtd frag iguais<0.75] yes=29,no=30,missing=30,gain=1.09112549,cover=631.523926\n\t\t\t\t\t29:[NOME ult frag igual<1] yes=43,no=44,missing=44,gain=25.2532768,cover=39.5646782\n\t\t\t\t\t\t43:leaf=0.0588262677,cover=35.896946\n\t\t\t\t\t\t44:leaf=-0.0665991232,cover=3.66773367\n\t\t\t\t\t30:leaf=0.0584761016,cover=591.959229\n\t\t6:[NOME qtd frag iguais<0.400000006] yes=13,no=14,missing=14,gain=24.1022949,cover=1734.19995\n\t\t\t13:leaf=-0.0506823957,cover=4.48495913\n\t\t\t14:[DTNASC dt iguais<1] yes=21,no=22,missing=22,gain=9.18701172,cover=1729.71497\n\t\t\t\t21:[NOME qtd frag raros<0.200000003] yes=31,no=32,missing=32,gain=10.9522705,cover=617.366333\n\t\t\t\t\t31:[NOME qtd frag iguais<0.600000024] yes=45,no=46,missing=46,gain=32.5784912,cover=399.761169\n\t\t\t\t\t\t45:leaf=-0.0551375858,cover=6.93943357\n\t\t\t\t\t\t46:leaf=0.0485125557,cover=392.821747\n\t\t\t\t\t32:[NOME qtd frag iguais<0.600000024] yes=47,no=48,missing=48,gain=0.888183594,cover=217.605179\n\t\t\t\t\t\t47:leaf=0.0699252337,cover=53.5864258\n\t\t\t\t\t\t48:leaf=0.0578876212,cover=164.018753\n\t\t\t\t22:leaf=0.0599305443,cover=1112.34863\n"
+      },
+      {
+        "tree": 25,
+        "total_split_gain": 6843.08039953,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=4741.50586,cover=5058.68945\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=336.670654,cover=2352.31885\n\t\t3:leaf=-0.0582126789,cover=1947.91479\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=419.497986,cover=404.404053\n\t\t\t7:leaf=-0.0590918027,cover=201.198746\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=131.663681,cover=203.205292\n\t\t\t\t13:leaf=-0.0586051755,cover=27.0582066\n\t\t\t\t14:[NOMEMAE qtd frag muito parec<0.159999996] yes=21,no=22,missing=22,gain=15.2675476,cover=176.147095\n\t\t\t\t\t21:[nota final<4.51999998] yes=25,no=26,missing=26,gain=11.5065765,cover=173.557831\n\t\t\t\t\t\t25:leaf=-0.0428200327,cover=2.01997876\n\t\t\t\t\t\t26:leaf=0.0616028197,cover=171.537857\n\t\t\t\t\t22:leaf=-0.048540432,cover=2.58925962\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=418.22876,cover=2706.37085\n\t\t5:[NOMEMAE qtd frag iguais<1] yes=9,no=10,missing=10,gain=298.197235,cover=232.805527\n\t\t\t9:leaf=-0.0583380423,cover=150.381866\n\t\t\t10:[nota final<7.80999994] yes=15,no=16,missing=16,gain=7.48542023,cover=82.4236526\n\t\t\t\t15:leaf=-0.0362906046,cover=1.39027739\n\t\t\t\t16:leaf=0.0614799075,cover=81.033371\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=74.7348633,cover=2473.56543\n\t\t\t11:[nota final<7.80999994] yes=17,no=18,missing=18,gain=121.009987,cover=80.2981796\n\t\t\t\t17:leaf=-0.0605071895,cover=36.4375763\n\t\t\t\t18:leaf=0.0612555221,cover=43.8606071\n\t\t\t12:[NOME qtd frag iguais<0.600000024] yes=19,no=20,missing=20,gain=64.6584473,cover=2393.26709\n\t\t\t\t19:leaf=-0.0574099831,cover=11.9544115\n\t\t\t\t20:[NOMEMAE ult frag igual<1] yes=23,no=24,missing=24,gain=11.8535156,cover=2381.31274\n\t\t\t\t\t23:leaf=0.0583837889,cover=1530.57349\n\t\t\t\t\t24:[NOMEMAE qtd frag iguais<0.5] yes=27,no=28,missing=28,gain=190.799866,cover=850.739258\n\t\t\t\t\t\t27:leaf=-0.084624961,cover=24.4464741\n\t\t\t\t\t\t28:leaf=0.0547507592,cover=826.292786\n"
+      },
+      {
+        "tree": 26,
+        "total_split_gain": 6197.7898103,
+        "dump": "0:[NOME qtd frag iguais<0.75] yes=1,no=2,missing=2,gain=4543.32861,cover=4682.19727\n\t1:[nota final<7.80999994] yes=3,no=4,missing=4,gain=470.153564,cover=2292.89038\n\t\t3:[NOME qtd frag comuns<-0] yes=7,no=8,missing=8,gain=181.506836,cover=2188.37061\n\t\t\t7:leaf=-0.0580614023,cover=2103.87036\n\t\t\t8:[NOME qtd frag muito parec<0.639999986] yes=13,no=14,missing=14,gain=74.9987717,cover=84.500267\n\t\t\t\t13:leaf=-0.056142658,cover=24.3041267\n\t\t\t\t14:[nota final<4.82999992] yes=17,no=18,missing=18,gain=36.2021065,cover=60.1961365\n\t\t\t\t\t17:[nota final<4.69000006] yes=23,no=24,missing=24,gain=19.3244705,cover=54.0943336\n\t\t\t\t\t\t23:leaf=-0.0465524569,cover=3.34281778\n\t\t\t\t\t\t24:leaf=0.0671239048,cover=50.7515144\n\t\t\t\t\t18:leaf=-0.0619508326,cover=6.10180521\n\t\t4:[NOMEMAE qtd frag comuns<-0.600000024] yes=9,no=10,missing=10,gain=12.8041077,cover=104.519768\n\t\t\t9:leaf=-0.0488302186,cover=2.28419399\n\t\t\t10:leaf=0.0557206832,cover=102.235573\n\t2:[nota final<5.46999979] yes=5,no=6,missing=6,gain=495.243164,cover=2389.30688\n\t\t5:leaf=-0.058799576,cover=102.535667\n\t\t6:[NOMEMAE qtd frag comuns<-0.670000017] yes=11,no=12,missing=12,gain=108.772461,cover=2286.771\n\t\t\t11:leaf=-0.0698917583,cover=17.0248108\n\t\t\t12:[NOME qtd frag comuns<-0.75] yes=15,no=16,missing=16,gain=32.1010742,cover=2269.74634\n\t\t\t\t15:[ENDERECO tokens jacc<0.140000001] yes=19,no=20,missing=20,gain=172.96109,cover=158.356064\n\t\t\t\t\t19:leaf=-0.0586642139,cover=38.8081284\n\t\t\t\t\t20:[nota final<6.94999981] yes=25,no=26,missing=26,gain=7.98583984,cover=119.547943\n\t\t\t\t\t\t25:leaf=-0.0410172455,cover=1.23133862\n\t\t\t\t\t\t26:leaf=0.0630854368,cover=118.316605\n\t\t\t\t16:[NOME qtd frag comuns<-0.400000006] yes=21,no=22,missing=22,gain=8.41259766,cover=2111.39014\n\t\t\t\t\t21:[nota final<6.13000011] yes=27,no=28,missing=28,gain=33.9951172,cover=577.22052\n\t\t\t\t\t\t27:leaf=-0.0526267104,cover=7.17800522\n\t\t\t\t\t\t28:leaf=0.0515494049,cover=570.042542\n\t\t\t\t\t22:leaf=0.0577451251,cover=1534.16968\n"
+      },
+      {
+        "tree": 27,
+        "total_split_gain": 6153.257992137999,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=4351.34668,cover=4587.7749\n\t1:[NOME qtd frag iguais<1] yes=3,no=4,missing=4,gain=252.526123,cover=2103.34961\n\t\t3:leaf=-0.0574809201,cover=1912.63232\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=246.883118,cover=190.717392\n\t\t\t7:leaf=-0.0584854595,cover=87.66185\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.25] yes=13,no=14,missing=14,gain=12.8884277,cover=103.055542\n\t\t\t\t13:leaf=-0.0465985872,cover=2.33437681\n\t\t\t\t14:leaf=0.0578532405,cover=100.721161\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=330.483398,cover=2484.42529\n\t\t5:[nota final<7.80999994] yes=9,no=10,missing=10,gain=347.319031,cover=406.351715\n\t\t\t9:[NOMEMAE qtd frag muito parec<0.159999996] yes=15,no=16,missing=16,gain=200.349991,cover=226.903625\n\t\t\t\t15:[NOME qtd frag raros<0.200000003] yes=21,no=22,missing=22,gain=5.45750809,cover=43.2535477\n\t\t\t\t\t21:leaf=-0.0313732475,cover=1.04446721\n\t\t\t\t\t22:leaf=0.0621524714,cover=42.2090797\n\t\t\t\t16:leaf=-0.0593734384,cover=183.650085\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=17,no=18,missing=18,gain=4.06822205,cover=179.448074\n\t\t\t\t17:[NOME prim frag igual<1] yes=23,no=24,missing=24,gain=30.5830002,cover=36.1445427\n\t\t\t\t\t23:leaf=0.05683887,cover=31.5162544\n\t\t\t\t\t24:leaf=-0.0706188306,cover=4.62828732\n\t\t\t\t18:leaf=0.0602886155,cover=143.303528\n\t\t6:[NOMEMAE qtd frag comuns<-0.670000017] yes=11,no=12,missing=12,gain=68.9111328,cover=2078.07373\n\t\t\t11:leaf=-0.0785089433,cover=8.9692564\n\t\t\t12:[NOME qtd frag comuns<-0.75] yes=19,no=20,missing=20,gain=33.234375,cover=2069.10449\n\t\t\t\t19:[NOMEMAE qtd frag iguais<0.200000003] yes=25,no=26,missing=26,gain=105.939285,cover=71.9099731\n\t\t\t\t\t25:leaf=0.0649319217,cover=46.5427246\n\t\t\t\t\t26:leaf=-0.0601280816,cover=25.3672447\n\t\t\t\t20:[NOMEMAE qtd frag iguais<0.200000003] yes=27,no=28,missing=28,gain=4.35888672,cover=1997.19446\n\t\t\t\t\t27:[nota final<6.13999987] yes=29,no=30,missing=30,gain=0.514892578,cover=1038.81555\n\t\t\t\t\t\t29:leaf=0.067371957,cover=49.7208748\n\t\t\t\t\t\t30:leaf=0.057547003,cover=989.094666\n\t\t\t\t\t28:[nota final<6.82000017] yes=31,no=32,missing=32,gain=158.393921,cover=958.378845\n\t\t\t\t\t\t31:leaf=-0.0919970796,cover=17.6672249\n\t\t\t\t\t\t32:leaf=0.0556016751,cover=940.71167\n"
+      },
+      {
+        "tree": 28,
+        "total_split_gain": 5881.72500079,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=4125.01367,cover=4559.8623\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=366.485474,cover=2068.22217\n\t\t3:[NOME qtd frag comuns<-0] yes=7,no=8,missing=8,gain=112.583984,cover=1982.57019\n\t\t\t7:[NOMEMAE qtd frag comuns<0] yes=15,no=16,missing=16,gain=15.1418457,cover=1918.50818\n\t\t\t\t15:leaf=-0.0569342561,cover=1684.45007\n\t\t\t\t16:[nota final<5.46999979] yes=27,no=28,missing=28,gain=122.362167,cover=234.058029\n\t\t\t\t\t27:leaf=-0.0581153817,cover=198.547638\n\t\t\t\t\t28:[nota final<5.48000002] yes=33,no=34,missing=34,gain=19.8884277,cover=35.5103836\n\t\t\t\t\t\t33:leaf=0.0560515337,cover=30.9620132\n\t\t\t\t\t\t34:leaf=-0.0482350029,cover=4.54836988\n\t\t\t8:[nota final<5.78000021] yes=17,no=18,missing=18,gain=73.4344559,cover=64.0619965\n\t\t\t\t17:leaf=-0.0567560382,cover=23.5631351\n\t\t\t\t18:[NOMEMAE qtd frag muito parec<0.159999996] yes=29,no=30,missing=30,gain=4.96337891,cover=40.4988594\n\t\t\t\t\t29:leaf=0.0553727113,cover=39.4490738\n\t\t\t\t\t30:leaf=-0.0325630121,cover=1.04978609\n\t\t4:[NOME qtd frag muito parec<0.600000024] yes=9,no=10,missing=10,gain=37.751503,cover=85.6520004\n\t\t\t9:leaf=-0.0507460348,cover=7.3912816\n\t\t\t10:[NOMEMAE qtd frag comuns<-0.25] yes=19,no=20,missing=20,gain=6.15101624,cover=78.2607193\n\t\t\t\t19:leaf=-0.0321485326,cover=1.1295321\n\t\t\t\t20:leaf=0.0641330704,cover=77.1311874\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=325.50415,cover=2491.64038\n\t\t5:[NOMEMAE qtd frag muito parec<0.159999996] yes=11,no=12,missing=12,gain=105.703873,cover=213.72435\n\t\t\t11:[NOME qtd frag raros<0.200000003] yes=21,no=22,missing=22,gain=5.23012924,cover=41.7332916\n\t\t\t\t21:leaf=-0.0308900476,cover=1.02385473\n\t\t\t\t22:leaf=0.0612981617,cover=40.7094383\n\t\t\t12:[ENDERECO tokens jacc<0.379999995] yes=23,no=24,missing=24,gain=172.148087,cover=171.991058\n\t\t\t\t23:leaf=-0.0569671206,cover=131.942963\n\t\t\t\t24:leaf=0.0602904074,cover=40.0480881\n\t\t6:[NOMEMAE qtd frag comuns<0] yes=13,no=14,missing=14,gain=24.7285156,cover=2277.91602\n\t\t\t13:[nota final<6.67999983] yes=25,no=26,missing=26,gain=252.99939,cover=1022.90649\n\t\t\t\t25:leaf=-0.0636796728,cover=48.8354187\n\t\t\t\t26:[NOMEMAE qtd frag muito parec<0.800000012] yes=31,no=32,missing=32,gain=25.3475342,cover=974.071045\n\t\t\t\t\t31:[NOME qtd frag comuns<-0.600000024] yes=35,no=36,missing=36,gain=86.2873993,cover=253.231339\n\t\t\t\t\t\t35:leaf=-0.0723686516,cover=15.677537\n\t\t\t\t\t\t36:leaf=0.0456640236,cover=237.553802\n\t\t\t\t\t32:leaf=0.0568469875,cover=720.839722\n\t\t\t14:leaf=0.0571355931,cover=1255.00952\n"
+      },
+      {
+        "tree": 29,
+        "total_split_gain": 5598.510040029,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=3659.96045,cover=4435.87354\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=439.451172,cover=2032.6781\n\t\t3:leaf=-0.0565104,cover=1639.32861\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=426.138275,cover=393.349579\n\t\t\t7:leaf=-0.0571424179,cover=169.979553\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=107.590225,cover=223.37001\n\t\t\t\t13:leaf=-0.05613897,cover=21.7365646\n\t\t\t\t14:[ENDERECO texto prox<0.0199999996] yes=21,no=22,missing=22,gain=12.5585022,cover=201.633453\n\t\t\t\t\t21:[nota final<5.13999987] yes=25,no=26,missing=26,gain=0.441741943,cover=199.348129\n\t\t\t\t\t\t25:leaf=0.06472601,cover=105.180397\n\t\t\t\t\t\t26:leaf=0.0550092719,cover=94.1677246\n\t\t\t\t\t22:leaf=-0.0434251912,cover=2.28532147\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=349.029785,cover=2403.19531\n\t\t5:[DTNASC dt iguais<1] yes=9,no=10,missing=10,gain=107.098297,cover=217.063324\n\t\t\t9:[ENDERECO tokens jacc<0.379999995] yes=15,no=16,missing=16,gain=163.490112,cover=177.357269\n\t\t\t\t15:leaf=-0.0564700142,cover=138.393906\n\t\t\t\t16:leaf=0.0583800375,cover=38.9633636\n\t\t\t10:leaf=0.058863461,cover=39.7060585\n\t\t6:[NOMEMAE qtd frag comuns<-0.25] yes=11,no=12,missing=12,gain=27.5810547,cover=2186.13208\n\t\t\t11:[nota final<6.67999983] yes=17,no=18,missing=18,gain=242.814697,cover=959.480835\n\t\t\t\t17:leaf=-0.0624055937,cover=48.6438255\n\t\t\t\t18:[nota final<7.80999994] yes=23,no=24,missing=24,gain=21.8190308,cover=910.837036\n\t\t\t\t\t23:[NOME qtd frag comuns<-0.75] yes=27,no=28,missing=28,gain=39.7335968,cover=264.794037\n\t\t\t\t\t\t27:leaf=-0.0560868047,cover=9.75213146\n\t\t\t\t\t\t28:leaf=0.0427708775,cover=255.041916\n\t\t\t\t\t24:leaf=0.0563540161,cover=646.042969\n\t\t\t12:[nota final<6.13999987] yes=19,no=20,missing=20,gain=0.803100586,cover=1226.65125\n\t\t\t\t19:leaf=0.0670123324,cover=49.2862282\n\t\t\t\t20:leaf=0.0565696955,cover=1177.36499\n"
+      },
+      {
+        "tree": 30,
+        "total_split_gain": 5284.884458196,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=3432.72437,cover=4247.08984\n\t1:[NOMEMAE qtd frag comuns<0] yes=3,no=4,missing=4,gain=401.268433,cover=1940.36731\n\t\t3:leaf=-0.056195844,cover=1550.14746\n\t\t4:[NOME qtd frag comuns<-0.330000013] yes=7,no=8,missing=8,gain=301.48288,cover=390.219849\n\t\t\t7:leaf=-0.0564514399,cover=144.843643\n\t\t\t8:[NOME qtd frag iguais<0.5] yes=13,no=14,missing=14,gain=118.487892,cover=245.376205\n\t\t\t\t13:leaf=-0.0548629835,cover=31.6120548\n\t\t\t\t14:[ENDERECO texto prox<0.0199999996] yes=23,no=24,missing=24,gain=38.0960846,cover=213.76416\n\t\t\t\t\t23:[NOMEMAE qtd frag muito parec<0.159999996] yes=31,no=32,missing=32,gain=12.0239258,cover=205.171417\n\t\t\t\t\t\t31:leaf=0.0533985607,cover=202.62001\n\t\t\t\t\t\t32:leaf=-0.043464385,cover=2.55140591\n\t\t\t\t\t24:leaf=-0.0511448346,cover=8.59274578\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=245.869873,cover=2306.7229\n\t\t5:[nota final<7.40999985] yes=9,no=10,missing=10,gain=285.619446,cover=392.891357\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=166.147827,cover=192.325363\n\t\t\t\t15:leaf=-0.0572155975,cover=154.021088\n\t\t\t\t16:leaf=0.0580421202,cover=38.3042679\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=17,no=18,missing=18,gain=13.1942291,cover=200.56601\n\t\t\t\t17:[NOMEMAE qtd frag comuns<-0.200000003] yes=25,no=26,missing=26,gain=71.317543,cover=63.9263115\n\t\t\t\t\t25:leaf=-0.0818946883,cover=10.5977325\n\t\t\t\t\t26:leaf=0.0550608449,cover=53.3285789\n\t\t\t\t18:leaf=0.0598408468,cover=136.639694\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=25.7685547,cover=1913.83142\n\t\t\t11:[nota final<7.80999994] yes=19,no=20,missing=20,gain=97.9253922,cover=90.0245819\n\t\t\t\t19:leaf=-0.0575892702,cover=24.4341049\n\t\t\t\t20:leaf=0.0579048693,cover=65.5904846\n\t\t\t12:[DTNASC dt iguais<1] yes=21,no=22,missing=22,gain=6.17041016,cover=1823.80688\n\t\t\t\t21:[nota final<6.40999985] yes=27,no=28,missing=28,gain=51.1799316,cover=852.872742\n\t\t\t\t\t27:leaf=-0.0745908469,cover=7.2420435\n\t\t\t\t\t28:[nota final<7.80999994] yes=33,no=34,missing=34,gain=17.3162842,cover=845.630676\n\t\t\t\t\t\t33:leaf=0.0395010896,cover=222.771896\n\t\t\t\t\t\t34:leaf=0.0562092252,cover=622.858826\n\t\t\t\t22:[nota final<6.13999987] yes=29,no=30,missing=30,gain=0.291381836,cover=970.934143\n\t\t\t\t\t29:leaf=0.0658028349,cover=47.7401276\n\t\t\t\t\t30:leaf=0.0565308928,cover=923.194031\n"
+      },
+      {
+        "tree": 31,
+        "total_split_gain": 4785.65728319,
+        "dump": "0:[NOME qtd frag muito parec<0.800000012] yes=1,no=2,missing=2,gain=3114.69263,cover=3948.47266\n\t1:[NOMEMAE qtd frag iguais<1] yes=3,no=4,missing=4,gain=509.256592,cover=1782.06201\n\t\t3:[DTNASC dt iguais<1] yes=7,no=8,missing=8,gain=186.194946,cover=1673.12085\n\t\t\t7:leaf=-0.0559183769,cover=1635.71741\n\t\t\t8:leaf=0.0558013432,cover=37.4034348\n\t\t4:[NOMEMAE qtd frag comuns<-0.670000017] yes=9,no=10,missing=10,gain=5.98153687,cover=108.941086\n\t\t\t9:leaf=-0.0320202149,cover=1.24428189\n\t\t\t10:leaf=0.0591169111,cover=107.6968\n\t2:[NOME qtd frag iguais<0.600000024] yes=5,no=6,missing=6,gain=232.405029,cover=2166.41064\n\t\t5:leaf=-0.0562689006,cover=56.9898911\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=193.974854,cover=2109.42065\n\t\t\t11:[ENDERECO texto prox<0.239999995] yes=13,no=14,missing=14,gain=244.130386,cover=182.610825\n\t\t\t\t13:leaf=-0.0567796007,cover=98.9468155\n\t\t\t\t14:leaf=0.0586137883,cover=83.6640015\n\t\t\t12:[NOMEMAE qtd frag comuns<-0.25] yes=15,no=16,missing=16,gain=35.5235596,cover=1926.80994\n\t\t\t\t15:[NOMEMAE qtd frag iguais<0.600000024] yes=17,no=18,missing=18,gain=132.965088,cover=786.942261\n\t\t\t\t\t17:[DTNASC dt iguais<1] yes=19,no=20,missing=20,gain=122.060921,cover=201.838928\n\t\t\t\t\t\t19:leaf=-0.0237776246,cover=124.975166\n\t\t\t\t\t\t20:leaf=0.0558609143,cover=76.8637695\n\t\t\t\t\t18:[NOME prim frag igual<1] yes=21,no=22,missing=22,gain=8.47174072,cover=585.103333\n\t\t\t\t\t\t21:leaf=-0.0448899679,cover=1.46672618\n\t\t\t\t\t\t22:leaf=0.0540904999,cover=583.636597\n\t\t\t\t16:leaf=0.0557091236,cover=1139.86768\n"
+      },
+      {
+        "tree": 33,
+        "total_split_gain": 4654.894502857,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=2865.14355,cover=3757.94092\n\t1:[NOMEMAE qtd frag comuns<0] yes=3,no=4,missing=4,gain=360.401367,cover=1710.00793\n\t\t3:leaf=-0.0552410148,cover=1360.15662\n\t\t4:[NOME qtd frag comuns<-0.330000013] yes=7,no=8,missing=8,gain=262.111755,cover=349.851318\n\t\t\t7:leaf=-0.0554052778,cover=127.050629\n\t\t\t8:[nota final<4.71999979] yes=13,no=14,missing=14,gain=99.6935883,cover=222.800705\n\t\t\t\t13:leaf=-0.0537470542,cover=27.3337517\n\t\t\t\t14:[ENDERECO texto prox<0.0199999996] yes=21,no=22,missing=22,gain=35.3828278,cover=195.466949\n\t\t\t\t\t21:[NOME qtd frag raros<0.400000006] yes=29,no=30,missing=30,gain=3.38864136,cover=187.23941\n\t\t\t\t\t\t29:leaf=0.04663774,cover=141.092026\n\t\t\t\t\t\t30:leaf=0.0643381998,cover=46.1473923\n\t\t\t\t\t22:leaf=-0.0501897447,cover=8.2275362\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=209.312256,cover=2047.93298\n\t\t5:[nota final<7.40999985] yes=9,no=10,missing=10,gain=388.047729,cover=352.324768\n\t\t\t9:leaf=-0.0563903861,cover=137.530731\n\t\t\t10:[NOMEMAE qtd frag iguais<0.75] yes=15,no=16,missing=16,gain=10.4165039,cover=214.794052\n\t\t\t\t15:[NOMEMAE qtd frag comuns<-0.200000003] yes=23,no=24,missing=24,gain=59.1763,cover=58.7406807\n\t\t\t\t\t23:leaf=-0.0739467964,cover=9.98266411\n\t\t\t\t\t24:leaf=0.0547210537,cover=48.7580147\n\t\t\t\t16:leaf=0.0576962121,cover=156.053375\n\t\t6:[DTNASC dt iguais<1] yes=11,no=12,missing=12,gain=16.9951172,cover=1695.60815\n\t\t\t11:[nota final<7.07999992] yes=17,no=18,missing=18,gain=91.3720093,cover=829.282288\n\t\t\t\t17:[NOME qtd frag comuns<-0.400000006] yes=25,no=26,missing=26,gain=218.106842,cover=124.884209\n\t\t\t\t\t25:[nota final<6.67000008] yes=31,no=32,missing=32,gain=10.2381592,cover=42.4403343\n\t\t\t\t\t\t31:leaf=-0.0631730556,cover=28.4683399\n\t\t\t\t\t\t32:leaf=-0.120434485,cover=13.9719944\n\t\t\t\t\t26:leaf=0.0537969284,cover=82.4438782\n\t\t\t\t18:[nota final<7.80999994] yes=27,no=28,missing=28,gain=6.3692627,cover=704.398071\n\t\t\t\t\t27:[NOMEMAE qtd frag comuns<-0.670000017] yes=33,no=34,missing=34,gain=18.5913773,cover=88.8652115\n\t\t\t\t\t\t33:leaf=-0.0814740509,cover=2.19165301\n\t\t\t\t\t\t34:leaf=0.0433948897,cover=86.6735535\n\t\t\t\t\t28:leaf=0.0548955798,cover=615.532837\n\t\t\t12:[nota final<6.13999987] yes=19,no=20,missing=20,gain=0.147216797,cover=866.325928\n\t\t\t\t19:leaf=0.0646927804,cover=46.2010841\n\t\t\t\t20:leaf=0.0557895899,cover=820.124817\n"
+      },
+      {
+        "tree": 32,
+        "total_split_gain": 4582.39844969,
+        "dump": "0:[nota final<6.19999981] yes=1,no=2,missing=2,gain=3140.53394,cover=3841.78467\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=319.792969,cover=1786.6438\n\t\t3:leaf=-0.0555098429,cover=1448.27185\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=334.75531,cover=338.371887\n\t\t\t7:leaf=-0.05608299,cover=152.944092\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=96.2264099,cover=185.42778\n\t\t\t\t13:leaf=-0.0549226999,cover=21.1549835\n\t\t\t\t14:[ENDERECO via prox<0.0399999991] yes=19,no=20,missing=20,gain=12.8864746,cover=164.272797\n\t\t\t\t\t19:[nota final<4.80000019] yes=27,no=28,missing=28,gain=7.94921875,cover=162.223938\n\t\t\t\t\t\t27:leaf=-0.0373481102,cover=1.52776015\n\t\t\t\t\t\t28:leaf=0.0592666753,cover=160.696182\n\t\t\t\t\t20:leaf=-0.0506020747,cover=2.04885197\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=220.191406,cover=2055.14087\n\t\t5:[NOMEMAE qtd frag comuns<-0.5] yes=9,no=10,missing=10,gain=95.589592,cover=172.238617\n\t\t\t9:leaf=-0.0550130196,cover=66.9655609\n\t\t\t10:[ENDERECO via prox<0.0399999991] yes=15,no=16,missing=16,gain=90.010025,cover=105.273064\n\t\t\t\t15:[NOME qtd frag muito parec<0.479999989] yes=21,no=22,missing=22,gain=5.23176575,cover=77.0481491\n\t\t\t\t\t21:leaf=-0.0319764838,cover=1.33137143\n\t\t\t\t\t22:[NOME qtd frag comuns<-0.75] yes=29,no=30,missing=30,gain=5.02711487,cover=75.7167816\n\t\t\t\t\t\t29:leaf=-0.0308055263,cover=1.24773896\n\t\t\t\t\t\t30:leaf=0.0523558967,cover=74.4690399\n\t\t\t\t16:leaf=-0.0541890077,cover=28.2249107\n\t\t6:[nota final<6.28000021] yes=11,no=12,missing=12,gain=55.9125977,cover=1882.90222\n\t\t\t11:leaf=-0.0569288135,cover=11.3092375\n\t\t\t12:[nota final<6.5999999] yes=17,no=18,missing=18,gain=18.8433838,cover=1871.59302\n\t\t\t\t17:[NOMEMAE qtd frag iguais<0.200000003] yes=23,no=24,missing=24,gain=130.237549,cover=153.29277\n\t\t\t\t\t23:leaf=0.055195611,cover=125.91996\n\t\t\t\t\t24:leaf=-0.0635041818,cover=27.3728142\n\t\t\t\t18:[nota final<7.80999994] yes=25,no=26,missing=26,gain=8.14794922,cover=1718.30017\n\t\t\t\t\t25:[NOMEMAE qtd frag comuns<-0.670000017] yes=31,no=32,missing=32,gain=41.0627441,cover=687.009827\n\t\t\t\t\t\t31:leaf=-0.0724571273,cover=6.17315149\n\t\t\t\t\t\t32:leaf=0.0491370112,cover=680.83667\n\t\t\t\t\t26:leaf=0.0554241538,cover=1031.29041\n"
+      },
+      {
+        "tree": 34,
+        "total_split_gain": 4266.174147473,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=2564.69189,cover=3445.39185\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=260.980347,cover=1634.96472\n\t\t3:[nota final<5.13000011] yes=7,no=8,missing=8,gain=82.2026367,cover=1563.47961\n\t\t\t7:leaf=-0.0549867414,cover=1101.27136\n\t\t\t8:[NOMEMAE qtd frag iguais<0.200000003] yes=15,no=16,missing=16,gain=294.05426,cover=462.208313\n\t\t\t\t15:[ENDERECO texto prox<0.0199999996] yes=27,no=28,missing=28,gain=69.3420486,cover=131.502518\n\t\t\t\t\t27:[nota final<5.13999987] yes=39,no=40,missing=40,gain=2.00796509,cover=112.751282\n\t\t\t\t\t\t39:leaf=0.0566633306,cover=49.8533211\n\t\t\t\t\t\t40:leaf=0.0405892655,cover=62.8979607\n\t\t\t\t\t28:leaf=-0.0536832921,cover=18.751236\n\t\t\t\t16:leaf=-0.0548498146,cover=330.705811\n\t\t4:[nota final<4.71999979] yes=9,no=10,missing=10,gain=14.0249481,cover=71.4850159\n\t\t\t9:leaf=-0.0424722917,cover=3.22669983\n\t\t\t10:[ENDERECO via prox<0.0399999991] yes=17,no=18,missing=18,gain=7.20589447,cover=68.258316\n\t\t\t\t17:[nota final<4.82999992] yes=29,no=30,missing=30,gain=0.49785614,cover=66.6667786\n\t\t\t\t\t29:leaf=0.0619942248,cover=44.8792267\n\t\t\t\t\t30:leaf=0.0448739156,cover=21.78755\n\t\t\t\t18:leaf=-0.0344657227,cover=1.59153485\n\t2:[NOMEMAE ult frag igual<1] yes=5,no=6,missing=6,gain=140.588501,cover=1810.42725\n\t\t5:[NOMEMAE prim frag igual<1] yes=11,no=12,missing=12,gain=21.2739258,cover=1123.38977\n\t\t\t11:[DTNASC dt iguais<1] yes=19,no=20,missing=20,gain=0.143798828,cover=1066.23816\n\t\t\t\t19:[nota final<6.28000021] yes=31,no=32,missing=32,gain=13.8864136,cover=126.031586\n\t\t\t\t\t31:leaf=-0.0644602999,cover=1.7702862\n\t\t\t\t\t32:[nota final<6.73000002] yes=41,no=42,missing=42,gain=0.533584595,cover=124.261299\n\t\t\t\t\t\t41:leaf=0.0411347076,cover=24.8182812\n\t\t\t\t\t\t42:leaf=0.0552613325,cover=99.4430237\n\t\t\t\t20:leaf=0.0561988018,cover=940.206604\n\t\t\t12:[DTNASC dt ap 1digi<1] yes=21,no=22,missing=22,gain=60.0040283,cover=57.1515961\n\t\t\t\t21:leaf=-0.0608709157,cover=14.6355925\n\t\t\t\t22:leaf=0.0535378829,cover=42.5160027\n\t\t6:[nota final<7.40999985] yes=13,no=14,missing=14,gain=413.574432,cover=687.037476\n\t\t\t13:[ENDERECO texto prox<0.0199999996] yes=23,no=24,missing=24,gain=55.7932663,cover=206.85141\n\t\t\t\t23:[nota final<6.67999983] yes=33,no=34,missing=34,gain=48.4729805,cover=116.58036\n\t\t\t\t\t33:leaf=-0.0576763451,cover=36.513752\n\t\t\t\t\t34:[nota final<6.73000002] yes=43,no=44,missing=44,gain=87.6483612,cover=80.0666046\n\t\t\t\t\t\t43:leaf=0.0429108329,cover=58.3781433\n\t\t\t\t\t\t44:leaf=-0.0726550892,cover=21.6884651\n\t\t\t\t24:[nota final<6.67999983] yes=35,no=36,missing=36,gain=1.19396973,cover=90.2710571\n\t\t\t\t\t35:leaf=-0.0550701991,cover=52.8764648\n\t\t\t\t\t36:[NOMEMAE prim frag igual<1] yes=45,no=46,missing=46,gain=4.81694794,cover=37.3945885\n\t\t\t\t\t\t45:leaf=-0.0963073596,cover=14.807127\n\t\t\t\t\t\t46:leaf=-0.0536963008,cover=22.5874634\n\t\t\t14:[NOMEMAE qtd frag iguais<0.600000024] yes=25,no=26,missing=26,gain=44.7687988,cover=480.186066\n\t\t\t\t25:leaf=-0.0851108283,cover=5.14174175\n\t\t\t\t26:[NOMEMAE qtd frag iguais<0.75] yes=37,no=38,missing=38,gain=9.06195068,cover=475.044342\n\t\t\t\t\t37:[NOMEMAE prim frag igual<1] yes=47,no=48,missing=48,gain=69.4053421,cover=74.3504639\n\t\t\t\t\t\t47:leaf=0.0543888584,cover=64.4648132\n\t\t\t\t\t\t48:leaf=-0.082440272,cover=9.88564682\n\t\t\t\t\t38:leaf=0.0553451888,cover=400.693878\n"
+      },
+      {
+        "tree": 35,
+        "total_split_gain": 3964.4584896799997,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=2489.00269,cover=3358.35181\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=333.644165,cover=1585.81616\n\t\t3:leaf=-0.0546615683,cover=1265.68738\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=299.930298,cover=320.128845\n\t\t\t7:leaf=-0.0550551713,cover=132.062775\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=79.1373138,cover=188.066071\n\t\t\t\t13:leaf=-0.0535018444,cover=18.3743954\n\t\t\t\t14:[NOMEMAE qtd frag muito parec<0.159999996] yes=19,no=20,missing=20,gain=13.4323273,cover=169.691666\n\t\t\t\t\t19:[nota final<4.51999998] yes=25,no=26,missing=26,gain=8.79232788,cover=167.126404\n\t\t\t\t\t\t25:leaf=-0.038344048,cover=1.81903303\n\t\t\t\t\t\t26:leaf=0.0566897765,cover=165.307373\n\t\t\t\t\t20:leaf=-0.0467304401,cover=2.56526875\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=246.888062,cover=1772.53564\n\t\t5:[nota final<7.80999994] yes=9,no=10,missing=10,gain=297.060913,cover=239.648865\n\t\t\t9:leaf=-0.0568875857,cover=125.741493\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=15,no=16,missing=16,gain=1.1443634,cover=113.907379\n\t\t\t\t15:[NOME prim frag igual<1] yes=21,no=22,missing=22,gain=12.7536812,cover=25.2300186\n\t\t\t\t\t21:leaf=0.0531577244,cover=22.4692116\n\t\t\t\t\t22:leaf=-0.0484630242,cover=2.76080656\n\t\t\t\t16:leaf=0.0574682057,cover=88.6773605\n\t\t6:[NOME qtd frag comuns<-0.400000006] yes=11,no=12,missing=12,gain=20.8214111,cover=1532.88672\n\t\t\t11:[nota final<6.28000021] yes=17,no=18,missing=18,gain=28.421875,cover=492.219543\n\t\t\t\t17:leaf=-0.0514976457,cover=7.24954033\n\t\t\t\t18:[NOMEMAE qtd frag iguais<1] yes=23,no=24,missing=24,gain=18.526062,cover=484.970001\n\t\t\t\t\t23:[NOMEMAE qtd frag muito parec<0.479999989] yes=27,no=28,missing=28,gain=114.903,cover=277.801025\n\t\t\t\t\t\t27:leaf=0.0426714197,cover=261.484619\n\t\t\t\t\t\t28:leaf=-0.0905814469,cover=16.3164196\n\t\t\t\t\t24:leaf=0.0546543375,cover=207.168991\n\t\t\t12:leaf=0.054506328,cover=1040.66724\n"
+      },
+      {
+        "tree": 36,
+        "total_split_gain": 3745.51433194,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=2504.00269,cover=3241.02661\n\t1:[NOME qtd frag raros<0.330000013] yes=3,no=4,missing=4,gain=247.109863,cover=1476.97461\n\t\t3:[NOME qtd frag muito parec<0.800000012] yes=7,no=8,missing=8,gain=84.4743652,cover=1410.32471\n\t\t\t7:leaf=-0.054402817,cover=1193.57642\n\t\t\t8:[nota final<5.13000011] yes=15,no=16,missing=16,gain=83.9233551,cover=216.748215\n\t\t\t\t15:leaf=-0.0545921288,cover=97.2292557\n\t\t\t\t16:[NOMEMAE qtd frag muito parec<0.159999996] yes=21,no=22,missing=22,gain=102.368782,cover=119.518959\n\t\t\t\t\t21:[ENDERECO via prox<0.0399999991] yes=27,no=28,missing=28,gain=22.5163383,cover=77.5605316\n\t\t\t\t\t\t27:leaf=0.0492356196,cover=71.9167633\n\t\t\t\t\t\t28:leaf=-0.0483629145,cover=5.64377117\n\t\t\t\t\t22:leaf=-0.0543977432,cover=41.9584312\n\t\t4:[NOME qtd frag muito parec<0.600000024] yes=9,no=10,missing=10,gain=22.5329514,cover=66.6499557\n\t\t\t9:leaf=-0.0460669026,cover=5.03732157\n\t\t\t10:leaf=0.0571634285,cover=61.6126328\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=216.244019,cover=1764.05188\n\t\t5:[DTNASC dt iguais<1] yes=11,no=12,missing=12,gain=86.0840988,cover=167.662186\n\t\t\t11:[DTNASC dt ap 1digi<1] yes=17,no=18,missing=18,gain=109.884048,cover=132.177856\n\t\t\t\t17:leaf=-0.0541751757,cover=101.243515\n\t\t\t\t18:[NOMEMAE qtd frag iguais<0.600000024] yes=23,no=24,missing=24,gain=4.71146774,cover=30.9343395\n\t\t\t\t\t23:leaf=-0.0294286851,cover=1.10553837\n\t\t\t\t\t24:leaf=0.0561205149,cover=29.8288021\n\t\t\t12:leaf=0.0576435588,cover=35.4843292\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=13,no=14,missing=14,gain=35.3438721,cover=1596.38977\n\t\t\t13:leaf=-0.0508217588,cover=8.03643322\n\t\t\t14:[NOMEMAE qtd frag iguais<0.200000003] yes=19,no=20,missing=20,gain=18.7415771,cover=1588.35327\n\t\t\t\t19:leaf=0.0552931316,cover=784.770264\n\t\t\t\t20:[nota final<6.67999983] yes=25,no=26,missing=26,gain=161.758789,cover=803.583008\n\t\t\t\t\t25:leaf=-0.0615194142,cover=33.8499756\n\t\t\t\t\t26:[NOMEMAE qtd frag muito parec<0.800000012] yes=29,no=30,missing=30,gain=45.8181152,cover=769.733032\n\t\t\t\t\t\t29:leaf=0.0220952183,cover=134.131836\n\t\t\t\t\t\t30:leaf=0.0544833541,cover=635.601196\n"
+      },
+      {
+        "tree": 37,
+        "total_split_gain": 3554.58301071,
+        "dump": "0:[nota final<6.13999987] yes=1,no=2,missing=2,gain=2492.55933,cover=3159.09448\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=184.050659,cover=1414.10559\n\t\t3:leaf=-0.0541702881,cover=1157.78394\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=210.848236,cover=256.321594\n\t\t\t7:leaf=-0.0545043461,cover=122.460625\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=61.0677567,cover=133.860962\n\t\t\t\t13:leaf=-0.0526472628,cover=16.2341595\n\t\t\t\t14:[NOMEMAE qtd frag muito parec<0.159999996] yes=19,no=20,missing=20,gain=11.7699203,cover=117.626808\n\t\t\t\t\t19:[NOME qtd frag iguais<0.600000024] yes=23,no=24,missing=24,gain=6.17657471,cover=115.128845\n\t\t\t\t\t\t23:leaf=-0.0345085226,cover=1.44134212\n\t\t\t\t\t\t24:leaf=0.0522964783,cover=113.6875\n\t\t\t\t\t20:leaf=-0.0457852297,cover=2.49796414\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=134.238281,cover=1744.98901\n\t\t5:[DTNASC dt ap 1digi<1] yes=9,no=10,missing=10,gain=100.446815,cover=182.419617\n\t\t\t9:[NOMEMAE qtd frag iguais<0.200000003] yes=15,no=16,missing=16,gain=123.263512,cover=122.712059\n\t\t\t\t15:leaf=0.0563496761,cover=34.3897209\n\t\t\t\t16:leaf=-0.0540043674,cover=88.3223343\n\t\t\t10:leaf=0.055655092,cover=59.7075577\n\t\t6:[NOME qtd frag iguais<0.600000024] yes=11,no=12,missing=12,gain=36.6437988,cover=1562.56934\n\t\t\t11:leaf=-0.051569771,cover=8.36175919\n\t\t\t12:[NOMEMAE qtd frag comuns<-0.25] yes=17,no=18,missing=18,gain=22.515625,cover=1554.20764\n\t\t\t\t17:[nota final<6.67999983] yes=21,no=22,missing=22,gain=147.929321,cover=674.398071\n\t\t\t\t\t21:leaf=-0.0596932732,cover=33.2457619\n\t\t\t\t\t22:[NOMEMAE qtd frag muito parec<0.800000012] yes=25,no=26,missing=26,gain=23.0731812,cover=641.152344\n\t\t\t\t\t\t25:leaf=0.0312348288,cover=172.099335\n\t\t\t\t\t\t26:leaf=0.052995868,cover=469.052979\n\t\t\t\t18:leaf=0.0542512648,cover=879.809509\n"
+      },
+      {
+        "tree": 38,
+        "total_split_gain": 3411.4838985700003,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=2103.63257,cover=2912.45093\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=252.253479,cover=1363.35681\n\t\t3:leaf=-0.0539453812,cover=1094.73328\n\t\t4:[NOME qtd frag comuns<-0.400000006] yes=7,no=8,missing=8,gain=237.727585,cover=268.623535\n\t\t\t7:leaf=-0.0542064682,cover=114.457886\n\t\t\t8:[NOMEMAE qtd frag comuns<-0.200000003] yes=13,no=14,missing=14,gain=69.9838104,cover=154.165665\n\t\t\t\t13:leaf=-0.0525578856,cover=17.1110535\n\t\t\t\t14:[nota final<4.80000019] yes=23,no=24,missing=24,gain=8.42880249,cover=137.054611\n\t\t\t\t\t23:leaf=-0.0379507206,cover=1.87565327\n\t\t\t\t\t24:[nota final<5.13999987] yes=31,no=32,missing=32,gain=0.590881348,cover=135.178955\n\t\t\t\t\t\t31:leaf=0.0579638667,cover=84.7867661\n\t\t\t\t\t\t32:leaf=0.0463022031,cover=50.3921814\n\t2:[NOME qtd frag iguais<0.75] yes=5,no=6,missing=6,gain=150.523804,cover=1549.09399\n\t\t5:[nota final<7.80999994] yes=9,no=10,missing=10,gain=203.449982,cover=289.027222\n\t\t\t9:[DTNASC dt iguais<1] yes=15,no=16,missing=16,gain=132.026199,cover=148.668533\n\t\t\t\t15:leaf=-0.0565566421,cover=115.570518\n\t\t\t\t16:leaf=0.0554635711,cover=33.0980186\n\t\t\t10:[DTNASC dt ap 1digi<1] yes=17,no=18,missing=18,gain=1.2285614,cover=140.358688\n\t\t\t\t17:[NOMEMAE qtd frag comuns<-0.25] yes=25,no=26,missing=26,gain=21.5922832,cover=40.4600983\n\t\t\t\t\t25:leaf=-0.0679514334,cover=3.22922277\n\t\t\t\t\t26:leaf=0.0529887564,cover=37.2308731\n\t\t\t\t18:leaf=0.0559561327,cover=99.8985825\n\t\t6:[NOME qtd frag comuns<-0.75] yes=11,no=12,missing=12,gain=16.7750244,cover=1260.06677\n\t\t\t11:[nota final<7.80999994] yes=19,no=20,missing=20,gain=65.4309158,cover=65.2784348\n\t\t\t\t19:leaf=-0.0552502833,cover=17.9227333\n\t\t\t\t20:leaf=0.0546097942,cover=47.3557053\n\t\t\t12:[NOMEMAE ult frag igual<1] yes=21,no=22,missing=22,gain=9.34631348,cover=1194.78833\n\t\t\t\t21:[nota final<6.13999987] yes=27,no=28,missing=28,gain=0.618164062,cover=764.18689\n\t\t\t\t\t27:leaf=0.0636295006,cover=44.612545\n\t\t\t\t\t28:leaf=0.0534232333,cover=719.574341\n\t\t\t\t22:[NOMEMAE qtd frag iguais<0.5] yes=29,no=30,missing=30,gain=116.560181,cover=430.60144\n\t\t\t\t\t29:[nota final<6.67000008] yes=33,no=34,missing=34,gain=3.29266739,cover=14.0953083\n\t\t\t\t\t\t33:leaf=-0.0600094907,cover=8.38844681\n\t\t\t\t\t\t34:leaf=-0.12452247,cover=5.70686054\n\t\t\t\t\t30:[nota final<6.67999983] yes=35,no=36,missing=36,gain=18.0226746,cover=416.506134\n\t\t\t\t\t\t35:leaf=-0.0550894551,cover=3.32510543\n\t\t\t\t\t\t36:leaf=0.0502277613,cover=413.18103\n"
+      },
+      {
+        "tree": 39,
+        "total_split_gain": 3385.8221738800003,
+        "dump": "0:[nota final<6.13000011] yes=1,no=2,missing=2,gain=2100.90356,cover=2863.74097\n\t1:[NOME qtd frag muito parec<0.800000012] yes=3,no=4,missing=4,gain=231.79834,cover=1298.64697\n\t\t3:leaf=-0.0537344217,cover=1044.51636\n\t\t4:[NOMEMAE qtd frag comuns<-0.200000003] yes=7,no=8,missing=8,gain=203.126541,cover=254.130585\n\t\t\t7:leaf=-0.053745497,cover=104.382111\n\t\t\t8:[ENDERECO texto prox<0.0199999996] yes=13,no=14,missing=14,gain=34.1696472,cover=149.748474\n\t\t\t\t13:[nota final<4.80000019] yes=21,no=22,missing=22,gain=19.8621292,cover=140.144058\n\t\t\t\t\t21:leaf=-0.0465308391,cover=5.17969894\n\t\t\t\t\t22:[NOMEMAE qtd frag muito parec<0.159999996] yes=29,no=30,missing=30,gain=15.4053116,cover=134.964355\n\t\t\t\t\t\t29:leaf=0.049685847,cover=131.34108\n\t\t\t\t\t\t30:leaf=-0.0457509048,cover=3.62327003\n\t\t\t\t14:leaf=-0.0507395267,cover=9.60442066\n\t2:[NOME qtd frag muito parec<0.600000024] yes=5,no=6,missing=6,gain=131.718506,cover=1565.09412\n\t\t5:[NOMEMAE qtd frag iguais<1] yes=9,no=10,missing=10,gain=91.8738403,cover=172.355225\n\t\t\t9:[NOME qtd frag raros<0.330000013] yes=15,no=16,missing=16,gain=110.815132,cover=116.986977\n\t\t\t\t15:leaf=-0.0534775816,cover=84.8493195\n\t\t\t\t16:leaf=0.054274302,cover=32.1376534\n\t\t\t10:leaf=0.0539303012,cover=55.3682556\n\t\t6:[NOMEMAE ult frag igual<1] yes=11,no=12,missing=12,gain=29.1573486,cover=1392.73889\n\t\t\t11:[NOMEMAE prim frag igual<1] yes=17,no=18,missing=18,gain=4.66418457,cover=887.572876\n\t\t\t\t17:leaf=0.0544934757,cover=807.676697\n\t\t\t\t18:[nota final<7.07999992] yes=23,no=24,missing=24,gain=41.1477203,cover=79.8961639\n\t\t\t\t\t23:leaf=-0.0592482388,cover=8.39784908\n\t\t\t\t\t24:leaf=0.0528199151,cover=71.4983139\n\t\t\t12:[nota final<7.80999994] yes=19,no=20,missing=20,gain=172.063477,cover=505.165985\n\t\t\t\t19:[nota final<6.73000002] yes=25,no=26,missing=26,gain=90.2135468,cover=101.794785\n\t\t\t\t\t25:[nota final<6.67999983] yes=31,no=32,missing=32,gain=75.3165665,cover=75.8124924\n\t\t\t\t\t\t31:leaf=-0.0579988733,cover=26.8948765\n\t\t\t\t\t\t32:leaf=0.044595167,cover=48.917614\n\t\t\t\t\t26:[NOMEMAE prim frag igual<1] yes=33,no=34,missing=34,gain=3.77852631,cover=25.9822884\n\t\t\t\t\t\t33:leaf=-0.12199942,cover=12.3832417\n\t\t\t\t\t\t34:leaf=-0.0701204166,cover=13.5990467\n\t\t\t\t20:[NOMEMAE qtd frag muito parec<0.800000012] yes=27,no=28,missing=28,gain=2.3430481,cover=403.371185\n\t\t\t\t\t27:[NOME qtd frag raros<0.200000003] yes=35,no=36,missing=36,gain=27.4647484,cover=20.3757248\n\t\t\t\t\t\t35:leaf=-0.122745216,cover=1.59069383\n\t\t\t\t\t\t36:leaf=0.0516877174,cover=18.7850304\n\t\t\t\t\t28:leaf=0.0536000729,cover=382.995483\n"
+      }
+    ],
+    "importance": {
+      "gain": {
+        "NOME prim frag igual": 14.316801071166992,
+        "NOME ult frag igual": 22.10365867614746,
+        "NOME qtd frag iguais": 213.68057250976562,
+        "NOME qtd frag raros": 47.79067611694336,
+        "NOME qtd frag comuns": 36.692726135253906,
+        "NOME qtd frag muito parec": 411.8634033203125,
+        "NOMEMAE prim frag igual": 11.673982620239258,
+        "NOMEMAE ult frag igual": 26.527833938598633,
+        "NOMEMAE qtd frag iguais": 47.59621810913086,
+        "NOMEMAE qtd frag raros": 11.893162727355957,
+        "NOMEMAE qtd frag comuns": 45.59247970581055,
+        "NOMEMAE qtd frag muito parec": 81.61091613769531,
+        "DTNASC dt iguais": 58.00761795043945,
+        "DTNASC dt ap 1digi": 32.35956954956055,
+        "DTNASC dt inv mes": 7.8327460289001465,
+        "CODMUNRES local igual": 11.975197792053223,
+        "CODMUNRES local prox": 28.597240447998047,
+        "ENDERECO via igual": 5.387234210968018,
+        "ENDERECO via prox": 13.857532501220703,
+        "ENDERECO texto prox": 28.16578483581543,
+        "ENDERECO tokens jacc": 22.355993270874023,
+        "nota final": 362.0582275390625
+      },
+      "total_gain": {
+        "NOME prim frag igual": 386.5536193847656,
+        "NOME ult frag igual": 132.6219482421875,
+        "NOME qtd frag iguais": 53633.82421875,
+        "NOME qtd frag raros": 9844.87890625,
+        "NOME qtd frag comuns": 23630.115234375,
+        "NOME qtd frag muito parec": 86903.1796875,
+        "NOMEMAE prim frag igual": 525.3292236328125,
+        "NOMEMAE ult frag igual": 1989.5875244140625,
+        "NOMEMAE qtd frag iguais": 11708.669921875,
+        "NOMEMAE qtd frag raros": 214.07693481445312,
+        "NOMEMAE qtd frag comuns": 17233.95703125,
+        "NOMEMAE qtd frag muito parec": 21708.50390625,
+        "DTNASC dt iguais": 11369.4931640625,
+        "DTNASC dt ap 1digi": 5274.60986328125,
+        "DTNASC dt inv mes": 70.49471282958984,
+        "CODMUNRES local igual": 35.925594329833984,
+        "CODMUNRES local prox": 142.9862060546875,
+        "ENDERECO via igual": 26.93617057800293,
+        "ENDERECO via prox": 2078.6298828125,
+        "ENDERECO texto prox": 6337.3017578125,
+        "ENDERECO tokens jacc": 1699.055419921875,
+        "nota final": 331645.34375
+      },
+      "weight": {
+        "NOME prim frag igual": 27.0,
+        "NOME ult frag igual": 6.0,
+        "NOME qtd frag iguais": 251.0,
+        "NOME qtd frag raros": 206.0,
+        "NOME qtd frag comuns": 644.0,
+        "NOME qtd frag muito parec": 211.0,
+        "NOMEMAE prim frag igual": 45.0,
+        "NOMEMAE ult frag igual": 75.0,
+        "NOMEMAE qtd frag iguais": 246.0,
+        "NOMEMAE qtd frag raros": 18.0,
+        "NOMEMAE qtd frag comuns": 378.0,
+        "NOMEMAE qtd frag muito parec": 266.0,
+        "DTNASC dt iguais": 196.0,
+        "DTNASC dt ap 1digi": 163.0,
+        "DTNASC dt inv mes": 9.0,
+        "CODMUNRES local igual": 3.0,
+        "CODMUNRES local prox": 5.0,
+        "ENDERECO via igual": 5.0,
+        "ENDERECO via prox": 150.0,
+        "ENDERECO texto prox": 225.0,
+        "ENDERECO tokens jacc": 76.0,
+        "nota final": 916.0
+      },
+      "cover": {
+        "NOME prim frag igual": 122.43974304199219,
+        "NOME ult frag igual": 970.3517456054688,
+        "NOME qtd frag iguais": 657.3373413085938,
+        "NOME qtd frag raros": 287.3397521972656,
+        "NOME qtd frag comuns": 244.97091674804688,
+        "NOME qtd frag muito parec": 970.1728515625,
+        "NOMEMAE prim frag igual": 138.33193969726562,
+        "NOMEMAE ult frag igual": 400.0296936035156,
+        "NOMEMAE qtd frag iguais": 160.9588623046875,
+        "NOMEMAE qtd frag raros": 183.18380737304688,
+        "NOMEMAE qtd frag comuns": 293.87164306640625,
+        "NOMEMAE qtd frag muito parec": 217.56915283203125,
+        "DTNASC dt iguais": 332.2270202636719,
+        "DTNASC dt ap 1digi": 65.62085723876953,
+        "DTNASC dt inv mes": 15.025554656982422,
+        "CODMUNRES local igual": 110.83560943603516,
+        "CODMUNRES local prox": 31.181957244873047,
+        "ENDERECO via igual": 8.188138961791992,
+        "ENDERECO via prox": 66.46988677978516,
+        "ENDERECO texto prox": 70.15458679199219,
+        "ENDERECO tokens jacc": 63.430084228515625,
+        "nota final": 458.25396728515625
+      }
+    },
+    "shap_training_aggregates": {
+      "gray_positive": {
+        "n": 65,
+        "features": {
+          "NOME prim frag igual": {
+            "mean_shap": -0.020870326086878777,
+            "mean_abs_shap": 0.02466072142124176
+          },
+          "NOME ult frag igual": {
+            "mean_shap": -0.0014512066263705492,
+            "mean_abs_shap": 0.0014512066263705492
+          },
+          "NOME qtd frag iguais": {
+            "mean_shap": 0.4825868606567383,
+            "mean_abs_shap": 0.7953428030014038
+          },
+          "NOME qtd frag raros": {
+            "mean_shap": -0.1408894956111908,
+            "mean_abs_shap": 0.2758229672908783
+          },
+          "NOME qtd frag comuns": {
+            "mean_shap": -0.29955554008483887,
+            "mean_abs_shap": 1.1525049209594727
+          },
+          "NOME qtd frag muito parec": {
+            "mean_shap": 0.8485512137413025,
+            "mean_abs_shap": 1.0270675420761108
+          },
+          "NOME qtd frag abrev": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "NOMEMAE prim frag igual": {
+            "mean_shap": -0.026654429733753204,
+            "mean_abs_shap": 0.09835377335548401
+          },
+          "NOMEMAE ult frag igual": {
+            "mean_shap": 0.48568543791770935,
+            "mean_abs_shap": 0.5914558172225952
+          },
+          "NOMEMAE qtd frag iguais": {
+            "mean_shap": -0.4398389458656311,
+            "mean_abs_shap": 0.7324123382568359
+          },
+          "NOMEMAE qtd frag raros": {
+            "mean_shap": -0.00041491049341857433,
+            "mean_abs_shap": 0.0037646249402314425
+          },
+          "NOMEMAE qtd frag comuns": {
+            "mean_shap": 0.4497081935405731,
+            "mean_abs_shap": 0.9337367415428162
+          },
+          "NOMEMAE qtd frag muito parec": {
+            "mean_shap": -0.025959664955735207,
+            "mean_abs_shap": 0.3471742570400238
+          },
+          "NOMEMAE qtd frag abrev": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "DTNASC dt iguais": {
+            "mean_shap": 1.2900490760803223,
+            "mean_abs_shap": 1.6910064220428467
+          },
+          "DTNASC dt ap 1digi": {
+            "mean_shap": -0.020071564242243767,
+            "mean_abs_shap": 0.3404043912887573
+          },
+          "DTNASC dt inv dia": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "DTNASC dt inv mes": {
+            "mean_shap": -0.002306027337908745,
+            "mean_abs_shap": 0.018235525116324425
+          },
+          "DTNASC dt inv ano": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES uf igual": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES uf prox": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES local igual": {
+            "mean_shap": -0.001069638761691749,
+            "mean_abs_shap": 0.004478836432099342
+          },
+          "CODMUNRES local prox": {
+            "mean_shap": -0.0007671350031159818,
+            "mean_abs_shap": 0.0046099768951535225
+          },
+          "ENDERECO via igual": {
+            "mean_shap": -0.0012171933194622397,
+            "mean_abs_shap": 0.003769125323742628
+          },
+          "ENDERECO via prox": {
+            "mean_shap": -0.19498416781425476,
+            "mean_abs_shap": 0.2065965235233307
+          },
+          "ENDERECO numero igual": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "ENDERECO compl prox": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "ENDERECO texto prox": {
+            "mean_shap": -0.3433973789215088,
+            "mean_abs_shap": 0.3809700906276703
+          },
+          "ENDERECO tokens jacc": {
+            "mean_shap": -0.09382466971874237,
+            "mean_abs_shap": 0.09946433454751968
+          },
+          "nota final": {
+            "mean_shap": 1.0139111280441284,
+            "mean_abs_shap": 1.668487310409546
+          }
+        }
+      },
+      "training_model_fn_proxy": {
+        "n": 0,
+        "features": {}
+      },
+      "training_model_fp_proxy": {
+        "n": 7,
+        "features": {
+          "NOME prim frag igual": {
+            "mean_shap": -0.009626595303416252,
+            "mean_abs_shap": 0.049196381121873856
+          },
+          "NOME ult frag igual": {
+            "mean_shap": -0.0010024466319009662,
+            "mean_abs_shap": 0.0010024466319009662
+          },
+          "NOME qtd frag iguais": {
+            "mean_shap": 0.5315123200416565,
+            "mean_abs_shap": 1.1065444946289062
+          },
+          "NOME qtd frag raros": {
+            "mean_shap": -0.10904520004987717,
+            "mean_abs_shap": 0.8183659315109253
+          },
+          "NOME qtd frag comuns": {
+            "mean_shap": -0.262055903673172,
+            "mean_abs_shap": 0.8559752106666565
+          },
+          "NOME qtd frag muito parec": {
+            "mean_shap": 1.632027506828308,
+            "mean_abs_shap": 1.793692946434021
+          },
+          "NOME qtd frag abrev": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "NOMEMAE prim frag igual": {
+            "mean_shap": -0.046669162809848785,
+            "mean_abs_shap": 0.09609973430633545
+          },
+          "NOMEMAE ult frag igual": {
+            "mean_shap": 0.25423067808151245,
+            "mean_abs_shap": 0.31255632638931274
+          },
+          "NOMEMAE qtd frag iguais": {
+            "mean_shap": -0.613477885723114,
+            "mean_abs_shap": 0.9746142029762268
+          },
+          "NOMEMAE qtd frag raros": {
+            "mean_shap": 0.0009539718157611787,
+            "mean_abs_shap": 0.0012697636848315597
+          },
+          "NOMEMAE qtd frag comuns": {
+            "mean_shap": 0.614995539188385,
+            "mean_abs_shap": 1.135292649269104
+          },
+          "NOMEMAE qtd frag muito parec": {
+            "mean_shap": 0.10160137712955475,
+            "mean_abs_shap": 0.21424733102321625
+          },
+          "NOMEMAE qtd frag abrev": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "DTNASC dt iguais": {
+            "mean_shap": -0.4383428394794464,
+            "mean_abs_shap": 0.4383428394794464
+          },
+          "DTNASC dt ap 1digi": {
+            "mean_shap": -0.07321685552597046,
+            "mean_abs_shap": 0.32311883568763733
+          },
+          "DTNASC dt inv dia": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "DTNASC dt inv mes": {
+            "mean_shap": -0.022093312814831734,
+            "mean_abs_shap": 0.022093312814831734
+          },
+          "DTNASC dt inv ano": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES uf igual": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES uf prox": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "CODMUNRES local igual": {
+            "mean_shap": -0.006745476741343737,
+            "mean_abs_shap": 0.006745476741343737
+          },
+          "CODMUNRES local prox": {
+            "mean_shap": -0.003250564681366086,
+            "mean_abs_shap": 0.003250564681366086
+          },
+          "ENDERECO via igual": {
+            "mean_shap": -0.004050409886986017,
+            "mean_abs_shap": 0.004050409886986017
+          },
+          "ENDERECO via prox": {
+            "mean_shap": -0.04292503371834755,
+            "mean_abs_shap": 0.06468956172466278
+          },
+          "ENDERECO numero igual": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "ENDERECO compl prox": {
+            "mean_shap": 0.0,
+            "mean_abs_shap": 0.0
+          },
+          "ENDERECO texto prox": {
+            "mean_shap": 0.016158705577254295,
+            "mean_abs_shap": 0.11434396356344223
+          },
+          "ENDERECO tokens jacc": {
+            "mean_shap": -0.02609683759510517,
+            "mean_abs_shap": 0.032860808074474335
+          },
+          "nota final": {
+            "mean_shap": -2.352285146713257,
+            "mean_abs_shap": 3.2324976921081543
+          }
+        }
+      }
+    },
+    "error_proxy_note": "Training-model threshold proxies, NOT historical motor error masks: avoids indirect heldout dependence via cached OOF model selection.",
+    "problem": "SIM versus Sinan-TB record linkage. Spelling errors, missing birth, date inversion, migration.",
+    "request": "Specify what this tree ensemble computes, rank probable failure modes with responsible features. Propose one high-band and one gray consistency rule, boolean over f['feature name']. Rules mean accept MATCH, not NONMATCH. Do not use p_cal or labels. Return JSON keys specification (string), failure_modes (list), high_rule (string), gray_rule (string), limitations (list). Expressions only and/or/not, comparisons, numeric literals, f subscripts. No arithmetic/functions. No pair examples."
+  },
+  "response": {
+    "specification": "Hypothesis, not an exact specification: the supplied material shows only 40 of 300 trees, with gaps in the tree indices, so the full decision function cannot be reconstructed. The visible trees are gradient-boosted regression trees whose leaf outputs (about -0.13 to +0.10) are summed into a score that ranks candidate pairs for MATCH. Tree splits are dominated by the composite comparator 'nota final', with a root split near 6.13 in nearly every visible tree. Above that cut, leaves are mostly positive (lean MATCH); below it, leaves are mostly negative. Within each side, the next most-used splits are 'NOME qtd frag muito parec' (thresholds 0.6 and 0.8), 'NOME qtd frag iguais', 'NOMEMAE qtd frag comuns', 'NOMEMAE qtd frag muito parec', and 'DTNASC dt iguais' (equal birth date, with value 1 pushing toward MATCH). Gain importance is concentrated in 'nota final' (about 331,600 total gain, far above all other features), then 'NOME qtd frag muito parec' (about 86,900) and 'NOME qtd frag iguais' (about 53,600). Address and municipality features contribute little. Missing values are encoded as zero, so zero cannot be distinguished from real disagreement.",
+    "failure_modes": [
+      {
+        "name": "Missing values coded as zero, conflated with disagreement",
+        "mechanism": "Absent fields are converted to 0 by the allowlist M1, which for equality and similarity features reads as 'fully different'. A pair with a missing birth date or missing name fragments is scored as disagreeing, which can push true links below the cut.",
+        "responsible_features": [
+          "DTNASC dt iguais",
+          "NOME qtd frag iguais",
+          "NOME qtd frag muito parec",
+          "NOMEMAE qtd frag muito parec",
+          "nota final"
+        ],
+        "evidence_type": "Observed from the feature dictionary; impact on error rate not measured."
+      },
+      {
+        "name": "Birth-date errors (one-digit typo or day/month inversion)",
+        "mechanism": "Trees split on 'DTNASC dt iguais' and 'DTNASC dt ap 1digi' with weight on exact equality. A one-digit error or inversion sets equality to 0 and gives negative leaves, even when names agree strongly. Inversion indicators for day and year have zero SHAP in the aggregates, and month inversion is near zero, so the model likely cannot recover these cases.",
+        "responsible_features": [
+          "DTNASC dt iguais",
+          "DTNASC dt ap 1digi",
+          "DTNASC dt inv mes"
+        ],
+        "evidence_type": "Hypothesis from tree structure and SHAP aggregates; no observed failure rate."
+      },
+      {
+        "name": "Spelling variants that reduce fragment equality",
+        "mechanism": "Name fragments with typos are counted as 'muito parecido' only in part. Trees split at 0.6 and 0.8 on that count, so partial similarity can land on the negative side of the split even when the full name is close.",
+        "responsible_features": [
+          "NOME qtd frag muito parec",
+          "NOMEMAE qtd frag muito parec",
+          "NOME prim frag igual",
+          "NOMEMAE prim frag igual"
+        ],
+        "evidence_type": "Hypothesis from split thresholds; no observed failure rate."
+      },
+      {
+        "name": "Common-name collisions producing false MATCH",
+        "mechanism": "Coincident common fragments (encoded as negative counts, range [-1, 0]) move leaves toward MATCH when 'comuns' is near zero. Two different people sharing common name fragments and a close composite score may therefore be accepted.",
+        "responsible_features": [
+          "NOME qtd frag comuns",
+          "NOMEMAE qtd frag comuns",
+          "NOME qtd frag iguais"
+        ],
+        "evidence_type": "Hypothesis; the sign encoding of the 'comuns' features is unusual and needs confirmation from the feature source."
+      },
+      {
+        "name": "Migration or address change causing false non-MATCH",
+        "mechanism": "Municipality and address features have small gain and cover. A true pair whose residence changed (municipality or street differs) receives low address similarity, which is weighted lightly. The model is unlikely to penalise this strongly, but the composite score may still fall below the cut when name and date signals are weak.",
+        "responsible_features": [
+          "CODMUNRES local igual",
+          "CODMUNRES local prox",
+          "ENDERECO via prox",
+          "ENDERECO texto prox",
+          "ENDERECO tokens jacc"
+        ],
+        "evidence_type": "Hypothesis; address features show low gain, so their effect on migrated cases is not directly measured."
+      },
+      {
+        "name": "Decision concentrated on a single composite threshold",
+        "mechanism": "'nota final' dominates gain and sits at the root of most trees (near 6.13). Errors cluster around this boundary, and small changes in the comparator's composite score can flip the outcome regardless of underlying field agreement.",
+        "responsible_features": [
+          "nota final"
+        ],
+        "evidence_type": "Observed from gain and split structure; error concentration near the cut is a hypothesis."
+      }
+    ],
+    "high_rule": "f['nota final'] >= 6.13 and f['NOME qtd frag muito parec'] >= 0.8 and f['DTNASC dt iguais'] >= 1 and f['NOMEMAE qtd frag comuns'] >= -0.2",
+    "gray_rule": "f['nota final'] >= 4.8 and f['nota final'] < 6.13 and f['DTNASC dt iguais'] >= 1 and f['NOME qtd frag iguais'] >= 0.6 and f['NOMEMAE qtd frag muito parec'] >= 0.16 and f['NOME qtd frag comuns'] >= -0.4",
+    "limitations": [
+      "Only 40 of 300 trees are included, with index gaps, so the full ensemble and its exact decision boundary cannot be stated.",
+      "No held-out evaluation, precision, recall, or observed failure rates are available; all failure modes are hypotheses drawn from tree structure and SHAP aggregates.",
+      "Missing values are encoded as zero, so the model cannot separate absent data from disagreement; this affects every feature and biases results in unknown directions.",
+      "Sign ranges for the 'comuns' features (negative only) are unusual and must be confirmed against the feature source before interpreting direction.",
+      "Gain and SHAP importance favour features that are heavily used in splits; they do not establish causal or error-reducing contribution.",
+      "The high and gray rules are untested expressions built from visible thresholds; they have not been validated against held-out folds and must not be treated as accepted linkage criteria.",
+      "Training used only complementary persisted folds; no heldout outcomes or pair rows were used, so the rules cannot be checked for generalisation here.",
+      "Health-record linkage between SIM and Sinan-TB involves sensitive personal data; any use of these rules should follow data-protection and ethics governance."
+    ]
+  },
+  "input_tokens": 71134,
+  "output_tokens": 5628
+}

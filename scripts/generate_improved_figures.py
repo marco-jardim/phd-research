@@ -151,7 +151,7 @@ ax.bar(
     color="#1f77b4",
     edgecolor="black",
     linewidth=0.3,
-    label="Total de pares candidatos",
+    label="Total de potenciais pares",
 )
 ax.bar(
     xb,
@@ -160,11 +160,11 @@ ax.bar(
     color="#d62728",
     edgecolor="black",
     linewidth=0.3,
-    label="Pares verdadeiros",
+    label="Vínculos",
 )
 ax.set_xticks(xb)
 ax.set_xticklabels(bands, fontsize=9)
-ax.set_xlabel("Faixa do escore agregado")
+ax.set_xlabel("Nota final do comparador")
 ax.set_ylabel(r"Quantidade (escala $\log_{10}$)")
 ax.set_yscale("log")
 ax.legend(fontsize=8.5, loc="upper right")
@@ -200,7 +200,7 @@ for p, pct in zip(pairs, pct_pairs):
 bars = ax.bar(xb, pct_pairs, 0.6, color=colors_pct, edgecolor="black", linewidth=0.3)
 ax.set_xticks(xb)
 ax.set_xticklabels(bands, fontsize=9)
-ax.set_xlabel("Faixa do escore agregado")
+ax.set_xlabel("Nota final do comparador")
 ax.set_ylabel(r"Pares verdadeiros / total (\%)")
 for i, (pct, p) in enumerate(zip(pct_pairs, pairs)):
     if pct > 0:
@@ -210,7 +210,7 @@ ax.axvspan(1.5, 4.5, alpha=0.08, color="gray")
 ax.text(
     3,
     max(pct_pairs) * 0.85,
-    r"\textit{Zona cinzenta}",
+    r"\textit{Área cinza}",
     ha="center",
     fontsize=8,
     color="gray",

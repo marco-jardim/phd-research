@@ -12,6 +12,14 @@ from gzcmd.config import (
 from gzcmd.drift_monitor import calculate_psi, calculate_ks, DriftMonitor, DriftMetric
 
 
+@pytest.fixture(autouse=True)
+def seeded_randomness():
+    state = np.random.get_state()
+    np.random.seed(42)
+    yield
+    np.random.set_state(state)
+
+
 def test_calculate_psi_identical_dist():
     a = np.random.normal(0, 1, 1000)
     b = a.copy()

@@ -279,49 +279,10 @@ def export_probabilities(models, model_names, X_test, y_test, output_dir, logger
 
 
 def regras_alta_confianca(row):
-    """Compute deterministic rule-based confidence score (max 12.5)."""
+    """Use the canonical ablation rule score (max 12.5), without a second policy."""
+    from scripts.ablation_study import regras_alta_confianca as canonical_rules
 
-    def v(key):
-        value = row.get(key, 0)
-        try:
-            return float(value)
-        except (TypeError, ValueError):
-            return 0.0
-
-    score = 0.0
-
-    # Name agreement
-    if v("NOME qtd frag iguais") >= 2:
-        score += 3
-    if v("NOME compativel bool") > 0:
-        score += 1
-
-    # Birth date agreement
-    if v("DTNASC dt iguais") == 1:
-        score += 3
-    elif v("DTNASC dt ap 1digi") == 1:
-        score += 2
-
-    # Mother name agreement
-    if v("NOMEMAE qtd frag iguais") >= 2:
-        score += 2
-    elif v("NOMEMAE compativel bool") == 1:
-        score += 1
-
-    # Location/address agreement
-    if v("CODMUNRES local igual") == 1:
-        score += 1
-    if v("ENDERECO via igual") == 1:
-        score += 0.5
-
-    # Legacy score bucket
-    nota_final = v("nota final")
-    if nota_final >= 9:
-        score += 2
-    elif nota_final >= 8:
-        score += 1
-
-    return score
+    return canonical_rules(row)
 
 
 def compute_rules_scores(df):

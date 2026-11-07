@@ -1,0 +1,7 @@
+model,escopo,chamadas,tokens_entrada,tokens_saida,tokens_raciocinio,usd_total,pares_revisados,usd_por_par_revisado,respostas_truncadas,chamadas_batch,chamadas_direto,transporte
+claude-haiku-5-5,probe,400,1275407,730075,500665,0.2462891,175,0.001407366285714285714285714286,17,400,0,batch
+claude-sonnet-5-5,probe,0,0,0,,0,0,,0,0,0,historico_reutilizado
+claude-opus-5-5,probe,633,2021045,692577,310568,11.293188,304,0.03714864473684210526315789474,0,613,20,batch+direto
+claude-fable-5-1,probe,653,2105712,859031,491984,32.900855,304,0.1082264967105263157894736842,0,633,20,batch+direto
+claude-haiku-5-5,coorte_historica,4879,15660017,8886843,,6.0094232,2233,0.002691188177339901477832512315,,0,4879,direto
+claude-sonnet-5-5,coorte_historica,4608,14888191,4654334,,76.319722,2120,0.03599986886792452830188679245,,0,4608,direto

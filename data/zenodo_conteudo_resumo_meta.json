@@ -1,0 +1,454 @@
+{
+  "data_utc": "2026-11-04T16:08:47.577817+00:00",
+  "metodo": "Cabeçalhos CSV; contagens e cardinalidades sem valores individuais; groupby(dropna=False, observed=True); consulta pública Zenodo, sem alteração do registro.",
+  "seed": 20261104,
+  "erros": [
+    {
+      "url": "https://zenodo.org/api/records/18652286/versions",
+      "erro": "HTTP Error 404: NOT FOUND"
+    }
+  ],
+  "versoes": [
+    {
+      "versao": "1.0.0",
+      "id": 18652289,
+      "access_right": "open",
+      "arquivos": [
+        {
+          "nome": "benchmark_sim_sinan_tb.csv",
+          "tamanho": 7969179
+        },
+        {
+          "nome": "baselines.json",
+          "tamanho": 8527
+        },
+        {
+          "nome": "manifest.json",
+          "tamanho": 288
+        },
+        {
+          "nome": "splits.csv",
+          "tamanho": 772446
+        },
+        {
+          "nome": "README.md",
+          "tamanho": 3006
+        },
+        {
+          "nome": "zenodo_metadata.json",
+          "tamanho": 1070
+        },
+        {
+          "nome": "k_anonymity_report.json",
+          "tamanho": 4877
+        }
+      ]
+    },
+    {
+      "versao": "2.0.0",
+      "id": 18674440,
+      "access_right": "open",
+      "arquivos": [
+        {
+          "nome": "manifest.json",
+          "tamanho": 357
+        },
+        {
+          "nome": "benchmark_sim_sinan_tb.csv",
+          "tamanho": 7969179
+        },
+        {
+          "nome": "baselines.json",
+          "tamanho": 97309
+        },
+        {
+          "nome": "zenodo_metadata.json",
+          "tamanho": 1282
+        },
+        {
+          "nome": "k_anonymity_report.json",
+          "tamanho": 4877
+        },
+        {
+          "nome": "qw3.zip",
+          "tamanho": 257322
+        },
+        {
+          "nome": "README.md",
+          "tamanho": 5137
+        },
+        {
+          "nome": "qw2.zip",
+          "tamanho": 791273
+        },
+        {
+          "nome": "splits.csv",
+          "tamanho": 772446
+        },
+        {
+          "nome": "resultados.zip",
+          "tamanho": 10139396
+        }
+      ]
+    },
+    {
+      "versao": "3.0.0",
+      "id": 23928226,
+      "access_right": "open",
+      "arquivos": [
+        {
+          "nome": "v2_gzcmd_v31.zip",
+          "tamanho": 16955928
+        },
+        {
+          "nome": "manifest.json",
+          "tamanho": 357
+        },
+        {
+          "nome": "benchmark_sim_sinan_tb.csv",
+          "tamanho": 7969179
+        },
+        {
+          "nome": "baselines.json",
+          "tamanho": 97309
+        },
+        {
+          "nome": "zenodo_metadata.json",
+          "tamanho": 1282
+        },
+        {
+          "nome": "k_anonymity_report.json",
+          "tamanho": 4877
+        },
+        {
+          "nome": "qw3.zip",
+          "tamanho": 257322
+        },
+        {
+          "nome": "README.md",
+          "tamanho": 5137
+        },
+        {
+          "nome": "qw2.zip",
+          "tamanho": 791273
+        },
+        {
+          "nome": "splits.csv",
+          "tamanho": 772446
+        },
+        {
+          "nome": "resultados.zip",
+          "tamanho": 10139396
+        }
+      ]
+    },
+    {
+      "versao": "3.0.1",
+      "id": 23948459,
+      "access_right": "open",
+      "arquivos": [
+        {
+          "nome": "manifest.json",
+          "tamanho": 357
+        },
+        {
+          "nome": "benchmark_sim_sinan_tb.csv",
+          "tamanho": 7969179
+        },
+        {
+          "nome": "README.md",
+          "tamanho": 5194
+        },
+        {
+          "nome": "zenodo_metadata.json",
+          "tamanho": 1340
+        },
+        {
+          "nome": "v2_gzcmd_v31.zip",
+          "tamanho": 16956846
+        },
+        {
+          "nome": "baselines.json",
+          "tamanho": 97309
+        },
+        {
+          "nome": "k_anonymity_report.json",
+          "tamanho": 4877
+        },
+        {
+          "nome": "qw3.zip",
+          "tamanho": 257322
+        },
+        {
+          "nome": "qw2.zip",
+          "tamanho": 791273
+        },
+        {
+          "nome": "splits.csv",
+          "tamanho": 772446
+        },
+        {
+          "nome": "resultados.zip",
+          "tamanho": 10139396
+        }
+      ]
+    }
+  ],
+  "comparacao_local": {
+    "manifest.json": {
+      "igual_publicado": true,
+      "tamanho_local": 357,
+      "tamanho_publicado": 357
+    },
+    "benchmark_sim_sinan_tb.csv": {
+      "igual_publicado": true,
+      "tamanho_local": 7969179,
+      "tamanho_publicado": 7969179
+    },
+    "README.md": {
+      "igual_publicado": false,
+      "tamanho_local": 5595,
+      "tamanho_publicado": 5194
+    },
+    "zenodo_metadata.json": {
+      "igual_publicado": false,
+      "tamanho_local": 1282,
+      "tamanho_publicado": 1340
+    },
+    "v2_gzcmd_v31.zip": {
+      "igual_publicado": false,
+      "tamanho_local": 16955928,
+      "tamanho_publicado": 16956846
+    },
+    "baselines.json": {
+      "igual_publicado": true,
+      "tamanho_local": 97309,
+      "tamanho_publicado": 97309
+    },
+    "k_anonymity_report.json": {
+      "igual_publicado": true,
+      "tamanho_local": 4877,
+      "tamanho_publicado": 4877
+    },
+    "splits.csv": {
+      "igual_publicado": true,
+      "tamanho_local": 772446,
+      "tamanho_publicado": 772446
+    }
+  },
+  "benchmark": {
+    "3.0.1": {
+      "n_linhas": 61696,
+      "n_colunas": 31,
+      "PAR": {
+        "0": 61449,
+        "1": 211,
+        "2": 36
+      },
+      "colunas": [
+        "PAR",
+        "PASSO",
+        "NOME prim frag igual",
+        "NOME ult frag igual",
+        "NOME qtd frag iguais",
+        "NOME qtd frag raros",
+        "NOME qtd frag comuns",
+        "NOME qtd frag muito parec",
+        "NOME qtd frag abrev",
+        "NOMEMAE prim frag igual",
+        "NOMEMAE ult frag igual",
+        "NOMEMAE qtd frag iguais",
+        "NOMEMAE qtd frag raros",
+        "NOMEMAE qtd frag comuns",
+        "NOMEMAE qtd frag muito parec",
+        "NOMEMAE qtd frag abrev",
+        "DTNASC dt iguais",
+        "DTNASC dt ap 1digi",
+        "DTNASC dt inv dia",
+        "DTNASC dt inv mes",
+        "DTNASC dt inv ano",
+        "CODMUNRES uf igual",
+        "CODMUNRES local igual",
+        "CODMUNRES local prox",
+        "ENDERECO via igual",
+        "ENDERECO via prox",
+        "ENDERECO numero igual",
+        "ENDERECO compl prox",
+        "ENDERECO texto prox",
+        "ENDERECO tokens jacc",
+        "nota final"
+      ],
+      "campos_brutos_datas_sexo_municipio": [],
+      "grupos_subescores_publicados": {
+        "esquema_k": "PASSO|NOME prim frag igual|NOME ult frag igual|NOME qtd frag iguais|NOME qtd frag raros|NOME qtd frag comuns|NOME qtd frag muito parec|NOME qtd frag abrev|NOMEMAE prim frag igual|NOMEMAE ult frag igual|NOMEMAE qtd frag iguais|NOMEMAE qtd frag raros|NOMEMAE qtd frag comuns|NOMEMAE qtd frag muito parec|NOMEMAE qtd frag abrev|DTNASC dt iguais|DTNASC dt ap 1digi|DTNASC dt inv dia|DTNASC dt inv mes|DTNASC dt inv ano|CODMUNRES uf igual|CODMUNRES local igual|CODMUNRES local prox|ENDERECO via igual|ENDERECO via prox|ENDERECO numero igual|ENDERECO compl prox|ENDERECO texto prox|ENDERECO tokens jacc|nota final",
+        "k_min_qw3": 1,
+        "n_celulas_qw3": 24735,
+        "n_celulas_k_menor_5": 23358,
+        "n_linhas_k_menor_5": 30141
+      }
+    }
+  },
+  "readme_301": {
+    "igual_local": false,
+    "sha256_local": "1218f0aef50f2e78c90418d11c68eeedddbfca58104f652a9afe57d1be54f813",
+    "sha256_publicado": "80d3f1520cf56e3e2ec97ac9addd7817a5da0a81084f739ca6418a94caa04768",
+    "diff": [
+      "--- \n",
+      "+++ \n",
+      "@@ -85,7 +85,7 @@\n",
+      " ",
+      " ## Licenca / License",
+      " ",
+      "-CC-BY-NC-4.0",
+      "+MIT",
+      " ",
+      " ## Citacao sugerida / Suggested citation",
+      " ",
+      "@@ -93,10 +93,5 @@\n",
+      " Dataset com DOI Zenodo (a ser preenchido apos publicacao) /",
+      " Zenodo DOI to be added after publication.",
+      " ",
+      "-## Versão 3.0.0 (GZ-CMD v3.1) / Version 3.0.0",
+      " ",
+      "-Publicada em 2026-11-03: DOI 10.5281/zenodo.23928226 (https://zenodo.org/records/23928226),",
+      "-conceito 10.5281/zenodo.18652286. Acrescenta `v2_gzcmd_v31.zip` (funis por par,",
+      "-OOF, revisores LLM, rótulos por par pseudonimizados por `pair_id`) e mantém os",
+      "-arquivos da versão 2.0.0 (10.5281/zenodo.18674440).",
+      "-Published 2026-11-03: DOI 10.5281/zenodo.23928226; adds `v2_gzcmd_v31.zip` and keeps the 2.0.0 files.",
+      "+3.0.1: corrige a licença declarada; dados idênticos à 3.0.0."
+    ]
+  },
+  "zip_301_vs_local_300": {
+    "adicionados": [
+      "v2_gzcmd_v31/LICENSE"
+    ],
+    "removidos": [],
+    "modificados": [
+      "v2_gzcmd_v31/README.md",
+      "v2_gzcmd_v31/manifest.json",
+      "v2_gzcmd_v31/zenodo_metadata.json"
+    ],
+    "n_membros_301": 150
+  },
+  "privacy_scan_report": {
+    "files_scanned": 144,
+    "chaves": [
+      "date",
+      "files_scanned",
+      "blocked",
+      "method",
+      "scanner_sha256",
+      "findings",
+      "csv_headers",
+      "json_prose_inventory",
+      "run_status",
+      "limitations"
+    ]
+  },
+  "k_anonymity_report": {
+    "generated_at_utc": "2026-02-17T19:26:30.242676+00:00",
+    "source_file": "data/COMPARADORSEMIDENT.csv",
+    "n_rows": 61696,
+    "n_subscores": 29,
+    "stages": [
+      {
+        "name": "stage_1_all_scores_quartiles",
+        "description": "PASSO + 29 sub-scores discretizados em quartis. Configuracao inicial de auditoria.",
+        "n_features": 29,
+        "group_count": 9245,
+        "k_min": 1,
+        "groups_lt5": 7154
+      },
+      {
+        "name": "stage_2_family_aggregates_quartiles",
+        "description": "Generalizacao por agregacao semantica dos sub-scores em seis dimensoes, ainda discretizadas em quartis.",
+        "n_features": 6,
+        "group_count": 588,
+        "k_min": 1,
+        "groups_lt5": 289
+      },
+      {
+        "name": "stage_3_mixed_bins_selected",
+        "description": "Esquema final encontrado por busca de granularidade maxima sob restricao de k-anonimidade >= 5.",
+        "n_features": 3,
+        "group_count": 43,
+        "k_min": 5,
+        "groups_lt5": 0
+      }
+    ],
+    "selected_schema": {
+      "quasi_identifiers": [
+        "PASSO",
+        "nome_total_q2",
+        "local_total_q4",
+        "endereco_total_q2"
+      ],
+      "k_min": 5,
+      "group_count": 43,
+      "groups_lt5": 0
+    },
+    "l_diversity_assessment": {
+      "evaluated": true,
+      "decision": "k-anonimidade adotada como criterio principal",
+      "justification": "O atributo sensivel PAR e binario e altamente desbalanceado (~0.4% positivos), o que torna l-diversidade pouco informativa para grupos pequenos. A protecao operacional priorizou k-anonimidade com generalizacao de quasi-identificadores, sem publicacao de identificadores diretos ou texto livre."
+    }
+  },
+  "qw3": {
+    "n_linhas": 61696,
+    "colunas": [
+      "index",
+      "y_true",
+      "y_pred",
+      "nome_qtd_quartis",
+      "bandeira",
+      "faixa_idade",
+      "sexo",
+      "uf",
+      "score_band",
+      "score_source",
+      "score_band_source"
+    ],
+    "cardinalidades": {
+      "index": 61696,
+      "y_true": 2,
+      "y_pred": 2,
+      "nome_qtd_quartis": 4,
+      "bandeira": 2,
+      "faixa_idade": 6,
+      "sexo": 2,
+      "uf": 2,
+      "score_band": 3,
+      "score_source": 788,
+      "score_band_source": 1
+    }
+  },
+  "identificadores": {
+    "COMPREC": {
+      "n_distintos": 19388,
+      "comprimento_digitos_min": 1,
+      "comprimento_digitos_max": 5,
+      "n_nao_numericos": 0,
+      "espaco_por_comprimentos_sem_zeros_iniciais": 99999,
+      "espaco_por_comprimentos_com_zeros_iniciais": 100000
+    },
+    "REFREC": {
+      "n_distintos": 1515,
+      "comprimento_digitos_min": 1,
+      "comprimento_digitos_max": 4,
+      "n_nao_numericos": 0,
+      "espaco_por_comprimentos_sem_zeros_iniciais": 9999,
+      "espaco_por_comprimentos_com_zeros_iniciais": 10000
+    },
+    "PASSO": {
+      "n_distintos": 3,
+      "comprimento_digitos_min": 1,
+      "comprimento_digitos_max": 2,
+      "n_nao_numericos": 0,
+      "espaco_por_comprimentos_sem_zeros_iniciais": 99,
+      "espaco_por_comprimentos_com_zeros_iniciais": 100
+    }
+  },
+  "espaco_observado_produto": 88118460,
+  "espaco_comprimentos_sem_zeros_iniciais": 98989110099,
+  "espaco_comprimentos_com_zeros_iniciais": 100000000000
+}

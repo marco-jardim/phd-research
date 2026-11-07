@@ -1,0 +1,29 @@
+% Gerado por scripts/gerar_tabelas_nb03_faixas.py de data/desempenho_faixas_ablacao.csv
+\begin{table}[htbp]
+\centering
+\caption{Desempenho do RF+SMOTE e do \textit{Gradient Boosting} por faixa da nota final do comparador, no conjunto de teste (18.509 potenciais pares; 74 vínculos), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, limiar de decisão 0,5, selecionado entre 0,3, 0,5 e 0,7 no conjunto de teste da ablação (Seção~\ref{sec:cap5-ablacao-pareto}), e semente 42.}
+\label{tab:desempenho-faixas}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}lrrcccccc@{}}
+\toprule
+& & & \multicolumn{3}{c}{RF+SMOTE} & \multicolumn{3}{c}{\textit{Gradient Boosting}} \\
+\cmidrule(lr){4-6} \cmidrule(l){7-9}
+Faixa & Pares & Vínculos & VP/FP/FN & Sensib. & Prec. & VP/FP/FN & Sensib. & Prec. \\
+\midrule
+0-3 & 1.607 & 0 & 0/0/0 & n.d. & n.d. & 0/0/0 & n.d. & n.d. \\
+3-5 & 10.316 & 0 & 0/0/0 & n.d. & n.d. & 0/0/0 & n.d. & n.d. \\
+5-6 & 4.336 & 3 & 3/3/0 & \shortstack{1,000\\(0,439; 1,000)} & \shortstack{0,500\\(0,188; 0,812)} & 3/0/0 & \shortstack{1,000\\(0,439; 1,000)} & \shortstack{1,000\\(0,439; 1,000)} \\
+6-7 & 1.846 & 13 & 10/0/3 & \shortstack{0,769\\(0,497; 0,918)} & \shortstack{1,000\\(0,722; 1,000)} & 10/0/3 & \shortstack{0,769\\(0,497; 0,918)} & \shortstack{1,000\\(0,722; 1,000)} \\
+7-8 & 337 & 15 & 14/0/1 & \shortstack{0,933\\(0,702; 0,988)} & \shortstack{1,000\\(0,785; 1,000)} & 14/2/1 & \shortstack{0,933\\(0,702; 0,988)} & \shortstack{0,875\\(0,640; 0,965)} \\
+8-9 & 36 & 12 & 9/0/3 & \shortstack{0,750\\(0,468; 0,911)} & \shortstack{1,000\\(0,701; 1,000)} & 4/2/8 & \shortstack{0,333\\(0,138; 0,609)} & \shortstack{0,667\\(0,300; 0,903)} \\
+9-10 & 15 & 15 & 15/0/0 & \shortstack{1,000\\(0,796; 1,000)} & \shortstack{1,000\\(0,796; 1,000)} & 15/0/0 & \shortstack{1,000\\(0,796; 1,000)} & \shortstack{1,000\\(0,796; 1,000)} \\
+$\geq$10 & 16 & 16 & 16/0/0 & \shortstack{1,000\\(0,806; 1,000)} & \shortstack{1,000\\(0,806; 1,000)} & 14/0/2 & \shortstack{0,875\\(0,640; 0,965)} & \shortstack{1,000\\(0,785; 1,000)} \\
+\midrule
+Total & 18.509 & 74 & 67/3/7 & \shortstack{0,905\\(0,817; 0,953)} & \shortstack{0,957\\(0,881; 0,985)} & 60/4/14 & \shortstack{0,811\\(0,707; 0,884)} & \shortstack{0,938\\(0,850; 0,975)} \\
+\bottomrule
+\end{tabular}
+
+\vspace{2pt}
+\par\footnotesize Nota: VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos. Faixas fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. n.d.: razão não definida (sem vínculos ou sem predições positivas na faixa). A área cinza corresponde às faixas de 5 a 9. Fonte: \texttt{data/desempenho\_faixas\_ablacao.csv}.
+\end{table}

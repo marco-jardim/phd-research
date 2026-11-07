@@ -1,0 +1,31 @@
+% Gerado por scripts/validar_ancoras_ml.py; não altera tabelas históricas.
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Calibração sobre a margem OOF do XGBoost, com âncoras definidas pela nota ($A^+:s\geq9$, $A^-:s<5$). Métricas na área cinza ($5\leq s<9$). Platt da nota é histórico, ajustado na própria base; isotônica ML usa validação aninhada. Âncoras usam somente duas prevalências agregadas medidas no extrato, não constituindo validação externa. ECE: dez intervalos uniformes.}
+\label{tab:cap8-ancoras-ml}
+\begin{tabular}{|l|r|r|r|r|r|}
+\hline
+Calibração & Brier & Log-loss & ECE & AUC & Mediana ($Y=1$) \\
+\hline
+Platt (nota) & 0,006150 & 0,031557 & 0,000742 & 0,873157 & 0,026337 \\
+Âncoras (margem ML) & 0,002654 & 0,015122 & 0,002537 & 0,997227 & 0,999721 \\
+Isotônica ML (OOF) & 0,002206 & 0,008541 & 0,001125 & 0,995142 & 0,894737 \\
+\hline
+\end{tabular}
+\par\smallskip
+\begin{tabular}{|l|l|r|r|r|r|r|}
+\hline
+Modo & Calibração & Revisão & FN auto & FP auto & Perda perfeita & Perda config. \\
+\hline
+Vigilância & Platt (nota) & 1590 & 69 & 0 & 3847,5 & 4816,7 \\
+Vigilância & Âncoras (margem ML) & 100 & 17 & 22 & 1095,0 & 1265,6 \\
+Vigilância & Isotônica ML (OOF) & 311 & 6 & 4 & 417,8 & 798,0 \\
+Confirmação & Platt (nota) & 210 & 107 & 0 & 2192,5 & 2777,3 \\
+Confirmação & Âncoras (margem ML) & 70 & 21 & 15 & 1937,5 & 2203,9 \\
+Confirmação & Isotônica ML (OOF) & 153 & 19 & 0 & 418,2 & 939,9 \\
+\hline
+\end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Simulação histórica v3, sem guardas, com os mesmos custos, tetos, orçamento e erros por banda das tabelas anteriores. Perda configurada é expectativa sobre as classes observadas, não resposta de revisor executado.}
+\end{table}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source_file": "claude-haiku-5-5_sem_pcal.json",
+  "source_sha256": "76d68226172986aa16f95cfa03c5b994570d019063b4f34fb83957b03021f6ae",
+  "model": "claude-haiku-5-5",
+  "mode": "vigilancia",
+  "arm": "sem_pcal",
+  "n_selected": 18,
+  "n_reviewed": 18,
+  "n_errors": 0,
+  "decisions": {
+    "MATCH": 7,
+    "NONMATCH": 0,
+    "UNSURE": 11
+  }
+}

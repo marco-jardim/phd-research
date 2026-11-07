@@ -1,0 +1,39 @@
+% Gerada por scripts/importar_equivalencia_java.py. Não editar à mão.
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Concordância entre o protótipo Java e a implementação Python do Comparador de Registros em 500 pares sintéticos construídos para exercitar casos de fronteira; proporção de pares com subescore idêntico (tolerância de $10^{-9}$) e maior diferença absoluta}
+\label{tab:equivalencia-java}
+\begin{tabular}{lrr}
+\toprule
+Subescore & Concordância (\%) & Diferença máxima \\
+\midrule
+Paciente: primeiro fragmento & 91,6 & 1,0 \\
+Paciente: último fragmento & 93,2 & 1,0 \\
+Paciente: fragmentos iguais & 84,8 & 1,0 \\
+Paciente: fragmentos raros & 56,8 & 1,0 \\
+Paciente: fragmentos comuns & 39,2 & 1,0 \\
+Paciente: Soundex & 88,8 & 0,8 \\
+Paciente: abreviações & 99,2 & 0,25 \\
+Mãe: primeiro fragmento & 92,8 & 1,0 \\
+Mãe: último fragmento & 93,2 & 1,0 \\
+Mãe: fragmentos iguais & 86,4 & 1,0 \\
+Mãe: fragmentos raros & 48,0 & 2,0 \\
+Mãe: fragmentos comuns & 70,8 & 2,0 \\
+Mãe: Soundex & 89,6 & 0,8 \\
+Mãe: abreviações & 99,2 & 0,25 \\
+\midrule
+Data: igualdade & 100,0 & 0,0 \\
+Data: um dígito & 100,0 & 0,0 \\
+Data: inversão do dia & 82,4 & 1,0 \\
+Data: inversão do mês & 76,8 & 1,0 \\
+Data: inversão do ano & 75,6 & 0,8 \\
+\midrule
+Nota final & 11,2 & 4,0 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{\textwidth}
+\footnotesize Nota: o lote não estima a concordância em dados reais. As tabelas de frequência são sintéticas e idênticas nos dois lados. Fonte: \path{tests/equivalencia/resultado_agregado.csv} do repositório do CdR, commit \texttt{0d5b411}, PR \#25 \cite{Jardim2025comparador}. Importação e geração: \path{scripts/importar_equivalencia_java.py} desta tese.
+\end{minipage}
+\end{table}

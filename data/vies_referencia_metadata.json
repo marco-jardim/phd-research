@@ -1,0 +1,114 @@
+{
+  "analysis": "analise_quantitativa_de_vies_sensibilidade_nao_estimativa_erro_real",
+  "registered": false,
+  "cpu_only": true,
+  "llm_calls": 0,
+  "model_fits": 0,
+  "fixed_a_priori_for_this_run_utc": "2026-11-07T01:03:12.112989+00:00",
+  "fp_grid": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "par2_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.2
+  ],
+  "seed": 20261107,
+  "repetitions": 1000,
+  "grid": "vigilancia: 5x5x4; confirmacao: 1x5x4 (grupo FP abaixo vazio)",
+  "rng": "numpy.default_rng PCG64; restart seed each scenario, common random numbers",
+  "rounding_changes": "floor(n*f)+Bernoulli(frac(n*f)); uniform subsets without replacement",
+  "targets_percent": [
+    25,
+    64,
+    100
+  ],
+  "targets_rounding": "nearest integer, halves up, min 1; baseline 9/23/36",
+  "strict_fraction_metrics": "revisoes_minimo: ceil(n*f), baseline 9/24/36; paired differences also provided",
+  "quantiles": "linear median/P2.5/P97.5 of 1000 paired metric draws; not confidence intervals",
+  "assumptions": "Uniform error within each group; 211 PAR1 fixed; policies and rankings fixed; no refit. FP groups disjoint from PAR2; baseline P accepted FP reclassified as links enter all queues. PAR2 removal applies uniformly to accepted, referred and lost positives.",
+  "conclusions": {
+    "C1": "VPP<0.5, diagnostic only; confirmation already >=0.5",
+    "C2": "lost equals 13/27 literally; any b>0 changes expectation",
+    "C3": "median paired O3-0.75*O1 <=0 at target64, surveillance",
+    "C4": "median paired F4-O1 <0 at targets25/100 (baseline9/36)"
+  },
+  "baseline_reproduction": {
+    "passed": true,
+    "below_cutoff": 61485,
+    "par2": 36,
+    "checks": [
+      "comparator queue",
+      "O1/O3/F4 reference efforts",
+      "P counts",
+      "FP step regions",
+      "PAR by step",
+      "cardinality",
+      "archived policy hashes"
+    ]
+  },
+  "strong_identifier_maxima": {
+    "NOME qtd frag iguais": 1.0,
+    "NOME prim frag igual": 1.0,
+    "NOME ult frag igual": 1.0,
+    "NOMEMAE qtd frag iguais": 1.0,
+    "NOMEMAE prim frag igual": 1.0,
+    "NOMEMAE ult frag igual": 1.0,
+    "DTNASC dt iguais": 1.0
+  },
+  "strong_identifier_criterion": "all seven empirical full-extract maxima simultaneously; no imputation",
+  "cardinality_criterion": "no COMPREC or REFREC shared with 211 accepted PAR1 above cutoff",
+  "par0_sample": {
+    "n": 1000,
+    "seed": 20261107,
+    "sampling": "uniform without replacement, lexical hash order"
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    ".local/arranjo_corte/policy_vigilancia_P.csv": "cd697d0ca0eba041fc23afecebcf8b7c1a51db0523e23145f3cd48ab89a79c79",
+    "responses/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+    "responses/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+    "responses/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+    "responses/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
+    "responses/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337",
+    ".local/arranjo_corte/policy_confirmacao_P.csv": "b836f6bf50f7b4e20bcdf1e0e5c3664099a4c2669c7fa088ec89f9d96953a30d",
+    "responses/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+    "responses/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+    "responses/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+    "responses/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
+    "responses/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c",
+    "data/arranjo_corte_metricas.csv": "d5f9f3c790802c8dcf7bb2d50c333390c5523f002aafdd7315e136e1c9945d16",
+    "data/fp_arranjo_por_regiao.csv": "f78a04e3fbb92c4aa8e14b1902d80fc9b767d840ff4f7a28a8999ff5c3ee4b2f",
+    "data/par_por_passo.csv": "101ffe242d5475f4bcee404ba951f6764108775632e2230d346f4d105f161207",
+    "data/fp_cardinalidade.json": "d7edf216fc88100e8ebdd6984d0d61280154a9f8c76d4ef0aec1cd50aefae666",
+    "data/fusao_filas.csv": "c9d3603680251c2741ccc253ca1cf6df2876805da2df9bfc74e044f46627d069",
+    "data/robustez_arranjo_metadata.json": "10beb42cb9d48b20677f1f116617bda316761d5ae6d5215656aeae6fccd4b8d6",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad"
+  },
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1"
+  },
+  "C1_uniform_analytic_threshold": {
+    "vigilancia": 0.40476190476190477,
+    "confirmacao": -0.5
+  },
+  "code_sha256_lf": {
+    "scripts/vies_referencia.py": "ef2b4b7ccab2b7927c9f1f1ec8f35bf2b22e5c49d4654e52a047c26920bc718b",
+    "scripts/fusao_filas.py": "8f41b556e8eee6f84ae294ee05dd9ee20cc8b26df24bb416457c35130c314ecd",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "gzcmd/loader.py": "6a9302f7324aac9149c3abba74fbd5fb5d9c4d7e376f058609fe956311eeb473"
+  },
+  "output_sha256": {
+    "vies_referencia.csv": "917771fbe4915543f083710c82804790570507fd451c02c3ef6f1e4823a975c8",
+    "vies_referencia_viradas.csv": "b3f51c84fc9727f8c51d970fba5c814187fb63cd5626a439ff8d24c7e563890a",
+    "vies_referencia_identificadores.csv": "bf30fa1c93c02030e3280a44cfa7351ef1b47880f2be19b91cf3604b7317cce1"
+  }
+}

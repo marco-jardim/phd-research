@@ -1,0 +1,11 @@
+{
+  "minutos_por_par": 20,
+  "revisoes_referencia": 2156,
+  "cenario": true,
+  "fonte_minutos": "gzcmd/gzcmd_v3_config.yaml: comentários dos perfis de custo, 5 s / (20 min * 60)",
+  "interpretacao_minutos": "Hipótese de duração, não medida do serviço; as horas expressam ordem de grandeza.",
+  "interpretacao_referencia": "Cenário exploratório: se a revisão tivesse seguido ordem decrescente de SCORE dentro de cada passo. Não há fonte para afirmar que essa foi a ordem histórica.",
+  "interpretacao_cargas": "K1 é o orçamento humano de P; K2 soma humanos e pares ao LLM de P. O3 aplica todo o orçamento à revisão humana. P mantém suas decisões e sua carga humana nas duas comparações.",
+  "interpretacao_razoes": "Horas por vínculo perdido ou FP usam as horas efetivas hipotéticas. As colunas horas_poupadas_por_* expressam a troca de esforço poupado por desfecho. Denominador zero produz campo vazio.",
+  "registro": "Análise exploratória post hoc, não registrada; revisor perfeito como referência e cenário adicional de erro humano de 5%."
+}

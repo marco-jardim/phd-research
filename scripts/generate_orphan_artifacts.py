@@ -83,7 +83,7 @@ def generate_tab_impacto_epidemiologico():
     lines.append(r"\begin{table}[htbp]")
     lines.append(r"\centering")
     lines.append(
-        r"\caption{Comparação de métodos: óbitos detectados, custo operacional e taxa corrigida}"
+        r"\caption{Comparação de métodos: óbitos detectados, custo operacional e sensibilidade}"
     )
     lines.append(r"\label{tab:impacto-epidemiologico}")
     lines.append(r"\footnotesize")
@@ -97,7 +97,7 @@ def generate_tab_impacto_epidemiologico():
     for _, row in df.iterrows():
         # Translate method names to Portuguese/LaTeX
         m = str(row["method"])
-        m = m.replace("Naive threshold >=", r"Limiar ingênuo $\geq$")
+        m = m.replace("Naive threshold >=", r"Decisão de limiar $\geq$")
         m = m.replace("Rules >=", r"Regras $\geq$")
         m = m.replace("ML RF+SMOTE >=", r"ML RF+SMOTE $\geq$")
         m = m.replace("ML GB >=", r"ML GB $\geq$")
@@ -183,7 +183,7 @@ def generate_fig_ablation():
 
     # Map category names to display names
     cat_map = {
-        "naive-threshold": "Limiar Ingênuo",
+        "naive-threshold": "Decisão de limiar",
         "rules-only": "Regras Determinísticas",
         "consensus-ml": "Consenso (ML)",
         "consensus-hybrid": "Consenso (Híbrido)",

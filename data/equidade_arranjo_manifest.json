@@ -1,0 +1,111 @@
+{
+  "analysis_name": "estudo5_equidade_arranjo_P",
+  "created_utc": "2026-11-06T14:30:54.084415+00:00",
+  "seed": "n/a: no random sampling, training, API calls or new thresholds",
+  "rows": 61696,
+  "links": 247,
+  "raca_cor_presente": false,
+  "alpha": 0.05,
+  "n_min": 30,
+  "decisoes": [
+    "arranjo_P_vigilancia",
+    "arranjo_P_confirmacao",
+    "cascata_v31_vigilancia",
+    "cascata_v31_confirmacao"
+  ],
+  "dimensoes_demograficas": [
+    "sexo",
+    "faixa_idade"
+  ],
+  "dimensoes_operacionais": [
+    "nome_qtd_quartis",
+    "bandeira",
+    "municipio",
+    "passo",
+    "ano_obito",
+    "completude"
+  ],
+  "prereg_commit": "d526c3fb3068d4e1b50df0571324915cb83c13e3",
+  "prereg_sha256": "3f156cfe3c316cef63a3349f4d46608128cc28893f6691d314c508a3b183c278",
+  "frozen_rates_sha256": "d0876836394b2513135995df3fc6e21621a2e162806bd8dd88b6fe54fb931172",
+  "registered_input_sha256": {
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5",
+    "scripts/arranjo_corte_s1_simular.py": "9f6ba768be060bb4062f181b2a267458ecda95e9a61ee21ba246a8fd6ea0abbd",
+    "scripts/arranjo_corte_s2_executar.py": "ac0d5b9b5c1d9c7730b0992f13e7e2dd3530284f14636d29731259c25fa02f60",
+    "tests/test_arranjo_corte.py": "8d30e41ad0fb88de99ce490030023f4568c89f75f642d0f085ce7bd9497fb0f9",
+    "gzcmd/M_arranjo_corte.md": "c73bcaec0efd43f1318211207c9227cdec503517e7ce74def997ae25b4f740b8",
+    "scripts/run_exp2_sem_model_outputs.py": "f10be94c2ed8b97403625920002213adb48568ff45d45536ce02cf42521adeae",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "gzcmd/runner.py": "3fe59df92bd95b80c34434c5f9bc1c8e87b800a99d7cffab52a999c459811f27",
+    "gzcmd/reliability.py": "ec08fc224d0ad66177135ef1c9bcc115ff9fa86655c90a07ae68de0515ad6d31",
+    "gzcmd/guardrails.py": "c23d5d5dc3087daeca7b5ade3245b57f19b04209b3d75e47d84092ad4210a850",
+    "gzcmd/calibration.py": "f1eb1af2f07db02baa74a23d7f0986793067a6b9e5766473ddf20acfc34c6629",
+    "gzcmd/gzcmd_v3_policy_engine.py": "c9a35191db3d4ec689720b3a91722b93f5a65bc8cb8affd9f90dc84e22f4a666",
+    "gzcmd/llm_dossier.py": "a9cdf3f078507254cd05c4278eca992266f8d1ab783074a3a241605fc35e9589",
+    "scripts/run_exp2_ablacao_dossie.py": "f94d3e1bb4d22687ae5e8dcf47a12596e875703aff7adf6b70c9d1679ca34ce7",
+    "scripts/funil_gzcmd_v2.py": "b3b4c60e55829cbcbedead76ee80d4f664476280b7576ccf404346db189518c6",
+    "gzcmd/gzcmd_v3_config.yaml": "d9d16a6e6b1726e3926b7c543c543e7fc2b580a031210283ae57c373d32a41e6",
+    "gzcmd/error_rates_by_band_v4.yaml": "0c48024b94de9bd2c3299fd0c21640a1e8a7f0733a424c59d6250ba30ae778b1",
+    "gzcmd/gzcmd_v4_llm_prompt.md": "0693f4a816c249800c1ccd98681547077f9953fae1d15e2729aa1198f5e8cb56",
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+    "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia_journal/identity.json": "0913e85596138fb15c2e9122d9e9f19c0c95db3339eedcd295316a6f3fc8ac60",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+    "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao_journal/identity.json": "59e3a3682583cbfb9b13b4b6ccaa78bea632bb8a5192a264558e6f301e62d6f6"
+  },
+  "policy_sha256": {
+    "policy_vigilancia_B1.csv": "5baa12870814702f7f8f9092cca847e6dee518f5f179ca43eea5ea6a3372282f",
+    "policy_vigilancia_P.csv": "cd697d0ca0eba041fc23afecebcf8b7c1a51db0523e23145f3cd48ab89a79c79",
+    "policy_vigilancia_P-Platt.csv": "b113355df238af4b786386719f2bc4dea61b9d00c9ba7475155ee4731d35286e",
+    "policy_vigilancia_A3.csv": "daecd5fd25f00871144b3e772c980964c65b78117e9647ab6afb48189bcd8102",
+    "policy_vigilancia_P-PAR2-grey.csv": "a8fa44d4d761e01a37c14e0d541b8f75e6e63680c6f4d0c17c45a45b5e219a4a",
+    "policy_confirmacao_B1.csv": "dc9429a145877315d63582da3f5c6822740aa5ae94f7f4a8eafa6efd1455de8b",
+    "policy_confirmacao_P.csv": "b836f6bf50f7b4e20bcdf1e0e5c3664099a4c2669c7fa088ec89f9d96953a30d",
+    "policy_confirmacao_P-Platt.csv": "ad54dcf66ace56dbb0a3b85a64c3c908a03256b60f9b172f9fef8ef49c78108a",
+    "policy_confirmacao_A3.csv": "2246a1305f3b5bd6a9c3a88ab937e9631d8e323ddea2a6ecbf39048107c48e60",
+    "policy_confirmacao_P-PAR2-grey.csv": "ffccf5754d24cc914eb6febcb6b94cc895df6056988672647ed3466ae2e1fb93"
+  },
+  "response_sources_sha256": {
+    "vigilancia": {
+      "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_vigilancia.json": "4af114a45b489e2273dc1cb2fa535d2cf436865449a807e8b6a75a2174a8b156",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_vigilancia.json": "e38da772e78f9c0f52d95e7c4b82a2b9e7f6f4d455ae9564e9907ee828dad8cb",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_vigilancia.json": "c1957314078621a5ba79ef6d316769918f59372ad35465ff51753efdebe10029",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_vigilancia.json": "cb9a60e112b02af552fc180eaac369d9f175b46b62c16ef3bccc1389d319dea3",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_vigilancia.json": "5b9ab19d1d9f2a6e74498601c0d632768c508c71299bbc89859f4b348968f337"
+    },
+    "confirmacao": {
+      "data/sprint3b/anthropic_sem_mo_v4/exp2_llm_sync_confirmacao.json": "4c50d1718a88ce8c639fac0c2a656632cef0873c4ccd52af23f8448fe2dd5fe1",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31/exp2_llm_sync_confirmacao.json": "ee8ef8e9068d29fec11af2d95186dd2f9073ce71158e5a4e7eedfced252e2a30",
+      "data/sprint3b/anthropic_sem_mo_v4_lote31_refrec/exp2_llm_sync_confirmacao.json": "0ac5aeac5cbde6e5f1f44d90061745488b84c20694eb52f5195d62480d8ee717",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte/exp2_llm_sync_confirmacao.json": "75e854323ebef06880259c62fa11bff82e30cf434d8f39f05b05b60266112233",
+      "data/sprint3b/anthropic_sem_mo_v4_arranjo_corte_supl/exp2_llm_sync_confirmacao.json": "edf02a1ff9790da0b81c60de2c5a90c8058b6ac52a2f8c3b01f669182896ca4c"
+    }
+  },
+  "reference_sha256": {
+    "data/equidade_v31_global.csv": "58845ca5331a8ac810693f4cf910e2378236bf1c92eefea76bc69a21f052119b",
+    "data/equidade_v31_group_metrics.csv": "8e6bd20bb4d2c5b9975a0b646b7c2a1023bd8f1dcec712d1b6a665d129944188",
+    "data/equidade_v31_pairwise_tests.csv": "90f6251ce04c5ad38f8953101e07ad0c296480bb9c57090dd1e7308d96c0a512",
+    "data/equidade_v31_maxdiff.csv": "9ac6e24a24f9137b8914ce9767d015c7cd994a407c8d152b67a298f309ea6143"
+  },
+  "code_sha256": {
+    "scripts/equidade_arranjo.py": "58b1b89df714f7300d49b2a63ff5f695964c1dc237ee52167e66d8e4c4660d99",
+    "scripts/arranjo_paths.py": "c549e9d95e5ed88291c1ad812837d666a4b37ace3e336459976d0c832317a2ce",
+    "scripts/equidade_v31.py": "361cb482ed2918217a825fd2131d9bae648a4077115246221a7db08d207b2883",
+    "scripts/qw3_fairness_analysis.py": "ba83b37da3e473b27d666c4e3a5bc8f71096c3fdb9ed8625500f94325244d352",
+    "tests/test_equidade_arranjo.py": "19d80cc1276b0389bd15ec42dcc5d8def2609a61a899697b5d34149cb2706340"
+  },
+  "published_reference_reproduced": true,
+  "historical_corte6_predictions": 7452,
+  "missing_age_pairs": 403,
+  "missing_age_links": 1,
+  "missing_group_rule": "Original inference excludes MISSING and groups with n<30; coverage CSV includes every group to close 61696/247",
+  "BH_rule": "Same legacy routine; correction per decision over finite p-values; no pooling across decisions",
+  "REFREC_dependence": "Pairwise tests do not adjust within-REFREC correlation; p-values may be optimistic",
+  "human_outcomes_observed": false
+}

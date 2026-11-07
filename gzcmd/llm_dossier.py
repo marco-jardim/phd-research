@@ -1,7 +1,14 @@
 """Build a JSON dossier per candidate pair for LLM clerical review.
 
-The dossier contains ONLY linkage sub-scores and model outputs — never PII.
+The dossier contains linkage sub-scores, model outputs and an unsalted pair
+pseudonym. It excludes nominal source fields, not all personal data.
 It is the sole input the LLM sees, enforcing a strict information boundary.
+
+The historical extract supplies 14 of its 29 sub-scores to this dossier:
+three name, three mother-name, one birth-date, six address and one municipality
+score. Rare/common/very-similar/abbreviated name scores, approximate and inverted
+birth dates, and UF/proximity municipality scores are not sent. Do not add these
+fields retroactively: the historical v3/v4 runs depend on this boundary.
 
 Usage::
 
@@ -30,9 +37,7 @@ __all__ = [
     "make_pair_id",
 ]
 
-# ---------------------------------------------------------------------------
 # Constants
-# ---------------------------------------------------------------------------
 
 SCHEMA_VERSION = "gzcmd_v3.dossier.1.0"
 
@@ -41,20 +46,15 @@ _NAME_COLS = [
     "NOME qtd frag iguais",
     "NOME prim frag igual",
     "NOME ult frag igual",
-    "NOME prim ult frag igual",
 ]
 
 _MOTHER_COLS = [
     "NOMEMAE qtd frag iguais",
     "NOMEMAE prim frag igual",
     "NOMEMAE ult frag igual",
-    "NOMEMAE prim ult frag igual",
 ]
 
 _DOB_COLS = [
-    "DTNASC ano igual",
-    "DTNASC mes igual",
-    "DTNASC dia igual",
     "DTNASC dt iguais",
 ]
 
@@ -99,9 +99,7 @@ _MACD_COLS = [
 ]
 
 
-# ---------------------------------------------------------------------------
 # Data classes
-# ---------------------------------------------------------------------------
 
 
 @dataclass(frozen=True)
@@ -151,9 +149,7 @@ class Dossier:
         return json.dumps(self.to_dict(), ensure_ascii=False, **kwargs)
 
 
-# ---------------------------------------------------------------------------
 # Pair ID generation
-# ---------------------------------------------------------------------------
 
 
 def make_pair_id(
@@ -161,17 +157,14 @@ def make_pair_id(
     refrec: Any,
     passo: Any,
 ) -> str:
-    """Deterministic, non-reversible pair identifier.
-
-    Uses SHA-256 of ``COMPREC|REFREC|PASSO`` — no PII leaks.
+    """Pseudônimo determinístico sem sal; recalculável por quem detém
+    COMPREC/REFREC/PASSO. Usa SHA-256 de ``COMPREC|REFREC|PASSO``.
     """
     raw = f"{comprec}|{refrec}|{passo}"
     return hashlib.sha256(raw.encode()).hexdigest()[:16]
 
 
-# ---------------------------------------------------------------------------
 # Dossier builder (single row)
-# ---------------------------------------------------------------------------
 
 
 def _safe_float(value: Any, default: float = 0.0) -> float:
@@ -221,8 +214,7 @@ def build_dossier(
 ) -> Dossier:
     """Build a :class:`Dossier` from a single DataFrame row.
 
-    Parameters
-    ----------
+    Parameters:
     row:
         A Series representing one candidate pair (one row of the enriched
         DataFrame after feature engineering + triage).
@@ -324,9 +316,7 @@ def build_dossier(
     )
 
 
-# ---------------------------------------------------------------------------
 # Batch builder
-# ---------------------------------------------------------------------------
 
 
 def build_dossiers(
@@ -337,8 +327,7 @@ def build_dossiers(
 ) -> list[Dossier]:
     """Build dossiers for multiple rows.
 
-    Parameters
-    ----------
+    Parameters:
     df:
         DataFrame after triage (must have ``action`` column).
     only_llm_review:
@@ -347,8 +336,7 @@ def build_dossiers(
     include_macd:
         Include MACD features when present.
 
-    Returns
-    -------
+    Returns:
     list[Dossier]
         One dossier per qualifying row, in original index order.
     """
@@ -364,9 +352,7 @@ def build_dossiers(
     return dossiers
 
 
-# ---------------------------------------------------------------------------
 # Helpers
-# ---------------------------------------------------------------------------
 
 
 def _sanitize(obj: Any) -> Any:

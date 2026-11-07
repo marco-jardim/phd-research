@@ -1,0 +1,127 @@
+{
+  "analysis": "exploratória post hoc; probe D",
+  "model": "Claude Haiku 5.5",
+  "source_sha256": {
+    "resultados_agregados.csv": "2ad604856f1fe326a779ca7159765076c33ea88fc2f3893bc67e0e0d09e21f99",
+    "transporte_agregado.json": "8de432e31f601b78dfcb4b2c92ecfa3137c67179776e33594a69a444a376391f",
+    "PREREG.md": "fd3f66370b6860ac54820c3a1161c9c38820940f50e9f2a384a40468b68a8050",
+    "prompt_v5.md": "6e419a61a68b63a73c3a30903e2160b0f7cfd6689775a2376702e43b0dbf5077"
+  },
+  "prompt_v5_sha256": "6e419a61a68b63a73c3a30903e2160b0f7cfd6689775a2376702e43b0dbf5077",
+  "campos_acrescentados": [
+    "NOME qtd frag raros",
+    "NOME qtd frag comuns",
+    "NOME qtd frag muito parec",
+    "NOME qtd frag abrev",
+    "NOMEMAE qtd frag raros",
+    "NOMEMAE qtd frag comuns",
+    "NOMEMAE qtd frag muito parec",
+    "NOMEMAE qtd frag abrev",
+    "DTNASC dt ap 1digi",
+    "DTNASC dt inv dia",
+    "DTNASC dt inv mes",
+    "DTNASC dt inv ano",
+    "CODMUNRES uf igual",
+    "CODMUNRES uf prox",
+    "CODMUNRES local prox"
+  ],
+  "contexto_acrescentado": [
+    "contagem REFREC",
+    "contagem COMPREC",
+    "posição pela nota",
+    "diferença para a melhor nota",
+    "diferença para a segunda nota"
+  ],
+  "MACD": "nove campos já presentes no v4, mantidos",
+  "cost_usd": 0.31989855,
+  "cost_basis": "usage retornado, não fatura; inclui piloto e truncadas",
+  "transport_by_stage": [
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "confirmacao",
+      "stage": "AB",
+      "transport": "batch",
+      "calls": 82,
+      "input_tokens": 330968,
+      "output_tokens": 163690,
+      "cost_usd": 0.0574709,
+      "truncated": 1
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "confirmacao",
+      "stage": "R",
+      "transport": "direto",
+      "calls": 4,
+      "input_tokens": 20570,
+      "output_tokens": 7570,
+      "cost_usd": 0.005842,
+      "truncated": 1
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "stage": "AB",
+      "transport": "batch",
+      "calls": 299,
+      "input_tokens": 1206740,
+      "output_tokens": 589243,
+      "cost_usd": 0.20764774999999977,
+      "truncated": 23
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "stage": "AB",
+      "transport": "direto",
+      "calls": 1,
+      "input_tokens": 4030,
+      "output_tokens": 1711,
+      "cost_usd": 0.0012585,
+      "truncated": 0
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "stage": "R",
+      "transport": "direto",
+      "calls": 23,
+      "input_tokens": 119999,
+      "output_tokens": 41257,
+      "cost_usd": 0.032628399999999995,
+      "truncated": 0
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "modo": "vigilancia",
+      "stage": "piloto",
+      "transport": "direto",
+      "calls": 11,
+      "input_tokens": 45510,
+      "output_tokens": 21000,
+      "cost_usd": 0.015051,
+      "truncated": 1
+    }
+  ],
+  "cancellation": {
+    "mode": "vigilancia",
+    "stage": "AB",
+    "canceled_without_generation": 1,
+    "late_success_responses_used": 299,
+    "rule": "cancelamento por prazo do crédito; sucessos tardios usados e não repetidos; somente cancelada sem geração teve fallback direto",
+    "source": "PREREG.md, adendo de transporte; reconciliação do relatório D"
+  },
+  "utility": {
+    "criterion": "FP S1 retirados >=5 OU PAR=2 S2 adicionais >=3 OU VPP S1 >=0.35",
+    "FP_S1_retirados_validos": 3,
+    "PAR2_S2_adicionais": 2,
+    "VPP_S1": 0.2222222222222222,
+    "useful": false,
+    "missing_rule": "ausentes não contam como correções; truncadas não são UNSURE",
+    "resultado": "não atingido"
+  },
+  "opus_executado": false,
+  "truncadas_passada_principal": 25,
+  "pares_sem_decisao": 20,
+  "truncation_note": "respostas não equivalem a pares; piloto separado"
+}

@@ -1,0 +1,69 @@
+{
+  "passos": [
+    {
+      "passo": 11,
+      "status": "a validar",
+      "chave_inferida": "Exato textual sobre UF de residência, município de residência e sexo. Chave ainda não confirmada. Os agregados não mostram nenhuma chave fonética (Soundex) nem chave de ano de nascimento.",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.UF_RES_norm, r.MUN_RES_norm, r.SEXO_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) com s EM SINAN ainda não pareados em passos anteriores e m EM SIM, com chave(s) = chave(m) = k\nPasso 11 não aplica escore; o escore é calculado depois, sobre os pares candidatos.",
+      "evidencia": [
+        "CODMUNRES uf igual = 1,0 (n = 57.598, sem ausentes): pista forte de que UF de residência compõe a chave; 1,0 é compatível com bloqueio, mas não prova.",
+        "CODMUNRES local igual = 1,0: pista de que o município compõe a chave.",
+        "SEXO igualdade = 1,0: pista de que o sexo compõe a chave.",
+        "Os campos de nome, nome da mãe e data de nascimento têm fração de concordância abaixo de 1 (ex.: NOME prim frag igual 0,753; NOMEMAE ult frag igual 0,336; DTNASC dt iguais 0,000156). Não se comportam como chave de igualdade exata para todos os pares.",
+        "DTNASC dt inv ano = 3,5e-05: é um indicador de inversão de dígito, não de igualdade de ano. Não permite inferir uso de ano de nascimento como chave."
+      ],
+      "alternativas": [
+        "Chave (UF, MUN, SEXO) é a mais compatível com os agregados, mas UF e MUN podem ser igualdades resultantes da seleção ou exportação da base, e não da chave.",
+        "Chave (MUN, SEXO) ou (UF, SEXO) também produziria UF/MUN = 1,0 se a base exportada tivesse residência homogênea. Não distinguível pelos agregados.",
+        "Chave fonética sobre primeiro/último bloco do nome: não sustentada, porque NOME ult frag igual = 0,960 e NOME prim frag igual = 0,753 não chegam a 1,0 e a proxy não é Soundex."
+      ],
+      "confianca": "Baixa a média: UF, MUN e SEXO são candidatos plausíveis; a presença de cada um na chave não é observada diretamente."
+    },
+    {
+      "passo": 6,
+      "status": "a validar",
+      "chave_inferida": "Exato textual sobre UF de residência, com chave de sexo improvável. Não há evidência de chave fonética nem de ano.",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.UF_RES_norm)\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) com s EM SINAN ainda não pareados em passos anteriores e m EM SIM, com chave(s) = chave(m) = k\n(Alternativa não sustentada pelos agregados: incluir r.SEXO_norm na chave, pois SEXO igualdade = 0,884 indica que o campo não tem concordância total.)",
+      "evidencia": [
+        "CODMUNRES uf igual = 1,0 (n = 2.649): pista de que a UF compõe a chave.",
+        "SEXO igualdade = 0,884 (com 0,11% ausente, n disponível = 2.646): abaixo de 0,99, o que é incompatível com sexo como componente exato de chave neste passo.",
+        "CODMUNRES local igual = 0,858: abaixo de 0,99, o que não sustenta município na chave deste passo.",
+        "NOME prim frag igual = 0,741 e NOMEMAE prim frag igual = 0,937: não sustentam chave fonética ou textual sobre primeiro bloco."
+      ],
+      "alternativas": [
+        "Chave (UF) com restrição adicional não observada (por exemplo, campo de nome ou de data) que não aparece nos agregados.",
+        "Chave (UF, SEXO): reduz blocos, mas o sexo não é concordante em 100% dos pares, então não seria chave exata; se usada, a discordância deveria estar nos pares excluídos e não observada."
+      ],
+      "confianca": "Baixa: a UF é a pista mais forte, mas a chave completa não é determinada pelos agregados."
+    },
+    {
+      "passo": 9,
+      "status": "a validar",
+      "chave_inferida": "Exato textual sobre sexo, com UF de residência como pista possível. Não há evidência de chave fonética nem de ano.",
+      "pseudocodigo": "PARA CADA registro r EM SINAN_normalizado E SIM_normalizado:\n  chave(r) = (r.SEXO_norm, r.UF_RES_norm)   # UF como hipótese a validar\nbloco[k] = agrupa registros por chave(r)\nPARA CADA bloco k:\n  candidatos = pares (s, m) com s EM SINAN ainda não pareados em passos anteriores e m EM SIM, com chave(s) = chave(m) = k\n(Se UF não compuser a chave, a versão reduzida é chave(r) = r.SEXO_norm.)",
+      "evidencia": [
+        "SEXO igualdade = 1,0 (n = 1.449): pista forte de sexo na chave.",
+        "CODMUNRES uf igual = 0,9965: quase total, mas abaixo de 1,0. Se UF fosse componente exato da chave, o valor esperado seria 1,0 (salvo diferenças de normalização). A pista é fraca.",
+        "CODMUNRES local igual = 0,859 (sem concordância total): município não sustentado como chave.",
+        "DTNASC dt iguais = 0,082, NOME prim frag igual = 0,794, NOMEMAE ult frag igual = 0,322: não sustentam chaves de data, nome ou nome da mãe como igualdade exata."
+      ],
+      "alternativas": [
+        "Chave somente sexo (muito grande; compatível com 1,0 de sexo, mas não identifica UF).",
+        "Chave (UF, SEXO) com desvios de UF decorrentes de normalização ou exportação; não separável pelos agregados."
+      ],
+      "confianca": "Baixa: o sexo é pista forte, a UF é ambígua (0,9965 não é 1,0)."
+    }
+  ],
+  "limitacoes": [
+    "Os agregados são frequências de concordância por campo; não permitem confirmar quais campos efetivamente compõem a chave de blocagem de cada passo. Campos com fração 1,0 são pistas, não prova.",
+    "Fração de concordância 1,0 pode resultar de seleção ou exportação da base, de prevalência geográfica (concentração em um mesmo município ou UF) ou de remoção sequencial de registros já pareados, e não necessariamente de a chave conter o campo.",
+    "Não há observação de código Soundex. Os campos 'prim frag igual' e 'ult frag igual' são proxies de concordância textual de fragmentos, não equivalentes a igualdade de Soundex. Nenhuma chave fonética é inferida.",
+    "Não há observação de ano de nascimento como chave. 'DTNASC dt inv ano' indica inversão de dígito, não igualdade de ano; 'DTNASC dt iguais' é igualdade de data completa. Ano de nascimento como chave permanece indisponível e não é atribuído.",
+    "A configuração completa dos 30 passos (29 de blocagem e 1 aberto) não está disponível; apenas os passos 11, 6 e 9 têm agregados. Não é possível reconstruir a sequência nem o efeito da exclusão progressiva entre passos.",
+    "Os agregados não informam a ordem de execução dos passos nem o número de pares gerados por cada um; a relação entre passos não é verificável.",
+    "Ausência de dados: no passo 6, SEXO igualdade tem 0,11% de ausentes (n disponível 2.646 de 2.649). As demais frações não têm ausências.",
+    "O campo 'NOME qtd frag iguais' tem fração exata-proxy 0,05 com média 0,55, e a média de NOME qtd frag comuns é negativa; estes são diagnósticos de composição e não indicam chave.",
+    "Inferências são propostas a validar: dependem de acesso à configuração efetiva do OpenRecLink (campos e ordem de blocagem) e aos registros normalizados, não disponíveis aqui.",
+    "Não se infere identificação causal da chave a partir de concordância alta; a associação observada é compatível com blocagem, mas também com estrutura geográfica e de seleção da base."
+  ]
+}

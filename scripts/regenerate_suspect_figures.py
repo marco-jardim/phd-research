@@ -67,7 +67,7 @@ def regenerate_score_band_figures() -> None:
         color="#1f77b4",
         edgecolor="black",
         linewidth=0.3,
-        label="Total de pares candidatos",
+        label="Total de potenciais pares",
     )
     ax.bar(
         x,
@@ -76,11 +76,11 @@ def regenerate_score_band_figures() -> None:
         color="#d62728",
         edgecolor="black",
         linewidth=0.3,
-        label="Pares verdadeiros",
+        label="Vínculos",
     )
     ax.set_xticks(x)
     ax.set_xticklabels(bands, fontsize=9)
-    ax.set_xlabel("Faixa do escore agregado")
+    ax.set_xlabel("Nota final do comparador")
     ax.set_ylabel(r"Quantidade (escala $\log_{10}$)")
     ax.set_yscale("log")
     ax.legend(fontsize=8.5, loc="upper right")
@@ -112,7 +112,7 @@ def regenerate_score_band_figures() -> None:
     ax.bar(x, pcts, 0.6, color=colors, edgecolor="black", linewidth=0.3)
     ax.set_xticks(x)
     ax.set_xticklabels(bands, fontsize=9)
-    ax.set_xlabel("Faixa do escore agregado")
+    ax.set_xlabel("Nota final do comparador")
     ax.set_ylabel(r"Pares verdadeiros / total (\%)")
 
     for i, pc in enumerate(pcts):
@@ -123,7 +123,7 @@ def regenerate_score_band_figures() -> None:
     ax.text(
         3,
         max(pcts) * 0.86,
-        r"\textit{Zona cinzenta}",
+        r"\textit{Área cinza}",
         ha="center",
         fontsize=8,
         color="gray",
@@ -152,7 +152,7 @@ def regenerate_nb01_comparison() -> None:
         "MLP Neural Network": "MLP",
         "Random Forest": "Random\nForest",
         "SVM (RBF)": "SVM (RBF)",
-        "Logistic Regression": "Regressao\nLogistica",
+        "Logistic Regression": "Regressão\nLogística",
         "Stacking Ensemble": "Stacking",
     }
 
@@ -165,15 +165,15 @@ def regenerate_nb01_comparison() -> None:
     x = np.arange(len(models))
     w = 0.25
     fig, ax = plt.subplots(figsize=(10, 5))
-    bars_p = ax.bar(x - w, precision, w, label="Precisao", color="#2166ac", alpha=0.85)
+    bars_p = ax.bar(x - w, precision, w, label="Precisão", color="#2166ac", alpha=0.85)
     bars_r = ax.bar(x, recall, w, label="Sensibilidade", color="#b2182b", alpha=0.85)
     bars_f = ax.bar(x + w, f1, w, label="F1", color="#4daf4a", alpha=0.85)
 
     ax.set_xticks(x)
     ax.set_xticklabels(models, fontsize=9)
-    ax.set_ylabel("Valor da metrica")
+    ax.set_ylabel("Valor da métrica")
     ax.set_ylim(0, 1.12)
-    ax.set_title("Comparacao de tecnicas de ML no limiar padrao (0,5)")
+    ax.set_title("Comparação de técnicas de ML no limiar padrão (0,5)")
     ax.legend(loc="upper right", fontsize=9)
 
     for bars in (bars_p, bars_r, bars_f):
@@ -202,13 +202,13 @@ def regenerate_ablation_best_category() -> None:
     categories: list[str] = []
     f1_rf: list[float] = []
 
-    pat = re.compile(r"^([^&]+?)\s*&\s*[^&]*&\s*([0-9.]+)\s*&\s*[^&]*&\s*(?:\\textbf\{)?([0-9.]+)(?:\})?")
+    pat = re.compile(r"^([^&]+?)\s*&\s*[^&]*&\s*([0-9.,]+)\s*&\s*[^&]*&\s*(?:\\textbf\{)?([0-9.,]+)(?:\})?")
     for line in lines:
         m = pat.search(line)
         if not m:
             continue
         categories.append(m.group(1).strip())
-        f1_rf.append(float(m.group(2)))
+        f1_rf.append(float(m.group(2).replace(",", ".")))
 
     if len(categories) < 5:
         raise RuntimeError(
@@ -216,15 +216,15 @@ def regenerate_ablation_best_category() -> None:
         )
 
     label_map = {
-        r"Limiar ing\^enuo": "naive-threshold",
-        "Somente regras": "rules-only",
-        "Somente ML": "ml-only",
-        r"H\'ibrido AND": "hybrid-and",
-        r"H\'ibrido OR": "hybrid-or",
-        r"Cascata ML$\rightarrow$Rules": "cascade-ml-rules",
-        r"Cascata Rules$\rightarrow$ML": "cascade-rules-ml",
-        "Consenso ML": "consensus-ml",
-        "Consenso+Rules": "consensus-hybrid",
+        r"Decis\~ao de limiar": "decisão de limiar",
+        "Somente regras": "somente regras",
+        "Somente ML": "somente ML",
+        r"H\'ibrido AND": "híbrido AND",
+        r"H\'ibrido OR": "híbrido OR",
+        r"Cascata ML$\rightarrow$Regras": "cascata ML$\\rightarrow$regras",
+        r"Cascata Regras$\rightarrow$ML": "cascata regras$\\rightarrow$ML",
+        "Consenso ML": "consenso ML",
+        "Consenso+Regras": "consenso + regras",
     }
     labels = [label_map.get(c, c) for c in categories]
 
@@ -233,7 +233,7 @@ def regenerate_ablation_best_category() -> None:
     bars = ax.bar(x, f1_rf, color="#4daf4a", edgecolor="black", linewidth=0.4)
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=8)
-    ax.set_ylabel("Escore F1 (melhor configuracao)")
+    ax.set_ylabel("Escore F1 (melhor configuração)")
     ax.set_ylim(0, 1.05)
 
     for bar in bars:

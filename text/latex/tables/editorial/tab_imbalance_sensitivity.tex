@@ -1,0 +1,21 @@
+\begin{table}[htbp]
+\centering
+\caption{Sensibilidade ao desbalanceamento: Random Forest com diferentes estrat\'egias de reamostragem (5-\textit{fold} CV).}
+\label{tab:imbalance-sensitivity}
+\begin{tabular}{lccc}
+\toprule
+Estrat\'egia & F$_1$ & Precis\~ao & Sensibilidade \\
+\midrule
+Sem balanceamento & 0,897 $\pm$ 0,041 & 0,963 $\pm$ 0,013 & 0,842 $\pm$ 0,067 \\
+Pesos de classe balanceados & 0,880 $\pm$ 0,041 & 0,899 $\pm$ 0,045 & 0,862 $\pm$ 0,039 \\
+SMOTE 0,3 & 0,916 $\pm$ 0,026 & 0,929 $\pm$ 0,022 & 0,903 $\pm$ 0,041 \\
+SMOTE 0,5 & 0,910 $\pm$ 0,018 & 0,918 $\pm$ 0,023 & 0,903 $\pm$ 0,027 \\
+SMOTE 1,0 & 0,905 $\pm$ 0,022 & 0,907 $\pm$ 0,028 & 0,903 $\pm$ 0,033 \\
+BorderlineSMOTE 0,3 & 0,905 $\pm$ 0,026 & 0,940 $\pm$ 0,029 & 0,875 $\pm$ 0,052 \\
+ADASYN 0,3 & 0,906 $\pm$ 0,021 & 0,910 $\pm$ 0,022 & 0,903 $\pm$ 0,033 \\
+SMOTETomek 0,3 & 0,918 $\pm$ 0,024 & 0,933 $\pm$ 0,026 & 0,903 $\pm$ 0,033 \\
+Pesos de classe + SMOTE 0,3 & 0,898 $\pm$ 0,024 & 0,902 $\pm$ 0,032 & 0,895 $\pm$ 0,027 \\
+\bottomrule
+\end{tabular}
+\par\footnotesize Fonte: \path{data/imbalance_sensitivity.csv}, produzida por \path{scripts/robustness_analysis.py}. Cinco partições dos 61.696 potenciais pares, com 247 vínculos; reamostragem restrita ao treinamento. Média e desvio-padrão entre partições, não intervalo de confiança da diferença pareada.
+\end{table}

@@ -1,0 +1,125 @@
+version: v4_candidata
+status: candidata_nao_validada_antes_da_coorte_nova
+author_decisions: [D20, D21]
+primary:
+  comparison: O3_vs_O1
+  O3: probabilidade calibrada fora da amostra do classificador
+  O1: escore do OpenRecLink
+  margin_reduction: 0.25
+  falsification: "O3 não atinge a recuperação obtida por P com pelo menos 25% menos revisões que O1, pelo limite inferior do intervalo de 95% entre partições predefinidas, em cada uma das duas metas"
+  interval: 0.95
+  primary_target_fractions: [0.25, 0.64]
+  fixed_before_outcomes: [ordenacao, orcamento, particoes]
+targets:
+  historical: [9, 23, 36]
+  new_cohort_fractions: [0.25, 0.64, 1.0]
+  denominator: vinculos da referencia abaixo do corte na coorte nova
+  rounding: teto da fracao multiplicada pelo denominador
+secondary:
+  O4: probabilidade recalibrada de P, conforme criterio da tese
+  F4:
+    arms: [O1, O3]
+    method: RRF
+    constant: 60
+    rank_base: 1
+  CM:
+    method: O3_contexto_MACD
+    feature_source: data/contexto_obito_metadata.json
+    features:
+      - NOME prim frag igual
+      - NOME ult frag igual
+      - NOME qtd frag iguais
+      - NOME qtd frag raros
+      - NOME qtd frag comuns
+      - NOME qtd frag muito parec
+      - NOME qtd frag abrev
+      - NOMEMAE prim frag igual
+      - NOMEMAE ult frag igual
+      - NOMEMAE qtd frag iguais
+      - NOMEMAE qtd frag raros
+      - NOMEMAE qtd frag comuns
+      - NOMEMAE qtd frag muito parec
+      - NOMEMAE qtd frag abrev
+      - DTNASC dt iguais
+      - DTNASC dt ap 1digi
+      - DTNASC dt inv dia
+      - DTNASC dt inv mes
+      - DTNASC dt inv ano
+      - CODMUNRES uf igual
+      - CODMUNRES uf prox
+      - CODMUNRES local igual
+      - CODMUNRES local prox
+      - ENDERECO via igual
+      - ENDERECO via prox
+      - ENDERECO numero igual
+      - ENDERECO compl prox
+      - ENDERECO texto prox
+      - ENDERECO tokens jacc
+      - nota final
+      - macd_nasc_close
+      - macd_nasc_day_match
+      - macd_nasc_diff_capped
+      - macd_nasc_month_match
+      - macd_nasc_partial_overlap
+      - macd_nasc_very_close
+      - macd_nasc_year_match
+      - macd_nome_perf_x_date_far
+      - macd_nome_perf_x_year_diff
+      - ctx_refrec_n_candidatos
+      - ctx_refrec_posicao
+      - ctx_refrec_delta_melhor
+      - ctx_refrec_delta_segundo
+      - ctx_refrec_eh_melhor
+      - ctx_comprec_n_candidatos
+      - ctx_comprec_posicao
+      - ctx_comprec_delta_melhor
+      - ctx_comprec_delta_segundo
+      - ctx_comprec_eh_melhor
+ordering:
+  direction: decrescente
+  tie_break: hash lexical crescente
+  exact_k: true
+training:
+  classifier: XGBoost
+  objective: binary:logistic
+  eval_metric: logloss
+  n_estimators: 300
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+  n_jobs: 8
+  random_state: 42
+  verbosity: 0
+  scale_pos_weight: recalculado em cada treinamento pela funcao original
+  remaining_parameters: defaults da implementacao registrada por hash
+  calibration: isotonic
+  outer_folds: 5
+  inner_folds: 5
+  split_by: REFREC
+  inner_seeds: [43, 44, 45, 46, 47]
+  missing_original: 0.0
+  missing_macd: -1.0
+  tuning_on_new_outcomes: false
+  versions:
+    python: 3.13.11
+    numpy: 2.4.2
+    pandas: 3.0.1
+    sklearn: 1.8.0
+    xgboost: 3.2.0
+reference:
+  design: amostragem estratificada cega independente
+  reviewers: 2
+  arbitration: true
+  strata: [FP_de_P, PAR2_perdidos, PAR0_por_faixa_de_escore]
+  sampling_probabilities: pendentes_antes_da_coorte
+stopping:
+  requirement: garantia estatistica de recuperacao
+  method: pendente_de_escolha_ANTES_da_coorte
+  parameters: pendentes_ANTES_da_coorte
+  cohort_start_blocked_until_resolved: true
+excluded: [LLM_como_evidencia, dossie_v5, encaminhamento_conformal]
+probe_D: criterio_de_utilidade_nao_atingido
+historical_profile_unchanged:
+  p_cal: platt
+  policy_version: v3

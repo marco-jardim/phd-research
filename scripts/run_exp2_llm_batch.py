@@ -490,6 +490,7 @@ def main() -> None:
         config_path=str(CONFIG_YAML),
         mode=mode,
         p_cal="fit_platt",
+        policy_version="v3",
     )
     llm_mask = df["action"] == "LLM_REVIEW"
     n_review = int(llm_mask.sum())

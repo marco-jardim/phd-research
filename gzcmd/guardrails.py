@@ -52,6 +52,18 @@ def _bool_indicator(df: pd.DataFrame, col: str) -> pd.Series:
     return s.fillna(0.0).gt(0.0)
 
 
+def strong_birth_conflict(df: pd.DataFrame) -> pd.Series:
+    """Known birth years differ; missing one side is not evidence of conflict."""
+    difference = _num(df, "diff_ano")
+    return difference.notna() & difference.gt(0)
+
+
+def high_guard_birth_variant(df: pd.DataFrame) -> pd.Series:
+    """Evaluation-only stricter subset of the existing p>=.9 high-score guard."""
+    nota = _num(df, "nota final").fillna(_num(df, "nota_final"))
+    return nota.ge(9) & _num(df, "p_cal").ge(.95) & ~strong_birth_conflict(df)
+
+
 def apply_guardrails(
     df: pd.DataFrame,
     *,
@@ -60,6 +72,7 @@ def apply_guardrails(
     nota_always_nonmatch: float = 3.0,
     homonimia_min_nota: float = 7.0,
     homonimia_year_gap: float = 5.0,
+    policy_version: str = "v3",
 ) -> GuardrailOutput:
     """Compute guardrails used by the policy engine.
 
@@ -76,6 +89,11 @@ def apply_guardrails(
     - NOME subscores
     """
 
+    if policy_version not in {"v3", "v3.1"}:
+        raise ValueError("policy_version must be v3 or v3.1")
+    nested = policy_version == "v3.1"
+    if nested:
+        nota_always_match, nota_always_nonmatch = 9.0, 5.0
     out_guardrail = pd.Series(pd.NA, index=df.index, dtype="string")
     out_reason = pd.Series("", index=df.index, dtype="string")
 
@@ -86,6 +104,16 @@ def apply_guardrails(
         out_reason = out_reason.mask(mask2, reason)
 
     nota = _num(df, "nota final").fillna(_num(df, "nota_final"))
+
+    if nested:
+        # Relaxed probability consistency; no exact DOB/municipality requirement.
+        # Unqualified high scores go to Bayesian argmin, NOT mandatory review.
+        _set(nota.lt(5), GuardrailDecision.ALWAYS_NONMATCH.value, "nota_final_low")
+        _set(nota.ge(9) & _num(df, "p_cal").ge(0.9),
+             GuardrailDecision.ALWAYS_MATCH.value, "nota_high_probability_consistent")
+        out_reason = out_reason.mask(nota.ge(9) & out_guardrail.isna(), "high_probability_inconsistent")
+        out_reason = out_reason.mask(out_reason.eq(""), pd.NA)
+        return GuardrailOutput(guardrail=out_guardrail, reason=out_reason)
 
     # 1) temporal_filter: death before diagnosis minus buffer
     dt_obito = df.get("R_DTOBITO_dt")

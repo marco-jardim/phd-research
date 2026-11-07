@@ -27,13 +27,19 @@ import pandas as pd
 
 # Shared feature engineering
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from feature_engineering import load_data, engineer_features, split_data
+from feature_engineering import _find_data_path, load_data, engineer_features, split_data
 
 from imblearn.over_sampling import SMOTE
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.metrics import precision_score, recall_score, f1_score
 
 warnings.filterwarnings("ignore")
+
+# pandas >= 3 usa dtype string do Arrow por padrao, o que quebra engineer_features
+try:
+    pd.options.future.infer_string = False
+except (AttributeError, KeyError, ValueError):
+    pass
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = ROOT / "data"
@@ -118,6 +124,8 @@ def extract_clinical(df: pd.DataFrame) -> pd.DataFrame:
     dt_obito = pd.to_datetime(clin["dt_obito"], errors="coerce")
     clin["idade_obito"] = (dt_obito - dt_nasc).dt.days / 365.25
 
+    # load_data() converte colunas textuais em numericas e anula R_SEXO (M/F);
+    # por isso o sexo e relido do extrato como texto em main().
     clin["sexo"] = (
         df["R_SEXO"].astype(str).str.strip().str.upper()
         if "R_SEXO" in df.columns
@@ -155,6 +163,10 @@ def main() -> None:
     df = load_data()
     X, y = engineer_features(df)
     clin = extract_clinical(df)
+    raw_sex = pd.read_csv(
+        _find_data_path(), sep=";", dtype=str, usecols=lambda c: c.split(",")[0] == "R_SEXO"
+    ).iloc[:, 0]
+    clin["sexo"] = raw_sex.reset_index(drop=True).set_axis(df.index).fillna("?").str.strip().str.upper()
 
     # Same split as ablation/notebooks
     X_train, X_test, y_train, y_test = split_data(X, y)
@@ -313,6 +325,7 @@ def main() -> None:
 
         sex_rec = clin_recovered["sexo"].value_counts()
         print(f"\n  Sex (recovered): {dict(sex_rec)}")
+        print(f"  Sex (already found): {dict(clin_found['sexo'].value_counts())}")
 
         nota_rec = clin_recovered["nota_final"]
         print(
@@ -325,8 +338,48 @@ def main() -> None:
             print(f"    Band {low}-{high}: {n_band} ({pct:.1f}%)")
 
     # ── Save outputs ──
-    results_df.to_csv(OUT_DIR / "epidemiological_impact.csv", index=False)
+    # O CSV tambem recebe linhas calculadas fora deste script (XGBoost, pelo fluxo
+    # Modal em qw1_modal_unified_pipeline.update_epidemiological_impact). Essas
+    # linhas sao preservadas: so os metodos computados aqui sao reescritos.
+    csv_path = OUT_DIR / "epidemiological_impact.csv"
+    if csv_path.exists():
+        previous = pd.read_csv(csv_path)
+        external = previous[~previous["method"].isin(results_df["method"])]
+        if len(external):
+            print(f"  (preservando {len(external)} linha(s) externa(s): "
+                  f"{', '.join(external['method'])})")
+            results_df = pd.concat([results_df, external], ignore_index=True)
+    results_df.to_csv(csv_path, index=False)
     print(f"\n-> Saved: data/epidemiological_impact.csv")
+
+    # Profile JSON (apenas agregados, sem linhas de pares)
+    def _profile(c: pd.DataFrame) -> dict:
+        age = c["idade_obito"].dropna()
+        nota = c["nota_final"]
+        n = len(c)
+        return {
+            "n": n,
+            "idade_media": round(float(age.mean()), 1) if len(age) else None,
+            "idade_dp": round(float(age.std()), 1) if len(age) > 1 else None,
+            "idade_n_validos": int(len(age)),
+            "sexo_masculino": int((c["sexo"] == "M").sum()),
+            "sexo_feminino": int((c["sexo"] == "F").sum()),
+            "sexo_outro": int((~c["sexo"].isin(["M", "F"])).sum()),
+            "nota_media": round(float(nota.mean()), 2) if n else None,
+            "faixas": {
+                f"{lo}-{hi}": int(((nota >= lo) & (nota < hi)).sum())
+                for lo, hi in [(5, 6), (6, 7), (7, 8), (8, 9)]
+            },
+        }
+
+    profile = {
+        "definicao": "recuperados = RF+SMOTE>=0.5 e nota final <8, entre vinculos verdadeiros do teste",
+        "recuperados": _profile(clin_test[recovered]),
+        "ja_encontrados": _profile(clin_test[ml_finds & naive_finds]),
+    }
+    with open(OUT_DIR / "epidemiological_profile.json", "w") as f:
+        json.dump(profile, f, indent=2)
+    print("-> Saved: data/epidemiological_profile.json")
 
     # Summary JSON
     summary = {

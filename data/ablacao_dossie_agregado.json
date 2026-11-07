@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "generator": "scripts/ablacao_dossie_agregado.py",
+  "input_sha256": {
+    "ablacao_dossie_pares.csv": "866cb20f07e9a7a547ae1b2d166c197e5aa45dc459acd822bcb743be1d38a646",
+    "ablacao_dossie_resultado.csv": "80e4a76c4809265d622be73e49453f1b40bd89f5475641900aeb27a34c532682"
+  },
+  "selection": {
+    "n": 18,
+    "n_revisores_erraram": {
+      "2": 9,
+      "3": 9
+    }
+  },
+  "result_rows": 36,
+  "categories": [
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "NONMATCH",
+      "controle": "NONMATCH",
+      "sem_pcal": "MATCH",
+      "n": 1
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "NONMATCH",
+      "controle": "NONMATCH",
+      "sem_pcal": "UNSURE",
+      "n": 6
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "NONMATCH",
+      "controle": "UNSURE",
+      "sem_pcal": "MATCH",
+      "n": 1
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "NONMATCH",
+      "controle": "UNSURE",
+      "sem_pcal": "UNSURE",
+      "n": 2
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "UNSURE",
+      "controle": "NONMATCH",
+      "sem_pcal": "MATCH",
+      "n": 1
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "UNSURE",
+      "controle": "NONMATCH",
+      "sem_pcal": "UNSURE",
+      "n": 1
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "UNSURE",
+      "controle": "UNSURE",
+      "sem_pcal": "MATCH",
+      "n": 4
+    },
+    {
+      "modelo": "claude-haiku-5-5",
+      "original": "UNSURE",
+      "controle": "UNSURE",
+      "sem_pcal": "UNSURE",
+      "n": 2
+    },
+    {
+      "modelo": "deepseek-v4.1-flash",
+      "original": "NONMATCH",
+      "controle": "NONMATCH",
+      "sem_pcal": "MATCH",
+      "n": 9
+    },
+    {
+      "modelo": "deepseek-v4.1-flash",
+      "original": "NONMATCH",
+      "controle": "NONMATCH",
+      "sem_pcal": "UNSURE",
+      "n": 9
+    }
+  ]
+}

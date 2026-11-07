@@ -1,0 +1,46 @@
+{
+  "fixed_before_data_and_fits_utc": "2026-11-07T01:31:05.160385+00:00",
+  "registered": false,
+  "definition": {
+    "features": [
+      "ctx_refrec_n_candidatos",
+      "ctx_refrec_posicao",
+      "ctx_refrec_delta_melhor",
+      "ctx_refrec_delta_segundo",
+      "ctx_refrec_eh_melhor",
+      "ctx_comprec_n_candidatos",
+      "ctx_comprec_posicao",
+      "ctx_comprec_delta_melhor",
+      "ctx_comprec_delta_segundo",
+      "ctx_comprec_eh_melhor"
+    ],
+    "score": "nota final (ou nota_final), mesma imputação zero de numeric_features",
+    "grouping_keys_only": [
+      "REFREC",
+      "COMPREC"
+    ],
+    "numeric_inputs": "somente nota final; subscores permanecem nos 30 atributos originais",
+    "forbidden_feature_inputs": [
+      "SCORE",
+      "PAR",
+      "C_SITUENCE",
+      "identificadores"
+    ],
+    "n_candidatos": "número de linhas candidatas no grupo, incluindo o próprio par",
+    "posicao": "rank decrescente mínimo, base 1; empates compartilham posição",
+    "delta_melhor": "nota do par menos a maior nota do grupo (não positivo)",
+    "delta_segundo": "nota do par menos a segunda nota em ordem decrescente, com multiplicidade",
+    "singleton": "segunda nota igual à primeira; ambos os deltas zero",
+    "eh_melhor": "1 para todos os empatados na maior nota; 0 nos demais",
+    "context_scope": "universo completo de candidatos, antes do corte e dos folds; sem rótulos",
+    "rrf": {
+      "k": 60,
+      "arms": [
+        "O1",
+        "O3_contexto"
+      ],
+      "implementation": "scripts.fusao_filas.rrf"
+    },
+    "tuning": "nenhum; definições e atributos fixos antes dos fits e das curvas"
+  }
+}

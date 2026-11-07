@@ -1,0 +1,18 @@
+\begin{table}[!htbp]
+\centering\scriptsize
+\caption{Subamostragem no treinamento: análise exploratória, posterior à avaliação principal. Ordenação isotônica abaixo do corte.}
+\label{tab:cap8-subamostragem}
+\resizebox{\linewidth}{!}{\begin{tabular}{lrrrrr}
+\toprule
+Pos.:neg. & PAR=2 no topo 96 & Brier & ECE & \shortstack{Fração dos PAR=2 do passo 11\\no topo 96 (\%)} & Sens. sexo M (\%) \\
+\midrule
+Original & 22 & 0{,}000629 & 0{,}000588 & 64{,}0 & 57{,}7 \\
+1:1 & 13{,}0 [8; 17] & 0{,}000999 & 0{,}001161 & 38{,}0 & 25{,}0 \\
+1:5 & 18{,}5 [16; 21] & 0{,}000806 & 0{,}000811 & 54{,}0 & 46{,}2 \\
+1:20 & 21{,}0 [18; 22] & 0{,}000698 & 0{,}000685 & 64{,}0 & 53{,}8 \\
+1:50 & 22{,}5 [20; 24] & 0{,}000648 & 0{,}000623 & 66{,}0 & 59{,}6 \\
+\bottomrule
+\end{tabular}}
+\par\smallskip\parbox{\linewidth}{\footnotesize Medianas entre sementes; colchetes indicam mínimo e máximo, não IC. A referência foi executada uma vez. A avaliação mantém a prevalência original. Métricas das outras variantes e grupos: \path{data/subamostragem_treino_resumo.csv}.}
+\par\footnotesize A ordenação usa a probabilidade calibrada do classificador. A linha de referência corresponde ao treino sem subamostragem, não à referência operacional de vínculos.
+\end{table}

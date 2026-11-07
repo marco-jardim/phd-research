@@ -1,0 +1,19 @@
+{
+  "definicao": "RF+SMOTE >=0.5, PAR=1 e nota final <8 no teste original",
+  "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+  "controle": {
+    "test_n": 18509,
+    "test_positivos": 74,
+    "tp": 67,
+    "fp": 3,
+    "recuperados": 27
+  },
+  "C_SITUENCE": {
+    "n": 27,
+    "encerrados_obito_tb": 7,
+    "encerrados_obito_outras_causas": 3,
+    "encerrados_obito_total": 10,
+    "outros_encerramentos": 11,
+    "ausentes_ou_nao_numericos": 6
+  }
+}

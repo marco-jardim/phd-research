@@ -1,0 +1,79 @@
+{
+  "semente": 42,
+  "test_size": 0.3,
+  "n_teste": 18509,
+  "n_atributos_nominais": 58,
+  "grupos_duplicatas_exatas_teste": [
+    [
+      "NOME prim frag igual",
+      "nome_prim_ok"
+    ],
+    [
+      "DTNASC dt iguais",
+      "dtnasc_squared"
+    ],
+    [
+      "CODMUNRES local igual",
+      "local_ok"
+    ],
+    [
+      "dtnasc_ok",
+      "max_score_dtnasc"
+    ]
+  ],
+  "duplicatas_exatas_redundantes": 4,
+  "dimensao_apos_remover_duplicatas_exatas_teste": 54,
+  "pares_exigidos_verificados": [
+    {
+      "atributos": [
+        "dtnasc_squared",
+        "DTNASC dt iguais"
+      ],
+      "igualdade_numerica": true
+    },
+    {
+      "atributos": [
+        "max_score_dtnasc",
+        "dtnasc_ok"
+      ],
+      "igualdade_numerica": true
+    }
+  ],
+  "transformacoes": [
+    {
+      "origem": "NOME qtd frag iguais",
+      "derivado": "nome_squared",
+      "formula": "x**2",
+      "minimo_origem_teste": 0.0,
+      "maximo_origem_teste": 1.0,
+      "monotona_nao_decrescente_no_teste": true
+    },
+    {
+      "origem": "nota final",
+      "derivado": "nota_squared",
+      "formula": "x**2",
+      "minimo_origem_teste": 0.53,
+      "maximo_origem_teste": 13.27,
+      "monotona_nao_decrescente_no_teste": true
+    },
+    {
+      "origem": "DTNASC dt iguais",
+      "derivado": "dtnasc_squared",
+      "formula": "x**2",
+      "minimo_origem_teste": 0.0,
+      "maximo_origem_teste": 1.0,
+      "monotona_nao_decrescente_no_teste": true
+    }
+  ],
+  "limite": "Colunas distintas no teste; não é posto matricial, independência estatística ou dimensão intrínseca. Igualdade amostral não prova identidade para entradas futuras.",
+  "codigo": {
+    "dtnasc_squared": "DTNASC dt iguais ** 2; igualdade requer escore binário",
+    "max_score_dtnasc": "max(dt iguais, dt ap 1digi); coincide com dtnasc_ok no suporte binário"
+  },
+  "vinculos_teste": 74,
+  "fontes_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/shap_importance.csv": "16afaab50ed0b66136e8c52514234e6560c9b79be65336da57cd3dfcd6b3f0a9",
+    "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163"
+  }
+}

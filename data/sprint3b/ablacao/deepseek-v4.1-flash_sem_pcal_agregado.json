@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source_file": "deepseek-v4.1-flash_sem_pcal.json",
+  "source_sha256": "253a051a2c608e4df1371729a26403620951eb6dbcce2a72075eebfca178a8ff",
+  "model": "deepseek-v4.1-flash",
+  "mode": "vigilancia",
+  "arm": "sem_pcal",
+  "n_selected": 18,
+  "n_reviewed": 18,
+  "n_errors": 0,
+  "decisions": {
+    "MATCH": 9,
+    "NONMATCH": 0,
+    "UNSURE": 9
+  }
+}

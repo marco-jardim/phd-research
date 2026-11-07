@@ -1,0 +1,455 @@
+{
+  "status": "completed",
+  "analysis": "B_contexto_obito_exploratory_post_hoc",
+  "registered": false,
+  "date_utc": "2026-11-07T01:40:49.948975+00:00",
+  "cpu_only": true,
+  "llm_calls": 0,
+  "definition": {
+    "features": [
+      "ctx_refrec_n_candidatos",
+      "ctx_refrec_posicao",
+      "ctx_refrec_delta_melhor",
+      "ctx_refrec_delta_segundo",
+      "ctx_refrec_eh_melhor",
+      "ctx_comprec_n_candidatos",
+      "ctx_comprec_posicao",
+      "ctx_comprec_delta_melhor",
+      "ctx_comprec_delta_segundo",
+      "ctx_comprec_eh_melhor"
+    ],
+    "score": "nota final (ou nota_final), mesma imputação zero de numeric_features",
+    "grouping_keys_only": [
+      "REFREC",
+      "COMPREC"
+    ],
+    "numeric_inputs": "somente nota final; subscores permanecem nos 30 atributos originais",
+    "forbidden_feature_inputs": [
+      "SCORE",
+      "PAR",
+      "C_SITUENCE",
+      "identificadores"
+    ],
+    "n_candidatos": "número de linhas candidatas no grupo, incluindo o próprio par",
+    "posicao": "rank decrescente mínimo, base 1; empates compartilham posição",
+    "delta_melhor": "nota do par menos a maior nota do grupo (não positivo)",
+    "delta_segundo": "nota do par menos a segunda nota em ordem decrescente, com multiplicidade",
+    "singleton": "segunda nota igual à primeira; ambos os deltas zero",
+    "eh_melhor": "1 para todos os empatados na maior nota; 0 nos demais",
+    "context_scope": "universo completo de candidatos, antes do corte e dos folds; sem rótulos",
+    "rrf": {
+      "k": 60,
+      "arms": [
+        "O1",
+        "O3_contexto"
+      ],
+      "implementation": "scripts.fusao_filas.rrf"
+    },
+    "tuning": "nenhum; definições e atributos fixos antes dos fits e das curvas"
+  },
+  "specification": {
+    "fixed_before_data_and_fits_utc": "2026-11-07T01:31:05.160385+00:00",
+    "registered": false,
+    "definition": {
+      "features": [
+        "ctx_refrec_n_candidatos",
+        "ctx_refrec_posicao",
+        "ctx_refrec_delta_melhor",
+        "ctx_refrec_delta_segundo",
+        "ctx_refrec_eh_melhor",
+        "ctx_comprec_n_candidatos",
+        "ctx_comprec_posicao",
+        "ctx_comprec_delta_melhor",
+        "ctx_comprec_delta_segundo",
+        "ctx_comprec_eh_melhor"
+      ],
+      "score": "nota final (ou nota_final), mesma imputação zero de numeric_features",
+      "grouping_keys_only": [
+        "REFREC",
+        "COMPREC"
+      ],
+      "numeric_inputs": "somente nota final; subscores permanecem nos 30 atributos originais",
+      "forbidden_feature_inputs": [
+        "SCORE",
+        "PAR",
+        "C_SITUENCE",
+        "identificadores"
+      ],
+      "n_candidatos": "número de linhas candidatas no grupo, incluindo o próprio par",
+      "posicao": "rank decrescente mínimo, base 1; empates compartilham posição",
+      "delta_melhor": "nota do par menos a maior nota do grupo (não positivo)",
+      "delta_segundo": "nota do par menos a segunda nota em ordem decrescente, com multiplicidade",
+      "singleton": "segunda nota igual à primeira; ambos os deltas zero",
+      "eh_melhor": "1 para todos os empatados na maior nota; 0 nos demais",
+      "context_scope": "universo completo de candidatos, antes do corte e dos folds; sem rótulos",
+      "rrf": {
+        "k": 60,
+        "arms": [
+          "O1",
+          "O3_contexto"
+        ],
+        "implementation": "scripts.fusao_filas.rrf"
+      },
+      "tuning": "nenhum; definições e atributos fixos antes dos fits e das curvas"
+    }
+  },
+  "features": {
+    "O3_controle": [
+      "NOME prim frag igual",
+      "NOME ult frag igual",
+      "NOME qtd frag iguais",
+      "NOME qtd frag raros",
+      "NOME qtd frag comuns",
+      "NOME qtd frag muito parec",
+      "NOME qtd frag abrev",
+      "NOMEMAE prim frag igual",
+      "NOMEMAE ult frag igual",
+      "NOMEMAE qtd frag iguais",
+      "NOMEMAE qtd frag raros",
+      "NOMEMAE qtd frag comuns",
+      "NOMEMAE qtd frag muito parec",
+      "NOMEMAE qtd frag abrev",
+      "DTNASC dt iguais",
+      "DTNASC dt ap 1digi",
+      "DTNASC dt inv dia",
+      "DTNASC dt inv mes",
+      "DTNASC dt inv ano",
+      "CODMUNRES uf igual",
+      "CODMUNRES uf prox",
+      "CODMUNRES local igual",
+      "CODMUNRES local prox",
+      "ENDERECO via igual",
+      "ENDERECO via prox",
+      "ENDERECO numero igual",
+      "ENDERECO compl prox",
+      "ENDERECO texto prox",
+      "ENDERECO tokens jacc",
+      "nota final"
+    ],
+    "O3_MACD": [
+      "NOME prim frag igual",
+      "NOME ult frag igual",
+      "NOME qtd frag iguais",
+      "NOME qtd frag raros",
+      "NOME qtd frag comuns",
+      "NOME qtd frag muito parec",
+      "NOME qtd frag abrev",
+      "NOMEMAE prim frag igual",
+      "NOMEMAE ult frag igual",
+      "NOMEMAE qtd frag iguais",
+      "NOMEMAE qtd frag raros",
+      "NOMEMAE qtd frag comuns",
+      "NOMEMAE qtd frag muito parec",
+      "NOMEMAE qtd frag abrev",
+      "DTNASC dt iguais",
+      "DTNASC dt ap 1digi",
+      "DTNASC dt inv dia",
+      "DTNASC dt inv mes",
+      "DTNASC dt inv ano",
+      "CODMUNRES uf igual",
+      "CODMUNRES uf prox",
+      "CODMUNRES local igual",
+      "CODMUNRES local prox",
+      "ENDERECO via igual",
+      "ENDERECO via prox",
+      "ENDERECO numero igual",
+      "ENDERECO compl prox",
+      "ENDERECO texto prox",
+      "ENDERECO tokens jacc",
+      "nota final",
+      "macd_nasc_close",
+      "macd_nasc_day_match",
+      "macd_nasc_diff_capped",
+      "macd_nasc_month_match",
+      "macd_nasc_partial_overlap",
+      "macd_nasc_very_close",
+      "macd_nasc_year_match",
+      "macd_nome_perf_x_date_far",
+      "macd_nome_perf_x_year_diff"
+    ],
+    "O3_contexto": [
+      "NOME prim frag igual",
+      "NOME ult frag igual",
+      "NOME qtd frag iguais",
+      "NOME qtd frag raros",
+      "NOME qtd frag comuns",
+      "NOME qtd frag muito parec",
+      "NOME qtd frag abrev",
+      "NOMEMAE prim frag igual",
+      "NOMEMAE ult frag igual",
+      "NOMEMAE qtd frag iguais",
+      "NOMEMAE qtd frag raros",
+      "NOMEMAE qtd frag comuns",
+      "NOMEMAE qtd frag muito parec",
+      "NOMEMAE qtd frag abrev",
+      "DTNASC dt iguais",
+      "DTNASC dt ap 1digi",
+      "DTNASC dt inv dia",
+      "DTNASC dt inv mes",
+      "DTNASC dt inv ano",
+      "CODMUNRES uf igual",
+      "CODMUNRES uf prox",
+      "CODMUNRES local igual",
+      "CODMUNRES local prox",
+      "ENDERECO via igual",
+      "ENDERECO via prox",
+      "ENDERECO numero igual",
+      "ENDERECO compl prox",
+      "ENDERECO texto prox",
+      "ENDERECO tokens jacc",
+      "nota final",
+      "ctx_refrec_n_candidatos",
+      "ctx_refrec_posicao",
+      "ctx_refrec_delta_melhor",
+      "ctx_refrec_delta_segundo",
+      "ctx_refrec_eh_melhor",
+      "ctx_comprec_n_candidatos",
+      "ctx_comprec_posicao",
+      "ctx_comprec_delta_melhor",
+      "ctx_comprec_delta_segundo",
+      "ctx_comprec_eh_melhor"
+    ],
+    "O3_contexto_MACD": [
+      "NOME prim frag igual",
+      "NOME ult frag igual",
+      "NOME qtd frag iguais",
+      "NOME qtd frag raros",
+      "NOME qtd frag comuns",
+      "NOME qtd frag muito parec",
+      "NOME qtd frag abrev",
+      "NOMEMAE prim frag igual",
+      "NOMEMAE ult frag igual",
+      "NOMEMAE qtd frag iguais",
+      "NOMEMAE qtd frag raros",
+      "NOMEMAE qtd frag comuns",
+      "NOMEMAE qtd frag muito parec",
+      "NOMEMAE qtd frag abrev",
+      "DTNASC dt iguais",
+      "DTNASC dt ap 1digi",
+      "DTNASC dt inv dia",
+      "DTNASC dt inv mes",
+      "DTNASC dt inv ano",
+      "CODMUNRES uf igual",
+      "CODMUNRES uf prox",
+      "CODMUNRES local igual",
+      "CODMUNRES local prox",
+      "ENDERECO via igual",
+      "ENDERECO via prox",
+      "ENDERECO numero igual",
+      "ENDERECO compl prox",
+      "ENDERECO texto prox",
+      "ENDERECO tokens jacc",
+      "nota final",
+      "macd_nasc_close",
+      "macd_nasc_day_match",
+      "macd_nasc_diff_capped",
+      "macd_nasc_month_match",
+      "macd_nasc_partial_overlap",
+      "macd_nasc_very_close",
+      "macd_nasc_year_match",
+      "macd_nome_perf_x_date_far",
+      "macd_nome_perf_x_year_diff",
+      "ctx_refrec_n_candidatos",
+      "ctx_refrec_posicao",
+      "ctx_refrec_delta_melhor",
+      "ctx_refrec_delta_segundo",
+      "ctx_refrec_eh_melhor",
+      "ctx_comprec_n_candidatos",
+      "ctx_comprec_posicao",
+      "ctx_comprec_delta_melhor",
+      "ctx_comprec_delta_segundo",
+      "ctx_comprec_eh_melhor"
+    ]
+  },
+  "seed": 42,
+  "inner_seeds": [
+    43,
+    44,
+    45,
+    46,
+    47
+  ],
+  "folds": 5,
+  "split_by": "refrec",
+  "calibration": "nested isotonic 5x5",
+  "classifier_parameters": {
+    "objective": "binary:logistic",
+    "base_score": null,
+    "booster": null,
+    "callbacks": null,
+    "colsample_bylevel": null,
+    "colsample_bynode": null,
+    "colsample_bytree": 0.8,
+    "device": null,
+    "early_stopping_rounds": null,
+    "enable_categorical": false,
+    "eval_metric": "logloss",
+    "feature_types": null,
+    "feature_weights": null,
+    "gamma": null,
+    "grow_policy": null,
+    "importance_type": null,
+    "interaction_constraints": null,
+    "learning_rate": 0.05,
+    "max_bin": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "max_delta_step": null,
+    "max_depth": 6,
+    "max_leaves": null,
+    "min_child_weight": null,
+    "missing": "NaN",
+    "monotone_constraints": null,
+    "multi_strategy": null,
+    "n_estimators": 300,
+    "n_jobs": 8,
+    "num_parallel_tree": null,
+    "random_state": 42,
+    "reg_alpha": null,
+    "reg_lambda": null,
+    "sampling_method": null,
+    "scale_pos_weight": 248.78137651821862,
+    "subsample": 0.8,
+    "tree_method": null,
+    "validate_parameters": null,
+    "verbosity": 0
+  },
+  "scale_pos_weight": "recalculado em cada treinamento pela função original",
+  "missing_values": {
+    "original_30": 0.0,
+    "macd": -1.0
+  },
+  "control_reproduction": {
+    "correlation": 1.0,
+    "max_abs_difference": 1.1102230246251565e-16,
+    "folds_identical": true,
+    "queues_identical": true,
+    "tolerance": 2.220446049250313e-16
+  },
+  "baseline_reproduction": {
+    "passed": true,
+    "full_curves": [
+      "O1",
+      "O3",
+      "O3_MACD",
+      "F4"
+    ],
+    "summaries": [
+      "data/fusao_filas.csv",
+      "data/sensibilidade_o3_macd.csv"
+    ]
+  },
+  "below_cutoff": 61485,
+  "par2": 36,
+  "targets": [
+    9,
+    23,
+    36
+  ],
+  "top_k": [
+    17,
+    58,
+    96,
+    125,
+    440,
+    2522
+  ],
+  "ordering": "score descending, lexical pair hash ascending, exactly k",
+  "auc_ap": "raw score, isotonic probability or actual RRF sum, ties preserved",
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/sensibilidade_o3_macd.csv": "5fdbca12bea11f8560dd8608d071bd2e0d622cf15fb83e5a63785660e4e6b862",
+    "data/fusao_filas.csv": "c9d3603680251c2741ccc253ca1cf6df2876805da2df9bfc74e044f46627d069",
+    "data/fusao_filas_curva.csv": "77ffaf3cef31b0c0f05830dd042a51c8ffa389990af384b007c64c3b49f0090c",
+    "data/ablation_comprec_allowlist_metadata.json": "0dec897ce9cac600583e66dc57ab6039b12007db8c0e035de4c967667abad29f"
+  },
+  "code_sha256": {
+    "scripts/contexto_obito.py": "2680a7c806136aadf19c1cccc5f05d998172808b9a0dd8527f31dfa8a2b81c2e",
+    "tests/test_contexto_obito.py": "54d1e83db813625bc8896718294d80ff37a4a8f6529bfcf12a06d82795aba26b",
+    "scripts/sensibilidade_o3_macd.py": "1606c5f47b1161a6744035d66a1b64c8e98c6a1e90e9dee41c60574733cd3011",
+    "scripts/fusao_filas.py": "8f41b556e8eee6f84ae294ee05dd9ee20cc8b26df24bb416457c35130c314ecd",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "gzcmd/loader.py": "6a9302f7324aac9149c3abba74fbd5fb5d9c4d7e376f058609fe956311eeb473",
+    "gzcmd/arranjo_corte.py": "4a5c51f57d51861e3991e64eec7a48d32a15d604450d98984e79a17e3da935a5"
+  },
+  "estimate": {
+    "pilot_seconds": [
+      2.266824599937536,
+      10.196165299974382,
+      11.339846199960448,
+      4.12300620006863
+    ],
+    "pilot_wall_by_matrix": {
+      "O3_controle": 2.266824599937536,
+      "O3_MACD": 10.196165299974382,
+      "O3_contexto": 11.339846199960448,
+      "O3_contexto_MACD": 4.12300620006863
+    },
+    "pilot_cpu_by_matrix": {
+      "O3_controle": 8.578125,
+      "O3_MACD": 28.984375,
+      "O3_contexto": 31.609375,
+      "O3_contexto_MACD": 12.828125
+    },
+    "pilot_fits": 4,
+    "model_fits": 90,
+    "safety_factor": 3,
+    "estimated_minutes": 51.029307899822015,
+    "projected_total_cpu_minutes": 80.89010416666666,
+    "include_context_macd": true
+  },
+  "elapsed_seconds": 215.5607438000152,
+  "cpu_seconds": 703.8125,
+  "cpu_limit_minutes": 150.0,
+  "runtime_authorization": "Continuação autorizada além de 45 min, teto de 150 min de CPU",
+  "timings": {
+    "O3_controle": {
+      "wall_seconds": 68.32583570003044,
+      "cpu_seconds": 233.515625
+    },
+    "O3_contexto": {
+      "wall_seconds": 46.64259659999516,
+      "cpu_seconds": 185.6875
+    },
+    "O3_contexto_MACD": {
+      "wall_seconds": 47.50323360005859,
+      "cpu_seconds": 183.109375
+    }
+  },
+  "execution_order": [
+    {
+      "variant": "O3_contexto",
+      "started_utc": "2026-11-07T01:39:13.012748+00:00"
+    },
+    {
+      "variant": "O3_contexto_MACD",
+      "started_utc": "2026-11-07T01:40:01.271595+00:00"
+    }
+  ],
+  "checkpoints": [
+    {
+      "path": "contexto_obito_etapa1.json",
+      "completed_utc": "2026-11-07T01:40:00.682515+00:00"
+    }
+  ],
+  "reference_macd": "stored aggregate metrics and curve, no refit",
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/contexto_obito.py --data-root D:/git/phd-research --cpu-limit-minutes 150",
+  "limitation": "Verification bias favors O1; full-universe unlabeled context; COMPREC can span REFREC folds; post hoc.",
+  "output_sha256": {
+    "contexto_obito.csv": "72f6629e818f9cf2611f0ba5921f9bd63d89ed8f45be51ff06ab4e04d4f19876",
+    "contexto_obito_curva.csv": "2d6a032967878aa72b20685d45af11d60928eb3dd7a813f869849daa3abcff18",
+    "contexto_obito_spec.json": "462ea5ba5a10d7fda5026197ec1b66f8c574fc6810cdf98aec129c34e3a8691d",
+    "contexto_obito_etapa1.json": "ac014a66ffe4b92e20d47f69e074546bb2e5146d8d8cda499222ee88853d4414"
+  },
+  "context_macd_projection_cpu_minutes": 27.899479166666666
+}

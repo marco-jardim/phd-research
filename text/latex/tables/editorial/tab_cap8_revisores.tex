@@ -1,0 +1,35 @@
+% Fonte: data/exp2_reruns_por_banda.csv, estrato limiar_9, dossiê completo/v3.
+\begin{table}[!htbp]
+\centering
+\caption{Resultados observados dos revisores com dossiê completo e instruções v3, estratificados pela nota final do Comparador de Registros (CdR), $v$.}
+\label{tab:cap8-revisores}
+\footnotesize
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrrr}
+\hline
+Revisor & Nota & $N$ & VP & FP & FN & VN & Inconcl. (vínculos) & Sens. (\%) \\
+\hline
+\multicolumn{9}{l}{\textbf{Vigilância}} \\
+Kimi K2.5 & $v<9$ & 1.388 & 57 & 6 & 19 & 1.265 & 41 (6) & 75,0 \\
+ & $v\geq9$ & 22 & 22 & 0 & 0 & 0 & 0 (0) & 100,0 \\
+DeepSeek V4.1 Flash & $v<9$ & 1.388 & 27 & 3 & 42 & 1.256 & 60 (13) & 39,1 \\
+ & $v\geq9$ & 22 & 22 & 0 & 0 & 0 & 0 (0) & 100,0 \\
+Claude Haiku 5.5 & $v<9$ & 1.388 & 16 & 0 & 10 & 1.103 & 259 (56) & 61,5 \\
+ & $v\geq9$ & 22 & 19 & 0 & 0 & 0 & 3 (3) & 100,0 \\
+Levanto Sage 2 & $v<9$ & 1.388 & 36 & 9 & 20 & 1.224 & 99 (26) & 64,3 \\
+ & $v\geq9$ & 22 & 13 & 0 & 1 & 0 & 8 (8) & 92,9 \\
+\hline
+\multicolumn{9}{l}{\textbf{Confirmação}} \\
+DeepSeek V4.1 Flash & $v<9$ & 377 & 12 & 1 & 8 & 287 & 69 (24) & 60,0 \\
+ & $v\geq9$ & 58 & 57 & 1 & 0 & 0 & 0 (0) & 100,0 \\
+Claude Haiku 5.5 & $v<9$ & 377 & 6 & 0 & 5 & 203 & 163 (33) & 54,5 \\
+ & $v\geq9$ & 58 & 49 & 1 & 0 & 0 & 8 (8) & 100,0 \\
+Kimi K3 (parcial) & $v<9$ & 295 & 15 & 2 & 16 & 248 & 14 (9) & 48,4 \\
+ & $v\geq9$ & 48 & 42 & 1 & 0 & 0 & 5 (5) & 100,0 \\
+\hline
+\end{tabular}%
+}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos; VN: verdadeiros negativos. Sensibilidade entre resolvidos: $VP/(VP+FN)$; inconclusivos não são acertos. Kimi K3: 343 respostas em 435 pares, sem imputação dos 92 ausentes. Levanto Sage 2 utiliza uma escolha por par, não dois agentes e árbitro; a comparação não isola o efeito do modelo. Fonte: \texttt{data/exp2\_reruns\_por\_banda.csv} \cite{Jardim2026phdrepo}.}
+\par\footnotesize Dossiê completo: inclui as saídas decisórias do motor. Instruções v3: solicitam essas saídas. CdR: Comparador de Registros; $v$: sua nota final.
+\end{table}

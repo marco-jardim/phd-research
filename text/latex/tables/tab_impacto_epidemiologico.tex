@@ -1,24 +1,24 @@
 \begin{table}[htbp]
 \centering
-\caption{Comparação de métodos: óbitos detectados, custo operacional e taxa corrigida}
+\caption{Comparação de métodos: óbitos detectados, custo operacional e sensibilidade}
 \label{tab:impacto-epidemiologico}
 \footnotesize
 \begin{tabular}{@{}lrrrrrl@{}}
 \toprule
 Método & Det. & Perd. & Rev. & Prec. & Sensib. & \% Verd. \\
 \midrule
-  Naive threshold $\geq$7 & 58 & 16 & 404 & 0.14 & 0.78 & 78.4 \\
-  Naive threshold $\geq$8 & 43 & 31 & 67 & 0.64 & 0.58 & 58.1 \\
-  Naive threshold $\geq$9 & 31 & 43 & 31 & 1.00 & 0.42 & 41.9 \\
-  Rules $\geq$7 & 55 & 19 & 62 & 0.89 & 0.74 & 74.3 \\
-  Rules $\geq$8 & 36 & 38 & 36 & 1.00 & 0.49 & 48.6 \\
-  ML RF+SMOTE $\geq$0.5 & 67 & 7 & 70 & 0.96 & 0.91 & 90.5 \\
-  ML RF+SMOTE $\geq$0.7 & 64 & 10 & 65 & 0.98 & 0.86 & 86.5 \\
-  ML GB $\geq$0.5 & 60 & 14 & 64 & 0.94 & 0.81 & 81.1 \\
-  Hybrid-OR RF$\geq$0.7+Rules$\geq$8 & 64 & 10 & 65 & 0.98 & 0.86 & 86.5 \\
-  Hybrid-AND RF$\geq$0.5+Rules$\geq$7 & 55 & 19 & 55 & 1.00 & 0.74 & 74.3 \\
-  XGBoost $\geq$0.5 & 66 & 8 & 67 & 0.99 & 0.89 & 89.2 \\
-  XGBoost $\geq$0.7 & 66 & 8 & 66 & 1.00 & 0.89 & 89.2 \\
+  Decisão de limiar $\geq$7 & 58 & 16 & 404 & 0,14 & 0,78 & 78,4 \\
+  Decisão de limiar $\geq$8 & 43 & 31 & 67 & 0,64 & 0,58 & 58,1 \\
+  Decisão de limiar $\geq$9 & 31 & 43 & 31 & 1,00 & 0,42 & 41,9 \\
+  Regras $\geq$7 & 55 & 19 & 62 & 0,89 & 0,74 & 74,3 \\
+  Regras $\geq$8 & 36 & 38 & 36 & 1,00 & 0,49 & 48,6 \\
+  ML RF+SMOTE $\geq$0,5 & 67 & 7 & 70 & 0,96 & 0,91 & 90,5 \\
+  ML RF+SMOTE $\geq$0,7 & 64 & 10 & 65 & 0,98 & 0,86 & 86,5 \\
+  ML GB $\geq$0,5 & 60 & 14 & 64 & 0,94 & 0,81 & 81,1 \\
+  Híbrido OR RF$\geq$0,7+Regras$\geq$8 & 64 & 10 & 65 & 0,98 & 0,86 & 86,5 \\
+  Híbrido AND RF$\geq$0,5+Regras$\geq$7 & 55 & 19 & 55 & 1,00 & 0,74 & 74,3 \\
+  XGBoost $\geq$0,5 & 66 & 8 & 67 & 0,99 & 0,89 & 89,2 \\
+  XGBoost $\geq$0,7 & 66 & 8 & 66 & 1,00 & 0,89 & 89,2 \\
 \bottomrule
 \end{tabular}
 \end{table}

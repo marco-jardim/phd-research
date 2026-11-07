@@ -1,0 +1,80 @@
+% Fontes: data/funil_gzcmd_final.csv, data/funil_gzcmd_final_metricas.csv
+% e data/funil_gzcmd_custos_usd.csv. Contagens observadas no extrato.
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{longtable}{lrrrr}
+\caption{Cascata sobre a base inteira (comparação), por política e modo, com OOF por REFREC na v3.1 e Claude Haiku 5.5 com instruções v4 sem as saídas do motor. Nas contagens, cada célula apresenta potenciais pares (vínculos).}
+\label{tab:cap8-cascata-v31}\label{tab:cap8-cascata-reducao}\\
+\hline
+ & \multicolumn{2}{c}{Vigilância} & \multicolumn{2}{c}{Confirmação} \\
+Recorte ou indicador & v3 & v3.1 & v3 & v3.1 \\
+\hline
+\endfirsthead
+\multicolumn{5}{l}{\tablename\ \thetable\ (continuação)} \\
+\hline
+ & \multicolumn{2}{c}{Vigilância} & \multicolumn{2}{c}{Confirmação} \\
+Recorte ou indicador & v3 & v3.1 & v3 & v3.1 \\
+\hline
+\endhead
+\hline
+\multicolumn{5}{r}{Continua na próxima página} \\
+\endfoot
+\hline
+\endlastfoot
+Universo avaliado & 61.696 (247) & 61.696 (247) & 61.696 (247) & 61.696 (247) \\
+\hline
+\textbf{Nota $<5$} & 39.981 (3) & 39.981 (3) & 39.981 (3) & 39.981 (3) \\
+\quad ALWAYS\_MATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\quad ALWAYS\_NONMATCH & 10.411 (0) & 39.981 (3) & 10.411 (0) & 39.981 (3) \\
+\quad AUTO\_MATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\quad AUTO\_NONMATCH & 29.570 (3) & 0 (0) & 29.570 (3) & 0 (0) \\
+\quad LLM & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\qquad MATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\qquad UNSURE & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\qquad NONMATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\quad Humano direto & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+Subtotal humano & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\hline
+\textbf{Nota $[5,9)$} & 21.620 (151) & 21.620 (151) & 21.620 (151) & 21.620 (151) \\
+\quad ALWAYS\_MATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\quad ALWAYS\_NONMATCH & 2.821 (0) & 0 (0) & 2.821 (0) & 0 (0) \\
+\quad AUTO\_MATCH & 0 (0) & 114 (98) & 0 (0) & 55 (55) \\
+\quad AUTO\_NONMATCH & 17.411 (69) & 21.093 (5) & 18.422 (107) & 21.432 (19) \\
+\quad LLM & 1.388 (82) & 347 (28) & 377 (44) & 30 (14) \\
+\qquad MATCH & 93 (59) & 33 (15) & 32 (26) & 10 (10) \\
+\qquad UNSURE & 58 (9) & 31 (6) & 16 (8) & 3 (3) \\
+\qquad NONMATCH & 1.237 (14) & 283 (7) & 329 (10) & 17 (1) \\
+\quad Humano direto & 0 (0) & 66 (20) & 0 (0) & 103 (63) \\
+Subtotal humano & 58 (9) & 97 (26) & 16 (8) & 106 (66) \\
+\hline
+\textbf{Nota $\geq9$} & 95 (93) & 95 (93) & 95 (93) & 95 (93) \\
+\quad ALWAYS\_MATCH & 4 (4) & 63 (63) & 4 (4) & 63 (63) \\
+\quad ALWAYS\_NONMATCH & 1 (0) & 0 (0) & 1 (0) & 0 (0) \\
+\quad AUTO\_MATCH & 68 (67) & 18 (18) & 32 (32) & 0 (0) \\
+\quad AUTO\_NONMATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\
+\quad LLM & 22 (22) & 0 (0) & 58 (57) & 14 (12) \\
+\qquad MATCH & 14 (14) & 0 (0) & 38 (38) & 4 (4) \\
+\qquad UNSURE & 3 (3) & 0 (0) & 9 (9) & 3 (3) \\
+\qquad NONMATCH & 5 (5) & 0 (0) & 11 (10) & 7 (5) \\
+\quad Humano direto & 0 (0) & 14 (12) & 0 (0) & 18 (18) \\
+Subtotal humano & 3 (3) & 14 (12) & 9 (9) & 21 (21) \\
+\hline
+\multicolumn{5}{l}{\textbf{Resultados finais observados (contagens simples)}} \\
+VP aceitos sem revisão humana & 144 & 194 & 100 & 132 \\
+FP aceitos sem revisão humana & 35 & 34 & 6 & 0 \\
+Vínculos perdidos (NONMATCH) & 91 & 15 & 130 & 28 \\
+Vínculos encaminhados ao humano & 12 & 38 & 17 & 87 \\
+Sensibilidade automática (\%, IC 95\%) & 58,3 (52,1; 64,3) & 78,5 (73,0; 83,2) & 40,5 (34,6; 46,7) & 53,4 (47,2; 59,6) \\
+Especificidade automática (\%) & 99,943 & 99,945 & 99,990 & 100,000 \\
+Pares submetidos ao LLM & 1.410 & 347 & 435 & 44 \\
+Pares encaminhados ao humano & 61 & 111 & 25 & 127 \\
+\hline
+\multicolumn{5}{l}{\textbf{Projeções e custos estimados, não acertos observados}} \\
+Sens. com humano, erro 5,0\% (\%) & 62,9 & 93,2 & 47,0 & 86,9 \\
+Custo LLM estimado (US\$) & 3,79 & 0,92 & 1,16 & 0,12 \\
+\end{longtable}
+\par\footnotesize Cascata: a mesma política aplicada a todos os potenciais pares. OOF: predições fora da amostra de treinamento; REFREC: registro do SIM. ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. v3.1 distingue revisão humana da revisão por modelo de linguagem; v4 são as instruções sem as saídas decisórias do motor.
+
+\noindent\parbox{\linewidth}{\footnotesize As faixas particionam o universo; decisões ALWAYS, AUTO, LLM e humano direto particionam cada faixa. MATCH, UNSURE e NONMATCH subdividem apenas o ramo LLM. O subtotal humano soma humano direto e UNSURE, sem constituir novo ramo. VP: verdadeiros positivos; FP: falsos positivos. Intervalos de Wilson de 95\% são descritivos, sem ajuste por dependência entre potenciais pares. A sensibilidade automática inclui decisões de vínculo do LLM e mantém vínculos ao humano no denominador. A especificidade mede ausência de falso vínculo automático, não acerto humano; preservam-se três casas decimais para distinguir as proporções próximas de 100\%. A sensibilidade com humano é projeção $(VP+0{,}95\,V_H)/247$, sob erro humano hipotético de 5,0\%, não medido. Para a v3, foi recalculada por essa fórmula com as contagens do CSV, pois a coluna original de projeção utiliza erro humano zero. Custos aplicam tarifa ao consumo registrado, sem representar fatura ou custo humano. Fontes: \texttt{data/funil\_gzcmd\_final.csv}, \texttt{data/funil\_gzcmd\_final\_metricas.csv} e \texttt{data/funil\_gzcmd\_custos\_usd.csv} \cite{Jardim2026phdrepo}.}
+\endgroup

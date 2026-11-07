@@ -1,0 +1,212 @@
+{
+  "NOME prim frag igual": {
+    "descricao": "NOME prim frag igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME ult frag igual": {
+    "descricao": "NOME ult frag igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME qtd frag iguais": {
+    "descricao": "NOME qtd frag iguais",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME qtd frag raros": {
+    "descricao": "NOME qtd frag raros",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME qtd frag comuns": {
+    "descricao": "NOME qtd frag comuns",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME qtd frag muito parec": {
+    "descricao": "NOME qtd frag muito parec",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOME qtd frag abrev": {
+    "descricao": "NOME qtd frag abrev",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE prim frag igual": {
+    "descricao": "NOMEMAE prim frag igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE ult frag igual": {
+    "descricao": "NOMEMAE ult frag igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE qtd frag iguais": {
+    "descricao": "NOMEMAE qtd frag iguais",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE qtd frag raros": {
+    "descricao": "NOMEMAE qtd frag raros",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE qtd frag comuns": {
+    "descricao": "NOMEMAE qtd frag comuns",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE qtd frag muito parec": {
+    "descricao": "NOMEMAE qtd frag muito parec",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "NOMEMAE qtd frag abrev": {
+    "descricao": "NOMEMAE qtd frag abrev",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "DTNASC dt iguais": {
+    "descricao": "DTNASC dt iguais",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "DTNASC dt ap 1digi": {
+    "descricao": "DTNASC dt ap 1digi",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "DTNASC dt inv dia": {
+    "descricao": "DTNASC dt inv dia",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "DTNASC dt inv mes": {
+    "descricao": "DTNASC dt inv mes",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "DTNASC dt inv ano": {
+    "descricao": "DTNASC dt inv ano",
+    "tipo": "diagnóstico de composição/erro, não igualdade",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "CODMUNRES uf igual": {
+    "descricao": "CODMUNRES uf igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "CODMUNRES uf prox": {
+    "descricao": "CODMUNRES uf prox",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "CODMUNRES local igual": {
+    "descricao": "CODMUNRES local igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "CODMUNRES local prox": {
+    "descricao": "CODMUNRES local prox",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO via igual": {
+    "descricao": "ENDERECO via igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO via prox": {
+    "descricao": "ENDERECO via prox",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO numero igual": {
+    "descricao": "ENDERECO numero igual",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO compl prox": {
+    "descricao": "ENDERECO compl prox",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO texto prox": {
+    "descricao": "ENDERECO texto prox",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "ENDERECO tokens jacc": {
+    "descricao": "ENDERECO tokens jacc",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  },
+  "SEXO igualdade": {
+    "descricao": "SEXO igualdade",
+    "tipo": "proxy de concordância",
+    "limiar_exato": 1.0,
+    "limiar_alto": 0.8,
+    "nota": "Fração >=1 e >=0.8 não equivale a igualdade de Soundex; alguns subescores têm teto <1. Abreviação indica erro, não concordância."
+  }
+}

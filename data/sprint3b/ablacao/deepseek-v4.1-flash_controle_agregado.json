@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source_file": "deepseek-v4.1-flash_controle.json",
+  "source_sha256": "823827879bea632c4f1409cff4903290d1a958954b6e04404f65908fe6ba8ae5",
+  "model": "deepseek-v4.1-flash",
+  "mode": "vigilancia",
+  "arm": "controle",
+  "n_selected": 18,
+  "n_reviewed": 18,
+  "n_errors": 0,
+  "decisions": {
+    "MATCH": 0,
+    "NONMATCH": 18,
+    "UNSURE": 0
+  }
+}
