@@ -17,7 +17,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Arranjo sequencial] Aplicação do GZ-CMD depois do corte do OpenRecLink. Os potenciais pares com escore maior ou igual ao corte do respectivo passo são aceitos; a política v3.1, recalibrada apenas abaixo do corte, decide os demais. É o resultado principal do registro interno, não uma política superior à ordenação calibrada. A aplicação da política a todos os potenciais pares constitui a cascata sobre a base inteira, usada como comparação.
 
-\item[B1] Ponte do Estudo~4 que mantém a cascata sobre a base inteira e a probabilidade original, alterando apenas as proporções de erro do revisor para as estimadas por validação cruzada. Não se confunde com a consulta B1 à BVS do Apêndice~\ref{ap:protocolo-busca}.
+\item[B1] Ponte do Estudo~4 que mantém a cascata sobre a base inteira e a probabilidade original, alterando apenas as proporções de erro do revisor para as estimadas por validação cruzada. Não se confunde com a consulta BV1 à BVS do Apêndice~\ref{ap:protocolo-busca}.
 
 \item[Blocagem] Estratégia de redução do espaço de comparação no \textit{linkage}, que agrupa candidatos por chaves comuns (ex.: \textit{Soundex} do nome, ano de nascimento) para evitar a comparação exaustiva de todos os pares possíveis.
 
@@ -35,7 +35,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Comparador de Registros (CdR)] Ferramenta que calcula escores de similaridade campo a campo entre potenciais pares, produzindo subescores individuais e uma nota final agregada. Nesta tese, foi utilizada uma implementação em Python \cite{Jardim2025comparador} que parte dos critérios de nome e de data de \citeonline{Lucena2013algoritmos} e inclui seis subescores de endereço, dos quais a igualdade da via retoma o critério de endereços iguais de Lucena e os demais derivam dos critérios acrescentados por \citeonline{Paiva2025comparador}, além de quatro subescores de município formulados pelo autor (Capítulo~\ref{cap:estudo1}).
 
-\item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical de origem encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
+\item[Corte do OpenRecLink] Ponto de corte do escore probabilístico do OpenRecLink, definido por passo de blocagem, etapa de geração de candidatos por chaves comuns (7,0240; 7,8444; 7,9019 nos passos 6, 9 e 11), sem limiar inferior. Os potenciais pares com escore maior ou igual ao corte do respectivo passo definem PAR~=~1 na referência operacional; os demais formam a região abaixo do corte, onde a revisão clerical de origem encontrou os PAR~=~2 (Apêndice~\ref{ap:linkage-origem}).
 
 \item[Curva de esforço] Relação entre o número de potenciais pares revisados em uma ordenação e os vínculos recuperados. É instrumento exploratório para escolha da ordenação e do ponto de parada segundo o orçamento humano; sua conversão em horas depende de parâmetro temporal, não de tempo medido. Exige vínculos verificados; em dados novos, depende de amostra revisada de forma independente.
 
@@ -95,7 +95,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[\texttt{MATCH}, \texttt{NONMATCH}, \texttt{UNSURE} e \texttt{DEFERRED}] Saídas da revisão assistida e do motor. \texttt{MATCH}: o revisor LLM classifica o potencial par como vínculo; \texttt{NONMATCH}: como não vínculo; \texttt{UNSURE}: declara a evidência inconclusiva, e o par é encaminhado ao revisor humano. \texttt{DEFERRED} é a marcação do pacote para potencial par encaminhado à revisão humana, não uma decisão final.
 
-\item[O1 a O4] Ordenações exploratórias dos potenciais pares abaixo do corte: O1 pelo escore do OpenRecLink, O2 pela nota final do CdR, O3 pela probabilidade calibrada OOF do classificador e O4 pela probabilidade recalibrada de P. Não se confundem com as consultas de busca bibliográfica, identificadas por Q1 a Q5 no Apêndice~\ref{ap:protocolo-busca}.
+\item[O1 a O4] Ordenações exploratórias dos potenciais pares abaixo do corte: O1 pelo escore do OpenRecLink, O2 pela nota final do CdR, O3 pela probabilidade calibrada OOF do classificador e O4 pela probabilidade recalibrada de P, arranjo que preserva o corte e decide abaixo dele. Não se confundem com as consultas de busca bibliográfica, identificadas por OA1 a OA5 no Apêndice~\ref{ap:protocolo-busca}.
 
 \item[OpenRecLink] \textit{Software} brasileiro de código aberto para \textit{linkage} probabilístico de registros, desenvolvido por Camargo Jr. e Coeli como sucessor do RecLink \cite{Camargo2000reclink}. Nesta tese, designa a versão original, em C, usada no \textit{linkage} de origem realizado no LinkDataPop; a tese não o executou.
 
@@ -133,7 +133,7 @@ Este glossário apresenta definições de termos técnicos utilizados ao longo d
 
 \item[Revisão clerical] Revisão manual de potenciais pares por revisor humano, que decide se correspondem à mesma pessoa. No \textit{linkage} de origem, foi feita por revisora única na região abaixo do corte do OpenRecLink e originou os PAR~=~2.
 
-\item[S1 a S3] Etapas da avaliação do arranjo sequencial no Estudo~4: S1, simulação sem chamadas a API; S2, chamadas ao LLM; S3, avaliação com os \textit{labels}. Não se confundem com as consultas S1 a S3 à SciELO do Apêndice~\ref{ap:protocolo-busca}.
+\item[S1 a S3] Etapas da avaliação do arranjo sequencial no Estudo~4: S1, simulação sem chamadas a API; S2, chamadas ao LLM; S3, avaliação com os \textit{labels}. Não se confundem com as consultas SC1 a SC3 à SciELO do Apêndice~\ref{ap:protocolo-busca}.
 
 \item[Sensibilidade] Proporção de vínculos corretamente identificados pelo classificador dentre todos os vínculos existentes.
 
