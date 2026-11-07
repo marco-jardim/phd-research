@@ -1,0 +1,147 @@
+{
+  "status": "stopped_runtime_estimate",
+  "analysis": "B_contexto_obito_exploratory_post_hoc",
+  "registered": false,
+  "cpu_only": true,
+  "llm_calls": 0,
+  "date_utc": "2026-11-07T01:33:00.322166+00:00",
+  "definition": {
+    "features": [
+      "ctx_refrec_n_candidatos",
+      "ctx_refrec_posicao",
+      "ctx_refrec_delta_melhor",
+      "ctx_refrec_delta_segundo",
+      "ctx_refrec_eh_melhor",
+      "ctx_comprec_n_candidatos",
+      "ctx_comprec_posicao",
+      "ctx_comprec_delta_melhor",
+      "ctx_comprec_delta_segundo",
+      "ctx_comprec_eh_melhor"
+    ],
+    "score": "nota final (ou nota_final), mesma imputação zero de numeric_features",
+    "grouping_keys_only": [
+      "REFREC",
+      "COMPREC"
+    ],
+    "numeric_inputs": "somente nota final; subscores permanecem nos 30 atributos originais",
+    "forbidden_feature_inputs": [
+      "SCORE",
+      "PAR",
+      "C_SITUENCE",
+      "identificadores"
+    ],
+    "n_candidatos": "número de linhas candidatas no grupo, incluindo o próprio par",
+    "posicao": "rank decrescente mínimo, base 1; empates compartilham posição",
+    "delta_melhor": "nota do par menos a maior nota do grupo (não positivo)",
+    "delta_segundo": "nota do par menos a segunda nota em ordem decrescente, com multiplicidade",
+    "singleton": "segunda nota igual à primeira; ambos os deltas zero",
+    "eh_melhor": "1 para todos os empatados na maior nota; 0 nos demais",
+    "context_scope": "universo completo de candidatos, antes do corte e dos folds; sem rótulos",
+    "rrf": {
+      "k": 60,
+      "arms": [
+        "O1",
+        "O3_contexto"
+      ],
+      "implementation": "scripts.fusao_filas.rrf"
+    },
+    "tuning": "nenhum; definições e atributos fixos antes dos fits e das curvas"
+  },
+  "specification": {
+    "fixed_before_data_and_fits_utc": "2026-11-07T01:31:05.160385+00:00",
+    "registered": false,
+    "definition": {
+      "features": [
+        "ctx_refrec_n_candidatos",
+        "ctx_refrec_posicao",
+        "ctx_refrec_delta_melhor",
+        "ctx_refrec_delta_segundo",
+        "ctx_refrec_eh_melhor",
+        "ctx_comprec_n_candidatos",
+        "ctx_comprec_posicao",
+        "ctx_comprec_delta_melhor",
+        "ctx_comprec_delta_segundo",
+        "ctx_comprec_eh_melhor"
+      ],
+      "score": "nota final (ou nota_final), mesma imputação zero de numeric_features",
+      "grouping_keys_only": [
+        "REFREC",
+        "COMPREC"
+      ],
+      "numeric_inputs": "somente nota final; subscores permanecem nos 30 atributos originais",
+      "forbidden_feature_inputs": [
+        "SCORE",
+        "PAR",
+        "C_SITUENCE",
+        "identificadores"
+      ],
+      "n_candidatos": "número de linhas candidatas no grupo, incluindo o próprio par",
+      "posicao": "rank decrescente mínimo, base 1; empates compartilham posição",
+      "delta_melhor": "nota do par menos a maior nota do grupo (não positivo)",
+      "delta_segundo": "nota do par menos a segunda nota em ordem decrescente, com multiplicidade",
+      "singleton": "segunda nota igual à primeira; ambos os deltas zero",
+      "eh_melhor": "1 para todos os empatados na maior nota; 0 nos demais",
+      "context_scope": "universo completo de candidatos, antes do corte e dos folds; sem rótulos",
+      "rrf": {
+        "k": 60,
+        "arms": [
+          "O1",
+          "O3_contexto"
+        ],
+        "implementation": "scripts.fusao_filas.rrf"
+      },
+      "tuning": "nenhum; definições e atributos fixos antes dos fits e das curvas"
+    }
+  },
+  "estimate": {
+    "pilot_seconds": [
+      1.3175029000267386,
+      5.12841240002308,
+      7.954051699955016,
+      6.876134700025432
+    ],
+    "model_fits": 120,
+    "pilot_fits": 4,
+    "safety_factor": 3,
+    "estimated_minutes": 47.7243101997301
+  },
+  "limit_minutes": 45,
+  "completed_nested_fits": 0,
+  "context_features": [
+    "ctx_refrec_n_candidatos",
+    "ctx_refrec_posicao",
+    "ctx_refrec_delta_melhor",
+    "ctx_refrec_delta_segundo",
+    "ctx_refrec_eh_melhor",
+    "ctx_comprec_n_candidatos",
+    "ctx_comprec_posicao",
+    "ctx_comprec_delta_melhor",
+    "ctx_comprec_delta_segundo",
+    "ctx_comprec_eh_melhor"
+  ],
+  "seed": 42,
+  "folds": 5,
+  "split_by": "refrec",
+  "targets": [
+    9,
+    23,
+    36
+  ],
+  "top_k": [
+    17,
+    58,
+    96,
+    125,
+    440,
+    2522
+  ],
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/contexto_obito.py --data-root D:/git/phd-research",
+  "output_sha256": {
+    "contexto_obito_spec.json": "462ea5ba5a10d7fda5026197ec1b66f8c574fc6810cdf98aec129c34e3a8691d"
+  },
+  "code_sha256": {
+    "scripts/contexto_obito.py": "8162a6aab5a752340fc2592f66f483367a1ddf9f12339749dbff99336cb47f04",
+    "tests/test_contexto_obito.py": "09fc00e0f6bdcb50d0509ff959467c8f068652094090eae1959f586fea9f9f37"
+  },
+  "limitation": "Nenhuma métrica estimada: somente quatro fits-piloto; autorização necessária para superar 45 min."
+}
