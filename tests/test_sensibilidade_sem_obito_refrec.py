@@ -32,6 +32,48 @@ def test_sha256_independe_dos_fins_de_linha(tmp_path):
     assert sens.sha256(crlf) == sens.sha256(lf)
 
 
+def test_refresh_provenance_accepts_editorial_generator_but_rejects_model_changes(tmp_path, monkeypatch):
+    meta = json.loads(sens.META.read_text(encoding="utf-8"))
+    for name in meta["fontes_sha256"]:
+        target = tmp_path / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes((sens.ROOT / name).read_bytes())
+    output = tmp_path / sens.OUT.name
+    output.write_bytes(sens.OUT.read_bytes())
+    extract = tmp_path / "synthetic.csv"
+    extract.write_bytes(b"synthetic input\n")
+    meta["entrada_sha256"] = sens.sha256(extract)
+    meta["fontes_sha256"] = {name: sens.sha256(tmp_path / name)
+                            for name in meta["fontes_sha256"]}
+    metadata = tmp_path / sens.META.name
+    metadata.write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8", newline="\n")
+    generator = tmp_path / "scripts/gerar_tabela_sensibilidade.py"
+    generator.write_bytes(generator.read_bytes() + b"\n# editorial caption change\n")
+    before_csv = output.read_bytes()
+    monkeypatch.setattr(sens, "ROOT", tmp_path)
+    monkeypatch.setattr(sens, "OUT", output)
+    monkeypatch.setattr(sens, "META", metadata)
+    monkeypatch.setattr(sens, "EXTRATO", extract)
+
+    sens.atualizar_proveniencia_sem_treino()
+
+    refreshed = json.loads(metadata.read_text(encoding="utf-8"))
+    assert refreshed["fontes_sha256"]["scripts/gerar_tabela_sensibilidade.py"] == sens.sha256(generator)
+    assert refreshed["revalidacao_sem_treino"]["fontes_sha256_anteriores"] == meta["fontes_sha256"]
+    assert refreshed["revalidacao_sem_treino"]["treinamento"] is False
+    for key in meta.keys() - {"fontes_sha256", "revalidacao_sem_treino"}:
+        assert refreshed[key] == meta[key]
+    assert output.read_bytes() == before_csv
+    assert b"\r\n" not in metadata.read_bytes()
+
+    features = tmp_path / "scripts/feature_engineering.py"
+    features.write_bytes(features.read_bytes() + b"\n# unapproved model change\n")
+    before_metadata = metadata.read_bytes()
+    with pytest.raises(AssertionError, match="scripts/feature_engineering.py"):
+        sens.atualizar_proveniencia_sem_treino()
+    assert metadata.read_bytes() == before_metadata
+
+
 def test_limpar_nan_recursivo_e_json_estrito():
     original = {"ausencias": [float("nan"), float("inf"), -float("inf"), pd.NA, pd.NaT],
                 "aninhado": ({"float": np.float32(0.5), "int": np.int64(42)},

@@ -144,7 +144,8 @@ def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
     assert 'hipótese exploratória a validar em dados novos' in recommendation
-    assert 'nunca deve aceitar vínculos sozinho' in recommendation
+    assert 'nas condições avaliadas, não deve aceitar vínculos sozinho' in recommendation
+    assert 'posição de precaução, não estimativa transferível' in recommendation
     assert 'validação registrada em dados novos' in recommendation
 
 
@@ -160,7 +161,7 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     assert '42,5' in pt and '42.5' in en
     assert 'pelo menos 95' in pt and 'at least 95' in en
     assert 'nenhuma estratégia domina' in pt
-    assert 'neither strategy dominates' in en
+    assert 'no strategy dominates' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
