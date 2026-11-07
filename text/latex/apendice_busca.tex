@@ -9,7 +9,7 @@ Foram consultadas cinco fontes em 3 de novembro de 2026. O PubMed/MEDLINE foi ac
 
 A Scopus foi consultada pelo autor em sessão institucional em 4 de novembro de 2026, pela busca avançada de documentos. O Embase não foi consultado, e o Google Scholar não foi usado como base de contagem, por não ser reprodutível. Buscas exploratórias realizadas em 1 de novembro de 2026 (PubMed, seis consultas; Google Scholar, quatro; Consensus, nove; SciELO, duas) não tiveram suas cadeias preservadas e não integram as contagens deste apêndice.
 
-As cadeias equivalentes em sintaxe Scopus, a correspondência com as variantes P1 a P6 do PubMed e o procedimento de acesso institucional pela UFRJ estão documentados em \path{docs/support_text/scopus_T6_instrucoes.md}, no repositório. As seis expressões foram aceitas sem alteração de sintaxe. O arquivo \path{data/protocolo_busca_T6_scopus_template.csv} foi preservado sem resultados, e a execução foi registrada separadamente em \path{data/protocolo_busca_T6_scopus_executado.csv}. Não foi realizada a exportação CSV em lote prevista nas instruções: os registros foram anotados por EID e DOI a partir das listas de resultados e das páginas de cada documento, e os metadados bibliográficos foram complementados pela API pública do Crossref.
+As cadeias equivalentes em sintaxe Scopus, a correspondência com as variantes PM1 a PM6 do PubMed e o procedimento de acesso institucional pela UFRJ estão documentados em \path{docs/support_text/scopus_T6_instrucoes.md}, no repositório. As seis expressões foram aceitas sem alteração de sintaxe. O arquivo \path{data/protocolo_busca_T6_scopus_template.csv} foi preservado sem resultados, e a execução foi registrada separadamente em \path{data/protocolo_busca_T6_scopus_executado.csv}. Não foi realizada a exportação CSV em lote prevista nas instruções: os registros foram anotados por EID e DOI a partir das listas de resultados e das páginas de cada documento, e os metadados bibliográficos foram complementados pela API pública do Crossref.
 
 \section{Cadeias de busca}
 
@@ -48,12 +48,12 @@ Foram incluídos os estudos que aplicam um classificador supervisionado à class
 \toprule
 Base & Consulta e filtro & Recuperados & Selecionados \\
 \midrule
-PubMed & P1, cadeia principal, sem rótulos de campo & 73 & 0 \\
-PubMed & P2, cadeia principal em título e resumo & 0 & 0 \\
-PubMed & P3, \textit{linkage} e aprendizado supervisionado, afiliação no Brasil & 0 & 0 \\
-PubMed & P4, mesmo bloco sem restrição de país & 94 & n.a. \\
-PubMed & P5, cadeia ampliada, sem rótulos de campo & 191 & 0\textsuperscript{a} \\
-PubMed & P6, cadeia ampliada em título e resumo & 0 & 0 \\
+PubMed & PM1, cadeia principal, sem rótulos de campo & 73 & 0 \\
+PubMed & PM2, cadeia principal em título e resumo & 0 & 0 \\
+PubMed & PM3, \textit{linkage} e aprendizado supervisionado, afiliação no Brasil & 0 & 0 \\
+PubMed & PM4, mesmo bloco sem restrição de país & 94 & n.a. \\
+PubMed & PM5, cadeia ampliada, sem rótulos de campo & 191 & 0\textsuperscript{a} \\
+PubMed & PM6, cadeia ampliada em título e resumo & 0 & 0 \\
 SciELO & SC1, cadeia principal & 0 & 0 \\
 SciELO & SC2, ``record linkage'' sozinho & 131\textsuperscript{b} & 0 \\
 SciELO & SC3, ``relacionamento de registros'' & 2\textsuperscript{b} & 0 \\
@@ -73,10 +73,10 @@ Consensus & CS1, pedido com o critério de inclusão & 15\textsuperscript{e} & 1
 Item conhecido & Trabalho não recuperado por nenhuma cadeia & 0 & 1 \\
 Scopus & Sc1, cadeia principal, título, resumo e palavras-chave & 0 & 0 \\
 Scopus & Sc2, cadeia ampliada, título, resumo e palavras-chave & 3 & 1\textsuperscript{f} \\
-Scopus & Sc3, variante P2, título e resumo & 2 & 1\textsuperscript{f} \\
-Scopus & Sc4, variante P3, afiliação no Brasil & 6 & 1\textsuperscript{f} \\
-Scopus & Sc5, variante P4, referência internacional & 222 & n.a. \\
-Scopus & Sc6, variante P6, título e resumo & 2 & 1\textsuperscript{f} \\
+Scopus & Sc3, variante PM2, título e resumo & 2 & 1\textsuperscript{f} \\
+Scopus & Sc4, variante PM3, afiliação no Brasil & 6 & 1\textsuperscript{f} \\
+Scopus & Sc5, variante PM4, referência internacional & 222 & n.a. \\
+Scopus & Sc6, variante PM6, título e resumo & 2 & 1\textsuperscript{f} \\
 \midrule
 \multicolumn{2}{l}{Estudos incluídos, sem duplicatas} & & 4 \\
 \bottomrule

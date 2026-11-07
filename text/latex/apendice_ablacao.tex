@@ -1,10 +1,10 @@
 MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).
 
-As tabelas deste apêndice descrevem a ablação saneada com partição por COMPREC, nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, $F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração (\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem selecionada para revisão simulada, não o número de respostas de um LLM. O $F_1$ esperado não é desempenho observado de um LLM. O Random Forest calibrado usa somente os 29 subescores e a nota final, acrescidos das MACD no braço ativado, com política v3. O histórico, que incluía escore do OpenRecLink, situação de encerramento, identificadores e atributos duplicados, permanece em \path{data/ablation_comprec_macd.csv} e \path{data/ablation_comprec_nomacd.csv}; a comparação está em \path{data/exp1_vazamento_comparacao.csv}. As partições de teste se sobrepõem e não constituem cinco amostras independentes. O $F_1$ esperado de 0,954 na vigilância com MACD pertence à versão anterior com vazamento, não à seleção saneada nem ao desempenho observado de um LLM.
+As tabelas deste apêndice descrevem a ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, $F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração (\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem selecionada para revisão simulada, não o número de respostas de um LLM. O $F_1$ esperado não é desempenho observado de um LLM. O Random Forest calibrado usa somente os 29 subescores e a nota final, acrescidos das MACD no braço ativado, com política v3. O histórico, que incluía escore do OpenRecLink, situação de encerramento, identificadores e atributos duplicados, permanece em \path{data/ablation_comprec_macd.csv} e \path{data/ablation_comprec_nomacd.csv}; a comparação está em \path{data/exp1_vazamento_comparacao.csv}. As partições de teste se sobrepõem e não constituem cinco amostras independentes. O $F_1$ esperado de 0,954 na vigilância com MACD pertence à versão anterior com vazamento, não à seleção saneada nem ao desempenho observado de um LLM.
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação saneada com MACD ativado (Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento), no modo confirmação (maior custo para falso positivo): métricas esperadas, sem chamadas a modelo de linguagem.}
+\caption{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD ativado (Medidas Contínuas de Diferença de Datas de nascimento), modo confirmação (maior custo para falso positivo): métricas esperadas, sem chamadas a modelo de linguagem.}
 \label{tab:ablacao-comprec-confirmacao-macd-on}
 \small
 \resizebox{\textwidth}{!}{%
@@ -25,7 +25,7 @@ Média $\pm$ DP & n.a. & 0,951 $\pm$ 0,004 & 0,885 $\pm$ 0,030 & 0,916 $\pm$ 0,0
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação saneada com MACD ativado (Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento), no modo vigilância (maior custo para falso negativo): métricas esperadas, sem chamadas a modelo de linguagem.}
+\caption{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD ativado (Medidas Contínuas de Diferença de Datas de nascimento), modo vigilância (maior custo para falso negativo): métricas esperadas, sem chamadas a modelo de linguagem.}
 \label{tab:ablacao-comprec-vigilancia-macd-on}
 \small
 \resizebox{\textwidth}{!}{%
@@ -46,7 +46,7 @@ Média $\pm$ DP & n.a. & 0,945 $\pm$ 0,006 & 0,938 $\pm$ 0,020 & 0,941 $\pm$ 0,0
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação saneada com MACD desativado (sem os atributos derivados do nascimento denominados Medidas Contínuas de Diferença de Datas), no modo confirmação (maior custo para falso positivo): métricas esperadas, sem chamadas a modelo de linguagem.}
+\caption{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD desativado (Medidas Contínuas de Diferença de Datas de nascimento), modo confirmação (maior custo para falso positivo): métricas esperadas, sem chamadas a modelo de linguagem.}
 \label{tab:ablacao-comprec-confirmacao-macd-off}
 \small
 \resizebox{\textwidth}{!}{%
@@ -67,7 +67,7 @@ Média $\pm$ DP & n.a. & 0,901 $\pm$ 0,033 & 0,910 $\pm$ 0,012 & 0,905 $\pm$ 0,0
 
 \begin{table}[htbp]
 \centering
-\caption{Ablação saneada com MACD desativado (sem os atributos derivados do nascimento denominados Medidas Contínuas de Diferença de Datas), no modo vigilância (maior custo para falso negativo): métricas esperadas, sem chamadas a modelo de linguagem.}
+\caption{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD desativado (Medidas Contínuas de Diferença de Datas de nascimento), modo vigilância (maior custo para falso negativo): métricas esperadas, sem chamadas a modelo de linguagem.}
 \label{tab:ablacao-comprec-vigilancia-macd-off}
 \small
 \resizebox{\textwidth}{!}{%

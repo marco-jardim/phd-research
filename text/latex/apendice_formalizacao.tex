@@ -37,7 +37,7 @@ As duas restrições de média sobre $A^+$ e $A^-$ não garantem que $p_{cal}(s)
 As equações restringem apenas duas médias preditas. Mantidas as distribuições e as proporções nas âncoras, podem existir diferentes funções $P(y=1\mid s)$ na região intermediária que satisfazem as mesmas restrições. Essas funções não precisam coincidir com a sigmoide ajustada. Mudanças temporais nessa região também não são controladas pelas duas médias.
 \end{proof}
 
-A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na área cinza depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
+A contaminação dos conjuntos âncora pode deslocar os alvos e alterar o ajuste, mas não se estabelece aqui uma cota para essa distorção. A repercussão na região intermediária dos escores depende da distribuição dos escores e da estabilidade do ajuste, não apenas da pureza das âncoras. O procedimento permite atualização periódica sem novos \textit{labels} no ajuste, mas requer validação com dados rotulados independentes, incluindo a região intermediária e diferentes períodos, para avaliar calibração local e deriva (\textit{drift}).
 
 \subsection{Função de Perda, Decisão em Três Ações e Extensão a Quatro}
 
@@ -114,7 +114,7 @@ Pela continuidade e concavidade, o conjunto $\{p:EVR(p)>0\}$ é vazio ou um inte
 
 \begin{corollary}[Limiar crítico de custo de revisão]
 \label{cor:cllm-critical}
-Sob as hipóteses da Proposição~\ref{prop:evr-concavity}, defina-se $H=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. A região de revisão estritamente ótima é não vazia se, e somente se, $EVR(p^*) > 0$. Calculando-se o máximo explicitamente:
+Sob as hipóteses da Proposição~\ref{prop:evr-concavity}, defina-se $\bar C=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. A região de revisão estritamente ótima é não vazia se, e somente se, $EVR(p^*) > 0$. Calculando-se o máximo explicitamente:
 
 \[
 EVR(p^*) = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN}) - C_{LLM}
@@ -126,7 +126,7 @@ Portanto, existe um limiar crítico de custo de revisão:
 C_{LLM}^* = \frac{C_{FP} \cdot C_{FN}}{C_{FP} + C_{FN}} \cdot (1 - e_{FP} - e_{FN})
 \]
 
-abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Como $C_{LLM}>0$, isso requer também $e_{FP}+e_{FN}<1$. Quando $C_{LLM} \ge C_{LLM}^*$, nenhuma revisão é estritamente ótima e toda decisão é automática pela convenção de desempate. O fator $H$ corresponde à metade da média harmônica dos custos de erro; o limiar multiplica esse fator por $(1-e_{FP}-e_{FN})$, de modo que maiores proporções de erro residual reduzem o custo justificável para revisão.
+abaixo do qual a revisão é economicamente justificável para ao menos alguns pares. Como $C_{LLM}>0$, isso requer também $e_{FP}+e_{FN}<1$. Quando $C_{LLM} \ge C_{LLM}^*$, nenhuma revisão é estritamente ótima e toda decisão é automática pela convenção de desempate. O fator $\bar C$ corresponde à metade da média harmônica dos custos de erro; o limiar multiplica esse fator por $(1-e_{FP}-e_{FN})$, de modo que maiores proporções de erro residual reduzem o custo justificável para revisão.
 \end{corollary}
 
 \textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Na escala da vigilância da tese, com $C_{FP}=10$ e $C_{FN}=50$ (\path{gzcmd/gzcmd_v3_config.yaml}), o limiar é $C_{LLM}^*=500/60\approx8{,}33$, cálculo da tese. Normalizando ambos os custos por $C_{FP}$, obtém-se $5/6\approx0{,}83$: a revisão é justificável com custo inferior a 83,3\% do custo do falso positivo. O valor normalizado não é o custo na escala original da política.
