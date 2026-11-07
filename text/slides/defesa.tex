@@ -388,6 +388,7 @@ Esta tese & SIM e Sinan-TB, base 1:249; política com regras de guarda, \textit{
 \item Ordem histórica desconhecida: 2.156 revisões são cenário. Apenas 36 PAR~=~2; REFREC não separa COMPREC
 \item Respostas históricas reutilizadas; proporções de coortes mais fáceis e denominadores mínimos. Sensibilidade humana não medida; especificidade perfeita assumida, sem FP humanos
 \item Comparador \textit{a posteriori} conhecido antes do registro interno; código registrado ausente do git e desvios de protocolo. Registro: recalibração, braços e avaliação; análise de estabilidade interna, não de generalização}
+Revisão cega independente não foi possível antes da defesa; integra o protocolo da coorte nova.
 \fonte[]{data/comparador\_mesma\_carga\_metadata.json; data/cenarios\_sensibilidade\_humana.csv; gzcmd/M\_arranjo\_corte\_desvios.md; reservas 45 a 48}
 \end{frame}
 
@@ -427,9 +428,9 @@ Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
 \item Mesmo LLM: VPP de 16,0\% como aceitador; filtro com orçamento humano fixo (H=22 em uma réplica): VPN de 87,8\% em k=96 e 78,0\% em k=58; 9 de 22 descartados. Não distingue ancoragem de abstenção
 \item Política de quatro ações com registro de decisões, sem exercício independente de auditoria; CdR em Python, código aberto e \textit{benchmark} restrito}
 \begin{block}{Recomendação final como hipótese a validar}
-Preservar o corte. Abaixo, ordem decrescente de uma probabilidade ou escore; curva de esforço exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. Só avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos. Subamostragem: quadro 47.
+Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probabilidade calibrada, no lugar do escore isolado; vantagem sobre a probabilidade não demonstrada, a validar com referência cega. Curva de esforço exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. Só avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos. Subamostragem: quadro 47.
 \end{block}
-\fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv}
+\fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv; data/fusao\_robustez\_bootstrap.csv}
 \end{frame}
 
 \begin{frame}{Agradecimentos}

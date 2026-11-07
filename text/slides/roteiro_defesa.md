@@ -110,6 +110,8 @@ As perdas são de cobertura, não de erro humano. Os cenários de sensibilidade 
 ### 29. Contribuições e recomendação final
 As contribuições são a decomposição por PAR, a curva de esforço, a política com registro de decisões, o CdR em Python, o código público e o *benchmark* restrito. Não houve auditoria independente nem identificação causal de ancoragem. Preservar o corte e revisar em ordem decrescente de uma probabilidade ou escore é proposta a validar. A curva de esforço exige amostra independente verificada para escolher fila e parada conforme o orçamento humano. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Restantes são não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. O filtro exige orçamento humano fixo (H=22 em uma réplica). Nas condições avaliadas, não deve aceitar sozinho. Só foi avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos.
 
+A recomendação exploratória é a fusão RRF do escore com a probabilidade calibrada no lugar do escore isolado, a validar com referência cega; vantagem sobre a probabilidade não demonstrada. Revisão cega independente não foi possível antes da defesa e integra o protocolo da coorte nova.
+
 ### 30. Agradecimentos
 Agradece-se à orientação, à banca e à equipe responsável pelo processamento e pela revisão. Abre-se a discussão com a banca.
 
@@ -172,7 +174,7 @@ Os mecanismos da política original são distintos do erro do revisor humano: gu
 
 ## Perguntas prováveis
 
-São 83 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
+São 86 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -446,7 +448,7 @@ Fonte: `estudo4_gzcmd.tex:320,328,334,668,670`; `conclusao.tex:59,76`.
 
 ### 46. Em que direção atua o viés de verificação?
 
-Se a revisão seguiu o escore do OpenRecLink, favoreceria O1: os 36 PAR=2 concentram-se acima de −5,648; O1 alcança todos em 2.521 revisões. A ordem não foi documentada. Se nota e subescores do CdR orientaram a revisão, hipótese de trabalho, o favorecimento alcança O2 a O4. Não há direção única demonstrada nem magnitude estimada; faltam revisão cega e casos não verificados.
+Se a revisão seguiu o escore do OpenRecLink, favoreceria O1: os 36 PAR=2 concentram-se acima de −5,6485; O1 alcança todos em 2.521 revisões. A ordem não foi documentada. Se nota e subescores do CdR orientaram a revisão, hipótese de trabalho, o favorecimento alcança O2 a O4. Não há direção única demonstrada nem magnitude estimada; faltam revisão cega e casos não verificados.
 
 Fonte: `capitulo_dados.tex:75,77`; `conclusao.tex:43`; `data/comparador_mesma_carga.csv:5`.
 
@@ -656,9 +658,9 @@ Fonte: `data/exp1_vazamento_comparacao.csv`; `data/pcal_ml_oof.json`; `data/arra
 
 ### 81. Combinar as ordenações não seria melhor?
 
-Na sensibilidade *post hoc*, a fusão por posições recíprocas (RRF) recuperou os mesmos 36 vínculos com 1.777 revisões ao combinar três ordenações (F3) e 1.387 ao combinar escore do OpenRecLink e probabilidade calibrada (F4), contra 2.521 pelo escore sozinho. Com F3, 23 vínculos exigiram 64 revisões. São resultados sob revisor perfeito, nos mesmos dados, sujeitos a viés de verificação; não constituem validação independente.
+Na análise *post hoc*, F3 recuperou 36 com 1.777 revisões e 23 com 64; F4, 36 com 1.387, contra 2.521 pelo escore. O *bootstrap* agrupado favorece F4 frente ao escore nas metas nove e 36, não 23. Frente à probabilidade calibrada, não demonstrou vantagem. Recomenda-se F4 no lugar do escore, a validar com referência cega; parte do ganho depende da faixa verificada.
 
-Fonte: `data/fusao_filas.csv`, F3/F4/O1; definições em `data/fusao_filas_metadata.json`.
+Fonte: `data/fusao_filas.csv`, F3/F4/O1; `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`.
 
 ### 82. O algoritmo consegue escolher a ordenação sozinho?
 
@@ -672,7 +674,38 @@ Não como conclusão desta tese. Uma operação sem revisor humano no *linkage* 
 
 Fonte: `text/latex/conclusao.tex`, seção Trabalhos futuros; proposta não avaliada.
 
+### 84. Um modelo maior resolveria?
+
+Não demonstrado. Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1 tiveram VPP de 16,0%, 20,8%, 19,0% e 21,7% na vigilância do probe. Sonnet cobre 139 dossiês; os demais, 150. Houve mudanças de abstenção, sem resolver a aceitação autônoma. Dossiê e referência limitam a interpretação, não apenas tamanho; o custo por par dos maiores foi muito superior, sem comparação de preços controlada.
+
+Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`; `data/probe_haiku_sonnet_coorte.csv`; tabela de apoio abaixo.
+
+### 85. E se a referência estiver errada?
+
+C1: VPP de 50,0% requer reclassificar 40,48% dos FP uniformemente, sem retirar PAR=2; na grade, 50,0%. C2: 13 e 27 perdas mudam com 5,0% de remoção; a 20,0%, restam 10,4 e 21,6. C3, O3 com margem de 25%, e C4, F4 frente a O1, mantêm medianas nos cenários; C3 cruza zero no P97,5 de um cenário. Revisão cega independente, impossível antes da defesa, integra o protocolo da nova coorte.
+
+Fonte: `data/vies_referencia.csv`; `data/vies_referencia_viradas.csv`; soluções algébricas e convenções em `docs/plans/RELATORIO_VIES_REFERENCIA_2026-11-07.md`.
+
+### 86. A fusão é melhor que a probabilidade calibrada?
+
+Não demonstrado. Nenhum intervalo de 95,0% das diferenças F4 menos O3 ficou inteiramente abaixo de zero no *bootstrap* agrupado por óbito. Frente ao escore, as medianas foram 38 e 1.203 revisões a menos nas metas nove e 36, com intervalos negativos, mas não na meta 23. Parte do ganho na cauda depende da faixa verificada. São probabilidades e referência fixas, com metas híbridas; não validação independente.
+
+Fonte: `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`; `data/fusao_robustez_metadata.json`.
+
 ## Figuras e critérios
+
+### Apoio às respostas 84 a 86
+
+Os custos são estimativas por uso e preço, não fatura nem comparação controlada: Haiku usa Batch no probe, Opus e Fable combinam Batch e chamadas diretas, e Sonnet reutiliza a coorte histórica direta. O denominador conta decisões válidas por passada, incluindo réplicas, não pares únicos. Não se atribui causalmente o desempenho ao tamanho do modelo.
+
+| Modelo | Vigilância do probe: VP/FP | VPP (%) | Custo por par revisado (US$) | Escopo do custo |
+| :-- | :-- | --: | --: | :-- |
+| Claude Haiku 5.5 | 4/21 | 16,0 | 0,0014 | probe |
+| Claude Sonnet 5.5 | 5/19 | 20,8 | 0,0360 | coorte histórica |
+| Claude Opus 5.5 | 4/17 | 19,0 | 0,0371 | probe |
+| Claude Fable 5.1 | 5/18 | 21,7 | 0,1082 | probe |
+
+Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`. Na coorte original comum Haiku/Sonnet, a concordância foi de 86,9% na vigilância (1.410 dossiês) e de 85,5% na confirmação (435), sem demonstração de superioridade do maior (`data/probe_haiku_sonnet_coorte.csv`, original/TOTAL).
 
 Figuras reaproveitadas, sem alterar os originais:
 
@@ -724,7 +757,7 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | Corte isolado nos passos 11/6/9: 15/40 (37,5%), 76/80 (95,0%) e 120/127 (94,5%) | `par_por_passo.csv:5-10,14-19,23-28` |
 | PAR=2 aceitos nos passos 6/9/11: 0/2/2 na vigilância e 1/3/4 na confirmação | `par_por_passo.csv:8,17,26,35,44,53` |
 | Pendentes de P∪B1 com chamada nova: 10 na vigilância e 14 na confirmação, não de P isolado; reutilização histórica e ausência de avaliação prospectiva | `arranjo_corte_s1_metadata.json:477-481`, campo `pending_P_union_B1_by_mode`; `arranjo_corte_metadata.json:355,357` |
-| Cenários de carga sob ordem hipotética: 2.156 por passo e 2.522 global; escore do OpenRecLink global ≥ −5,648, sob hipótese não documentada de revisão decrescente de escore do OpenRecLink | `carga_abaixo_corte.csv:5,9` |
+| Cenários de carga sob ordem hipotética: 2.156 por passo e 2.522 global; escore do OpenRecLink global ≥ −5,6485, sob hipótese não documentada de revisão decrescente de escore do OpenRecLink | `carga_abaixo_corte.csv:5,9`; precisão em `fusao_robustez_metadata.json` |
 | Hipótese de 20 min por par: por passo, pelo menos 718 h 40 min; global, pelo menos 840 h 40 min; não são tempos observados | `carga_abaixo_corte_horas.csv:3,2` |
 | P, vigilância: VPP do LLM 4/25 = 16,0%, IC 6,4 a 34,7%; 9,06 FP previstos contra 21 observados | `arranjo_corte_vpp_llm.csv:2` |
 | P, confirmação: VPP 8/12 = 66,7%, IC 39,1 a 86,2%; P-Platt vigilância: 4/7 = 57,1%, IC 25,0 a 84,2% | `arranjo_corte_vpp_llm.csv:8,3` |
@@ -780,7 +813,7 @@ A referência de 2.156 revisões pressupõe ordem decrescente de escore do OpenR
 
 ### FP por região do escore do OpenRecLink, análise exploratória
 
-Global: limiar −5,648; por passo: limite compatível com PAR=2 naquele passo. Acima ou igual e abaixo são posições no escore, não prova de exame histórico pela revisão clerical de origem.
+Global: limiar operacional −5,6485 para os 36 PAR=2, incluindo o bloco com escore aproximadamente −5,64846; o literal −5,648 seleciona 2.495 candidatos e 31 PAR=2. As contagens de FP da tabela preservam o limiar literal da análise original. Por passo: limite compatível com PAR=2 naquele passo. Acima ou igual e abaixo são posições no escore, não prova de exame histórico pela revisão clerical de origem. Fonte da precisão: `data/fusao_robustez_metadata.json`.
 
 | Modo | Limiar | Região SCORE | FP | CSV:linha |
 | :-- | :-- | :-- | --: | :-- |
