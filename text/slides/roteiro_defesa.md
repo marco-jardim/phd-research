@@ -99,7 +99,7 @@ A disparidade por passo é herdada do corte e do *label*, não um efeito isolado
 Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. Na linha desta tese, a tabela de posicionamento registra SIM e Sinan-TB e a política com regras de guarda, *expected loss* e revisão assistida por modelo de linguagem; a tese propõe essa composição operacional, com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
 
 ### 26. Limitações de método
-A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, proporções com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O comparador *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade mede estabilidade nos mesmos dados, não generalização.
+A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, proporções com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O braço braço *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade mede estabilidade nos mesmos dados, não generalização.
 
 ### 27. Limitações de transferência e governança
 O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. A transferência internacional à Modal e a APIs externas não foi objeto de análise específica nos pareceres, limitação declarada em `capitulo_dados.tex:31`. O Zenodo é público com arquivos restritos. O repositório contém agregados e escores/decisões por pseudônimo, sem *label*; MIT vale apenas para o código. A exportação por HMAC foi implementada, mas a matriz não foi depositada nem saneou retroativamente as execuções. A equivalência Java é parcial; a comparação com Lages não foi realizada.
@@ -235,7 +235,7 @@ Fonte: `data/equidade_arranjo_group_metrics.csv`, passo; `data/equidade_arranjo_
 
 ### 10. Por que o arranjo, e não a cascata publicada?
 
-O arranjo preserva 211 vínculos por construção. Nos 36 PAR=2, aceita 4 e 8 contra 10 e 8 da cascata, nos dois modos; perde 13 e 27. A vantagem total vem do corte, não de maior recuperação abaixo dele. O comparador *a posteriori* era conhecido antes do registro de recalibração, braços e avaliação. O registro não protegeu o enquadramento nem demonstrou superioridade.
+O arranjo preserva 211 vínculos por construção. Nos 36 PAR=2, aceita 4 e 8 contra 10 e 8 da cascata, nos dois modos; perde 13 e 27. A vantagem total vem do corte, não de maior recuperação abaixo dele. O braço braço *a posteriori* era conhecido antes do registro de recalibração, braços e avaliação. O registro não protegeu o enquadramento nem demonstrou superioridade.
 
 Fonte: `data/arranjo_corte_metricas.csv:2,4,12,22,30`; `data/arranjo_corte_par2.csv:3,7,12,16`; `gzcmd/prereg_arranjo_corte.yaml`. Slides 17, 19, 20, 26 e 28.
 
@@ -289,7 +289,7 @@ Fonte: repositório, `gzcmd/prereg_arranjo_corte.yaml` e `gzcmd/prereg_robustez_
 
 ### 19. O registro interno elimina os desvios de protocolo?
 
-Não. O código inicialmente registrado não está no git, e o suplemento fez chamadas de sensibilidade apesar da vedação original. O comparador *a posteriori* já era conhecido antes do registro; o enquadramento veio depois. Esses fatos limitam a proteção do registro e precisam ser declarados. P continua principal; não se reescreve o protocolo para tornar outra política vencedora.
+Não. O código inicialmente registrado não está no git, e o suplemento fez chamadas de sensibilidade apesar da vedação original. O braço braço *a posteriori* já era conhecido antes do registro; o enquadramento veio depois. Esses fatos limitam a proteção do registro e precisam ser declarados. P continua principal; não se reescreve o protocolo para tornar outra política vencedora.
 
 Fonte: `gzcmd/prereg_arranjo_corte.yaml`, emendas e suplemento; `data/arranjo_corte_metadata.json`. Slide 26.
 
@@ -788,7 +788,7 @@ Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sob
 | Perda de 13/36 = 36,1% e 27/36 = 75,0% dos PAR=2 | `arranjo_corte_par2.csv:7,16` |
 | Dominância de P-Platt: vigilância nos blocos numérico (N)/partição (R), 7/20 e 4/20; confirmação 7/20 e 5/20; inversa 0/20 em todos os casos; FP menores em 20/20 nos dois blocos da vigilância | `robustez_arranjo_resumo.csv:2-5` |
 | Vigilância: P-Platt perde em mediana 1/2 vínculos a mais, blocos numérico (N)/partição (R) | `robustez_arranjo_resumo.csv:404,488`, diferenças P menos P-Platt −1/−2 |
-| P perde mais PAR=2 que o *a posteriori* em 20/20 e 19/20 na vigilância e 20/20 nos dois blocos da confirmação | `robustez_arranjo_resumo.csv:6,8,10,12`, proporções multiplicadas por 20 |
+| P perde mais PAR=2 que o braço *a posteriori* em 20/20 e 19/20 na vigilância e 20/20 nos dois blocos da confirmação | `robustez_arranjo_resumo.csv:6,8,10,12`, proporções multiplicadas por 20 |
 | P na vigilância, bloco de partição (R): FP de 9 a 31, perdas de 9 a 21 e Jaccard mediano 0,43 em relação à partição original | `robustez_arranjo_resumo.csv:270,278,654` |
 | VPP por sexo de P na vigilância sem rejeição na família den30: p ajustado BH de 0,360 | `equidade_arranjo_den30_pairwise_tests.csv:3` |
 | Mudança máxima da probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R) | `robustez_arranjo_resumo.csv:632,652` |
