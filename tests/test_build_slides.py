@@ -132,15 +132,15 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
-def test_script_has_eighty_six_short_answers():
+def test_script_has_eighty_nine_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
         "## Figuras e critérios"
     )[0]
     answers = re.findall(r"### \d+\..*?\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 86
+    assert len(answers) == 89
     assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(
-        range(1, 87)
+        range(1, 90)
     )
     assert all(len(answer.split()) <= 70 for answer in answers)
     recorded = re.search(r"São (\d+) respostas, com no máximo 70 palavras cada", source)[1]
@@ -945,7 +945,7 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
     assert "a análise de estabilidade mede estabilidade nos mesmos dados, não generalização" in section26
     assert "### Rastreabilidade dos números do arranjo" in source
-    assert "São 86 respostas, com no máximo 70 palavras cada" in source
+    assert "São 89 respostas, com no máximo 70 palavras cada" in source
     for forbidden in ("Verificação técnica do build oficial", "PDFs existentes não representam", "hashes a atualizar", "revisão pela orientadora foi dispensada"):
         assert forbidden not in source
     frames = slide_frames()

@@ -142,7 +142,7 @@ def test_future_comparisons_and_script_values_track_aggregate_sources():
         assert phrase in conclusion
     script = (ROOT / 'text/slides/roteiro_defesa.md').read_text(encoding='utf-8')
     questions = script.split('## Perguntas prováveis')[1].split('## Figuras e critérios')[0]
-    assert [int(n) for n in re.findall(r'^### (\d+)\.', questions, re.M)] == list(range(1, 87))
+    assert [int(n) for n in re.findall(r'^### (\d+)\.', questions, re.M)] == list(range(1, 90))
     for queue in ('F3', 'F4', 'O1'):
         value = f'{int(float(rows[queue, "revisoes_36"]["media"])):,}'.replace(',', '.')
         assert value in questions

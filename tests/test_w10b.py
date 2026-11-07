@@ -132,9 +132,9 @@ def test_reference_turning_points_and_remaining_losses_match_csv():
 def test_new_answers_remain_contiguous_short_and_slide_stays_under_budget():
     script = text("text/slides/roteiro_defesa.md")
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
-    assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(range(1, 87))
+    assert [int(n) for n in re.findall(r"^### (\d+)\.", questions, re.M)] == list(range(1, 90))
     answers = re.findall(r"### (\d+)\.[^\n]*\n\n(.*?)\n\nFonte:", questions, re.S)
-    assert len(answers) == 86
+    assert len(answers) == 89
     assert all(len(answer.split()) <= 70 for _, answer in answers)
     frames = re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", text("text/slides/defesa.tex"), re.S)
     assert len(frames[28].split(r"\fonte")[0].split()) <= 210
