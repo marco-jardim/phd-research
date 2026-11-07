@@ -81,7 +81,7 @@ Com duas ações, revisor humano e não vínculo, revisor perfeito e perdas adit
 P conserva os 211 vínculos do corte e acrescenta 4 na vigilância e 8 na confirmação. Não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem. Aceita 25 e 12 potenciais pares abaixo do corte: 4 e 8 são PAR=2; dos demais, 21 e 4 são FP contra o *label*, rejeitados ou não examinados nessa revisão. Portanto, não se atribui essa condição aos 25 e 12 como um todo. As revisões humanas são 96 na vigilância e 17 na confirmação; os pares avaliados pelo LLM são 344 e 41. A comparação de carga, o VPP e os mecanismos são análises exploratórias *post hoc*, não registradas. S3 designa a avaliação com os *labels*; os fechamentos e a cronologia estão na reserva.
 
 ### 20. Curva de esforço e ponto de parada
-A curva de esforço relaciona revisões humanas e vínculos recuperados. O3 é a probabilidade calibrada OOF, e O4 a probabilidade recalibrada de P. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: recupera 9 PAR=2 com 11 revisões, sem FP nem LLM; O3 precisa de 29. Para todos os 36, O1 requer 2.521 e O3, 23.443, fora do limite gráfico de 2.522. Os pontos de P incluem 344 pares adicionais avaliados pelo LLM na vigilância e 41 na confirmação. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 foram treinados nos mesmos *labels* verificados. O4 iguala P com 106 revisões na vigilância e 27 na confirmação, contra 125 e 29 de O3. No orçamento humano original de P (96 e 17), P recupera 23 e 9; O3 recupera 22 e 6, deixando 14 e 30 dos 36 fora. Fontes: `comparador_mesma_carga.csv:19,22,27,32,37`.
+A curva de esforço relaciona revisões humanas e vínculos recuperados. O3 é a probabilidade calibrada OOF, e O4 a probabilidade recalibrada de P. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: recupera 9 PAR=2 com 11 revisões, sem FP nem LLM; O3 precisa de 29. Para todos os 36, O1 requer 2.521 e O3, 23.443, fora do limite gráfico de 2.522. Os pontos de P incluem 344 pares adicionais avaliados pelo LLM na vigilância e 41 na confirmação. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 foram treinados nos mesmos *labels* verificados. O4 iguala P com 106 revisões na vigilância e 27 na confirmação, contra 125 e 29 de O3. No orçamento humano original de P (96 e 17), P recupera 23 e 9; O3 recupera 22 e 6, deixando 14 e 30 dos 36 fora. Fontes: `comparador_mesma_carga.csv:19,22,27,32,37`.
 
 ### 21. Aceitador e filtro: papéis distintos
 Como aceitador, o LLM teve VPP de 16,0% na vigilância, com 21 FP contra 9,06 previstos, análise *post hoc*. Como filtro de NONMATCH, em k=96 na vigilância são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra 6 sem filtro na mesma carga. O VPN é 87,8% em k=96 (IC 95%: 78,5 a 93,5); 78,0% em k=58. A sensibilidade do filtro é 59,1% (IC 95%: 38,7 a 76,7): descarta 9 dos 22 vínculos do topo. A vantagem é condicionada a H=22; na unidade de custo da tese, perde para O3 com 96 revisões. Na confirmação k=125, descarta 10 dos 23 vínculos. MATCH e inconclusivos vão ao humano, nunca à aceitação autônoma. É hipótese exploratória a validar, com protocolo fixado antes dos desfechos e respostas de datas diferentes. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex`, filtro.
@@ -108,7 +108,7 @@ O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, n
 As perdas são de cobertura, não de erro humano. Os cenários de sensibilidade humana de 95%, 99% e 100% assumem especificidade perfeita. As amplitudes de até 0,53 p.p. nas cargas reduzidas e 0,73 p.p. na revisão integral são limites por construção, não achados empíricos. Sob revisor perfeito, P recupera 23 e 9 dos 36, não reproduzindo 13 e 27, mas aceita 21 e 4 FP. Em 96 e 17 revisões, O3 recupera 22 e 6, deixando 14 e 30 fora. Para igualar P, O3 requer 125 e 29; O4, 106 e 27. Para os 36, O1 requer 2.521 e O3, 23.443. As filas são comuns aos modos; os orçamentos, distintos. O2 recupera nove com 11 revisões na confirmação, sem FP nem LLM. Fonte: `comparador_mesma_carga.csv:2,19,22,27,32,37`; `cenarios_sensibilidade_humana.csv:3,21`.
 
 ### 29. Contribuições e recomendação final
-As contribuições são a decomposição por PAR, a curva de esforço, a política com registro de decisões, o CdR em Python, o código público e o *benchmark* restrito. Não houve auditoria independente nem identificação causal de ancoragem. Preservar o corte e revisar em ordem decrescente de uma probabilidade ou escore é proposta a validar. A curva de esforço exige amostra independente verificada para escolher fila e parada conforme o orçamento humano. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Restantes são não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. O filtro exige orçamento humano fixo (H=22 em uma réplica). Nas condições avaliadas, não deve aceitar sozinho. Só foi avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos.
+As contribuições são a decomposição por PAR, a curva de esforço, a política com registro de decisões, o CdR em Python, o código público e o *benchmark* restrito. Não houve auditoria independente nem identificação causal de ancoragem. Preservar o corte e ordenar pela fusão RRF do escore com a probabilidade calibrada, no lugar do escore isolado, é proposta a validar. A curva de esforço exige amostra independente verificada para escolher fila e parada conforme o orçamento humano. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Restantes são não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. O filtro exige orçamento humano fixo (H=22 em uma réplica). Nas condições avaliadas, não deve aceitar sozinho. Só foi avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos.
 
 A recomendação exploratória é a fusão RRF do escore com a probabilidade calibrada no lugar do escore isolado, a validar com referência cega; vantagem sobre a probabilidade não demonstrada. Revisão cega independente não foi possível antes da defesa e integra o protocolo da coorte nova.
 
@@ -169,7 +169,7 @@ A subamostragem é exploratória. Na isotônica, a mediana do topo 96 cai de 22 
 ### 48. Backup: filtro de NONMATCH
 Na vigilância, em k=96 são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra seis sem filtro, apenas sob H=22. VPN: 87,8% em k=96; 78,0% em k=58. Sensibilidade 59,1% (IC 38,7 a 76,7), com nove dos 22 vínculos descartados. Na unidade de custo, filtro 1.172,5 contra O3 796 com 96 revisões. Na confirmação, k=125 descarta 10 dos 23 vínculos. As decisões dos PAR=2 coincidem entre modos nesse topo; há seis diferenças nos não vínculos. Protocolo fixado antes dos desfechos, respostas de datas diferentes; exploração, não validação. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex:578`.
 
-### 49. Backup: Protocolo da coorte nova (1/2)
+### 49. Backup: mecanismos, cenários humanos e registro interno
 Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos não medem seu erro nem modelam FP humanos. O registro interno antecede a S3 em 49 minutos. Fontes: `data/arranjo_corte_perdas_mecanismo.csv`; `data/cenarios_sensibilidade_humana.csv`; `estudo4_gzcmd.tex`, cronologia.
 
 ### 50. Backup: Protocolo da coorte nova (2/2)
@@ -379,7 +379,7 @@ Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `data/comparador_p_match_humano.csv:2
 
 ### 34. O que aconteceu com os números da qualificação?
 
-O E1 saneado usa Random Forest calibrado por sigmoide interna, partições por COMPREC e atributos permitidos: 39 com MACD, 30 sem. Com MACD, F1 esperado, não observado: 0,941 na vigilância e 0,916 na confirmação; reduções de revisões: 55,0% e 34,7%. A seleção histórica incluía SCORE e identificadores, vazamento corrigido: 0,954 e reduções de 14,5%/17,6% não sustentam a interpretação atual. Não houve chamada a LLM.
+O Experimento 1 do Estudo 4 usa Random Forest com sigmoide interna, partições por COMPREC e atributos permitidos: 39 com MACD, 30 sem. F1 esperado, não observado: 0,941 na vigilância e 0,916 na confirmação; reduções de revisões: 55,0% e 34,7%. A seleção histórica incluía SCORE e identificadores, vazamento reduzido pela seleção restrita: 0,954 e reduções de 14,5%/17,6% não sustentam a interpretação atual. Não houve chamada a LLM.
 
 Fonte: `data/exp1_vazamento_comparacao.csv`; `data/ablation_comprec_allowlist_metadata.json`; `gzcmd/classifier.py`; `gzcmd/eval.py`.
 
@@ -623,7 +623,7 @@ A responsabilidade não é transferida ao modelo. O profissional do serviço e a
 
 Fonte: `capitulo3.tex`, uso no serviço; `conclusao.tex`, recomendações e limitações.
 
-### 75. Qual estimador e quais atributos produziram o E1 histórico e o saneado?
+### 75. Qual estimador e quais atributos produziram o Experimento 1 do Estudo 4 histórico e o saneado?
 
 Random Forest com 200 árvores, profundidade 10, pesos balanceados e calibração sigmoide em validação cruzada interna no treino, não Platt da nota. A seleção histórica usou 100 atributos com MACD, 91 sem, incluindo SCORE e identificadores. O saneamento restringiu a 39 e 30. Retiraram-se conjuntamente campos brutos, identificadores e aliases; não se isolou causalmente o efeito do SCORE nem se provou ausência universal de vazamento.
 
@@ -653,11 +653,11 @@ Equidade em saúde envolve evitar diferenças injustas e evitáveis. A tese medi
 
 Fonte: `estudo5_equidade.tex`, objetivo e limitações; `data/equidade_arranjo_den30_recomputacao.json`.
 
-### 80. Por que v3.1 e P não usam MACD no calibrador se o E1 saneado reduz 55% das revisões?
+### 80. Por que v3.1 e P não usam MACD no calibrador se o Experimento 1 do Estudo 4 saneado reduz 55% das revisões?
 
-Na sensibilidade *post hoc*, MACD, medidas contínuas de diferença de datas, exigiram 46/118/3.040 revisões para nove/23/36 vínculos, contra 29/125/23.443 sem elas; a precisão média (AP) caiu de 0,283 para 0,261. Não há melhora uniforme nem substituição retrospectiva da fila. A redução de 55,0% do E1 não se transfere: não foi avaliado nesta tese no arranjo recalibrado. Validar essa extensão continua como trabalho futuro.
+Na sensibilidade *post hoc*, MACD, medidas contínuas de diferença de datas, exigiram 46/118/3.040 revisões para nove/23/36 vínculos, contra 29/125/23.443 sem elas; a precisão média (AP) caiu de 0,283 para 0,261. Não há melhora uniforme nem substituição retrospectiva da fila. A redução de 55,0% do Experimento 1 do Estudo 4 não se transfere: não foi avaliado nesta tese no arranjo recalibrado. Validar essa extensão continua como trabalho futuro.
 
-Fonte: `data/exp1_vazamento_comparacao.csv`; `data/pcal_ml_oof.json`; `data/arranjo_corte_metadata.json`.
+Fonte: `data/exp1_vazamento_comparacao.csv`; `data/pcal_ml_oof.json`; `data/arranjo_corte_metadata.json`; `data/sensibilidade_o3_macd.csv`.
 
 ### 81. Combinar as ordenações não seria melhor?
 
@@ -679,15 +679,15 @@ Fonte: `text/latex/conclusao.tex`, seção Trabalhos futuros; proposta não aval
 
 ### 84. Um modelo maior resolveria?
 
-Não demonstrado. Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1 tiveram VPP de 16,0%, 20,8%, 19,0% e 21,7% na vigilância do probe. Sonnet cobre 139 dossiês; os demais, 150. Houve mudanças de abstenção, sem resolver a aceitação autônoma. Dossiê e referência limitam a interpretação, não apenas tamanho; o custo por par dos maiores foi muito superior, sem comparação de preços controlada.
+Não demonstrado. Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1 tiveram VPP de 16,0%, 19,0% (21 resultados), 19,0% e 18,2% entre as 25 aceitações do Haiku na vigilância (V1). Houve mudanças de abstenção, sem resolver a aceitação autônoma. Dossiê e referência limitam a interpretação; custos dos maiores foram superiores, sem comparação controlada.
 
-Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`; `data/probe_haiku_sonnet_coorte.csv`; tabela de apoio abaixo.
+Fonte: `data/probe_frontier_agregado.csv`, estrato S1 (V1 no texto); `data/probe_frontier_custos.csv`; `data/probe_haiku_sonnet_coorte.csv`; tabela de apoio abaixo.
 
 ### 85. E se a referência estiver errada?
 
-C1: VPP de 50,0% requer reclassificar 40,48% dos FP uniformemente, sem retirar PAR=2; na grade, 50,0%. C2: 13 e 27 perdas mudam com 5,0% de remoção; a 20,0%, restam 10,4 e 21,6. C3, O3 com margem de 25%, e C4, F4 frente a O1, mantêm medianas nos cenários; C3 cruza zero no P97,5 de um cenário. Revisão cega independente, impossível antes da defesa, integra o protocolo da nova coorte.
+C1: VPP de 50,0% requer reclassificar 40,5% dos FP uniformemente, sem retirar PAR=2; na grade, 50,0%. C2: 13 e 27 perdas mudam com 5,0% de remoção; a 20,0%, restam 10,4 e 21,6. C3, O3 com margem de 25%, e C4, F4 frente a O1, mantêm medianas nos cenários; C3 cruza zero no P97,5 de um cenário. Revisão cega independente, impossível antes da defesa, integra o protocolo da nova coorte.
 
-Fonte: `data/vies_referencia.csv`; `data/vies_referencia_viradas.csv`; soluções algébricas e convenções em `docs/plans/RELATORIO_VIES_REFERENCIA_2026-11-07.md`.
+Fonte: `data/vies_referencia.csv`; `data/vies_referencia_viradas.csv`; soluções algébricas e convenções em `text/latex/tables/editorial/tab_cap8_vies_referencia.tex`.
 
 ### 86. A fusão é melhor que a probabilidade calibrada?
 
@@ -697,9 +697,9 @@ Fonte: `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`; `da
 
 ### 87. O que mais tentou para melhorar a fila?
 
-Contexto por óbito com MACD: 1.298 revisões para recuperação integral, promissor na cauda, sem superioridade demonstrada sobre F4. Propagação por pessoa: dois vínculos recuperados, alcance restrito. LLM como evidência: VPP de 42,3% na vigilância, insuficiente para dispensar revisão. Dossiê ampliado: o critério de utilidade pré-registrado não foi atingido. São explorações, não autorização para substituir a fila recomendada.
+Contexto por óbito com MACD: 1.298 revisões para recuperação integral, sem superioridade demonstrada sobre F4. Propagação por pessoa: dois vínculos. LLM como evidência: VPP de 42,3%, insuficiente para dispensar revisão. Dossiê ampliado: três dos 21 FP retirados (mínimo cinco), dois PAR=2 recuperados (mínimo três), VPP de 22,2% (mínimo 35,0%); critério não atingido. Explorações, não substituição da fila recomendada.
 
-Fonte: `data/contexto_obito.csv`, O3_contexto_MACD; `data/contexto_robustez_bootstrap.csv`; `data/propagacao_pessoa.csv`, R1_UNIAO/TOTAL; `data/llm_evidencia.csv`, vigilancia/O3-post/VPP; `data/probe_dossie_v5_agregado.csv` (veredito qualitativo).
+Fonte: `data/contexto_obito.csv`, O3_contexto_MACD; `data/contexto_robustez_bootstrap.csv`; `data/propagacao_pessoa.csv`, R1_UNIAO/TOTAL; `data/llm_evidencia.csv`, vigilancia/O3-post/VPP; `data/probe_dossie_v5_agregado.csv`, vigilancia S1/S2 v5 vs v4_pareado; `data/probe_dossie_v5_metadata.json`, utility.
 
 ### 88. Por que não adotou a fila com contexto, se ela foi melhor na cauda?
 
@@ -717,6 +717,8 @@ Fonte: `gzcmd/M_v4_candidata.md`; `text/latex/conclusao.tex`, Trabalhos futuros.
 
 ### Apoio às respostas 84 a 86
 
+No exame de modelos, V1 reúne as 25 aceitações do Haiku na vigilância; V2, os 13 PAR=2 não aceitos; V3, os 24 PAR=0 não aceitos pelo Haiku e aceitos pelo Sonnet; V4, a amostra de 88 dos demais potenciais pares da vigilância. V1 a V4 correspondem aos estratos S1 a S4 no CSV, não às etapas S1 a S3 do arranjo. A tabela abaixo usa a amostra total, diferentemente da resposta 84, restrita a V1.
+
 Os custos são estimativas por uso e preço, não fatura nem comparação controlada: Haiku usa Batch no probe, Opus e Fable combinam Batch e chamadas diretas, e Sonnet reutiliza a coorte histórica direta. O denominador conta decisões válidas por passada, incluindo réplicas, não pares únicos. Não se atribui causalmente o desempenho ao tamanho do modelo.
 
 | Modelo | Vigilância do probe: VP/FP | VPP (%) | Custo por par revisado (US$) | Escopo do custo |
@@ -726,7 +728,7 @@ Os custos são estimativas por uso e preço, não fatura nem comparação contro
 | Claude Opus 5.5 | 4/17 | 19,0 | 0,0371 | probe |
 | Claude Fable 5.1 | 5/18 | 21,7 | 0,1082 | probe |
 
-Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`. Na coorte original comum Haiku/Sonnet, a concordância foi de 86,9% na vigilância (1.410 dossiês) e de 85,5% na confirmação (435), sem demonstração de superioridade do maior (`data/probe_haiku_sonnet_coorte.csv`, original/TOTAL).
+Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`. Na coorte original comum Haiku/Sonnet, a concordância foi de 87,0% na vigilância (1.410 dossiês) e de 85,5% na confirmação (435), sem demonstração de superioridade do maior (`data/probe_haiku_sonnet_coorte.csv`, original/TOTAL).
 
 Figuras reaproveitadas, sem alterar os originais:
 

@@ -55,7 +55,7 @@ Abaixo do corte, ordenar pela probabilidade calibrada do classificador (O3) pode
 \end{block}
 \itens{\item P: isotônica registrada internamente como principal; vigilância e confirmação são perfis de custo
 \item O3: probabilidade calibrada OOF na prevalência original; O4: probabilidade recalibrada de P, com o mesmo XGBoost
-\item Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: 9 vínculos com 11 revisões, sem FP nem LLM. Corte único e duas fronteiras são comparações, não recomendações validadas}
+\item Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: 9 vínculos com 11 revisões, sem FP nem LLM. Corte único e duas fronteiras são comparações, não recomendações validadas}
 \fonte[]{data/comparador\_mesma\_carga.csv; data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv, análises exploratórias}
 \end{frame}
 
@@ -290,7 +290,7 @@ Base inteira, conf. & 132 (53,4\%) & 0 & 28 & 127 & 44 \\
 \centering
 \resizebox{.94\textwidth}{!}{\input{figures/curva_esforco.pgf}}
 \par\footnotesize
-Exploratória \textit{post hoc}, não registrada. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: 9 vínculos com 11 revisões, sem FP nem LLM.
+Exploratória \textit{post hoc}, não registrada. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore, favoreceria O1; O3 e O4 usam os mesmos \textit{labels} verificados. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: 9 vínculos com 11 revisões, sem FP nem LLM.
 \fonte[]{data/comparador\_mesma\_carga\_curva.csv; data/comparador\_mesma\_carga.csv; data/comparador\_p\_match\_humano.csv}
 \end{frame}
 
@@ -428,7 +428,7 @@ Confirmação, k=17 & 9 & 6 / 30 & 29 / 27 \\
 \item Mesmo LLM: aceitador, VPP 16,0\%; filtro com orçamento humano fixo (H=22 em uma réplica): VPN 87,8\% em k=96 e 78,0\% em k=58; 9 de 22 descartados. Não distingue ancoragem de abstenção
 \item Política de quatro ações, registro de decisões, sem auditoria independente; CdR em Python, código aberto e \textit{benchmark} restrito}
 \begin{block}{Recomendação final como hipótese a validar}
-Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probabilidade calibrada, substituindo o escore isolado; vantagem sobre a probabilidade não demonstrada, a validar com referência cega. Exige amostra independente verificada. Na vigilância, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, nunca aceitando sozinho nas condições avaliadas. API externa; ambiente controlado não avaliado. Exige validação registrada em dados novos. Subamostragem: quadro 47.
+Preservar o corte. Abaixo, ordem decrescente da fusão RRF do escore e da probabilidade calibrada, substituindo o escore isolado; vantagem sobre a probabilidade não demonstrada, a validar com referência cega. Exige amostra independente verificada. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Revisor humano no topo até o orçamento humano; restantes não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. LLM apenas como filtro de NONMATCH, sem aceitar sozinho nas condições avaliadas. API externa; ambiente controlado não avaliado. Exige validação registrada em dados novos. Subamostragem: quadro 47.
 \end{block}
 \fonte[]{data/comparador\_p\_match\_humano.csv; data/subamostragem\_treino\_resumo.csv; data/filtro\_llm.csv; data/arranjo\_corte\_vpp\_llm.csv; data/fusao\_robustez\_bootstrap.csv}
 \end{frame}
@@ -710,7 +710,7 @@ Confirmação, 125 & 22 & 13 & 6 & 90,3\% & 10 de 23 \\
 \fonte[]{data/filtro\_llm.csv, linhas 5, 7 e 13; data/filtro\_llm\_concordancia\_modos.csv, linhas 18 e 19; data/filtro\_llm\_metadata.json; data/cenarios\_sensibilidade\_humana.csv}
 \end{frame}
 
-\begin{frame}{Backup: Protocolo da coorte nova (1/2)}
+\begin{frame}{Backup: mecanismos, cenários humanos e registro interno}
 \small
 PAR~=~2, aceitos / ao revisor humano / perdidos: arranjo e cascata sobre a base inteira.\par
 \begin{tabular}{lrrrrrr}
