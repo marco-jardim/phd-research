@@ -174,7 +174,7 @@ Os mecanismos da política original são distintos do erro do revisor humano: gu
 
 ## Perguntas prováveis
 
-São 86 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
+São 89 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
 
 ### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
 
@@ -691,6 +691,24 @@ Fonte: `data/vies_referencia.csv`; `data/vies_referencia_viradas.csv`; soluçõe
 Não demonstrado. Nenhum intervalo de 95,0% das diferenças F4 menos O3 ficou inteiramente abaixo de zero no *bootstrap* agrupado por óbito. Frente ao escore, as medianas foram 38 e 1.203 revisões a menos nas metas nove e 36, com intervalos negativos, mas não na meta 23. Parte do ganho na cauda depende da faixa verificada. São probabilidades e referência fixas, com metas híbridas; não validação independente.
 
 Fonte: `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`; `data/fusao_robustez_metadata.json`.
+
+### 87. O que mais tentou para melhorar a fila?
+
+Contexto por óbito com MACD: 1.298 revisões para recuperação integral, promissor na cauda, sem superioridade demonstrada sobre F4. Propagação por pessoa: dois vínculos recuperados, alcance restrito. LLM como evidência: VPP de 42,3% na vigilância, insuficiente para dispensar revisão. Dossiê ampliado: o critério de utilidade pré-registrado não foi atingido. São explorações, não autorização para substituir a fila recomendada.
+
+Fonte: `data/contexto_obito.csv`, O3_contexto_MACD; `data/contexto_robustez_bootstrap.csv`; `data/propagacao_pessoa.csv`, R1_UNIAO/TOTAL; `data/llm_evidencia.csv`, vigilancia/O3-post/VPP; `data/probe_dossie_v5_agregado.csv` (veredito qualitativo).
+
+### 88. Por que não adotou a fila com contexto, se ela foi melhor na cauda?
+
+A combinação de contexto por óbito e MACD teve suporte dos intervalos somente contra O1, escore do OpenRecLink, na meta de 36 vínculos. Não demonstrou vantagem sobre F4 nem sobre a probabilidade calibrada. Foram examinadas múltiplas variantes nos mesmos 36 vínculos, sob referência e probabilidades fixas. A fila vai para a coorte nova como comparação secundária pré-registrada, não como substituição retrospectiva da recomendação.
+
+Fonte: `data/contexto_robustez_bootstrap.csv`, CM-O1/CM-O3/CM-F4; `data/contexto_obito.csv`; `gzcmd/M_v4_candidata.md`.
+
+### 89. O que é a v4 candidata?
+
+É o registro que fixa, antes dos dados novos, a comparação primária da ordenação pela probabilidade calibrada com o escore do OpenRecLink e as secundárias com F4 e fila com contexto e MACD. Não é versão já validada nem alteração retrospectiva da hipótese ou da margem. A avaliação na coorte nova exige referência cega e protocolo prévio, preservando a distinção entre exploração e confirmação.
+
+Fonte: `gzcmd/M_v4_candidata.md`; `text/latex/conclusao.tex`, Trabalhos futuros.
 
 ## Figuras e critérios
 
