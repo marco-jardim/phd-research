@@ -87,7 +87,7 @@ EVR(p) = \min(\mathcal{L}(a_M\mid p), \mathcal{L}(a_N\mid p)) - \mathcal{L}(a_R\
 
 Sem restrição orçamentária ou regras de guarda adicionais, um par deve ser encaminhado para revisão se, e somente se, $EVR(p) > 0$. Intuitivamente, isso ocorre quando a incerteza do modelo (proximidade de $p$ em relação ao limiar de decisão) é alta o suficiente para que o custo da informação adicional ($C_{LLM}$) seja compensado pela mitigação do risco de erro.
 
-Em cenários com orçamento de revisão fixo $B$ (número máximo de pares revisáveis), os candidatos à revisão são ordenados por $EVR(p)$ decrescente, selecionando-se os $k$ primeiros, onde $k$ é o número de candidatos selecionados, tal que $\sum_{i=1}^k \mathbb{I}(a_i=a_R) \le B$.
+Em cenários com orçamento de revisão fixo $B$ (número máximo de pares revisáveis), os candidatos com $EVR(p)>0$ são ordenados por $EVR(p)$ decrescente, selecionando-se o maior prefixo de tamanho $k$ que respeite $\sum_{i=1}^k \mathbb{I}(a_i=a_R) \le B$.
 
 \subsubsection{Propriedades geométricas do EVR}
 
