@@ -43,9 +43,12 @@ def transform(name, text):
     name = Path(name).stem
     text = text.replace("grupo A menos grupo B", "grupo 1 menos grupo 2")
     text = text.replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2")
-    if name in ("tab_ablation_top10", "tab_qw1_deep_learning", "tab_cv_5fold",
+    if name in ("tab_ablation_top10", "tab_ablation_best_category", "tab_qw1_deep_learning", "tab_cv_5fold",
                 "tab_imbalance_sensitivity", "tab_pareto_frontier"):
         text = re.sub(r"\bF1\b", r"F$_1$", text)
+    if name in ("tab_ablation_top10", "tab_ablation_best_category"):
+        text = re.sub(r"teste interno QW1(?! \(comparação de classificadores tabulares\))",
+                      "teste interno QW1 (comparação de classificadores tabulares)", text)
     if name in ("tab_cap8_revisores", "tab_e4_desempenho_faixas_oof",
                 "tab_cap8_ancoras_decisao"):
         text = text.replace("$s", "$v").replace(" s<", " v<").replace(r" s\geq", r" v\geq")
@@ -97,7 +100,7 @@ def transform(name, text):
     }
     if name == "tab_cap8_reruns":
         text = text.replace("Avaliação dos revisores no Exp2 segundo o dossiê e a versão do prompt.",
-            "Avaliação dos revisores no Experimento 2 (revisão assistida por modelo de linguagem), segundo o dossiê e as instruções v3 (com saídas do motor) ou v4 (sem elas).")
+            "Avaliação dos revisores no Experimento 2 (revisão assistida por LLM), segundo o dossiê e as instruções v3 (com saídas do motor) ou v4 (sem elas).")
         text = text.replace("MO: bloco \\texttt{model\\_outputs}.", "MO: bloco de saídas decisórias do motor.")
         text = add_note(text, REFREC + "QW2: registro das execuções de revisão por modelo de linguagem.")
     if name == "tab_sensibilidade_qw1":
