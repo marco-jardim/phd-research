@@ -51,13 +51,13 @@ def occurrences(paragraph, token):
             if paragraph[max(0, m.start()-5):m.start()] != 'Kimi ']
 
 
-def assert_unit_first_mentions(text):
+def assert_unit_first_mentions(text, arquivo=None):
     seen = set()
     for paragraph in re.split(r'\n\s*\n', prose(text)):
         for token, groups in GLOSS_WORDS.items():
             if token not in seen and occurrences(paragraph, token):
-                normalized = normalizar_terminologia(paragraph)  # migrado: terminologia 3.6
-                assert all(any(normalizar_terminologia(word) in normalized for word in alternatives)
+                normalized = normalizar_terminologia(paragraph, arquivo=arquivo)  # migrado: terminologia 3.6
+                assert all(any(normalizar_terminologia(word, arquivo=arquivo) in normalized for word in alternatives)
                            for alternatives in groups), (token, paragraph)
                 seen.add(token)
 
@@ -85,7 +85,7 @@ def captions(text):
 @pytest.mark.parametrize('body', [0, 1], ids=['resumo', 'abstract'])
 def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
     text = summary_bodies()[body]
-    assert_unit_first_mentions(text)
+    assert_unit_first_mentions(text, arquivo='text/latex/tese.tex')
     assert len(text.split()) <= 500
     assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
     assert 'NONMATCH' in text
@@ -96,10 +96,10 @@ def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
 def test_captions_and_chapter_openings_have_local_glosses(name):
     text = (LATEX / name).read_text(encoding='utf-8')
     for caption in captions(text):
-        assert_unit_first_mentions(caption)
+        assert_unit_first_mentions(caption, arquivo=f'text/latex/{name}')
     opening = re.split(r'\\(?:sub)?section\*?\{', text, maxsplit=1)[0]
     opening = re.sub(r'\\(?:chapter\*?|begin\{chapter\})\{[^\n]*\}', '', opening)
-    assert_unit_first_mentions(opening)
+    assert_unit_first_mentions(opening, arquivo=f'text/latex/{name}')
 
 
 @pytest.mark.parametrize('name', [n for n in OWNED if n not in ('glossario.tex', 'siglas.tex')])
@@ -107,7 +107,7 @@ def test_section_and_subsection_first_mentions_have_local_glosses(name):
     text = (LATEX / name).read_text(encoding='utf-8')
     # O cabeçalho e o primeiro parágrafo formam a unidade de apresentação do termo.
     for section in re.split(r'(?=\\(?:sub)?section\*?\{)', text):
-        assert_unit_first_mentions(section)
+        assert_unit_first_mentions(section, arquivo=f'text/latex/{name}')
 
 
 @pytest.mark.parametrize('token', GLOSS_WORDS)

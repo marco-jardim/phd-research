@@ -26,7 +26,7 @@ def test_perfil_editorial_preserva_celulas_e_fonte_historica(monkeypatch, tmp_pa
     assert "data/perfil_obitos_agregado.csv" in current
     assert "data/epidemiological_profile.json" in current
     assert "Valores históricos arredondados" in current
-    assert contem(current, "Perfil dos vínculos recuperados")  # migrado: terminologia 3.6
+    assert contem(current, "Perfil dos vínculos recuperados", arquivo="text/latex/tables/editorial/tab_perfil_recuperados.tex")  # migrado: terminologia 3.6
     assert "Versão editorial da tabela histórica; células preservadas." not in current
     assert r"\input{tables/editorial/tab_perfil_recuperados.tex}" in (
         ROOT / "text/latex/estudo3_estrategias.tex"
@@ -39,6 +39,7 @@ def test_impacto_editorial_usa_vinculos_e_custo_inverso_vpp(monkeypatch, tmp_pat
     generated = (tmp_path / "tab_impacto_epidemiologico.tex").read_bytes()
     assert generated == (TABLES / "editorial/tab_impacto_epidemiologico.tex").read_bytes()
     text = generated.decode("utf-8")
-    assert contem(text, "vínculos detectados")  # migrado: terminologia 3.6
-    assert contem(text, "custo por vínculo (inverso do VPP)")  # migrado: terminologia 3.6
+    arquivo = "text/latex/tables/editorial/tab_impacto_epidemiologico.tex"
+    assert contem(text, "vínculos detectados", arquivo=arquivo)  # migrado: terminologia 3.6
+    assert contem(text, "custo por vínculo (inverso do VPP)", arquivo=arquivo)  # migrado: terminologia 3.6
     assert "óbitos detectados" not in text and "custo por óbito" not in text

@@ -55,7 +55,7 @@ def assert_fragments(frame, required):
     normalized = frame.replace("{,}", ",")
     for fragment in required:
         if isinstance(fragment, Termo):
-            assert contem(normalized, fragment), fragment  # migrado: terminologia 3.6
+            assert contem(normalized, fragment, arquivo="text/slides/defesa.tex"), fragment  # migrado: terminologia 3.6
         else:
             assert fragment in normalized, fragment
 
@@ -605,8 +605,8 @@ def test_slide_backup_cascade_rows_from_csv():
                                ("fp", "Falsos positivos")):
             # migrado: terminologia 3.6 (cabeçalho e quadro comparados após normalizar)
             assert re.search(
-                rf"{re.escape(normalizar_terminologia(heading))} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
-                normalizar_terminologia(frames[reserve - 1]),
+                rf"{re.escape(normalizar_terminologia(heading, arquivo='text/slides/defesa.tex'))} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
+                normalizar_terminologia(frames[reserve - 1], arquivo="text/slides/defesa.tex"),
             ), (reserve, field)
 
 
@@ -795,13 +795,14 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
             assert "na vigilância, entre o1 a o4 e p, nenhuma ordenação domina" in text.lower()
             assert "na confirmação, o2 domina fracamente p" in text.lower()
             assert "fila por p_cal_ml" not in text and r"\texttt{p\_cal\_ml}" not in text
-    for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
+    for arquivo, text in (("text/slides/roteiro_defesa.md", script),
+                          ("text/slides/defesa.tex", (SLIDES / "defesa.tex").read_text(encoding="utf-8"))):
         # migrado: terminologia 3.6 (a forma hifenizada segue proibida; "não par" é a forma canônica)
         assert not re.search(r"não-(?:vínculos?|par(?:es)?)", text, re.I)
         assert "N/P" not in text and "no P |" not in text
         assert "cerca de 90" not in text and "cerca de 88 a 90" not in text
         assert "cabe na variação" not in text and "dentro da variação de perdas" not in text
-        assert contem(text, "Uma diferença de um vínculo em 36 não sustenta superioridade")  # migrado: terminologia 3.6
+        assert contem(text, "Uma diferença de um vínculo em 36 não sustenta superioridade", arquivo=arquivo)  # migrado: terminologia 3.6
     filters = read_csv("filtro_llm.csv")
     for number in (21, 48):
         section = speech.split(f"### {number}.")[1].split("### ")[0]
@@ -885,7 +886,7 @@ def test_script_s6_questions_and_provenance():
         "varredura de custos",
     ]:
         # migrado: terminologia 3.6
-        assert contem(questions, topic) if "vínculo" in topic else topic in questions
+        assert contem(questions, topic, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in topic else topic in questions
     assert "recalibração, braços e avaliação" in questions
     metrics = read_csv("arranjo_corte_metricas.csv")
     cutoff = one_row(metrics, modo="vigilancia", braco="corte_sozinho", faixa="TODAS")
@@ -943,7 +944,7 @@ def test_banca_e_title_terminology_and_new_answers():
     }.items():
         for fragment in fragments:
             # migrado: terminologia 3.6
-            presente = contem(answers[number], fragment) if "vínculo" in fragment else fragment in answers[number]
+            presente = contem(answers[number], fragment, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in fragment else fragment in answers[number]
             assert presente, (number, fragment)
     costs = {row["braco"]: row for row in read_csv("custos_equivalentes_exploratorios.csv")
              if row["modo"] == "vigilancia"}
@@ -1013,7 +1014,7 @@ def test_review3_questions_cover_unanswered_limits(number, fragments):
     section = questions.split(f"### {number}.")[1].split("### ")[0]
     for fragment in fragments:
         # migrado: terminologia 3.6
-        assert contem(section, fragment) if "vínculo" in fragment else fragment in section
+        assert contem(section, fragment, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in fragment else fragment in section
     assert "Fonte:" in section
 
 
@@ -1023,10 +1024,11 @@ def test_review3_ethics_and_residual_terminology():
     for number in (8, 48):
         section = questions.split(f"### {number}.")[1].split("### ")[0]
         assert "não foi objeto de análise específica nos pareceres" in section
-    for source in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
+    for arquivo, source in (("text/slides/roteiro_defesa.md", script),
+                            ("text/slides/defesa.tex", (SLIDES / "defesa.tex").read_text(encoding="utf-8"))):
         # migrado: terminologia 3.6 ("vínculos verdadeiros" segue proibido; "pares verdadeiros" é a forma canônica)
         assert not re.search(rf"\bbandas?\b|auditável|impacto epidemiológico|{PAR} verdadeiros",
-                             normalizar_terminologia(source))
+                             normalizar_terminologia(source, arquivo=arquivo))
     assert len(slide_frames()[28].split("\\fonte")[0].split()) <= 210
 
 

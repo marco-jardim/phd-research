@@ -64,7 +64,7 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
     study = text("estudo4_gzcmd.tex")
     assert "compatíveis com ancoragem ou abstenção generalizada" in study
     assert "1.845 revisões" in study and "1.582" in study
-    assert contem(study, "Não há controle negativo com não vínculos")  # migrado: terminologia 3.6
+    assert contem(study, "Não há controle negativo com não vínculos", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "retira somente o grupo" in study
     assert "versão do prompt não está registrada" in study
     assert "proxies adicionais" not in study

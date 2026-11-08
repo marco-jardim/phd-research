@@ -102,12 +102,12 @@ def test_canonical_names_and_operational_area_cinza_definition():
         assert r"\textit{Random Forest}" not in text
     formal = (LATEX / "apendice_formalizacao.tex").read_text(encoding="utf-8")
     assert r"\textit{labels}" in formal
-    assert contem(formal, "Essas regiões não redefinem a área cinza da nota")  # migrado: terminologia 3.6
+    assert contem(formal, "Essas regiões não redefinem a área cinza da nota", arquivo="text/latex/apendice_formalizacao.tex")  # migrado: terminologia 3.6
     assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
-        assert contem(text, "área cinza da nota")  # migrado: terminologia 3.6
-        assert contem(text, "área cinza")  # migrado: terminologia 3.6
+        assert contem(text, "área cinza da nota", arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
+        assert contem(text, "área cinza", arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
     intro = (LATEX / "capitulo1.tex").read_text(encoding="utf-8")
     assert "conversão em horas utiliza um parâmetro temporal" in intro
     assert "Esses valores constituem cenário exploratório, não carga histórica medida." in intro
@@ -152,4 +152,4 @@ def test_review3_scope_and_experiment1_caveats():
         assert "não detecta" in source
         assert "nem compara óbitos vinculados e não vinculados" in source
         assert "Soundex do primeiro e do último fragmentos do nome" in source
-    assert contem((LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8"), "e detecção de vínculos}")  # migrado: terminologia 3.6
+    assert contem((LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8"), "e detecção de vínculos}", arquivo="text/latex/estudo3_estrategias.tex")  # migrado: terminologia 3.6

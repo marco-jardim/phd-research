@@ -36,7 +36,7 @@ def test_local_editorial_redundancies_and_number_forms():
             assert 'com 96 pares enviados ao LLM na vigilância' in text
             assert r'As limitações do filtro são discutidas na Seção~\ref{sec:e4-filtro}' in text
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
-        assert contem(text, 'descartou nove dos 22 vínculos') or '9 dos 22 PAR~=~2' in text  # migrado: terminologia 3.6
+        assert contem(text, 'descartou nove dos 22 vínculos', arquivo=f'text/latex/{name}') or '9 dos 22 PAR~=~2' in text  # migrado: terminologia 3.6
     study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'O2 recupera 9 PAR~=~2 com 11 revisões' in study
     assert 'no feminino, a queda é de 10 pontos' in study
@@ -44,4 +44,4 @@ def test_local_editorial_redundancies_and_number_forms():
     assert r'proposição de duas ações (Proposição~\ref{prop:duas-acoes-orcamento})' in discussion
     assert 'Isso não fixa O3' not in discussion
     formal = (L / 'apendice_formalizacao.tex').read_text(encoding='utf-8')
-    assert contem(formal, r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}')  # migrado: terminologia 3.6
+    assert contem(formal, r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}', arquivo='text/latex/apendice_formalizacao.tex')  # migrado: terminologia 3.6

@@ -51,7 +51,8 @@ def test_person_propagation_is_limited_to_published_recovery():
     assert int(row["par2"]) == int(row["propagados"]) == 2
     assert "Propagação por pessoa: dois vínculos" in answer(87)
     assert contem(text("text/latex/conclusao.tex"),  # migrado: terminologia 3.6
-                  "propagação por pessoa recuperou somente dois vínculos, com alcance restrito")
+                  "propagação por pessoa recuperou somente dois vínculos, com alcance restrito",
+                  arquivo="text/latex/conclusao.tex")
 
 
 def test_llm_evidence_vpp_and_caution_track_same_baseline():

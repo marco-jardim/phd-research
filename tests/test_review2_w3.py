@@ -39,7 +39,7 @@ def test_ablation_appendix_is_generated_expected_not_llm_observation():
             assert f" & {int(count)} " + r"\\" in text
             assert f" & {int(count)},0 " + r"\\" not in text
         assert f"data/ablation_comprec_{arm}.csv" in text
-    assert conta(text, "Cada teste contém 74 vínculos") == 4  # migrado: terminologia 3.6
+    assert conta(text, "Cada teste contém 74 vínculos", arquivo="text/latex/apendice_ablacao.tex") == 4  # migrado: terminologia 3.6
 
 
 def test_origin_and_family_importance_have_no_personal_attribution():

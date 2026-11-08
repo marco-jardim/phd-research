@@ -45,7 +45,7 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
         assert r'\citeonline{Sariyar2010recordlinkage}' in text
         assert 'dentro da variação de perdas' not in text
     text = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert contem(text, 'uma diferença de um vínculo em 36 não sustenta superioridade')  # migrado: terminologia 3.6
+    assert contem(text, 'uma diferença de um vínculo em 36 não sustenta superioridade', arquivo='text/latex/estudo4_gzcmd.tex')  # migrado: terminologia 3.6
     discussion = text.split(r'\label{sec:e4-discussao}')[1]
     assert 'as perdas são de cobertura, não de erro humano' in discussion
     assert 'o ótimo é dar ao revisor humano o topo da fila' in discussion
@@ -97,7 +97,7 @@ def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, stra
     assert value(mutated[4]) == pytest.approx(expected + 2 * scenario.s)
     assert value(mutated[5]) != value(row[5])
     text = same_load(data, scenarios=scenarios)
-    assert contem(text, 'em P, os vínculos aceitos pelo LLM não recebem desconto')  # migrado: terminologia 3.6
+    assert contem(text, 'em P, os vínculos aceitos pelo LLM não recebem desconto', arquivo='text/latex/tables/editorial/tab_cap8_mesma_carga.tex')  # migrado: terminologia 3.6
     assert 'em P com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
     assert 'h/FP: horas de revisão divididas pelos FP automáticos' in effort(pd.read_csv(ROOT / 'data/esforco_arranjo.csv'))
 

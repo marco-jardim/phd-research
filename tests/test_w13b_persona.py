@@ -28,7 +28,7 @@ def test_persona_blockers_in_bilingual_summaries_and_ceiling():
                      'influência das saídas do motor na resposta do LLM (ancoragem)',
                      'P-Platt é análise de sensibilidade', 'recuperação obtida por P'):
         # migrado: terminologia 3.6
-        assert contem(pt, fragment) if ('vínculo' in fragment or 'clerical' in fragment) else fragment in pt
+        assert contem(pt, fragment, arquivo='text/latex/tese.tex') if ('vínculo' in fragment or 'clerical' in fragment) else fragment in pt
     for fragment in ('one, accepted by the cut-off', 'two, recovered by clerical review below it',
                      'zero, others', 'recovery obtained by P', "P's automatic sensitivity",
                      'separating links accepted by the cut-off from those recovered by review',

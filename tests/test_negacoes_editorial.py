@@ -63,7 +63,9 @@ def paragraph(filename, anchor):
         part.strip()
         for part in (LATEX / filename).read_text(encoding="utf-8").split("\n\n")
         # migrado: terminologia 3.6 (âncora comparada após normalizar; o parágrafo devolvido é o texto bruto)
-        if normalizar_terminologia(part.strip()).startswith(normalizar_terminologia(anchor))
+        if normalizar_terminologia(part.strip(), arquivo=f"text/latex/{filename}").startswith(
+            normalizar_terminologia(anchor, arquivo=f"text/latex/{filename}")
+        )
     ]
     assert len(matches) == 1, (filename, anchor, len(matches))
     return matches[0]
@@ -109,14 +111,15 @@ def test_formulas_no_maximo_uma_vez_por_capitulo(filename):
 def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
     text = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
     magnitude = "de dois a quatro vínculos a mais"
-    assert conta(text, magnitude) == 2  # migrado: terminologia 3.6
+    arquivo = "text/latex/estudo4_gzcmd.tex"
+    assert conta(text, magnitude, arquivo=arquivo) == 2  # migrado: terminologia 3.6
     results, discussion = text.split(r"\label{sec:e4-reruns}", 1)[1].split(
         "Na cascata v3.1 sobre a base inteira, Claude Sonnet", 1
     )
-    assert contem(results, magnitude)  # migrado: terminologia 3.6
+    assert contem(results, magnitude, arquivo=arquivo)  # migrado: terminologia 3.6
     discussion = "Na cascata v3.1 sobre a base inteira, Claude Sonnet" + discussion
     discussion = discussion.split("\n\n", 1)[0]
-    assert contem(discussion, magnitude)  # migrado: terminologia 3.6
+    assert contem(discussion, magnitude, arquivo=arquivo)  # migrado: terminologia 3.6
     assert "mais inconclusivos e encaminhamentos humanos" in discussion
     assert r"vinte vezes mais caro por \textit{token}" in discussion
     assert "não constitui resultado do arranjo" in discussion
@@ -125,7 +128,7 @@ def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
 
 def test_ressalvas_de_fidelidade_permanecem_explicitas():
     calibration = paragraph("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade")
-    assert contem(calibration, "não demonstrou calibração absoluta na área cinza da nota")  # migrado: terminologia 3.6
+    assert contem(calibration, "não demonstrou calibração absoluta na área cinza da nota", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "não corrigiria o viés" in calibration
     assert "não de impossibilidade geral do método" in calibration
     equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")
@@ -160,4 +163,4 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
     text = (LATEX / filename).read_text(encoding="utf-8")
     # migrado: terminologia 3.6
-    assert contem(text, expected) if "vínculo" in expected else expected in text
+    assert contem(text, expected, arquivo=f"text/latex/{filename}") if "vínculo" in expected else expected in text

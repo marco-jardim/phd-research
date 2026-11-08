@@ -122,7 +122,7 @@ def test_editorial_order_and_limitations_remain_explicit():
                  "reavaliação periódica dos LLM", "307{,}72", "122{,}72",
                  "A análise de estabilidade descreve a estabilidade interna"):
         assert term in text
-    assert not contem(text, "área cinza convencional")  # migrado: terminologia 3.6
+    assert not contem(text, "área cinza convencional", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "taxas" not in text.replace("taxas_crossfit", "").replace("taxas_erro", "")
     assert "Ele ajuda" not in text
     assert r"\input{tables/editorial/tab_qw2_confusion.tex}" in text
