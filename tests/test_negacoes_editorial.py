@@ -157,7 +157,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
-    ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),
+    ("capitulo2.tex", "A técnica é menos sujeita ao sobreajuste e dispõe de mecanismos intrínsecos para avaliação da importância de variáveis."),
     ("capitulo3.tex", "de modo que constitui hipótese a validar em outra coorte, sem pressupor superioridade operacional nem transferência dos parâmetros a outras bases."),
 ])
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
