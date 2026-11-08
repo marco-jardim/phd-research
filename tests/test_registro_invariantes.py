@@ -6,6 +6,10 @@ Dois grupos parametrizados, para que cada falha seja granular:
 - ``test_ocorrencia_no_texto``: um caso por (entrada, ocorrência).
 Ocorrências com ``xfail`` documentam inconsistências reais do texto (strict:
 se passarem, o teste falha e o marcador deve ser removido).
+
+Cada ocorrência tem uma ``vigencia`` (``sempre``, ``pre_revisao``, ``pos_revisao``,
+``informativa``) que a liga ao estado de ``tests/data/arquivos_revisados.yaml``: fora de
+vigor o caso é ignorado (``skip``); ``informativa`` nunca falha (``skip`` com os problemas).
 """
 import shutil
 import subprocess
@@ -27,22 +31,30 @@ CASOS_OCORRENCIAS = ri.casos_ocorrencias(REG)
 
 
 def _params(casos):
+    # Informativa nunca falha: sem xfail estrito (um caso que passe não é XPASS).
     return [
         pytest.param(
             c, id=c.id,
             marks=([pytest.mark.xfail(reason=c.xfail, strict=True)]
-                   if c.xfail else []))
+                   if c.xfail and c.vigencia != "informativa" else []))
         for c in casos
     ]
 
 
 def _executar(caso):
     try:
-        problemas = ri.executar_caso(REG, caso)
+        estado, problemas = ri.executar_vigente(REG, caso)
     except ri.FonteIndisponivel as exc:
         pytest.skip(ri.MENSAGEM_INDISPONIVEL + str(exc))
     except ri.ErroRegistro as exc:
         pytest.fail(f"erro de registro: {exc}")
+    if estado == "inativa":
+        pytest.skip(f"vigência {caso.vigencia}: fora de vigor para o estado atual de "
+                    "arquivos_revisados.yaml")
+    if estado == "informativa":
+        if problemas:
+            pytest.skip("informativa (não falha): " + "; ".join(problemas))
+        return
     assert not problemas, "\n".join(problemas)
 
 
@@ -50,10 +62,15 @@ def test_estrutura_do_registro():
     assert ri.verificar_estrutura(REG) == []
 
 
+ANCORAS_NOVAS = ("C10", "C01r", "C11", "C12", "C13", "C14", "C15", "C16",
+                 "C08r", "C02r", "C03r", "C05r", "C09r")
+
+
 def test_registro_cobre_numeros_e_afirmacoes():
     ids = {e["id"] for e in REG.entradas}
-    assert {f"N{i:02d}" for i in range(1, 40)} <= ids
+    assert {f"N{i:02d}" for i in range(1, 44)} <= ids
     assert {f"C{i:02d}" for i in range(1, 10)} <= ids
+    assert set(ANCORAS_NOVAS) <= ids
 
 
 @pytest.mark.parametrize("caso", _params(CASOS_VALORES))
@@ -390,6 +407,223 @@ def test_segmentar_frases():
         "A. B. Silva fez 2 testes etc. e voltou."]
     assert seg("um; dois") == ["um;", "dois"]
     assert seg("") == []
+
+
+# --- vigencia: ocorrências ligadas ao estado de arquivos_revisados.yaml -------------
+
+def _e_slide(oc):
+    return oc["arquivo"].startswith("text/slides/")
+
+
+def test_slides_e_roteiro_sao_todos_informativos():
+    achadas = 0
+    for e in REG.entradas:
+        for oc in e["ocorrencias"]:
+            if _e_slide(oc):
+                achadas += 1
+                assert oc.get("vigencia") == "informativa", (e["id"], oc["arquivo"])
+    assert achadas > 0
+
+
+def test_ancoras_antigas_c01_a_c09_sao_pre_revisao_fora_dos_slides():
+    for i in range(1, 10):
+        for oc in REG.por_id[f"C{i:02d}"]["ocorrencias"]:
+            esperado = "informativa" if _e_slide(oc) else "pre_revisao"
+            assert oc.get("vigencia") == esperado, (i, oc["arquivo"])
+
+
+def test_ancoras_novas_sao_aprovadas_afirmacoes_pos_revisao_sem_slides():
+    for cid in ANCORAS_NOVAS:
+        e = REG.por_id[cid]
+        assert e["tipo"] == "afirmacao", cid
+        assert str(e["aprovado_por_autora"]) == "2026-11-08", cid
+        assert e["ocorrencias"], cid
+        for oc in e["ocorrencias"]:
+            assert oc.get("vigencia") == "pos_revisao", (cid, oc["arquivo"])
+            assert not _e_slide(oc), (cid, oc["arquivo"])
+            assert len(oc.get("exige_todos") or []) >= 2, (cid, oc["arquivo"])
+
+
+def test_ancoras_novas_aparecem_nos_arquivos_previstos():
+    def arquivos(cid):
+        return {(Path(oc["arquivo"]).name, oc.get("secao")) for oc in REG.por_id[cid]["ocorrencias"]}
+
+    for cid in ("C10", "C01r", "C11", "C12", "C13", "C14", "C08r", "C03r", "C05r", "C09r"):
+        assert ("tese.tex", "resumo") in arquivos(cid), cid
+        assert ("tese.tex", "abstract") in arquivos(cid), cid
+        assert ("conclusao.tex", None) in arquivos(cid), cid
+    for cid in ("C10", "C01r", "C03r"):
+        assert {("capitulo1.tex", None), ("capitulo3.tex", None)} <= arquivos(cid), cid
+    for cid in ("C01r", "C11", "C12", "C13", "C08r", "C02r"):
+        assert ("estudo4_gzcmd.tex", None) in arquivos(cid), cid
+    assert ("estudo5_equidade.tex", None) in arquivos("C14")
+    assert ("estudo1_comparador.tex", None) in arquivos("C15")
+    assert ("estudo2_classificadores.tex", None) in arquivos("C16")
+    assert {("estudo2_classificadores.tex", None), ("estudo3_estrategias.tex", None)} <= arquivos("C05r")
+
+
+def test_c11_e_c01r_carregam_a_ressalva_do_ic_acoplada():
+    marcas = ("IC", "CI", "zero", "intervalo", "interval")
+    for oc in REG.por_id["C11"]["ocorrencias"]:
+        algum = [str(t) for t in oc["exige_algum"]]
+        assert any(m in t for t in algum for m in marcas), oc["arquivo"]
+    for oc in REG.por_id["C01r"]["ocorrencias"]:
+        if oc.get("secao") or oc["arquivo"].endswith(("estudo4_gzcmd.tex", "conclusao.tex")):
+            tokens = [str(a) for t in oc["exige_todos"] for a in (t if isinstance(t, list) else [t])]
+            assert "F4" in tokens and any("zero" in t or "IC" in t or "CI" in t for t in tokens)
+        assert oc["exige_algum"], oc["arquivo"]  # polaridade (ordenação e não automação)
+
+
+def test_numeros_novos_n40_em_diante_tem_fonte_e_mesma_frase_pos_revisao():
+    for i in range(40, 44):
+        e = REG.por_id[f"N{i}"]
+        assert e["tipo"] == "numero"
+        for v in e["valores"]:
+            assert v["fonte"]["arquivo"].startswith("data/"), v["nome"]
+            assert v["fonte"].get("coluna"), v["nome"]
+            assert v.get("texto_pt"), v["nome"]
+        assert e["ocorrencias"]
+        for oc in e["ocorrencias"]:
+            assert oc.get("vigencia") == "pos_revisao"
+            assert oc.get("mesma_frase")
+
+
+def test_ocorrencias_pos_revisao_de_numeros_tem_mesma_frase():
+    n = 0
+    for e in REG.entradas:
+        if e["tipo"] != "numero":
+            continue
+        for oc in e["ocorrencias"]:
+            if oc.get("vigencia") == "pos_revisao":
+                n += 1
+                assert oc.get("mesma_frase"), (e["id"], oc["arquivo"])
+    assert n > 0
+
+
+def test_numeros_das_ancoras_ficam_na_mesma_frase_da_entidade():
+    """Exemplos pedidos: 125 com O3 e vigilância; 501 com O1; 1.203 com F4; 16,0 com VPP e LLM."""
+    def termos(entrada, valor):
+        achados = [oc["mesma_frase"] for oc in REG.por_id[entrada]["ocorrencias"]
+                   if oc.get("vigencia") == "pos_revisao" and valor in (oc.get("exige") or [])]
+        assert achados, (entrada, valor)
+        return achados
+
+    assert ["O3", "vigilância"] in termos("N20", "k_O3_vig")
+    assert ["O1"] in termos("N20", "k_O1_vig")
+    assert ["F4"] in termos("N26", "boot_mediana_meta36")
+    assert ["VPP", "LLM"] in termos("N16", "vpp_llm_vig")
+
+
+def test_estado_vigencia_segue_arquivos_revisados():
+    rev = frozenset({"text/latex/capitulo1.tex", "text/latex/tese.tex#resumo"})
+
+    def oc(vigencia, arquivo="text/latex/capitulo1.tex", secao=None):
+        base = {"arquivo": arquivo, "vigencia": vigencia}
+        return dict(base, secao=secao) if secao else base
+
+    assert ri.estado_vigencia({"arquivo": "text/latex/capitulo1.tex"}, rev) == "ativa"
+    assert ri.estado_vigencia(oc("sempre"), rev) == "ativa"
+    assert ri.estado_vigencia(oc("informativa"), rev) == "informativa"
+    # arquivo revisado: pre_revisao deixa de valer e pos_revisao passa a valer
+    assert ri.estado_vigencia(oc("pre_revisao"), rev) == "inativa"
+    assert ri.estado_vigencia(oc("pos_revisao"), rev) == "ativa"
+    # arquivo ainda não revisado: o inverso
+    outro = "text/latex/conclusao.tex"
+    assert ri.estado_vigencia(oc("pre_revisao", outro), rev) == "ativa"
+    assert ri.estado_vigencia(oc("pos_revisao", outro), rev) == "inativa"
+    # tese.tex: a vigência vale pela chave tese.tex#resumo / tese.tex#abstract
+    tese = "text/latex/tese.tex"
+    assert ri.estado_vigencia(oc("pos_revisao", tese, "resumo"), rev) == "ativa"
+    assert ri.estado_vigencia(oc("pos_revisao", tese, "abstract"), rev) == "inativa"
+    assert ri.estado_vigencia(oc("pre_revisao", tese, "resumo"), rev) == "inativa"
+    assert ri.estado_vigencia(oc("pre_revisao", tese, "abstract"), rev) == "ativa"
+    # o arquivo inteiro na lista vale para as duas seções
+    inteiro = frozenset({tese})
+    assert ri.estado_vigencia(oc("pos_revisao", tese, "abstract"), inteiro) == "ativa"
+    with pytest.raises(ri.ErroRegistro):
+        ri.estado_vigencia(oc("depois"), rev)
+
+
+def test_chaves_revisadas_aceita_secao_e_terminologia_a_ignora(tmp_path):
+    import terminologia
+
+    lista = tmp_path / "revisados.yaml"
+    lista.write_text("- text/latex/estudo4_gzcmd.tex\n- text/latex/tese.tex#resumo\n",
+                     encoding="utf-8")
+    assert ri.chaves_revisadas(lista) == frozenset(
+        {"text/latex/estudo4_gzcmd.tex", "text/latex/tese.tex#resumo"})
+    # chave com seção não é arquivo: não entra na lista de modo estrito nem no lint
+    assert terminologia._revisados(lista) == frozenset(
+        {(terminologia.REPO / "text/latex/estudo4_gzcmd.tex").resolve()})
+    vazia = tmp_path / "vazia.yaml"
+    vazia.write_text("[]\n", encoding="utf-8")
+    assert ri.chaves_revisadas(vazia) == frozenset()
+    assert isinstance(ri.chaves_revisadas(), frozenset)  # a lista real do repositório
+
+
+def test_executar_vigente_respeita_a_vigencia(tmp_path, monkeypatch):
+    monkeypatch.setattr(ri, "ROOT", tmp_path)
+    ri.paragrafos.cache_clear()
+    (tmp_path / "t.tex").write_text("Texto sem o token procurado.\n", encoding="utf-8")
+    lista = tmp_path / "revisados.yaml"
+    monkeypatch.setattr(ri, "ARQUIVOS_REVISADOS", lista)
+    ocs = [{"arquivo": "t.tex", "vigencia": v, "exige": ["xyz"]}
+           for v in ("sempre", "pre_revisao", "pos_revisao", "informativa")]
+    reg = ri.Registro([{"id": "V", "tipo": "numero", "valores": [], "ocorrencias": ocs}])
+    casos = ri.casos_ocorrencias(reg)
+    assert [c.vigencia for c in casos] == ["sempre", "pre_revisao", "pos_revisao", "informativa"]
+    try:
+        lista.write_text("[]\n", encoding="utf-8")
+        r = {c.vigencia: ri.executar_vigente(reg, c) for c in casos}
+        assert r["sempre"][0] == "ativa" and r["sempre"][1]
+        assert r["pre_revisao"][0] == "ativa" and r["pre_revisao"][1]
+        assert r["pos_revisao"] == ("inativa", [])
+        assert r["informativa"][0] == "informativa" and r["informativa"][1]
+        status = {c.vigencia: st for c, st, _ in ri.executar_tudo(reg)}
+        assert status == {"sempre": "falha", "pre_revisao": "falha",
+                          "pos_revisao": "inativo", "informativa": "informativa"}
+
+        lista.write_text("- t.tex\n", encoding="utf-8")
+        r = {c.vigencia: ri.executar_vigente(reg, c) for c in casos}
+        assert r["sempre"][0] == "ativa" and r["sempre"][1]
+        assert r["pre_revisao"] == ("inativa", [])
+        assert r["pos_revisao"][0] == "ativa" and r["pos_revisao"][1]
+        assert r["informativa"][0] == "informativa" and r["informativa"][1]
+        status = {c.vigencia: st for c, st, _ in ri.executar_tudo(reg)}
+        assert status == {"sempre": "falha", "pre_revisao": "inativo",
+                          "pos_revisao": "falha", "informativa": "informativa"}
+    finally:
+        ri.paragrafos.cache_clear()
+
+
+def test_informativa_com_xfail_nao_vira_xpass(tmp_path, monkeypatch):
+    monkeypatch.setattr(ri, "ROOT", tmp_path)
+    ri.paragrafos.cache_clear()
+    (tmp_path / "t.tex").write_text("Aqui há xyz.\n", encoding="utf-8")
+    lista = tmp_path / "revisados.yaml"
+    lista.write_text("[]\n", encoding="utf-8")
+    monkeypatch.setattr(ri, "ARQUIVOS_REVISADOS", lista)
+    oc = {"arquivo": "t.tex", "vigencia": "informativa", "exige": ["xyz"], "xfail": "I0"}
+    reg = ri.Registro([{"id": "V", "tipo": "numero", "valores": [], "ocorrencias": [oc]}])
+    try:
+        (caso, status, detalhe), = ri.executar_tudo(reg)
+    finally:
+        ri.paragrafos.cache_clear()
+    assert status == "informativa" and detalhe == ""
+
+
+def test_estrutura_recusa_vigencia_invalida():
+    reg = ri.Registro([{
+        "id": "N97", "tipo": "numero",
+        "valores": [{"nome": "v", "fonte": {"arquivo": "x.csv"}, "texto_pt": "1"}],
+        "ocorrencias": [{"arquivo": "t.tex", "exige": ["v"], "vigencia": "depois"}]}])
+    assert any("vigencia inválida" in p for p in ri.verificar_estrutura(reg))
+    for ok in ri.VIGENCIAS:
+        reg_ok = ri.Registro([{
+            "id": "N96", "tipo": "numero",
+            "valores": [{"nome": "v", "fonte": {"arquivo": "x.csv"}, "texto_pt": "1"}],
+            "ocorrencias": [{"arquivo": "t.tex", "exige": ["v"], "vigencia": ok}]}])
+        assert ri.verificar_estrutura(reg_ok) == []
 
 
 def test_markdown_continua_separado_por_linha_em_branco(tmp_path, monkeypatch):

@@ -157,7 +157,11 @@ def _revisados(caminho: Path) -> frozenset[Path]:
     dados = yaml.safe_load(caminho.read_text(encoding="utf-8")) or []
     if not isinstance(dados, list):
         raise ValueError(f"{caminho}: esperada uma lista de caminhos")
-    return frozenset((REPO / str(item)).resolve() for item in dados)
+    # Chaves "arquivo#secao" (ex.: tese.tex#resumo) valem só para o registro de invariantes
+    # (scripts/registro_invariantes.py); não são arquivos nem ativam o modo estrito.
+    return frozenset(
+        (REPO / str(item)).resolve() for item in dados if "#" not in str(item)
+    )
 
 
 def arquivos_revisados() -> list[Path]:

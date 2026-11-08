@@ -13,4 +13,12 @@
 # Formato: lista de caminhos relativos à raiz do repositório, com barras normais.
 # Exemplo (descomentar ao fechar a revisão do capítulo):
 #   - text/latex/estudo1_exemplo.tex
+#
+# Resumo e Abstract vivem em tese.tex e se revisam à parte: use as chaves
+#   - text/latex/tese.tex#resumo
+#   - text/latex/tese.tex#abstract
+# Elas ativam só as ocorrências `vigencia: pos_revisao` (e desativam as `pre_revisao`) do
+# registro de invariantes (scripts/registro_invariantes.py) naquela seção; não são arquivos,
+# não ativam o modo estrito de tests/terminologia.py nem entram em test_arquivos_revisados.py.
+# O arquivo inteiro na lista (text/latex/tese.tex) vale para as duas seções.
 []

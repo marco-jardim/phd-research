@@ -15,6 +15,18 @@ Campo opcional ``mesma_frase`` por ocorrência (lista de termos, cada um texto o
 de alternativas): cada valor exigido tem de aparecer, no arquivo (ou seção), numa frase
 que contenha também todos esses termos (``segmentar_frases``).
 
+Campo opcional ``vigencia`` por ocorrência (padrão ``sempre``), para valer durante uma
+revisão capítulo a capítulo (``tests/data/arquivos_revisados.yaml``):
+
+- ``sempre``: verificada sempre;
+- ``pre_revisao``: verificada só enquanto o arquivo NÃO está na lista de revisados;
+- ``pos_revisao``: verificada só quando o arquivo está na lista;
+- ``informativa``: nunca falha; é executada e listada.
+
+Para ``tese.tex`` com ``secao`` (resumo/abstract), a chave da lista é
+``text/latex/tese.tex#resumo`` ou ``text/latex/tese.tex#abstract``; o arquivo inteiro na
+lista também vale para as suas seções. Uma ocorrência fora de vigor não é executada.
+
 Uso::
 
     python scripts/registro_invariantes.py [--relatorio .local/fase0/registro_relatorio.md]
@@ -44,6 +56,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRO = ROOT / "tests" / "data" / "registro_invariantes.yaml"
+# Lista de arquivos revisados (a mesma de tests/terminologia.py).
+ARQUIVOS_REVISADOS = ROOT / "tests" / "data" / "arquivos_revisados.yaml"
+VIGENCIAS = ("sempre", "pre_revisao", "pos_revisao", "informativa")
 # Raiz dos artefatos de dados (mesma variável de tests/local_data.py).
 RAIZ_DADOS = Path(os.environ.get("PHD_RESEARCH_DATA_ROOT", str(ROOT)))
 
@@ -625,6 +640,40 @@ def verificar_ocorrencia(reg: Registro, entrada: dict, oc: dict) -> list[str]:
 # Casos (para testes e relatório)
 # --------------------------------------------------------------------------
 
+def chaves_revisadas(caminho: Path | None = None) -> frozenset[str]:
+    """Chaves de ``arquivos_revisados.yaml``: caminhos relativos, com ``#secao`` opcional."""
+    caminho = Path(caminho) if caminho is not None else ARQUIVOS_REVISADOS
+    dados = yaml.safe_load(caminho.read_text(encoding="utf-8")) or []
+    if not isinstance(dados, list):
+        raise ErroRegistro(f"{caminho}: esperada uma lista de caminhos")
+    return frozenset(str(item).replace("\\", "/") for item in dados)
+
+
+def arquivo_revisado(arquivo: str, secao: str | None = None,
+                     revisados: frozenset[str] | None = None) -> bool:
+    """O arquivo (ou a seção ``arquivo#secao``) consta da lista de revisados?"""
+    chaves = chaves_revisadas() if revisados is None else revisados
+    arquivo = str(arquivo).replace("\\", "/")
+    if arquivo in chaves:
+        return True
+    return bool(secao) and f"{arquivo}#{secao}" in chaves
+
+
+def estado_vigencia(oc: dict, revisados: frozenset[str] | None = None) -> str:
+    """``ativa`` | ``inativa`` | ``informativa`` para uma ocorrência, segundo ``vigencia``."""
+    vigencia = oc.get("vigencia", "sempre")
+    if vigencia not in VIGENCIAS:
+        raise ErroRegistro(f"vigencia inválida {vigencia!r} em {oc.get('arquivo')}")
+    if vigencia == "sempre":
+        return "ativa"
+    if vigencia == "informativa":
+        return "informativa"
+    revisado = arquivo_revisado(oc["arquivo"], oc.get("secao"), revisados)
+    if vigencia == "pre_revisao":
+        return "inativa" if revisado else "ativa"
+    return "ativa" if revisado else "inativa"
+
+
 @dataclass
 class Caso:
     id: str
@@ -633,6 +682,7 @@ class Caso:
     alvo: str
     xfail: str | None = None
     ocorrencia: dict | None = None
+    vigencia: str = "sempre"
 
 
 def _rotulo_ocorrencia(entrada: str, i: int, oc: dict) -> str:
@@ -651,7 +701,8 @@ def casos_ocorrencias(reg: Registro) -> list[Caso]:
     for e in reg.entradas:
         for i, oc in enumerate(e.get("ocorrencias") or []):
             saida.append(Caso(_rotulo_ocorrencia(e["id"], i, oc), e["id"],
-                              "ocorrencia", oc["arquivo"], oc.get("xfail"), oc))
+                              "ocorrencia", oc["arquivo"], oc.get("xfail"), oc,
+                              oc.get("vigencia", "sempre")))
     return saida
 
 
@@ -659,6 +710,26 @@ def executar_caso(reg: Registro, caso: Caso) -> list[str]:
     if caso.tipo == "valor":
         return verificar_valor(reg, caso.alvo)
     return verificar_ocorrencia(reg, reg.por_id[caso.entrada], caso.ocorrencia)
+
+
+def estado_caso(caso: Caso, revisados: frozenset[str] | None = None) -> str:
+    """Estado de vigência do caso: valores são sempre ``ativa``."""
+    if caso.tipo == "valor":
+        return "ativa"
+    return estado_vigencia(caso.ocorrencia, revisados)
+
+
+def executar_vigente(reg: Registro, caso: Caso,
+                     revisados: frozenset[str] | None = None) -> tuple[str, list[str]]:
+    """Executa o caso respeitando a vigência: devolve ``(estado, problemas)``.
+
+    ``inativa``: não executa (``problemas`` vazio). ``informativa``: executa, mas quem chama
+    não deve falhar com os problemas. ``ativa``: os problemas são falhas.
+    """
+    estado = estado_caso(caso, revisados)
+    if estado == "inativa":
+        return estado, []
+    return estado, executar_caso(reg, caso)
 
 
 def verificar_estrutura(reg: Registro) -> list[str]:
@@ -688,6 +759,10 @@ def verificar_estrutura(reg: Registro) -> list[str]:
                 problemas.append(f"{eid}: ocorrência {oc['arquivo']} sem exigências")
             if oc.get("secao") and oc["secao"] not in _MARCADORES:
                 problemas.append(f"{eid}: seção inválida {oc['secao']!r}")
+            if oc.get("vigencia", "sempre") not in VIGENCIAS:
+                problemas.append(
+                    f"{eid}: vigencia inválida {oc.get('vigencia')!r} em {oc['arquivo']} "
+                    f"(esperada uma de {list(VIGENCIAS)})")
             if "mesma_frase" in oc:
                 mf = oc["mesma_frase"]
                 itens_ok = isinstance(mf, list) and bool(mf) and all(
@@ -718,17 +793,27 @@ def verificar_estrutura(reg: Registro) -> list[str]:
 def executar_tudo(reg: Registro) -> list[tuple[Caso, str, str]]:
     """Executa todos os casos; devolve ``(caso, status, detalhe)``.
 
-    status: ok | falha | xfail | xpass | pulado
+    status: ok | falha | xfail | xpass | pulado | inativo | informativa
+
+    ``inativo``: ocorrência fora de vigor (``pre_revisao``/``pos_revisao``) para o estado
+    atual de ``arquivos_revisados.yaml``. ``informativa``: executada e listada, sem falhar;
+    o detalhe traz os problemas encontrados (vazio se confere).
     """
     resultados = []
     for caso in [*casos_valores(reg), *casos_ocorrencias(reg)]:
         try:
-            problemas = executar_caso(reg, caso)
+            estado, problemas = executar_vigente(reg, caso)
         except FonteIndisponivel as exc:
             resultados.append((caso, "pulado", MENSAGEM_INDISPONIVEL + str(exc)))
             continue
         except ErroRegistro as exc:
-            problemas = [f"erro de registro: {exc}"]
+            estado, problemas = "ativa", [f"erro de registro: {exc}"]
+        if estado == "inativa":
+            resultados.append((caso, "inativo", f"vigencia={caso.vigencia}"))
+            continue
+        if estado == "informativa":
+            resultados.append((caso, "informativa", "; ".join(problemas)))
+            continue
         if caso.xfail:
             if problemas:
                 resultados.append((caso, "xfail", f"{caso.xfail} | {problemas[0]}"))
@@ -751,8 +836,9 @@ def relatorio_markdown(reg: Registro, resultados) -> str:
               "", f"Entradas: {len(reg.entradas)}; valores: {len(reg.valores)}.", ""]
     for titulo, status in (("Falhas", "falha"), ("XPASS (remover xfail)", "xpass"),
                            ("Inconsistências documentadas (xfail)", "xfail"),
+                           ("Informativas com divergência (não falham)", "informativa"),
                            ("Pulados (dado ausente)", "pulado")):
-        sel = [(c, d) for c, st, d in resultados if st == status]
+        sel = [(c, d) for c, st, d in resultados if st == status and (d or status != "informativa")]
         if not sel:
             continue
         linhas += [f"## {titulo}", ""]
