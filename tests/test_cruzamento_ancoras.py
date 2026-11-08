@@ -855,6 +855,79 @@ def test_cli_sem_chave_e_sem_fatias(tmp_path: Path, fatias, monkeypatch, capsys)
     assert "ANTHROPIC_API_KEY ausente" in capsys.readouterr().err
 
 
+def test_chave_env_padrao_e_anthropic_api_key() -> None:
+    parser = cli.build_parser()
+    for etapa in ("mapear", "pinos", "cruzar", "adjudicar"):
+        assert parser.parse_args([etapa]).chave_env == "ANTHROPIC_API_KEY"
+        assert parser.parse_args([etapa, "--chave-env", "OUTRA"]).chave_env == "OUTRA"
+
+
+def test_cli_chave_env_alt_cria_o_cliente_com_o_valor_dessa_variavel(
+        tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    padrao, alt = "valor-padrao-falso-111", "valor-alt-falso-222"
+    monkeypatch.setenv("ANTHROPIC_API_KEY", padrao)
+    monkeypatch.setenv("ANTHROPIC_API_KEY_ALT", alt)
+    cliente = cliente_falso(responder_mapear_de(fatias))
+    chaves: list[str] = []
+
+    def fabrica(chave):
+        chaves.append(chave)
+        return cliente
+
+    monkeypatch.setattr(cli.av, "make_client", fabrica)
+    argv = ["mapear", "--modo", "sync", "--ancoras", str(yaml_path), "--out", str(out)]
+    assert cli.main([*argv, "--chave-env", "ANTHROPIC_API_KEY_ALT"]) == 0
+    assert chaves == [alt]
+    capturado = capsys.readouterr()
+    for segredo in (padrao, alt):
+        assert segredo not in capturado.out and segredo not in capturado.err
+
+
+def test_cli_chave_env_chega_a_todas_as_etapas_com_cliente(tmp_path: Path, fatias, monkeypatch) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    par = {"id": "p1", "tipo": "numero_divergente", "topico": "P_vigilancia", "topicos": ["P_vigilancia"],
+           "justificativa": "j", "flags": [],
+           "a": {"afirmacao_id": "af002", "fatia_id": fatias[0]["id"], "arquivo": "a.tex", "linha": 12, "trecho": "t"},
+           "b": {"afirmacao_id": "af004", "fatia_id": fatias[1]["id"], "arquivo": "a.tex", "linha": 14, "trecho": "u"}}
+    write_jsonl_atomic(out / PARES_NOME, [par])
+    nomes: list[str] = []
+
+    def cliente_recusado(nome="ANTHROPIC_API_KEY"):
+        nomes.append(nome)
+        return None, 2
+
+    monkeypatch.setattr(cli, "_cliente", cliente_recusado)
+    base = ["--chave-env", "NOME_QUALQUER", "--out", str(out)]
+    assert cli.main(["mapear", "--ancoras", str(yaml_path), *base]) == 2
+    assert cli.main(["cruzar", *base]) == 2
+    assert cli.main(["adjudicar", "--ancoras", str(yaml_path), *base]) == 2
+    assert nomes == ["NOME_QUALQUER"] * 3
+
+
+def test_cli_chave_env_ausente_sai_com_2_citando_so_o_nome(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "valor-padrao-falso-333")
+    monkeypatch.delenv("ANTHROPIC_API_KEY_ALT", raising=False)
+    monkeypatch.setattr(cli, "load_env_var", lambda nome: "" if nome == "ANTHROPIC_API_KEY_ALT" else "x")
+
+    def proibido(chave):
+        raise AssertionError("sem a variável escolhida não pode haver cliente")
+
+    monkeypatch.setattr(cli.av, "make_client", proibido)
+    argv = ["mapear", "--ancoras", str(yaml_path), "--out", str(out), "--chave-env", "ANTHROPIC_API_KEY_ALT"]
+    assert cli.main(argv) == 2
+    capturado = capsys.readouterr()
+    assert "ANTHROPIC_API_KEY_ALT ausente" in capturado.err
+    assert "valor-padrao-falso-333" not in capturado.out + capturado.err
+
+
 def test_padroes_da_linha_de_comando() -> None:
     parser = cli.build_parser()
     for etapa in ("mapear", "cruzar", "adjudicar"):

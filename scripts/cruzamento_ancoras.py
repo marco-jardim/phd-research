@@ -54,7 +54,7 @@ sistema). ``mapear``, ``cruzar``, ``adjudicar`` e ``pinos`` aceitam:
 
 O cache de prompt (``cache_control``) fica no bloco de sistema (âncoras, taxonomia e terminologia) e nunca
 se envia ``temperature``. Chave da API: ``ANTHROPIC_API_KEY`` (ambiente ou ``.env``), nunca impressa nem
-gravada. Códigos de saída: 0 sucesso; 2 insumo ou chave ausente; 3 execução incompleta ou com erros.
+gravada; ``--chave-env NOME`` escolhe outra variável (por exemplo ``ANTHROPIC_API_KEY_ALT``). Códigos de saída: 0 sucesso; 2 insumo ou chave ausente; 3 execução incompleta ou com erros.
 """
 
 from __future__ import annotations
@@ -103,6 +103,8 @@ from scripts.cruzamento.comum import (  # noqa: E402
 from scripts.cruzamento.execucao import CONCORRENCIA_PADRAO, criar_settings  # noqa: E402
 from scripts.cruzamento.fatiar import fatiar  # noqa: E402
 
+CHAVE_ENV_PADRAO = "ANTHROPIC_API_KEY"
+
 
 def log(texto: str) -> None:
     print(texto, flush=True)
@@ -149,10 +151,10 @@ def _ficha(args: argparse.Namespace):
         return None, _erro(str(exc))
 
 
-def _cliente():
-    chave = load_env_var("ANTHROPIC_API_KEY")
+def _cliente(nome_chave: str = CHAVE_ENV_PADRAO):
+    chave = load_env_var(nome_chave)
     if not chave:
-        return None, _erro("ANTHROPIC_API_KEY ausente (ambiente ou .env)")
+        return None, _erro(f"{nome_chave} ausente (ambiente ou .env)")
     return av.make_client(chave), None
 
 
@@ -202,7 +204,7 @@ def cmd_mapear(args: argparse.Namespace) -> int:
     if args.estimar:
         _imprimir_estimativa("mapear", mp.estimar_mapear(fatias, ancoras, settings, ficha))
         return 0
-    client, erro = _cliente()
+    client, erro = _cliente(args.chave_env)
     if erro is not None:
         return erro
     resultado = mp.run_mapear(fatias=fatias, ancoras=ancoras, out=out, settings=settings, client=client,
@@ -226,7 +228,7 @@ def cmd_cruzar(args: argparse.Namespace) -> int:
         _imprimir_estimativa(
             "cruzar", crz.estimar_cruzar(mapa, settings, args.max_afirmacoes, args.incluir_outro, ficha))
         return 0
-    client, erro = _cliente()
+    client, erro = _cliente(args.chave_env)
     if erro is not None:
         return erro
     resultado = crz.run_cruzar(mapa=mapa, out=out, settings=settings, client=client,
@@ -261,7 +263,7 @@ def cmd_adjudicar(args: argparse.Namespace) -> int:
         if args.estimar:
             _imprimir_estimativa("adjudicar", adj.estimar_adjudicar(pares, mapa, fatias, ancoras, settings, ficha))
             return 0
-        client, erro = _cliente()
+        client, erro = _cliente(args.chave_env)
         if erro is not None:
             return erro
         resultado = adj.run_adjudicar(pares=pares, mapa=mapa, fatias=fatias, ancoras=ancoras, out=out,
@@ -294,7 +296,7 @@ def cmd_pinos(args: argparse.Namespace) -> int:
     if args.estimar:
         _imprimir_estimativa("pinos", pn.estimar_pinos(pinos, ancoras, settings, args.tamanho_lote))
         return 0
-    client, erro = _cliente()
+    client, erro = _cliente(args.chave_env)
     if erro is not None:
         return erro
     resultado = pn.run_pinos(pinos=pinos, ancoras=ancoras, out=out, settings=settings, client=client,
@@ -339,6 +341,8 @@ def build_parser() -> argparse.ArgumentParser:
                        help="não chama a API: imprime requisições e tokens aproximados")
         p.add_argument("--refazer-falhas", action="store_true", dest="refazer_falhas",
                        help="reenvia o que terminou com erro de resposta")
+        p.add_argument("--chave-env", default=CHAVE_ENV_PADRAO, dest="chave_env", metavar="NOME",
+                       help=f"variável de ambiente (ou do .env) com a chave da Anthropic (padrão {CHAVE_ENV_PADRAO})")
 
     p_fa = sub.add_parser("fatiar", help="gera fatias.jsonl")
     comum(p_fa)
