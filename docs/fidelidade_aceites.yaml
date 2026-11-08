@@ -1,0 +1,21 @@
+# Alertas do portão de fidelidade (scripts/portao_fidelidade.py) reconhecidos pela autora.
+#
+# Cada entrada aceita UM alerta, identificado por arquivo + hash do parágrafo novo:
+#
+#   - arquivo: text/latex/estudo4_gzcmd.tex     # caminho relativo à raiz, com "/"
+#     hash_paragrafo_novo: "0123456789abcdef"   # sha256 do parágrafo normalizado (espaços
+#                                               # colapsados, sem comentários), 16 primeiros
+#                                               # hexadecimais; aparece como "Hash" no relatório.
+#                                               # Sempre entre aspas (hash só com dígitos viraria
+#                                               # número no YAML). Para parágrafo removido, use o
+#                                               # hash do parágrafo da base.
+#     itens:                                    # opcional; itens aceitos, no formato do JSON
+#       - numeros:-39.3                         # (categoria:sinal+valor; "-" removido, "+"
+#       - citacoes:+silva2020                   # adicionado). Vazio ou ausente = todos.
+#     justificativa: "Número corrigido conforme data/x.csv."
+#     autora_aprovou: true                      # só "true" suprime o alerta
+#
+# Reeditar o parágrafo muda o hash e invalida o aceite (aparece como "sem correspondência").
+# Formato plano: o analisador interno aceita escalares, listas inline ([a, b]) e listas em bloco.
+
+aceites: []
