@@ -29,6 +29,7 @@ import math
 import operator
 import os
 import re
+import subprocess
 import sys
 import unicodedata
 from dataclasses import dataclass
@@ -204,7 +205,31 @@ def _igual(celula, alvo) -> bool:
         return False
 
 
+@functools.lru_cache(maxsize=None)
+def _rastreado(raiz: str, arquivo: str) -> bool:
+    """True se ``arquivo`` está rastreado pelo git em ``raiz`` (uma consulta por caminho)."""
+    extra = {}
+    if sys.platform == "win32":
+        extra["creationflags"] = subprocess.CREATE_NO_WINDOW
+    try:
+        r = subprocess.run(
+            ["git", "-C", raiz, "ls-files", "--error-unmatch", "--", arquivo],
+            capture_output=True, check=False, timeout=30, **extra)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return r.returncode == 0
+
+
 def caminho_dado(arquivo: str) -> Path:
+    """Resolve a fonte de dados.
+
+    Arquivo versionado (ou presente) no checkout: raiz do repositório, de modo que
+    a verificação rode também no CI. Só arquivo não versionado (privado) usa
+    ``RAIZ_DADOS`` (``PHD_RESEARCH_DATA_ROOT``).
+    """
+    no_repo = ROOT / arquivo
+    if no_repo.exists() or _rastreado(str(ROOT), arquivo):
+        return no_repo
     return RAIZ_DADOS / arquivo
 
 
@@ -354,7 +379,17 @@ _ABNTEX = {"resumo": ("\\begin{resumo}", "\\end{resumo}"),
 
 
 def _sem_comentarios(texto: str) -> str:
+    # Linha só de comentário some inteira (com a quebra de linha): deixá-la em
+    # branco criaria uma separação de parágrafo que o texto compilado não tem.
+    texto = re.sub(r"^[ \t]*%.*(?:\n|\Z)", "", texto, flags=re.MULTILINE)
     return re.sub(r"(?<!\\)%.*", "", texto)
+
+
+# Separadores de parágrafo: linha em branco, \item e \par (comando isolado).
+# Quadro Beamer completo (grupo de captura único: re.split devolve os quadros nos
+# índices ímpares).
+_QUADRO = re.compile(r"(\\begin\{frame\}.*?\\end\{frame\})", re.DOTALL)
+_SEPARADOR_PARAGRAFO = re.compile(r"\n\s*\n|\\item(?![A-Za-z])|\\par(?![A-Za-z])")
 
 
 def _bloco(texto: str, secao: str) -> str:
@@ -405,7 +440,17 @@ def paragrafos(arquivo: str, secao: str | None) -> tuple[str, ...]:
         if secao not in _MARCADORES:
             raise ErroRegistro(f"seção desconhecida: {secao!r}")
         texto = _bloco(texto, secao)
-    partes = re.split(r"\n\s*\n", texto)
+    if not secao and arquivo.endswith(".tex") and r"\begin{frame}" in texto:
+        # Slides Beamer: a unidade de coocorrência é o quadro inteiro (os itens de
+        # um quadro compõem uma mesma tela); o que fica fora dos quadros segue
+        # a separação por parágrafo.
+        partes = []
+        for i, trecho in enumerate(_QUADRO.split(texto)):
+            partes += [trecho] if i % 2 else _SEPARADOR_PARAGRAFO.split(trecho)
+    elif arquivo.endswith(".tex"):
+        partes = _SEPARADOR_PARAGRAFO.split(texto)
+    else:
+        partes = re.split(r"\n\s*\n", texto)  # .md: só linha em branco
     return tuple(p for p in (normalizar(x) for x in partes) if p)
 
 

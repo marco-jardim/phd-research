@@ -40,6 +40,17 @@
 #
 # Convenções: tokens não incluem terminologia sujeita a revisão ("revisão clerical",
 # "vínculo" etc.); ancoram-se em números e termos técnicos (P, O3, PAR, k=96, LLM, NONMATCH).
+# Afirmações (C01-C09): as ocorrências ancoram-se na polaridade e em símbolos/termos
+# técnicos, com variantes de lema em sublistas (alternativas, qualquer uma) de
+# `exige_todos` ou em `exige_algum`; nenhuma frase inteira é fixada. Uma reescrita
+# legítima continua passando; a inversão de polaridade (ex.: "aceita" no lugar de "não
+# deve aceitar") falha.
+#
+# ATENÇÃO: alterar qualquer `exige`, `exige_todos`, `exige_algum` ou `texto_*` deste
+# arquivo exige aprovação da autora. Cada entrada alterada leva, antes de `ocorrencias`,
+# a linha de comentário `# aprovado_por_autora: <data>` (AAAA-MM-DD, data da aprovação).
+# Sem a linha, a alteração não foi aprovada.
+#
 # Abreviações dos arquivos nos comentários: T=tese.tex, C1/C3=capitulo1/3, CC=conclusao,
 # ED=capitulo_dados, E4/E5=estudo4_gzcmd/estudo5_equidade, SL=slides/defesa.tex,
 # RO=slides/roteiro_defesa.md. Linhas citadas são da tag pre-revisao-2.
@@ -658,110 +669,119 @@
 - id: C01
   descricao: "Hipótese post hoc, a validar em dados novos; o ganho decorreria da ordenação, não da política de quatro ações"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["post hoc"], exige_algum: ["a validar"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["post hoc"], exige_algum: ["requiring validation"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["post hoc", "quatro ações"], exige_algum: ["a validar"]}
-    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["post hoc", "exploratórias"]}
-    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["hipótese gerada"], exige_algum: ["requer validação", "exige validação", "a validar"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["post hoc", "quatro ações"], exige_algum: ["a validar"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["hipótese", "quatro ações"], exige_algum: ["a validar"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["hipótese gerada", "quatro ações"], exige_algum: ["exige validação", "a validar", "requer validação"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["post hoc", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["post hoc", "hypothesis"], exige_algum: ["validation", "validate"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["post hoc", "quatro ações", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["post hoc", "exploratóri"]}
+    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["hipótese", "gerad", "valida"], exige_algum: ["requer", "exige", "a validar", "depende"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["post hoc", "quatro ações", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["hipótese", "quatro ações"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["hipótese", "gerad", "quatro ações", "valida"], exige_algum: ["exige", "requer", "a validar", "depende"]}
 
 - id: C02
   descricao: "Critério de falsificação: refuta-se se O3 não atingir a recuperação de P com pelo menos 25% menos revisões que O1 (limite inferior do IC 95%) em cada meta"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["25% menos revisões", "O1"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["25% menos revisões", "O1"], exige_algum: ["limite inferior"]}
-    - {arquivo: text/latex/estudo4_gzcmd.tex, exige_todos: ["25% menos revisões", "O1"], exige_algum: ["limite inferior"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["25% menos revisões", "O1"], exige_algum: ["limite inferior"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["25% menos revisões", "O1"], exige_algum: ["limite inferior"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["25", "O1", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"]], exige_algum: ["critério", "falsific", "refut"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["25", "O1", "O3", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"], ["refut", "falsific"]], exige_algum: ["limite inferior", "limite inf"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
   ressalvas: "Ausente do Resumo e do Abstract."
 
 - id: C03
   descricao: "Referência operacional: revisora única; ordem e parada da revisão não documentadas; precedência do CdR é hipótese de trabalho"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["Verificação seletiva", "incorporação"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["Selective verification", "incorporation"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["parada da revisão"], exige_algum: ["não informa"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["revisora única"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["hipótese de trabalho", "não foi documentada"]}
-    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["referência operacional", "rotina do serviço"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["revisora única", "hipótese de trabalho"], exige_algum: ["não estão documentadas"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["Revisora única", "hipótese de trabalho"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["Revisora única", "O1"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["revisora única"], exige_algum: ["hipóteses de trabalho", "hipótese de trabalho"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["hipótese de trabalho", "ordem"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["verificação", "incorporação"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["verification", "incorporation"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["parada", "revisão"], exige_algum: ["não informa", "não documenta", "não consta", "sem registro"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["revisor", "únic"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["hipótese", "trabalho"], exige_algum: ["não foi documentad", "não está documentad", "não estão documentad", "não documentad", "não informad"]}
+    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["referência operacional", "rotina"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["revisor", "únic", "hipótese", "trabalho"], exige_algum: ["não estão documentad", "não está documentad", "não foi documentad", "não documentad", "não informad"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["revisor", "únic", "hipótese", "trabalho"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["revisor", "únic", "O1"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["revisor", "únic", "hipótese", "trabalho"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["hipótese", "trabalho", "ordem"]}
 
 - id: C04
   descricao: "Viés de verificação e de incorporação: direção dominante e magnitude não identificáveis"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["direção", "magnitude"], exige_algum: ["não são identificáveis", "não é identificável"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["viés de verificação", "magnitude"], exige_algum: ["não é identificável", "não são identificáveis"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["viés de verificação"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["viés de verificação", "magnitude"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["direção", "magnitude"], exige_algum: ["não há direção única", "não estimada", "estimada"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["direção", "magnitude"], exige_algum: ["não são identific", "não é identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["viés", "verificação", "magnitude"], exige_algum: ["não é identific", "não são identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["viés", "verificação", "incorporação"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["viés", "verificação", "magnitude"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["direção", "magnitude"], exige_algum: ["não há direção", "não estimad", "estimad", "não identific"]}
 
 - id: C05
   descricao: "Indicadores de encerramento por óbito introduziram vazamento de alvo nos estudos de classificadores e de estratégias"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["vazamento", "indicadores de encerramento por óbito"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["leakage", "Death-closure indicators"]}
-    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["vazamento", "encerramento por óbito"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["vazamento de alvo", "indicadores de encerramento por óbito"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["vazamento de alvo"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["vazamento de alvo", "encerramento por óbito"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["vazamento", "indicador", "encerramento", "óbito"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["leakage", "death", "closure"]}
+    - {arquivo: text/latex/capitulo3.tex, exige_todos: ["vazamento", "encerramento", "óbito"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["vazamento", "alvo", "indicador", "encerramento", "óbito"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["vazamento", "alvo"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["vazamento", "alvo", "encerramento", "óbito"]}
 
 - id: C06
   descricao: "Registro interno de P sem critério de sucesso; a leitura como resultado negativo é posterior"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["registro interno", "critério de sucesso"]}
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["registro interno", "negativo"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["registered internally", "success criterion"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["internally registered", "negative"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["registro interno", "resultado negativo"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["registro interno", "critério de sucesso", "resultado negativo"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["Registro interno", "S3"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["critério de sucesso", "resultado negativo"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["critério de sucesso", "carimbo independente"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["registro", "intern", "critério", "sucesso"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["registro", "intern", "negativ"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["registered", "internal", "success", "criterion"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["registered", "internal", "negative"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["registro", "intern", "negativ"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["registro", "intern", "critério", "sucesso", "negativ"], exige_algum: ["sem hipótese", "nem critério", "sem critério", "ausência de critério"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["registro", "intern", "S3"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["critério", "sucesso", "negativ"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["critério", "sucesso", "carimbo", "independente"]}
   ressalvas: "Horários 01:22:17 e 02:11:52 UTC só no texto e no histórico git (16d5876); o texto cita 8c16a41 e a metadata JSON traz d526c3fb e 7b40cfb (I7)."
 
 - id: C07
   descricao: "O LLM não deve aceitar vínculos sozinho; só como filtro de NONMATCH exploratório"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["não deve aceitar sozinho", "exploratório"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["should not accept links alone", "exploratory"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["não deve aceitar vínculos sozinho", "NONMATCH"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["sem aceitar sozinho", "NONMATCH"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["Nunca aceita sozinho", "NONMATCH"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["nunca aceitação autônoma", "NONMATCH"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["não deve aceitar sozinho"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["LLM", "exploratóri"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["LLM", "exploratory"], exige_algum: ["should not accept", "must not accept", "does not accept", "never accept", "without accepting"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["LLM", "NONMATCH"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["NONMATCH", ["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["LLM", "NONMATCH", ["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["NONMATCH"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: [["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
 
 - id: C08
   descricao: "Recomendação: preservar o corte e, abaixo dele, ordenar pela fusão RRF (F4); vantagem sobre a probabilidade calibrada não demonstrada"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["preservar o corte", "fusão", "não foi demonstrada"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["preserve the cut-off", "reciprocal rank fusion", "not demonstrated"]}
-    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["preservar o corte", "curva de esforço"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["fusão", "preserva-se o corte", "não foi demonstrada"]}
-    - {arquivo: text/latex/estudo4_gzcmd.tex, exige_todos: ["Recomenda-se a fusão", "não foi demonstrada"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["Preservar o corte", "fusão RRF", "não demonstrada"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["Preservar o corte", "fusão RRF"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["Recomenda-se F4", "a validar"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["preserv", "corte", "fusão"], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["preserve", "cut-off", "reciprocal rank fusion"], exige_algum: ["not demonstrated", "not been demonstrated", "not shown", "not established", "unproven"]}
+    - {arquivo: text/latex/capitulo1.tex, exige_todos: ["preserv", "corte", "curva de esforço"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["fusão", "preserv", "corte"], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige_todos: ["fusão", ["recomend", "indica-se", "sugere-se", "propõe-se"]], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: ["preserv", "corte", "fusão", "RRF"], exige_algum: ["não demonstrad", "não foi demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["preserv", "corte", "fusão", "RRF"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["F4", ["recomend", "indica-se", "sugere-se", "propõe-se"]], exige_algum: ["validar", "validação"]}
 
 - id: C09
   descricao: "Pares fora do orçamento são não examinados, não óbitos não notificados"
   tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: ["não examinados", "não óbitos não notificados"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: ["unexamined", "unnotified deaths"]}
-    - {arquivo: text/latex/conclusao.tex, exige_todos: ["não examinados", "óbito não notificado"]}
-    - {arquivo: text/slides/defesa.tex, exige_todos: ["não examinados", "não óbitos sem notificação"]}
-    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: ["não examinados", "não óbitos sem notificação"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige_todos: [["unexamined", "not examined", "were not examined"], "death", "notified"], exige_algum: ["not equivalent", "not equal", "not mean", "not imply", "not necessarily"]}
+    - {arquivo: text/latex/conclusao.tex, exige_todos: ["não examinad", "óbito", "notificad"], exige_algum: ["não equivale", "não equivalem", "não significa", "não corresponde", "não representa", "não óbito"]}
+    - {arquivo: text/slides/defesa.tex, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notifica"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/slides/roteiro_defesa.md, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notifica"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
