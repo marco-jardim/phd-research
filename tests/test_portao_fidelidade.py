@@ -1173,6 +1173,35 @@ def test_modo_paragrafo_nao_isenta_identificadores():
     assert dif["numeros"] == {"removidos": ["1"], "adicionados": ["3"]}
 
 
+# Nos textos de capítulo o "%" vem escapado ("95\%"): "%" sem escape abre comentário LaTeX
+# e ``segmentar`` descarta o resto da linha.
+@pytest.mark.parametrize(
+    "nivel",
+    ["IC 95\\%", "IC~95\\%", "IC de 95\\%", "IC 95", "intervalo de confiança de 95\\%",
+     "intervalo de confiança de~95\\%"],
+)
+def test_nivel_de_confianca_do_ic_e_isento_na_comparacao_por_capitulo(nivel):
+    # só o nível é isento: o número que vem depois continua contando
+    ach = numeros("Havia 10 casos.", f"Havia 10 casos ({nivel}) em 3 réplicas.")
+    assert [(a.numero, a.tipo, a.status) for a in ach] == [("3", "novo", "pendente")]
+    # no modo parágrafo o "95" continua contando
+    assert sum(pf.extrair_tokens(f"Havia 10 casos ({nivel}).")["numeros"].values()) >= 2
+
+
+def test_limites_do_ic_e_95_solto_continuam_contando():
+    ach = numeros("Havia 10 casos.", "Havia 10 casos (IC 95\\%: 6,4 a 34,7).")
+    assert sorted(a.numero for a in ach) == ["34.7", "6.4"]
+    ach = numeros("Havia 10 casos.", "Havia 10 casos em 95\\% das réplicas.")
+    assert [a.numero for a in ach] == ["95%"]
+    ach = numeros("Havia 10 casos.", "Havia 10 casos com cobertura de 95\\%.")
+    assert [a.numero for a in ach] == ["95%"]
+
+
+def test_modo_paragrafo_nao_isenta_nivel_de_confianca():
+    dif = pf.comparar(pf.extrair_tokens("Taxa de 5."), pf.extrair_tokens("Taxa de 5 (IC 95\\%)."))
+    assert dif["numeros"] == {"removidos": [], "adicionados": ["95%"]}
+
+
 def test_modo_invalido(repo):
     base_commit(repo, {"text/latex/cap.tex": TEX_BASE})
     with pytest.raises(ValueError):

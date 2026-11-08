@@ -272,15 +272,33 @@ def _e_identificador(texto: str, inicio: int) -> bool:
     return _cobertura_numeros().eh_identificador(antes)
 
 
+RE_ANTES_CONFIANCA = re.compile(r"(?:(?<![A-Za-z])IC(?:[\s~]+de)?|confiança[\s~]+de)[\s~]*$")
+
+
+def _e_nivel_confianca(texto: str, inicio: int, numero: str) -> bool:
+    """O ``95`` que começa em ``texto[inicio]`` é o nível de confiança de um IC?
+
+    Parâmetro de método, não dado: "IC 95%", "IC de 95%", "intervalo de confiança de 95%".
+    Só o número ``95`` imediatamente depois de "IC", "IC de" ou "confiança de"; os limites do
+    intervalo e um "95%" solto continuam contando.
+    """
+    if numero != "95":
+        return False
+    return bool(RE_ANTES_CONFIANCA.search(texto[max(0, inicio - 40) : inicio]))
+
+
 def extrair_tokens(
-    par: str, isentar_rotulos: bool = False, isentar_identificadores: bool = False
+    par: str,
+    isentar_rotulos: bool = False,
+    isentar_identificadores: bool = False,
+    isentar_confianca: bool = False,
 ) -> dict[str, Counter]:
     """Multiconjuntos de itens com sentido, por categoria.
 
     Com ``isentar_rotulos``, os números de rótulo (passo, capítulo, seção, figura, tabela,
     equação, estudo, objetivo, meta...) não entram em ``numeros`` nem na ordem dos números.
     Com ``isentar_identificadores``, o mesmo vale para dígitos colados a letras (O3, F4, K2.5,
-    COVID-19).
+    COVID-19). Com ``isentar_confianca``, o nível "95" logo depois de "IC"/"IC de"/"confiança de".
     """
     tok = {cat: Counter() for cat in CATEGORIAS}
     trabalho = par
@@ -310,6 +328,10 @@ def extrair_tokens(
             if isentar_rotulos and _e_rotulo(numerico, inicio_frase + m.start("num")):
                 continue
             if isentar_identificadores and _e_identificador(numerico, inicio_frase + m.start("num")):
+                continue
+            if isentar_confianca and _e_nivel_confianca(
+                numerico, inicio_frase + m.start("num"), m.group("num")
+            ):
                 continue
             item = normalizar_numero(m.group("num"))
             if m.group("sinal"):
@@ -952,7 +974,9 @@ def contar_numeros(texto: str) -> Counter:
     total: Counter = Counter()
     for par in segmentar(texto):
         total.update(
-            extrair_tokens(par, isentar_rotulos=True, isentar_identificadores=True)["numeros"]
+            extrair_tokens(
+                par, isentar_rotulos=True, isentar_identificadores=True, isentar_confianca=True
+            )["numeros"]
         )
     return total
 
