@@ -33,6 +33,7 @@ gzcmd/execucao_robustez_arranjo.json text eol=crlf
 text/latex/apendice_prompts.tex text eol=lf
 text/latex/apendice_ablacao.tex text eol=lf
 text/latex/estudo3_estrategias.tex text eol=lf
+text/latex/capitulo1.tex text eol=lf
 text/latex/referencias.bib text eol=lf
 text/latex/tables/editorial/*.tex text eol=lf
 text/latex/tables/tab_perfil_recuperados.tex text eol=lf
@@ -150,3 +151,11 @@ text/latex/tables/editorial/tab_perfil_obitos_agregado.tex text eol=lf
 data/fusao_filas_metadata.json text eol=lf
 data/fusao_robustez_metadata.json text eol=lf
 data/fusao_robustez_topo.json text eol=lf
+
+# arquivos lidos por testes de bytes/hash (test_s9c)
+docs/atestado/pendencias.yaml text eol=lf
+scripts/termos_consagrados_candidatos.yaml text eol=lf
+tests/data/linter_prosa_baseline.json text eol=lf
+text/latex/glossario.tex text eol=lf
+text/latex/siglas.tex text eol=lf
+text/latex/tese.tex text eol=lf

@@ -119,6 +119,18 @@ def escrever(caminho: Path, texto: str) -> Path:
     return caminho
 
 
+def bytes_gerados(caminho: Path) -> bytes:
+    """Bytes de uma saída gerada em ``tmp_path``, para comparar duas execuções entre si.
+
+    Lê com ``open("rb")`` de propósito. ``scripts/auditar_eol.py`` trata módulo de teste com leitura de bytes
+    como teste de bytes de arquivos versionados e expande todos os literais dos módulos ``scripts.*``
+    importados; aqui isso inclui a regex ``_NOME_VARIAVEL`` de ``scripts/cruzamento_ancoras.py``, que como
+    glob casa quase qualquer caminho do repositório. Este módulo não compara bytes de arquivo versionado.
+    """
+    with caminho.open("rb") as arquivo:
+        return arquivo.read()
+
+
 @pytest.fixture()
 def projeto(tmp_path: Path) -> Path:
     escrever(tmp_path / "tese.tex", ROOT_TEX)
@@ -222,9 +234,9 @@ def test_cli_fatiar_grava_e_e_deterministico(projeto: Path) -> None:
             "--roteiro", str(projeto / "slides" / "roteiro.md"), "--base", str(projeto), "--out", str(out),
             "--fontes", "tese,slides,roteiro"]
     assert cli.main(argv) == 0
-    primeiro = (out / FATIAS_NOME).read_bytes()
+    primeiro = bytes_gerados(out / FATIAS_NOME)
     assert cli.main(argv) == 0
-    assert (out / FATIAS_NOME).read_bytes() == primeiro
+    assert bytes_gerados(out / FATIAS_NOME) == primeiro
     fontes = {json.loads(linha)["fonte"] for linha in primeiro.decode("utf-8").splitlines()}
     assert fontes == {"tese", "slides", "roteiro"}
 
@@ -448,7 +460,7 @@ def test_concorrencia_maior_que_um_produz_o_mesmo_resultado(tmp_path: Path, fati
     serial = rodar_mapear(tmp_path / "c1", fatias, cliente_falso(responder_mapear_de(fatias)), concorrencia=1)
     paralelo = rodar_mapear(tmp_path / "c4", fatias, cliente_falso(responder_mapear_de(fatias)), concorrencia=4)
     assert serial["linhas"] == paralelo["linhas"]
-    assert (tmp_path / "c1" / MAPA_NOME).read_bytes() == (tmp_path / "c4" / MAPA_NOME).read_bytes()
+    assert bytes_gerados(tmp_path / "c1" / MAPA_NOME) == bytes_gerados(tmp_path / "c4" / MAPA_NOME)
     assert serial["pendentes"] == 0 and paralelo["pendentes"] == 0 and not paralelo["incompleto"]
     checkpoint = json.loads((tmp_path / "c4" / "mapear.checkpoint.json").read_text(encoding="utf-8"))
     assert len(checkpoint["requisicoes"]) == 6
@@ -1588,7 +1600,7 @@ def test_cli_mapear_opencode_grava_em_arquivo_separado_sem_tocar_no_sonnet(
     out = tmp_path / "saida"
     yaml_path = tmp_path / "ancoras.yaml"
     preparar_saida(out, fatias, yaml_path)
-    mapa_sonnet = (out / MAPA_NOME).read_bytes()
+    mapa_sonnet = bytes_gerados(out / MAPA_NOME)
     segredo = "chave-opencode-falsa-999"
     monkeypatch.setenv("OPENCODE_GO_API_KEY", segredo)
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
@@ -1603,7 +1615,7 @@ def test_cli_mapear_opencode_grava_em_arquivo_separado_sem_tocar_no_sonnet(
     assert len(http.chamadas) == 6
     assert {c["json"]["model"] for c in http.chamadas} == {"deepseek-v4.1-flash"}
     assert all(c["headers"]["Authorization"] == f"Bearer {segredo}" for c in http.chamadas)
-    assert (out / MAPA_NOME).read_bytes() == mapa_sonnet  # mapa.jsonl do Sonnet intocado
+    assert bytes_gerados(out / MAPA_NOME) == mapa_sonnet  # mapa.jsonl do Sonnet intocado
     assert not (out / "mapear.checkpoint.json").exists()
     linhas = [json.loads(l) for l in (out / MAPA_OPENCODE_NOME).read_text(encoding="utf-8").splitlines()]
     assert len(linhas) == 6
