@@ -14,7 +14,11 @@ DEFAULT_ANCORAS = ".local/ancoras/ancoras_candidatas.yaml"
 DEFAULT_TESE = "text/latex/tese.tex"
 DEFAULT_SLIDES = "text/slides/defesa.tex"
 DEFAULT_ROTEIRO = "text/slides/roteiro_defesa.md"
+DEFAULT_REGISTRO = "tests/data/registro_invariantes.yaml"
+DEFAULT_PINOS_INVENTARIO = ".local/fase0/inventario_pinos.csv"
 MAX_PALAVRAS_FATIA = 1200
+FONTES = ("tese", "slides", "roteiro")
+FONTES_PADRAO = "tese"
 
 FATIAS_NOME = "fatias.jsonl"
 MAPA_NOME = "mapa.jsonl"
@@ -22,7 +26,11 @@ PARES_NOME = "pares.jsonl"
 ADJUDICACOES_NOME = "adjudicacoes.jsonl"
 RELATORIO_NOME = "relatorio.md"
 MATRIZ_NOME = "matriz_ancoras.csv"
-ETAPAS = ("mapear", "cruzar", "adjudicar")
+PINOS_NOME = "pinos.jsonl"
+PINOS_META_NOME = "pinos_meta.json"
+ETAPAS = ("mapear", "cruzar", "adjudicar", "pinos")
+CATEGORIAS_PINO = ("frase", "negacao", "ressalva")
+CONFLITOS_PINO = ("nenhum", "forte_demais", "contradiz_ancora", "cautela_solta")
 
 TOPICOS = (
     "corte_openreclink", "O1_escore", "O2_cdr", "O3_prob_calibrada", "O4_P_recalibrada", "F4_fusao",
@@ -143,6 +151,54 @@ def bloco_ancoras(ancoras: list[dict]) -> str:
         if a["ressalva"]:
             linha += f' RESSALVA: {a["ressalva"]}'
         linhas.append(linha)
+    return "\n".join(linhas)
+
+
+def _fonte_da_ficha(fonte) -> str:
+    if not isinstance(fonte, dict):
+        return "-"
+    if fonte.get("derivado"):
+        return f"derivado: {fonte['derivado']}"
+    arquivo = fonte.get("arquivo") or "-"
+    partes = [f"arquivo {arquivo}"]
+    if fonte.get("chave"):
+        partes.append(f"chave {fonte['chave']}")
+    if fonte.get("coluna"):
+        partes.append(f"coluna {fonte['coluna']}")
+    filtro = fonte.get("filtro")
+    if isinstance(filtro, dict) and filtro:
+        partes.append("filtro " + ", ".join(f"{k}={v}" for k, v in filtro.items()))
+    return "; ".join(partes)
+
+
+def carregar_ficha(caminho: Path) -> str:
+    """Ficha de valores conferidos: uma linha por valor das entradas numéricas (N##, tipo != afirmacao).
+
+    Devolve ``""`` se o registro não existe. Valores sem ``texto_pt`` (auxiliares) ficam de fora.
+    """
+    import yaml
+
+    caminho = Path(caminho)
+    if not caminho.is_file():
+        return ""
+    dados = yaml.safe_load(caminho.read_text(encoding="utf-8"))
+    if not isinstance(dados, list):
+        raise ValueError(f"{caminho}: esperada uma lista de entradas")
+    linhas: list[str] = []
+    for entrada in dados:
+        if not isinstance(entrada, dict):
+            continue
+        ident = str(entrada.get("id") or "").strip()
+        if not ident.startswith("N") or entrada.get("tipo") == "afirmacao":
+            continue
+        descricao = " ".join(str(entrada.get("descricao") or "").split())
+        for valor in entrada.get("valores") or []:
+            if not isinstance(valor, dict) or valor.get("texto_pt") in (None, ""):
+                continue
+            linhas.append(
+                f'- {ident} ({descricao}) | {valor.get("nome")} = {valor["texto_pt"]} | '
+                f'{_fonte_da_ficha(valor.get("fonte"))}'
+            )
     return "\n".join(linhas)
 
 

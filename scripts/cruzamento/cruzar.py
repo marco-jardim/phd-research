@@ -74,8 +74,9 @@ def planejar_cruzar(
     settings: av.Settings,
     max_afirmacoes: int = MAX_AFIRMACOES_PADRAO,
     incluir_outro: bool = False,
+    ficha: str = "",
 ) -> list[PlanoCruzar]:
-    sistema = sistema_cruzar()
+    sistema = sistema_cruzar(ficha)
     digest = hashlib.sha256(sistema.encode("utf-8")).hexdigest()[:12]
     planos: list[PlanoCruzar] = []
     grupos = agrupar_por_topico(afirmacoes_validas(mapa), incluir_outro)
@@ -104,10 +105,10 @@ def planejar_cruzar(
 
 def estimar_cruzar(
     mapa: list[dict], settings: av.Settings, max_afirmacoes: int = MAX_AFIRMACOES_PADRAO,
-    incluir_outro: bool = False,
+    incluir_outro: bool = False, ficha: str = "",
 ) -> dict[str, int]:
     """Saída aproximada: 200 tokens mais 5 por afirmação enviada."""
-    planos = planejar_cruzar(mapa, settings, max_afirmacoes, incluir_outro)
+    planos = planejar_cruzar(mapa, settings, max_afirmacoes, incluir_outro, ficha)
     return ex.estimar([p.req for p in planos], lambda req, n: 200 + 5 * len(req.ids))
 
 
@@ -162,6 +163,7 @@ def consolidar_pares(planos: list[PlanoCruzar], cp: av.Checkpoint) -> tuple[list
                 problemas.append({
                     "custom_id": plano.req.custom_id, "topico": plano.topico, "motivo": "par_consigo_mesmo",
                     "a": str(item.get("a")), "b": str(item.get("b")),
+                    "justificativa": str(item.get("justificativa") or ""),
                 })
                 continue
             tipo = str(item.get("tipo") or "").strip()
@@ -189,11 +191,12 @@ def run_cruzar(
     client: object,
     max_afirmacoes: int = MAX_AFIRMACOES_PADRAO,
     incluir_outro: bool = False,
+    ficha: str = "",
     sleep: Callable[[float], None] = time.sleep,
     log: Callable[[str], None] = lambda texto: None,
 ) -> dict:
     rt = ex.abrir_runtime(out, "cruzar", settings, client, sleep, log)
-    planos = planejar_cruzar(mapa, settings, max_afirmacoes, incluir_outro)
+    planos = planejar_cruzar(mapa, settings, max_afirmacoes, incluir_outro, ficha)
     restantes = ex.executar(rt, [p.req for p in planos], PASSADA)
     pares, problemas = consolidar_pares(planos, rt.cp)
     write_jsonl_atomic(out / PARES_NOME, pares)

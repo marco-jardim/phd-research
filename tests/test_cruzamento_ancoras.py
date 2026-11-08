@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 import re
 import threading
@@ -17,12 +18,15 @@ from scripts.cruzamento import cruzar as crz
 from scripts.cruzamento import execucao as ex
 from scripts.cruzamento import fatiar as ft
 from scripts.cruzamento import mapear as mp
+from scripts.cruzamento import pinos as pn
 from scripts.cruzamento import relatorio as rel
 from scripts.cruzamento.comum import (
     FATIAS_NOME,
     MAPA_NOME,
     PARES_NOME,
+    PINOS_NOME,
     carregar_ancoras,
+    carregar_ficha,
     extrair_objeto,
     id_curto,
     indexar_fatia,
@@ -212,13 +216,31 @@ def test_fatiar_roteiro_por_secao(projeto: Path) -> None:
 def test_cli_fatiar_grava_e_e_deterministico(projeto: Path) -> None:
     out = projeto / "saida"
     argv = ["fatiar", "--tese", str(projeto / "tese.tex"), "--slides", str(projeto / "slides" / "defesa.tex"),
-            "--roteiro", str(projeto / "slides" / "roteiro.md"), "--base", str(projeto), "--out", str(out)]
+            "--roteiro", str(projeto / "slides" / "roteiro.md"), "--base", str(projeto), "--out", str(out),
+            "--fontes", "tese,slides,roteiro"]
     assert cli.main(argv) == 0
     primeiro = (out / FATIAS_NOME).read_bytes()
     assert cli.main(argv) == 0
     assert (out / FATIAS_NOME).read_bytes() == primeiro
     fontes = {json.loads(linha)["fonte"] for linha in primeiro.decode("utf-8").splitlines()}
     assert fontes == {"tese", "slides", "roteiro"}
+
+
+def _fontes_gravadas(out: Path) -> set[str]:
+    return {json.loads(linha)["fonte"] for linha in (out / FATIAS_NOME).read_text(encoding="utf-8").splitlines()}
+
+
+def test_cli_fatiar_padrao_so_tese_e_fontes_escolhidas(projeto: Path, capsys) -> None:
+    out = projeto / "saida"
+    base = ["fatiar", "--tese", str(projeto / "tese.tex"), "--slides", str(projeto / "slides" / "defesa.tex"),
+            "--roteiro", str(projeto / "slides" / "roteiro.md"), "--base", str(projeto), "--out", str(out)]
+    assert cli.build_parser().parse_args(["fatiar"]).fontes == "tese"
+    assert cli.main(base) == 0
+    assert _fontes_gravadas(out) == {"tese"}  # o padrão não inclui slides nem roteiro
+    assert cli.main([*base, "--fontes", "tese,slides"]) == 0
+    assert _fontes_gravadas(out) == {"tese", "slides"}
+    assert cli.main([*base, "--fontes", "tese,video"]) == 2
+    assert "--fontes inválido" in capsys.readouterr().err
 
 
 # ---------------------------------------------------------------------------
@@ -850,3 +872,290 @@ def test_saidas_ficam_em_pasta_ignorada_pelo_git() -> None:
     linhas = {linha.strip() for linha in (REPO / ".gitignore").read_text(encoding="utf-8").splitlines()}
     assert ".local/" in linhas
     assert cli.DEFAULT_OUT.startswith(".local/")
+
+
+# ---------------------------------------------------------------------------
+# Ficha de valores conferidos
+# ---------------------------------------------------------------------------
+REGISTRO_YAML = """\
+- id: N01
+  descricao: "Total de potenciais pares do extrato"
+  tipo: numero
+  valores:
+    - {nome: n_pares_total, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_pares_candidatos}, coluna: valor}, texto_pt: "61.696"}
+    - {nome: so_auxiliar, fonte: {derivado: "a / b"}, auxiliar: true}
+- id: N02
+  descricao: "Razão de desbalanceamento"
+  tipo: numero
+  valores:
+    - {nome: razao, fonte: {derivado: "n_par0 / n_vinculos", formato: "1:{:.0f}"}, texto_pt: "1:249"}
+- id: N03
+  descricao: "Entrada N com tipo afirmacao"
+  tipo: afirmacao
+  valores:
+    - {nome: valor_de_afirmacao, fonte: {arquivo: data/x.csv, coluna: y}, texto_pt: "999"}
+- id: C01
+  descricao: "Afirmação central"
+  tipo: afirmacao
+  ocorrencias: []
+"""
+
+
+def test_carregar_ficha_so_numericas_com_texto_pt(tmp_path: Path) -> None:
+    ficha = carregar_ficha(escrever(tmp_path / "registro.yaml", REGISTRO_YAML))
+    linhas = ficha.splitlines()
+    assert len(linhas) == 2
+    assert linhas[0].startswith("- N01 (Total de potenciais pares do extrato) | n_pares_total = 61.696 | ")
+    assert "arquivo data/extrato_resumo.csv" in linhas[0] and "coluna valor" in linhas[0]
+    assert "filtro metrica=n_pares_candidatos" in linhas[0]
+    assert "derivado: n_par0 / n_vinculos" in linhas[1] and "= 1:249" in linhas[1]
+    assert "N03" not in ficha and "C01" not in ficha and "so_auxiliar" not in ficha
+    assert carregar_ficha(tmp_path / "inexistente.yaml") == ""
+
+
+def test_ficha_do_registro_real_tem_as_numericas() -> None:
+    ficha = carregar_ficha(REPO / "tests" / "data" / "registro_invariantes.yaml")
+    assert "- N01 (" in ficha and "n_pares_total = 61.696" in ficha
+    assert "- C01" not in ficha
+
+
+def test_prompts_de_sistema_levam_a_ficha_so_quando_ha_ficha(fatias) -> None:
+    ficha = "- N01 (Total) | n_pares_total = 61.696 | arquivo data/x.csv; coluna valor"
+    settings = ex.criar_settings("m", "sync", 100)
+    mapa = mapa_sintetico(fatias)
+    pares = [{"id": "p1", "tipo": "numero_divergente", "topico": "P_vigilancia", "topicos": ["P_vigilancia"],
+              "justificativa": "j", "flags": [],
+              "a": {"afirmacao_id": "af002", "fatia_id": fatias[0]["id"], "arquivo": "a.tex", "linha": 12, "trecho": "t"},
+              "b": {"afirmacao_id": "af004", "fatia_id": fatias[1]["id"], "arquivo": "a.tex", "linha": 14, "trecho": "u"}}]
+    com = [
+        mp.planejar_mapear(fatias, ANCORAS, settings, ficha)[0].params,
+        crz.planejar_cruzar(mapa, settings, ficha=ficha)[0].req.params,
+        adj.planejar_adjudicar(pares, mapa, fatias, ANCORAS, settings, ficha)[0].req.params,
+    ]
+    sem = [
+        mp.planejar_mapear(fatias, ANCORAS, settings)[0].params,
+        crz.planejar_cruzar(mapa, settings)[0].req.params,
+        adj.planejar_adjudicar(pares, mapa, fatias, ANCORAS, settings)[0].req.params,
+    ]
+    for params in com:
+        sistema = params["system"][0]["text"]
+        assert "FICHA DE VALORES CONFERIDOS" in sistema and ficha in sistema and "id da ficha" in sistema
+        assert params["system"][0]["cache_control"] == {"type": "ephemeral"}
+    for params in sem:
+        assert "FICHA DE VALORES CONFERIDOS" not in params["system"][0]["text"]
+    # o prompt muda com a ficha, então o custom_id também (sem colisão com checkpoints sem ficha)
+    assert mp.planejar_mapear(fatias, ANCORAS, settings, ficha)[0].custom_id != \
+        mp.planejar_mapear(fatias, ANCORAS, settings)[0].custom_id
+
+
+def test_cli_mapear_ficha_do_registro_e_sem_ficha(tmp_path: Path, fatias, monkeypatch) -> None:
+    yaml_path = tmp_path / "ancoras.yaml"
+    registro = escrever(tmp_path / "registro.yaml", REGISTRO_YAML)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "chave-falsa")
+    sistemas = {}
+    for nome, extra in (("com", []), ("sem", ["--sem-ficha"])):
+        out = tmp_path / nome
+        preparar_saida(out, fatias, yaml_path)
+        cliente = cliente_falso(responder_mapear_de(fatias))
+        monkeypatch.setattr(cli.av, "make_client", lambda chave, c=cliente: c)
+        argv = ["mapear", "--modo", "sync", "--limite", "1", "--ancoras", str(yaml_path), "--out", str(out),
+                "--registro", str(registro), *extra]
+        assert cli.main(argv) == 0
+        sistemas[nome] = cliente.messages.chamadas[0]["system"][0]["text"]
+    assert "n_pares_total = 61.696" in sistemas["com"] and "N01" in sistemas["com"]
+    assert "FICHA DE VALORES CONFERIDOS" not in sistemas["sem"] and "61.696" not in sistemas["sem"]
+
+
+def test_padroes_da_ficha_na_linha_de_comando() -> None:
+    parser = cli.build_parser()
+    for etapa in ("mapear", "cruzar", "adjudicar"):
+        args = parser.parse_args([etapa])
+        assert args.sem_ficha is False and args.registro == "tests/data/registro_invariantes.yaml"
+        assert parser.parse_args([etapa, "--sem-ficha"]).sem_ficha is True
+
+
+# ---------------------------------------------------------------------------
+# pinos
+# ---------------------------------------------------------------------------
+COLUNAS_PINOS = ["arquivo_teste", "funcao", "linha", "tipo", "literal", "alvo", "categoria",
+                 "afetado_pela_terminologia", "proposta_migracao", "linha_assert", "detalhe", "deteccao"]
+
+
+def pino_csv(i: int, categoria: str = "frase", alvo: str = "text/latex/capitulo3.tex",
+             arquivo: str = "tests/test_a.py") -> dict:
+    return {"arquivo_teste": arquivo, "funcao": f"test_{i}", "linha": str(100 + i), "tipo": "contem",
+            "literal": f"literal {i}", "alvo": alvo, "categoria": categoria, "afetado_pela_terminologia": "nao",
+            "proposta_migracao": "manter", "linha_assert": str(100 + i), "detalhe": "", "deteccao": "direta"}
+
+
+def escrever_inventario(caminho: Path, linhas: list[dict]) -> Path:
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    with caminho.open("w", encoding="utf-8-sig", newline="") as arquivo:
+        escritor = csv.DictWriter(arquivo, fieldnames=COLUNAS_PINOS, delimiter=";")
+        escritor.writeheader()
+        escritor.writerows(linhas)
+    return caminho
+
+
+def responder_pinos(params):
+    texto = params["messages"][0]["content"][0]["text"]
+    itens = []
+    for pid, resto in re.findall(r"^\[([0-9a-f]{16})\] (.*)$", texto, re.M):
+        forte = '"literal 3"' in resto
+        itens.append({
+            "pino_id": pid, "afirmacao_travada": "afirmação travada", "duplica_ancora": None,
+            "conflito": "forte_demais" if forte else "nenhum", "ancora_conflito": "C01" if forte else None,
+            "central_sem_ancora": '"literal 4"' in resto, "justificativa": "j",
+        })
+    return {"pinos": itens}
+
+
+def rodar_pinos(out: Path, pinos, cliente, tamanho=40, meta=None, concorrencia=1, modo="sync"):
+    settings = ex.criar_settings("modelo-teste", modo, 1000, concorrencia)
+    return pn.run_pinos(pinos=pinos, ancoras=ANCORAS, out=out, settings=settings, client=cliente,
+                        tamanho_lote=tamanho, meta=meta, sleep=lambda s: None)
+
+
+def test_pinos_filtra_categorias_e_le_inventario_com_bom(tmp_path: Path) -> None:
+    categorias = ["frase", "negacao", "ressalva", "numero", "termo", "citacao", "estrutural"]
+    caminho = escrever_inventario(tmp_path / "inv.csv", [pino_csv(i, c) for i, c in enumerate(categorias)])
+    linhas = pn.ler_inventario(caminho)
+    assert len(linhas) == 7 and linhas[0]["arquivo_teste"] == "tests/test_a.py"  # BOM não vaza para a coluna
+    pinos, meta = pn.selecionar(linhas)
+    assert [p["categoria"] for p in pinos] == ["frase", "negacao", "ressalva"]
+    assert meta["linhas_inventario"] == 7 and meta["pinos_de_conteudo"] == 3 and meta["excluidos_slides"] == 0
+
+
+def test_pinos_agrupa_em_lotes_de_40_com_ancoras_em_cache(tmp_path: Path) -> None:
+    pinos, _ = pn.selecionar([pino_csv(i) for i in range(85)])
+    assert [len(l) for l in pn.agrupar(pinos, 40)] == [40, 40, 5]
+    assert [len(l) for l in pn.agrupar(pinos)] == [40, 40, 5]  # padrão
+    cliente = cliente_falso(responder_pinos)
+    resultado = rodar_pinos(tmp_path, pinos, cliente)
+    assert resultado["requisicoes"] == 3 and len(cliente.messages.chamadas) == 3
+    assert len(resultado["linhas"]) == 85 and resultado["erros"] == 0 and not resultado["incompleto"]
+    for params in cliente.messages.chamadas:
+        assert "temperature" not in params
+        assert params["system"][0]["cache_control"] == {"type": "ephemeral"}
+        assert "Texto da âncora um." in params["system"][0]["text"]
+    corpo = cliente.messages.chamadas[0]["messages"][0]["content"][0]["text"]
+    assert len(re.findall(r"^\[[0-9a-f]{16}\] ", corpo, re.M)) == 40
+    saida = [json.loads(l) for l in (tmp_path / PINOS_NOME).read_text(encoding="utf-8").splitlines()]
+    assert len(saida) == 85 and {"pino_id", "afirmacao_travada", "duplica_ancora", "conflito", "ancora_conflito",
+                                 "central_sem_ancora", "justificativa"} <= set(saida[0])
+    novo = cliente_falso(responder_pinos)
+    rodar_pinos(tmp_path, pinos, novo)
+    assert novo.messages.chamadas == []  # retomada pelo checkpoint
+
+
+def test_pino_id_e_estavel(tmp_path: Path) -> None:
+    a = pn.pino_id("tests/test_a.py", "test_1", "101", "literal 1")
+    assert a == pn.pino_id("tests/test_a.py", "test_1", "101", "literal 1") and len(a) == 16
+    assert a != pn.pino_id("tests/test_a.py", "test_1", "102", "literal 1")
+    assert a == id_curto("tests/test_a.py", "test_1", "101", "literal 1")
+    linhas = [pino_csv(i) for i in range(5)]
+    direto, _ = pn.selecionar(linhas)
+    invertido, _ = pn.selecionar(list(reversed(linhas)))
+    assert [p["pino_id"] for p in direto] == [p["pino_id"] for p in invertido]
+    settings = ex.criar_settings("m", "sync", 100)
+    ids1 = [r.custom_id for r, _ in pn.planejar_pinos(direto, ANCORAS, settings)]
+    ids2 = [r.custom_id for r, _ in pn.planejar_pinos(invertido, ANCORAS, settings)]
+    assert ids1 == ids2
+
+
+def test_pinos_json_invalido_e_registrado_como_falha(tmp_path: Path) -> None:
+    pinos, _ = pn.selecionar([pino_csv(i) for i in range(85)])
+    boa = responder_pinos
+
+    def responder(params):
+        texto = params["messages"][0]["content"][0]["text"]
+        return "isto não é JSON" if '"literal 45"' in texto else boa(params)
+
+    resultado = rodar_pinos(tmp_path, pinos, cliente_falso(responder))
+    com_erro = [l for l in resultado["linhas"] if l["erro"]]
+    assert len(com_erro) == 40 and resultado["erros"] == 40 and resultado["pendentes"] == 0
+    assert all(l["erro"].startswith("json_invalido") and l["conflito"] is None for l in com_erro)
+    estado = json.loads((tmp_path / "pinos.checkpoint.json").read_text(encoding="utf-8"))
+    assert sum(1 for e in estado["requisicoes"].values() if e["erro"]) == 1
+
+
+def test_pinos_resposta_incompleta_ou_invalida_nao_e_descartada(tmp_path: Path) -> None:
+    pinos, _ = pn.selecionar([pino_csv(i) for i in range(3)])
+
+    def responder(params):
+        saida = responder_pinos(params)["pinos"]
+        saida[0]["conflito"] = "grave"  # fora da lista
+        saida[1]["ancora_conflito"] = "C99"  # âncora inexistente
+        return {"pinos": saida[:2]}  # o terceiro falta
+
+    linhas = rodar_pinos(tmp_path, pinos, cliente_falso(responder))["linhas"]
+    assert [l["erro"] for l in linhas] == ["conflito_invalido", None, "ausente_na_resposta"]
+    assert linhas[1]["flags"] == ["ancora_desconhecida"]
+
+
+def test_pinos_exclui_alvo_so_de_slides_por_padrao() -> None:
+    alvos = [
+        "text/slides/defesa.tex",  # excluído
+        "text/slides/defesa.tex|text/slides/roteiro_defesa.md",  # excluído
+        "(inferido) text/slides/roteiro_defesa.md",  # excluído
+        "text/latex/capitulo3.tex|text/slides/defesa.tex",  # tem arquivo de text/latex
+        "text/slides/defesa.tex|+2",  # truncado: pode haver outros
+        "(dinâmico)",
+        "text/latex/conclusao.tex",
+    ]
+    linhas = [pino_csv(i, alvo=a) for i, a in enumerate(alvos)]
+    pinos, meta = pn.selecionar(linhas)
+    assert meta["excluidos_slides"] == 3 and meta["pinos_enviados"] == 4 and len(pinos) == 4
+    assert {p["alvo"] for p in pinos} == set(alvos[3:])
+    todos, meta2 = pn.selecionar(linhas, incluir_slides=True)
+    assert len(todos) == 7 and meta2["excluidos_slides"] == 0 and meta2["incluir_slides"] is True
+    assert pn.alvo_so_slides("text/slides/defesa.tex") and not pn.alvo_so_slides("")
+
+
+def test_relatorio_secao_pinos(tmp_path: Path, fatias) -> None:
+    rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias)))
+    write_jsonl_atomic(tmp_path / FATIAS_NOME, fatias)
+    sem_pinos = rel.gerar_relatorio(tmp_path, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    assert "## Pinos" in sem_pinos and "não executado" in sem_pinos
+    linhas = [pino_csv(i) for i in range(6)] + [pino_csv(10 + i, alvo="text/slides/defesa.tex") for i in range(2)]
+    pinos, meta = pn.selecionar(linhas)
+    rodar_pinos(tmp_path, pinos, cliente_falso(responder_pinos), meta=meta)
+    texto = rel.gerar_relatorio(tmp_path, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    secao = texto.split("\n## Pinos\n")[1].split("\n## Custo")[0]
+    assert "excluídos (slides e roteiro serão refeitos): 2" in secao
+    assert "forte_demais 1" in secao and "nenhum 5" in secao
+    assert "`tests/test_a.py:103` \"literal 3\" (âncora C01): j" in secao
+    assert "### Pinos centrais sem âncora (1)" in secao and "`tests/test_a.py:104` \"literal 4\"" in secao
+    assert "| pinos | sync | 1 |" in texto
+
+
+def test_cli_pinos_ponta_a_ponta_estimar_e_slides(tmp_path: Path, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = escrever(tmp_path / "ancoras.yaml", "".join(
+        f"- id: {a['id']}\n  origem: {a['origem']}\n  texto: {a['texto']}\n" for a in ANCORAS))
+    linhas = [pino_csv(i) for i in range(5)] + [pino_csv(20, alvo="text/slides/defesa.tex"),
+                                                pino_csv(21, categoria="numero")]
+    inventario = escrever_inventario(tmp_path / "inv.csv", linhas)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "chave-falsa")
+    cliente = cliente_falso(responder_pinos)
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: cliente)
+    base = ["pinos", "--inventario", str(inventario), "--ancoras", str(yaml_path), "--out", str(out)]
+    assert cli.main([*base, "--estimar"]) == 0
+    saida = capsys.readouterr().out
+    assert "excluídos por alvo só em slides/roteiro: 1; enviados: 5" in saida
+    assert re.search(r"^pinos: 1 requisições; entrada ≈", saida, re.M)
+    assert cliente.messages.chamadas == [] and not list(out.glob("*.checkpoint.json"))
+    assert cli.main([*base, "--modo", "sync"]) == 0
+    assert len(cliente.messages.chamadas) == 1
+    assert len((out / PINOS_NOME).read_text(encoding="utf-8").splitlines()) == 5
+    assert json.loads((out / "pinos_meta.json").read_text(encoding="utf-8"))["excluidos_slides"] == 1
+    assert cli.main([*base, "--modo", "sync", "--incluir-slides"]) == 0
+    assert len((out / PINOS_NOME).read_text(encoding="utf-8").splitlines()) == 6
+    assert cli.main(["pinos", "--inventario", str(tmp_path / "nao_existe.csv"), "--ancoras", str(yaml_path),
+                     "--out", str(out)]) == 2
+
+
+def test_padroes_do_pinos_na_linha_de_comando() -> None:
+    args = cli.build_parser().parse_args(["pinos"])
+    assert args.inventario == ".local/fase0/inventario_pinos.csv" and args.tamanho_lote == 40
+    assert args.incluir_slides is False and args.modelo == "claude-sonnet-5-5" and args.modo == "batch"

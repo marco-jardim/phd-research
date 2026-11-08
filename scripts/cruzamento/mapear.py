@@ -36,8 +36,10 @@ from .prompts import sistema_mapear, usuario_mapear
 PASSADA = 1
 
 
-def planejar_mapear(fatias: list[dict], ancoras: list[dict], settings: av.Settings) -> list[av.PlannedRequest]:
-    sistema = sistema_mapear(ancoras)
+def planejar_mapear(
+    fatias: list[dict], ancoras: list[dict], settings: av.Settings, ficha: str = ""
+) -> list[av.PlannedRequest]:
+    sistema = sistema_mapear(ancoras, ficha)
     digest = hashlib.sha256(sistema.encode("utf-8")).hexdigest()[:12]
     planejadas = []
     for fatia in fatias:
@@ -47,11 +49,13 @@ def planejar_mapear(fatias: list[dict], ancoras: list[dict], settings: av.Settin
     return planejadas
 
 
-def estimar_mapear(fatias: list[dict], ancoras: list[dict], settings: av.Settings) -> dict[str, int]:
+def estimar_mapear(
+    fatias: list[dict], ancoras: list[dict], settings: av.Settings, ficha: str = ""
+) -> dict[str, int]:
     """Saída aproximada: 150 tokens mais 30% dos tokens do texto da fatia."""
-    sistema_tokens = ex.tokens_aprox(sistema_mapear(ancoras))
+    sistema_tokens = ex.tokens_aprox(sistema_mapear(ancoras, ficha))
     return ex.estimar(
-        planejar_mapear(fatias, ancoras, settings),
+        planejar_mapear(fatias, ancoras, settings, ficha),
         lambda req, n: 150 + int(0.3 * max(0, n - sistema_tokens)),
     )
 
@@ -180,11 +184,12 @@ def run_mapear(
     out: Path,
     settings: av.Settings,
     client: object,
+    ficha: str = "",
     sleep: Callable[[float], None] = time.sleep,
     log: Callable[[str], None] = lambda texto: None,
 ) -> dict:
     rt = ex.abrir_runtime(out, "mapear", settings, client, sleep, log)
-    planejadas = planejar_mapear(fatias, ancoras, settings)
+    planejadas = planejar_mapear(fatias, ancoras, settings, ficha)
     restantes = ex.executar(rt, planejadas, PASSADA)
     linhas = consolidar_mapa(fatias, planejadas, rt.cp, ancoras)
     write_jsonl_atomic(out / MAPA_NOME, linhas)

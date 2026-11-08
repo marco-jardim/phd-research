@@ -12,11 +12,14 @@ Sequência de execução::
     python scripts/cruzamento_ancoras.py cruzar
     python scripts/cruzamento_ancoras.py adjudicar --estimar
     python scripts/cruzamento_ancoras.py adjudicar
+    python scripts/cruzamento_ancoras.py pinos     --estimar                   # classifica pinos de teste
+    python scripts/cruzamento_ancoras.py pinos
     python scripts/cruzamento_ancoras.py relatorio
 
 1. ``fatiar``: grava ``fatias.jsonl`` (grupos de parágrafos inteiros da mesma seção, até 1.200 palavras;
    um frame por fatia nos slides; uma seção ou bloco por fatia no roteiro). Só entra o que a árvore de
    ``\\input`` de ``tese.tex`` alcança; ``*_diff.tex`` e ``*_diff_work/`` ficam de fora. Determinístico.
+   ``--fontes`` (padrão ``tese``) aceita ``tese,slides,roteiro``: slides e roteiro só entram se pedidos.
 2. ``mapear``: uma requisição por fatia ao Claude (padrão Sonnet 5.5). Devolve as relações não neutras com
    as âncoras (afirma, contradiz, enfraquece, exagera, omite_ressalva) e as afirmações substantivas da
    fatia (tipo, tópicos da taxonomia fixa, números, polaridade, escopo). Todo trecho é conferido
@@ -28,10 +31,18 @@ Sequência de execução::
 4. ``adjudicar``: cada par e cada relação contradiz/exagera vai ao Claude Opus (padrão ``claude-opus-5-5``)
    com as fatias completas: CONFIRMADO, FALSO_ALARME ou DEPENDE_DE_ESCOPO, com a correção mínima.
    Saída: ``adjudicacoes.jsonl``.
-5. ``relatorio``: ``relatorio.md`` (por âncora, contradições confirmadas por tópico, candidatas a âncora,
-   tokens por etapa) e ``matriz_ancoras.csv`` (âncora × arquivo × contagem por relação).
+5. ``pinos``: lê ``inventario_pinos.csv`` (``--inventario``), fica com as categorias frase, negacao e
+   ressalva, exclui por padrão os pinos cujo alvo só cita ``defesa.tex``/``roteiro_defesa.md``
+   (``--incluir-slides`` os mantém) e envia ~40 pinos por requisição ao Sonnet, com as âncoras em cache.
+   Por pino: ``pino_id``, ``afirmacao_travada``, ``duplica_ancora``, ``conflito`` (nenhum, forte_demais,
+   contradiz_ancora, cautela_solta), ``ancora_conflito``, ``central_sem_ancora`` e ``justificativa``.
+   Saída: ``pinos.jsonl`` e ``pinos_meta.json``.
+6. ``relatorio``: ``relatorio.md`` (por âncora, contradições confirmadas por tópico, candidatas a âncora,
+   pinos, tokens por etapa) e ``matriz_ancoras.csv`` (âncora × arquivo × contagem por relação).
 
-``mapear``, ``cruzar`` e ``adjudicar`` aceitam:
+``mapear``, ``cruzar`` e ``adjudicar`` também aceitam ``--sem-ficha`` (desliga a ficha de valores conferidos,
+gerada de ``--registro``, padrão ``tests/data/registro_invariantes.yaml``, entradas N## numéricas, no bloco de
+sistema). ``mapear``, ``cruzar``, ``adjudicar`` e ``pinos`` aceitam:
 
 * ``--modo batch`` (padrão): Message Batches API, retomável (o id do lote fica em
   ``<etapa>.checkpoint.json``; rode de novo para continuar a espera e baixar). ``--modo sync``: pool de
@@ -67,18 +78,25 @@ from scripts.atestado.common import (  # noqa: E402
 from scripts.cruzamento import adjudicar as adj  # noqa: E402
 from scripts.cruzamento import cruzar as crz  # noqa: E402
 from scripts.cruzamento import mapear as mp  # noqa: E402
+from scripts.cruzamento import pinos as pn  # noqa: E402
 from scripts.cruzamento import relatorio as rel  # noqa: E402
 from scripts.cruzamento.comum import (  # noqa: E402
     DEFAULT_ANCORAS,
     DEFAULT_OUT,
+    DEFAULT_PINOS_INVENTARIO,
+    DEFAULT_REGISTRO,
     DEFAULT_ROTEIRO,
     DEFAULT_SLIDES,
     DEFAULT_TESE,
     FATIAS_NOME,
+    FONTES,
+    FONTES_PADRAO,
     MAPA_NOME,
     MAX_PALAVRAS_FATIA,
     PARES_NOME,
+    PINOS_NOME,
     carregar_ancoras,
+    carregar_ficha,
     formatar_milhar,
     ler_jsonl,
 )
@@ -121,6 +139,16 @@ def _carregar_fatias(out: Path):
     return fatias, None
 
 
+def _ficha(args: argparse.Namespace):
+    """Ficha de valores conferidos (``""`` com ``--sem-ficha`` ou sem registro) e o erro, se houver."""
+    if args.sem_ficha:
+        return "", None
+    try:
+        return carregar_ficha(resolve_path(args.registro)), None
+    except ValueError as exc:
+        return None, _erro(str(exc))
+
+
 def _cliente():
     chave = load_env_var("ANTHROPIC_API_KEY")
     if not chave:
@@ -138,9 +166,13 @@ def _settings(args: argparse.Namespace):
 def cmd_fatiar(args: argparse.Namespace) -> int:
     out = resolve_path(args.out)
     base = resolve_path(args.base)
+    fontes = {f.strip() for f in args.fontes.split(",") if f.strip()}
+    if not fontes or not fontes <= set(FONTES):
+        return _erro(f"--fontes inválido: {args.fontes!r}; use itens de {', '.join(FONTES)} separados por vírgula")
     try:
-        fatias = fatiar(base, resolve_path(args.tese), _opcional(args.slides), _opcional(args.roteiro),
-                        args.max_palavras)
+        fatias = fatiar(base, resolve_path(args.tese) if "tese" in fontes else None,
+                        _opcional(args.slides) if "slides" in fontes else None,
+                        _opcional(args.roteiro) if "roteiro" in fontes else None, args.max_palavras)
     except FileNotFoundError as exc:
         return _erro(f"arquivo ausente: {exc}")
     write_jsonl_atomic(out / FATIAS_NOME, fatias)
@@ -163,14 +195,18 @@ def cmd_mapear(args: argparse.Namespace) -> int:
     ancoras, erro = _carregar_ancoras(args)
     if erro is not None:
         return erro
+    ficha, erro = _ficha(args)
+    if erro is not None:
+        return erro
     settings = _settings(args)
     if args.estimar:
-        _imprimir_estimativa("mapear", mp.estimar_mapear(fatias, ancoras, settings))
+        _imprimir_estimativa("mapear", mp.estimar_mapear(fatias, ancoras, settings, ficha))
         return 0
     client, erro = _cliente()
     if erro is not None:
         return erro
-    resultado = mp.run_mapear(fatias=fatias, ancoras=ancoras, out=out, settings=settings, client=client, log=log)
+    resultado = mp.run_mapear(fatias=fatias, ancoras=ancoras, out=out, settings=settings, client=client,
+                              ficha=ficha, log=log)
     print(f"mapear: {resultado['requisicoes']} requisições; pendentes {resultado['pendentes']}; "
           f"fatias com erro {resultado['erros']}; trechos inválidos {resultado['trechos_invalidos']}")
     print(f"saída: {out / MAPA_NOME}")
@@ -182,15 +218,20 @@ def cmd_cruzar(args: argparse.Namespace) -> int:
     mapa = ler_jsonl(out / MAPA_NOME)
     if not mapa:
         return _erro(f"{out / MAPA_NOME} ausente ou vazio; rode `mapear` antes")
+    ficha, erro = _ficha(args)
+    if erro is not None:
+        return erro
     settings = _settings(args)
     if args.estimar:
-        _imprimir_estimativa("cruzar", crz.estimar_cruzar(mapa, settings, args.max_afirmacoes, args.incluir_outro))
+        _imprimir_estimativa(
+            "cruzar", crz.estimar_cruzar(mapa, settings, args.max_afirmacoes, args.incluir_outro, ficha))
         return 0
     client, erro = _cliente()
     if erro is not None:
         return erro
     resultado = crz.run_cruzar(mapa=mapa, out=out, settings=settings, client=client,
-                               max_afirmacoes=args.max_afirmacoes, incluir_outro=args.incluir_outro, log=log)
+                               max_afirmacoes=args.max_afirmacoes, incluir_outro=args.incluir_outro,
+                               ficha=ficha, log=log)
     print(f"cruzar: {resultado['requisicoes']} requisições; pares {len(resultado['pares'])}; "
           f"problemas {len(resultado['problemas'])}; pendentes {resultado['pendentes']}")
     print(f"saída: {out / PARES_NOME}")
@@ -212,21 +253,55 @@ def cmd_adjudicar(args: argparse.Namespace) -> int:
     ancoras, erro = _carregar_ancoras(args)
     if erro is not None:
         return erro
+    ficha, erro = _ficha(args)
+    if erro is not None:
+        return erro
     settings = _settings(args)
     try:
         if args.estimar:
-            _imprimir_estimativa("adjudicar", adj.estimar_adjudicar(pares, mapa, fatias, ancoras, settings))
+            _imprimir_estimativa("adjudicar", adj.estimar_adjudicar(pares, mapa, fatias, ancoras, settings, ficha))
             return 0
         client, erro = _cliente()
         if erro is not None:
             return erro
         resultado = adj.run_adjudicar(pares=pares, mapa=mapa, fatias=fatias, ancoras=ancoras, out=out,
-                                      settings=settings, client=client, log=log)
+                                      settings=settings, client=client, ficha=ficha, log=log)
     except ValueError as exc:
         return _erro(str(exc))
     print(f"adjudicar: {resultado['requisicoes']} requisições; vereditos {resultado['vereditos']}; "
           f"pendentes {resultado['pendentes']}")
     print(f"saída: {out / 'adjudicacoes.jsonl'}")
+    return 3 if resultado["incompleto"] or resultado["erros"] else 0
+
+
+def cmd_pinos(args: argparse.Namespace) -> int:
+    out = resolve_path(args.out)
+    try:
+        linhas = pn.ler_inventario(resolve_path(args.inventario))
+    except FileNotFoundError as exc:
+        return _erro(f"inventário ausente: {exc}")
+    pinos, meta = pn.selecionar(linhas, args.incluir_slides)
+    if not pinos:
+        return _erro("nenhum pino de conteúdo (frase, negacao, ressalva) no inventário")
+    if args.limite:
+        pinos = pinos[: args.limite]
+    ancoras, erro = _carregar_ancoras(args)
+    if erro is not None:
+        return erro
+    settings = _settings(args)
+    print(f"pinos: {meta['pinos_de_conteudo']} de conteúdo; excluídos por alvo só em slides/roteiro: "
+          f"{meta['excluidos_slides']}; enviados: {len(pinos)}")
+    if args.estimar:
+        _imprimir_estimativa("pinos", pn.estimar_pinos(pinos, ancoras, settings, args.tamanho_lote))
+        return 0
+    client, erro = _cliente()
+    if erro is not None:
+        return erro
+    resultado = pn.run_pinos(pinos=pinos, ancoras=ancoras, out=out, settings=settings, client=client,
+                             tamanho_lote=args.tamanho_lote, meta=meta, log=log)
+    print(f"pinos: {resultado['requisicoes']} requisições; conflitos {resultado['conflitos']}; "
+          f"pendentes {resultado['pendentes']}; pinos com erro {resultado['erros']}")
+    print(f"saída: {out / PINOS_NOME}")
     return 3 if resultado["incompleto"] or resultado["erros"] else 0
 
 
@@ -270,13 +345,22 @@ def build_parser() -> argparse.ArgumentParser:
     p_fa.add_argument("--tese", default=DEFAULT_TESE)
     p_fa.add_argument("--slides", default=DEFAULT_SLIDES, help="vazio desliga")
     p_fa.add_argument("--roteiro", default=DEFAULT_ROTEIRO, help="vazio desliga")
+    p_fa.add_argument("--fontes", default=FONTES_PADRAO,
+                      help=f"fontes a fatiar, separadas por vírgula: {', '.join(FONTES)} (padrão {FONTES_PADRAO})")
     p_fa.add_argument("--base", default=".", help="raiz dos caminhos relativos gravados")
     p_fa.add_argument("--max-palavras", type=int, default=MAX_PALAVRAS_FATIA, dest="max_palavras")
     p_fa.set_defaults(func=cmd_fatiar)
 
+    def ficha(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--registro", default=DEFAULT_REGISTRO,
+                       help=f"registro de invariantes da ficha de valores (padrão {DEFAULT_REGISTRO})")
+        p.add_argument("--sem-ficha", action="store_true", dest="sem_ficha",
+                       help="não inclui a ficha de valores conferidos no prompt de sistema")
+
     p_ma = sub.add_parser("mapear", help="relações com as âncoras e afirmações por fatia")
     comum(p_ma)
     api(p_ma, DEFAULT_MODEL, 8192)
+    ficha(p_ma)
     p_ma.add_argument("--ancoras", default=DEFAULT_ANCORAS)
     p_ma.add_argument("--limite", type=int, default=0, help="só as N primeiras fatias (piloto)")
     p_ma.set_defaults(func=cmd_mapear)
@@ -284,6 +368,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_cr = sub.add_parser("cruzar", help="pares inconsistentes por tópico")
     comum(p_cr)
     api(p_cr, DEFAULT_MODEL, 4096)
+    ficha(p_cr)
     p_cr.add_argument("--max-afirmacoes", type=int, default=crz.MAX_AFIRMACOES_PADRAO, dest="max_afirmacoes",
                       help="afirmações por lote dentro de um tópico")
     p_cr.add_argument("--incluir-outro", action="store_true", dest="incluir_outro",
@@ -293,8 +378,22 @@ def build_parser() -> argparse.ArgumentParser:
     p_ad = sub.add_parser("adjudicar", help="adjudica pares e relações contradiz/exagera (Opus)")
     comum(p_ad)
     api(p_ad, DEFAULT_ADJ_MODEL, 2048)
+    ficha(p_ad)
     p_ad.add_argument("--ancoras", default=DEFAULT_ANCORAS)
     p_ad.set_defaults(func=cmd_adjudicar)
+
+    p_pi = sub.add_parser("pinos", help="classifica os pinos de teste contra as âncoras (lotes de pinos)")
+    comum(p_pi)
+    api(p_pi, DEFAULT_MODEL, 8192)
+    p_pi.add_argument("--ancoras", default=DEFAULT_ANCORAS)
+    p_pi.add_argument("--inventario", default=DEFAULT_PINOS_INVENTARIO,
+                      help=f"inventario_pinos.csv (padrão {DEFAULT_PINOS_INVENTARIO})")
+    p_pi.add_argument("--tamanho-lote", type=int, default=pn.TAMANHO_LOTE_PADRAO, dest="tamanho_lote",
+                      help=f"pinos por requisição (padrão {pn.TAMANHO_LOTE_PADRAO})")
+    p_pi.add_argument("--incluir-slides", action="store_true", dest="incluir_slides",
+                      help="inclui os pinos cujo alvo só cita defesa.tex ou roteiro_defesa.md (fora por padrão)")
+    p_pi.add_argument("--limite", type=int, default=0, help="só os N primeiros pinos (piloto)")
+    p_pi.set_defaults(func=cmd_pinos)
 
     p_re = sub.add_parser("relatorio", help="gera relatorio.md e matriz_ancoras.csv")
     comum(p_re)

@@ -48,7 +48,8 @@ def relacoes_adjudicaveis(mapa: list[dict], ids_ancoras: set[str]) -> list[dict]
 
 
 def planejar_adjudicar(
-    pares: list[dict], mapa: list[dict], fatias: list[dict], ancoras: list[dict], settings: av.Settings
+    pares: list[dict], mapa: list[dict], fatias: list[dict], ancoras: list[dict], settings: av.Settings,
+    ficha: str = "",
 ) -> list[PlanoAdjudicar]:
     por_fatia = {f["id"]: f for f in fatias}
     por_ancora = {a["id"]: a for a in ancoras}
@@ -69,7 +70,7 @@ def planejar_adjudicar(
             raise ValueError(f"fatia {ausentes[0]} ausente de fatias.jsonl; refaça `fatiar` e `mapear`")
         alvo["fatias"] = sorted(set(alvo["fatias"]))
     uso = Counter(i for alvo in alvos for i in alvo["fatias"])
-    sistema = sistema_adjudicar()
+    sistema = sistema_adjudicar(ficha)
     digest = hashlib.sha256(sistema.encode("utf-8")).hexdigest()[:12]
     planos = []
     for alvo in alvos:
@@ -85,9 +86,10 @@ def planejar_adjudicar(
 
 
 def estimar_adjudicar(
-    pares: list[dict], mapa: list[dict], fatias: list[dict], ancoras: list[dict], settings: av.Settings
+    pares: list[dict], mapa: list[dict], fatias: list[dict], ancoras: list[dict], settings: av.Settings,
+    ficha: str = "",
 ) -> dict[str, int]:
-    planos = planejar_adjudicar(pares, mapa, fatias, ancoras, settings)
+    planos = planejar_adjudicar(pares, mapa, fatias, ancoras, settings, ficha)
     return ex.estimar([p.req for p in planos], lambda req, n: SAIDA_ESTIMADA_TOKENS)
 
 
@@ -124,11 +126,12 @@ def run_adjudicar(
     out: Path,
     settings: av.Settings,
     client: object,
+    ficha: str = "",
     sleep: Callable[[float], None] = time.sleep,
     log: Callable[[str], None] = lambda texto: None,
 ) -> dict:
     rt = ex.abrir_runtime(out, "adjudicar", settings, client, sleep, log)
-    planos = planejar_adjudicar(pares, mapa, fatias, ancoras, settings)
+    planos = planejar_adjudicar(pares, mapa, fatias, ancoras, settings, ficha)
     restantes = ex.executar(rt, [p.req for p in planos], PASSADA)
     linhas = consolidar_adjudicacoes(planos, rt.cp)
     write_jsonl_atomic(out / ADJUDICACOES_NOME, linhas)

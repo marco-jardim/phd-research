@@ -21,11 +21,14 @@ from scripts.atestado.common import read_json, write_text_atomic
 
 from .comum import (
     ADJUDICACOES_NOME,
+    CONFLITOS_PINO,
     ETAPAS,
     FATIAS_NOME,
     MAPA_NOME,
     MATRIZ_NOME,
     PARES_NOME,
+    PINOS_META_NOME,
+    PINOS_NOME,
     RELACOES,
     RELATORIO_NOME,
     colapsar_espacos,
@@ -149,9 +152,52 @@ def _veredito(adj_por_id: dict[str, dict], alvo_id: str) -> str:
     return linha["veredito"] or f"sem veredito ({linha['erro']})"
 
 
+def secao_pinos(pinos: list[dict], meta: dict) -> list[str]:
+    """Seção "Pinos": contagem por conflito, pinos em conflito e pinos centrais sem âncora."""
+    L: list[str] = ["## Pinos", ""]
+    if not pinos:
+        L.extend(["- `pinos` não executado (sem `pinos.jsonl`)", ""])
+        return L
+    classificados = [p for p in pinos if not p.get("erro")]
+    if "excluidos_slides" in meta:
+        motivo = "incluídos" if meta.get("incluir_slides") else "excluídos"
+        L.append(f"- Pinos cujo alvo só cita `defesa.tex` ou `roteiro_defesa.md` {motivo} "
+                 f"(slides e roteiro serão refeitos): {meta['excluidos_slides']}")
+    L.append(f"- Pinos no arquivo: {len(pinos)}; classificados: {len(classificados)}; "
+             f"com erro ou pendentes: {dict(sorted(Counter(p['erro'] for p in pinos if p.get('erro')).items())) or 'nenhum'}")
+    contagem = Counter(p["conflito"] for p in classificados)
+    L.append("- Por conflito: " + ", ".join(f"{c} {contagem[c]}" for c in CONFLITOS_PINO))
+    L.append(f"- Pinos que duplicam uma âncora: {sum(1 for p in classificados if p.get('duplica_ancora'))}")
+    L.append("")
+    em_conflito = [p for p in classificados if p["conflito"] != "nenhum"]
+    L.append(f"### Pinos em conflito ({len(em_conflito)})")
+    L.append("")
+    if not em_conflito:
+        L.append("- nenhum")
+    for p in em_conflito[:LIMITE_LISTA]:
+        L.append(f"- {p['conflito']}: `{p['arquivo_teste']}:{p['linha']}` \"{_curto(p['literal'])}\" "
+                 f"(âncora {p.get('ancora_conflito') or '-'}): {_curto(p['justificativa'])}")
+    if len(em_conflito) > LIMITE_LISTA:
+        L.append(f"- ... e mais {len(em_conflito) - LIMITE_LISTA} em `pinos.jsonl`")
+    L.append("")
+    centrais = [p for p in classificados if p.get("central_sem_ancora")]
+    L.append(f"### Pinos centrais sem âncora ({len(centrais)})")
+    L.append("")
+    if not centrais:
+        L.append("- nenhum")
+    for p in centrais[:LIMITE_LISTA]:
+        L.append(f"- `{p['arquivo_teste']}:{p['linha']}` \"{_curto(p['literal'])}\": "
+                 f"{_curto(p['afirmacao_travada'])}")
+    if len(centrais) > LIMITE_LISTA:
+        L.append(f"- ... e mais {len(centrais) - LIMITE_LISTA} em `pinos.jsonl`")
+    L.append("")
+    return L
+
+
 def construir_relatorio(
     fatias: list[dict], mapa: list[dict], pares: list[dict], problemas_pares: list[dict],
     adjudicacoes: list[dict], ancoras: list[dict], uso: dict, min_ocorrencias: int = 3,
+    pinos: list[dict] | None = None, pinos_meta: dict | None = None,
 ) -> str:
     adj = {a["alvo_id"]: a for a in adjudicacoes}
     ids_ancoras = {a["id"] for a in ancoras}
@@ -275,6 +321,9 @@ def construir_relatorio(
         L.append(f"  - onde: {', '.join(f'`{x}`' for x in g['locais'][:8])}")
     L.append("")
 
+    # --- pinos -----------------------------------------------------------------------
+    L.extend(secao_pinos(pinos or [], pinos_meta or {}))
+
     # --- custo -----------------------------------------------------------------------
     L.append("## Custo (tokens de `usage`)")
     L.append("")
@@ -336,6 +385,7 @@ def gerar_relatorio(out: Path, ancoras: list[dict], min_ocorrencias: int = 3) ->
     texto = construir_relatorio(
         ler_jsonl(out / FATIAS_NOME), mapa, ler_jsonl(out / PARES_NOME), ler_jsonl(out / PARES_PROBLEMAS_NOME),
         ler_jsonl(out / ADJUDICACOES_NOME), ancoras, uso_por_etapa(out), min_ocorrencias,
+        ler_jsonl(out / PINOS_NOME), read_json(out / PINOS_META_NOME) or {},
     )
     matriz = montar_matriz(mapa, ancoras)
     write_text_atomic(out / RELATORIO_NOME, texto)
