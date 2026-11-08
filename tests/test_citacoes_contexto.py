@@ -195,12 +195,51 @@ def test_stable_id_for_same_key_and_sentence(tmp_path):
     assert other["records"][0]["id"] != id_first
 
 
-def test_repeated_key_in_same_sentence_is_merged(tmp_path):
+def test_repeated_key_in_same_sentence_gets_one_id_per_position(tmp_path):
     result = extract(tmp_path, "Texto \\cite{a} e depois \\citeyearpar{a}.\n")
+    first, second = result["records"]
+    assert first["id"] != second["id"]
+    assert first["id_legado"] == second["id_legado"]
+    assert first["sentence_text"] == "Texto [cit] e depois [ref]."
+    assert second["sentence_text"] == "Texto [ref] e depois [cit]."
+    resumo = (tmp_path / "out" / "resumo.md").read_text(encoding="utf-8")
+    assert "Ocorrências de citação (chave por comando): 2" in resumo
+
+
+def test_identical_context_is_merged(tmp_path):
+    result = extract(tmp_path, "Texto \\cite{a, a}.\n")
     (rec,) = result["records"]
     assert len(rec["outras_ocorrencias"]) == 1
     resumo = (tmp_path / "out" / "resumo.md").read_text(encoding="utf-8")
     assert "Ocorrências de citação (chave por comando): 2" in resumo
+
+
+def test_swapping_two_citations_changes_the_ids(tmp_path):
+    before = extract(tmp_path / "antes", "Texto \\citeonline{a} e \\citeonline{b} concordam.\n")
+    after = extract(tmp_path / "depois", "Texto \\citeonline{b} e \\citeonline{a} concordam.\n")
+    for key in ("a", "b"):
+        old, new = by_key(before["records"], key)[0], by_key(after["records"], key)[0]
+        assert old["id"] != new["id"]
+        assert old["id_legado"] == new["id_legado"]  # a fórmula antiga não percebia a troca
+
+
+def test_page_argument_and_command_change_the_id(tmp_path):
+    base = by_key(extract(tmp_path / "x0", "Regra \\citeonline[p.~10]{a} vale.\n")["records"], "a")[0]
+    page = by_key(extract(tmp_path / "x1", "Regra \\citeonline[p.~11]{a} vale.\n")["records"], "a")[0]
+    nopage = by_key(extract(tmp_path / "x2", "Regra \\citeonline{a} vale.\n")["records"], "a")[0]
+    command = by_key(extract(tmp_path / "x3", "Regra \\cite[p.~10]{a} vale.\n")["records"], "a")[0]
+    same = by_key(extract(tmp_path / "x4", "Regra \\citeonline[p.~10]{a} vale.\n")["records"], "a")[0]
+    assert len({base["id"], page["id"], nopage["id"], command["id"]}) == 4
+    assert base["id"] == same["id"]
+    assert len({r["id_legado"] for r in (base, page, nopage, command)}) == 1
+
+
+def test_legacy_id_formula_is_kept(tmp_path):
+    from scripts.citacoes_contexto import make_id
+
+    (rec,) = extract(tmp_path, "Frase um \\cite{a}.\n")["records"]
+    assert rec["id_legado"] == make_id("a", "Frase um [ref].")
+    assert rec["id"] != rec["id_legado"]
 
 
 def test_sentence_mapping_with_two_citations(tmp_path):
@@ -284,7 +323,7 @@ def test_cli_writes_outputs(tmp_path, capsys):
     lines = (out / "citacoes.jsonl").read_text(encoding="utf-8").splitlines()
     record = json.loads(lines[0])
     expected = {
-        "id", "key", "cite_command", "args", "file", "line", "chapter", "section_path",
+        "id", "id_legado", "key", "cite_command", "args", "file", "line", "chapter", "section_path",
         "environment", "sentence_latex", "sentence_text", "paragraph_text", "co_cited",
     }
     assert expected <= set(record)

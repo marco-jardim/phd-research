@@ -18,9 +18,13 @@ Convenções:
   chave de ``scripts/ref_audit`` (``data/cache/abstracts/<key>.json``).
 * Em ``sentence_text`` e ``paragraph_text`` a citação do registro aparece como
   ``[cit]`` e as demais citações como ``[ref]``.
-* ``id`` é ``sha256(chave + "|" + sentença normalizada)[:16]``; contextos com o
-  mesmo ``id`` (mesma chave na mesma sentença) viram um único registro, e os
-  demais locais ficam em ``outras_ocorrencias``.
+* ``id`` é ``sha256`` (16 primeiros hexadecimais) da chave, da sentença normalizada com
+  ``[cit]`` na posição da citação do registro (as demais como ``[ref]``), do comando de
+  citação e dos argumentos opcionais (página). Trocar duas citações na mesma sentença ou
+  mudar a página muda o ``id``. Contextos com o mesmo ``id`` viram um único registro, e
+  os demais locais ficam em ``outras_ocorrencias``.
+* ``id_legado`` é a fórmula antiga, ``sha256(chave + "|" + sentença normalizada com todas
+  as citações como [ref])[:16]``, mantida só para mapear avaliações antigas ao ``id`` novo.
 
 Somente biblioteca padrão, sem rede.
 """
@@ -952,8 +956,21 @@ def normalise_sentence(text: str) -> str:
 
 
 def make_id(key: str, sentence: str) -> str:
+    """Fórmula antiga do ``id`` (``id_legado``): todas as citações da sentença como [ref]."""
     digest = hashlib.sha256(f"{key}|{normalise_sentence(sentence)}".encode()).hexdigest()
     return digest[:16]
+
+
+def make_context_id(key: str, sentence: str, command: str, args: list[str]) -> str:
+    """``id`` do contexto: chave, sentença com [cit] na citação alvo, comando e argumentos.
+
+    ``sentence`` já traz ``[cit]`` na posição alvo e ``[ref]`` nas demais.
+    """
+    payload = json.dumps(
+        [key, normalise_sentence(sentence), command, [re.sub(r"\s+", " ", a).strip() for a in args]],
+        ensure_ascii=False,
+    )
+    return hashlib.sha256(payload.encode()).hexdigest()[:16]
 
 
 def _unit_records(
@@ -995,7 +1012,8 @@ def _unit_records(
         for key in call.keys:
             records.append(
                 {
-                    "id": make_id(key, norm_text),
+                    "id": make_context_id(key, sentence_text, call.command, call.args),
+                    "id_legado": make_id(key, norm_text),
                     "key": key,
                     "cite_command": call.command,
                     "args": list(call.args),

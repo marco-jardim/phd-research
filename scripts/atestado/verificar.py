@@ -18,6 +18,8 @@ PROBLEMS = (
 NEEDS_QUOTE = {"SUSTENTA", "SUSTENTA_PARCIALMENTE", "CONTRADIZ"}
 SECOND_PASS_VERDICTS = {"NAO_SUSTENTA", "CONTRADIZ"}
 MAX_QUOTE_WORDS = 60
+MIN_QUOTE_WORDS = 6
+MIN_QUOTE_CHARS = 40
 
 DIVERGENTE = "DIVERGENTE"
 
@@ -37,6 +39,15 @@ def verify_quote(quote: str, evidence_text: str) -> bool:
         return True
     lq = _loose(nq)
     return bool(lq) and lq in _loose(ne)
+
+
+def quote_long_enough(quote: str) -> bool:
+    """Trecho com pelo menos ``MIN_QUOTE_WORDS`` palavras ou ``MIN_QUOTE_CHARS`` caracteres.
+
+    Trechos mais curtos (uma sigla, um número) aparecem em qualquer fonte e não sustentam um veredito.
+    """
+    text = re.sub(r"\s+", " ", quote).strip()
+    return len(text.split()) >= MIN_QUOTE_WORDS or len(text) >= MIN_QUOTE_CHARS
 
 
 def make_assessment(raw: dict | None, evidence_text: str) -> dict:
@@ -65,6 +76,9 @@ def make_assessment(raw: dict | None, evidence_text: str) -> dict:
         verified = verify_quote(quote, evidence_text)
         if not verified:
             flags.append("trecho_nao_encontrado")
+        elif verdict in NEEDS_QUOTE and not quote_long_enough(quote):
+            verified = False
+            flags.append("trecho_curto")
     elif verdict_raw in NEEDS_QUOTE:
         verified = False
         flags.append("trecho_ausente")

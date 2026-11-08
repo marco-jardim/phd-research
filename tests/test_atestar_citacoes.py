@@ -28,7 +28,7 @@ from scripts.atestado import verificar as vf
 from scripts.citacoes_contexto import BibEntry
 
 ABSTRACT = "The coverage reached 92.4% in 2015 across all regions."
-QUOTE = "coverage reached 92.4% in 2015"
+QUOTE = "coverage reached 92.4% in 2015 across all regions"  # 8 palavras, 49 caracteres
 TITLE = "Probabilistic linkage in cancer registries"
 DOI = "10.1234/abc.1"
 EMAIL = "test@example.org"
@@ -498,6 +498,37 @@ def test_verdict_downgraded_when_quote_not_found():
 
     assert vf.make_assessment(item(problem="inventado"), ABSTRACT)["problema"] == "outro"
     assert "sem_resposta_modelo" in vf.make_assessment(None, ABSTRACT)["flags"]
+
+
+def test_quote_length_rule():
+    assert vf.quote_long_enough("one two three four five six")  # 6 palavras
+    assert vf.quote_long_enough("x" * 40)  # 40 caracteres
+    assert not vf.quote_long_enough("one two three four five")
+    assert not vf.quote_long_enough("x" * 39)
+    assert not vf.quote_long_enough("")
+
+
+@pytest.mark.parametrize("verdict", ["SUSTENTA", "SUSTENTA_PARCIALMENTE", "CONTRADIZ"])
+def test_short_quote_downgrades_supporting_verdicts(verdict):
+    short = "coverage reached 92.4% in 2015"  # encontrado na fonte, mas só 5 palavras e 30 caracteres
+    assert vf.verify_quote(short, ABSTRACT)
+    result = vf.make_assessment(item(verdict, quote=short), ABSTRACT)
+    assert result["veredito"] == "NAO_VERIFICAVEL" and result["veredito_modelo"] == verdict
+    assert result["trecho_verificado"] is False
+    assert "trecho_curto" in result["flags"] and "trecho_nao_encontrado" not in result["flags"]
+    assert vf.needs_second_pass(result)
+
+
+def test_short_quote_is_accepted_by_chars_or_words_and_ignored_for_nao_sustenta():
+    by_words = vf.make_assessment(item(quote="The coverage reached 92.4% in 2015"), ABSTRACT)  # 6 palavras
+    assert by_words["veredito"] == "SUSTENTA" and by_words["trecho_verificado"] is True
+    six_words = vf.make_assessment(item(quote="coverage reached 92.4% in 2015 across"), ABSTRACT)  # 37 chars
+    assert six_words["trecho_verificado"] is True
+    word = "pneumonoultramicroscopicsilicovolcanoconiosis"  # 1 palavra, 45 caracteres
+    by_chars = vf.make_assessment(item(quote=word), f"Case of {word} reported.")
+    assert by_chars["veredito"] == "SUSTENTA" and by_chars["trecho_verificado"] is True
+    nao = vf.make_assessment(item("NAO_SUSTENTA", quote="coverage reached 92.4%"), ABSTRACT)
+    assert nao["veredito"] == "NAO_SUSTENTA" and nao["trecho_verificado"] is True and nao["flags"] == []
 
 
 def test_second_pass_trigger():

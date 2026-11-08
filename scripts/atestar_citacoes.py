@@ -53,15 +53,27 @@ Sequência de execução (a etapa 1 é ``scripts/citacoes_contexto.py``, que ger
    de tokens; batch_desconto como fração, ex. 0.5), custo estimado.
 
 4. ``exportar-ledger --escopo tese``: grava o ledger versionado ``docs/atestado/ledger.csv`` (UTF-8, ``;``;
-   colunas id, chave, arquivo, capitulo, veredito_final, nivel_evidencia, adjudicado, modelo, data; sem
-   citações nem justificativas, que ficam em ``.local/``) a partir de ``piloto/tese/avaliacoes.jsonl`` e
-   ``artefatos.json`` (obras próprias entram como ``PROPRIO``). Também atualiza ``docs/atestado/pendencias.yaml``
-   (ids com NAO_SUSTENTA ou CONTRADIZ, cada um com ``decisao``, inicialmente ``pendente``; decisões já
-   registradas são preservadas e os ids novos são listados na saída). Contextos ainda sem veredito final
-   (PENDENTE) não entram no ledger.
+   colunas id, id_legado, chave, arquivo, capitulo, veredito_final, nivel_evidencia, adjudicado, modelo, data,
+   hash_avaliacao; sem citações nem justificativas, que ficam em ``.local/``) a partir de
+   ``piloto/tese/avaliacoes.jsonl`` e ``artefatos.json`` (obras próprias entram como ``PROPRIO``). Avaliações
+   com o id antigo (chave + sentença) são mapeadas ao id novo de ``citacoes.jsonl`` pelo campo ``id_legado``.
+   ``hash_avaliacao`` é o sha256 (16 primeiros hexadecimais) de modelo, veredito final e trecho da fonte
+   (o trecho não é gravado). Contextos ainda sem veredito final (PENDENTE) não entram no ledger.
+   Também reconcilia ``docs/atestado/pendencias.yaml`` (ids com NAO_SUSTENTA ou CONTRADIZ, cada um com
+   ``decisao``; decisões e ``origem`` já registradas são preservadas, inclusive ao migrar ids antigos):
+
+   * sem ``--aceitar-novas``, NAO_SUSTENTA/CONTRADIZ que não estão em ``pendencias.yaml`` NÃO são
+     acrescentados: o ledger é gravado, os ids novos são listados e o código de saída é 3;
+   * com ``--aceitar-novas``, os ids novos entram com ``decisao: pendente`` (código 0), e o teste de
+     portão só passa depois que o autor registrar uma decisão diferente de ``pendente``;
+   * ``--marcar-baseline`` (migração única) marca as entradas já existentes com
+     ``origem: baseline-2026-11-08``, a única forma de ``pendente`` aceita pelo portão.
+
+   Códigos de saída: 0 sucesso; 2 sem avaliações; 3 problemas novos sem ``--aceitar-novas``.
 
 Como atestar contextos alterados após uma edição do texto (o teste ``tests/test_atestado_ledger.py`` falha
-com "contextos sem atestamento" para toda sentença nova ou reescrita; o ``id`` é a chave mais a sentença):
+com "contextos sem atestamento" para toda sentença nova ou reescrita; o ``id`` é a chave, a sentença com
+``[cit]`` na posição da citação, o comando de citação e os argumentos opcionais, como a página):
 
     python scripts/citacoes_contexto.py                       # extrai os contextos atuais
     python scripts/atestar_citacoes.py evidencias --escopo tese
@@ -71,8 +83,10 @@ com "contextos sem atestamento" para toda sentença nova ou reescrita; o ``id`` 
     python -m pytest tests/test_atestado_ledger.py -q
 
 O reaproveitamento do ``avaliar`` (``reaproveitado_de``) mantém o custo baixo: só contextos novos ou com evidência
-alterada vão à API. Se o passo ``exportar-ledger`` listar pendências NOVAS, corrija o texto ou registre a
-decisão em ``pendencias.yaml`` antes de versionar o ledger.
+alterada vão à API. Se o passo ``exportar-ledger`` sair com código 3 (problemas NOVOS), corrija o texto ou
+rode de novo com ``--aceitar-novas`` e registre a decisão em ``pendencias.yaml`` antes de versionar o ledger.
+Trechos de fonte com menos de 6 palavras e menos de 40 caracteres não sustentam SUSTENTA, SUSTENTA_PARCIALMENTE
+nem CONTRADIZ (``trecho_curto``: veredito rebaixado a NAO_VERIFICAVEL, com segunda passada).
 
 Saídas em ``.local/biblio/piloto/<capitulo>/``: ``evidencias_resumo.md``, ``classificacao.json``,
 ``artefatos.json``, ``checkpoint.json``, ``avaliacoes.jsonl``, ``metadados.json``, ``relatorio.md``.
@@ -346,7 +360,9 @@ def cmd_exportar_ledger(args: argparse.Namespace) -> int:
     pdir = pilot_dir(out_dir, None)
     dest = resolve_path(args.saida)
     try:
-        summary = led.exportar_ledger(pdir, out_dir, dest)
+        summary = led.exportar_ledger(
+            pdir, out_dir, dest, aceitar_novas=args.aceitar_novas, marcar_baseline=args.marcar_baseline
+        )
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
         return 2
@@ -354,10 +370,18 @@ def cmd_exportar_ledger(args: argparse.Namespace) -> int:
     print(f"pendências: {dest / led.PENDENCIAS_NAME} ({summary['pendencias']} abertas)")
     if summary["pendentes_sem_veredito"]:
         print(f"sem veredito final (fora do ledger): {len(summary['pendentes_sem_veredito'])}", file=sys.stderr)
-    if summary["pendencias_novas"]:
-        print(f"pendências NOVAS ({len(summary['pendencias_novas'])}): " + ", ".join(summary["pendencias_novas"]))
+    novas = summary["pendencias_novas"]
+    if novas:
+        print(f"problemas NOVOS ({len(novas)}): " + ", ".join(novas))
     if summary["pendencias_resolvidas"]:
         print(f"pendências resolvidas e removidas: {len(summary['pendencias_resolvidas'])}")
+    if novas and not args.aceitar_novas:
+        print(
+            "NAO_SUSTENTA/CONTRADIZ novos não foram acrescentados a pendencias.yaml: corrija o texto ou "
+            "rode de novo com --aceitar-novas (a decisão do autor continua exigida pelo teste de portão)",
+            file=sys.stderr,
+        )
+        return 3
     return 0
 
 
@@ -443,6 +467,11 @@ def build_parser() -> argparse.ArgumentParser:
                        help="lê piloto/tese/avaliacoes.jsonl (e artefatos.json das obras próprias)")
     p_led.add_argument("--out", default=DEFAULT_OUT, help="diretório de trabalho (padrão .local/biblio)")
     p_led.add_argument("--saida", default="docs/atestado", help="pasta do ledger versionado (padrão docs/atestado)")
+    p_led.add_argument("--aceitar-novas", action="store_true", dest="aceitar_novas",
+                       help="acrescenta a pendencias.yaml os NAO_SUSTENTA/CONTRADIZ novos (decisao: pendente); "
+                            "sem esta opção eles só são listados e o comando sai com código 3")
+    p_led.add_argument("--marcar-baseline", action="store_true", dest="marcar_baseline",
+                       help="migração única: marca as pendências existentes com origem: baseline-2026-11-08")
     p_led.set_defaults(func=cmd_exportar_ledger)
     return parser
 

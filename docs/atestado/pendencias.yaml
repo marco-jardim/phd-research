@@ -1,128 +1,160 @@
 # Problemas abertos aceitos (NAO_SUSTENTA ou CONTRADIZ) da atestação bibliográfica.
 # Gerado por `scripts/atestar_citacoes.py exportar-ledger`; decisões existentes são preservadas.
-# Uma pendência nova só entra por aqui, visível no diff; `decisao` começa em "pendente".
+# `origem: baseline-2026-11-08` marca o conjunto aceito na linha de base. Uma pendência nova só entra
+# com `--aceitar-novas`, visível no diff, e o teste de portão exige que o autor troque `decisao: pendente`.
 pendencias:
-- id: 6adc5b05acc6f5de
+- id: 10af85a98fbcbcf3
   chave: Bartholomay2014improved
   arquivo: text/latex/apendice_linkage_origem.tex
   decisao: pendente
-- id: a3339aa9422645bd
+  origem: baseline-2026-11-08
+- id: b1e3f95bd5ee65c1
   chave: Oliveira2012uso
   arquivo: text/latex/apendice_linkage_origem.tex
   decisao: pendente
-- id: 9e355ca1eddf1a78
+  origem: baseline-2026-11-08
+- id: d87249d389380f26
   chave: Oliveira2016accuracy
   arquivo: text/latex/apendice_linkage_origem.tex
   decisao: pendente
-- id: 853d75715417e250
+  origem: baseline-2026-11-08
+- id: 98507fa4791565cb
   chave: Nasseh2016semisupervised
   arquivo: text/latex/capitulo1.tex
   decisao: pendente
-- id: 48e07896d42386eb
+  origem: baseline-2026-11-08
+- id: 319afcf06376c845
   chave: Barreto2019The
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: ad9f1cd564a06123
+  origem: baseline-2026-11-08
+- id: 8ef89d348dfb4916
   chave: He2009imbalanced
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: 45338b48fa5d22df
+  origem: baseline-2026-11-08
+- id: 434aa35c75b8e9f3
   chave: Nasseh2016semisupervised
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: f476ac8258488f85
+  origem: baseline-2026-11-08
+- id: 4f1f9bd55cd77747
   chave: Nasseh2016semisupervised
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: 7a7d3baacb973f98
+  origem: baseline-2026-11-08
+- id: 734d7e351fae9de2
   chave: Rochner2024machine
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: 232231fdca2a63dc
+  origem: baseline-2026-11-08
+- id: 362454542d821d31
   chave: Viacava2012avaliacao
   arquivo: text/latex/capitulo2.tex
   decisao: pendente
-- id: 48d1980154b48a18
+  origem: baseline-2026-11-08
+- id: 50401bda8c4a3c08
   chave: Camargo2000reclink
   arquivo: text/latex/capitulo3.tex
   decisao: pendente
-- id: e3529757e3cfb802
+  origem: baseline-2026-11-08
+- id: 51b53812b5f7c05b
   chave: Maia2022covid_tb
   arquivo: text/latex/capitulo3.tex
   decisao: pendente
-- id: 2b496d6fdf8f72ad
+  origem: baseline-2026-11-08
+- id: 44e2e552293df883
   chave: Oliveira2016accuracy
   arquivo: text/latex/capitulo3.tex
   decisao: pendente
-- id: 65ee442fabb98aea
+  origem: baseline-2026-11-08
+- id: c9cc4d48e485d510
   chave: Werneck2020covid
   arquivo: text/latex/capitulo3.tex
   decisao: pendente
-- id: 8f49ced527a1ed59
+  origem: baseline-2026-11-08
+- id: 0993953c7620f233
   chave: Bartholomay2014improved
   arquivo: text/latex/capitulo_dados.tex
   decisao: pendente
-- id: b529d579c1b2f8b9
+  origem: baseline-2026-11-08
+- id: 127fd279e4f91687
   chave: Oliveira2012uso
   arquivo: text/latex/capitulo_dados.tex
   decisao: pendente
-- id: c8d290244ff0845a
+  origem: baseline-2026-11-08
+- id: 24615fafa2acc11e
   chave: Oliveira2016accuracy
   arquivo: text/latex/capitulo_dados.tex
   decisao: pendente
-- id: 4cd0b3c64bb8bc71
+  origem: baseline-2026-11-08
+- id: 38d398e20071634a
   chave: Doidge2019linkageerror
   arquivo: text/latex/conclusao.tex
   decisao: pendente
-- id: 30848ed252ca9d49
+  origem: baseline-2026-11-08
+- id: bf398294b0a66417
   chave: Li2020ditto
   arquivo: text/latex/conclusao.tex
   decisao: pendente
-- id: a2c73a730fef9a40
+  origem: baseline-2026-11-08
+- id: 48bf1b168a300543
   chave: Winkler1990string
   arquivo: text/latex/estudo1_comparador.tex
   decisao: pendente
-- id: 44682c3fc8d8a9f8
+  origem: baseline-2026-11-08
+- id: bc29f05b17237bf8
   chave: Hand2018fmeasure
   arquivo: text/latex/estudo2_classificadores.tex
   decisao: pendente
-- id: 1818449dd22b507a
+  origem: baseline-2026-11-08
+- id: ce00cc241fd241a8
   chave: Hastie2009elements
   arquivo: text/latex/estudo2_classificadores.tex
   decisao: pendente
-- id: 08e403b276694249
+  origem: baseline-2026-11-08
+- id: 279269f8eaf185f6
   chave: Breiman2001rf
   arquivo: text/latex/estudo3_estrategias.tex
   decisao: pendente
-- id: 3719d80dd86d2515
+  origem: baseline-2026-11-08
+- id: e878f7b786fad1e5
   chave: Chen2016xgboost
   arquivo: text/latex/estudo3_estrategias.tex
   decisao: pendente
-- id: e3a91a3206185d90
+  origem: baseline-2026-11-08
+- id: ce31481145a121b2
   chave: Coeli2021suboptimal
   arquivo: text/latex/estudo3_estrategias.tex
   decisao: pendente
-- id: 756a6db5f642d5a2
+  origem: baseline-2026-11-08
+- id: 8926f218b375fae6
   chave: Oliveira2019early
   arquivo: text/latex/estudo3_estrategias.tex
   decisao: pendente
-- id: 9dafae5d5ea55e3c
+  origem: baseline-2026-11-08
+- id: f57e35deb82ae520
   chave: Rochner2024machine
   arquivo: text/latex/estudo3_estrategias.tex
   decisao: pendente
-- id: e738aa4d559e633c
+  origem: baseline-2026-11-08
+- id: 56add4fd9a82ffae
   chave: KimiK2_5_2025
   arquivo: text/latex/estudo4_gzcmd.tex
   decisao: pendente
-- id: 5b175db9b07d1384
+  origem: baseline-2026-11-08
+- id: aa482788bd84f091
   chave: Oliveira2026obitoTBpulmonar
   arquivo: text/latex/estudo4_gzcmd.tex
   decisao: pendente
-- id: e45743e0326e4f12
+  origem: baseline-2026-11-08
+- id: aa80b590c0ec8ba4
   chave: Shaw2022biases
   arquivo: text/latex/estudo4_gzcmd.tex
   decisao: pendente
-- id: 5c759f48fa5c911d
+  origem: baseline-2026-11-08
+- id: 5b22f7ccc88ff574
   chave: Camargo2000reclink
   arquivo: text/latex/glossario.tex
   decisao: pendente
+  origem: baseline-2026-11-08
