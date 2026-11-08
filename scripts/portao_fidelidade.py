@@ -234,25 +234,27 @@ def normalizar_numero(bruto: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-_RE_ROTULO_CACHE: list = []
+_COBERTURA_CACHE: list = []
 
 
-def _re_rotulo() -> re.Pattern:
-    """Regra de rótulo (passo, capítulo, seção, figura, tabela...) de ``cobertura_numeros``.
-
-    Importada sob demanda: ``cobertura_numeros`` importa este módulo.
-    """
-    if not _RE_ROTULO_CACHE:
+def _cobertura_numeros():
+    """Módulo ``cobertura_numeros``, importado sob demanda: ele importa este módulo."""
+    if not _COBERTURA_CACHE:
         ultimo: ImportError | None = None
         for nome in ("scripts.cobertura_numeros", "cobertura_numeros"):
             try:
-                _RE_ROTULO_CACHE.append(importlib.import_module(nome)._RE_ROTULO)
+                _COBERTURA_CACHE.append(importlib.import_module(nome))
                 break
             except ImportError as exc:
                 ultimo = exc
         else:
-            raise ErroInvariantes(f"regra de rótulos indisponível (cobertura_numeros): {ultimo}")
-    return _RE_ROTULO_CACHE[0]
+            raise ErroInvariantes(f"regras de isenção indisponíveis (cobertura_numeros): {ultimo}")
+    return _COBERTURA_CACHE[0]
+
+
+def _re_rotulo() -> re.Pattern:
+    """Regra de rótulo (passo, capítulo, seção, figura, tabela...) de ``cobertura_numeros``."""
+    return _cobertura_numeros()._RE_ROTULO
 
 
 def _e_rotulo(texto: str, inicio: int) -> bool:
@@ -261,11 +263,24 @@ def _e_rotulo(texto: str, inicio: int) -> bool:
     return bool(_re_rotulo().search(antes))
 
 
-def extrair_tokens(par: str, isentar_rotulos: bool = False) -> dict[str, Counter]:
+def _e_identificador(texto: str, inicio: int) -> bool:
+    """O número que começa em ``texto[inicio]`` é dígito de identificador (O3, K2.5, COVID-19)?
+
+    Mesma regra do motivo ``identificador`` de ``cobertura_numeros`` (``eh_identificador``).
+    """
+    antes = re.sub(r"\s+", " ", texto[max(0, inicio - 120) : inicio])
+    return _cobertura_numeros().eh_identificador(antes)
+
+
+def extrair_tokens(
+    par: str, isentar_rotulos: bool = False, isentar_identificadores: bool = False
+) -> dict[str, Counter]:
     """Multiconjuntos de itens com sentido, por categoria.
 
     Com ``isentar_rotulos``, os números de rótulo (passo, capítulo, seção, figura, tabela,
     equação, estudo, objetivo, meta...) não entram em ``numeros`` nem na ordem dos números.
+    Com ``isentar_identificadores``, o mesmo vale para dígitos colados a letras (O3, F4, K2.5,
+    COVID-19).
     """
     tok = {cat: Counter() for cat in CATEGORIAS}
     trabalho = par
@@ -293,6 +308,8 @@ def extrair_tokens(par: str, isentar_rotulos: bool = False) -> dict[str, Counter
         sequencia = []
         for m in RE_NUMERO.finditer(frase):
             if isentar_rotulos and _e_rotulo(numerico, inicio_frase + m.start("num")):
+                continue
+            if isentar_identificadores and _e_identificador(numerico, inicio_frase + m.start("num")):
                 continue
             item = normalizar_numero(m.group("num"))
             if m.group("sinal"):
@@ -929,11 +946,14 @@ def contar_numeros(texto: str) -> Counter:
     """Multiconjunto de números do arquivo, pela mesma extração dos parágrafos.
 
     Os números de rótulo ("passo 11", "Tabela 3", "seção 2.1") ficam de fora: são
-    isentos pela regra ``rotulo`` de ``scripts/cobertura_numeros.py``.
+    isentos pela regra ``rotulo`` de ``scripts/cobertura_numeros.py``, e os dígitos de
+    identificadores (O3, F4, K2.5, COVID-19), pela regra ``identificador`` do mesmo módulo.
     """
     total: Counter = Counter()
     for par in segmentar(texto):
-        total.update(extrair_tokens(par, isentar_rotulos=True)["numeros"])
+        total.update(
+            extrair_tokens(par, isentar_rotulos=True, isentar_identificadores=True)["numeros"]
+        )
     return total
 
 

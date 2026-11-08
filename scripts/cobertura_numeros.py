@@ -171,6 +171,15 @@ _RE_NORMA = re.compile(
     r"n[ºo°]\.?|n\.º|de|no))*[\s-]*(?:\d+(?:[.,]\d+)*[\s/.-]*)*$", re.I)
 
 
+def eh_identificador(antes: str) -> bool:
+    """O número que segue ``antes`` é dígito de identificador (O3, H1, K2.5, COVID-19)?
+
+    Regra compartilhada com ``portao_fidelidade``: o trecho anterior termina em letra, ou
+    em hífen precedido de letra.
+    """
+    return antes[-1:].isalpha() or (antes[-1:] == "-" and antes[-2:-1].isalpha())
+
+
 def _motivo_isencao(arq: lp.Arquivo, pos: int, novo: str, ini: int, fim: int,
                     bruto: str, estruturas: list[tuple[int, int]],
                     datas: list[tuple[int, int]]) -> str | None:
@@ -192,7 +201,7 @@ def _motivo_isencao(arq: lp.Arquivo, pos: int, novo: str, ini: int, fim: int,
         return "rotulo"
     if _RE_NORMA.search(antes):
         return "norma"
-    if antes[-1:].isalpha() or (antes[-1:] == "-" and antes[-2:-1].isalpha()):
+    if eh_identificador(antes):
         return "identificador"
     return None
 

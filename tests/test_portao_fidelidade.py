@@ -1143,6 +1143,36 @@ def test_numero_depois_do_rotulo_e_numero_antes_da_palavra_continuam_contando():
     assert numeros("Ver o passo 11 e depois 5 casos.", "Ver 5 casos no passo 11.") == []
 
 
+@pytest.mark.parametrize(
+    "identificador",
+    ["a ordenação O3", "a fusão F4", "a hipótese H1", "o Kimi K2.5", "a COVID-19", "o modelo F3 e O1"],
+)
+def test_identificadores_sao_isentos_na_comparacao_por_capitulo(identificador):
+    assert numeros("Havia 10 casos.", f"Havia 10 casos com {identificador}.") == []
+    # no alinhamento por parágrafo o dígito do identificador continua contando
+    assert sum(pf.extrair_tokens(f"Havia 10 casos com {identificador}.")["numeros"].values()) >= 2
+
+
+def test_identificador_novo_nao_conta_mas_numero_solto_continua():
+    base = "A recomendação usa O1 e F4 em 7 casos."
+    alvo = "A recomendação usa O3, F3 e F4 em 7 casos."
+    assert numeros(base, alvo) == []
+    ach = numeros(base, "A recomendação usa O3, F3 e F4 em 7 casos e 3 revisões.")
+    assert [(a.numero, a.tipo) for a in ach] == [("3", "novo")]
+    ach = numeros(base, "A recomendação usa O3 e F4 em 7 casos e 4 revisões.")
+    assert [(a.numero, a.tipo) for a in ach] == [("4", "novo")]
+
+
+def test_rotulo_de_classe_par_igual_a_2_continua_contando():
+    # "PAR~=~2" não é identificador (o dígito vem depois de "=~"): fica na contagem
+    assert pf.contar_numeros("Os pares com PAR~=~2 somam 5.")["2"] == 1
+
+
+def test_modo_paragrafo_nao_isenta_identificadores():
+    dif = pf.comparar(pf.extrair_tokens("Usa O1 e F4."), pf.extrair_tokens("Usa O3 e F4."))
+    assert dif["numeros"] == {"removidos": ["1"], "adicionados": ["3"]}
+
+
 def test_modo_invalido(repo):
     base_commit(repo, {"text/latex/cap.tex": TEX_BASE})
     with pytest.raises(ValueError):
