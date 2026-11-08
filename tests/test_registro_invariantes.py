@@ -436,7 +436,9 @@ def test_ancoras_novas_sao_aprovadas_afirmacoes_pos_revisao_sem_slides():
     for cid in ANCORAS_NOVAS:
         e = REG.por_id[cid]
         assert e["tipo"] == "afirmacao", cid
-        assert str(e["aprovado_por_autora"]) == "2026-11-08", cid
+        assert str(e["aprovado_por_autora"]).startswith("2026-11-08"), cid
+        if cid in ("C01r", "C12", "C08r"):
+            assert "revisada em 2026-11-08 (F3)" in str(e["aprovado_por_autora"]), cid
         assert e["ocorrencias"], cid
         for oc in e["ocorrencias"]:
             assert oc.get("vigencia") == "pos_revisao", (cid, oc["arquivo"])
@@ -470,12 +472,12 @@ def test_c11_e_c01r_carregam_a_ressalva_do_ic_acoplada():
     for oc in REG.por_id["C01r"]["ocorrencias"]:
         if oc.get("secao") or oc["arquivo"].endswith(("estudo4_gzcmd.tex", "conclusao.tex")):
             tokens = [str(a) for t in oc["exige_todos"] for a in (t if isinstance(t, list) else [t])]
-            assert "F4" in tokens and any("zero" in t or "IC" in t or "CI" in t for t in tokens)
+            assert any("F4" in t or "fusões" in t or "fusion" in t for t in tokens) and any("zero" in t or "IC" in t or "CI" in t for t in tokens)
         assert oc["exige_algum"], oc["arquivo"]  # polaridade (ordenação e não automação)
 
 
 def test_numeros_novos_n40_em_diante_tem_fonte_e_mesma_frase_pos_revisao():
-    for i in range(40, 44):
+    for i in range(40, 45):
         e = REG.por_id[f"N{i}"]
         assert e["tipo"] == "numero"
         for v in e["valores"]:

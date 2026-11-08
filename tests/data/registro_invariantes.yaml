@@ -1,4 +1,4 @@
-# Registro de invariantes da tese (números centrais N01-N43 e afirmações C01-C09, C10, C01r,
+# Registro de invariantes da tese (números centrais N01-N44 e afirmações C01-C09, C10, C01r,
 # C11-C16, C08r, C02r, C03r, C05r, C09r).
 #
 # Verificado por scripts/registro_invariantes.py e tests/test_registro_invariantes.py.
@@ -71,7 +71,7 @@
 #   - âncoras novas (C10, C01r, C11-C16, C08r, C02r, C03r, C05r, C09r): `aprovado_por_autora:
 #     "2026-11-08"` como campo da entrada e ocorrências `pos_revisao` (o texto atual ainda não
 #     as contém; passam a valer quando cada arquivo entra na lista de revisados);
-#   - N40-N43: números das âncoras novas ausentes do registro, com `mesma_frase`; os números já
+#   - N40-N44: números das âncoras novas ausentes do registro, com `mesma_frase`; os números já
 #     registrados (N04, N07, N09, N13, N15, N16, N18-N23, N26, N30, N39) ganham ocorrências
 #     `pos_revisao` com `mesma_frase`, sob o comentário "pos_revisao: âncora ...".
 #
@@ -827,6 +827,25 @@
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo6_vig, sens_P_passo9_vig], mesma_frase: ["passo", "sensibilidade"]}
   ressalvas: "Sensibilidade automática de P (com o corte), distinta da sensibilidade do corte isolado por passo (N31: 95,0% no passo 6 e 94,5% no 9)."
 
+- id: N44
+  descricao: "Bootstrap agrupado por óbito de F3 frente a O1: medianas de 35 e 894 revisões a menos nas metas 9 e 36, com IC 95% inteiramente abaixo de zero (59 a 14 e 2.243 a 164); com 96 revisões (vigilância), F3 recupera 25 pares verdadeiros (âncoras C01r e C12)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
+  valores:
+    - {nome: f3o1_mediana_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "35"}
+    - {nome: f3o1_ic_inf_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "59"}
+    - {nome: f3o1_ic_sup_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "14"}
+    - {nome: f3o1_mediana_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "894"}
+    - {nome: f3o1_ic_inf_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "2.243"}
+    - {nome: f3o1_ic_sup_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "164"}
+    - {nome: par2_F3_96, fonte: {arquivo: data/fusao_filas.csv, filtro: {fila: F3, metrica: par2_top_96}, coluna: media}, texto_pt: "25"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f3o1_mediana_meta9, f3o1_ic_inf_meta9, f3o1_ic_sup_meta9, f3o1_mediana_meta36, f3o1_ic_inf_meta36, f3o1_ic_sup_meta36], mesma_frase: ["F3"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f3o1_mediana_meta9, f3o1_ic_inf_meta9, f3o1_ic_sup_meta9, f3o1_mediana_meta36, f3o1_ic_inf_meta36, f3o1_ic_sup_meta36], mesma_frase: ["F3"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F3_96], mesma_frase: ["F3", "96"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F3_96], mesma_frase: ["F3", "96"]}
+  ressalvas: "Valores absolutos: os limites do IC são de revisões a menos (limite inferior 59 e 2.243, superior 14 e 164), logo inteiramente abaixo de zero na diferença F3 menos O1. Nas metas 9 e 36, frente a O3 (F3-O3), nenhum IC 95% fica inteiramente abaixo de zero. Análise posterior ao registro, entre variantes de fusão. fusao_filas.csv é determinístico (p10 = p90 = média)."
+
 # ------------------------------------------------------------- afirmações
 
 - id: C01
@@ -969,16 +988,16 @@
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["grey area", "pós-processamento", "calibrad", ["perda esperada", "expected loss"], "referência operacional"], exige_algum: ["atribu", "componente"]}
 
 - id: C01r
-  descricao: "Argumento central (opção a): a redução observada veio da ordenação e não da automação pela política de quatro ações nem do LLM; com IC, só a fusão F4 reduziu as revisões frente ao escore do OpenRecLink (metas de 9 e 36); a probabilidade calibrada isolada (O3) reduziu pontualmente, sem IC que exclua zero. Ressalva acoplada: achado post hoc, sob revisor perfeito simulado, hipótese a validar pelo critério C02r"
+  descricao: "Argumento central (opção a): a redução observada veio da ordenação, e não da automação pela política nem do LLM; com IC, as fusões da probabilidade calibrada com o escore do OpenRecLink (F3 e F4) reduziram as revisões frente a O1 nas metas de 9 e 36, e nenhuma o fez frente a O3; a probabilidade calibrada isolada (O3) reduziu pontualmente, sem IC que exclua zero. Ressalva acoplada: achado post hoc, sob revisor perfeito simulado, hipótese a validar pelo critério C02r"
   tipo: afirmacao
-  aprovado_por_autora: "2026-11-08"
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", "F4", "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["order", ["automat", "policy"], "LLM", "F4", "post hoc", ["no CI", "without a CI", "without CI", "exclude zero", "excludes zero", "include zero", "includes zero", "cross zero", "crosses zero", "contain zero"]], exige_algum: ["and not", "rather than", "not from", "not due", "instead of", "not by"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["order", ["automat", "policy"], "LLM", ["F3 and F4", "fusion"], "post hoc", ["no CI", "without a CI", "without CI", "exclude zero", "excludes zero", "include zero", "includes zero", "cross zero", "crosses zero", "contain zero"]], exige_algum: ["and not", "rather than", "not from", "not due", "instead of", "not by"]}
     - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "post hoc"], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
     - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "post hoc"], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
-    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", "F4", "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
-    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", "F4", "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
 
 - id: C11
   descricao: "Resultado: sob revisor perfeito simulado, O3 atingiu a recuperação de P com 125 revisões na vigilância e 29 na confirmação, contra 501 e 51 de O1 (reduções pontuais de 75,0% e 43,1%; O4 exigiu 106 e 27). Ressalva acoplada: sem IC que exclua zero (data/ordenacao_bootstrap_o3_o1.csv); na recuperação integral dos 36, O3 exige 23.443 revisões contra 2.521 de O1; estimativa pontual, post hoc. Números em N18, N20, N22, N23, N40 e N41"
@@ -991,14 +1010,14 @@
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["O3", "O1", "recuper", "pontua", "post hoc", ["simulad", "revisor perfeito"]], exige_algum: ["sem IC", "sem intervalo", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui", "nenhum IC"]}
 
 - id: C12
-  descricao: "Resultado: na análise exploratória posterior ao registro, a fusão F4 reduziu as revisões frente a O1 nas metas de 9 e 36 pares verdadeiros, com IC 95% por bootstrap agrupado por óbito inteiramente abaixo de zero (medianas de 38 e 1.203 revisões a menos), mas não na meta de 23; F4 recuperou os 36 com 1.387 revisões contra 2.521 de O1. Ressalva acoplada: frente a O3 nenhum IC fica abaixo de zero; com 96 revisões F4 recupera 18, O1 19 e O3 22; F4 foi escolhida entre variantes de fusão. Números em N22, N26 e N42"
+  descricao: "Resultado: na análise exploratória posterior ao registro, as fusões F3 e F4 reduziram as revisões frente a O1 nas metas de 9 e 36 pares verdadeiros, com IC 95% por bootstrap agrupado por óbito inteiramente abaixo de zero (F4: medianas de 38 e 1.203 revisões a menos; F3: 35 e 894), mas não na meta de 23; F4 recuperou os 36 com 1.387 revisões contra 2.521 de O1. Ressalvas acopladas: frente a O3 nenhum IC fica abaixo de zero; com 96 revisões F3 recupera 25, F4 18, O1 19 e O3 22; as fusões vêm de análise posterior ao registro, entre variantes. Números em N22, N26, N42 e N44"
   tipo: afirmacao
-  aprovado_por_autora: "2026-11-08"
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["F4", "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta"], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["F4", "O1", "O3", ["below zero", "entirely below"]], exige_algum: ["no CI", "none", "not exclude", "did not", "include zero", "includes zero"]}
-    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["F4", "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
-    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["F4", "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta"], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: [["F3 and F4", "fusion"], "O1", "O3", ["below zero", "entirely below"]], exige_algum: ["no CI", "none", "not exclude", "did not", "include zero", "includes zero"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
 
 - id: C13
   descricao: "Resultado: na vigilância P aceitou automaticamente 4 dos 36 pares verdadeiros abaixo do corte, todos pelo LLM, com 21 falsos positivos (VPP 16,0%) e encaminhou 96 potenciais pares ao revisor humano; encaminhando também os MATCH do LLM, P recuperaria 23 com 121 revisões e O3, 23 com 125; na confirmação O2 recuperou os mesmos 9 com 11 revisões contra 17. Nas condições avaliadas o LLM não deve aceitar vínculos sozinho; usos subordinados ao revisor humano são hipóteses exploratórias. Ressalvas acopladas: registro interno de P anterior à avaliação, sem critério de sucesso, leitura como resultado negativo posterior; revisor perfeito simulado. Números em N13, N15, N16, N18 e N19"
@@ -1021,15 +1040,15 @@
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar", "raça"], exige_algum: ["demográf", "estrato", "atributo"]}
 
 - id: C08r
-  descricao: "Recomendação: a validar em coorte nova com referência cega, preservar o corte do OpenRecLink e, abaixo dele, ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida (F4), escolhendo o ponto de parada pela curva de esforço conforme o orçamento humano. Ressalva acoplada: nenhuma ordenação dominou em todas as cargas (C12)"
+  descricao: "Recomendação: a validar em coorte nova com referência cega, preservar o corte do OpenRecLink e, abaixo dele, ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida ao escore (F4; F3 quando houver as MACD), com a escolha pela curva de esforço conforme o orçamento humano. Ressalva acoplada: nenhuma ordenação dominou em todas as cargas (C12)"
   tipo: afirmacao
-  aprovado_por_autora: "2026-11-08"
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", "F4", "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["preserve", "cut-off", "O3", "F4", "effort curve", ["dominat", "dominan", "uniform"]], exige_algum: ["validate", "validation", "validated"]}
-    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", "F4", "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
-    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", "F4", "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
-    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", "F4", "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["preserve", "cut-off", "O3", ["F3 and F4", "F4; F3", "F4 (F3", "fusion"], "effort curve", ["dominat", "dominan", "uniform"]], exige_algum: ["validate", "validation", "validated"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
 
 - id: C02r
   descricao: "Critério de refutação, acoplado a C01r e C11: em outra coorte, com ordenação e orçamento fixados antes dos desfechos e referência cega independente, a hipótese é refutada se O3 não atingir a recuperação de P com pelo menos 25% menos revisões que O1, pelo limite inferior do IC 95%, em cada uma das duas metas. Ressalva: a margem foi escolhida com os dados de desenvolvimento à vista (reduções pontuais de 75,0% e 43,1%) e não foi testada"
