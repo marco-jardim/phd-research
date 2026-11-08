@@ -23,7 +23,7 @@ from . import avaliar as av
 from .common import read_json, utc_now_iso
 from .evidencias import cache_path
 from .prompts import trim_paragraph
-from .trechos import load_english_queries, save_english_queries
+from .trechos import english_query_for, load_english_queries, save_english_queries
 
 N_KEYWORDS_MIN = 5
 N_KEYWORDS_MAX = 12
@@ -130,10 +130,11 @@ def run_consultas(
     """Pede (lote ou sync) as consultas em inglês que faltam e grava ``_consultas_en.json``.
 
     Só entram contextos de chaves com texto completo maior que ``settings.max_chars`` e ainda sem consulta
-    no arquivo. Retorna ``{"pedidas", "novas", "invalidas", "em_cache", "incompleto"}``."""
+    no arquivo, pelo id atual ou pelo ``id_legado`` (como na seleção, ``english_query_for``).
+    Retorna ``{"pedidas", "novas", "invalidas", "em_cache", "incompleto"}``."""
     cached = load_english_queries(out_dir)
     long_keys = long_text_keys(contexts, out_dir, settings.max_chars)
-    targets = [c for c in contexts if c["key"] in long_keys and c["id"] not in cached]
+    targets = [c for c in contexts if c["key"] in long_keys and english_query_for(cached, c) is None]
     summary = {"pedidas": len(targets), "novas": 0, "invalidas": 0, "em_cache": len(cached), "incompleto": False}
     if not targets:
         log("nenhuma consulta nova a pedir")

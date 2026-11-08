@@ -2124,6 +2124,35 @@ def test_union_round_robin_respects_max_chars_and_document_order():
     assert re.search(r"\[trechos? \d+(?:-\d+)?\]", plain.texto) and "p." not in plain.texto
 
 
+def test_selection_finds_english_query_by_id_legado_and_keeps_the_old_evidence(tmp_path):
+    text, starts = long_book({20: SPECIAL_A, 40: SPECIAL_B})
+    record = write_long_record(tmp_path, "kL", text, starts)
+    english = {"id01": EN_A, "id02": EN_B}  # consultas gravadas com o id antigo
+    migrated = [{**CTX_A, "id": "n9", "id_legado": "id01"}, {**CTX_B, "id": "n8", "id_legado": "id02"}]
+    sel = tr.select_evidence_text(text, "kL", migrated, english, 120000, None, starts)
+    assert sel.consultas == 2 and sel.consultas_en == 2
+    old = prompts.build_evidence_block(record, 120000, [CTX_A, CTX_B], tmp_path, english)[0]
+    new = prompts.build_evidence_block(record, 120000, migrated, tmp_path, english)[0]
+    assert av.evidence_fingerprint(new) == av.evidence_fingerprint(old)
+    # o id atual tem precedência sobre o id_legado
+    assert tr.english_query_for({"n9": EN_B, "id01": EN_A}, migrated[0]) == EN_B
+
+
+def test_contexts_on_the_same_line_keep_the_legacy_order_in_the_selection(monkeypatch):
+    text, starts = long_book({**{n: SPECIAL_A for n in range(10, 20)}, **{n: SPECIAL_B for n in range(40, 50)}})
+    english = {"id01": EN_A, "id02": EN_B}
+    old_a, old_b = {**CTX_A, "line": 30}, {**CTX_B, "line": 30}  # mesma linha: desempate pelo id
+    new_a = {**old_a, "id": "ff00", "id_legado": "id01"}  # o id novo inverte a ordem dos ids antigos
+    new_b = {**old_b, "id": "0a00", "id_legado": "id02"}
+    seen = []
+    original = tr.build_query
+    monkeypatch.setattr(tr, "build_query", lambda c, en=None: seen.append(c["id"]) or original(c, en))
+    new = tr.select_evidence_text(text, "kL", [new_b, new_a], english, 11000, None, starts)
+    assert seen == ["ff00", "0a00"]  # ordem dos ids antigos (id01, id02), não dos novos
+    old = tr.select_evidence_text(text, "kL", [old_b, old_a], english, 11000, None, starts)
+    assert new.texto == old.texto
+
+
 def test_evidence_block_selection_changes_fingerprint_and_short_text_is_untouched(tmp_path):
     text, starts = long_book({20: SPECIAL_A, 40: SPECIAL_B})
     record = write_long_record(tmp_path, "kL", text, starts)
@@ -2276,6 +2305,18 @@ def test_consultas_cleaning_of_answers_and_cache_file(tmp_path):
     tr.save_english_queries(tmp_path, {CTX_A["id"]: EN_A})
     assert tr.load_english_queries(tmp_path) == {CTX_A["id"]: EN_A}
     assert tr.load_english_queries(tmp_path / "nada") == {}
+
+
+def test_consultas_are_not_requested_again_for_contexts_with_a_query_under_id_legado(tmp_path):
+    text, starts = long_book({20: SPECIAL_A})
+    write_long_record(tmp_path, "kL", text, starts)
+    tr.save_english_queries(tmp_path, {"id01": EN_A, "id02": EN_B})  # gravadas com o id antigo
+    contexts = [{**CTX_A, "id": "n1", "id_legado": "id01"}, {**CTX_B, "id": "n2", "id_legado": "id02"}]
+    client = query_client()
+    summary = cons.run_consultas(contexts=contexts, out_dir=tmp_path, pilot_dir=tmp_path / "piloto" / "tese",
+                                 client=client, settings=query_settings(max_chars=120000), sleep=lambda s: None)
+    assert summary["pedidas"] == 0 and client.messages.batches.created == []
+    assert tr.load_english_queries(tmp_path) == {"id01": EN_A, "id02": EN_B}
 
 
 def test_cli_consultas_options_and_missing_key(tmp_path, monkeypatch, capsys):

@@ -15,7 +15,8 @@ Consulta de cada contexto (pesos em ``W_*``):
     (SMOTE, Random Forest, blocking, Fellegi-Sunter);
 (c) tradução da sentença para o inglês e 5 a 12 palavras-chave em inglês, geradas uma vez pelo
     subcomando ``consultas`` (Claude Haiku, Message Batches) e guardadas por id de contexto em
-    ``<out>/evidencias/_consultas_en.json``. Sem a consulta em inglês vale só (a) + (b).
+    ``<out>/evidencias/_consultas_en.json``. Sem a consulta em inglês vale só (a) + (b). A busca usa o id
+    atual e, na falta, o ``id_legado`` (consultas gravadas antes da fórmula nova de id).
 
 O índice de trechos de cada chave fica em ``<out>/evidencias/<chave>.chunks.json`` (chaveado pelo hash do
 texto e dos parâmetros). A seleção é determinística: mesma entrada, mesmo texto enviado, mesma
@@ -374,6 +375,22 @@ def select_chunk_positions(
     return chosen
 
 
+def english_query_for(english: dict[str, dict], ctx: dict) -> dict | None:
+    """Consulta em inglês do contexto pelo ``id`` atual ou, na falta, pelo ``id_legado``: as consultas
+    pedidas antes da fórmula nova de id ficaram gravadas com o id antigo."""
+    found = english.get(ctx["id"])
+    if found is None and ctx.get("id_legado"):
+        found = english.get(ctx["id_legado"])
+    return found
+
+
+def context_order(ctx: dict) -> tuple:
+    """Ordem dos contextos na seleção (a rodada entre consultas segue essa ordem). Contextos da mesma linha
+    desempatam pelo ``id_legado``, o id com que as seleções anteriores foram feitas, para que a troca de
+    fórmula do id não mude a seleção nem a impressão digital da evidência."""
+    return (ctx.get("file", ""), ctx.get("line", 0), ctx.get("id_legado") or ctx["id"], ctx["id"])
+
+
 @dataclass
 class Selecao:
     texto: str  # início do documento + blocos marcados, como enviado
@@ -397,8 +414,8 @@ def select_evidence_text(
     if not contexts or max_chars < FRONT_CHARS + CHUNK_CHARS:
         return None
     english = english or {}
-    ordered = sorted(contexts, key=lambda c: (c.get("file", ""), c.get("line", 0), c["id"]))
-    queries = [build_query(c, english.get(c["id"])) for c in ordered]
+    ordered = sorted(contexts, key=context_order)
+    queries = [build_query(c, english_query_for(english, c)) for c in ordered]
     chunks = load_chunks(text, key, out_dir, page_starts)
     front_end = front_end_of(text)
     chosen = select_chunk_positions(text, chunks, queries, max_chars, front_end)
@@ -410,7 +427,7 @@ def select_evidence_text(
     ]
     return Selecao(
         render(text, runs, front_end), sent, len(chunks), len(ordered),
-        sum(1 for c in ordered if english.get(c["id"])),
+        sum(1 for c in ordered if english_query_for(english, c)),
     )
 
 
