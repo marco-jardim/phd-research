@@ -10,7 +10,7 @@ from terminologia import conta, contem, normalizar_terminologia
 
 LATEX = Path(__file__).resolve().parents[1] / "text" / "latex"
 PARAGRAPHS = [
-    ("capitulo1.tex", "O percurso da tese abrange"),
+    ("capitulo1.tex", r"O Capítulo~\ref{cap:referencial} traz o referencial teórico"),
     ("capitulo_dados.tex", "O novo pseudônimo é calculado"),
     ("capitulo_dados.tex", "A matriz restrita não foi depositada"),
     ("capitulo_dados.tex", r"O arquivo \path{qw3/qw3_analysis_frame.csv}"),
@@ -38,7 +38,7 @@ FORMULAS = (
 # Número de ocorrências dos quatro negadores por frase consecutiva.
 # Retrato aprovado pelo autor, não meta de redução: valores 3 são deliberados.
 EXPECTED_NEGATIONS = {
-    "O percurso da tese abrange": [0, 0, 0, 0],
+    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0, 0],
     "O novo pseudônimo é calculado": [0, 2, 2, 1, 0],
     "A matriz restrita não foi depositada": [1, 2, 1],
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],

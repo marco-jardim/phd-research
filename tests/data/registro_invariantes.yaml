@@ -113,6 +113,7 @@
     - {arquivo: text/latex/capitulo3.tex, exige: [n_par1, n_vinculos, n_par2]}
     - {arquivo: text/latex/conclusao.tex, exige: [n_par1, n_vinculos, n_par2]}
     - {arquivo: text/latex/capitulo_dados.tex, exige: [n_par0, n_par1, n_par2]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige: [n_par2], mesma_frase: ["metas"]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
 
@@ -574,7 +575,7 @@
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, [o3_par2_k96, "seis"], "k=96"]}
     - {arquivo: text/latex/tese.tex, secao: resumo, exige: [H_k96, "réplica"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Resumo traz '22 revisões humanas' sem qualificador"}
     - {arquivo: text/latex/tese.tex, secao: abstract, exige: [H_k96, "replicate"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Abstract traz '22 human reviews' sem qualificador"}
-    - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "réplica"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o capítulo 1 traz '22 revisões humanas' sem qualificador"}
+    - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "réplica"]}
   ressalvas: "H=22 é de uma réplica; na confirmação H=18 (filtro_llm.csv, confirmacao k=96)."
 
 - id: N28

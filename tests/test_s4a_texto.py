@@ -106,7 +106,10 @@ def test_canonical_names_and_operational_area_cinza_definition():
     assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
-        assert contem(text, "área cinza da nota", arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
+        # Decisão da autora de 2026-11-08: no capítulo 1 (revisado), a faixa [5,9) é "faixa intermediária da
+        # nota final" e a grey area (área cinza) designa a região abaixo do corte do OpenRecLink.
+        nome_faixa = "faixa intermediária da nota final" if name == "capitulo1.tex" else "área cinza da nota"
+        assert contem(text, nome_faixa, arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
         assert contem(text, "área cinza", arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
     intro = (LATEX / "capitulo1.tex").read_text(encoding="utf-8")
     assert "conversão em horas utiliza um parâmetro temporal" in intro

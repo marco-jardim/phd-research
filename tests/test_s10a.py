@@ -36,7 +36,12 @@ def test_local_editorial_redundancies_and_number_forms():
             assert 'com 96 pares enviados ao LLM na vigilância' in text
             assert r'As limitações do filtro são discutidas na Seção~\ref{sec:e4-filtro}' in text
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
-        assert contem(text, 'descartou nove dos 22 vínculos', arquivo=f'text/latex/{name}') or '9 dos 22 PAR~=~2' in text  # migrado: terminologia 3.6
+        # capitulo1.tex (revisado, modo estrito): "pares verdadeiros" é a classe segundo a referência (terminologia 3.6).
+        if name == 'capitulo1.tex':
+            # o "22" saiu desta frase por ambiguidade; N27 do registro exige 22, k=96 e "nove" no parágrafo.
+            assert contem(text, 'descartou nove dos pares verdadeiros do topo', arquivo=f'text/latex/{name}')
+        else:
+            assert contem(text, 'descartou nove dos 22 pares verdadeiros', arquivo=f'text/latex/{name}') or '9 dos 22 PAR~=~2' in text  # migrado: terminologia 3.6
     study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'O2 recupera 9 PAR~=~2 com 11 revisões' in study
     assert 'no feminino, a queda é de 10 pontos' in study

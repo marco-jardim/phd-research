@@ -45,7 +45,11 @@ def test_approved_recommendation_is_literal_unique_and_in_recommendations():
     assert APPROVED in recommendations
     assert "condicionais às probabilidades" in recommendations
     assert "alterando o estimando" in recommendations
-    assert "sem vantagem demonstrada" in text("text/latex/capitulo1.tex")
+    # Capítulo 1 reescrito (âncora C08r): a recomendação é O3 isolada ou fundida (F4; F3 com as MACD),
+    # pela curva de esforço; o texto antigo "sem vantagem demonstrada" foi substituído.
+    intro = text("text/latex/capitulo1.tex")
+    assert "Nenhuma ordenação domina em todas as cargas" in intro
+    assert "não têm vantagem demonstrada" in intro
 
 
 def test_bootstrap_claims_match_published_csv():
