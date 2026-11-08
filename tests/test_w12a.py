@@ -79,7 +79,7 @@ def test_bayesian_evidence_compares_original_and_posterior_counts():
     assert "16,0\\% quando o LLM aceita sozinho" in body
 
 
-@pytest.mark.parametrize("name", ["estudo1_comparador.tex", "estudo2_classificadores.tex", "apendice_sensibilidade.tex"])
+@pytest.mark.parametrize("name", ["estudo1_comparador.tex", "apendice_sensibilidade.tex"])  # estudo2 revisado (revisão 2): Experimento 1 fica no estudo1 e no apêndice
 def test_experiment_one_has_study_scope_and_separating_comma(name):
     body = text(name)
     expansion = ("Medidas Contínuas de Diferença de Datas de nascimento, MACD, "

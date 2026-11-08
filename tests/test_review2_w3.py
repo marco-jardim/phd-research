@@ -62,11 +62,13 @@ def test_reference_and_uncertainty_are_explicit_without_mechanism_claims():
         assert "referência" in text and "D" in text
         assert "0,846" in text or "0{,}846" in text
     e3 = (LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8")
-    assert "não estima isoladamente esse otimismo" in e3
-    assert "não permitem distinguir as dez primeiras" in e3
-    assert "sugere possível contribuição da diversidade" not in e3
+    # Revisão 2: o detalhe do Estudo 3 (delineamento, ablação, NB03) está no apêndice das estratégias.
+    ap = (LATEX / "apendice_estrategias.tex").read_text(encoding="utf-8")
+    assert "não estima isoladamente esse otimismo" in ap
+    assert "não permitem distinguir as dez primeiras" in ap
+    assert "sugere possível contribuição da diversidade" not in e3 + ap
     assert "70/67 não representa o esforço adicional" in e3
-    assert "dominando, nesse plano e nessa partição" in e3
+    assert "dominando, nesse plano e nessa partição" in ap
 
 
 def test_equity_uses_feasible_criteria_and_declares_review_limit():

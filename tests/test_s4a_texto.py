@@ -141,7 +141,9 @@ def test_notification_year_aggregates_reproduce_from_private_input():
 
 
 def test_review3_scope_and_experiment1_caveats():
-    for name in ("estudo1_comparador.tex", "estudo2_classificadores.tex", "conclusao.tex", "apendice_sensibilidade.tex"):
+    # estudo2 revisado (revisão 2): o Experimento 1 e data/exp1_vazamento_comparacao.csv ficam no
+    # estudo1, na conclusão e no apêndice de sensibilidade; o estudo2 remete ao vazamento sem repeti-los
+    for name in ("estudo1_comparador.tex", "conclusao.tex", "apendice_sensibilidade.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
         assert "GZ-CMD v3.1" in text and "arranjo P" in text
         assert r"\path{data/exp1_vazamento_comparacao.csv}" in text

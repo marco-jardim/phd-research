@@ -106,7 +106,9 @@ def test_profile_from_private_extract_matches_public_base_sets():
 
 def test_text_uses_test_par2_denominator_and_profile_source():
     text = (ROOT / "text/latex/estudo3_estrategias.tex").read_text(encoding="utf-8")
+    # Revisão 2: o perfil agregado dos óbitos foi para o apêndice das estratégias.
+    appendix = (ROOT / "text/latex/apendice_estrategias.tex").read_text(encoding="utf-8")
     assert "cinco dos oito PAR" in text
     assert r"\path{data/ablacao_teste_composicao.csv}" in text
-    assert r"\input{tables/editorial/tab_perfil_obitos_agregado.tex}" in text
-    assert "não foi identificado agregado versionado" not in text
+    assert r"\input{tables/editorial/tab_perfil_obitos_agregado.tex}" in appendix
+    assert "não foi identificado agregado versionado" not in text + appendix

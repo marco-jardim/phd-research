@@ -79,7 +79,8 @@ def test_f1_comparison_has_false_positives_and_explicit_calculation():
     assert "um ou dois VP e até três FP" in conclusion
     assert "diferenças de 0,012 a 0,027" in conclusion
     assert "abaixo da variação" not in conclusion
-    for name in ("estudo3_estrategias.tex", "conclusao.tex"):
+    # Revisão 2: o trecho da variação entre controles A e A0 do Estudo 3 está no apêndice das estratégias.
+    for name in ("apendice_estrategias.tex", "conclusao.tex"):
         source = text(name)
         assert re.search(r"XGBoost e Random Forest entre os controles A(?: \([^)]*\))? e A0", source)
         assert "cálculo da tese" in source or "calculada na tese" in source

@@ -18,10 +18,11 @@ PARAGRAPHS = [
     ("capitulo_dados.tex", r"O relatório \path{k_anonymity_report.json}"),
     ("capitulo_dados.tex", r"O \texttt{pair\_id} histórico"),
     ("estudo1_comparador.tex", "Os pesos internos do comparador permanecem fixos"),
-    ("estudo3_estrategias.tex", "Entre as configurações originais da Tabela"),
+    # Revisão 2: o detalhe do Estudo 3 (validação cruzada, pipelines, contribuição) foi para o apêndice.
+    ("apendice_estrategias.tex", "Entre as configurações originais da Tabela"),
     ("estudo3_estrategias.tex", "A razão hipotética de revisões por vínculo também favoreceu"),
-    ("estudo3_estrategias.tex", "A organização reprodutível das configurações"),
-    ("estudo3_estrategias.tex", "As estratégias de vigilância e confirmação descritas"),
+    ("apendice_estrategias.tex", "A organização reprodutível das configurações"),
+    ("apendice_estrategias.tex", "As estratégias de vigilância e confirmação descritas"),
     ("estudo4_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A paridade simultânea de sensibilidade e VPP adotada"),
@@ -47,7 +48,7 @@ EXPECTED_NEGATIONS = {
     r"O \texttt{pair\_id} histórico": [2, 0, 1, 3],
     "Os pesos internos do comparador permanecem fixos": [0, 1, 1, 1],  # estudo1 revisado (revisão 2)
     "Entre as configurações originais da Tabela": [0, 1, 1, 1],
-    "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 0],
+    "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 1],  # estudo3 revisado (revisão 2): Coeli2021 (NAO_SUSTENTA) retirado, frase final com "sem medir"
     "A organização reprodutível das configurações": [1, 1, 0],
     "As estratégias de vigilância e confirmação descritas": [1, 0, 1],
     "Na cascata v3.1 sobre a base inteira, Claude Sonnet": [0, 2],
@@ -153,7 +154,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 
 @pytest.mark.parametrize("filename,expected", [
     ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
-    ("estudo2_classificadores.tex", "Para avaliar a estabilidade, a análise original utilizou validação cruzada estratificada com cinco partições da base completa, sem repetições."),
+    ("estudo2_classificadores.tex", "A análise original usou validação cruzada estratificada com cinco partições da base completa, sem repetições"),
     ("conclusao.tex", r"A análise de estabilidade descreve a estabilidade interna entre réplicas, não validação em novos dados \cite{Jardim2026phdrepo}."),
     ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
