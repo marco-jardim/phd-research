@@ -26,7 +26,9 @@ Estruturas isentas (não mascaradas e não checadas como "dígito livre"): argum
 colchetes e argumentos de \\begin{...} (tabular, minipage etc.); comandos de tabela
 (\\multicolumn, \\cmidrule, \\\\[2pt]); larguras e comprimentos (0.5\\textwidth, 2cm);
 comentários LaTeX (% até o fim da linha). Além da isenção, o texto editado não pode
-conter estrutura isenta com dígitos que não exista no trecho original.
+conter estrutura isenta com dígitos que não exista no trecho original. Exceção: comandos de
+citação (\\cite, \\citeonline, \\citeyearpar etc.) novos ou alterados geram só a linha de aviso
+``CITACAO:``; a proteção deles é check_bib_usage.py e o ledger de atestamento.
 
 Por que não reaproveitar ``portao_fidelidade.extrair_tokens``: ela devolve valores
 normalizados (39,3 = 39.3; separadores de milhar removidos; ``{,}`` trocado por vírgula)
@@ -378,7 +380,12 @@ class Resultado:
     movidos: list[int] = field(default_factory=list)
     liberados: list[str] = field(default_factory=list)
     liberados_id: list[str] = field(default_factory=list)
+    citacoes: list[str] = field(default_factory=list)
 
+
+# Comandos de citação (\cite, \citeonline, \citeyearpar, \citep*, ...): os dígitos das chaves
+# não são dados da tese; a proteção é check_bib_usage.py e o ledger de atestamento.
+RE_COMANDO_CITACAO = re.compile(r"\\[A-Za-z]*cite[A-Za-z]*\*?")
 
 RE_ID_LIVRE = re.compile(r"[A-Za-z]+\d+")
 
@@ -502,7 +509,9 @@ def validar_texto(
     originais = Counter(mapa.get("isentos", {}))
     for s, n in _textos_isentos_com_digito(texto, estruturas).items():
         if n > originais.get(s, 0):
-            if any(v in s for v in permitir):
+            if RE_COMANDO_CITACAO.match(s):
+                res.citacoes.append(s)
+            elif any(v in s for v in permitir):
                 res.liberados.append(f"estrutura isenta {s!r}")
             else:
                 res.erros.append(
@@ -574,6 +583,8 @@ def executar(
 
     for av in res.avisos:
         print(f"AVISO: {av}")
+    for cit in res.citacoes:
+        print(f"CITACAO: comando de citação novo ou alterado {cit!r} (reatestar a frase; chaves conferidas por check_bib_usage.py)")
     for lib in res.liberados:
         print(f"LIBERADO: número novo autorizado {lib}")
     for lib in res.liberados_id:

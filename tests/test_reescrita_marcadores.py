@@ -218,6 +218,58 @@ def test_estrutura_isenta_nova_com_digitos_falha(tmp_path, capsys):
     assert "estrutura LaTeX isenta" in capsys.readouterr().out
 
 
+def preparar_trecho(tmp_path, trecho):
+    """Como ``preparar``, mas com o trecho (linha 2) escolhido pelo teste."""
+    arq = tmp_path / ARQ
+    arq.parent.mkdir(parents=True, exist_ok=True)
+    arq.write_bytes((ANTES + trecho + DEPOIS).encode("utf-8"))
+    n = trecho.count("\n") + 1
+    rc = rm.main(["mascarar", "--raiz", str(tmp_path), "--arquivo", ARQ, "--linhas", f"2-{n}", "--id", "t"])
+    assert rc == 0
+    return arq
+
+
+def test_lista_de_cite_reduzida_passa_com_aviso(tmp_path, capsys):
+    arq = preparar_trecho(tmp_path, "Métodos recentes \\cite{Christen2012book, Barreto2019The}.\n")
+    capsys.readouterr()
+    assert rodar(tmp_path, "restaurar", "Métodos recentes \\cite{Barreto2019The}.\n") == 0
+    out = capsys.readouterr().out
+    assert "CITACAO:" in out and "\\cite{Barreto2019The}" in out
+    assert "ERRO" not in out
+    assert "\\cite{Barreto2019The}" in arq.read_text(encoding="utf-8")
+
+
+def test_citeonline_com_chave_nova_passa_com_aviso(tmp_path, capsys):
+    preparar_trecho(tmp_path, "Segundo \\citeonline{silva2020}, vale.\n")
+    capsys.readouterr()
+    assert rodar(tmp_path, "verificar", "Segundo \\citeonline{souza2021}, vale.\n") == 0
+    out = capsys.readouterr().out
+    assert "CITACAO:" in out and "\\citeonline{souza2021}" in out
+
+
+def test_cite_inalterado_nao_gera_aviso(tmp_path, capsys):
+    preparar_trecho(tmp_path, "Segundo \\citeonline{silva2020}, vale.\n")
+    capsys.readouterr()
+    assert rodar(tmp_path, "verificar", "Segundo \\citeonline{silva2020}, vale.\n") == 0
+    assert "CITACAO:" not in capsys.readouterr().out
+
+
+def test_ref_novo_com_digito_continua_falhando(tmp_path, capsys):
+    preparar_trecho(tmp_path, "Ver Tabela~\\ref{tab:res2}.\n")
+    capsys.readouterr()
+    assert rodar(tmp_path, "verificar", "Ver Tabela~\\ref{tab:res3}.\n") == 1
+    out = capsys.readouterr().out
+    assert "estrutura LaTeX isenta" in out and "CITACAO:" not in out
+
+
+def test_includegraphics_alterado_continua_falhando(tmp_path, capsys):
+    preparar_trecho(tmp_path, "\\includegraphics[width=0.4\\textwidth]{fig}\n")
+    capsys.readouterr()
+    assert rodar(tmp_path, "verificar", "\\includegraphics[width=0.5\\textwidth]{fig}\n") == 1
+    out = capsys.readouterr().out
+    assert "estrutura LaTeX isenta" in out and "CITACAO:" not in out
+
+
 def test_permitir_novos_libera(tmp_path, capsys):
     _, arq = preparar(tmp_path)
     texto = f"{M(1)} pares em 42 casos.\n"
