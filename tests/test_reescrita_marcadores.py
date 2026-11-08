@@ -256,6 +256,52 @@ def test_valor_liberado_vale_para_todas_as_ocorrencias(tmp_path, capsys):
     assert capsys.readouterr().out.count("LIBERADO") == 2
 
 
+def test_permitir_ids_libera_id_exato(tmp_path, capsys):
+    preparar(tmp_path)
+    texto = f"{M(1)} pares ordenados por O3 e F4.\n"
+    assert rodar(tmp_path, "verificar", texto) == 1
+    capsys.readouterr()
+    assert rodar(tmp_path, "verificar", texto, "--permitir-ids", "O3,F4") == 0
+
+
+def test_permitir_ids_nao_libera_id_fora_da_lista(tmp_path, capsys):
+    preparar(tmp_path)
+    texto = f"{M(1)} pares ordenados por O3 e F4.\n"
+    assert rodar(tmp_path, "verificar", texto, "--permitir-ids", "O3") == 1
+    out = capsys.readouterr().out
+    assert "dígito livre '4'" in out and "dígito livre '3'" not in out
+
+
+@pytest.mark.parametrize("trecho", ["O35", "BO3", "O3x"])
+def test_permitir_ids_exige_identificador_inteiro(tmp_path, capsys, trecho):
+    preparar(tmp_path)
+    assert rodar(tmp_path, "verificar", f"{M(1)} pares em {trecho}.\n", "--permitir-ids", "O3") == 1
+    assert "dígito livre" in capsys.readouterr().out
+
+
+def test_permitir_ids_nao_libera_numero_solto(tmp_path, capsys):
+    preparar(tmp_path)
+    assert rodar(tmp_path, "verificar", f"{M(1)} pares em O3 e 3 casos.\n", "--permitir-ids", "O3") == 1
+    out = capsys.readouterr().out
+    assert "dígito livre '3'" in out and out.count("dígito livre") == 1
+
+
+def test_permitir_ids_aparece_no_resumo(tmp_path, capsys):
+    _, arq = preparar(tmp_path)
+    texto = f"{M(1)} pares por O3, depois F4 e de novo O3.\n"
+    assert rodar(tmp_path, "restaurar", texto, "--permitir-ids", "O3", "--permitir-ids", "F4") == 0
+    out = capsys.readouterr().out
+    assert out.count("LIBERADO-ID") == 3
+    assert "LIBERADO-ID: identificador autorizado O3" in out and "F4" in out
+    assert "61.696 pares por O3, depois F4 e de novo O3." in arq.read_text(encoding="utf-8")
+
+
+def test_permitir_ids_formato_invalido_e_erro_de_uso(tmp_path, capsys):
+    preparar(tmp_path)
+    assert rodar(tmp_path, "verificar", None, "--permitir-ids", "3,O") == 2
+    assert "--permitir-ids inválido" in capsys.readouterr().err
+
+
 def test_sha256_divergente_falha(tmp_path, capsys):
     original, arq = preparar(tmp_path)
     mudado = original.replace(b"6,4", b"6,5")

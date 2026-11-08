@@ -14,6 +14,9 @@ Validações (sai com código 1 e lista cada problema):
   (c) não sobrou dígito fora de marcador, salvo em estruturas LaTeX isentas;
   (d) o trecho original no .tex mantém o mesmo sha256.
 Números removidos viram aviso. ``--permitir-novos`` libera números novos de forma explícita.
+``--permitir-ids "O3,F4"`` libera só ocorrências livres desses identificadores exatos (letras
+seguidas de dígitos, com fronteira de palavra: O3 não libera O35 nem BO3); o dígito de outros
+identificadores e números soltos continuam bloqueados, e cada liberação sai como ``LIBERADO-ID``.
 
 ``mascarar`` recusa (código 2) qualquer ``--arquivo`` sob ``text/latex/tables/``: tabelas ficam
 fora da reescrita e mudam só pelo gerador (ver ``tests/data/tabelas_tese.yaml``).
@@ -374,6 +377,30 @@ class Resultado:
     removidos: list[int] = field(default_factory=list)
     movidos: list[int] = field(default_factory=list)
     liberados: list[str] = field(default_factory=list)
+    liberados_id: list[str] = field(default_factory=list)
+
+
+RE_ID_LIVRE = re.compile(r"[A-Za-z]+\d+")
+
+
+def parse_ids(valores: list[str] | None) -> list[str]:
+    """Identificadores exatos liberados (``O3``, ``F4``, ``K1``): letras seguidas de dígitos.
+
+    A vírgula (ou ';') separa; repetir a opção vale. Qualquer item fora do formato é erro de uso.
+    """
+    saida: list[str] = []
+    for v in valores or []:
+        for item in re.split(r"[,;]", v):
+            item = item.strip()
+            if not item:
+                continue
+            if not RE_ID_LIVRE.fullmatch(item):
+                raise ErroUso(
+                    f"--permitir-ids inválido: {item!r} (use letras seguidas de dígitos, ex.: O3,F4)"
+                )
+            if item not in saida:
+                saida.append(item)
+    return saida
 
 
 def parse_permitir(valores: list[str] | None) -> list[str]:
@@ -416,8 +443,14 @@ def _movidos(ordem: list[int]) -> list[int]:
     return [ordem[i] for i in range(n) if i not in ficam]
 
 
-def validar_texto(texto: str, mapa: dict, permitir: list[str]) -> Resultado:
-    """Validações (a), (b) e (c) do texto editado contra o mapa."""
+def validar_texto(
+    texto: str, mapa: dict, permitir: list[str], ids: list[str] | None = None
+) -> Resultado:
+    """Validações (a), (b) e (c) do texto editado contra o mapa.
+
+    ``ids`` libera ocorrências livres de identificadores exatos (``O3``), com fronteira de
+    palavra dos dois lados; o dígito de qualquer outro identificador continua bloqueado.
+    """
     res = Resultado()
     a = mapa["linhas"][0]
     literais = {m["k"]: m for m in mapa["marcadores"]}
@@ -446,14 +479,24 @@ def validar_texto(texto: str, mapa: dict, permitir: list[str]) -> Resultado:
             res.erros.append(f"marcador duplicado {marcador(k)} ({n} vezes; {linhas})")
 
     achados, estruturas, _ = localizar_numeros(branco)
+    spans_id: list[tuple[int, int, str]] = []
+    if ids:
+        alternativa = "|".join(re.escape(i) for i in sorted(ids, key=len, reverse=True))
+        for mi in re.finditer(rf"(?<!\w)(?:{alternativa})(?!\w)", branco):
+            spans_id.append((mi.start(), mi.end(), mi.group(0)))
     for m in achados:
         lit = m.group(0)
+        id_cobre = next((s for s in spans_id if s[0] <= m.start() and m.end() <= s[1]), None)
+        if id_cobre is not None:
+            res.liberados_id.append(f"{id_cobre[2]} ({pos_linha(m.start())})")
+            continue
         if lit in permitir or m.group("num") in permitir:
             res.liberados.append(f"{lit} ({pos_linha(m.start())})")
             continue
         res.erros.append(
             f"dígito livre {lit!r} na {pos_linha(m.start())} "
-            "(para liberar use --permitir-novos; ';' separa valores)"
+            "(para liberar use --permitir-novos; ';' separa valores; "
+            "--permitir-ids para identificadores como O3)"
         )
 
     originais = Counter(mapa.get("isentos", {}))
@@ -501,7 +544,10 @@ def carregar_mapa(raiz: Path, id_: str) -> tuple[dict, Path]:
     return json.loads(f_mapa.read_text(encoding="utf-8")), f_mask
 
 
-def executar(raiz: Path, id_: str, entrada: str | None, permitir: list[str], escrever: bool) -> int:
+def executar(
+    raiz: Path, id_: str, entrada: str | None, permitir: list[str], escrever: bool,
+    ids: list[str] | None = None,
+) -> int:
     mapa, f_mask = carregar_mapa(raiz, id_)
     f_entrada = resolver(raiz, entrada) if entrada else f_mask
     editado = ler_utf8(f_entrada)
@@ -510,7 +556,7 @@ def executar(raiz: Path, id_: str, entrada: str | None, permitir: list[str], esc
     original = ler_utf8(caminho)
     todas = dividir_linhas(original)
     a, b = mapa["linhas"]
-    res = validar_texto(editado, mapa, permitir)
+    res = validar_texto(editado, mapa, permitir, ids)
 
     trecho: str | None = None
     if b > len(todas):
@@ -530,6 +576,8 @@ def executar(raiz: Path, id_: str, entrada: str | None, permitir: list[str], esc
         print(f"AVISO: {av}")
     for lib in res.liberados:
         print(f"LIBERADO: número novo autorizado {lib}")
+    for lib in res.liberados_id:
+        print(f"LIBERADO-ID: identificador autorizado {lib}")
     if res.erros:
         for e in res.erros:
             print(f"ERRO: {e}")
@@ -583,6 +631,10 @@ def construir_parser() -> argparse.ArgumentParser:
                        help="números novos autorizados, por valor (vale para todas as "
                             "ocorrências dele): 'a;b'; a vírgula separa só quando o bloco "
                             "não é um número ('12, 7'); '0,95' é um único número; repetível")
+        q.add_argument("--permitir-ids", action="append", default=None,
+                       help="identificadores exatos autorizados no texto editado, separados por "
+                            "vírgula (letras + dígitos, ex.: 'O3,F4,K1'); só casa o "
+                            "identificador inteiro (O3 não libera O35 nem BO3); repetível")
     return ap
 
 
@@ -597,7 +649,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.comando == "mascarar":
             return cmd_mascarar(raiz, args.arquivo, args.linhas, args.id)
         permitir = parse_permitir(args.permitir_novos)
-        return executar(raiz, args.id, args.entrada, permitir, escrever=args.comando == "restaurar")
+        ids = parse_ids(args.permitir_ids)
+        return executar(raiz, args.id, args.entrada, permitir,
+                        escrever=args.comando == "restaurar", ids=ids)
     except ErroUso as e:
         print(f"ERRO DE USO: {e}", file=sys.stderr)
         return 2
