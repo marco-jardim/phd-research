@@ -11,9 +11,10 @@ from terminologia import conta, contem, normalizar_terminologia
 LATEX = Path(__file__).resolve().parents[1] / "text" / "latex"
 PARAGRAPHS = [
     ("capitulo1.tex", r"O Capítulo~\ref{cap:referencial} traz o referencial teórico"),
-    ("capitulo_dados.tex", "O novo pseudônimo é calculado"),
+    ("capitulo_dados.tex", "O novo pseudônimo é o HMAC-SHA256"),
     ("capitulo_dados.tex", "A matriz restrita não foi depositada"),
-    ("capitulo_dados.tex", r"O arquivo \path{qw3/qw3_analysis_frame.csv}"),
+    # W5: a auditoria do frame de equidade saiu do capítulo e vive no apêndice do pacote.
+    ("apendice_pacote.tex", r"O arquivo \path{qw3/qw3_analysis_frame.csv}"),
     ("capitulo_dados.tex", r"O relatório \path{k_anonymity_report.json}"),
     ("capitulo_dados.tex", r"O \texttt{pair\_id} histórico"),
     ("estudo1_comparador.tex", "Os pesos internos do comparador permanecem fixos"),
@@ -39,11 +40,11 @@ FORMULAS = (
 # Retrato aprovado pelo autor, não meta de redução: valores 3 são deliberados.
 EXPECTED_NEGATIONS = {
     r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0, 0],
-    "O novo pseudônimo é calculado": [0, 2, 2, 1, 0],
-    "A matriz restrita não foi depositada": [1, 2, 1],
+    "O novo pseudônimo é o HMAC-SHA256": [0, 4, 1],
+    "A matriz restrita não foi depositada": [3, 1],
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],
-    r"O relatório \path{k_anonymity_report.json}": [1, 0, 1, 0, 1, 1, 0, 0],
-    r"O \texttt{pair\_id} histórico": [2, 0, 0, 1, 1, 3],
+    r"O relatório \path{k_anonymity_report.json}": [1, 1],
+    r"O \texttt{pair\_id} histórico": [2, 0, 1, 3],
     "Os pesos internos do comparador permanecem fixos": [0, 1, 0, 2],
     "Entre as configurações originais da Tabela": [0, 1, 1, 1],
     "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 0],

@@ -68,7 +68,8 @@ def test_bootstrap_claims_match_published_csv():
             row["diferenca_revisoes_ic95_sup"])
 
 
-@pytest.mark.parametrize("name", ["conclusao.tex", "capitulo_dados.tex", "glossario.tex"])
+# W5: o bloco limítrofe e o filtro literal foram movidos do capítulo de dados para o apêndice de origem.
+@pytest.mark.parametrize("name", ["conclusao.tex", "apendice_linkage_origem.tex", "glossario.tex"])
 def test_boundary_precision_is_explained_and_matches_metadata(name):
     metadata = json.loads(text("data/fusao_robustez_metadata.json"))["faixa"]
     assert metadata["operational_n"] == 2522

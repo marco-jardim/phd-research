@@ -151,7 +151,7 @@ def test_remaining_editorial_caveats_and_reductions():
     assert "a tese não participou dessas etapas" not in text("capitulo1.tex")
     assert "sem distingui-la de abstenção generalizada" in text("capitulo1.tex")
     assert "não mede concordância entre registros" in text("estudo1_comparador.tex")
-    assert "7 é o limiar mínimo da nota no filtro de homonímia histórico v3" in text("capitulo_dados.tex")
+    assert "7 é o limiar mínimo da nota final no filtro de homonímia histórico v3" in text("capitulo_dados.tex")
     for value in ("0{,}5", "2{,}0"):
         assert r"$\beta=" + value + "$" in text("apendice_ablacao.tex")
     roteiro = (ROOT / "text/slides/roteiro_defesa.md").read_text(encoding="utf-8")

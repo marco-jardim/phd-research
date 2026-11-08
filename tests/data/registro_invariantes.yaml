@@ -112,7 +112,11 @@
     - {arquivo: text/latex/tese.tex, secao: abstract, exige: [n_par2, "PAR=2"]}
     - {arquivo: text/latex/capitulo3.tex, exige: [n_par1, n_vinculos, n_par2]}
     - {arquivo: text/latex/conclusao.tex, exige: [n_par1, n_vinculos, n_par2]}
-    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_par0, n_par1, n_par2]}
+    # W5: o parágrafo do depósito (61.449 não pares, 211 e 36) saiu do capítulo; os valores seguem
+    # nos parágrafos de desbalanceamento (61.449 com 247) e da referência operacional (247 = 211 + 36).
+    # migração 1:1 sob o regime de proteção e a decisão W5 aprovados pela autora em 2026-11-08
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_par0, n_vinculos]}
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_vinculos, n_par1, n_par2]}
     - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige: [n_par2], mesma_frase: ["metas"]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
@@ -217,6 +221,8 @@
   ocorrencias:
     - {arquivo: text/latex/conclusao.tex, exige: [abaixo_corte, n_pares_total]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [faixa_n_operacional, limiar_global_escore, faixa_n_literal, faixa_par2_literal, faixa_par2_operacional]}
+    # W5: o bloco limítrofe e o filtro literal foram movidos do capítulo de dados para o apêndice de origem.
+    - {arquivo: text/latex/apendice_linkage_origem.tex, exige: [limiar_global_escore, faixa_n_literal, faixa_par2_literal]}
     # pos_revisao: âncoras C10 e C03r (aprovado_por_autora: 2026-11-08)
     - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [abaixo_corte, n_pares_total], mesma_frase: ["grey area"]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [abaixo_corte, n_pares_total], mesma_frase: ["grey area"]}

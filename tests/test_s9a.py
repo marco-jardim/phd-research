@@ -135,7 +135,7 @@ def test_ic_scope_and_filter_cost_are_explicit():
     data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
     assert 'termo de consentimento' not in data
     # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
-    assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
+    assert 'sob os pareceres dos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
     # capitulo3.tex: pinos de protocolo de busca, Pacheco2008/Rafael2024 e "post hoc"
     # retirados na reescrita (a âncora C01r do registro protege o caráter post hoc).
     bib = (L / 'referencias.bib').read_text(encoding='utf-8')

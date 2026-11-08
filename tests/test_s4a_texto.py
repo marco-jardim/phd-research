@@ -126,9 +126,11 @@ def test_notification_year_aggregates_are_portable_and_match_text():
     assert frame["n_vinculos_notificacao_2019_2022"] == 184
     assert frame["n_vinculos_notificacao_2013_2018"] + frame["n_vinculos_notificacao_2019_2022"] == frame["n_par1"] + frame["n_par2"]
     chapter = (LATEX / "capitulo_dados.tex").read_text(encoding="utf-8")
+    # W5: a janela de notificação dos pares verdadeiros foi movida para o apêndice de origem.
+    origin = (LATEX / "apendice_linkage_origem.tex").read_text(encoding="utf-8")
     assert "entre 2013 e 2022" in chapter
-    assert "184 correspondem a notificações de 2019 a 2022 e 63" in chapter
-    assert "2 de janeiro" not in chapter and "30 de dezembro" not in chapter
+    assert "184 correspondem a notificações de 2019 a 2022 e 63" in origin
+    assert "2 de janeiro" not in chapter + origin and "30 de dezembro" not in chapter + origin
 
 
 @requires_files(DATA_ROOT / "data/COMPARADORSEMIDENT.csv")

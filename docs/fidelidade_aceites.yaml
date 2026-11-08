@@ -36,6 +36,192 @@
 #     autora_aprovou: true                      # só "true" libera
 #     motivo: "Número novo conferido em data/x.csv."
 
-aceites: []
-
-aceites_numeros: []
+aceites:
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    hash_paragrafo_novo: "334cd3c8355ce91b"
+    itens:
+      - negadores:+sem
+      - numeros:+12397
+      - numeros:+13412
+      - numeros:+15964
+      - numeros:+184
+      - numeros:+19923
+      - numeros:+2013
+      - numeros:+2018
+      - numeros:+2019
+      - numeros:+2020
+      - numeros:+2021
+      - numeros:+2022
+      - numeros:+247
+      - numeros:+61696
+      - numeros:+63
+    justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    hash_paragrafo_novo: "802e87ffee77f129"
+    itens:
+      - numeros:+-5.648
+      - numeros:+-5.64846
+      - numeros:+-5.6485
+      - numeros:+2
+      - numeros:+2495
+      - numeros:+31
+    justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_pacote.tex
+    hash_paragrafo_novo: "ef3f7464b1abedd6"
+    itens:
+      - negadores:+nenhuma
+      - negadores:+não
+      - numeros:+1
+      - numeros:+13
+      - numeros:+23
+      - numeros:+41
+      - numeros:+5
+      - numeros:+6
+    justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_pacote.tex
+    hash_paragrafo_novo: "febc8e6a0249c141"
+    itens:
+      - negadores:+não
+      - numeros:+1
+      - numeros:+144
+      - numeros:+23358
+      - numeros:+24735
+      - numeros:+28
+      - numeros:+29
+      - numeros:+30141
+      - numeros:+43
+      - numeros:+5
+      - numeros:+7154
+    justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
+    autora_aprovou: true
+aceites_numeros:
+  # W5 (decisão da autora): conteúdo movido de text/latex/capitulo_dados.tex para os apêndices,
+  # com os mesmos valores da versão pré-revisão. 2.495, 31 e -5,6485 em apendice_linkage_origem.tex
+  # são cobertos por invariante do registro (N09) e não precisam de aceite.
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2013"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2018"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2019"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2020"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2021"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2022"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "247"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "184"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "63"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "61.696"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "12.397"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "13.412"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "19.923"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "15.964"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "-5,64846"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "-5,648"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_linkage_origem.tex
+    numero: "2"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "1"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "5"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "6"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "13"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "23"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "28"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "29"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "41"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "43"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "144"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "7.154"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "23.358"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "24.735"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
+  - arquivo: text/latex/apendice_pacote.tex
+    numero: "30.141"
+    autora_aprovou: true
+    motivo: "W5 (decisão da autora): movido de capitulo_dados.tex, mesmo valor da versão pré-revisão"
