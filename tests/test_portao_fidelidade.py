@@ -1,5 +1,7 @@
 """Portão de fidelidade: comparação de parágrafos entre base e alvo."""
 
+import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -202,6 +204,133 @@ def test_paragrafo_adicionado_com_citacao_e_alerta():
     assert ach[0].diferencas["citacoes"]["adicionados"] == ["novo2024"]
 
 
+def test_paragrafo_adicionado_com_negador_e_alerta():
+    p1 = "Introdução geral do tema."
+    p2 = "Esse efeito não foi observado em nenhum grupo."
+    ach = alertas(analisar(f"{p1}\n", f"{p1}\n\n{p2}\n"))
+    assert len(ach) == 1
+    assert ach[0].tipo == "adicionado"
+    assert ach[0].diferencas["negadores"]["adicionados"] == ["nenhum", "não"]
+    assert "negadores:+não" in ach[0].itens
+
+
+# ---------------------------------------------------------------------------
+# Qualificadores, comparativos, métricas, sinal e ordem dos números
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "a,b,antes,depois",
+    [
+        ("no máximo", "pelo menos", "no máximo", "pelo menos"),
+        ("mais de", "menos de", "mais de", "menos de"),
+        ("cerca de", "ao menos", "cerca de", "ao menos"),
+        ("aproximadamente", "até", "aproximadamente", "até"),
+    ],
+)
+def test_qualificador_numerico_trocado(a, b, antes, depois):
+    ach = alertas(analisar(f"Foram revisados {a} 50 casos no estudo.", f"Foram revisados {b} 50 casos no estudo."))
+    assert len(ach) == 1
+    assert ach[0].diferencas == {"qualificadores": {"removidos": [antes], "adicionados": [depois]}}
+
+
+def test_qualificador_removido_e_espaco_latex():
+    ach = alertas(analisar("Foram revisados mais de 50 casos.", "Foram revisados 50 casos."))
+    assert ach[0].diferencas["qualificadores"] == {"removidos": ["mais de"], "adicionados": []}
+    assert alertas(analisar("Foram revisados mais de 50 casos.", "Foram revisados mais~de 50 casos.")) == []
+    # "até" dentro de outra palavra não conta
+    assert pf.extrair_tokens("O atendimento ocorreu.")["qualificadores"] == {}
+
+
+@pytest.mark.parametrize(
+    "a,b",
+    [("maior", "menor"), ("acima", "abaixo"), ("superior", "inferior")],
+)
+def test_comparativo_trocado(a, b):
+    ach = alertas(analisar(f"O desempenho foi {a} que o do método anterior.", f"O desempenho foi {b} que o do método anterior."))
+    assert len(ach) == 1
+    assert ach[0].diferencas["comparativos"] == {"removidos": [a], "adicionados": [b]}
+
+
+def test_comparativo_plural_nao_alerta():
+    assert alertas(analisar("Houve valores maiores no grupo.", "Houve valores maior no grupo.")) == []
+
+
+def test_metricas_e_modos_trocados():
+    ach = alertas(
+        analisar(
+            "A sensibilidade foi alta no modo vigilância.",
+            "A especificidade foi alta no modo confirmação.",
+        )
+    )
+    assert len(ach) == 1
+    d = ach[0].diferencas["metricas"]
+    assert d["removidos"] == ["sensibilidade", "vigilância"]
+    assert d["adicionados"] == ["confirmação", "especificidade"]
+    vpp = alertas(analisar("O VPP foi alto em todos os casos.", "O VPN foi alto em todos os casos."))
+    assert vpp[0].diferencas["metricas"] == {"removidos": ["VPP"], "adicionados": ["VPN"]}
+    f1 = pf.extrair_tokens("O F1 e a sensibilidade subiram.")
+    assert f1["metricas"] == {"F1": 1, "sensibilidade": 1}
+
+
+@pytest.mark.parametrize(
+    "escrita",
+    ["-5,6485", "\u22125,6485", "$-$5,6485", "$-5{,}6485$", "($-$5{,}6485)"],
+)
+def test_sinal_negativo_e_preservado(escrita):
+    tok = pf.extrair_tokens(f"A diferença foi de {escrita} pontos percentuais.")
+    assert tok["numeros"] == {"-5.6485": 1}
+
+
+def test_perda_do_sinal_negativo_alerta():
+    ach = alertas(
+        analisar(
+            "A diferença foi de \u22125,6485 pontos percentuais.",
+            "A diferença foi de 5,6485 pontos percentuais.",
+        )
+    )
+    assert len(ach) == 1
+    assert ach[0].diferencas["numeros"] == {"removidos": ["-5.6485"], "adicionados": ["5.6485"]}
+    # grafias equivalentes do sinal não alertam
+    assert alertas(analisar("Foi de -5,6485 pontos.", "Foi de $-$5{,}6485 pontos.")) == []
+    assert alertas(analisar("Foi de -5,6485 pontos.", "Foi de \u22125,6485 pontos.")) == []
+
+
+def test_hifen_entre_numeros_e_palavras_nao_e_sinal():
+    tok = pf.extrair_tokens("No período 2020-2021 e 10--15 casos, pré-1999 e covid-19.")
+    assert tok["numeros"] == {"2020": 1, "2021": 1, "10": 1, "15": 1, "1999": 1, "19": 1}
+
+
+def test_troca_de_ordem_de_numeros_na_frase_alerta():
+    antigo = "O grupo A teve 12 casos e o grupo B teve 30 casos."
+    novo = "O grupo A teve 30 casos e o grupo B teve 12 casos."
+    ach = alertas(analisar(antigo, novo))
+    assert len(ach) == 1
+    # o multiconjunto de números é igual: só a ordem acusa a troca
+    assert set(ach[0].diferencas) == {"ordem_numeros"}
+    assert ach[0].diferencas["ordem_numeros"] == {"removidos": ["12|30"], "adicionados": ["30|12"]}
+    assert ach[0].itens == ["ordem_numeros:+30|12", "ordem_numeros:-12|30"]
+
+
+def test_ordem_de_numeros_sem_troca_nao_alerta():
+    antigo = "O grupo A teve 12 casos e o grupo B teve 30 casos. Houve 7 perdas."
+    # mesma ordem em cada frase, frases em outra ordem
+    novo = "Houve 7 perdas. O grupo A teve 12 casos e o grupo B teve 30 casos."
+    assert alertas(analisar(antigo, novo)) == []
+    # números em frases distintas trocados de frase não são "ordem dentro da frase"
+    assert pf.extrair_tokens("A teve 12 casos. B teve 30 casos.")["ordem_numeros"] == {}
+
+
+def test_numero_diferente_nao_gera_alerta_de_ordem():
+    ach = alertas(
+        analisar(
+            "O grupo A teve 12 casos e o grupo B teve 30 casos.",
+            "O grupo A teve 12 casos e o grupo B teve 31 casos.",
+        )
+    )
+    assert set(ach[0].diferencas) == {"numeros"}
+
+
 # ---------------------------------------------------------------------------
 # Aceites
 # ---------------------------------------------------------------------------
@@ -211,7 +340,7 @@ def aceite_para(achado, **extra):
     base = {
         "arquivo": achado.arquivo,
         "hash_paragrafo_novo": achado.hash,
-        "itens": [],
+        "itens": list(achado.itens),
         "justificativa": "conferido",
         "autora_aprovou": True,
     }
@@ -272,8 +401,72 @@ def test_parser_simples_do_yaml_de_aceites():
     assert pf.parse_aceites_simples("aceites: []\n") == []
 
 
-def test_template_de_aceites_do_repositorio_esta_vazio():
-    assert pf.carregar_aceites(ROOT / "docs" / "fidelidade_aceites.yaml") == []
+ACEITES_REPO = ROOT / "docs" / "fidelidade_aceites.yaml"
+
+
+def test_aceites_do_repositorio_seguem_o_esquema():
+    entradas = pf.ler_entradas_aceites(ACEITES_REPO)
+    for e in entradas:
+        assert pf.validar_aceite(e) == [], e
+        assert set(e) <= {"arquivo", "hash_paragrafo_novo", "itens", "justificativa", "autora_aprovou"}
+    # hash sempre entre aspas no arquivo (hash só com dígitos viraria número no YAML)
+    if ACEITES_REPO.exists():
+        linhas = [
+            ln.split(":", 1)[1].strip()
+            for ln in ACEITES_REPO.read_text(encoding="utf-8").splitlines()
+            if ln.strip().startswith("hash_paragrafo_novo:")
+        ]
+        assert len(linhas) == len(entradas)
+        assert all(re.fullmatch(r"""(["'])[0-9a-f]{16}\1\s*(#.*)?""", v) for v in linhas), linhas
+    # o carregador aceita tudo o que o esquema aceita
+    assert len(pf.carregar_aceites(ACEITES_REPO)) == len(entradas)
+
+
+def aceite_valido(**extra):
+    base = {
+        "arquivo": "text/latex/x.tex",
+        "hash_paragrafo_novo": "0123456789abcdef",
+        "itens": ["numeros:-39.3"],
+        "justificativa": "ok",
+        "autora_aprovou": True,
+    }
+    base.update(extra)
+    return base
+
+
+def test_validar_aceite_aceita_entrada_completa():
+    assert pf.validar_aceite(aceite_valido()) == []
+
+
+@pytest.mark.parametrize(
+    "campo,valor",
+    [
+        ("arquivo", ""),
+        ("arquivo", None),
+        ("hash_paragrafo_novo", 1234567890123456),  # hash só com dígitos sem aspas
+        ("hash_paragrafo_novo", 1.2345e20),
+        ("hash_paragrafo_novo", "0123456789ABCDEF"),
+        ("hash_paragrafo_novo", "0123456789abcde"),
+        ("itens", []),
+        ("itens", None),
+        ("itens", "numeros:-1"),
+        ("itens", [""]),
+        ("justificativa", ""),
+        ("justificativa", None),
+        ("autora_aprovou", "true"),
+        ("autora_aprovou", None),
+    ],
+)
+def test_validar_aceite_rejeita_campos_invalidos(campo, valor):
+    assert pf.validar_aceite(aceite_valido(**{campo: valor}))
+
+
+def test_validar_aceite_rejeita_campo_ausente_e_nao_mapeamento():
+    for campo in ("arquivo", "hash_paragrafo_novo", "itens", "justificativa", "autora_aprovou"):
+        e = aceite_valido()
+        del e[campo]
+        assert pf.validar_aceite(e), campo
+    assert pf.validar_aceite("texto")
 
 
 def test_carregar_aceites_normaliza(tmp_path):
@@ -282,6 +475,8 @@ def test_carregar_aceites_normaliza(tmp_path):
         "aceites:\n"
         "  - arquivo: text/latex/x.tex\n"
         '    hash_paragrafo_novo: "0123456789abcdef"\n'
+        "    itens:\n"
+        "      - numeros:-39.3\n"
         "    justificativa: ok\n"
         "    autora_aprovou: true\n",
         encoding="utf-8",
@@ -291,11 +486,37 @@ def test_carregar_aceites_normaliza(tmp_path):
         {
             "arquivo": "text/latex/x.tex",
             "hash_paragrafo_novo": "0123456789abcdef",
-            "itens": [],
+            "itens": ["numeros:-39.3"],
             "justificativa": "ok",
             "autora_aprovou": True,
         }
     ]
+
+
+def test_carregar_aceites_rejeita_itens_vazios(tmp_path):
+    for itens in ("", "    itens: []\n"):
+        arq = tmp_path / "b.yaml"
+        arq.write_text(
+            "aceites:\n"
+            "  - arquivo: text/latex/x.tex\n"
+            '    hash_paragrafo_novo: "0123456789abcdef"\n'
+            + itens
+            + "    justificativa: ok\n"
+            "    autora_aprovou: true\n",
+            encoding="utf-8",
+        )
+        with pytest.raises(pf.ErroAceites, match="sem itens"):
+            pf.carregar_aceites(arq)
+    assert pf.main(["--raiz", str(tmp_path), "--aceites", str(arq)]) == 2
+
+
+def test_aceite_com_itens_vazios_nao_cobre_nada():
+    antigo = "O método não foi validado em campo."
+    novo = "O método foi validado em campo."
+    ach = alertas(analisar(antigo, novo))[0]
+    res = analisar(antigo, novo, [aceite_para(ach, itens=[])])
+    assert alertas(res)[0].status == "pendente"
+    assert "sem itens" in alertas(res)[0].nota_aceite
 
 
 # ---------------------------------------------------------------------------
@@ -315,9 +536,74 @@ def test_tabela_gerada_listada_a_parte(repo):
     escrever(repo, "text/latex/tables/tab_a.tex", TABELA.replace("1\n", "2\n"))
     escrever(repo, "text/latex/tese_rev_diff.tex", "ignorado 99\n")
     res = pf.analisar_repositorio(repo)
-    assert res.gerados == [{"arquivo": "text/latex/tables/tab_a.tex", "estado": "alterada"}]
+    assert [(g["arquivo"], g["estado"], g["status"]) for g in res.gerados] == [
+        ("text/latex/tables/tab_a.tex", "alterada", "pendente")
+    ]
     assert res.achados == []
     assert "regenerar e conferir" in pf.renderizar_markdown(res)
+
+
+def test_tabela_gerada_alterada_e_pendente_e_falha_o_portao(repo):
+    base_commit(repo, {"text/latex/tables/tab_a.tex": TABELA})
+    escrever(repo, "text/latex/tables/tab_a.tex", TABELA.replace("1\n", "2\n"))
+    res = pf.analisar_repositorio(repo)
+    assert res.pendentes == []
+    assert res.n_pendentes == 1
+    md = pf.renderizar_markdown(res)
+    assert "FALHA" in md and "PENDENTE" in md
+    assert pf.main(["--raiz", str(repo)]) == 1
+
+
+def test_tabela_gerada_regenerada_identica_nao_e_pendente(repo):
+    base_commit(repo, {"text/latex/tables/tab_a.tex": TABELA})
+    escrever(repo, "text/latex/tables/tab_a.tex", TABELA.replace("1\n", "2\n"))
+    escrever(repo, "text/latex/tables/tab_a.tex", TABELA)  # regenerada: volta idêntica
+    res = pf.analisar_repositorio(repo)
+    assert res.gerados == []
+    assert res.n_pendentes == 0
+    assert pf.main(["--raiz", str(repo)]) == 0
+
+
+def test_tabela_gerada_so_com_fim_de_linha_diferente_nao_e_pendente(repo):
+    base_commit(repo, {"text/latex/tables/tab_a.tex": TABELA})
+    p = repo / "text/latex/tables/tab_a.tex"
+    p.write_bytes(TABELA.replace("\n", "\r\n").encode("utf-8"))
+    res = pf.analisar_repositorio(repo)
+    assert res.gerados == [] and res.n_pendentes == 0
+
+
+def test_tabela_gerada_nova_ou_removida_e_pendente(repo):
+    base_commit(repo, {"text/latex/tables/tab_a.tex": TABELA})
+    (repo / "text/latex/tables/tab_a.tex").unlink()
+    escrever(repo, "text/latex/tables/tab_b.tex", TABELA)
+    res = pf.analisar_repositorio(repo)
+    assert sorted((g["arquivo"][-10:], g["estado"]) for g in res.gerados) == [
+        ("/tab_a.tex", "removida"),
+        ("/tab_b.tex", "nova"),
+    ]
+    assert res.n_pendentes == 2
+
+
+def test_tabela_gerada_aceita_com_item_e_aprovacao(repo):
+    base_commit(repo, {"text/latex/tables/tab_a.tex": TABELA})
+    escrever(repo, "text/latex/tables/tab_a.tex", TABELA.replace("1\n", "2\n"))
+    h = pf.analisar_repositorio(repo).gerados[0]["hash"]
+    arq = "text/latex/tables/tab_a.tex"
+
+    def aceite(**extra):
+        return aceite_valido(
+            arquivo=arq, hash_paragrafo_novo=h, itens=["tabela_gerada:alterada"], **extra
+        )
+
+    ok = pf.analisar_repositorio(repo, aceites=[aceite()])
+    assert ok.gerados[0]["status"] == "aceito" and ok.n_pendentes == 0
+    assert ok.orfaos == []
+    sem = pf.analisar_repositorio(repo, aceites=[aceite(autora_aprovou=False)])
+    assert sem.n_pendentes == 1
+    outro = pf.analisar_repositorio(
+        repo, aceites=[aceite_valido(arquivo=arq, hash_paragrafo_novo=h, itens=["numeros:-1"])]
+    )
+    assert outro.n_pendentes == 1
 
 
 def test_arquivos_padrao_incluem_novos_e_slides(repo):
@@ -364,6 +650,8 @@ def test_cli_codigos_de_saida(repo):
         "aceites:\n"
         "  - arquivo: text/latex/cap.tex\n"
         f'    hash_paragrafo_novo: "{achado.hash}"\n'
+        "    itens:\n"
+        "      - negadores:-não\n"
         '    justificativa: "negador retirado de propósito"\n'
         "    autora_aprovou: true\n",
         encoding="utf-8",
@@ -372,6 +660,30 @@ def test_cli_codigos_de_saida(repo):
     assert "ACEITO" in saida.read_text(encoding="utf-8")
 
     assert pf.main(["--raiz", str(repo), "--base", "tag-inexistente"]) == 2
+
+
+def test_portao_no_repositorio_real(tmp_path):
+    """O portão roda contra o repositório de verdade: base pre-revisao-2, alvo HEAD."""
+    if shutil.which("git") is None:
+        pytest.skip("git indisponível")
+    try:
+        raiz = pf.raiz_git(ROOT)
+        base_ok = pf.ref_valida(raiz, "pre-revisao-2") and pf.ref_valida(raiz, "HEAD")
+    except (pf.ErroGit, OSError):
+        pytest.skip("repositório git indisponível")
+    if not base_ok:
+        pytest.skip("tag pre-revisao-2 ausente (clone raso ou sem tags)")
+    saida = tmp_path / "relatorio.md"
+    codigo = pf.main(
+        [
+            "--raiz", str(raiz),
+            "--base", "pre-revisao-2",
+            "--alvo", "HEAD",
+            "--saida", str(saida),
+        ]
+    )  # fmt: skip
+    relatorio = saida.read_text(encoding="utf-8") if saida.exists() else "(sem relatório)"
+    assert codigo == 0, relatorio[:6000]
 
 
 def test_cli_como_subprocesso(repo):

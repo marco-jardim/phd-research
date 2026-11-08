@@ -62,11 +62,49 @@ QUANTIFICADORES = {
 }
 # Siglas escritas em caixa mista (além das de 2 ou mais maiúsculas).
 SIGLAS_MISTAS = {"sinan", "sinasc", "datasus"}
+# Qualificadores de quantidade com mais de uma palavra ou com sentido de limite.
+QUALIFICADORES = (
+    "no máximo",
+    "pelo menos",
+    "mais de",
+    "menos de",
+    "cerca de",
+    "aproximadamente",
+    "até",
+    "ao menos",
+)
+# Comparativos; o plural é reduzido ao lema.
+COMPARATIVOS = {
+    "maior": "maior",
+    "maiores": "maior",
+    "menor": "menor",
+    "menores": "menor",
+    "acima": "acima",
+    "abaixo": "abaixo",
+    "superior": "superior",
+    "superiores": "superior",
+    "inferior": "inferior",
+    "inferiores": "inferior",
+}
+# Modos de operação e métricas, cuja troca altera a afirmação.
+METRICAS = {
+    "vigilância": "vigilância",
+    "confirmação": "confirmação",
+    "sensibilidade": "sensibilidade",
+    "vpp": "VPP",
+    "especificidade": "especificidade",
+    "f1": "F1",
+    "vpn": "VPN",
+}
 
 CATEGORIAS = (
     "numeros",
+    "ordem_numeros",
     "negadores",
     "quantificadores",
+    "qualificadores",
+    "comparativos",
+    "metricas",
     "citacoes",
     "referencias",
     "siglas",
@@ -74,15 +112,29 @@ CATEGORIAS = (
 )
 # Categorias que tornam um parágrafo removido/adicionado um alerta.
 CATEGORIAS_REMOVIDO = ("numeros", "citacoes", "negadores")
-CATEGORIAS_ADICIONADO = ("numeros", "citacoes")
+CATEGORIAS_ADICIONADO = ("numeros", "citacoes", "negadores")
 
 RE_CITE = re.compile(r"\\[A-Za-z]*cite[A-Za-z]*\*?(?:\s*\[[^\]]*\]){0,2}\s*\{([^{}]*)\}")
 RE_REF = re.compile(r"\\(ref|eqref|autoref|pageref|cref|Cref|vref|nameref|label)\*?\s*\{([^{}]*)\}")
 RE_PATH = re.compile(r"\\(?:path|url)\s*\{([^{}]*)\}")
 RE_COMANDO = re.compile(r"\\[A-Za-z@]+\*?")
 RE_PALAVRA = re.compile(r"[^\W_]+")
-RE_NUMERO = re.compile(r"(?<!\d)(\d+(?:[.,]\d+)*)((?:\s|~|\\,|\\;)*\\?%)?")
+# Sinal negativo: "$-$", "−" (U+2212) ou hífen que não segue letra, dígito, "-" ou "\".
+RE_NUMERO = re.compile(
+    r"(?:(?P<sinal>\$\s*[-\u2212]\s*\$|\u2212|(?<![\w\\-])-)(?=\d))?"
+    r"(?<!\d)(?P<num>\d+(?:[.,]\d+)*)(?P<pct>(?:\s|~|\\,|\\;)*\\?%)?"
+)
 RE_SEP_MILHAR = re.compile("(?<=\\d)(?:\\\\,|\u00a0|\u202f|\u2009)(?=\\d{3}(?!\\d))")
+RE_FRASE = re.compile(r"(?<=[.!?;])\s+")
+RE_QUALIFICADOR = re.compile(
+    r"(?<!\w)(?:"
+    + "|".join(
+        r"[\s~]+".join(re.escape(w) for w in q.split())
+        for q in sorted(QUALIFICADORES, key=len, reverse=True)
+    )
+    + r")(?!\w)"
+)
+SEP_ORDEM = "|"
 
 
 # ---------------------------------------------------------------------------
@@ -158,19 +210,33 @@ def extrair_tokens(par: str) -> dict[str, Counter]:
     trabalho = RE_PATH.sub(" ", trabalho)
 
     numerico = RE_SEP_MILHAR.sub("", trabalho.replace("{,}", ","))
-    for m in RE_NUMERO.finditer(numerico):
-        item = normalizar_numero(m.group(1))
-        if m.group(2):
-            item += "%"
-        tok["numeros"][item] += 1
+    for frase in RE_FRASE.split(numerico):
+        sequencia = []
+        for m in RE_NUMERO.finditer(frase):
+            item = normalizar_numero(m.group("num"))
+            if m.group("sinal"):
+                item = "-" + item
+            if m.group("pct"):
+                item += "%"
+            tok["numeros"][item] += 1
+            sequencia.append(item)
+        if len(sequencia) >= 2:
+            tok["ordem_numeros"][SEP_ORDEM.join(sequencia)] += 1
 
     sem_comandos = RE_COMANDO.sub(" ", trabalho)
+    minusculo = unicodedata.normalize("NFC", sem_comandos).lower()
+    for m in RE_QUALIFICADOR.finditer(minusculo):
+        tok["qualificadores"][" ".join(m.group(0).replace("~", " ").split())] += 1
     for palavra in RE_PALAVRA.findall(sem_comandos):
         baixa = unicodedata.normalize("NFC", palavra).lower()
         if baixa in NEGADORES:
             tok["negadores"][baixa] += 1
         if baixa in QUANTIFICADORES:
             tok["quantificadores"][QUANTIFICADORES[baixa]] += 1
+        if baixa in COMPARATIVOS:
+            tok["comparativos"][COMPARATIVOS[baixa]] += 1
+        if baixa in METRICAS:
+            tok["metricas"][METRICAS[baixa]] += 1
         if baixa in SIGLAS_MISTAS:
             tok["siglas"][palavra.upper()] += 1
         elif sum(1 for c in palavra if c.isupper()) >= 2:
@@ -178,11 +244,34 @@ def extrair_tokens(par: str) -> dict[str, Counter]:
     return tok
 
 
+def _pares_permutados(rem: list[str], add: list[str]) -> list[tuple[str, str]]:
+    """Sequências removidas e adicionadas com os mesmos números em outra ordem."""
+    livres = list(add)
+    pares = []
+    for r in rem:
+        chave = sorted(r.split(SEP_ORDEM))
+        for k, a in enumerate(livres):
+            if sorted(a.split(SEP_ORDEM)) == chave:
+                pares.append((r, livres.pop(k)))
+                break
+    return pares
+
+
 def comparar(tok_a: dict[str, Counter], tok_b: dict[str, Counter]) -> dict[str, dict[str, list[str]]]:
     dif: dict[str, dict[str, list[str]]] = {}
     for cat in CATEGORIAS:
         rem = tok_a[cat] - tok_b[cat]
         add = tok_b[cat] - tok_a[cat]
+        if cat == "ordem_numeros":
+            # Só interessa a troca de ordem: mesmos números, outra sequência.
+            # Números diferentes já aparecem na categoria "numeros".
+            pares = _pares_permutados(sorted(rem.elements()), sorted(add.elements()))
+            if pares:
+                dif[cat] = {
+                    "removidos": sorted(a for a, _ in pares),
+                    "adicionados": sorted(b for _, b in pares),
+                }
+            continue
         if rem or add:
             dif[cat] = {
                 "removidos": sorted(rem.elements()),
@@ -348,7 +437,15 @@ def parse_aceites_simples(texto: str) -> list[dict]:
     return entradas
 
 
-def carregar_aceites(caminho: Path) -> list[dict]:
+class ErroAceites(ValueError):
+    """Arquivo de aceites malformado (por exemplo, entrada sem itens)."""
+
+
+RE_HASH_ACEITE = re.compile(r"[0-9a-f]{16}")
+
+
+def ler_entradas_aceites(caminho: Path) -> list:
+    """Entradas do YAML de aceites como vieram, sem normalização."""
     if not caminho.exists():
         return []
     texto = caminho.read_text(encoding="utf-8")
@@ -358,9 +455,38 @@ def carregar_aceites(caminho: Path) -> list[dict]:
         dados = yaml.safe_load(texto)
         if isinstance(dados, dict):
             dados = dados.get("aceites")
-        entradas = list(dados or [])
+        return list(dados or [])
     except ImportError:
-        entradas = parse_aceites_simples(texto)
+        return parse_aceites_simples(texto)
+
+
+def validar_aceite(e: object) -> list[str]:
+    """Erros de esquema de uma entrada bruta de aceite (lista vazia se válida)."""
+    if not isinstance(e, dict):
+        return ["a entrada não é um mapeamento"]
+    erros = []
+    if not isinstance(e.get("arquivo"), str) or not e["arquivo"].strip():
+        erros.append("arquivo ausente ou vazio")
+    h = e.get("hash_paragrafo_novo")
+    if not isinstance(h, str) or not RE_HASH_ACEITE.fullmatch(h):
+        erros.append("hash_paragrafo_novo deve ser texto com 16 hexadecimais minúsculos")
+    itens = e.get("itens")
+    if (
+        not isinstance(itens, list)
+        or not itens
+        or not all(isinstance(x, str) and x.strip() for x in itens)
+    ):
+        erros.append("itens deve ser uma lista não vazia de textos")
+    j = e.get("justificativa")
+    if not isinstance(j, str) or not j.strip():
+        erros.append("justificativa ausente ou vazia")
+    if not isinstance(e.get("autora_aprovou"), bool):
+        erros.append("autora_aprovou deve ser booleano")
+    return erros
+
+
+def carregar_aceites(caminho: Path) -> list[dict]:
+    entradas = ler_entradas_aceites(caminho)
     saida = []
     for e in entradas:
         if not isinstance(e, dict):
@@ -368,6 +494,12 @@ def carregar_aceites(caminho: Path) -> list[dict]:
         itens = e.get("itens") or []
         if isinstance(itens, str):
             itens = [itens]
+        if not itens:
+            raise ErroAceites(
+                f"aceite sem itens: arquivo={e.get('arquivo')!s} "
+                f"hash_paragrafo_novo={e.get('hash_paragrafo_novo')!s}; "
+                "liste em `itens` cada alerta aceito (itens vazios não cobrem tudo)"
+            )
         saida.append(
             {
                 "arquivo": str(e.get("arquivo", "")).replace("\\", "/"),
@@ -508,7 +640,10 @@ def aplicar_aceites(achados: list[Achado], aceites: list[dict], usados: set) -> 
             ach.nota_aceite = "aceite sem aprovação da autora (autora_aprovou: false)"
             continue
         cobertos = set(ent["itens"])
-        if cobertos and not set(ach.itens) <= cobertos:
+        if not cobertos:
+            ach.nota_aceite = "aceite sem itens não cobre nenhum alerta"
+            continue
+        if not set(ach.itens) <= cobertos:
             faltam = sorted(set(ach.itens) - cobertos)
             ach.nota_aceite = "aceite não cobre: " + ", ".join(faltam)
             continue
@@ -607,8 +742,38 @@ class Resultado:
         return [a for a in self.achados if a.alerta and a.status == "pendente"]
 
     @property
+    def gerados_pendentes(self) -> list:
+        """Tabelas geradas que mudaram em relação à base e não foram aceitas."""
+        return [g for g in self.gerados if g.get("status") == "pendente"]
+
+    @property
+    def n_pendentes(self) -> int:
+        """Total que conta para o código de saída."""
+        return len(self.pendentes) + len(self.gerados_pendentes)
+
+    @property
     def aceitos(self) -> list:
         return [a for a in self.achados if a.status == "aceito"]
+
+
+def _sem_eol(texto: str) -> str:
+    return texto.replace("\r\n", "\n").replace("\r", "\n")
+
+
+def aceitar_tabela(ent: dict, aceites: list[dict], usados: set) -> None:
+    """Tabela gerada alterada só deixa de ser pendente com aceite que cite ``tabela_gerada:<estado>``."""
+    for a in aceites:
+        if (a["arquivo"], a["hash_paragrafo_novo"]) != (ent["arquivo"], ent["hash"]):
+            continue
+        usados.add((a["arquivo"], a["hash_paragrafo_novo"]))
+        if not a["autora_aprovou"]:
+            ent["nota_aceite"] = "aceite sem aprovação da autora (autora_aprovou: false)"
+        elif f"tabela_gerada:{ent['estado']}" not in a["itens"]:
+            ent["nota_aceite"] = f"aceite não cobre: tabela_gerada:{ent['estado']}"
+        else:
+            ent["status"] = "aceito"
+            ent["nota_aceite"] = a["justificativa"]
+        return
 
 
 def analisar_repositorio(
@@ -643,8 +808,18 @@ def analisar_repositorio(
         if antigo == novo:
             continue
         if eh_tabela_gerada(arq, novo if novo is not None else antigo):
+            if antigo is not None and novo is not None and _sem_eol(antigo) == _sem_eol(novo):
+                continue  # regenerada com conteúdo idêntico (só mudou o fim de linha)
             estado = "removida" if novo is None else ("nova" if antigo is None else "alterada")
-            res.gerados.append({"arquivo": arq, "estado": estado})
+            ent = {
+                "arquivo": arq,
+                "estado": estado,
+                "hash": hash_paragrafo(novo if novo is not None else antigo or ""),
+                "status": "pendente",
+                "nota_aceite": "",
+            }
+            aceitar_tabela(ent, aceites, usados)
+            res.gerados.append(ent)
             continue
         achados, cont = analisar_textos(arq, antigo or "", novo or "", aceites, usados)
         res.achados.extend(achados)
@@ -663,8 +838,12 @@ def analisar_repositorio(
 
 NOMES_CATEGORIA = {
     "numeros": "números",
+    "ordem_numeros": "ordem dos números na frase",
     "negadores": "negadores",
     "quantificadores": "quantificadores/hedges",
+    "qualificadores": "qualificadores numéricos",
+    "comparativos": "comparativos",
+    "metricas": "métricas e modos",
     "citacoes": "citações",
     "referencias": "referências cruzadas",
     "siglas": "siglas",
@@ -678,13 +857,15 @@ def _fmt_itens(lista: list[str]) -> str:
 
 
 def renderizar_markdown(res: Resultado) -> str:
-    pend = res.pendentes
     ace = res.aceitos
     out = ["# Portão de fidelidade", ""]
     out.append(f"Base: `{res.base}`. Alvo: `{res.alvo}`.")
     out.append("")
-    veredito = "FALHA" if pend else "OK"
-    out.append(f"**Resultado: {veredito}** ({len(pend)} alertas pendentes, {len(ace)} aceitos).")
+    veredito = "FALHA" if res.n_pendentes else "OK"
+    out.append(
+        f"**Resultado: {veredito}** ({res.n_pendentes} alertas pendentes, "
+        f"{len(ace)} aceitos)."
+    )
     out.append("")
     por_arquivo: dict[str, list[Achado]] = {}
     for a in res.achados:
@@ -738,8 +919,17 @@ def renderizar_markdown(res: Resultado) -> str:
     if res.gerados:
         out.append("## Tabelas geradas por script: regenerar e conferir")
         out.append("")
+        out.append(
+            "Tabela alterada em relação à base é pendência até ser regenerada com conteúdo "
+            "idêntico ou aceita (item `tabela_gerada:<estado>`)."
+        )
+        out.append("")
         for g in res.gerados:
-            out.append(f"- `{g['arquivo']}` ({g['estado']})")
+            rotulo = "ACEITA" if g.get("status") == "aceito" else "PENDENTE"
+            linha = f"- `{g['arquivo']}` ({g['estado']}) [{rotulo}] hash `{g.get('hash', '')}`"
+            if g.get("nota_aceite"):
+                linha += f". Aceite: {g['nota_aceite']}"
+            out.append(linha)
         out.append("")
     if res.orfaos:
         out.append("## Aceites sem correspondência")
@@ -756,7 +946,8 @@ def resultado_json(res: Resultado) -> dict:
     return {
         "base": res.base,
         "alvo": res.alvo,
-        "pendentes": len(res.pendentes),
+        "pendentes": res.n_pendentes,
+        "pendentes_tabelas": len(res.gerados_pendentes),
         "aceitos": len(res.aceitos),
         "achados": [asdict(a) for a in res.achados],
         "gerados": res.gerados,
@@ -795,7 +986,7 @@ def main(argv: list[str] | None = None) -> int:
         raiz = Path(args.raiz).resolve() if args.raiz else raiz_git(Path.cwd())
         aceites = carregar_aceites(_resolver(raiz, args.aceites))
         res = analisar_repositorio(raiz, args.base, args.alvo, args.arquivos, aceites)
-    except (ErroGit, OSError) as exc:
+    except (ErroGit, ErroAceites, OSError) as exc:
         print(f"erro: {exc}", file=sys.stderr)
         return 2
 
@@ -808,11 +999,12 @@ def main(argv: list[str] | None = None) -> int:
         js.write_text(json.dumps(resultado_json(res), ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(
-        f"Portão de fidelidade: {len(res.pendentes)} alertas pendentes, "
-        f"{len(res.aceitos)} aceitos, {len(res.gerados)} tabelas geradas a conferir. "
+        f"Portão de fidelidade: {res.n_pendentes} alertas pendentes "
+        f"({len(res.gerados_pendentes)} de tabelas geradas), "
+        f"{len(res.aceitos)} aceitos, {len(res.gerados)} tabelas geradas alteradas. "
         f"Relatório: {saida}"
     )
-    return 1 if res.pendentes else 0
+    return 1 if res.n_pendentes else 0
 
 
 if __name__ == "__main__":

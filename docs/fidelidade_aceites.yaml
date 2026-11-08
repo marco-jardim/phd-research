@@ -9,9 +9,9 @@
 #                                               # Sempre entre aspas (hash só com dígitos viraria
 #                                               # número no YAML). Para parágrafo removido, use o
 #                                               # hash do parágrafo da base.
-#     itens:                                    # opcional; itens aceitos, no formato do JSON
-#       - numeros:-39.3                         # (categoria:sinal+valor; "-" removido, "+"
-#       - citacoes:+silva2020                   # adicionado). Vazio ou ausente = todos.
+#     itens:                                    # obrigatório e não vazio; itens aceitos, no formato
+#       - numeros:-39.3                         # do JSON (categoria:sinal+valor; "-" removido,
+#       - citacoes:+silva2020                   # "+" adicionado). Tabela gerada: tabela_gerada:<estado>.
 #     justificativa: "Número corrigido conforme data/x.csv."
 #     autora_aprovou: true                      # só "true" suprime o alerta
 #
