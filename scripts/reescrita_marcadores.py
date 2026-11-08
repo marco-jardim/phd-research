@@ -15,6 +15,9 @@ Validações (sai com código 1 e lista cada problema):
   (d) o trecho original no .tex mantém o mesmo sha256.
 Números removidos viram aviso. ``--permitir-novos`` libera números novos de forma explícita.
 
+``mascarar`` recusa (código 2) qualquer ``--arquivo`` sob ``text/latex/tables/``: tabelas ficam
+fora da reescrita e mudam só pelo gerador (ver ``tests/data/tabelas_tese.yaml``).
+
 Estruturas isentas (não mascaradas e não checadas como "dígito livre"): argumentos de
 \\ref, \\label, \\cite*, \\input, \\includegraphics, \\hspace, \\vspace e afins; opções entre
 colchetes e argumentos de \\begin{...} (tabular, minipage etc.); comandos de tabela
@@ -41,6 +44,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
 from collections import Counter
@@ -49,6 +53,7 @@ from pathlib import Path
 
 RAIZ_PADRAO = Path(__file__).resolve().parents[1]
 SAIDA_REL = Path(".local") / "reescrita"
+PASTA_TABELAS_REL = Path("text") / "latex" / "tables"
 ABRE = "\u27e6"
 FECHA = "\u27e7"
 RE_MARCADOR = re.compile(ABRE + r"(\d+)" + FECHA)
@@ -298,9 +303,30 @@ def caminhos_saida(raiz: Path, id_: str) -> tuple[Path, Path]:
     return pasta / f"{id_}.mascarado.tex", pasta / f"{id_}.mapa.json"
 
 
+def recusar_tabela(raiz: Path, caminho: Path) -> None:
+    """Tabelas da tese (``text/latex/tables/``) mudam só pelo gerador, nunca por reescrita."""
+    pasta = os.path.normcase(str((raiz / PASTA_TABELAS_REL).resolve()))
+    alvo = os.path.normcase(str(caminho.resolve()))
+    if alvo == pasta or alvo.startswith(pasta + os.sep):
+        raise ErroUso(
+            f"{arquivo_rel(raiz, caminho)} é tabela da tese (text/latex/tables/): tabelas mudam só "
+            "pelo gerador, nunca por reescrita de texto. Para alterar uma tabela, altere o gerador "
+            "e regenere; tabelas sem gerador mudam só com aprovação da autora "
+            "(tests/data/tabelas_tese.yaml)."
+        )
+
+
+def arquivo_rel(raiz: Path, caminho: Path) -> str:
+    try:
+        return caminho.resolve().relative_to(raiz.resolve()).as_posix()
+    except ValueError:
+        return str(caminho)
+
+
 def cmd_mascarar(raiz: Path, arquivo: str, linhas: str, id_: str | None) -> int:
     a, b = parse_linhas(linhas)
     caminho = resolver(raiz, arquivo)
+    recusar_tabela(raiz, caminho)
     todas = dividir_linhas(ler_utf8(caminho))
     if b > len(todas):
         raise ErroUso(f"o arquivo tem {len(todas)} linhas; pedido {a}-{b}")

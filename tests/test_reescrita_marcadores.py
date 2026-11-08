@@ -286,6 +286,32 @@ def test_linhas_fora_do_arquivo_e_erro_de_uso(tmp_path):
     assert rm.main(["mascarar", "--raiz", str(tmp_path), "--arquivo", ARQ, "--linhas", "1-5"]) == 2
 
 
+@pytest.mark.parametrize("rel", [
+    "text/latex/tables/tab_x.tex",
+    "text/latex/tables/editorial/tab_y.tex",
+    "text/latex/cap/../tables/editorial/tab_y.tex",
+])
+def test_mascarar_recusa_tabelas_da_tese(tmp_path, capsys, rel):
+    tabela = tmp_path / "text/latex/tables/editorial/tab_y.tex"
+    tabela.parent.mkdir(parents=True)
+    tabela.write_bytes(b"a & 0,931 \\\\\n")
+    antes = tabela.read_bytes()
+    rc = rm.main(["mascarar", "--raiz", str(tmp_path), "--arquivo", rel, "--linhas", "1-1", "--id", "tab"])
+    err = capsys.readouterr().err
+    assert rc == 2
+    assert "tabelas mudam só pelo gerador" in err
+    assert not (tmp_path / rm.SAIDA_REL).exists()
+    assert tabela.read_bytes() == antes
+
+
+def test_mascarar_aceita_arquivo_fora_de_tables(tmp_path):
+    arq = tmp_path / "text/latex/tablesx/cap.tex"
+    arq.parent.mkdir(parents=True)
+    arq.write_bytes(b"valor 12\n")
+    assert rm.main(["mascarar", "--raiz", str(tmp_path), "--arquivo", "text/latex/tablesx/cap.tex",
+                    "--linhas", "1-1", "--id", "ok"]) == 0
+
+
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
