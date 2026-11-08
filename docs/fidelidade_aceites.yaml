@@ -98,6 +98,10 @@ aceites:
     justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
     autora_aprovou: true
 aceites_numeros:
+  - arquivo: text/latex/estudo1_comparador.tex
+    numero: "1"
+    autora_aprovou: true
+    motivo: "Revisão 2 (regime aprovado pela autora em 2026-11-08): SMOTE em proporção 1:1 voltou à legenda da Figura fig:shap-summary, como estava na prosa pré-revisão (scripts/qw1_modal_unified_pipeline.py:213); o excedente de uma ocorrência vem de PAR~=~1, autorizado na reescrita."
   # W5 (decisão da autora): conteúdo movido de text/latex/capitulo_dados.tex para os apêndices,
   # com os mesmos valores da versão pré-revisão. 2.495, 31 e -5,6485 em apendice_linkage_origem.tex
   # são cobertos por invariante do registro (N09) e não precisam de aceite.

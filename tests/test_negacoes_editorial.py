@@ -45,7 +45,7 @@ EXPECTED_NEGATIONS = {
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],
     r"O relatório \path{k_anonymity_report.json}": [1, 1],
     r"O \texttt{pair\_id} histórico": [2, 0, 1, 3],
-    "Os pesos internos do comparador permanecem fixos": [0, 1, 0, 2],
+    "Os pesos internos do comparador permanecem fixos": [0, 1, 1, 1],  # estudo1 revisado (revisão 2)
     "Entre as configurações originais da Tabela": [0, 1, 1, 1],
     "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 0],
     "A organização reprodutível das configurações": [1, 1, 0],

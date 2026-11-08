@@ -128,10 +128,13 @@ def test_encerramento_aggregate_is_complete_and_contains_no_pair_rows():
 def test_limiar_rules_and_comparator_neutrality_are_explicit():
     e1, e3 = study(1), study(3)
     assert "não elege uma implementação como a correta" in e1
-    assert "afastamento do Python em relação ao peso 0,8" in e1
+    # estudo1 revisado (revisão 2): "peso" qualificado como peso de concordância (guia 3.6)
+    assert "afastamento do Python em relação ao peso de concordância 0,8" in e1
     assert "núcleo metodológico" not in e1
     assert "não é o XGBoost de 300 estimadores" in e1
-    assert r"A Figura~\ref{fig:shap-summary} provém de \path{scripts/qw1_modal_unified_pipeline.py}: um RF+SMOTE com 150 árvores" in e1
+    # estudo1 revisado (revisão 2): os hiperparâmetros (150 árvores etc.) ficaram na legenda da figura
+    assert r"A Figura~\ref{fig:shap-summary} provém de \path{scripts/qw1_modal_unified_pipeline.py}: um RF+SMOTE e o XGBoost do fluxo Modal, com os hiperparâmetros da legenda" in e1
+    assert "150 árvores" in e1
     assert r"\ref{sec:e3-contribuicao-framework}" not in e1
     assert r"\ref{sec:proposta-estrategia}" not in study(2)
     assert "itinerário terapêutico" not in e3
