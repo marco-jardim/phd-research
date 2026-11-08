@@ -7,17 +7,25 @@ checkpoint guarda o objeto em ``resultado``.
 
 * ``temperature`` nunca é enviada.
 * O bloco de sistema leva ``cache_control`` efêmero (sync e lote).
-* Sync: ``concorrencia`` threads chamam a API; cada resposta é gravada no checkpoint, sob trava, assim
-  que chega. Uma nova execução pula tudo o que já tem resposta.
+* Sync: ``concorrencia`` threads por chave chamam a API; cada resposta é gravada no checkpoint, sob
+  trava, assim que chega. Uma nova execução pula tudo o que já tem resposta.
+* Várias chaves: o cliente pode ser um único objeto (vale como ``ANTHROPIC_API_KEY``) ou um dicionário
+  ``{nome da variável: cliente}``. Cada requisição vai à chave ``nomes[i % n]``, com ``i`` o índice estável
+  da requisição no plano, de modo que a retomada repete a distribuição. Retry de 429, 529 e erro de rede
+  fica na mesma chave. 401/403, ou 400/402 com mensagem de crédito ou saldo, tira a chave desta execução e
+  passa as pendentes dela às restantes. No lote, cada lote vai a uma chave e o checkpoint guarda o NOME
+  da variável, usado depois na consulta e no download. Só nomes de variáveis são gravados, nunca valores.
 """
 
 from __future__ import annotations
 
 import time
+from collections import deque
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import replace
 from pathlib import Path
-from threading import Lock
+from threading import Condition, Lock
 
 from scripts.atestado import avaliar as av
 from scripts.atestado.common import utc_now_iso
@@ -26,6 +34,8 @@ from .comum import extrair_objeto
 
 CONCORRENCIA_PADRAO = 8
 CARACTERES_POR_TOKEN = 3.5  # aproximação para português com LaTeX
+CHAVE_ENV_PADRAO = "ANTHROPIC_API_KEY"
+_MARCAS_SEM_CREDITO = ("credit", "balance", "billing", "saldo", "crédito", "credito")
 
 
 def criar_settings(
@@ -65,13 +75,17 @@ def custom_id(prefixo: str, *partes: str) -> str:
 # ---------------------------------------------------------------------------
 # Resposta
 # ---------------------------------------------------------------------------
-def nova_entrada(message, req: av.PlannedRequest, modo: str) -> dict:
-    """Registro de checkpoint de uma resposta; JSON inválido ou truncado fica registrado em ``erro``."""
+def nova_entrada(message, req: av.PlannedRequest, modo: str, chave: str | None = None) -> dict:
+    """Registro de checkpoint de uma resposta; JSON inválido ou truncado fica registrado em ``erro``.
+
+    ``chave`` é o NOME da variável de ambiente da chave usada, nunca o valor.
+    """
     entrada = {
         "key": req.key,
         "passada": req.passada,
         "ids": req.ids,
         "modo": modo,
+        "chave": chave,
         "uso": av.usage_of(message),
         "stop_reason": getattr(message, "stop_reason", None),
         "resultado": None,
@@ -92,26 +106,135 @@ def nova_entrada(message, req: av.PlannedRequest, modo: str) -> dict:
 # ---------------------------------------------------------------------------
 # Sync e lote
 # ---------------------------------------------------------------------------
-def executar_sync(rt: av.Runtime, todo: list[av.PlannedRequest]) -> None:
-    trava = Lock()
+def normalizar_clientes(client: object) -> dict[str, object]:
+    """``{nome da variável: cliente}`` na ordem dada; um cliente avulso vale como ``ANTHROPIC_API_KEY``."""
+    if isinstance(client, dict):
+        if not client:
+            raise ValueError("nenhum cliente da API")
+        return dict(client)
+    return {CHAVE_ENV_PADRAO: client}
 
-    def trabalhar(req: av.PlannedRequest) -> None:
+
+def status_da_falha(exc: BaseException) -> int | None:
+    causa = exc.__cause__ if isinstance(exc, av.ApiCallError) else exc
+    return getattr(causa, "status_code", None)
+
+
+def chave_indisponivel(exc: BaseException) -> bool:
+    """401/403, ou 400/402 com mensagem de crédito ou saldo: a chave não serve mais nesta execução."""
+    causa = exc.__cause__ if isinstance(exc, av.ApiCallError) else exc
+    status = getattr(causa, "status_code", None)
+    if status in (401, 403):
+        return True
+    if status in (400, 402):
+        texto = f"{causa} {getattr(causa, 'body', '')}".casefold()
+        return any(marca in texto for marca in _MARCAS_SEM_CREDITO)
+    return False
+
+
+class Rodizio:
+    """Chave de cada requisição pelo índice estável no plano, desviando das chaves indisponíveis."""
+
+    def __init__(self, nomes) -> None:
+        self.nomes = list(nomes)
+        self.fora: set[str] = set()
+
+    def disponiveis(self) -> list[str]:
+        return [nome for nome in self.nomes if nome not in self.fora]
+
+    def chave(self, indice: int) -> str | None:
+        preferida = self.nomes[indice % len(self.nomes)]
+        if preferida not in self.fora:
+            return preferida
+        restantes = self.disponiveis()
+        return restantes[indice % len(restantes)] if restantes else None
+
+
+def _indices(todo: list[av.PlannedRequest], indices: dict[str, int] | None) -> dict[str, int]:
+    return indices if indices is not None else {r.custom_id: i for i, r in enumerate(todo)}
+
+
+def executar_sync(
+    rt: av.Runtime, todo: list[av.PlannedRequest], indices: dict[str, int] | None = None
+) -> None:
+    """Uma fila por chave, ``concorrencia`` threads por chave; failover quando a chave cai."""
+    clientes = normalizar_clientes(rt.client)
+    indices = _indices(todo, indices)
+    rodizio = Rodizio(clientes)
+    filas: dict[str, deque[av.PlannedRequest]] = {nome: deque() for nome in clientes}
+    for req in todo:
+        filas[rodizio.chave(indices[req.custom_id])].append(req)
+    cond = Condition()  # filas, chaves fora e contagem em voo
+    trava = Lock()  # checkpoint
+    em_voo = 0
+
+    def pendentes() -> int:
+        return em_voo + sum(len(fila) for fila in filas.values())
+
+    def desativar(nome: str, req: av.PlannedRequest, exc: av.ApiCallError) -> None:
+        status = status_da_falha(exc)
+        with cond:
+            nova = nome not in rodizio.fora
+            rodizio.fora.add(nome)
+            orfas = sorted([req, *filas[nome]], key=lambda r: indices[r.custom_id])
+            filas[nome].clear()
+            for orfa in orfas:
+                destino = rodizio.chave(indices[orfa.custom_id])
+                if destino is not None:
+                    filas[destino].append(orfa)
+            restantes = rodizio.disponiveis()
+            cond.notify_all()
+        with trava:
+            rt.cp.fail(req.custom_id, f"chave_indisponivel:{nome} status={status}")
+        if nova:
+            rt.log(f"chave {nome} indisponível nesta execução (status={status}); "
+                   f"pendentes dela vão para: {', '.join(restantes) or 'nenhuma'}")
+            if not restantes:
+                rt.log("todas as chaves indisponíveis; o que falta fica pendente no checkpoint")
+
+    def processar(nome: str, req: av.PlannedRequest) -> None:
+        cliente = clientes[nome]
         try:
-            message = av.with_retry(lambda: rt.client.messages.create(**req.params), rt.sleep)
+            message = av.with_retry(lambda: cliente.messages.create(**req.params), rt.sleep)
         except av.ApiCallError as exc:
+            if chave_indisponivel(exc):
+                desativar(nome, req, exc)
+                return
             with trava:
                 rt.cp.fail(req.custom_id, str(exc))
             rt.log(f"falha em {req.custom_id}: {exc}")
             return
-        entrada = nova_entrada(message, req, "sync")
+        entrada = nova_entrada(message, req, "sync", nome)
         with trava:
             rt.cp.record(req.custom_id, entrada)
 
-    with ThreadPoolExecutor(max_workers=max(1, rt.settings.concorrencia)) as pool:
-        list(pool.map(trabalhar, todo))
+    def trabalhar(nome: str) -> None:
+        nonlocal em_voo
+        while True:
+            with cond:
+                while nome not in rodizio.fora and not filas[nome] and pendentes() > 0:
+                    cond.wait()
+                if nome in rodizio.fora or not filas[nome]:
+                    return
+                req = filas[nome].popleft()
+                em_voo += 1
+            try:
+                processar(nome, req)
+            finally:
+                with cond:
+                    em_voo -= 1
+                    cond.notify_all()
+
+    por_chave = max(1, rt.settings.concorrencia)
+    with ThreadPoolExecutor(max_workers=por_chave * len(clientes)) as pool:
+        futuros = [pool.submit(trabalhar, nome) for nome in clientes for _ in range(por_chave)]
+        for futuro in futuros:
+            futuro.result()
 
 
-def baixar_lote(rt: av.Runtime, entrada: dict, por_id: dict[str, av.PlannedRequest]) -> None:
+def baixar_lote(
+    rt: av.Runtime, entrada: dict, por_id: dict[str, av.PlannedRequest], chave: str | None = None
+) -> None:
     for item in rt.client.messages.batches.results(entrada["id"]):
         cid = item.custom_id
         req = por_id.get(cid)
@@ -122,34 +245,109 @@ def baixar_lote(rt: av.Runtime, entrada: dict, por_id: dict[str, av.PlannedReque
             tipo_erro = getattr(getattr(item.result, "error", None), "type", None)
             rt.cp.fail(cid, f"{item.result.type}:{tipo_erro}")
             continue
-        rt.cp.record(cid, nova_entrada(item.result.message, req, "batch"))
+        rt.cp.record(cid, nova_entrada(item.result.message, req, "batch", chave))
     entrada["baixado"] = True
     rt.cp.save()
 
 
-def executar_lote(rt: av.Runtime, todo: list[av.PlannedRequest], passada: int) -> None:
+def enviar_lote(rt: av.Runtime, nome: str, cliente: object, todo: list[av.PlannedRequest], passada: int) -> None:
+    """Como ``av.submit_batch``, mas o lote nasce no checkpoint com o NOME da variável da chave."""
+    if any(b.get("id") is None for b in rt.cp.batches):
+        raise RuntimeError(
+            "envio de lote anterior sem id registrado: confira os lotes na conta Anthropic "
+            "e reconcilie o checkpoint manualmente; não reenviar"
+        )
+    arquivo = av.write_batch_file(rt, todo, passada)
+    entrada = {
+        "id": None, "passada": passada, "chave": nome, "status": "enviando", "baixado": False,
+        "custom_ids": [r.custom_id for r in todo], "arquivo": arquivo.name, "enviado_em": utc_now_iso(),
+    }
+    rt.cp.batches.append(entrada)
+    rt.cp.save()
+    try:
+        lote = av.with_retry(
+            lambda: cliente.messages.batches.create(
+                requests=[{"custom_id": r.custom_id, "params": r.params} for r in todo]
+            ),
+            rt.sleep,
+            attempts=1,
+        )
+    except av.ApiCallError as exc:
+        status = status_da_falha(exc)
+        if status is not None and 400 <= status < 500 and status not in (408, 409, 429):
+            # Recusa explícita: o lote não foi criado, então o envio pode ser repetido.
+            rt.cp.batches.remove(entrada)
+            rt.cp.save()
+        raise
+    entrada["id"] = lote.id
+    entrada["status"] = lote.processing_status
+    rt.cp.save()
+    rt.log(f"lote enviado: {lote.id} ({len(todo)} requisições; chave {nome})")
+
+
+def executar_lote(
+    rt: av.Runtime, todo: list[av.PlannedRequest], passada: int, indices: dict[str, int] | None = None
+) -> None:
+    clientes = normalizar_clientes(rt.client)
+    indices = _indices(todo, indices)
+    rodizio = Rodizio(clientes)
     esperando = rt.cp.in_flight()
     novos = [r for r in todo if r.custom_id not in esperando]
-    if novos:
-        av.submit_batch(rt, novos, passada)
+    while novos:
+        grupos: dict[str, list[av.PlannedRequest]] = {}
+        for req in novos:
+            destino = rodizio.chave(indices[req.custom_id])
+            if destino is not None:
+                grupos.setdefault(destino, []).append(req)
+        if not grupos:
+            rt.log("todas as chaves indisponíveis; o que falta fica pendente no checkpoint")
+            break
+        novos = []
+        for nome in rodizio.nomes:
+            if nome not in grupos:
+                continue
+            try:
+                enviar_lote(rt, nome, clientes[nome], grupos[nome], passada)
+            except av.ApiCallError as exc:
+                if not chave_indisponivel(exc):
+                    raise
+                rodizio.fora.add(nome)
+                novos.extend(grupos[nome])
+                rt.log(f"chave {nome} indisponível nesta execução (status={status_da_falha(exc)}); "
+                       f"o lote dela vai para: {', '.join(rodizio.disponiveis()) or 'nenhuma'}")
+        novos.sort(key=lambda r: indices[r.custom_id])
     por_id = {r.custom_id: r for r in todo}
     for entrada in rt.cp.batches:
         if entrada.get("baixado") or entrada.get("passada") != passada:
             continue
-        if av.wait_for_batch(rt, entrada):
-            baixar_lote(rt, entrada, por_id)
-        else:
-            rt.log(f"lote {entrada['id']} ainda em processamento; rode novamente para retomar")
+        nome = entrada.get("chave") or CHAVE_ENV_PADRAO  # lotes anteriores ao campo vinham da chave padrão
+        if nome not in clientes or nome in rodizio.fora:
+            rt.log(f"lote {entrada['id']} pertence à chave {nome}, indisponível nesta execução; "
+                   "inclua-a em --chave-env e rode novamente")
+            continue
+        rt_chave = replace(rt, client=clientes[nome])
+        try:
+            if av.wait_for_batch(rt_chave, entrada):
+                baixar_lote(rt_chave, entrada, por_id, nome)
+            else:
+                rt.log(f"lote {entrada['id']} ainda em processamento; rode novamente para retomar")
+        except av.ApiCallError as exc:
+            if not chave_indisponivel(exc):
+                raise
+            rodizio.fora.add(nome)
+            rt.log(f"chave {nome} indisponível nesta execução (status={status_da_falha(exc)}); "
+                   f"lote {entrada['id']} fica para a próxima execução")
 
 
 def executar(rt: av.Runtime, planejadas: list[av.PlannedRequest], passada: int) -> list[av.PlannedRequest]:
     """Executa o que falta; devolve as requisições ainda sem resposta (lote em andamento ou falha)."""
     todo = av.pending(planejadas, rt.cp, rt.settings.refazer_falhas)
     if todo:
+        indices = {r.custom_id: i for i, r in enumerate(planejadas)}
         if rt.settings.modo == "sync":
-            executar_sync(rt, todo)
+            executar_sync(rt, todo, indices)
         else:
-            executar_lote(rt, todo, passada)
+            executar_lote(rt, todo, passada, indices)
     return av.pending(planejadas, rt.cp, False)
 
 

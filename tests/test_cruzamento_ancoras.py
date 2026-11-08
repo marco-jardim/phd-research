@@ -928,6 +928,248 @@ def test_cli_chave_env_ausente_sai_com_2_citando_so_o_nome(tmp_path: Path, fatia
     assert "valor-padrao-falso-333" not in capturado.out + capturado.err
 
 
+# ---------------------------------------------------------------------------
+# Várias chaves: rodízio, concorrência por chave, failover, lote por chave, relatório
+# ---------------------------------------------------------------------------
+class ErroCredito(Exception):
+    def __init__(self, status: int) -> None:
+        super().__init__("Your credit balance is too low to access the Anthropic API.")
+        self.status_code = status
+
+
+def fatia_do_pedido(params: dict) -> str:
+    return re.search(r"^Fatia (\S+)$", params["messages"][0]["content"][0]["text"], re.M).group(1)
+
+
+def ler_checkpoint(out: Path, etapa: str = "mapear") -> dict:
+    return json.loads((out / f"{etapa}.checkpoint.json").read_text(encoding="utf-8"))
+
+
+def indice_no_plano(fatias, settings) -> dict[str, int]:
+    return {r.custom_id: i for i, r in enumerate(mp.planejar_mapear(fatias, ANCORAS, settings))}
+
+
+def test_rodizio_entre_duas_chaves_e_deterministico_e_sobrevive_a_retomada(tmp_path: Path, fatias) -> None:
+    settings = ex.criar_settings("modelo-teste", "sync", 1000, 2)
+    indice = indice_no_plano(fatias, settings)
+    a, b = cliente_falso(responder_mapear_de(fatias)), cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path, fatias[:3], {"K_A": a, "K_B": b}, settings=settings)  # interrompida na metade
+    a2, b2 = cliente_falso(responder_mapear_de(fatias)), cliente_falso(responder_mapear_de(fatias))
+    resultado = rodar_mapear(tmp_path, fatias, {"K_A": a2, "K_B": b2}, settings=settings)
+    assert resultado["pendentes"] == 0
+    estado = ler_checkpoint(tmp_path)
+    assert len(estado["requisicoes"]) == 6
+    for cid, entrada in estado["requisicoes"].items():
+        assert entrada["chave"] == ("K_A", "K_B")[indice[cid] % 2]
+    por_fatia = {f["id"]: n for n, f in enumerate(fatias)}
+    enviados = {nome: sorted(por_fatia[fatia_do_pedido(p)] for p in c.messages.chamadas)
+                for nome, c in (("A1", a), ("B1", b), ("A2", a2), ("B2", b2))}
+    assert enviados == {"A1": [0, 2], "B1": [1], "A2": [4], "B2": [3, 5]}
+
+
+def test_concorrencia_vale_por_chave(tmp_path: Path) -> None:
+    fatias8 = [fatia_sintetica(i) for i in range(8)]
+    responder = responder_mapear_de(fatias8)
+    trava = threading.Lock()
+    ativos = {"K_A": 0, "K_B": 0}
+    picos = {"K_A": 0, "K_B": 0}
+    pico_total = [0]
+    barreira = threading.Barrier(4, timeout=10)  # só passa com 2 chaves x 2 em voo ao mesmo tempo
+
+    def cliente(nome: str) -> SimpleNamespace:
+        def create(**params):
+            with trava:
+                ativos[nome] += 1
+                picos[nome] = max(picos[nome], ativos[nome])
+                pico_total[0] = max(pico_total[0], sum(ativos.values()))
+            try:
+                barreira.wait()
+                return mensagem(responder(params))
+            finally:
+                with trava:
+                    ativos[nome] -= 1
+
+        return SimpleNamespace(messages=SimpleNamespace(create=create))
+
+    resultado = rodar_mapear(tmp_path, fatias8, {"K_A": cliente("K_A"), "K_B": cliente("K_B")}, concorrencia=2)
+    assert resultado["pendentes"] == 0 and not resultado["incompleto"]
+    assert picos == {"K_A": 2, "K_B": 2} and pico_total[0] == 4
+
+
+@pytest.mark.parametrize("erro", [ErroApi(401), ErroApi(403), ErroCredito(400), ErroCredito(402)])
+def test_failover_quando_uma_chave_cai(tmp_path: Path, fatias, erro) -> None:
+    caida = cliente_falso(responder_mapear_de(fatias), erros=[erro] * 10)
+    boa = cliente_falso(responder_mapear_de(fatias))
+    logs: list[str] = []
+    settings = ex.criar_settings("modelo-teste", "sync", 1000, 1)
+    resultado = mp.run_mapear(fatias=fatias, ancoras=ANCORAS, out=tmp_path, settings=settings,
+                              client={"K_A": caida, "K_B": boa}, sleep=lambda s: None, log=logs.append)
+    assert resultado["pendentes"] == 0 and not resultado["incompleto"]
+    assert len(caida.messages.chamadas) == 1  # sem retry na chave caída
+    assert len(boa.messages.chamadas) == 6
+    estado = ler_checkpoint(tmp_path)
+    assert {e["chave"] for e in estado["requisicoes"].values()} == {"K_B"}
+    assert [f["motivo"] for f in estado["falhas"]] == [f"chave_indisponivel:K_A status={erro.status_code}"]
+    assert any("chave K_A indisponível" in linha and "K_B" in linha for linha in logs)
+
+
+def test_erro_400_sem_credito_nao_derruba_a_chave(tmp_path: Path, fatias) -> None:
+    a = cliente_falso(responder_mapear_de(fatias), erros=[ErroApi(400)])
+    b = cliente_falso(responder_mapear_de(fatias))
+    resultado = rodar_mapear(tmp_path, fatias, {"K_A": a, "K_B": b})
+    assert resultado["pendentes"] == 1 and len(a.messages.chamadas) == 3 and len(b.messages.chamadas) == 3
+
+
+def test_cli_todas_as_chaves_indisponiveis_sai_com_3_e_checkpoint(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    segredos = {"CHAVE_TESTE_A": "segredo-falso-aaa-111", "CHAVE_TESTE_B": "segredo-falso-bbb-222"}
+    for nome, valor in segredos.items():
+        monkeypatch.setenv(nome, valor)
+    clientes = {segredos["CHAVE_TESTE_A"]: cliente_falso(responder_mapear_de(fatias), erros=[ErroApi(401)] * 10),
+                segredos["CHAVE_TESTE_B"]: cliente_falso(responder_mapear_de(fatias), erros=[ErroCredito(400)] * 10)}
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: clientes[chave])
+    argv = ["mapear", "--modo", "sync", "--concorrencia", "1", "--chave-env", "CHAVE_TESTE_A,CHAVE_TESTE_B",
+            "--ancoras", str(yaml_path), "--out", str(out)]
+    assert cli.main(argv) == 3
+    estado = ler_checkpoint(out)
+    assert estado["requisicoes"] == {}
+    assert sorted(f["motivo"].split(" ")[0] for f in estado["falhas"]) == [
+        "chave_indisponivel:CHAVE_TESTE_A", "chave_indisponivel:CHAVE_TESTE_B"]
+    capturado = capsys.readouterr()
+    assert "todas as chaves indisponíveis" in capturado.out
+    for valor in segredos.values():
+        assert valor not in capturado.out and valor not in capturado.err
+        for arquivo in out.rglob("*"):
+            if arquivo.is_file():
+                assert valor not in arquivo.read_text(encoding="utf-8", errors="ignore")
+
+
+def test_lote_fica_associado_a_chave_que_o_criou(tmp_path: Path, fatias) -> None:
+    a = cliente_falso(responder_mapear_de(fatias), pronto=False)
+    b = cliente_falso(responder_mapear_de(fatias), pronto=False)
+    consultas: list[str] = []
+    def espiar(nome: str, original):
+        def retrieve(lote):
+            consultas.append(nome)
+            return original(lote)
+        return retrieve
+
+    for nome, c in (("K_A", a), ("K_B", b)):
+        c.messages.batches.retrieve = espiar(nome, c.messages.batches.retrieve)
+    settings = ex.criar_settings("modelo-teste", "batch", 1000)
+    settings.espera_max_s = 0.0
+    indice = indice_no_plano(fatias, settings)
+    primeiro = rodar_mapear(tmp_path, fatias, {"K_A": a, "K_B": b}, modo="batch", settings=settings)
+    assert primeiro["incompleto"] and primeiro["pendentes"] == 6
+    lotes = ler_checkpoint(tmp_path)["lotes"]
+    assert [lote["chave"] for lote in lotes] == ["K_A", "K_B"]
+    for lote in lotes:
+        assert {indice[cid] % 2 for cid in lote["custom_ids"]} == {0 if lote["chave"] == "K_A" else 1}
+    assert a.messages.batches.criados == ["msgbatch_1"] and b.messages.batches.criados == ["msgbatch_1"]
+    a.messages.batches.pronto = b.messages.batches.pronto = True
+    segundo = rodar_mapear(tmp_path, fatias, {"K_A": a, "K_B": b}, modo="batch", settings=settings)
+    assert not segundo["incompleto"] and segundo["pendentes"] == 0
+    assert a.messages.batches.criados == ["msgbatch_1"] and b.messages.batches.criados == ["msgbatch_1"]
+    assert consultas == ["K_A", "K_B", "K_A", "K_B"]  # cada lote consultado pela própria chave
+    estado = ler_checkpoint(tmp_path)
+    for cid, entrada in estado["requisicoes"].items():
+        assert entrada["modo"] == "batch" and entrada["chave"] == ("K_A", "K_B")[indice[cid] % 2]
+    # sem a chave do lote na execução, o lote não é consultado com outra chave
+    c = cliente_falso(responder_mapear_de(fatias), pronto=False)
+    logs: list[str] = []
+    mp.run_mapear(fatias=fatias, ancoras=ANCORAS, out=tmp_path / "outro", settings=settings,
+                  client={"K_A": c}, sleep=lambda s: None, log=logs.append)
+    estado_outro = ler_checkpoint(tmp_path / "outro")
+    estado_outro["lotes"][0]["chave"] = "K_B"
+    (tmp_path / "outro" / "mapear.checkpoint.json").write_text(json.dumps(estado_outro), encoding="utf-8")
+    c.messages.batches.pronto = True
+    restante = mp.run_mapear(fatias=fatias, ancoras=ANCORAS, out=tmp_path / "outro", settings=settings,
+                             client={"K_A": c}, sleep=lambda s: None, log=logs.append)
+    assert restante["pendentes"] == 6 and any("pertence à chave K_B" in linha for linha in logs)
+
+
+def test_lote_com_chave_caida_vai_para_a_restante(tmp_path: Path, fatias) -> None:
+    a = cliente_falso(responder_mapear_de(fatias))
+    a.messages.batches.create = lambda requests: (_ for _ in ()).throw(ErroApi(401))
+    b = cliente_falso(responder_mapear_de(fatias))
+    settings = ex.criar_settings("modelo-teste", "batch", 1000)
+    resultado = rodar_mapear(tmp_path, fatias, {"K_A": a, "K_B": b}, modo="batch", settings=settings)
+    assert resultado["pendentes"] == 0
+    lotes = ler_checkpoint(tmp_path)["lotes"]
+    assert [lote["chave"] for lote in lotes] == ["K_B", "K_B"]
+    assert sorted(len(lote["custom_ids"]) for lote in lotes) == [3, 3]
+
+
+def test_relatorio_separa_uso_por_chave(tmp_path: Path, fatias) -> None:
+    a, b = cliente_falso(responder_mapear_de(fatias)), cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path, fatias, {"K_A": a, "K_B": b})
+    uso = rel.uso_por_chave(tmp_path)
+    assert uso["K_A"]["mapear"]["sync"]["requisicoes"] == 3 and uso["K_B"]["mapear"]["sync"]["output_tokens"] == 150
+    write_jsonl_atomic(tmp_path / FATIAS_NOME, fatias)
+    texto = rel.gerar_relatorio(tmp_path, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    assert "| mapear | sync | 6 | 600 | 60 | 30 | 300 |" in texto  # total por etapa continua
+    assert "| K_A | mapear | sync | 3 | 300 | 30 | 15 | 150 |" in texto
+    assert "| K_B | mapear | sync | 3 | 300 | 30 | 15 | 150 |" in texto
+    assert "| K_A | **Total** | | 3 | 300 | 30 | 15 | 150 |" in texto
+
+
+def test_relatorio_marca_checkpoint_antigo_sem_chave(tmp_path: Path, fatias) -> None:
+    rodar_mapear(tmp_path, fatias[:2], cliente_falso(responder_mapear_de(fatias)))
+    estado = ler_checkpoint(tmp_path)
+    for entrada in estado["requisicoes"].values():
+        del entrada["chave"]
+    (tmp_path / "mapear.checkpoint.json").write_text(json.dumps(estado), encoding="utf-8")
+    assert rel.uso_por_chave(tmp_path)[rel.CHAVE_NAO_REGISTRADA]["mapear"]["sync"]["requisicoes"] == 2
+
+
+def test_cli_duas_chaves_sem_vazar_valores(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    segredos = {"ANTHROPIC_API_KEY": "segredo-falso-principal-1", "ANTHROPIC_API_KEY_ALT": "segredo-falso-alt-2"}
+    for nome, valor in segredos.items():
+        monkeypatch.setenv(nome, valor)
+    clientes = {valor: cliente_falso(responder_mapear_de(fatias)) for valor in segredos.values()}
+    criados: list[str] = []
+
+    def fabrica(chave):
+        criados.append(chave)
+        return clientes[chave]
+
+    monkeypatch.setattr(cli.av, "make_client", fabrica)
+    argv = ["mapear", "--modo", "sync", "--chave-env", "ANTHROPIC_API_KEY,ANTHROPIC_API_KEY_ALT",
+            "--ancoras", str(yaml_path), "--out", str(out)]
+    assert cli.main(argv) == 0
+    assert criados == list(segredos.values())
+    assert all(len(c.messages.chamadas) == 3 for c in clientes.values())
+    assert cli.main(["relatorio", "--ancoras", str(yaml_path), "--out", str(out)]) == 0
+    assert "| ANTHROPIC_API_KEY_ALT | mapear | sync | 3 |" in (out / rel.RELATORIO_NOME).read_text(encoding="utf-8")
+    capturado = capsys.readouterr()
+    for valor in segredos.values():
+        assert valor not in capturado.out and valor not in capturado.err
+        for arquivo in out.rglob("*"):
+            if arquivo.is_file():
+                assert valor not in arquivo.read_text(encoding="utf-8", errors="ignore")
+
+
+def test_cli_chave_env_invalida_ou_parcial_sai_com_2_sem_eco(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: pytest.fail("não pode criar cliente"))
+    colado = "sk-ant-valor-colado-por-engano"
+    assert cli.main(["mapear", "--chave-env", colado, "--ancoras", str(yaml_path), "--out", str(out)]) == 2
+    monkeypatch.setenv("CHAVE_TESTE_A", "segredo-falso-ccc-333")
+    monkeypatch.setattr(cli, "load_env_var", lambda nome: "segredo-falso-ccc-333" if nome == "CHAVE_TESTE_A" else "")
+    assert cli.main(["mapear", "--chave-env", "CHAVE_TESTE_A,CHAVE_TESTE_B", "--ancoras", str(yaml_path),
+                     "--out", str(out)]) == 2
+    capturado = capsys.readouterr()
+    assert "--chave-env inválido" in capturado.err and "CHAVE_TESTE_B ausente" in capturado.err
+    assert colado not in capturado.out + capturado.err and "segredo-falso-ccc-333" not in capturado.out + capturado.err
+
+
 def test_padroes_da_linha_de_comando() -> None:
     parser = cli.build_parser()
     for etapa in ("mapear", "cruzar", "adjudicar"):

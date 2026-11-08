@@ -38,7 +38,7 @@ Sequência de execução::
    contradiz_ancora, cautela_solta), ``ancora_conflito``, ``central_sem_ancora`` e ``justificativa``.
    Saída: ``pinos.jsonl`` e ``pinos_meta.json``.
 6. ``relatorio``: ``relatorio.md`` (por âncora, contradições confirmadas por tópico, candidatas a âncora,
-   pinos, tokens por etapa) e ``matriz_ancoras.csv`` (âncora × arquivo × contagem por relação).
+   pinos, tokens por etapa e por nome da variável da chave) e ``matriz_ancoras.csv`` (âncora × arquivo × contagem por relação).
 
 ``mapear``, ``cruzar`` e ``adjudicar`` também aceitam ``--sem-ficha`` (desliga a ficha de valores conferidos,
 gerada de ``--registro``, padrão ``tests/data/registro_invariantes.yaml``, entradas N## numéricas, no bloco de
@@ -46,20 +46,26 @@ sistema). ``mapear``, ``cruzar``, ``adjudicar`` e ``pinos`` aceitam:
 
 * ``--modo batch`` (padrão): Message Batches API, retomável (o id do lote fica em
   ``<etapa>.checkpoint.json``; rode de novo para continuar a espera e baixar). ``--modo sync``: pool de
-  ``--concorrencia`` threads (padrão 8), retry com backoff exponencial em 429, 529 e erros de rede,
+  ``--concorrencia`` threads por chave (padrão 8), retry com backoff exponencial em 429, 529 e erros de rede,
   checkpoint gravado a cada resposta e retomada sem reenviar o que já tem resposta.
+* ``--chave-env NOME[,NOME...]``: variáveis com as chaves da Anthropic (padrão ``ANTHROPIC_API_KEY``). Com
+  mais de uma, as requisições se dividem em rodízio pelo índice estável (sync) ou um lote por chave
+  (batch); 401/403 ou crédito esgotado tira a chave da execução e passa as pendentes às restantes.
 * ``--estimar``: não chama a API; imprime requisições e tokens aproximados de entrada e saída
   (cerca de 3,5 caracteres por token; a saída é uma estimativa por etapa, não um limite).
 * ``--refazer-falhas``: reenvia o que terminou com erro de resposta (JSON inválido, resposta truncada).
 
 O cache de prompt (``cache_control``) fica no bloco de sistema (âncoras, taxonomia e terminologia) e nunca
 se envia ``temperature``. Chave da API: ``ANTHROPIC_API_KEY`` (ambiente ou ``.env``), nunca impressa nem
-gravada; ``--chave-env NOME`` escolhe outra variável (por exemplo ``ANTHROPIC_API_KEY_ALT``). Códigos de saída: 0 sucesso; 2 insumo ou chave ausente; 3 execução incompleta ou com erros.
+gravada; ``--chave-env`` escolhe outras variáveis (por exemplo ``ANTHROPIC_API_KEY,ANTHROPIC_API_KEY_ALT``).
+Checkpoints e relatório registram só o NOME da variável. Códigos de saída: 0 sucesso; 2 insumo ou chave
+ausente; 3 execução incompleta ou com erros (inclusive todas as chaves indisponíveis).
 """
 
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -100,10 +106,10 @@ from scripts.cruzamento.comum import (  # noqa: E402
     formatar_milhar,
     ler_jsonl,
 )
-from scripts.cruzamento.execucao import CONCORRENCIA_PADRAO, criar_settings  # noqa: E402
+from scripts.cruzamento.execucao import CHAVE_ENV_PADRAO, CONCORRENCIA_PADRAO, criar_settings  # noqa: E402
 from scripts.cruzamento.fatiar import fatiar  # noqa: E402
 
-CHAVE_ENV_PADRAO = "ANTHROPIC_API_KEY"
+_NOME_VARIAVEL = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
 
 def log(texto: str) -> None:
@@ -151,11 +157,17 @@ def _ficha(args: argparse.Namespace):
         return None, _erro(str(exc))
 
 
-def _cliente(nome_chave: str = CHAVE_ENV_PADRAO):
-    chave = load_env_var(nome_chave)
-    if not chave:
-        return None, _erro(f"{nome_chave} ausente (ambiente ou .env)")
-    return av.make_client(chave), None
+def _cliente(chave_env: str = CHAVE_ENV_PADRAO):
+    """``{nome da variável: cliente}`` para cada nome de ``--chave-env``; erro cita só nomes, nunca valores."""
+    nomes = list(dict.fromkeys(nome.strip() for nome in chave_env.split(",") if nome.strip()))
+    if not nomes or not all(_NOME_VARIAVEL.fullmatch(nome) for nome in nomes):
+        # sem eco do texto: um valor de chave colado por engano não pode ir para o terminal
+        return None, _erro("--chave-env inválido: use nomes de variáveis de ambiente separados por vírgula")
+    valores = {nome: load_env_var(nome) for nome in nomes}
+    faltando = [nome for nome, valor in valores.items() if not valor]
+    if faltando:
+        return None, _erro(f"{', '.join(faltando)} ausente (ambiente ou .env)")
+    return {nome: av.make_client(valor) for nome, valor in valores.items()}, None
 
 
 def _settings(args: argparse.Namespace):
@@ -335,14 +347,15 @@ def build_parser() -> argparse.ArgumentParser:
         p.add_argument("--modelo", default=modelo)
         p.add_argument("--modo", choices=("batch", "sync"), default="batch")
         p.add_argument("--concorrencia", type=int, default=CONCORRENCIA_PADRAO,
-                       help=f"threads no modo sync (padrão {CONCORRENCIA_PADRAO})")
+                       help=f"threads por chave no modo sync (padrão {CONCORRENCIA_PADRAO})")
         p.add_argument("--max-tokens", type=int, default=max_tokens, dest="max_tokens")
         p.add_argument("--estimar", action="store_true",
                        help="não chama a API: imprime requisições e tokens aproximados")
         p.add_argument("--refazer-falhas", action="store_true", dest="refazer_falhas",
                        help="reenvia o que terminou com erro de resposta")
-        p.add_argument("--chave-env", default=CHAVE_ENV_PADRAO, dest="chave_env", metavar="NOME",
-                       help=f"variável de ambiente (ou do .env) com a chave da Anthropic (padrão {CHAVE_ENV_PADRAO})")
+        p.add_argument("--chave-env", default=CHAVE_ENV_PADRAO, dest="chave_env", metavar="NOMES",
+                       help="variáveis de ambiente (ou do .env) com as chaves da Anthropic, separadas por vírgula; "
+                            f"a carga se divide entre elas (padrão {CHAVE_ENV_PADRAO})")
 
     p_fa = sub.add_parser("fatiar", help="gera fatias.jsonl")
     comum(p_fa)

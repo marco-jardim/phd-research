@@ -142,6 +142,26 @@ def uso_por_etapa(out: Path) -> dict[str, dict[str, dict[str, int]]]:
     return resultado
 
 
+CHAVE_NAO_REGISTRADA = "(não registrada)"
+
+
+def uso_por_chave(out: Path) -> dict[str, dict[str, dict[str, dict[str, int]]]]:
+    """Tokens de ``usage`` por NOME da variável da chave, etapa e modo (o valor da chave nunca é gravado)."""
+    resultado: dict[str, dict[str, dict[str, dict[str, int]]]] = {}
+    for etapa in ETAPAS:
+        estado = read_json(out / f"{etapa}.checkpoint.json")
+        if not estado:
+            continue
+        for entrada in estado.get("requisicoes", {}).values():
+            chave = entrada.get("chave") or CHAVE_NAO_REGISTRADA
+            acumulado = resultado.setdefault(chave, {}).setdefault(etapa, {}).setdefault(
+                entrada["modo"], {**dict.fromkeys(USAGE_FIELDS, 0), "requisicoes": 0})
+            acumulado["requisicoes"] += 1
+            for campo in USAGE_FIELDS:
+                acumulado[campo] += int(entrada.get("uso", {}).get(campo, 0))
+    return resultado
+
+
 # ---------------------------------------------------------------------------
 # Relatório
 # ---------------------------------------------------------------------------
@@ -197,7 +217,7 @@ def secao_pinos(pinos: list[dict], meta: dict) -> list[str]:
 def construir_relatorio(
     fatias: list[dict], mapa: list[dict], pares: list[dict], problemas_pares: list[dict],
     adjudicacoes: list[dict], ancoras: list[dict], uso: dict, min_ocorrencias: int = 3,
-    pinos: list[dict] | None = None, pinos_meta: dict | None = None,
+    pinos: list[dict] | None = None, pinos_meta: dict | None = None, uso_chave: dict | None = None,
 ) -> str:
     adj = {a["alvo_id"]: a for a in adjudicacoes}
     ids_ancoras = {a["id"] for a in ancoras}
@@ -345,6 +365,28 @@ def construir_relatorio(
         f"{formatar_milhar(total['output_tokens'])} |"
     )
     L.append("")
+    if uso_chave:
+        L.append("### Por chave (nome da variável de ambiente)")
+        L.append("")
+        L.append("| Chave | Etapa | Modo | Requisições | Entrada | Escrita em cache | Leitura de cache | Saída |")
+        L.append("|---|---|---|---:|---:|---:|---:|---:|")
+        for chave in sorted(uso_chave):
+            soma = dict.fromkeys(("requisicoes", *USAGE_FIELDS), 0)
+            for etapa in ETAPAS:
+                for modo, u in sorted(uso_chave[chave].get(etapa, {}).items()):
+                    L.append(
+                        f"| {chave} | {etapa} | {modo} | {formatar_milhar(u['requisicoes'])} | "
+                        f"{formatar_milhar(u['input_tokens'])} | {formatar_milhar(u['cache_creation_input_tokens'])} | "
+                        f"{formatar_milhar(u['cache_read_input_tokens'])} | {formatar_milhar(u['output_tokens'])} |"
+                    )
+                    for campo in soma:
+                        soma[campo] += u[campo]
+            L.append(
+                f"| {chave} | **Total** | | {formatar_milhar(soma['requisicoes'])} | "
+                f"{formatar_milhar(soma['input_tokens'])} | {formatar_milhar(soma['cache_creation_input_tokens'])} | "
+                f"{formatar_milhar(soma['cache_read_input_tokens'])} | {formatar_milhar(soma['output_tokens'])} |"
+            )
+        L.append("")
 
     # --- problemas --------------------------------------------------------------------
     L.append("## Problemas de execução e de verificação")
@@ -385,7 +427,7 @@ def gerar_relatorio(out: Path, ancoras: list[dict], min_ocorrencias: int = 3) ->
     texto = construir_relatorio(
         ler_jsonl(out / FATIAS_NOME), mapa, ler_jsonl(out / PARES_NOME), ler_jsonl(out / PARES_PROBLEMAS_NOME),
         ler_jsonl(out / ADJUDICACOES_NOME), ancoras, uso_por_etapa(out), min_ocorrencias,
-        ler_jsonl(out / PINOS_NOME), read_json(out / PINOS_META_NOME) or {},
+        ler_jsonl(out / PINOS_NOME), read_json(out / PINOS_META_NOME) or {}, uso_por_chave(out),
     )
     matriz = montar_matriz(mapa, ancoras)
     write_text_atomic(out / RELATORIO_NOME, texto)
