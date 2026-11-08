@@ -74,7 +74,7 @@ def test_bayesian_evidence_compares_original_and_posterior_counts():
     for variant in ("O3", "O3-post"):
         vp, n = rows[variant, "VP"], rows[variant, "aceitacoes"]
         vpp = f"{rows[variant, 'VPP'] * 100:.1f}".replace(".", ",")
-        assert f"{vpp}\\% ({vp:.0f} vínculos em {n:.0f} aceitações)" in body
+        assert f"{vpp}\\% ({vp:.0f} pares verdadeiros em {n:.0f} aceitações)" in body
         assert rows[variant, "VPP"] == pytest.approx(vp / n)
     assert "16,0\\% quando o LLM aceita sozinho" in body
 

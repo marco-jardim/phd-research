@@ -41,12 +41,15 @@ def test_primary_arm_and_comparisons_are_unambiguous():
     assert "A comparação na mesma carga" in source
     assert r"braço \textit{a posteriori} preserva o corte e aplica a cascata publicada abaixo dele, sem recalibração" in source
     assert "P-Platt é a sensibilidade" not in source
-    assert r"P-Platt é a análise de sensibilidade de P com \textit{Platt scaling}" in source
+    # Revisão 2: P-Platt é definida na legenda da estabilidade e na descrição do arranjo (método).
+    assert r"P-Platt (análise de sensibilidade de P com \textit{Platt scaling} abaixo do corte)" in source
+    assert r"P-Platt, com \textit{Platt scaling} no lugar da isotônica abaixo do corte, foi reclassificada por emenda como análise de sensibilidade" in source
     assert "percentil 97,5" in source and "percentis 10 a 90" in source
     assert "P97,5" not in source and "P10 a P90" not in source
     assert r"constante $k=60$" not in source
     assert "treino sem subamostragem" in source
-    assert "na partição agrupada por COMPREC (registro do Sinan)" in source
+    # Revisão 2: a partição por COMPREC do Experimento 1 está no apêndice do Estudo 4, com Sinan-TB.
+    assert "na partição agrupada por COMPREC (registro do Sinan-TB)" in text("apendice_gzcmd.tex")
     assert "(três vizinhos)" in text("estudo2_classificadores.tex")
 
 
@@ -55,7 +58,7 @@ def test_fusions_and_model_strata_are_glossed_at_use():
     assert "F3 (fusão por posição recíproca de O3, O1 e O3 com MACD)" in source
     assert source.index("F1 e F2 intercalam as filas") < source.index("F2, F3 e F4 superaram")
     assert "metas de 9, 23 e 36 PAR~=~2" in source
-    for term in ("V1 (aceitações do Haiku)", "V2 (vínculos não aceitos pelo Haiku)",
+    for term in ("V1 (aceitações do Haiku)", "V2 (pares verdadeiros não aceitos pelo Haiku)",
                  "V3 (PAR~=~0 com decisões discordantes entre Haiku e Sonnet)"):
         assert term in source
     assert "depois de conhecido o resultado da cascata publicada aplicada abaixo do corte" in text("estudo5_equidade.tex")

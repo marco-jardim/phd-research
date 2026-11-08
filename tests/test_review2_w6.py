@@ -65,7 +65,7 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
     assert r"limite inferior do intervalo de 95\% entre partições predefinidas" in criterion
     assert "em cada uma das duas metas" in criterion
     assert "os 23 PAR~=~2 da vigilância e os nove da confirmação" in criterion
-    assert "P supera O3 por um vínculo na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
+    assert "P supera O3 por um par verdadeiro na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
     assert "de 9 a 21 perdas na vigilância e de 21 a 29 na confirmação" in criterion
     assert "Nenhuma dessas avaliações foi realizada" in criterion
     for name in ("defesa.tex", "roteiro_defesa.md"):
@@ -141,7 +141,8 @@ def test_score_band_precision_follows_count_only_source(tmp_path):
 def test_remaining_editorial_caveats_and_reductions():
     study = text("estudo4_gzcmd.tex")
     assert "Essa proporção de referência é descritiva" in study
-    assert "As âncoras superestimam a probabilidade nas faixas $[7,9)$" in study
+    # Revisão 2: a validação das âncoras foi para o apêndice do Estudo 4.
+    assert "As âncoras superestimam a probabilidade nas faixas $[7,9)$" in text("apendice_gzcmd.tex")
     assert "Usar $1/240$ em vez de 0,005 não altera decisões" in study
     assert "cobre $C_{LLM}$ de 0,005 a 0,25" in study
     for name in ("estudo4_gzcmd.tex", "apendice_pacote.tex", "capitulo_dados.tex"):

@@ -64,7 +64,7 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
     study = text("estudo4_gzcmd.tex")
     assert "compatíveis com ancoragem ou abstenção generalizada" in study
     assert "1.845 revisões" in study and "1.582" in study
-    assert contem(study, "Não há controle negativo com não vínculos", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
+    assert contem(study, "Não há controle negativo com não pares", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "retira somente o grupo" in study
     assert "versão do prompt não está registrada" in study
     assert "proxies adicionais" not in study
@@ -74,8 +74,9 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
 def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
     from test_w9a import expected_ablation_appendix
 
-    study = text("estudo4_gzcmd.tex")
-    section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\subsection{Experimento 2:")[0]
+    # Revisão 2: o Experimento 1 foi para o Apêndice do Estudo 4 (seção da ablação das MACD).
+    study = text("apendice_gzcmd.tex")
+    section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\section{Registro interno do arranjo")[0]
     appendix = text("apendice_ablacao.tex")
     assert appendix == expected_ablation_appendix()
     for arm in ("macd", "nomacd"):
@@ -157,7 +158,8 @@ def test_cardinality_counts_do_not_imply_an_implemented_rule():
     assert (vigil["fp_total"], vigil["refrec_ja_aceito"], vigil["comprec_ja_aceito"],
             vigil["nenhum_ja_aceito"]) == (21, 1, 0, 20)
     assert (conf["fp_total"], conf["comprec_ou_refrec_ja_aceito"]) == (4, 0)
-    source = text("estudo4_gzcmd.tex")
+    # Revisão 2: a contagem de cardinalidade foi para o Apêndice A.1 (política histórica v3).
+    source = text("apendice_gzcmd.tex")
     assert "previstos, mas não implementados" in source
     assert "não avalia conflitos entre novas aceitações" in source
     assert "um compartilha REFREC" in source and "os outros 20" in source

@@ -818,7 +818,7 @@ _RE_DECIMAL = re.compile(r"(?<![\w.,/\\])(?:\d+\.\d{1,2}|0\.\d{3})(?![\w/]|\.\d)
 PADROES_VERSAO_MODELO = [
     re.compile(p, I)
     for p in (
-        r"\b(?:Claude\s+)?(?:Haiku|Sonnet|Opus)\s+\d+(?:\.\d+)+",
+        r"\b(?:Claude\s+)?(?:Haiku|Sonnet|Opus|Fable)\s+\d+(?:\.\d+)+",
         r"\bK\d+(?:\.\d+)+",
         r"\b(?:Kimi|DeepSeek|GLM|Qwen\d*|MiniMax|GPT|Gemini|Llama|Mistral|Grok|Gemma|Phi)[-\s]*[A-Za-z]?\d+(?:\.\d+)+",
         r"\bv\d+(?:\.\d+)+",

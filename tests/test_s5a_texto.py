@@ -9,20 +9,26 @@ LATEX = ROOT / "text/latex"
 
 def test_main_arm_robustness_and_method_deviations_are_explicit():
     study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+    appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
     for text in (
         "P foi dominado por P-Platt na avaliação original",
-        "P permanece o resultado principal do registro interno",
+        # Revisão 2 (D2): P é o braço do registro interno, não o "resultado principal".
+        "P é o braço do registro interno e não o resultado principal do capítulo",
         "dominância de P-Platt sobre P não foi sustentada",
         "7/20", "4/20", "5/20", "0/20", "20/20", "19/20",
-        "0,427", "0,65", "US\\$~0,6255", "US\\$~0,8703",
+        "0,427", "0,65",
         "16,0\\%", "9,06 FP", "66,7\\%", "57,1\\%",
         "22 por", "quatro por", "um, seis e seis",
         "99,97\\%", "99,99\\%", "está ausente do histórico do git",
-        "69 do suplemento", "dois ou três PAR", "01:22:17 UTC", "02:17:13 UTC",
+        "dois ou três PAR", "01:22:17 UTC", "02:17:13 UTC",
         "não generalização", r"\input{tables/editorial/tab_cap8_robustez_arranjo.tex}",
         r"\ref{tab:cap8-robustez-arranjo}",
     ):
         assert text in study, text
+    assert "P permanece o resultado principal do registro interno" not in study
+    # Revisão 2: custos das chamadas e suplemento foram para o apêndice do Estudo 4.
+    for text in ("US\\$~0,6255", "US\\$~0,8703", "O suplemento, com 69 potenciais pares"):
+        assert text in appendix, text
     deviations = (ROOT / "gzcmd/M_arranjo_corte_desvios.md").read_text(encoding="utf-8")
     for text in ("8c16a41", "83c7842", "parameter_change: false", "no sensitivity API calls",
                  "1e-14", "especificidade", "antes do registro", "não generalização"):

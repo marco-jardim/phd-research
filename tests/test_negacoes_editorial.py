@@ -23,7 +23,8 @@ PARAGRAPHS = [
     ("estudo3_estrategias.tex", "A razão hipotética de revisões por vínculo também favoreceu"),
     ("apendice_estrategias.tex", "A organização reprodutível das configurações"),
     ("apendice_estrategias.tex", "As estratégias de vigilância e confirmação descritas"),
-    ("estudo4_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
+    # Revisão 2: o parágrafo do Sonnet na cascata foi para o Apêndice do Estudo 4 (A.4, custos).
+    ("apendice_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A paridade simultânea de sensibilidade e VPP adotada"),
     ("estudo5_equidade.tex", "A construção da referência operacional limita a inferência"),
@@ -111,17 +112,22 @@ def test_formulas_no_maximo_uma_vez_por_capitulo(filename):
 
 
 def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
+    # Revisão 2: a magnitude aparece uma vez no capítulo (resultados) e uma vez no apêndice dos custos (A.4),
+    # em vez de duas vezes no capítulo; nos dois lugares é a mesma grandeza, "pares verdadeiros" a mais.
     text = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
-    magnitude = "de dois a quatro vínculos a mais"
+    appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
+    magnitude = "de dois a quatro pares verdadeiros a mais"
+    recovered = magnitude
     arquivo = "text/latex/estudo4_gzcmd.tex"
-    assert conta(text, magnitude, arquivo=arquivo) == 2  # migrado: terminologia 3.6
-    results, discussion = text.split(r"\label{sec:e4-reruns}", 1)[1].split(
-        "Na cascata v3.1 sobre a base inteira, Claude Sonnet", 1
-    )
-    assert contem(results, magnitude, arquivo=arquivo)  # migrado: terminologia 3.6
-    discussion = "Na cascata v3.1 sobre a base inteira, Claude Sonnet" + discussion
+    arquivo_ap = "text/latex/apendice_gzcmd.tex"
+    assert conta(text, magnitude, arquivo=arquivo) == 1
+    assert conta(appendix, recovered, arquivo=arquivo_ap) == 1
+    results = text.split(r"\label{sec:e4-reruns}", 1)[1].split(r"\label{sec:e4-arranjo}", 1)[0]
+    assert contem(results, magnitude, arquivo=arquivo)
+    discussion = "Na cascata v3.1 sobre a base inteira, Claude Sonnet" + appendix.split(
+        "Na cascata v3.1 sobre a base inteira, Claude Sonnet", 1)[1]
     discussion = discussion.split("\n\n", 1)[0]
-    assert contem(discussion, magnitude, arquivo=arquivo)  # migrado: terminologia 3.6
+    assert contem(discussion, recovered, arquivo=arquivo_ap)
     assert "mais inconclusivos e encaminhamentos humanos" in discussion
     assert r"vinte vezes mais caro por \textit{token}" in discussion
     assert "não constitui resultado do arranjo" in discussion
@@ -130,7 +136,7 @@ def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
 
 def test_ressalvas_de_fidelidade_permanecem_explicitas():
     calibration = paragraph("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade")
-    assert contem(calibration, "não demonstrou calibração absoluta na área cinza da nota", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
+    assert contem(calibration, "não demonstrou calibração absoluta na faixa intermediária da nota final", arquivo="text/latex/estudo4_gzcmd.tex")  # revisão 2: faixa intermediária da nota final
     assert "não corrigiria o viés" in calibration
     assert "não de impossibilidade geral do método" in calibration
     equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")

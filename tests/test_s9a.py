@@ -45,7 +45,7 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
         assert r'\citeonline{Sariyar2010recordlinkage}' in text
         assert 'dentro da variação de perdas' not in text
     text = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert contem(text, 'uma diferença de um vínculo em 36 não sustenta superioridade', arquivo='text/latex/estudo4_gzcmd.tex')  # migrado: terminologia 3.6
+    assert contem(text, 'uma diferença de um par verdadeiro em 36 não sustenta superioridade', arquivo='text/latex/estudo4_gzcmd.tex')  # revisão 2: classe, não decisão
     discussion = text.split(r'\label{sec:e4-discussao}')[1]
     assert 'as perdas são de cobertura, não de erro humano' in discussion
     assert 'o ótimo é dar ao revisor humano o topo da fila' in discussion

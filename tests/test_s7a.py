@@ -45,7 +45,10 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
         reviewer = llm.loc[llm.braco.eq('P') & llm.modo.eq(mode)].iloc[0]
         assert rows.loc['MATCH_LLM', 'nao_vinculos'] == reviewer.FP == observed.fp
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert contem(study, 'a cadeia aceitou 196 vínculos', arquivo='text/latex/estudo4_gzcmd.tex')  # migrado: terminologia 3.6
+    # Revisão 2: a cascata com Sonnet foi para o Apêndice (A.4), com "vínculo" só para a decisão da cadeia.
+    appendix = (LATEX / 'apendice_gzcmd.tex').read_text(encoding='utf-8')
+    assert contem(appendix, 'a cadeia aceitou 196 pares verdadeiros', arquivo='text/latex/apendice_gzcmd.tex')
+    assert contem(study, 'a cadeia aceitou de dois a quatro pares verdadeiros a mais que a cadeia com o Haiku (196 na vigilância e 136 na confirmação)', arquivo='text/latex/estudo4_gzcmd.tex')
     assert 'o Sonnet como revisor aceitou' not in study
 
 
@@ -114,12 +117,17 @@ def test_fraction_denominators_are_explicitly_minima_not_observed_counts():
 
 def test_study_grey_zone_model_version_chronology_and_range_are_unambiguous():
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    for prefix in ('Nos 21.620', r'A Tabela~\ref{tab:e4-desempenho-faixas-oof}',
-                   'O escore de Brier', r'A Tabela~\ref{tab:cap8-ancoras-decisao}'):
-        paragraph = next(p for p in study.split('\n\n') if p.startswith(prefix))
+    appendix = (LATEX / 'apendice_gzcmd.tex').read_text(encoding='utf-8')
+    # Revisão 2: o parágrafo do escore de Brier e o da decisão por âncoras foram para o apêndice do Estudo 4.
+    for source, name, prefix in (
+            (study, 'estudo4_gzcmd.tex', 'Nos 21.620'),
+            (study, 'estudo4_gzcmd.tex', r'A Tabela~\ref{tab:e4-desempenho-faixas-oof}'),
+            (appendix, 'apendice_gzcmd.tex', 'O escore de Brier'),
+            (appendix, 'apendice_gzcmd.tex', r'A Tabela~\ref{tab:cap8-ancoras-decisao}')):
+        paragraph = next(p for p in source.split('\n\n') if p.startswith(prefix))
         # migrado: terminologia 3.6 (a glosa "(área cinza)" vira o mesmo marcador de \textit{grey area})
-        assert not re.search(f'{GREY_AREA}(?! da nota)', normalizar_terminologia(paragraph, arquivo='text/latex/estudo4_gzcmd.tex'))
-    assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in study
+        assert not re.search(f'{GREY_AREA}(?! da nota)', normalizar_terminologia(paragraph, arquivo=f'text/latex/{name}'))
+    assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in appendix
     assert r'S3 às 02:11:52 UTC, conforme \path{data/arranjo_corte_metadata.json} na versão \texttt{16d5876}' in study
     assert 'não no JSON atual' in study
     assert 'e as perdas de nove a 21' not in study
