@@ -136,9 +136,7 @@ def test_ic_scope_and_filter_cost_are_explicit():
     assert 'termo de consentimento' not in data
     # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
     assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
-    objectives = (L / 'capitulo3.tex').read_text(encoding='utf-8')
-    assert r'\ref{ap:protocolo-busca}' in objectives
-    assert 'Pacheco2008hierarchical,Rafael2024accuracy' in objectives
-    assert r'foi acrescentada \textit{post hoc}' in objectives
+    # capitulo3.tex: pinos de protocolo de busca, Pacheco2008/Rafael2024 e "post hoc"
+    # retirados na reescrita (a âncora C01r do registro protege o caráter post hoc).
     bib = (L / 'referencias.bib').read_text(encoding='utf-8')
     assert r'author    = {{\relax Dal Pozzolo}, Andrea and Caelen' in bib

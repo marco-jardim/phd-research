@@ -158,7 +158,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
     ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),
-    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, que preserva os vínculos aceitos pelo corte e aplica o GZ-CMD aos demais potenciais pares, comparações exploratórias com o mesmo número de revisões humanas e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
+    ("capitulo3.tex", "de modo que constitui hipótese a validar em outra coorte, sem pressupor superioridade operacional nem transferência dos parâmetros a outras bases."),
 ])
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
     text = (LATEX / filename).read_text(encoding="utf-8")

@@ -31,9 +31,9 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
 
 def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     objectives = (LATEX / "capitulo3.tex").read_text(encoding="utf-8")
-    assert "potenciais pares não aceitos pelo corte" in objectives
-    assert "Desenvolver e avaliar o GZ-CMD" in objectives
-    assert r"processo de \textit{linkage} de origem (corte seguido de revisão manual)" in objectives
+    assert "região abaixo do ponto de corte do OpenRecLink" in objectives
+    assert "Desenvolver e avaliar um pós-processamento" in objectives
+    assert "resulta do corte do OpenRecLink e da revisão manual de origem" in objectives
     assert "prática do serviço" not in objectives
     assert "origem do registro" not in objectives
     assert "O objetivo específico 4 mantém" not in objectives

@@ -39,7 +39,8 @@ def test_objectives_and_contribution_do_not_claim_audited_policy_or_wrong_incomp
         source = text(name)
         assert "política auditável" not in source
         assert "decisões auditáveis" not in source
-        assert "sem exercício independente de auditoria das justificativas" in source
+        if name != "capitulo3.tex":  # C3-04: frase retirada do objetivo
+            assert "sem exercício independente de auditoria das justificativas" in source
     assert "não pela política de quatro ações" in text("conclusao.tex").split("\n\n")[1]
 
 
