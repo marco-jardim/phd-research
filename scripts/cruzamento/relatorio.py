@@ -36,6 +36,7 @@ from .comum import (
     ler_jsonl,
 )
 from .cruzar import PARES_PROBLEMAS_NOME
+from .leitores import carregar_mapas, concordancia_por_ancora
 
 TRECHO_MAX = 180
 LIMITE_LISTA = 50
@@ -214,10 +215,56 @@ def secao_pinos(pinos: list[dict], meta: dict) -> list[str]:
     return L
 
 
+def secao_concordancia(mapa: list[dict], leitores: list[str], ancoras: list[dict]) -> list[str]:
+    """Seção "Concordância entre leitores": por âncora, relações só de cada leitor e de vários (ambos).
+
+    Dois leitores concordam quando o item é o mesmo (mesma fatia, mesmo trecho normalizado, mesma âncora e
+    mesma relação); o mesmo lugar citado com outro recorte de trecho conta como um item de cada leitor.
+    """
+    L: list[str] = ["## Concordância entre leitores", ""]
+    L.append(f"Leitores: {', '.join(leitores)}. Só entram relações com trecho verificado na fatia; "
+             "a lista nominal traz as relações não neutras achadas por um leitor só.")
+    L.append("")
+    linhas = concordancia_por_ancora(mapa, leitores, [a["id"] for a in ancoras])
+    cabecalho = ["Relação", *(f"Só {leitor}" for leitor in leitores), "Ambos"]
+    for ancora in ancoras:
+        L.append(f"### {ancora['id']} ({ancora['origem']})")
+        L.append("")
+        proprias = [linha for linha in linhas if linha["ancora_id"] == ancora["id"]]
+        if not proprias:
+            L.append("- nenhuma relação")
+            L.append("")
+            continue
+        L.append("| " + " | ".join(cabecalho) + " |")
+        L.append("|---|" + "---:|" * (len(cabecalho) - 1))
+        for linha in proprias:
+            valores = [linha[f"so_{leitor}"] for leitor in leitores] + [linha["ambos"]]
+            L.append(f"| {linha['relacao']} | " + " | ".join(str(v) for v in valores) + " |")
+        L.append("")
+        so_um = sorted(
+            (
+                (r, r["leitores"][0])
+                for linha in mapa
+                for r in linha.get("relacoes", [])
+                if r.get("trecho_valido") and r.get("ancora_id") == ancora["id"] and r.get("relacao") in RELACOES
+                and r.get("relacao") != "afirma" and len(r.get("leitores") or []) == 1
+            ),
+            key=lambda x: (x[1], x[0]["arquivo"], x[0]["linha"], x[0]["id"]),
+        )
+        for r, leitor in so_um[:LIMITE_LISTA]:
+            L.append(f"- só {leitor}: {r['relacao']} `{_local(r)}` \"{_curto(r['trecho'])}\"")
+        if len(so_um) > LIMITE_LISTA:
+            L.append(f"- ... e mais {len(so_um) - LIMITE_LISTA} em `mapa*.jsonl`")
+        if so_um:
+            L.append("")
+    return L
+
+
 def construir_relatorio(
     fatias: list[dict], mapa: list[dict], pares: list[dict], problemas_pares: list[dict],
     adjudicacoes: list[dict], ancoras: list[dict], uso: dict, min_ocorrencias: int = 3,
     pinos: list[dict] | None = None, pinos_meta: dict | None = None, uso_chave: dict | None = None,
+    leitores: list[str] | None = None,
 ) -> str:
     adj = {a["alvo_id"]: a for a in adjudicacoes}
     ids_ancoras = {a["id"] for a in ancoras}
@@ -272,6 +319,10 @@ def construir_relatorio(
             for r in itens:
                 L.append(f"  - `{_local(r)}` [{_veredito(adj, r['id'])}] \"{_curto(r['trecho'])}\": {_curto(r['justificativa'])}")
         L.append("")
+
+    # --- concordância entre leitores -------------------------------------------------
+    if leitores and len(leitores) > 1:
+        L.extend(secao_concordancia(mapa, leitores, ancoras))
 
     # --- contradições confirmadas ----------------------------------------------------
     L.append("## Contradições confirmadas")
@@ -419,15 +470,19 @@ def construir_relatorio(
     return "\n".join(L).rstrip() + "\n"
 
 
-def gerar_relatorio(out: Path, ancoras: list[dict], min_ocorrencias: int = 3) -> dict:
+def gerar_relatorio(
+    out: Path, ancoras: list[dict], min_ocorrencias: int = 3, arquivos_mapas: tuple[str, ...] = (MAPA_NOME,),
+) -> dict:
+    """Com mais de um mapa em ``arquivos_mapas`` o relatório usa a união e ganha a seção de concordância."""
     out = Path(out)
-    mapa = ler_jsonl(out / MAPA_NOME)
-    if not mapa:
-        raise ValueError(f"{out / MAPA_NOME} ausente ou vazio; rode `mapear` antes")
+    mapa, leitores, erro = carregar_mapas(out, list(arquivos_mapas))
+    if erro is not None:
+        raise ValueError(erro)
     texto = construir_relatorio(
         ler_jsonl(out / FATIAS_NOME), mapa, ler_jsonl(out / PARES_NOME), ler_jsonl(out / PARES_PROBLEMAS_NOME),
         ler_jsonl(out / ADJUDICACOES_NOME), ancoras, uso_por_etapa(out), min_ocorrencias,
         ler_jsonl(out / PINOS_NOME), read_json(out / PINOS_META_NOME) or {}, uso_por_chave(out),
+        leitores=leitores,
     )
     matriz = montar_matriz(mapa, ancoras)
     write_text_atomic(out / RELATORIO_NOME, texto)

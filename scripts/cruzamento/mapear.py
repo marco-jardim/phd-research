@@ -18,6 +18,7 @@ from scripts.atestado.common import write_jsonl_atomic
 
 from . import execucao as ex
 from .comum import (
+    ETAPA_MAPEAR,
     MAPA_NOME,
     POLARIDADES,
     RELACOES,
@@ -187,12 +188,15 @@ def run_mapear(
     ficha: str = "",
     sleep: Callable[[float], None] = time.sleep,
     log: Callable[[str], None] = lambda texto: None,
+    etapa: str = ETAPA_MAPEAR,
+    mapa_nome: str = MAPA_NOME,
 ) -> dict:
-    rt = ex.abrir_runtime(out, "mapear", settings, client, sleep, log)
+    """``etapa`` e ``mapa_nome`` separam checkpoint e saída de um segundo leitor (padrão: o do Sonnet)."""
+    rt = ex.abrir_runtime(out, etapa, settings, client, sleep, log)
     planejadas = planejar_mapear(fatias, ancoras, settings, ficha)
     restantes = ex.executar(rt, planejadas, PASSADA)
     linhas = consolidar_mapa(fatias, planejadas, rt.cp, ancoras)
-    write_jsonl_atomic(out / MAPA_NOME, linhas)
+    write_jsonl_atomic(out / mapa_nome, linhas)
     invalidos = sum(
         1 for linha in linhas for item in (*linha["relacoes"], *linha["afirmacoes"]) if not item["trecho_valido"]
     )

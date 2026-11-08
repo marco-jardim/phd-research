@@ -17,12 +17,15 @@ from scripts.cruzamento import adjudicar as adj
 from scripts.cruzamento import cruzar as crz
 from scripts.cruzamento import execucao as ex
 from scripts.cruzamento import fatiar as ft
+from scripts.cruzamento import leitores as ld
 from scripts.cruzamento import mapear as mp
+from scripts.cruzamento import opencode as oc
 from scripts.cruzamento import pinos as pn
 from scripts.cruzamento import relatorio as rel
 from scripts.cruzamento.comum import (
     FATIAS_NOME,
     MAPA_NOME,
+    MAPA_OPENCODE_NOME,
     PARES_NOME,
     PINOS_NOME,
     carregar_ancoras,
@@ -1474,3 +1477,362 @@ def test_padroes_do_pinos_na_linha_de_comando() -> None:
     args = cli.build_parser().parse_args(["pinos"])
     assert args.inventario == ".local/fase0/inventario_pinos.csv" and args.tamanho_lote == 40
     assert args.incluir_slides is False and args.modelo == "claude-sonnet-5-5" and args.modo == "batch"
+
+
+# ---------------------------------------------------------------------------
+# Segundo leitor: DeepSeek V4.1 Flash via OpenCode Go (mapear --provedor opencode, --mapas, concordância)
+# ---------------------------------------------------------------------------
+class RespostaHttp:
+    def __init__(self, status: int, corpo: dict | None = None, texto: str = "") -> None:
+        self.status_code = status
+        self._corpo = corpo
+        self.text = texto
+
+    def json(self) -> dict:
+        if self._corpo is None:
+            raise ValueError("sem corpo")
+        return self._corpo
+
+
+class ErroDeRede(OSError):
+    """Falha de conexão no transporte (como ``requests.ConnectionError``)."""
+
+
+class HttpFalso:
+    """Dublê de ``requests``: grava as chamadas e responde no formato ``chat/completions``."""
+
+    def __init__(self, responder, erros=()) -> None:
+        self.responder = responder
+        self.erros = list(erros)
+        self.chamadas: list[dict] = []
+        self.trava = threading.Lock()
+
+    def post(self, url, headers=None, **kw):
+        payload = kw["json"]
+        with self.trava:
+            self.chamadas.append({"url": url, "headers": headers, "json": payload, "timeout": kw.get("timeout")})
+            erro = self.erros.pop(0) if self.erros else None
+        if isinstance(erro, int):
+            return RespostaHttp(erro, texto="falha do gateway")
+        if erro is not None:
+            raise erro
+        resultado = self.responder({"messages": [{"content": [{"text": payload["messages"][-1]["content"]}]}]})
+        corpo = {
+            "choices": [{"message": {"content": json.dumps(resultado, ensure_ascii=False)}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 100, "completion_tokens": 50},
+        }
+        return RespostaHttp(200, corpo)
+
+
+def test_opencode_monta_a_requisicao_sem_vazar_a_chave(fatias) -> None:
+    segredo = "chave-opencode-falsa-777"
+    http = HttpFalso(responder_mapear_de(fatias))
+    cliente = oc.ClienteOpencode(segredo, http=http)
+    settings = ex.criar_settings(oc.MODELO_OPENCODE_PADRAO, "sync", 1000)
+    req = mp.planejar_mapear(fatias[:1], ANCORAS, settings)[0]
+    resposta = cliente.messages.create(**req.params)
+    chamada = http.chamadas[0]
+    assert chamada["url"] == "https://opencode.ai/zen/go/v1/chat/completions"
+    assert chamada["headers"]["Authorization"] == f"Bearer {segredo}" and chamada["headers"]["x-opencode-session"]
+    corpo = chamada["json"]
+    assert corpo["model"] == "deepseek-v4.1-flash" and corpo["max_tokens"] == 1000 and corpo["temperature"] == 0.0
+    assert corpo["thinking"] == {"type": "disabled"} and corpo["reasoning_effort"] == "none"
+    assert [m["role"] for m in corpo["messages"]] == ["system", "user"]
+    assert "Texto da âncora um." in corpo["messages"][0]["content"]  # mesmo prompt de sistema do Sonnet
+    assert f"Fatia {fatias[0]['id']}" in corpo["messages"][1]["content"]
+    assert req.params["system"][0]["text"] == corpo["messages"][0]["content"]
+    assert "cache_control" not in json.dumps(corpo) and segredo not in json.dumps(corpo)
+    entrada = ex.nova_entrada(resposta, req, "sync", oc.CHAVE_ENV_OPENCODE)
+    assert entrada["erro"] is None and entrada["chave"] == "OPENCODE_GO_API_KEY"
+    assert entrada["uso"] == {"input_tokens": 100, "output_tokens": 50,
+                              "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0}
+    assert len(entrada["resultado"]["relacoes"]) == 1 and segredo not in json.dumps(entrada)
+
+
+def test_opencode_resposta_cortada_e_erros_sem_a_chave() -> None:
+    cortada = oc._mensagem({"choices": [{"message": {"content": "{"}, "finish_reason": "length"}], "usage": {}})
+    assert cortada.stop_reason == "max_tokens" and cortada.usage.input_tokens == 0
+    segredo = "chave-opencode-falsa-888"
+    params = ex.montar_params(ex.criar_settings("deepseek-v4.1-flash", "sync", 10), "sistema", [ex.bloco_texto("u")])
+    for erro in (401, 429, 500):
+        cliente = oc.ClienteOpencode(segredo, http=HttpFalso(lambda p: {}, erros=[erro]))
+        with pytest.raises(oc.ErroOpencode) as info:
+            cliente.messages.create(**params)
+        assert info.value.status_code == erro and segredo not in str(info.value) + info.value.body
+    rede = oc.ClienteOpencode(segredo, http=HttpFalso(lambda p: {}, erros=[ErroDeRede(f"falha {segredo}")]))
+    with pytest.raises(oc.APIConnectionError) as info:
+        rede.messages.create(**params)
+    assert segredo not in str(info.value)
+
+
+def test_opencode_retry_com_backoff_e_retomada_no_checkpoint_proprio(tmp_path: Path, fatias) -> None:
+    http = HttpFalso(responder_mapear_de(fatias), erros=[429, ErroDeRede("rede")])
+    sleeps: list[float] = []
+    settings = ex.criar_settings(oc.MODELO_OPENCODE_PADRAO, "sync", 1000, 1)
+    resultado = mp.run_mapear(fatias=fatias[:2], ancoras=ANCORAS, out=tmp_path, settings=settings,
+                              client=oc.ClienteOpencode("k", http=http), sleep=sleeps.append,
+                              etapa="mapear_opencode", mapa_nome=MAPA_OPENCODE_NOME)
+    assert resultado["pendentes"] == 0 and resultado["erros"] == 0
+    assert sleeps == [3.0, 6.0]  # 429 e depois erro de rede na primeira requisição: backoff exponencial
+    assert (tmp_path / MAPA_OPENCODE_NOME).is_file() and (tmp_path / "mapear_opencode.checkpoint.json").is_file()
+    assert not (tmp_path / MAPA_NOME).exists() and not (tmp_path / "mapear.checkpoint.json").exists()
+    novo = HttpFalso(responder_mapear_de(fatias))
+    mp.run_mapear(fatias=fatias[:2], ancoras=ANCORAS, out=tmp_path, settings=settings,
+                  client=oc.ClienteOpencode("k", http=novo), sleep=sleeps.append,
+                  etapa="mapear_opencode", mapa_nome=MAPA_OPENCODE_NOME)
+    assert novo.chamadas == []
+
+
+def test_cli_mapear_opencode_grava_em_arquivo_separado_sem_tocar_no_sonnet(
+        tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    mapa_sonnet = (out / MAPA_NOME).read_bytes()
+    segredo = "chave-opencode-falsa-999"
+    monkeypatch.setenv("OPENCODE_GO_API_KEY", segredo)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(cli, "load_env_var", lambda nome: segredo if nome == "OPENCODE_GO_API_KEY" else "")
+    http = HttpFalso(responder_mapear_de(fatias, trecho_ruim_na_fatia=2))
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: pytest.fail("não pode usar o cliente da Anthropic"))
+    monkeypatch.setattr(cli.oc, "criar_cliente", lambda chave: oc.ClienteOpencode(chave, http=http))
+    # sem --modo (padrão batch) e sem --modelo: o provedor opencode força sync e o DeepSeek V4.1 Flash
+    argv = ["mapear", "--provedor", "opencode", "--concorrencia", "3", "--ancoras", str(yaml_path),
+            "--out", str(out)]
+    assert cli.main(argv) == 0
+    assert len(http.chamadas) == 6
+    assert {c["json"]["model"] for c in http.chamadas} == {"deepseek-v4.1-flash"}
+    assert all(c["headers"]["Authorization"] == f"Bearer {segredo}" for c in http.chamadas)
+    assert (out / MAPA_NOME).read_bytes() == mapa_sonnet  # mapa.jsonl do Sonnet intocado
+    assert not (out / "mapear.checkpoint.json").exists()
+    linhas = [json.loads(l) for l in (out / MAPA_OPENCODE_NOME).read_text(encoding="utf-8").splitlines()]
+    assert len(linhas) == 6
+    invalidos = [r for l in linhas for r in l["relacoes"] if not r["trecho_valido"]]
+    assert len(invalidos) == 1 and invalidos[0]["flags"] == ["trecho_invalido"]  # verificação literal vale igual
+    checkpoint = json.loads((out / "mapear_opencode.checkpoint.json").read_text(encoding="utf-8"))
+    assert checkpoint["modelo"] == "deepseek-v4.1-flash" and len(checkpoint["requisicoes"]) == 6
+    for entrada in checkpoint["requisicoes"].values():
+        assert entrada["chave"] == "OPENCODE_GO_API_KEY" and entrada["modo"] == "sync"
+        assert entrada["uso"]["input_tokens"] == 100 and entrada["uso"]["output_tokens"] == 50  # usage registrado
+    assert cli.main(argv) == 0 and len(http.chamadas) == 6  # retomada: nada reenviado
+    capturado = capsys.readouterr()
+    assert f"saída: {out / MAPA_OPENCODE_NOME}" in capturado.out
+    assert segredo not in capturado.out and segredo not in capturado.err
+    for arquivo in out.rglob("*"):
+        if arquivo.is_file():
+            assert segredo not in arquivo.read_text(encoding="utf-8", errors="ignore")
+    texto = rel.gerar_relatorio(out, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    assert "| mapear_opencode | sync | 6 | 600 | 0 | 0 | 300 |" in texto
+    assert "| OPENCODE_GO_API_KEY | **Total** |" in texto
+
+
+def test_cli_mapear_opencode_sem_chave_sai_com_2(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    monkeypatch.setattr(cli, "load_env_var", lambda nome: "")
+    monkeypatch.setattr(cli.oc, "criar_cliente", lambda chave: pytest.fail("sem chave não cria cliente"))
+    assert cli.main(["mapear", "--provedor", "opencode", "--ancoras", str(yaml_path), "--out", str(out)]) == 2
+    assert "OPENCODE_GO_API_KEY ausente" in capsys.readouterr().err
+    assert not (out / MAPA_OPENCODE_NOME).exists()
+
+
+def linha_de_mapa(fatia: dict, resultado: dict) -> dict:
+    return {
+        "fatia_id": fatia["id"], "arquivo": fatia["arquivo"], "linha_inicio": fatia["linha_inicio"],
+        "secao": fatia["secao"], "fonte": fatia["fonte"], "erro": None,
+        **mp.processar_resultado(fatia, resultado, {"C01", "C02"}),
+    }
+
+
+def mapas_dos_dois_leitores(fatias: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Mapas do Sonnet e do DeepSeek sobre a fatia 0, construídos com a verificação real de trechos."""
+    f = fatias[0]
+    primeira, segunda = f["texto"].split("\n")
+
+    def relacao(ancora: str, tipo: str, trecho: str, justificativa: str = "j") -> dict:
+        return {"ancora_id": ancora, "relacao": tipo, "trecho": trecho, "linha": 0, "justificativa": justificativa}
+
+    def afirmacao_de(trecho: str) -> dict:
+        return {"trecho": trecho, "linha": f["linhas"][1], "tipo": "resultado", "topicos": ["P_vigilancia"],
+                "numeros": [], "polaridade": "afirma", "escopo": "esc"}
+
+    sonnet = [linha_de_mapa(f, {"relacoes": [relacao("C01", "contradiz", primeira)],
+                                "afirmacoes": [afirmacao_de(segunda)]})]
+    opencode = [linha_de_mapa(f, {
+        "relacoes": [
+            relacao("C01", "contradiz", primeira, "outra justificativa"),  # igual à do Sonnet: dedup
+            relacao("C01", "exagera", primeira),  # mesmo trecho, outra relação: só DeepSeek
+            relacao("C02", "omite_ressalva", segunda),  # só DeepSeek
+            relacao("C01", "contradiz", "Texto que não existe na fatia."),  # trecho inválido
+        ],
+        "afirmacoes": [afirmacao_de(segunda.replace(" ", "  "))],  # mesmo trecho com espaços extras: dedup
+    })]
+    return sonnet, opencode
+
+
+def test_uniao_deduplica_por_fatia_e_trecho_guardando_o_leitor(fatias) -> None:
+    sonnet, opencode = mapas_dos_dois_leitores(fatias)
+    uniao = ld.unir_mapas([("sonnet", sonnet), ("opencode", opencode)])
+    assert len(uniao) == 1 and uniao[0]["erro"] is None
+    relacoes = {(r["ancora_id"], r["relacao"], r["trecho_valido"]): r for r in uniao[0]["relacoes"]}
+    assert len(uniao[0]["relacoes"]) == 4
+    assert relacoes[("C01", "contradiz", True)]["leitores"] == ["sonnet", "opencode"]
+    assert relacoes[("C01", "contradiz", True)]["justificativa"] == "j"  # fica o item do primeiro leitor
+    assert relacoes[("C01", "exagera", True)]["leitores"] == ["opencode"]
+    assert relacoes[("C02", "omite_ressalva", True)]["leitores"] == ["opencode"]
+    invalida = relacoes[("C01", "contradiz", False)]
+    assert invalida["leitores"] == ["opencode"] and invalida["flags"] == ["trecho_invalido"]
+    assert len(uniao[0]["afirmacoes"]) == 1 and uniao[0]["afirmacoes"][0]["leitores"] == ["sonnet", "opencode"]
+    # ids estáveis: os do Sonnet continuam os mesmos na união
+    assert {r["id"] for r in sonnet[0]["relacoes"]} <= {r["id"] for r in uniao[0]["relacoes"]}
+    assert sonnet[0]["afirmacoes"][0]["id"] == uniao[0]["afirmacoes"][0]["id"] == opencode[0]["afirmacoes"][0]["id"]
+    assert ld.unir_mapas([("opencode", opencode), ("sonnet", sonnet)])[0]["relacoes"][0]["leitores"] == \
+        ["opencode", "sonnet"]
+    # só o que tem trecho verificado segue para cruzar e adjudicar
+    # (a ordem é por arquivo, linha e id, e o id depende do hash: compara-se como conjunto)
+    assert {r["relacao"] for r in adj.relacoes_adjudicaveis(uniao, {"C01", "C02"})} == {"contradiz", "exagera"}
+    assert len(adj.relacoes_adjudicaveis(uniao, {"C01", "C02"})) == 2
+    assert len(crz.afirmacoes_validas(uniao)) == 1
+
+
+def test_uniao_com_um_mapa_devolve_as_linhas_sem_alteracao(fatias) -> None:
+    sonnet, _ = mapas_dos_dois_leitores(fatias)
+    assert ld.unir_mapas([("sonnet", sonnet)]) is sonnet
+    assert "leitores" not in sonnet[0]["relacoes"][0]
+
+
+def test_uniao_erro_so_quando_todos_os_leitores_falharam(fatias) -> None:
+    sonnet, opencode = mapas_dos_dois_leitores(fatias)
+    pendente = {**sonnet[0], "erro": "pendente", "relacoes": [], "afirmacoes": []}
+    assert ld.unir_mapas([("sonnet", [pendente]), ("opencode", opencode)])[0]["erro"] is None
+    falha = {**opencode[0], "erro": "resposta_truncada", "relacoes": [], "afirmacoes": []}
+    assert ld.unir_mapas([("sonnet", [pendente]), ("opencode", [falha])])[0]["erro"] == "pendente"
+
+
+def test_carregar_mapas_nomes_leitores_e_erros(tmp_path: Path, fatias) -> None:
+    sonnet, opencode = mapas_dos_dois_leitores(fatias)
+    assert ld.separar_mapas(" mapa.jsonl, mapa_opencode.jsonl,mapa.jsonl ,") == [MAPA_NOME, MAPA_OPENCODE_NOME]
+    assert ld.nome_do_leitor(MAPA_NOME) == "sonnet" and ld.nome_do_leitor(MAPA_OPENCODE_NOME) == "opencode"
+    assert ld.nome_do_leitor("mapa_kimi.jsonl") == "kimi"
+    write_jsonl_atomic(tmp_path / MAPA_NOME, sonnet)
+    mapa, nomes, erro = ld.carregar_mapas(tmp_path, [MAPA_NOME])
+    assert erro is None and nomes == ["sonnet"] and mapa == sonnet
+    mapa, nomes, erro = ld.carregar_mapas(tmp_path, [MAPA_NOME, MAPA_OPENCODE_NOME])
+    assert mapa == [] and f"{tmp_path / MAPA_OPENCODE_NOME} ausente ou vazio; rode `mapear` antes" == erro
+    write_jsonl_atomic(tmp_path / MAPA_OPENCODE_NOME, opencode)
+    mapa, nomes, erro = ld.carregar_mapas(tmp_path, [MAPA_NOME, MAPA_OPENCODE_NOME])
+    assert erro is None and nomes == ["sonnet", "opencode"] and len(mapa[0]["relacoes"]) == 4
+    assert ld.carregar_mapas(tmp_path, [])[2] is not None
+
+
+def escrever_dois_mapas(out: Path, fatias: list[dict]) -> None:
+    sonnet, opencode = mapas_dos_dois_leitores(fatias)
+    write_jsonl_atomic(out / FATIAS_NOME, fatias)
+    write_jsonl_atomic(out / MAPA_NOME, sonnet)
+    write_jsonl_atomic(out / MAPA_OPENCODE_NOME, opencode)
+
+
+def test_relatorio_secao_de_concordancia_entre_leitores(tmp_path: Path, fatias) -> None:
+    escrever_dois_mapas(tmp_path, fatias)
+    padrao = rel.gerar_relatorio(tmp_path, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    assert "Concordância entre leitores" not in padrao  # padrão: só mapa.jsonl, relatório como antes
+    texto = rel.gerar_relatorio(tmp_path, ANCORAS, arquivos_mapas=(MAPA_NOME, MAPA_OPENCODE_NOME))[
+        "relatorio"].read_text(encoding="utf-8")
+    secao = texto.split("\n## Concordância entre leitores\n")[1].split("\n## Contradições confirmadas")[0]
+    assert "Leitores: sonnet, opencode." in secao
+    c01 = secao.split("### C01 (atual)")[1].split("### C02")[0]
+    assert "| Relação | Só sonnet | Só opencode | Ambos |" in c01
+    assert "| contradiz | 0 | 0 | 1 |" in c01 and "| exagera | 0 | 1 | 0 |" in c01  # o inválido não conta
+    assert "- só opencode: exagera `a.tex:1`" in c01
+    c02 = secao.split("### C02 (proposta)")[1]
+    assert "| omite_ressalva | 0 | 1 | 0 |" in c02 and "- só opencode: omite_ressalva `a.tex:2`" in c02
+    assert "Trechos inválidos (1)" in texto  # a verificação literal do DeepSeek entra no relatório
+    linhas = rel.gerar_relatorio(tmp_path, ANCORAS, arquivos_mapas=(MAPA_NOME, MAPA_OPENCODE_NOME))["matriz"]
+    assert "C01;a.tex;0;1;0;1;0;2" in linhas.read_text(encoding="utf-8").splitlines()
+
+
+def test_concordancia_so_do_sonnet_e_so_do_deepseek_por_ancora(fatias) -> None:
+    sonnet, opencode = mapas_dos_dois_leitores(fatias)
+    # o Sonnet acha ainda uma relação que o DeepSeek não achou
+    sonnet[0]["relacoes"].append({**sonnet[0]["relacoes"][0], "id": "so-sonnet", "relacao": "enfraquece"})
+    uniao = ld.unir_mapas([("sonnet", sonnet), ("opencode", opencode)])
+    linhas = ld.concordancia_por_ancora(uniao, ["sonnet", "opencode"], ["C01", "C02"])
+    assert {(l["ancora_id"], l["relacao"]): (l["so_sonnet"], l["so_opencode"], l["ambos"]) for l in linhas} == {
+        ("C01", "contradiz"): (0, 0, 1), ("C01", "enfraquece"): (1, 0, 0), ("C01", "exagera"): (0, 1, 0),
+        ("C02", "omite_ressalva"): (0, 1, 0),
+    }
+
+
+def test_cli_cruzar_e_adjudicar_aceitam_mapas_e_o_padrao_nao_muda(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    outro = mapa_sintetico(fatias)
+    outro[0]["relacoes"] = [{**outro[0]["relacoes"][0], "id": "r9", "relacao": "exagera"}]
+    outro[1]["afirmacoes"] = [afirmacao(9, fatias[1]["id"])]
+    write_jsonl_atomic(out / MAPA_OPENCODE_NOME, outro)
+    par = {"id": "p1", "tipo": "numero_divergente", "topico": "P_vigilancia", "topicos": ["P_vigilancia"],
+           "justificativa": "j", "flags": [],
+           "a": {"afirmacao_id": "af002", "fatia_id": fatias[0]["id"], "arquivo": "a.tex", "linha": 12, "trecho": "t"},
+           "b": {"afirmacao_id": "af004", "fatia_id": fatias[1]["id"], "arquivo": "a.tex", "linha": 14, "trecho": "u"}}
+    write_jsonl_atomic(out / PARES_NOME, [par])
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "chave-falsa")
+    cliente = cliente_falso(lambda params: {"pares": []})
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: cliente)
+    base = ["--out", str(out)]
+    uniao = ["--mapas", f"{MAPA_NOME},{MAPA_OPENCODE_NOME}"]
+
+    def textos() -> list[str]:
+        return [ex.texto_dos_params(p) for p in cliente.messages.chamadas]
+
+    # padrão: só mapa.jsonl, mesmo com mapa_opencode.jsonl na pasta
+    assert cli.main(["cruzar", "--modo", "sync", *base]) == 0
+    assert len(cliente.messages.chamadas) == 1 and "Trecho literal número 9." not in textos()[0]
+    write_jsonl_atomic(out / PARES_NOME, [par])  # o cruzar com resposta vazia regravou pares.jsonl sem pares
+    assert cli.main(["adjudicar", "--estimar", "--ancoras", str(yaml_path), *base]) == 0
+    assert re.search(r"^adjudicar: 2 requisições", capsys.readouterr().out, re.M)  # par + r1
+    # com --mapas: afirmações e relações dos dois leitores
+    assert cli.main(["cruzar", "--modo", "sync", *uniao, *base]) == 0
+    assert len(cliente.messages.chamadas) == 2 and "Trecho literal número 9." in textos()[1]
+    assert "Trecho literal número 5." in textos()[1]
+    assert cli.main(["cruzar", "--estimar", *uniao, *base]) == 0
+    write_jsonl_atomic(out / PARES_NOME, [par])  # o cruzar com resposta vazia regravou pares.jsonl sem pares
+    assert cli.main(["adjudicar", "--estimar", "--ancoras", str(yaml_path), *uniao, *base]) == 0
+    assert re.search(r"^adjudicar: 3 requisições", capsys.readouterr().out, re.M)  # par + r1 + r9
+    # mapa ausente: erro de insumo citando o arquivo
+    assert cli.main(["cruzar", "--estimar", "--mapas", "mapa_kimi.jsonl", *base]) == 2
+    assert "mapa_kimi.jsonl ausente ou vazio; rode `mapear` antes" in capsys.readouterr().err
+    assert cli.main(["adjudicar", "--estimar", "--ancoras", str(yaml_path), "--mapas", "", *base]) == 2
+
+
+def test_cli_relatorio_mapas_e_padroes_da_linha_de_comando(tmp_path: Path, fatias) -> None:
+    parser = cli.build_parser()
+    for etapa in ("cruzar", "adjudicar", "relatorio"):
+        assert parser.parse_args([etapa]).mapas == "mapa.jsonl"
+    assert parser.parse_args(["mapear"]).provedor == "anthropic"
+    assert parser.parse_args(["mapear", "--provedor", "opencode"]).provedor == "opencode"
+    out = tmp_path / "saida"
+    escrever_dois_mapas(out, fatias)
+    yaml_path = escrever(tmp_path / "ancoras.yaml", "".join(
+        f"- id: {a['id']}\n  origem: {a['origem']}\n  texto: {a['texto']}\n" for a in ANCORAS))
+    assert cli.main(["relatorio", "--ancoras", str(yaml_path), "--out", str(out)]) == 0
+    assert "Concordância entre leitores" not in (out / "relatorio.md").read_text(encoding="utf-8")
+    assert cli.main(["relatorio", "--ancoras", str(yaml_path), "--out", str(out),
+                     "--mapas", f"{MAPA_NOME},{MAPA_OPENCODE_NOME}"]) == 0
+    assert "## Concordância entre leitores" in (out / "relatorio.md").read_text(encoding="utf-8")
+
+
+def test_cli_mapear_padrao_continua_gravando_mapa_jsonl(tmp_path: Path, fatias, monkeypatch) -> None:
+    out = tmp_path / "saida"
+    yaml_path = escrever(tmp_path / "ancoras.yaml", "".join(
+        f"- id: {a['id']}\n  origem: {a['origem']}\n  texto: {a['texto']}\n" for a in ANCORAS))
+    write_jsonl_atomic(out / FATIAS_NOME, fatias)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "chave-falsa")
+    cliente = cliente_falso(responder_mapear_de(fatias))
+    monkeypatch.setattr(cli.av, "make_client", lambda chave: cliente)
+    monkeypatch.setattr(cli.oc, "criar_cliente", lambda chave: pytest.fail("anthropic não usa o OpenCode Go"))
+    assert cli.main(["mapear", "--modo", "sync", "--ancoras", str(yaml_path), "--out", str(out)]) == 0
+    assert (out / MAPA_NOME).is_file() and (out / "mapear.checkpoint.json").is_file()
+    assert not (out / MAPA_OPENCODE_NOME).exists() and not (out / "mapear_opencode.checkpoint.json").exists()
+    assert {c["model"] for c in cliente.messages.chamadas} == {"claude-sonnet-5-5"}

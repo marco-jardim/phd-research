@@ -22,13 +22,16 @@ FONTES_PADRAO = "tese"
 
 FATIAS_NOME = "fatias.jsonl"
 MAPA_NOME = "mapa.jsonl"
+MAPA_OPENCODE_NOME = "mapa_opencode.jsonl"
+ETAPA_MAPEAR = "mapear"
+ETAPA_MAPEAR_OPENCODE = "mapear_opencode"
 PARES_NOME = "pares.jsonl"
 ADJUDICACOES_NOME = "adjudicacoes.jsonl"
 RELATORIO_NOME = "relatorio.md"
 MATRIZ_NOME = "matriz_ancoras.csv"
 PINOS_NOME = "pinos.jsonl"
 PINOS_META_NOME = "pinos_meta.json"
-ETAPAS = ("mapear", "cruzar", "adjudicar", "pinos")
+ETAPAS = (ETAPA_MAPEAR, ETAPA_MAPEAR_OPENCODE, "cruzar", "adjudicar", "pinos")
 CATEGORIAS_PINO = ("frase", "negacao", "ressalva")
 CONFLITOS_PINO = ("nenhum", "forte_demais", "contradiz_ancora", "cautela_solta")
 

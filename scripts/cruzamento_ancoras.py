@@ -16,6 +16,13 @@ Sequência de execução::
     python scripts/cruzamento_ancoras.py pinos
     python scripts/cruzamento_ancoras.py relatorio
 
+Segundo leitor independente (DeepSeek V4.1 Flash via OpenCode Go, só sync; ``mapa.jsonl`` não é tocado)::
+
+    python scripts/cruzamento_ancoras.py mapear --provedor opencode --modo sync --concorrencia 4
+    python scripts/cruzamento_ancoras.py cruzar    --mapas mapa.jsonl,mapa_opencode.jsonl
+    python scripts/cruzamento_ancoras.py adjudicar --mapas mapa.jsonl,mapa_opencode.jsonl
+    python scripts/cruzamento_ancoras.py relatorio --mapas mapa.jsonl,mapa_opencode.jsonl
+
 1. ``fatiar``: grava ``fatias.jsonl`` (grupos de parágrafos inteiros da mesma seção, até 1.200 palavras;
    um frame por fatia nos slides; uma seção ou bloco por fatia no roteiro). Só entra o que a árvore de
    ``\\input`` de ``tese.tex`` alcança; ``*_diff.tex`` e ``*_diff_work/`` ficam de fora. Determinístico.
@@ -58,6 +65,10 @@ sistema). ``mapear``, ``cruzar``, ``adjudicar`` e ``pinos`` aceitam:
 O cache de prompt (``cache_control``) fica no bloco de sistema (âncoras, taxonomia e terminologia) e nunca
 se envia ``temperature``. Chave da API: ``ANTHROPIC_API_KEY`` (ambiente ou ``.env``), nunca impressa nem
 gravada; ``--chave-env`` escolhe outras variáveis (por exemplo ``ANTHROPIC_API_KEY,ANTHROPIC_API_KEY_ALT``).
+Com ``mapear --provedor opencode`` o modelo padrão é ``deepseek-v4.1-flash`` e a chave vem de
+``OPENCODE_GO_API_KEY`` (cliente em ``scripts/cruzamento/opencode.py``; ``temperature`` 0,0, como nos runs do
+Exp 2); o checkpoint é ``mapear_opencode.checkpoint.json``. ``--mapas`` une os mapas (ver
+``scripts/cruzamento/leitores.py``) e o ``relatorio`` ganha a seção "Concordância entre leitores".
 Checkpoints e relatório registram só o NOME da variável. Códigos de saída: 0 sucesso; 2 insumo ou chave
 ausente; 3 execução incompleta ou com erros (inclusive todas as chaves indisponíveis).
 """
@@ -84,6 +95,7 @@ from scripts.atestado.common import (  # noqa: E402
 from scripts.cruzamento import adjudicar as adj  # noqa: E402
 from scripts.cruzamento import cruzar as crz  # noqa: E402
 from scripts.cruzamento import mapear as mp  # noqa: E402
+from scripts.cruzamento import opencode as oc  # noqa: E402
 from scripts.cruzamento import pinos as pn  # noqa: E402
 from scripts.cruzamento import relatorio as rel  # noqa: E402
 from scripts.cruzamento.comum import (  # noqa: E402
@@ -96,8 +108,11 @@ from scripts.cruzamento.comum import (  # noqa: E402
     DEFAULT_TESE,
     FATIAS_NOME,
     FONTES,
+    ETAPA_MAPEAR,
+    ETAPA_MAPEAR_OPENCODE,
     FONTES_PADRAO,
     MAPA_NOME,
+    MAPA_OPENCODE_NOME,
     MAX_PALAVRAS_FATIA,
     PARES_NOME,
     PINOS_NOME,
@@ -108,6 +123,8 @@ from scripts.cruzamento.comum import (  # noqa: E402
 )
 from scripts.cruzamento.execucao import CHAVE_ENV_PADRAO, CONCORRENCIA_PADRAO, criar_settings  # noqa: E402
 from scripts.cruzamento.fatiar import fatiar  # noqa: E402
+from scripts.cruzamento.leitores import carregar_mapas, separar_mapas  # noqa: E402
+from scripts.cruzamento.opencode import CHAVE_ENV_OPENCODE, MODELO_OPENCODE_PADRAO  # noqa: E402
 
 _NOME_VARIAVEL = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
@@ -157,8 +174,12 @@ def _ficha(args: argparse.Namespace):
         return None, _erro(str(exc))
 
 
-def _cliente(chave_env: str = CHAVE_ENV_PADRAO):
-    """``{nome da variável: cliente}`` para cada nome de ``--chave-env``; erro cita só nomes, nunca valores."""
+def _cliente(chave_env: str = CHAVE_ENV_PADRAO, fabrica=None):
+    """``{nome da variável: cliente}`` para cada nome de ``--chave-env``; erro cita só nomes, nunca valores.
+
+    ``fabrica`` cria o cliente a partir do valor da chave (padrão: cliente da Anthropic).
+    """
+    fabrica = fabrica or av.make_client
     nomes = list(dict.fromkeys(nome.strip() for nome in chave_env.split(",") if nome.strip()))
     if not nomes or not all(_NOME_VARIAVEL.fullmatch(nome) for nome in nomes):
         # sem eco do texto: um valor de chave colado por engano não pode ir para o terminal
@@ -167,11 +188,28 @@ def _cliente(chave_env: str = CHAVE_ENV_PADRAO):
     faltando = [nome for nome, valor in valores.items() if not valor]
     if faltando:
         return None, _erro(f"{', '.join(faltando)} ausente (ambiente ou .env)")
-    return {nome: av.make_client(valor) for nome, valor in valores.items()}, None
+    return {nome: fabrica(valor) for nome, valor in valores.items()}, None
 
 
 def _settings(args: argparse.Namespace):
     return criar_settings(args.modelo, args.modo, args.max_tokens, args.concorrencia, args.refazer_falhas)
+
+
+def _mapa(args: argparse.Namespace, out: Path):
+    """Mapa de ``--mapas`` (união se houver mais de um) e o código de saída do erro, se houver."""
+    mapa, _leitores, erro = carregar_mapas(out, separar_mapas(args.mapas))
+    if erro is not None:
+        return None, _erro(erro)
+    return mapa, None
+
+
+def _ajustar_opencode(args: argparse.Namespace) -> None:
+    """``--provedor opencode``: modelo e chave padrão do OpenCode Go e sempre sync (não há lote)."""
+    if args.modelo == DEFAULT_MODEL:
+        args.modelo = MODELO_OPENCODE_PADRAO
+    if args.chave_env == CHAVE_ENV_PADRAO:
+        args.chave_env = CHAVE_ENV_OPENCODE
+    args.modo = "sync"
 
 
 # ---------------------------------------------------------------------------
@@ -212,26 +250,30 @@ def cmd_mapear(args: argparse.Namespace) -> int:
     ficha, erro = _ficha(args)
     if erro is not None:
         return erro
+    opencode = args.provedor == "opencode"
+    if opencode:
+        _ajustar_opencode(args)
     settings = _settings(args)
     if args.estimar:
         _imprimir_estimativa("mapear", mp.estimar_mapear(fatias, ancoras, settings, ficha))
         return 0
-    client, erro = _cliente(args.chave_env)
+    client, erro = _cliente(args.chave_env, fabrica=oc.criar_cliente) if opencode else _cliente(args.chave_env)
     if erro is not None:
         return erro
+    etapa, mapa_nome = (ETAPA_MAPEAR_OPENCODE, MAPA_OPENCODE_NOME) if opencode else (ETAPA_MAPEAR, MAPA_NOME)
     resultado = mp.run_mapear(fatias=fatias, ancoras=ancoras, out=out, settings=settings, client=client,
-                              ficha=ficha, log=log)
+                              ficha=ficha, log=log, etapa=etapa, mapa_nome=mapa_nome)
     print(f"mapear: {resultado['requisicoes']} requisições; pendentes {resultado['pendentes']}; "
           f"fatias com erro {resultado['erros']}; trechos inválidos {resultado['trechos_invalidos']}")
-    print(f"saída: {out / MAPA_NOME}")
+    print(f"saída: {out / mapa_nome}")
     return 3 if resultado["incompleto"] or resultado["erros"] else 0
 
 
 def cmd_cruzar(args: argparse.Namespace) -> int:
     out = resolve_path(args.out)
-    mapa = ler_jsonl(out / MAPA_NOME)
-    if not mapa:
-        return _erro(f"{out / MAPA_NOME} ausente ou vazio; rode `mapear` antes")
+    mapa, erro = _mapa(args, out)
+    if erro is not None:
+        return erro
     ficha, erro = _ficha(args)
     if erro is not None:
         return erro
@@ -254,9 +296,9 @@ def cmd_cruzar(args: argparse.Namespace) -> int:
 
 def cmd_adjudicar(args: argparse.Namespace) -> int:
     out = resolve_path(args.out)
-    mapa = ler_jsonl(out / MAPA_NOME)
-    if not mapa:
-        return _erro(f"{out / MAPA_NOME} ausente ou vazio; rode `mapear` antes")
+    mapa, erro = _mapa(args, out)
+    if erro is not None:
+        return erro
     pares_path = out / PARES_NOME
     if not pares_path.is_file():
         return _erro(f"{pares_path} ausente; rode `cruzar` antes")
@@ -325,7 +367,7 @@ def cmd_relatorio(args: argparse.Namespace) -> int:
     if erro is not None:
         return erro
     try:
-        resultado = rel.gerar_relatorio(out, ancoras, args.min_ocorrencias)
+        resultado = rel.gerar_relatorio(out, ancoras, args.min_ocorrencias, tuple(separar_mapas(args.mapas)))
     except ValueError as exc:
         return _erro(str(exc))
     print(f"relatório: {resultado['relatorio']}")
@@ -380,12 +422,22 @@ def build_parser() -> argparse.ArgumentParser:
     ficha(p_ma)
     p_ma.add_argument("--ancoras", default=DEFAULT_ANCORAS)
     p_ma.add_argument("--limite", type=int, default=0, help="só as N primeiras fatias (piloto)")
+    p_ma.add_argument("--provedor", choices=("anthropic", "opencode"), default="anthropic",
+                      help="anthropic (padrão): grava mapa.jsonl; opencode: segundo leitor (DeepSeek V4.1 Flash "
+                           f"via OpenCode Go, chave {CHAVE_ENV_OPENCODE}, só sync), grava {MAPA_OPENCODE_NOME} "
+                           "com checkpoint próprio; --modelo e --chave-env no padrão passam aos do OpenCode Go")
     p_ma.set_defaults(func=cmd_mapear)
+
+    def mapas(p: argparse.ArgumentParser) -> None:
+        p.add_argument("--mapas", default=MAPA_NOME,
+                       help=f"mapas dos leitores, separados por vírgula, unidos e deduplicados (padrão {MAPA_NOME}; "
+                            f"segundo leitor: {MAPA_NOME},{MAPA_OPENCODE_NOME})")
 
     p_cr = sub.add_parser("cruzar", help="pares inconsistentes por tópico")
     comum(p_cr)
     api(p_cr, DEFAULT_MODEL, 4096)
     ficha(p_cr)
+    mapas(p_cr)
     p_cr.add_argument("--max-afirmacoes", type=int, default=crz.MAX_AFIRMACOES_PADRAO, dest="max_afirmacoes",
                       help="afirmações por lote dentro de um tópico")
     p_cr.add_argument("--incluir-outro", action="store_true", dest="incluir_outro",
@@ -396,6 +448,7 @@ def build_parser() -> argparse.ArgumentParser:
     comum(p_ad)
     api(p_ad, DEFAULT_ADJ_MODEL, 2048)
     ficha(p_ad)
+    mapas(p_ad)
     p_ad.add_argument("--ancoras", default=DEFAULT_ANCORAS)
     p_ad.set_defaults(func=cmd_adjudicar)
 
@@ -414,6 +467,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_re = sub.add_parser("relatorio", help="gera relatorio.md e matriz_ancoras.csv")
     comum(p_re)
+    mapas(p_re)
     p_re.add_argument("--ancoras", default=DEFAULT_ANCORAS)
     p_re.add_argument("--min-ocorrencias", type=int, default=3, dest="min_ocorrencias",
                       help="ocorrências mínimas para listar uma afirmação frequente sem âncora")
