@@ -57,7 +57,7 @@ tabelas:
     teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
   - arquivo: tab_desempenho_faixas.tex
     protecao: sha256
-    sha256: 9e11c84e7f4b482318a26478d842e85b5e4ff305769c425d5751b22f7b7a5414
+    sha256: 1b4b274334ecc4481a707939ae37800c566a9c68ccab31a8781e63167b168e16
     motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py; tests/test_desempenho_faixas.py::test_gerador_tex_nd_virgula_ic_e_hifen gera em diretório temporário e confere só a forma (cabeçalho, n.d., vírgula decimal), sem comparar com o arquivo versionado."
 
   # Estudo 3

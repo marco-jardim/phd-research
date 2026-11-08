@@ -100,7 +100,7 @@ Na Figura~\ref{fig:shap-summary}, parte dos atributos de maior importância é c
 \begin{figure}[!ht]
 \centering
 \resizebox{0.92\textwidth}{!}{\input{fig_doc/feature_importance_heatmap.pgf}}
-\caption{Importância global dos atributos (ganho, \textit{gain}), sem decomposição por faixa da nota final; a decomposição por faixa consta do texto. \texttt{score\_recall} é o escore agregado ponderado da estratégia de máxima sensibilidade (cf.\ Seção~\ref{sec:estrategia-recall}), calculado como combinação linear dos subescores do comparador com pesos de desenho, não estimados a partir do poder discriminatório: proporção de fragmentos idênticos do nome, 3{,}0; primeiro fragmento igual, 2{,}0; data idêntica, 2{,}5; diferença de um dígito, 2{,}0; fragmentos idênticos do nome da mãe, 1{,}5; município idêntico, 1{,}0; e via igual, 0{,}5 (\protect\path{scripts/feature_engineering.py}).}
+\caption{Importância global dos atributos (ganho, \textit{gain}), sem decomposição por faixa da nota final; a decomposição por faixa consta do texto. \texttt{score\_recall} é o escore agregado ponderado da estratégia de máxima sensibilidade (cf.\ Apêndice~\ref{sec:estrategia-recall}), calculado como combinação linear dos subescores do comparador com pesos de desenho, não estimados a partir do poder discriminatório: proporção de fragmentos idênticos do nome, 3{,}0; primeiro fragmento igual, 2{,}0; data idêntica, 2{,}5; diferença de um dígito, 2{,}0; fragmentos idênticos do nome da mãe, 1{,}5; município idêntico, 1{,}0; e via igual, 0{,}5 (\protect\path{scripts/feature_engineering.py}).}
 \label{fig:feature-importance-heatmap}
 \end{figure}
 

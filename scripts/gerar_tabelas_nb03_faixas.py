@@ -150,7 +150,7 @@ def tabela_faixas() -> None:
         r"\caption{Desempenho do RF+SMOTE e do \textit{Gradient Boosting} por faixa da nota final do comparador, no conjunto de teste "
         f"({n_teste} potenciais pares; {n_vinc} vínculos), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, "
         r"limiar de decisão 0,5, selecionado entre 0,3, 0,5 e 0,7 no conjunto de teste da ablação "
-        r"(Seção~\ref{sec:cap5-ablacao-pareto}), e semente 42.}",
+        r"(Apêndice~\ref{sec:cap5-ablacao-pareto}), e semente 42.}",
         r"\label{tab:desempenho-faixas}",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
