@@ -6,8 +6,10 @@ Toda rede e toda chamada à API são simuladas; nada depende de .env, data/ ou d
 import json
 import os
 import re
+import shutil
 import unicodedata
 import urllib.request
+from datetime import datetime, timezone
 from types import SimpleNamespace
 
 import pytest
@@ -1589,6 +1591,137 @@ def test_ambiguous_id_legado_without_old_sentence_text_is_regraded(tmp_path):
     result = run_global(tmp_path, contexts, client)
     assert sorted(sent_ids(p) for p in seen) == [["new01", "new02"]]
     assert result["metadados"]["contextos_reaproveitados"] == 0
+
+
+# --- reaproveitamento por fonte (seleção de trechos muda quando muda um contexto de outro capítulo) ------------------
+SPECIAL_C = "Blocking reduces the comparison space for candidate pairs."
+EN_C = {"traducao": "Blocking reduces the comparison space", "palavras_chave": ["blocking", "comparison space"]}
+SENT_A = "A cobertura chegou a 92,4% em 2015 [cit]."
+SENT_B = "O limiar altera a cobertura [cit]."
+SENT_B2 = "A blocagem reduz o espaço de comparação [cit]."
+
+
+def write_selection_source(tmp_path, specials=None, english=None):
+    text, starts = long_book(specials or {20: ABSTRACT, 40: SPECIAL_B, 50: SPECIAL_C})
+    write_long_record(tmp_path, "kL", text, starts)
+    tr.save_english_queries(tmp_path, english or {"id02": EN_B, "id03": EN_C})
+    return tmp_path / "evidencias" / "kL.json"
+
+
+def prior_selection_run(tmp_path, name="anterior"):
+    """Avalia [A (cap. 1), B (cap. 3)] e guarda as linhas como execução anterior ``name``."""
+    contexts = [ctx(1, "kL", SENT_A), ctx(2, "kL", SENT_B, chapter="Cap 3")]
+    result = run_global(tmp_path, contexts, fake_client())
+    rows = {r["id"]: r for r in result["rows"]}
+    assert av.is_final_row(rows["id01"]) and rows["id01"]["trechos_enviados"] and rows["id01"]["fonte_sha256"]
+    shutil.rmtree(tmp_path / "piloto" / "tese")
+    write_prior(tmp_path, name, list(rows.values()))
+    return rows
+
+
+def test_changing_contexts_of_another_chapter_does_not_force_regrading_when_sentence_and_source_are_unchanged(tmp_path):
+    write_selection_source(tmp_path)
+    prior = prior_selection_run(tmp_path)
+    # o capítulo 3 foi reescrito: o contexto B sai (id02) e entra B2 (id03), com outra consulta e outra seleção
+    contexts = [ctx(1, "kL", SENT_A), ctx(3, "kL", SENT_B2, chapter="Cap 3")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+
+    final = {r["id"]: r for r in result["rows"]}
+    assert [sent_ids(p) for p in seen] == [["id03"]]
+    assert final["id01"]["reaproveitado_de"] == "anterior" and "reaproveitado_de" not in final["id03"]
+    assert final["id01"]["veredito_final"] == prior["id01"]["veredito_final"]
+    # a premissa: a impressão digital da evidência da chave realmente mudou, mas a fonte não
+    assert final["id01"]["evidencia_fingerprint_avaliada"] == prior["id01"]["evidencia_fingerprint"]
+    assert final["id01"]["evidencia_fingerprint"] != prior["id01"]["evidencia_fingerprint"]
+    assert final["id01"]["fonte_sha256"] == prior["id01"]["fonte_sha256"]
+    assert result["metadados"]["contextos_reaproveitados"] == 1
+
+    again_client, again_seen = spy_client()  # a linha reaproveitada já está na pasta tese: nada é reenviado
+    again = run_global(tmp_path, contexts, again_client)
+    assert again_seen == [] and {r["id"] for r in again["rows"]} == {"id01", "id03"}
+
+
+def test_own_folder_row_is_reused_when_only_the_selection_changed(tmp_path):
+    write_selection_source(tmp_path)
+    first = run_global(tmp_path, [ctx(1, "kL", SENT_A), ctx(2, "kL", SENT_B, chapter="Cap 3")], fake_client())
+    first_rows = {r["id"]: r for r in first["rows"]}
+    contexts = [ctx(1, "kL", SENT_A), ctx(3, "kL", SENT_B2, chapter="Cap 3")]  # mesma pasta tese, mesma linha id01
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert [sent_ids(p) for p in seen] == [["id03"]]
+    assert final["id01"]["reaproveitado_de"] == "tese"
+    assert final["id01"]["veredito_final"] == first_rows["id01"]["veredito_final"]
+    assert final["id01"]["evidencia_fingerprint_avaliada"] == first_rows["id01"]["evidencia_fingerprint"]
+
+
+def test_changing_the_source_forces_regrading_even_with_the_same_sentence(tmp_path):
+    write_selection_source(tmp_path)
+    prior_selection_run(tmp_path)
+    write_selection_source(tmp_path, {20: ABSTRACT, 40: SPECIAL_B, 50: SPECIAL_C, 55: "A new edition adds a chapter."})
+    contexts = [ctx(1, "kL", SENT_A), ctx(3, "kL", SENT_B2, chapter="Cap 3")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    assert [sent_ids(p) for p in seen] == [["id01", "id03"]]
+    assert result["metadados"]["contextos_reaproveitados"] == 0
+
+
+def test_changing_the_sentence_forces_regrading_while_the_unchanged_one_is_reused(tmp_path):
+    write_selection_source(tmp_path, english={"id02": EN_B, "id03": EN_C, "id04": EN_C})
+    prior_selection_run(tmp_path)
+    # id04: frase nova do mesmo capítulo (a frase muda, o id muda); id01 segue igual
+    contexts = [ctx(1, "kL", SENT_A), ctx(4, "kL", SENT_B2), ctx(3, "kL", SENT_B2, chapter="Cap 3")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert [sent_ids(p) for p in seen] == [["id03", "id04"]]
+    assert final["id01"]["reaproveitado_de"] == "anterior"
+
+
+def test_source_hash_ignores_contexts_and_follows_the_cached_document():
+    text, starts = long_book({20: ABSTRACT})
+    record = {"key": "kL", "titulo_bib": TITLE, "fulltext": text, "fulltext_paginas": starts, "fulltext_fonte": "x"}
+    base = av.source_sha256(record, 120000)
+    assert av.source_sha256(dict(record), 120000) == base
+    assert av.source_sha256({**record, "fulltext": text + " mais"}, 120000) != base
+    assert av.source_sha256({**record, "abstract": "novo resumo"}, 120000) != base
+    assert av.source_sha256(record, 90000) != base  # texto longo: o orçamento decide o que é enviado
+    short = {**record, "fulltext": "curto", "fulltext_paginas": None}
+    assert av.source_sha256(short, 120000) == av.source_sha256(short, 90000)
+
+
+@pytest.mark.parametrize("cache_time,with_meta,reused", [
+    ("before", True, True), ("after", True, False), ("before", False, False),
+])
+def test_legacy_rows_without_source_hash_are_reused_only_if_cache_is_older_than_the_run(
+    tmp_path, cache_time, with_meta, reused
+):
+    cache_file = write_selection_source(tmp_path)
+    prior = prior_selection_run(tmp_path)
+    legacy = [{k: v for k, v in r.items() if k != "fonte_sha256"} for r in prior.values()]
+    write_prior(tmp_path, "anterior", legacy)
+    run_time = datetime(2026, 11, 1, tzinfo=timezone.utc)
+    if with_meta:
+        common.write_json_atomic(tmp_path / "piloto" / "anterior" / "metadados.json",
+                                 {"data_utc": run_time.isoformat()})
+    stamp = run_time.timestamp() + (-86400 if cache_time == "before" else 86400)
+    os.utime(cache_file, (stamp, stamp))
+    contexts = [ctx(1, "kL", SENT_A), ctx(3, "kL", SENT_B2, chapter="Cap 3")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert ("reaproveitado_de" in final["id01"]) is reused
+    assert [sent_ids(p) for p in seen] == ([["id03"]] if reused else [["id01", "id03"]])
+
+
+def test_source_rule_does_not_apply_without_a_selection_on_either_side():
+    old = {"fonte_sha256": "abc", "trechos_enviados": [{"trecho": 1, "pagina": 2}]}
+    assert av.source_unchanged(old, av.SourceState("abc", 1.0, True), None)
+    assert not av.source_unchanged(old, av.SourceState("abc", 1.0, False), None)  # agora o texto cabe: reavalia
+    assert not av.source_unchanged({**old, "trechos_enviados": []}, av.SourceState("abc", 1.0, True), None)
+    assert not av.source_unchanged(old, av.SourceState("outro", 1.0, True), None)
+    assert not av.source_unchanged(old, None, None)
 
 
 def test_cli_global_scope_end_to_end_report_has_chapter_and_key_tables(tmp_path, monkeypatch):

@@ -20,6 +20,7 @@ import time
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
+from datetime import datetime
 from pathlib import Path
 
 from .common import (
@@ -437,12 +438,14 @@ def assemble_final(
     evidence_text: str = "",
     fingerprint: str | None = None,
     trechos: list[dict] | None = None,
+    fonte: str | None = None,
 ) -> dict:
     row = {
         "id": ctx["id"], "key": ctx["key"], "file": ctx.get("file", ""), "line": ctx.get("line", 0),
         "chapter": ctx.get("chapter", ""), "section_path": ctx.get("section_path", []),
         "classe": classe, "nivel_evidencia": nivel,
         "evidencia_fingerprint": fingerprint,
+        "fonte_sha256": fonte,
         "trechos_enviados": trechos or [],
         "numeros_nao_encontrados": numeros_nao_encontrados(
             ctx.get("sentence_text", ""), prepare_evidence(evidence_text)
@@ -462,6 +465,67 @@ def assemble_final(
 def evidence_fingerprint(evidence_text: str) -> str:
     """Impressão digital do texto de evidência efetivamente enviado."""
     return hashlib.sha256(evidence_text.encode()).hexdigest()[:16]
+
+
+@dataclass(frozen=True)
+class SourceState:
+    """Estado atual da fonte de uma chave, para decidir o reaproveitamento sem depender da seleção de trechos.
+
+    ``sha256``: hash do documento-fonte em cache (ver ``source_sha256``); ``mtime``: data de modificação
+    do arquivo de cache da chave (``None`` se não existe); ``selecao``: a evidência atual é uma seleção de
+    trechos (a única situação em que a impressão digital depende dos outros contextos da chave).
+    """
+
+    sha256: str
+    mtime: float | None = None
+    selecao: bool = False
+
+
+def source_sha256(record: dict, max_chars: int) -> str:
+    """Hash do documento-fonte em cache, independente dos contextos que o citam.
+
+    Cobre tudo o que alimenta o bloco de evidência (título, DOI, texto completo e suas páginas, resumo,
+    trechos do Consensus, nível e rótulo da fonte). ``max_chars`` entra só quando o texto completo o
+    excede, porque então o orçamento decide o que é enviado."""
+    fulltext = record.get("fulltext") or ""
+    payload = {
+        "titulo": record.get("titulo_fonte") or record.get("titulo_bib") or "",
+        "doi": record.get("doi") or "",
+        "fulltext": fulltext,
+        "paginas": record.get("fulltext_paginas") or [],
+        "fonte_texto": record.get("fulltext_fonte") or "",
+        "abstract": record.get("abstract") or "",
+        "consensus": record.get("consensus") or [],
+        "max_chars": max_chars if len(fulltext) > max_chars else None,
+    }
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
+
+
+def run_evaluated_at(run_dir: Path) -> float | None:
+    """Instante (epoch) da última execução da pasta, de ``metadados.json``; ``None`` se ausente ou ilegível."""
+    stamp = (read_json(run_dir / "metadados.json", default={}) or {}).get("data_utc")
+    if not isinstance(stamp, str):
+        return None
+    try:
+        return datetime.fromisoformat(stamp).timestamp()
+    except ValueError:
+        return None
+
+
+def source_unchanged(old: dict, source: SourceState | None, evaluated_at: float | None) -> bool:
+    """A fonte é a mesma da avaliação anterior, mesmo que a seleção de trechos tenha mudado.
+
+    Só vale quando a linha antiga também foi avaliada sobre uma seleção (``trechos_enviados`` não vazio) e a
+    evidência atual é uma seleção: nos demais casos a impressão digital já é o critério e uma mudança do
+    texto enviado (formato do bloco, corte, orçamento) continua forçando a reavaliação. Linhas com
+    ``fonte_sha256`` comparam o hash. Linhas antigas, sem o campo, só valem se o arquivo de cache da chave
+    não foi modificado depois da última execução da pasta de origem (falha para o lado seguro: sem data
+    da execução ou sem arquivo de cache, reavalia)."""
+    if source is None or not source.selecao or not old.get("trechos_enviados"):
+        return False
+    if old.get("fonte_sha256"):
+        return old["fonte_sha256"] == source.sha256
+    return source.mtime is not None and evaluated_at is not None and source.mtime <= evaluated_at
 
 
 def is_final_row(row: dict) -> bool:
@@ -490,10 +554,14 @@ def find_reusable(
     evidence_text: dict[str, str],
     reuse_root: Path,
     current_dir: Path,
+    sources: dict[str, SourceState] | None = None,
 ) -> dict[str, tuple[str, dict]]:
     """Vereditos finais de execuções anteriores (``reuse_root/*/avaliacoes.jsonl``) reaproveitáveis.
 
-    Vale quando o id do contexto tem veredito final e a evidência enviada é a mesma (fingerprint).
+    Vale quando o id do contexto tem veredito final e a evidência enviada é a mesma (fingerprint). Para
+    chaves de texto longo, a seleção de trechos depende das consultas de todos os contextos da chave, de modo
+    que a impressão digital muda quando muda um contexto de outro capítulo; com ``sources`` o veredito também
+    vale se a fonte é a mesma (``source_unchanged``), pois a frase já é a mesma (id ou ``id_legado``).
     Também casa linhas cujo ``id`` é o ``id_legado`` do contexto (fórmula antiga: chave + sentença
     normalizada). Se um id antigo corresponde a vários contextos novos (a mesma chave citada duas
     vezes na sentença), só vale para o contexto cuja ``sentence_text`` é idêntica à da linha antiga;
@@ -503,7 +571,9 @@ def find_reusable(
     A própria pasta de trabalho é lida primeiro (é a avaliação mais recente, com a adjudicação). Nela,
     linhas casadas por ``id_legado`` (id da fórmula antiga) entram como as das outras pastas; linhas com o
     mesmo id atual só entram se já eram reaproveitadas (preserva a origem), porque as demais vêm do
-    checkpoint desta execução.
+    checkpoint desta execução; a exceção é a linha cuja impressão digital mudou por troca da seleção de
+    trechos com a fonte inalterada: o checkpoint não tem essa resposta (outro ``custom_id``) e a regra da
+    fonte a reaproveita.
     """
     wanted = {c["id"]: c for c in contexts}
     by_legacy: dict[str, list[dict]] = {}
@@ -520,6 +590,7 @@ def find_reusable(
     for run_dir in run_dirs:
         own = run_dir.resolve() == current
         state: dict | None = None
+        evaluated_at = run_evaluated_at(run_dir) if sources else None
         for old in read_jsonl(run_dir / "avaliacoes.jsonl"):
             old_id = old.get("id")
             if old_id in wanted:
@@ -533,31 +604,49 @@ def find_reusable(
                         if old_sentence and _same_sentence(old_sentence, c.get("sentence_text", ""))
                     ]
             same_id_own = own and old_id in wanted and not old.get("reaproveitado_de")
-            if not targets or not is_final_row(old) or same_id_own:
+            if not targets or not is_final_row(old):
                 continue
             for ctx in targets:
                 if ctx["id"] in found or old.get("key") != ctx["key"]:
                     continue
                 text = evidence_text[ctx["key"]]
-                if old.get("evidencia_fingerprint"):
+                if same_id_own:
+                    # a resposta vem do checkpoint se a evidência é a mesma; se a seleção de trechos mudou
+                    # (outro custom_id), o checkpoint não a tem e vale a regra da fonte
+                    unchanged = bool(
+                        sources
+                        and old.get("evidencia_fingerprint")
+                        and old["evidencia_fingerprint"] != evidence_fingerprint(text)
+                        and source_unchanged(old, sources.get(ctx["key"]), evaluated_at)
+                    )
+                elif old.get("evidencia_fingerprint"):
                     unchanged = old["evidencia_fingerprint"] == evidence_fingerprint(text)
                 else:
                     if state is None:
                         state = read_json(run_dir / "checkpoint.json", default={}) or {}
                     unchanged = _legacy_evidence_unchanged(state, ctx["key"], old_id, text)
+                if not unchanged and sources and not same_id_own:
+                    unchanged = source_unchanged(old, sources.get(ctx["key"]), evaluated_at)
                 if unchanged:
                     found[ctx["id"]] = (old.get("reaproveitado_de") or run_dir.name, old)
     return found
 
 
 def reused_row(
-    ctx: dict, old: dict, origin: str, evidence_text: str, fingerprint: str, trechos: list[dict] | None = None
+    ctx: dict, old: dict, origin: str, evidence_text: str, fingerprint: str, trechos: list[dict] | None = None,
+    fonte: str | None = None,
 ) -> dict:
     """Cópia do veredito anterior com id, localização atuais e a marca ``reaproveitado_de``.
 
     A linha leva o ``id`` novo do contexto; ``id_legado`` é o do contexto (ou, na falta, o da linha anterior).
+    ``fonte_sha256`` passa a ser o da fonte atual (igual ao da avaliação, pela regra de reaproveitamento). Se a
+    impressão digital da evidência mudou (reaproveitado pela fonte, com outra seleção de trechos), a anterior
+    fica em ``evidencia_fingerprint_avaliada``.
     """
     row = dict(old)
+    if old.get("evidencia_fingerprint") and old["evidencia_fingerprint"] != fingerprint:
+        row["evidencia_fingerprint_avaliada"] = old.get("evidencia_fingerprint_avaliada") or old["evidencia_fingerprint"]
+    row["fonte_sha256"] = fonte
     legacy_id = ctx.get("id_legado") or old.get("id_legado")
     if legacy_id:
         row["id_legado"] = legacy_id
@@ -608,14 +697,21 @@ def run_avaliacao(
     evidence_text: dict[str, str] = {}
     levels: dict[str, str] = {}
     sent_passages: dict[str, list[dict]] = {}
+    sources: dict[str, SourceState] = {}
     queries_en = load_english_queries(out_dir)
     by_key = group_by_key(graded)
     for key in sorted(by_key):
-        record = read_json(cache_path(out_dir, key)) or {"key": key}
+        cache_file = cache_path(out_dir, key)
+        record = read_json(cache_file) or {"key": key}
         evidence_text[key], levels[key], info = build_evidence_block_info(
             record, settings.max_chars, by_key[key], out_dir, queries_en
         )
         sent_passages[key] = info["trechos"]
+        sources[key] = SourceState(
+            source_sha256(record, settings.max_chars),
+            cache_file.stat().st_mtime if cache_file.is_file() else None,
+            info["selecao"],
+        )
         if info["selecao"]:
             log(f"{key}: seleção de {len(info['trechos'])} trechos "
                 f"({info['consultas_en']}/{info['consultas']} contextos com consulta em inglês)")
@@ -624,7 +720,7 @@ def run_avaliacao(
     candidates = [c for c in graded if levels[c["key"]] != "nenhum"]
     reused: dict[str, tuple[str, dict]] = {}
     if reuse_root is not None:
-        reused = find_reusable(candidates, evidence_text, reuse_root, pilot_dir)
+        reused = find_reusable(candidates, evidence_text, reuse_root, pilot_dir, sources)
         if reused:
             log(f"vereditos reaproveitados: {len(reused)}")
 
@@ -651,13 +747,17 @@ def run_avaliacao(
         if cid in reused:
             origin, old = reused[cid]
             rows.append(
-                reused_row(ctx, old, origin, evidence_text[key], fingerprints[key], sent_passages[key])
+                reused_row(
+                    ctx, old, origin, evidence_text[key], fingerprints[key], sent_passages[key],
+                    sources[key].sha256,
+                )
             )
             continue
         rows.append(
             assemble_final(
                 ctx, classes[key], levels[key], assess1.get(cid), assess2.get(cid),
                 evidence_text.get(key, ""), fingerprints.get(key), sent_passages.get(key),
+                sources[key].sha256 if key in sources else None,
             )
         )
     write_jsonl_atomic(pilot_dir / "avaliacoes.jsonl", rows)
