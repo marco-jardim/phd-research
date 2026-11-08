@@ -498,8 +498,12 @@ def find_reusable(
     normalizada). Se um id antigo corresponde a vários contextos novos (a mesma chave citada duas
     vezes na sentença), só vale para o contexto cuja ``sentence_text`` é idêntica à da linha antiga;
     sem esse texto na linha antiga, os contextos são reavaliados. Devolve
-    ``{id_atual: (execução_de_origem, linha_anterior)}``. Na própria pasta de trabalho só entram linhas
-    que já eram reaproveitadas (preserva a origem).
+    ``{id_atual: (execução_de_origem, linha_anterior)}``.
+
+    A própria pasta de trabalho é lida primeiro (é a avaliação mais recente, com a adjudicação). Nela,
+    linhas casadas por ``id_legado`` (id da fórmula antiga) entram como as das outras pastas; linhas com o
+    mesmo id atual só entram se já eram reaproveitadas (preserva a origem), porque as demais vêm do
+    checkpoint desta execução.
     """
     wanted = {c["id"]: c for c in contexts}
     by_legacy: dict[str, list[dict]] = {}
@@ -510,7 +514,10 @@ def find_reusable(
     if not wanted or not reuse_root.is_dir():
         return found
     current = current_dir.resolve()
-    for run_dir in sorted(p for p in reuse_root.iterdir() if p.is_dir()):
+    run_dirs = sorted(
+        (p for p in reuse_root.iterdir() if p.is_dir()), key=lambda p: (p.resolve() != current, p.name)
+    )
+    for run_dir in run_dirs:
         own = run_dir.resolve() == current
         state: dict | None = None
         for old in read_jsonl(run_dir / "avaliacoes.jsonl"):
@@ -525,7 +532,8 @@ def find_reusable(
                         c for c in targets
                         if old_sentence and _same_sentence(old_sentence, c.get("sentence_text", ""))
                     ]
-            if not targets or not is_final_row(old) or (own and not old.get("reaproveitado_de")):
+            same_id_own = own and old_id in wanted and not old.get("reaproveitado_de")
+            if not targets or not is_final_row(old) or same_id_own:
                 continue
             for ctx in targets:
                 if ctx["id"] in found or old.get("key") != ctx["key"]:

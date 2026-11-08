@@ -73,6 +73,17 @@ def test_pendencias_tem_decisao_ou_origem_de_linha_de_base(tese):
     )
 
 
+def test_origem_de_linha_de_base_so_em_ids_do_conjunto_congelado(tese):
+    congelado = led.load_baseline_ids(led.BASELINE_IDS_FILE)
+    assert congelado, f"conjunto congelado ausente ou vazio: {led.BASELINE_IDS_FILE}"
+    fora = led.baseline_fora_do_conjunto(tese["pendencias"], congelado)
+    detalhe = "\n".join(f"  {p['id']}  {p.get('chave')}  {p.get('arquivo')}" for p in fora)
+    assert not fora, (
+        f"pendências com origem {led.ORIGEM_BASELINE} fora de {led.BASELINE_IDS_FILE.name} "
+        "(a linha de base não aceita problemas novos; a autora decide cada um):\n" + detalhe
+    )
+
+
 def test_chave_do_ledger_coincide_com_a_do_contexto(tese):
     errados = led.chaves_divergentes(tese["ledger"], tese["chaves"])
     detalhe = "\n".join(f"  {r['id']}  ledger={r['chave']}  contexto={tese['chaves'][r['id']]}" for r in errados[:50])
@@ -276,7 +287,7 @@ def test_marcar_baseline_marca_so_as_pendencias_existentes(tmp_path):
         yaml.safe_dump({"pendencias": [{"id": "a1", "chave": "A2020", "arquivo": "x.tex", "decisao": "pendente"}]}),
         encoding="utf-8",
     )
-    summary = led.exportar_ledger(pdir, out, dest, marcar_baseline=True)
+    summary = led.exportar_ledger(pdir, out, dest, marcar_baseline=True, baseline_ids={"a1"})
 
     pend = {p["id"]: p for p in led.load_pendencias(dest / "pendencias.yaml")}
     assert pend["a1"]["origem"] == led.ORIGEM_BASELINE and pend["a1"]["decisao"] == "pendente"
@@ -287,14 +298,61 @@ def test_marcar_baseline_marca_so_as_pendencias_existentes(tmp_path):
     assert led.load_pendencias(dest / "pendencias.yaml")[0]["origem"] == led.ORIGEM_BASELINE
 
 
+def test_marcar_baseline_recusa_id_fora_do_conjunto_congelado(tmp_path):
+    out, pdir = _piloto(tmp_path, [_avaliacao("a1", "A2020", "CONTRADIZ"), _avaliacao("a2", "B2021", "NAO_SUSTENTA")])
+    dest = tmp_path / "docs" / "atestado"
+    led.exportar_ledger(pdir, out, dest, aceitar_novas=True)  # a1 e a2 entram com decisao: pendente, sem origem
+    antes = (dest / "pendencias.yaml").read_text(encoding="utf-8")
+
+    with pytest.raises(ValueError, match="a2"):
+        led.exportar_ledger(pdir, out, dest, marcar_baseline=True, baseline_ids={"a1"})
+    assert (dest / "pendencias.yaml").read_text(encoding="utf-8") == antes  # nada é gravado na recusa
+    assert all("origem" not in p for p in led.load_pendencias(dest / "pendencias.yaml"))
+
+
+def test_subcomando_marcar_baseline_sai_com_codigo_diferente_de_zero_para_id_fora_do_conjunto(
+    tmp_path, monkeypatch, capsys
+):
+    monkeypatch.setattr(cli, "ROOT", tmp_path)
+    monkeypatch.setattr("scripts.atestado.common.ROOT", tmp_path)
+    congelado = tmp_path / "congelado.txt"
+    congelado.write_text("# ids da linha de base\na1\n", encoding="utf-8")
+    monkeypatch.setattr(led, "BASELINE_IDS_FILE", congelado)
+    _piloto(tmp_path, [_avaliacao("a1", "A2020", "CONTRADIZ"), _avaliacao("a2", "B2021", "NAO_SUSTENTA")])
+    assert cli.main(["exportar-ledger", "--escopo", "tese", "--aceitar-novas"]) == 0
+    capsys.readouterr()
+
+    assert cli.main(["exportar-ledger", "--escopo", "tese", "--marcar-baseline"]) != 0
+    assert "a2" in capsys.readouterr().err
+    pend = led.load_pendencias(tmp_path / "docs" / "atestado" / "pendencias.yaml")
+    assert all("origem" not in p for p in pend)
+
+
+def test_carregar_ids_da_linha_de_base_ignora_comentarios_e_linhas_vazias(tmp_path):
+    arquivo = tmp_path / "ids.txt"
+    arquivo.write_text("# comentário\n\nabc\n  def  \n", encoding="utf-8")
+    assert led.load_baseline_ids(arquivo) == {"abc", "def"}
+
+
+def test_origem_de_linha_de_base_so_vale_para_ids_do_conjunto_congelado():
+    pend = [
+        {"id": "a1", "decisao": "pendente", "origem": led.ORIGEM_BASELINE},
+        {"id": "a2", "decisao": "pendente", "origem": led.ORIGEM_BASELINE},
+        {"id": "a3", "decisao": "pendente"},
+    ]
+    assert [p["id"] for p in led.baseline_fora_do_conjunto(pend, {"a1"})] == ["a2"]
+
+
 def test_avaliacoes_com_id_legado_sao_mapeadas_ao_id_novo(tmp_path):
     contextos = [
         {"id": "n1", "id_legado": "old1", "key": "Silva2020", "file": "text/latex/novo.tex", "chapter": "Cap"},
         {"id": "n2", "id_legado": "old1", "key": "Silva2020", "file": "text/latex/novo.tex", "chapter": "Cap"},
         {"id": "n3", "id_legado": "old3", "key": "Lima2019", "file": "text/latex/novo.tex", "chapter": "Cap"},
+        {"id": "n4", "id_legado": "old4", "key": "Souza2018", "file": "text/latex/novo.tex", "chapter": "Cap"},
     ]
     avaliacoes = [
-        _avaliacao("old1", "Silva2020", "SUSTENTA"),
+        _avaliacao("old1", "Silva2020", "SUSTENTA"),  # id antigo ambíguo (n1 e n2): não é copiado a nenhum
+        _avaliacao("old4", "Souza2018", "SUSTENTA"),  # id antigo 1→1: mapeado a n4
         _avaliacao("n3", "Lima2019", "CONTRADIZ"),  # já com id novo
         _avaliacao("orfao", "Zeta2000", "SUSTENTA"),  # id que não existe mais no texto
     ]
@@ -310,15 +368,42 @@ def test_avaliacoes_com_id_legado_sao_mapeadas_ao_id_novo(tmp_path):
     summary = led.exportar_ledger(pdir, out, dest)
 
     rows = {r["id"]: r for r in led.load_ledger(dest / "ledger.csv")}
-    assert set(rows) == {"n1", "n2", "n3", "orfao"}
-    assert rows["n1"]["id_legado"] == rows["n2"]["id_legado"] == "old1"
-    assert rows["n1"]["arquivo"] == "text/latex/novo.tex" and rows["n1"]["capitulo"] == "Cap"
-    assert rows["n1"]["hash_avaliacao"] == rows["n2"]["hash_avaliacao"]
-    assert led.contextos_sem_atestamento(["n1", "n2", "n3"], list(rows.values())) == []
+    assert set(rows) == {"n3", "n4", "orfao"}
+    assert rows["n4"]["id_legado"] == "old4"
+    assert rows["n4"]["arquivo"] == "text/latex/novo.tex" and rows["n4"]["capitulo"] == "Cap"
+    # n1 e n2 compartilham o id_legado: a única avaliação não identifica a ocorrência, então ficam sem atestado
+    assert led.contextos_sem_atestamento(["n1", "n2", "n3", "n4"], list(rows.values())) == ["n1", "n2"]
+    pares = [(r["id_legado"], r["hash_avaliacao"]) for r in rows.values() if r["id_legado"]]
+    assert len(pares) == len(set(pares))
     pend = led.load_pendencias(dest / "pendencias.yaml")
     assert pend == [{"id": "n3", "chave": "Lima2019", "arquivo": "text/latex/novo.tex", "decisao": "ok",
                      "origem": led.ORIGEM_BASELINE}]
     assert summary["pendencias_novas"] == [] and summary["pendencias_resolvidas"] == []
+
+
+def test_chave_citada_duas_vezes_na_sentenca_nao_divide_o_veredito(tmp_path):
+    primeira, segunda = "A [cit] e B [ref] afirmam 92%.", "A [ref] e B [cit] afirmam 92%."
+    contextos = [
+        {"id": "m1", "id_legado": "oldM", "key": "Maia2022", "file": "c3.tex", "chapter": "C", "sentence_text": primeira},
+        {"id": "m2", "id_legado": "oldM", "key": "Maia2022", "file": "c3.tex", "chapter": "C", "sentence_text": segunda},
+    ]
+    out, pdir = _piloto(
+        tmp_path, [_avaliacao("oldM", "Maia2022", "SUSTENTA"), _avaliacao("outro", "Zeta2000", "SUSTENTA")],
+        contextos=contextos,
+    )
+    led.exportar_ledger(pdir, out, tmp_path / "dest")
+    # nenhuma ocorrência identificada: m1 e m2 ficam sem atestado
+    assert [r["id"] for r in led.load_ledger(tmp_path / "dest" / "ledger.csv")] == ["outro"]
+
+    # com o texto da sentença na avaliação, só a ocorrência idêntica recebe o veredito
+    out, pdir = _piloto(
+        tmp_path / "2", [_avaliacao("oldM", "Maia2022", "SUSTENTA", sentence_text=primeira)], contextos=contextos
+    )
+    led.exportar_ledger(pdir, out, tmp_path / "dest2")
+    rows = led.load_ledger(tmp_path / "dest2" / "ledger.csv")
+    assert [r["id"] for r in rows] == ["m1"]
+    pares = [(r["id_legado"], r["hash_avaliacao"]) for r in rows]
+    assert len(pares) == len(set(pares))
 
 
 def test_avaliacao_com_id_atual_prevalece_sobre_a_mapeada_por_id_legado(tmp_path):

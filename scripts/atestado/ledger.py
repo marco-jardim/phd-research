@@ -8,9 +8,15 @@ seguintes) são o núcleo do teste de portão ``tests/test_atestado_ledger.py``.
 Ids: as avaliações antigas trazem o ``id`` da fórmula legada (chave + sentença). O exportador as
 mapeia ao ``id`` novo de ``citacoes.jsonl`` pelo campo ``id_legado``; o ledger grava o ``id`` novo
 e, em ``id_legado``, o antigo. Pendências com id legado também são migradas para o id novo.
+O mapeamento de uma avaliação só vale quando é 1→1: se o id antigo corresponde a vários ids novos
+(a mesma chave citada mais de uma vez na sentença), a avaliação só vale para o contexto cuja
+``sentence_text`` é idêntica à da avaliação (como em ``avaliar.find_reusable``); sem esse texto,
+nenhum deles entra no ledger e todos precisam ser atestados de novo.
 
 Pendências: o exportador nunca acrescenta ids novos a ``pendencias.yaml`` sem ``aceitar_novas``
 (``--aceitar-novas`` na linha de comando); sem a opção, os ids novos só são listados.
+``marcar_baseline`` só marca ids do conjunto congelado em ``tests/data/pendencias_baseline_ids.txt``
+e recusa (``BaselineRecusada``) qualquer outro.
 """
 
 from __future__ import annotations
@@ -22,6 +28,7 @@ from pathlib import Path
 
 import yaml
 
+from scripts.atestado.avaliar import _same_sentence
 from scripts.atestado.common import read_json, read_jsonl, write_text_atomic
 
 LEDGER_COLUMNS = [
@@ -35,7 +42,12 @@ LEDGER_NAME = "ledger.csv"
 PENDENCIAS_NAME = "pendencias.yaml"
 DECISAO_INICIAL = "pendente"
 ORIGEM_BASELINE = "baseline-2026-11-08"
+BASELINE_IDS_FILE = Path(__file__).resolve().parents[2] / "tests" / "data" / "pendencias_baseline_ids.txt"
 HASH_LEN = 16
+
+
+class BaselineRecusada(ValueError):
+    """``marcar_baseline`` com id fora do conjunto congelado da linha de base."""
 
 
 def _day(stamp: str | None) -> str:
@@ -90,6 +102,20 @@ def _destinos(old_id: str, contexts: dict[str, dict], legado: dict[str, list[str
     return legado.get(old_id) or [old_id]
 
 
+def _destinos_avaliacao(ev: dict, contexts: dict[str, dict], legado: dict[str, list[str]]) -> list[str]:
+    """Como ``_destinos``, mas um id antigo que corresponde a vários ids novos não divide o veredito.
+
+    Vale só para o contexto cuja ``sentence_text`` é idêntica à da avaliação; sem esse texto, nenhum.
+    """
+    destinos = _destinos(ev["id"], contexts, legado)
+    if len(destinos) <= 1:
+        return destinos
+    sentence = ev.get("sentence_text")
+    return [
+        cid for cid in destinos if sentence and _same_sentence(sentence, contexts[cid].get("sentence_text", ""))
+    ]
+
+
 def _place(row: dict, ctx: dict | None) -> dict:
     """Reaponta uma linha ao contexto atual (id novo, id_legado, chave, arquivo e capítulo)."""
     if ctx is None:
@@ -126,7 +152,7 @@ def build_ledger_rows(pilot_dir: Path, out_dir: Path) -> tuple[list[dict], list[
         if ev.get("veredito_final") in (None, "PENDENTE") or {"pendente", "segunda_passada_pendente"} & flags:
             pendentes.append(ev["id"])
             continue
-        for new_id in _destinos(ev["id"], contexts, legado):
+        for new_id in _destinos_avaliacao(ev, contexts, legado):
             row = _place(_row_from_evaluation({**ev, "id": new_id}, meta), contexts.get(new_id))
             if ev["id"] in contexts:
                 direct[new_id] = row
@@ -162,12 +188,14 @@ def build_pendencias(
     existentes: list[dict],
     aceitar_novas: bool = False,
     marcar_baseline: bool = False,
+    baseline_ids: set[str] | frozenset[str] = frozenset(),
 ) -> tuple[list[dict], list[str], list[str]]:
     """Pendências atualizadas, ids novos e ids resolvidos.
 
     Decisões e ``origem`` existentes são preservadas (inclusive de entradas com id legado, que
     passam ao id novo). Ids novos só entram em ``current`` com ``aceitar_novas``; são sempre
-    devolvidos em ``novos``. ``marcar_baseline`` marca com ``origem`` as entradas que já existiam.
+    devolvidos em ``novos``. ``marcar_baseline`` marca com ``origem`` as entradas que já existiam e
+    levanta ``BaselineRecusada`` se alguma entrada com essa origem estiver fora de ``baseline_ids``.
     """
     previous = {p["id"]: p for p in existentes}
     matched: set[str] = set()
@@ -195,6 +223,13 @@ def build_pendencias(
         if origem:
             entry["origem"] = origem
         current.append(entry)
+    if marcar_baseline:
+        recusados = [p["id"] for p in baseline_fora_do_conjunto(current, baseline_ids)]
+        if recusados:
+            raise BaselineRecusada(
+                f"--marcar-baseline recusado: {len(recusados)} id(s) fora de {BASELINE_IDS_FILE.name} "
+                "(problemas novos exigem decisão da autora, não origem de linha de base): " + ", ".join(recusados)
+            )
     resolvidos = sorted(set(previous) - matched)
     return current, sorted(novos), resolvidos
 
@@ -216,18 +251,24 @@ def exportar_ledger(
     dest_dir: Path,
     aceitar_novas: bool = False,
     marcar_baseline: bool = False,
+    baseline_ids: set[str] | None = None,
 ) -> dict:
     """Grava ``ledger.csv`` e ``pendencias.yaml`` em ``dest_dir``.
 
     Sem ``aceitar_novas``, ids NAO_SUSTENTA/CONTRADIZ novos não entram em ``pendencias.yaml``;
     o chamador deve tratá-los como falha (``pendencias_novas`` não vazio e ``novas_aceitas`` falso).
+    Com ``marcar_baseline``, ``baseline_ids`` (padrão: o conteúdo de ``BASELINE_IDS_FILE``) limita os
+    ids que podem ter ``origem`` de linha de base; fora dele, ``BaselineRecusada`` e nada é gravado.
     """
     rows, pendentes = build_ledger_rows(pilot_dir, out_dir)
     if not rows:
         raise ValueError(f"{pilot_dir / 'avaliacoes.jsonl'} ausente ou vazio; rode `avaliar` antes")
+    if marcar_baseline and baseline_ids is None:
+        baseline_ids = load_baseline_ids(BASELINE_IDS_FILE)
     pend_path = dest_dir / PENDENCIAS_NAME
     pendencias, novos, resolvidos = build_pendencias(
-        rows, load_pendencias(pend_path), aceitar_novas=aceitar_novas, marcar_baseline=marcar_baseline
+        rows, load_pendencias(pend_path), aceitar_novas=aceitar_novas, marcar_baseline=marcar_baseline,
+        baseline_ids=baseline_ids or frozenset(),
     )
     write_text_atomic(dest_dir / LEDGER_NAME, render_ledger(rows))
     write_text_atomic(pend_path, render_pendencias(pendencias))
@@ -263,6 +304,23 @@ def pendencias_sem_decisao(pendencias: list[dict]) -> list[dict]:
         for p in pendencias
         if p.get("origem") != ORIGEM_BASELINE and str(p.get("decisao") or DECISAO_INICIAL).strip() == DECISAO_INICIAL
     ]
+
+
+def load_baseline_ids(path: Path) -> set[str]:
+    """Ids congelados da linha de base (um por linha; ``#`` inicia comentário); vazio se faltar o arquivo."""
+    if not path.is_file():
+        return set()
+    ids: set[str] = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        value = line.split("#", 1)[0].strip()
+        if value:
+            ids.add(value)
+    return ids
+
+
+def baseline_fora_do_conjunto(pendencias: list[dict], congelado: set[str] | frozenset[str]) -> list[dict]:
+    """Entradas com ``origem`` de linha de base cujo id não está no conjunto congelado."""
+    return [p for p in pendencias if p.get("origem") == ORIGEM_BASELINE and p["id"] not in congelado]
 
 
 def proprios_indevidos(ledger: list[dict], chaves_proprias: set[str]) -> list[dict]:

@@ -1488,6 +1488,58 @@ def test_reuse_matches_prior_row_by_id_legado_and_writes_new_id(tmp_path):
     assert again_seen == [] and {r["id"] for r in again["rows"]} == {"new01", "new02"}
 
 
+def test_rows_with_legacy_id_in_the_own_tese_folder_are_reused_without_api_calls(tmp_path):
+    write_evidence(tmp_path, "kA")
+    fp = evidence_fp(tmp_path, "kA")
+    adjudicacao = {"modelo": "claude-opus-5-5", "veredito": "SUSTENTA", "em": "2026-11-06T09:00:00+00:00"}
+    prior = [
+        {**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": fp, "adjudicacao": adjudicacao},
+        {**row(2, "kA", "NAO_SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": fp},
+    ]
+    write_prior(tmp_path, "tese", prior)  # ids antigos (fórmula anterior), sem reaproveitado_de, na própria pasta
+    contexts = [new_ctx(1, "id01"), new_ctx(2, "id02", chapter="Métodos")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+
+    assert seen == []  # nenhum envio à API
+    final = {r["id"]: r for r in result["rows"]}
+    assert set(final) == {"new01", "new02"}
+    assert final["new01"]["adjudicacao"] == adjudicacao and final["new01"]["veredito_final"] == "SUSTENTA"
+    assert final["new01"]["id_legado"] == "id01" and final["new01"]["reaproveitado_de"] == "tese"
+    assert final["new02"]["veredito_final"] == "NAO_SUSTENTA"
+    assert result["metadados"]["contextos_reaproveitados"] == 2
+    checkpoint = common.read_json(tmp_path / "piloto" / "tese" / "checkpoint.json", default={}) or {}
+    assert checkpoint.get("requisicoes", {}) == {}
+
+    again_client, again_seen = spy_client()
+    again = run_global(tmp_path, contexts, again_client)
+    assert again_seen == [] and again["rows"] == result["rows"]
+
+
+def test_own_tese_folder_takes_precedence_over_chapter_folders(tmp_path):
+    write_evidence(tmp_path, "kA")
+    fp = evidence_fp(tmp_path, "kA")
+    adjudicacao = {"modelo": "claude-opus-5-5", "veredito": "NAO_SUSTENTA", "em": "2026-11-06T09:00:00+00:00"}
+    write_prior(tmp_path, "introducao", [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": fp}])
+    write_prior(tmp_path, "tese", [{**row(1, "kA", "NAO_SUSTENTA", "resumo", QUOTE, True),
+                                    "evidencia_fingerprint": fp, "adjudicacao": adjudicacao}])
+    client, seen = spy_client()
+    result = run_global(tmp_path, [new_ctx(1, "id01")], client)
+    (final,) = result["rows"]
+    assert seen == [] and final["adjudicacao"] == adjudicacao and final["veredito_final"] == "NAO_SUSTENTA"
+    assert final["reaproveitado_de"] == "tese"
+
+
+def test_own_folder_rows_with_the_same_new_id_and_no_origin_are_not_copied(tmp_path):
+    write_evidence(tmp_path, "kA")
+    prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]
+    write_prior(tmp_path, "tese", prior)  # mesmo id novo: a linha vem do checkpoint, não da cópia
+    found = av.find_reusable([ctx(1, "kA")], {"kA": prompts.build_evidence_block(
+        common.read_json(tmp_path / "evidencias" / "kA.json"), av.Settings().max_chars)[0]},
+        tmp_path / "piloto", tmp_path / "piloto" / "tese")
+    assert found == {}
+
+
 def test_reuse_by_id_legado_requires_unchanged_fingerprint(tmp_path):
     write_evidence(tmp_path, "kA")
     prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]

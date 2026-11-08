@@ -67,9 +67,15 @@ Sequência de execução (a etapa 1 é ``scripts/citacoes_contexto.py``, que ger
    * com ``--aceitar-novas``, os ids novos entram com ``decisao: pendente`` (código 0), e o teste de
      portão só passa depois que o autor registrar uma decisão diferente de ``pendente``;
    * ``--marcar-baseline`` (migração única) marca as entradas já existentes com
-     ``origem: baseline-2026-11-08``, a única forma de ``pendente`` aceita pelo portão.
+     ``origem: baseline-2026-11-08``, a única forma de ``pendente`` aceita pelo portão. Só vale para os ids
+     congelados em ``tests/data/pendencias_baseline_ids.txt``: qualquer outro id (por exemplo, um aceito
+     antes com ``--aceitar-novas``) faz o comando recusar a marcação, sem gravar nada, com código 4.
 
-   Códigos de saída: 0 sucesso; 2 sem avaliações; 3 problemas novos sem ``--aceitar-novas``.
+   Avaliações com id antigo só são mapeadas quando o id antigo corresponde a um único id novo; se a mesma
+   chave aparece duas vezes na sentença, os dois contextos ficam sem atestado até nova avaliação.
+
+   Códigos de saída: 0 sucesso; 2 sem avaliações; 3 problemas novos sem ``--aceitar-novas``;
+   4 ``--marcar-baseline`` recusado.
 
 Como atestar contextos alterados após uma edição do texto (o teste ``tests/test_atestado_ledger.py`` falha
 com "contextos sem atestamento" para toda sentença nova ou reescrita; o ``id`` é a chave, a sentença com
@@ -83,7 +89,9 @@ com "contextos sem atestamento" para toda sentença nova ou reescrita; o ``id`` 
     python -m pytest tests/test_atestado_ledger.py -q
 
 O reaproveitamento do ``avaliar`` (``reaproveitado_de``) mantém o custo baixo: só contextos novos ou com evidência
-alterada vão à API. Se o passo ``exportar-ledger`` sair com código 3 (problemas NOVOS), corrija o texto ou
+alterada vão à API. Isso inclui as linhas da própria ``piloto/tese/avaliacoes.jsonl`` gravadas com o id antigo
+(casadas por ``id_legado``), que são lidas antes das pastas por capítulo e preservam a adjudicação.
+Se o passo ``exportar-ledger`` sair com código 3 (problemas NOVOS), corrija o texto ou
 rode de novo com ``--aceitar-novas`` e registre a decisão em ``pendencias.yaml`` antes de versionar o ledger.
 Trechos de fonte com menos de 6 palavras e menos de 40 caracteres não sustentam SUSTENTA, SUSTENTA_PARCIALMENTE
 nem CONTRADIZ (``trecho_curto``: veredito rebaixado a NAO_VERIFICAVEL, com segunda passada).
@@ -363,6 +371,9 @@ def cmd_exportar_ledger(args: argparse.Namespace) -> int:
         summary = led.exportar_ledger(
             pdir, out_dir, dest, aceitar_novas=args.aceitar_novas, marcar_baseline=args.marcar_baseline
         )
+    except led.BaselineRecusada as exc:
+        print(str(exc), file=sys.stderr)
+        return 4
     except ValueError as exc:
         print(str(exc), file=sys.stderr)
         return 2
@@ -471,7 +482,8 @@ def build_parser() -> argparse.ArgumentParser:
                        help="acrescenta a pendencias.yaml os NAO_SUSTENTA/CONTRADIZ novos (decisao: pendente); "
                             "sem esta opção eles só são listados e o comando sai com código 3")
     p_led.add_argument("--marcar-baseline", action="store_true", dest="marcar_baseline",
-                       help="migração única: marca as pendências existentes com origem: baseline-2026-11-08")
+                       help="migração única: marca as pendências existentes com origem: baseline-2026-11-08; "
+                            "recusa (código 4, nada gravado) ids fora de tests/data/pendencias_baseline_ids.txt")
     p_led.set_defaults(func=cmd_exportar_ledger)
     return parser
 
