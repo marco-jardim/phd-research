@@ -314,11 +314,56 @@ def test_troca_de_ordem_de_numeros_na_frase_alerta():
 
 def test_ordem_de_numeros_sem_troca_nao_alerta():
     antigo = "O grupo A teve 12 casos e o grupo B teve 30 casos. Houve 7 perdas."
-    # mesma ordem em cada frase, frases em outra ordem
+    assert alertas(analisar(antigo, antigo)) == []
+    # mesma ordem em cada frase, frases em outra ordem: a ordem por frase não alerta
+    # (a troca de frases inteiras só aparece como ordem do parágrafo, ver teste abaixo)
     novo = "Houve 7 perdas. O grupo A teve 12 casos e o grupo B teve 30 casos."
-    assert alertas(analisar(antigo, novo)) == []
+    ach = alertas(analisar(antigo, novo))
+    assert all(set(a.diferencas) == {"ordem_paragrafo"} for a in ach)
     # números em frases distintas trocados de frase não são "ordem dentro da frase"
     assert pf.extrair_tokens("A teve 12 casos. B teve 30 casos.")["ordem_numeros"] == {}
+
+
+@pytest.mark.parametrize("sep", ["; ", ". "])
+def test_troca_de_numeros_entre_oracoes_alerta(sep):
+    antigo = f"A revisão aceitou 215 dos 247 vínculos{sep}na confirmação, 219 dos 247."
+    novo = f"A revisão aceitou 219 dos 247 vínculos{sep}na confirmação, 215 dos 247."
+    ach = alertas(analisar(antigo, novo))
+    assert len(ach) == 1
+    # multiconjuntos iguais, inclusive por frase: só a ordem do parágrafo acusa a troca
+    assert set(ach[0].diferencas) == {"ordem_paragrafo"}
+    assert ach[0].diferencas["ordem_paragrafo"] == {
+        "removidos": ["215|247|219|247"],
+        "adicionados": ["219|247|215|247"],
+    }
+    assert ach[0].itens == ["ordem_paragrafo:+219|247|215|247", "ordem_paragrafo:-215|247|219|247"]
+    # exige aceite como as demais categorias de sentido
+    assert ach[0].status == "pendente"
+    aceito = alertas(analisar(antigo, novo, [aceite_para(ach[0])]))[0]
+    assert aceito.status == "aceito"
+    outro = alertas(analisar(antigo, novo, [aceite_para(ach[0], itens=["numeros:-215"])]))[0]
+    assert outro.status == "pendente"
+
+
+def test_ordem_do_paragrafo_sem_mudanca_nao_alerta():
+    texto = "A revisão aceitou 215 dos 247 vínculos; na confirmação, 219 dos 247."
+    assert alertas(analisar(texto, texto + " Nada mais.")) == []
+    assert alertas(analisar(texto, texto.replace("A revisão", "A equipe de revisão"))) == []
+    assert pf.extrair_tokens(texto)["ordem_paragrafo"] == {"215|247|219|247": 1}
+    # um único número não define ordem
+    assert pf.extrair_tokens("Houve 7 perdas.")["ordem_paragrafo"] == {}
+
+
+def test_insercao_ou_remocao_de_numero_continua_em_numeros():
+    antigo = "A revisão aceitou 215 dos 247 vínculos; na confirmação, 219 dos 247."
+    inserido = "A revisão aceitou 215 dos 247 vínculos; na confirmação, 219 dos 247 e 12 perdas."
+    ach = alertas(analisar(antigo, inserido))
+    assert len(ach) == 1
+    assert set(ach[0].diferencas) == {"numeros"}
+    assert ach[0].diferencas["numeros"] == {"removidos": [], "adicionados": ["12"]}
+    ach = alertas(analisar(inserido, antigo))
+    assert set(ach[0].diferencas) == {"numeros"}
+    assert ach[0].diferencas["numeros"] == {"removidos": ["12"], "adicionados": []}
 
 
 def test_numero_diferente_nao_gera_alerta_de_ordem():

@@ -100,6 +100,7 @@ METRICAS = {
 CATEGORIAS = (
     "numeros",
     "ordem_numeros",
+    "ordem_paragrafo",
     "negadores",
     "quantificadores",
     "qualificadores",
@@ -210,6 +211,7 @@ def extrair_tokens(par: str) -> dict[str, Counter]:
     trabalho = RE_PATH.sub(" ", trabalho)
 
     numerico = RE_SEP_MILHAR.sub("", trabalho.replace("{,}", ","))
+    sequencia_paragrafo = []
     for frase in RE_FRASE.split(numerico):
         sequencia = []
         for m in RE_NUMERO.finditer(frase):
@@ -220,8 +222,11 @@ def extrair_tokens(par: str) -> dict[str, Counter]:
                 item += "%"
             tok["numeros"][item] += 1
             sequencia.append(item)
+        sequencia_paragrafo.extend(sequencia)
         if len(sequencia) >= 2:
             tok["ordem_numeros"][SEP_ORDEM.join(sequencia)] += 1
+    if len(sequencia_paragrafo) >= 2:
+        tok["ordem_paragrafo"][SEP_ORDEM.join(sequencia_paragrafo)] += 1
 
     sem_comandos = RE_COMANDO.sub(" ", trabalho)
     minusculo = unicodedata.normalize("NFC", sem_comandos).lower()
@@ -262,9 +267,13 @@ def comparar(tok_a: dict[str, Counter], tok_b: dict[str, Counter]) -> dict[str, 
     for cat in CATEGORIAS:
         rem = tok_a[cat] - tok_b[cat]
         add = tok_b[cat] - tok_a[cat]
-        if cat == "ordem_numeros":
+        if cat in ("ordem_numeros", "ordem_paragrafo"):
             # Só interessa a troca de ordem: mesmos números, outra sequência.
             # Números diferentes já aparecem na categoria "numeros".
+            # A ordem do parágrafo pega trocas entre orações (a ordem por frase não
+            # as vê) e fica de fora quando a ordem dentro da frase já alertou.
+            if cat == "ordem_paragrafo" and "ordem_numeros" in dif:
+                continue
             pares = _pares_permutados(sorted(rem.elements()), sorted(add.elements()))
             if pares:
                 dif[cat] = {
@@ -839,6 +848,7 @@ def analisar_repositorio(
 NOMES_CATEGORIA = {
     "numeros": "números",
     "ordem_numeros": "ordem dos números na frase",
+    "ordem_paragrafo": "ordem dos números no parágrafo",
     "negadores": "negadores",
     "quantificadores": "quantificadores/hedges",
     "qualificadores": "qualificadores numéricos",
