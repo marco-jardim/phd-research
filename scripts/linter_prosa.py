@@ -18,15 +18,27 @@ como primeira menção na regra R03). Em ``tese.tex`` só vale o que vem depois 
 Regras: R01 a R10 (ver ``REGRAS``). ``siglas.tex`` e ``glossario.tex`` são definições:
 só recebem as regras com ``aplica_definicoes`` (R01 e R08).
 
-Baseline (``tests/data/linter_prosa_baseline.json``): contagem por (regra, arquivo).
-O gate falha se uma contagem passar do baseline ou surgir violação em (regra, arquivo)
-ausente dele.
+Baseline (``tests/data/linter_prosa_baseline.json``, versão 2): uma impressão digital por
+violação de severidade ``erro``, ``sha1(regra | arquivo | trecho | ocorrência)[:12]``, em que o
+trecho é o texto casado com 40 caracteres de cada lado, com espaços colapsados e em minúsculas
+(não depende do número da linha) e a ocorrência é o índice (1, 2, ...) entre as violações de
+mesma regra, arquivo e trecho, para que repetições idênticas não colapsem. Formato::
+
+    {"versao": 2, "gerado_em": "...", "violacoes": {"<fp>": {"regra", "arquivo", "trecho"}}}
+
+O gate falha se algum erro atual tiver impressão digital ausente do baseline (violação nova,
+mesmo que outra tenha sido corrigida). Avisos (severidade ``aviso``) nunca falham o gate;
+saem só no relatório. O baseline só pode encolher: ``--atualizar-baseline`` remove entradas
+que não existem mais e recusa acrescentar; ``--gerar-baseline`` (que pode afrouxar tudo)
+exige ``--forcar``. Editar prosa vizinha a uma violação já registrada muda a sua impressão
+digital; a saída correta é corrigir a violação. O teste ``test_baseline_nao_afrouxou`` compara
+o baseline com o do ``merge-base`` com ``pq/revisao-2-redacao``.
 
 Uso::
 
-    python scripts/linter_prosa.py                     # relatório + confere o baseline
-    python scripts/linter_prosa.py --gerar-baseline    # recria o baseline do zero
-    python scripts/linter_prosa.py --atualizar-baseline  # só diminui contagens
+    python scripts/linter_prosa.py                       # relatório + confere o baseline
+    python scripts/linter_prosa.py --gerar-baseline --forcar  # recria o baseline do zero
+    python scripts/linter_prosa.py --atualizar-baseline  # só remove entradas resolvidas
 
 O relatório sai em ``.local/linter/relatorio.md``.
 """
@@ -35,11 +47,13 @@ from __future__ import annotations
 
 import argparse
 import bisect
+import hashlib
 import json
 import re
+import subprocess
 import sys
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Iterable
@@ -335,6 +349,12 @@ class Arquivo:
         s = " ".join(self.limpo[ini:fim].split()).replace("`", "'")
         return s if len(s) <= 160 else s[:159] + "…"
 
+    def contexto(self, a: int, b: int) -> str:
+        """Trecho casado com 40 caracteres de cada lado, espaços colapsados, em minúsculas."""
+        ini = max(0, a - 40)
+        fim = min(len(self.limpo), max(b, a + 1) + 40)
+        return " ".join(self.limpo[ini:fim].split()).casefold()
+
     def _sem_nao_prosa(self, texto: str) -> str:
         alvo = [(a, b) for a, b, tipo in self.spans if tipo != "prosa"]
         return _branquear(texto, alvo)
@@ -512,6 +532,18 @@ class Violacao:
     tipo: str
     mensagem: str
     trecho: str
+    contexto: str = ""  # trecho normalizado (``Arquivo.contexto``), base da impressão digital
+    fp: str = ""  # impressão digital (ver ``fingerprint``); definida por ``lintar``
+
+
+def fingerprint(regra: str, arquivo: str, contexto: str, ocorrencia: int = 1) -> str:
+    """``sha1(regra | arquivo | contexto | ocorrência)[:12]``; independe da linha.
+
+    ``ocorrencia`` é o índice (1, 2, ...) da violação entre as que têm a mesma regra, arquivo e
+    contexto, para que repetições idênticas no mesmo arquivo não colapsem numa só entrada.
+    """
+    chave = f"{regra}|{arquivo}|{contexto}|{ocorrencia}"
+    return hashlib.sha1(chave.encode("utf-8")).hexdigest()[:12]
 
 
 @dataclass(frozen=True)
@@ -621,6 +653,39 @@ def _exc_recall(arq: Arquivo, a: int, b: int) -> bool:
     return bool(re.search(r"precision[\s-]*$", arq.texto[max(0, a - 20) : a], I))
 
 
+# «precisão» só é proibida como nome de métrica (guia 3.5.1 e 3.6); o sentido geral
+# («com precisão», «precisão dos dados») fica de fora. Janela de contexto: 40 caracteres
+# antes e 60 depois do achado.
+_RE_PRECISAO_ANTES = re.compile(
+    r"\b(?:sensibilidade|especificidade|revoca\w+|recall|VPP|F1|AUC\S*|acur[áa]cia|"
+    r"m[ée]tricas?|(?:valor(?:es)?|medidas?|[íi]ndices?)\s+de)"
+    r"\s*(?:,|/|e|ou|de|como)?\s*(?:a\s+|de\s+)?$",
+    I,
+)
+_RE_PRECISAO_DEPOIS = re.compile(
+    r"\s*(?:"
+    r"(?:(?:foi|ficou|chegou\s+a|alcançou|atingiu|variou\s+de|é|de|em)\s+|[=:]\s*)?\d"  # número
+    r"|\\?%"
+    r"|(?:,|/|e|ou)\s*(?:a\s+)?(?:sensibilidade|especificidade|VPP|F1|revoca|recall|acur[áa]cia|"
+    r"valor\s+preditivo)"
+    r"|\(\s*(?:VPP|F1)"
+    r"|como\s+m[ée]trica"
+    r"|d[oa]s?\s+(?:modelos?|classificador(?:es)?|m[ée]todos?|abordagens?|pol[ií]ticas?|regras?|"
+    r"sistemas?|limiar(?:es)?|pipelines?|estimativas?)\b"
+    r")",
+    I,
+)
+
+
+def _exc_precisao(arq: Arquivo, a: int, b: int) -> bool:
+    """Exceção (não sinalizar): AUC-PR/«precisão média» ou «precisão» fora de contexto de métrica."""
+    depois = arq.texto[b : b + 60]
+    if re.match(r"\s*-\s*sensibilidade|\s+m[ée]dia\b", depois, I):
+        return True
+    antes = arq.texto[max(0, a - 40) : a]
+    return not (_RE_PRECISAO_ANTES.search(antes) or _RE_PRECISAO_DEPOIS.match(depois))
+
+
 PADROES_R02: list[Padrao] = [
     _p(r"\bzonas?\s+cinz(?:as?|ent[ao]s?)\b",
        "«zona cinzenta/cinza» é proibida: usar \\textit{grey area} (guia 3.6)"),
@@ -646,8 +711,8 @@ PADROES_R02: list[Padrao] = [
        "«falso vínculo» é proibido, salvo no nome da política NP: usar «falso positivo» (guia 3.6)",
        exc=_contexto(FALSO_VINCULO_PERMITIDO)),
     _p(r"\bprecis[ãa]o\b",
-       "«precisão» só em AUC-PR, «precisão média» e «curva precisão-sensibilidade»; VPP é o nome único (guia 3.5.1 e 3.6)",
-       exc=_depois(r"\s*-\s*sensibilidade|\s+m[ée]dia\b")),
+       "«precisão» como nome de métrica: só em AUC-PR, «precisão média» e «curva precisão-sensibilidade»; VPP é o nome único (guia 3.5.1 e 3.6)",
+       exc=_exc_precisao),
     _p(r"\bflorestas?\s+aleat[óo]rias?\b",
        "«floresta aleatória» só na glosa Random Forest (floresta aleatória) (guia 3.5.3 e 3.6)",
        flags=0, exc=_antes(r"Random\s+Forests?\s*\}?\s*\(\s*$")),
@@ -698,7 +763,7 @@ NOMES_PROPRIOS_LINKAGE = (
     "Laboratório de Linkage e Análise de Dados Populacionais",
     "Laboratório de Linkage de Dados Populacionais",
 )
-_RE_LINKAGE_SOLTO = re.compile(r"(?<![\w\-_/.])linkage(?![\w\-/])", I)
+_RE_LINKAGE_SOLTO = re.compile(r"(?<![\w\-_/.])linkages?(?![\w\-/])", I)
 
 
 def regra_r04(arq: Arquivo) -> list[Achado]:
@@ -746,7 +811,8 @@ def regra_r05(arq: Arquivo) -> list[Achado]:
 
 
 # --- R06: ponto decimal em prosa ------------------------------------------------
-_RE_DECIMAL = re.compile(r"(?<![\w.,/\\])\d+\.\d{1,2}(?![\w/]|\.\d)")
+# «0.941» (zero, ponto, três dígitos) nunca é milhar: também é decimal com ponto.
+_RE_DECIMAL = re.compile(r"(?<![\w.,/\\])(?:\d+\.\d{1,2}|0\.\d{3})(?![\w/]|\.\d)")
 # Versões, nomes de modelos e referências internas que usam ponto (guia, Seção
 # "Nomes de modelos e versões"; AGENTS.md seção 1).
 PADROES_VERSAO_MODELO = [
@@ -1009,7 +1075,7 @@ def regra_r03(arvore: Arvore) -> list[Violacao]:
             if not ok:
                 saida.append(
                     Violacao("R03", "erro", arq.rel, arq.linha(pos), arq.tipo(pos), msg,
-                             arq.trecho(pos, m.end()))
+                             arq.trecho(pos, m.end()), arq.contexto(pos, m.end()))
                 )
     return saida
 
@@ -1058,35 +1124,58 @@ def lintar(arvore: Arvore, regras: Iterable[str] | None = None) -> list[Violacao
                 vistos.add(chave)
                 saida.append(
                     Violacao(regra.id, ach.severidade, arq.rel, arq.linha(ach.ini), arq.tipo(ach.ini),
-                             ach.mensagem, arq.trecho(ach.ini, ach.fim))
+                             ach.mensagem, arq.trecho(ach.ini, ach.fim),
+                             arq.contexto(ach.ini, ach.fim))
                 )
     if "R03" in ativas:
         saida.extend(regra_r03(arvore))
     saida.sort(key=lambda v: (v.regra, v.arquivo, v.linha, v.mensagem))
-    return saida
+    # Impressão digital única por ocorrência: contextos idênticos no mesmo arquivo e regra
+    # recebem o índice 1, 2, ... na ordem do arquivo (estável a mudanças de linha).
+    ocorrencias: dict[tuple[str, str, str], int] = {}
+    numeradas: list[Violacao] = []
+    for v in saida:
+        chave = (v.regra, v.arquivo, v.contexto)
+        n = ocorrencias.get(chave, 0) + 1
+        ocorrencias[chave] = n
+        numeradas.append(replace(v, fp=fingerprint(v.regra, v.arquivo, v.contexto, n)))
+    return numeradas
 
 
 # ---------------------------------------------------------------------------
 # Baseline que só encolhe
 # ---------------------------------------------------------------------------
-def contar(violacoes: Iterable[Violacao]) -> dict[str, dict[str, int]]:
-    """Contagem por regra e arquivo (erros e avisos juntos)."""
-    cont: dict[str, dict[str, int]] = {}
-    for v in violacoes:
-        por_arq = cont.setdefault(v.regra, {})
-        por_arq[v.arquivo] = por_arq.get(v.arquivo, 0) + 1
-    return {r: dict(sorted(cont[r].items())) for r in sorted(cont)}
+VERSAO_BASELINE = 2
+RAMOS_BASE = ("origin/pq/revisao-2-redacao", "pq/revisao-2-redacao")
+BASELINE_RELATIVO = "tests/data/linter_prosa_baseline.json"
+
+
+def erros(violacoes: Iterable[Violacao]) -> list[Violacao]:
+    """Só as violações de severidade ``erro`` (as que entram no baseline e no gate)."""
+    return [v for v in violacoes if v.severidade == "erro"]
+
+
+def entrada_baseline(v: Violacao) -> dict[str, str]:
+    return {"regra": v.regra, "arquivo": v.arquivo, "trecho": v.trecho}
 
 
 def ler_baseline(caminho: Path) -> dict:
-    return json.loads(Path(caminho).read_text(encoding="utf-8"))
+    """Lê o baseline; ``ValueError`` se não estiver na versão 2."""
+    dado = json.loads(Path(caminho).read_text(encoding="utf-8"))
+    if not isinstance(dado, dict) or dado.get("versao") != VERSAO_BASELINE:
+        raise ValueError(
+            f"baseline {caminho} não está na versão {VERSAO_BASELINE} (impressões digitais); "
+            "recrie com --gerar-baseline --forcar"
+        )
+    return dado
 
 
-def montar_baseline(contagens: dict[str, dict[str, int]]) -> dict:
+def montar_baseline(violacoes: Iterable[Violacao]) -> dict:
+    """Baseline v2 a partir das violações (só as de severidade ``erro``)."""
     return {
-        "versao": 1,
+        "versao": VERSAO_BASELINE,
         "gerado_em": datetime.now().isoformat(timespec="seconds"),
-        "contagens": contagens,
+        "violacoes": {v.fp: entrada_baseline(v) for v in erros(violacoes)},
     }
 
 
@@ -1101,33 +1190,72 @@ def escrever_baseline(caminho: Path, baseline: dict) -> None:
     escrever_texto(caminho, json.dumps(baseline, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
 
 
-def comparar(
-    contagens: dict[str, dict[str, int]], baseline: dict[str, dict[str, int]]
-) -> list[tuple[str, str, int, int]]:
-    """(regra, arquivo, atual, limite) onde a contagem passa do baseline (ausente = 0)."""
-    excessos = []
-    for regra, por_arq in contagens.items():
-        for arquivo, n in por_arq.items():
-            limite = baseline.get(regra, {}).get(arquivo, 0)
-            if n > limite:
-                excessos.append((regra, arquivo, n, limite))
-    return sorted(excessos)
+def novas_violacoes(violacoes: Iterable[Violacao], baseline: dict) -> list[Violacao]:
+    """Erros atuais cuja impressão digital não está no baseline (avisos nunca entram)."""
+    conhecidas = baseline.get("violacoes", {})
+    return [v for v in erros(violacoes) if v.fp not in conhecidas]
 
 
 def atualizar_baseline(
-    contagens: dict[str, dict[str, int]], baseline: dict[str, dict[str, int]]
-) -> tuple[dict[str, dict[str, int]] | None, list[tuple[str, str, int, int]]]:
-    """Novas contagens do baseline, só com reduções; ``(None, aumentos)`` se houver aumento."""
-    aumentos = comparar(contagens, baseline)
-    if aumentos:
-        return None, aumentos
-    novo: dict[str, dict[str, int]] = {}
-    for regra in sorted(baseline):
-        for arquivo in sorted(baseline[regra]):
-            atual = contagens.get(regra, {}).get(arquivo, 0)
-            if atual > 0:
-                novo.setdefault(regra, {})[arquivo] = min(baseline[regra][arquivo], atual)
+    violacoes: Iterable[Violacao], baseline: dict
+) -> tuple[dict | None, list[Violacao]]:
+    """Baseline sem as entradas que não existem mais; ``(None, novas)`` se houver erro novo.
+
+    Nunca acrescenta entradas: o baseline só encolhe.
+    """
+    violacoes = list(violacoes)
+    novas = novas_violacoes(violacoes, baseline)
+    if novas:
+        return None, novas
+    atuais = {v.fp for v in erros(violacoes)}
+    mantidas = {fp: e for fp, e in baseline.get("violacoes", {}).items() if fp in atuais}
+    novo = {k: val for k, val in baseline.items() if k != "violacoes"}
+    novo["violacoes"] = mantidas
+    novo["gerado_em"] = datetime.now().isoformat(timespec="seconds")
     return novo, []
+
+
+def afrouxamentos(atual: dict, base: dict) -> list[str]:
+    """Impressões digitais do baseline ``atual`` ausentes do ``base`` (o baseline só pode encolher)."""
+    return sorted(set(atual.get("violacoes", {})) - set(base.get("violacoes", {})))
+
+
+def baseline_da_base(
+    repo: Path = REPO, refs: Iterable[str] = RAMOS_BASE, relativo: str = BASELINE_RELATIVO
+) -> tuple[dict | None, str]:
+    """Baseline v2 versionado no ``merge-base`` de ``HEAD`` com o ramo base.
+
+    Devolve ``(baseline, descrição)`` ou ``(None, motivo)`` se git, o ramo base ou o arquivo em
+    formato v2 não estiverem disponíveis.
+    """
+
+    def git(*args: str) -> str | None:
+        try:
+            r = subprocess.run(["git", *args], cwd=repo, capture_output=True, timeout=30)
+        except (OSError, subprocess.SubprocessError):
+            return None
+        return r.stdout.decode("utf-8") if r.returncode == 0 else None
+
+    if git("rev-parse", "--git-dir") is None:
+        return None, "git ou repositório indisponível"
+    commit, ref = "", ""
+    for ref in refs:
+        saida = git("merge-base", "HEAD", ref)
+        if saida and saida.strip():
+            commit = saida.strip()
+            break
+    if not commit:
+        return None, "sem merge-base com " + " nem ".join(refs)
+    blob = git("show", f"{commit}:{relativo}")
+    if blob is None:
+        return None, f"o merge-base {commit[:10]} ({ref}) não contém {relativo}"
+    try:
+        dado = json.loads(blob)
+    except ValueError:
+        return None, f"{relativo} no merge-base {commit[:10]} não é JSON válido"
+    if not isinstance(dado, dict) or dado.get("versao") != VERSAO_BASELINE:
+        return None, f"{relativo} no merge-base {commit[:10]} não está na versão {VERSAO_BASELINE}"
+    return dado, f"merge-base {commit[:10]} com {ref}"
 
 
 # ---------------------------------------------------------------------------
@@ -1137,9 +1265,12 @@ def formatar_relatorio(
     violacoes: list[Violacao],
     arvore: Arvore,
     tex_raiz: Path,
-    baseline: dict[str, dict[str, int]] | None = None,
+    baseline: dict | None = None,
 ) -> str:
-    cont = contar(violacoes)
+    """``baseline`` é o JSON v2 inteiro (ou ``None`` se ausente)."""
+    conhecidas = None if baseline is None else baseline.get("violacoes", {})
+    novas = [] if baseline is None else novas_violacoes(violacoes, baseline)
+    fps_novas = {v.fp for v in novas}
     linhas = [
         "# Relatório do linter de prosa",
         "",
@@ -1148,26 +1279,41 @@ def formatar_relatorio(
         "",
         "## Resumo por regra",
         "",
-        "| Regra | Descrição | Erros | Avisos | Total | Baseline |",
-        "|---|---|---:|---:|---:|---:|",
+        "Só os erros entram no baseline e no gate; os avisos são informativos.",
+        "",
+        "| Regra | Descrição | Erros | Avisos | Total | Baseline (erros) | Erros novos |",
+        "|---|---|---:|---:|---:|---:|---:|",
     ]
     for rid, regra in REGRAS.items():
-        erros = sum(1 for v in violacoes if v.regra == rid and v.severidade == "erro")
-        avisos = sum(1 for v in violacoes if v.regra == rid and v.severidade == "aviso")
-        base = "n/d" if baseline is None else str(sum(baseline.get(rid, {}).values()))
-        linhas.append(f"| {rid} | {regra.titulo} | {erros} | {avisos} | {erros + avisos} | {base} |")
-    linhas += ["", "## Contagem por regra e arquivo", "", "| Regra | Arquivo | Contagem | Baseline |", "|---|---|---:|---:|"]
-    for rid, por_arq in cont.items():
-        for arquivo, n in por_arq.items():
-            base = "n/d" if baseline is None else str(baseline.get(rid, {}).get(arquivo, 0))
-            linhas.append(f"| {rid} | `{arquivo}` | {n} | {base} |")
-    if baseline is not None:
-        excessos = comparar(cont, baseline)
-        linhas += ["", "## Acima do baseline", ""]
-        if excessos:
-            linhas += [f"- {r} em `{a}`: {n} (baseline {lim})" for r, a, n, lim in excessos]
+        n_erros = sum(1 for v in violacoes if v.regra == rid and v.severidade == "erro")
+        n_avisos = sum(1 for v in violacoes if v.regra == rid and v.severidade == "aviso")
+        if conhecidas is None:
+            base, n_novas = "n/d", "n/d"
         else:
-            linhas.append("Nenhuma.")
+            base = str(sum(1 for e in conhecidas.values() if e.get("regra") == rid))
+            n_novas = str(sum(1 for v in novas if v.regra == rid))
+        linhas.append(
+            f"| {rid} | {regra.titulo} | {n_erros} | {n_avisos} | {n_erros + n_avisos} | {base} | {n_novas} |"
+        )
+    linhas += [
+        "", "## Contagem por regra e arquivo", "",
+        "| Regra | Arquivo | Erros | Avisos | Baseline (erros) |", "|---|---|---:|---:|---:|",
+    ]
+    por_chave: dict[tuple[str, str], list[int]] = {}
+    for v in violacoes:
+        por_chave.setdefault((v.regra, v.arquivo), [0, 0])[0 if v.severidade == "erro" else 1] += 1
+    for (rid, arquivo), (n_erros, n_avisos) in sorted(por_chave.items()):
+        if conhecidas is None:
+            base = "n/d"
+        else:
+            base = str(sum(1 for e in conhecidas.values() if e.get("regra") == rid and e.get("arquivo") == arquivo))
+        linhas.append(f"| {rid} | `{arquivo}` | {n_erros} | {n_avisos} | {base} |")
+    if baseline is not None:
+        linhas += ["", "## Erros novos (fora do baseline)", ""]
+        if novas:
+            linhas += [f"- `{v.arquivo}:{v.linha}` {v.regra}: {v.mensagem}: `{v.trecho}`" for v in novas]
+        else:
+            linhas.append("Nenhum.")
     if arvore.avisos:
         linhas += ["", "## Avisos de leitura", ""] + [f"- {a}" for a in arvore.avisos]
     linhas += ["", "## Violações", ""]
@@ -1177,14 +1323,17 @@ def formatar_relatorio(
             continue
         linhas += [f"### {rid}: {regra.titulo}", ""]
         for v in do_rid:
-            linhas.append(f"- `{v.arquivo}:{v.linha}` [{v.tipo}, {v.severidade}] {v.mensagem}: `{v.trecho}`")
+            marca = " **novo**" if v.fp in fps_novas and v.severidade == "erro" else ""
+            linhas.append(
+                f"- `{v.arquivo}:{v.linha}` [{v.tipo}, {v.severidade}]{marca} {v.mensagem}: `{v.trecho}`"
+            )
         linhas.append("")
     return "\n".join(linhas) + "\n"
 
 
-def _imprimir_excessos(excessos: list[tuple[str, str, int, int]]) -> None:
-    for regra, arquivo, n, limite in excessos:
-        print(f"  {regra} em {arquivo}: {n} (baseline {limite})")
+def _imprimir_novas(novas: list[Violacao], destino=None) -> None:
+    for v in novas:
+        print(f"  {v.regra} {v.arquivo}:{v.linha} {v.mensagem}: {v.trecho}", file=destino or sys.stdout)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -1194,41 +1343,63 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--baseline", type=Path, default=BASELINE_PADRAO)
     ap.add_argument("--relatorio", type=Path, default=RELATORIO_PADRAO)
     grupo = ap.add_mutually_exclusive_group()
-    grupo.add_argument("--gerar-baseline", action="store_true", help="recria o baseline do zero")
-    grupo.add_argument("--atualizar-baseline", action="store_true", help="só diminui contagens")
+    grupo.add_argument("--gerar-baseline", action="store_true",
+                       help="recria o baseline do zero (exige --forcar; pode afrouxar tudo)")
+    grupo.add_argument("--atualizar-baseline", action="store_true",
+                       help="remove entradas resolvidas; recusa acrescentar")
+    ap.add_argument("--forcar", action="store_true", help="confirma --gerar-baseline")
     args = ap.parse_args(argv)
+
+    if args.gerar_baseline and not args.forcar:
+        print(
+            "recusado: --gerar-baseline recria o baseline do zero e pode afrouxar o gate; "
+            "repita com --forcar se for isso mesmo que se quer",
+            file=sys.stderr,
+        )
+        return 2
 
     arvore = carregar_arvore(args.tex, args.base)
     violacoes = lintar(arvore)
-    contagens = contar(violacoes)
-    baseline = ler_baseline(args.baseline)["contagens"] if args.baseline.is_file() else None
+    baseline: dict | None = None
+    if args.baseline.is_file() and not args.gerar_baseline:
+        try:
+            baseline = ler_baseline(args.baseline)
+        except ValueError as e:
+            print(str(e), file=sys.stderr)
+            return 2
 
     status = 0
     if args.gerar_baseline:
-        escrever_baseline(args.baseline, montar_baseline(contagens))
-        baseline = contagens
-        print(f"baseline gerado: {args.baseline} ({len(violacoes)} violações)")
+        print(
+            "AVISO: --gerar-baseline --forcar substitui o baseline inteiro; o teste "
+            "test_baseline_nao_afrouxou falha se entrarem violações que o ramo base não tinha",
+            file=sys.stderr,
+        )
+        baseline = montar_baseline(violacoes)
+        escrever_baseline(args.baseline, baseline)
+        print(f"baseline gerado: {args.baseline} ({len(baseline['violacoes'])} erros registrados)")
     elif args.atualizar_baseline:
         if baseline is None:
-            print(f"baseline ausente: {args.baseline}; use --gerar-baseline", file=sys.stderr)
+            print(f"baseline ausente: {args.baseline}; use --gerar-baseline --forcar", file=sys.stderr)
             return 2
-        novo, aumentos = atualizar_baseline(contagens, baseline)
+        novo, novas = atualizar_baseline(violacoes, baseline)
         if novo is None:
-            print("recusado: há contagens acima do baseline:", file=sys.stderr)
-            _imprimir_excessos(aumentos)
+            print("recusado: há erros novos fora do baseline:", file=sys.stderr)
+            _imprimir_novas(novas, sys.stderr)
             status = 1
         else:
-            escrever_baseline(args.baseline, montar_baseline(novo))
+            removidas = len(baseline.get("violacoes", {})) - len(novo["violacoes"])
+            escrever_baseline(args.baseline, novo)
             baseline = novo
-            print(f"baseline atualizado: {args.baseline}")
+            print(f"baseline atualizado: {args.baseline} ({removidas} entradas removidas)")
     elif baseline is None:
-        print(f"baseline ausente: {args.baseline}; use --gerar-baseline", file=sys.stderr)
+        print(f"baseline ausente: {args.baseline}; use --gerar-baseline --forcar", file=sys.stderr)
         status = 2
     else:
-        excessos = comparar(contagens, baseline)
-        if excessos:
-            print("contagens acima do baseline:")
-            _imprimir_excessos(excessos)
+        novas = novas_violacoes(violacoes, baseline)
+        if novas:
+            print("erros novos fora do baseline:")
+            _imprimir_novas(novas)
             status = 1
         else:
             print("dentro do baseline")
@@ -1236,6 +1407,8 @@ def main(argv: list[str] | None = None) -> int:
     escrever_texto(args.relatorio, formatar_relatorio(violacoes, arvore, args.tex, baseline))
     por_regra = {rid: sum(1 for v in violacoes if v.regra == rid) for rid in REGRAS}
     print("violações por regra: " + ", ".join(f"{r}={n}" for r, n in por_regra.items()))
+    n_avisos = sum(1 for v in violacoes if v.severidade == "aviso")
+    print(f"avisos informativos (não bloqueiam o gate): {n_avisos}")
     print(f"relatório: {args.relatorio}")
     return status
 

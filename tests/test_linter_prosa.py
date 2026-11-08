@@ -2,12 +2,15 @@
 
 Casos sintéticos em ``tmp_path`` para cada regra e o gate da tese real contra
 ``tests/data/linter_prosa_baseline.json`` (gerado por
-``python scripts/linter_prosa.py --gerar-baseline``).
+``python scripts/linter_prosa.py --gerar-baseline --forcar``; baseline v2 com uma impressão
+digital por erro; avisos não entram no gate).
 """
 
 from __future__ import annotations
 
 import json
+import shutil
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -117,6 +120,21 @@ CASOS_R02 = [
     ("A precisão do modelo.", 1),
     ("A precisão média foi calculada.", 0),
     ("A curva precisão-sensibilidade foi traçada.", 0),
+    # precisão só como nome de métrica (contexto: número, %, VPP, F1, sensibilidade, métrica)
+    ("Mediu-se a precisão de 0,95 no teste.", 1),
+    ("A precisão foi 0,95 no teste.", 1),
+    (r"A precisão chegou a 85\% no teste.", 1),
+    ("A precisão e a sensibilidade foram altas.", 1),
+    ("A precisão, a sensibilidade e o F1 foram altas.", 1),
+    ("Foi medida a sensibilidade e a precisão.", 1),
+    ("O F1 e a precisão foram altos.", 1),
+    ("A precisão (VPP) foi alta.", 1),
+    ("A métrica de precisão foi usada.", 1),
+    ("A precisão como métrica foi usada.", 1),
+    ("A precisão do classificador foi usada.", 1),
+    ("Os pares foram medidos com precisão.", 0),
+    ("A precisão dos dados de endereço é baixa.", 0),
+    ("A precisão da data de nascimento varia.", 0),
     ("Usou-se Random Forest (floresta aleatória) no estudo.", 0),
     ("Usou-se floresta aleatória no estudo.", 1),
     ("Usou-se Floresta Aleatória no estudo.", 1),
@@ -315,6 +333,10 @@ def test_r03_nao_aplica_a_definicoes(tmp_path):
         ("O Laboratório de Linkage e Análise de Dados Populacionais apoiou.", 0),
         ("O pacote gzcmd-record-linkage apoiou.", 0),
         (r"O \path{x/linkage} apoiou.", 0),
+        ("Os linkages probabilísticos decidem pares.", 1),
+        ("Dois Linkages foram feitos.", 1),
+        (r"Os \textit{linkages} decidem pares.", 0),
+        (r"Os \emph{linkages} decidem pares.", 0),
     ],
 )
 def test_r04(tmp_path, texto, esperado):
@@ -350,6 +372,9 @@ def test_r05(tmp_path, texto, esperado):
         "O valor foi 0.95 no total.",
         "A média de 3.5 casos.",
         r"Resultado de 12.5\% do total.",
+        "A sensibilidade foi 0.941 no teste.",  # zero, ponto e três dígitos nunca é milhar
+        "O escore 0.500 separa as classes.",
+        "O escore (0.941) separa as classes.",
     ],
 )
 def test_r06_positivos(tmp_path, texto):
@@ -361,6 +386,7 @@ def test_r06_positivos(tmp_path, texto):
     [
         "Foram 1.000 casos.",
         "Foram 84.368 pares.",
+        "Foram 10.941 pares e 1.941 casos.",  # só "0.xxx" é decimal; "10.941" é milhar
         "Usou-se a versão v0.4.1 do pacote.",
         "Na versão 0.4 do pacote.",
         "Usou-se Kimi K2.5 no teste.",
@@ -589,32 +615,170 @@ def test_trecho_tem_no_maximo_160_caracteres(tmp_path):
 # ---------------------------------------------------------------------------
 # Baseline que só encolhe
 # ---------------------------------------------------------------------------
-def test_contar_agrupa_por_regra_e_arquivo(tmp_path):
-    viols = lint(tmp_path, "A zona cinzenta \u2014 e a vinculação.\n")
-    assert lp.contar(viols) == {"R01": {"x.tex": 1}, "R02": {"x.tex": 2}}
+def test_fingerprint_independe_da_linha_e_distingue_trechos(tmp_path):
+    a = lint(tmp_path, "A zona cinzenta é ampla.\n")
+    b = lint(tmp_path, "\n\n\nA zona cinzenta é ampla.\n")  # mesma violação, três linhas abaixo
+    assert (a[0].linha, b[0].linha) == (1, 4)
+    assert a[0].fp == b[0].fp and len(a[0].fp) == 12
+    c = lint(tmp_path, "A zona cinza é ampla.\n")  # outro trecho
+    assert c[0].fp != a[0].fp
+    assert lp.fingerprint("R02", "a.tex", "x") != lp.fingerprint("R02", "b.tex", "x")
+    assert lp.fingerprint("R02", "a.tex", "x") != lp.fingerprint("R05", "a.tex", "x")
 
 
-def test_comparar_detecta_excesso_e_violacao_nova():
-    base = {"R01": {"a.tex": 2}}
-    assert lp.comparar({"R01": {"a.tex": 2}}, base) == []
-    assert lp.comparar({"R01": {"a.tex": 1}}, base) == []
-    assert lp.comparar({"R01": {"a.tex": 3}}, base) == [("R01", "a.tex", 3, 2)]
-    assert lp.comparar({"R01": {"b.tex": 1}}, base) == [("R01", "b.tex", 1, 0)]
-    assert lp.comparar({"R02": {"a.tex": 1}}, base) == [("R02", "a.tex", 1, 0)]
+def test_fingerprint_normaliza_espacos_e_caixa(tmp_path):
+    a = lint(tmp_path, "A zona   cinzenta\né ampla.\n")
+    b = lint(tmp_path, "A zona cinzenta é ampla.\n")
+    # a diferença está dentro do trecho casado ("zona   cinzenta\n" vs "zona cinzenta"):
+    # o contexto colapsa espaços e quebras, logo a impressão digital é a mesma
+    assert a[0].fp == b[0].fp
 
 
-def test_atualizar_baseline_so_diminui():
-    base = {"R01": {"a.tex": 3, "b.tex": 1}, "R02": {"a.tex": 2}}
-    novo, aumentos = lp.atualizar_baseline({"R01": {"a.tex": 2}, "R02": {"a.tex": 2}}, base)
-    assert aumentos == []
-    assert novo == {"R01": {"a.tex": 2}, "R02": {"a.tex": 2}}
+def test_montar_baseline_v2_so_com_erros(tmp_path):
+    viols = lint(tmp_path, "A zona cinzenta \u2014 e o padrão-ouro.\n")  # R01 erro, R02 erro, R02 aviso
+    assert {v.severidade for v in viols} == {"erro", "aviso"}
+    base = lp.montar_baseline(viols)
+    assert base["versao"] == 2
+    assert set(base["violacoes"]) == {v.fp for v in viols if v.severidade == "erro"}
+    entrada = next(iter(base["violacoes"].values()))
+    assert set(entrada) == {"regra", "arquivo", "trecho"}
+    assert entrada["arquivo"] == "x.tex"
 
 
-def test_atualizar_baseline_recusa_aumento():
-    base = {"R01": {"a.tex": 3}}
-    novo, aumentos = lp.atualizar_baseline({"R01": {"a.tex": 4}, "R02": {"b.tex": 1}}, base)
+def test_trocar_uma_violacao_por_outra_e_detectado(tmp_path):
+    """Com contagens por (regra, arquivo) a troca passaria; com impressão digital, não."""
+    base = lp.montar_baseline(lint(tmp_path, "A zona cinzenta é ampla.\n"))
+    trocada = lint(tmp_path, "A zona cinza é ampla.\n")  # mesma regra, mesmo arquivo, mesma contagem
+    assert len(trocada) == 1
+    novas = lp.novas_violacoes(trocada, base)
+    assert [v.fp for v in novas] == [trocada[0].fp]
+
+
+def test_avisos_nunca_sao_novas_violacoes(tmp_path):
+    viols = lint(tmp_path, "O padrão-ouro foi usado. Um método robusto!\n")
+    assert viols and {v.severidade for v in viols} == {"aviso"}
+    assert lp.novas_violacoes(viols, {"versao": 2, "violacoes": {}}) == []
+
+
+SEPARADOR = "\n" * 60  # mais de 40 caracteres de espaço: uma violação não entra no contexto da outra
+
+
+def test_contextos_identicos_no_mesmo_arquivo_tem_fingerprints_distintos(tmp_path):
+    corpo = "A zona cinzenta é ampla." + SEPARADOR + "A zona cinzenta é ampla.\n"
+    viols = lint(tmp_path, corpo)
+    assert len(viols) == 2
+    assert viols[0].contexto == viols[1].contexto  # mesmo contexto normalizado
+    assert viols[0].fp != viols[1].fp
+    base = lp.montar_baseline(viols)
+    assert len(base["violacoes"]) == 2  # nenhuma colapsa
+    assert lp.novas_violacoes(viols, base) == []
+    # uma terceira repetição idêntica é violação nova
+    tres = lint(tmp_path, corpo + SEPARADOR + "A zona cinzenta é ampla.\n")
+    assert [v.fp for v in lp.novas_violacoes(tres, base)] == [tres[2].fp]
+    # resolver a primeira repetição mantém o gate verde (o índice 1 continua no baseline)
+    uma = lint(tmp_path, "A zona cinzenta é ampla.\n")
+    assert lp.novas_violacoes(uma, base) == []
+    novo, novas = lp.atualizar_baseline(uma, base)
+    assert novas == [] and len(novo["violacoes"]) == 1
+
+
+def test_fingerprint_ocorrencia_muda_o_hash():
+    assert lp.fingerprint("R02", "a.tex", "x") == lp.fingerprint("R02", "a.tex", "x", 1)
+    assert lp.fingerprint("R02", "a.tex", "x", 1) != lp.fingerprint("R02", "a.tex", "x", 2)
+
+
+def test_novas_violacoes_ignora_mudanca_de_linha(tmp_path):
+    base = lp.montar_baseline(lint(tmp_path, "A zona cinzenta é ampla.\n"))
+    # o texto ao redor (±40 caracteres) não muda; só a linha
+    movida = lint(tmp_path, "Linha nova." + SEPARADOR + "A zona cinzenta é ampla.\n")
+    assert movida[0].linha == 61
+    assert lp.novas_violacoes(movida, base) == []
+
+
+def test_atualizar_baseline_remove_resolvidas_e_nao_acrescenta(tmp_path):
+    duas = lint(tmp_path, "A zona cinzenta é ampla." + SEPARADOR + "A vinculação das bases.\n")
+    base = lp.montar_baseline(duas)
+    assert len(base["violacoes"]) == 2
+    # uma resolvida: encolhe
+    uma = lint(tmp_path, "A zona cinzenta é ampla.\n")
+    novo, novas = lp.atualizar_baseline(uma, base)
+    assert novas == []
+    assert set(novo["violacoes"]) == {uma[0].fp}
+    assert novo["versao"] == 2
+    # uma resolvida e uma nova ao mesmo tempo: recusa (não troca)
+    trocada = lint(tmp_path, "A zona cinzenta é ampla." + SEPARADOR + "O falso vínculo ocorreu.\n")
+    novo, novas = lp.atualizar_baseline(trocada, base)
     assert novo is None
-    assert aumentos == [("R01", "a.tex", 4, 3), ("R02", "b.tex", 1, 0)]
+    assert [v.mensagem.startswith("«falso vínculo»") for v in novas] == [True]
+
+
+def test_afrouxamentos_lista_so_o_que_o_base_nao_tinha():
+    base = {"versao": 2, "violacoes": {"a": {}, "b": {}}}
+    assert lp.afrouxamentos({"versao": 2, "violacoes": {"a": {}}}, base) == []
+    assert lp.afrouxamentos({"versao": 2, "violacoes": {"a": {}, "b": {}}}, base) == []
+    assert lp.afrouxamentos({"versao": 2, "violacoes": {"a": {}, "c": {}, "d": {}}}, base) == ["c", "d"]
+
+
+def test_ler_baseline_recusa_versao_antiga(tmp_path):
+    p = tmp_path / "b.json"
+    p.write_text(json.dumps({"versao": 1, "contagens": {}}), encoding="utf-8")
+    with pytest.raises(ValueError, match="versão 2"):
+        lp.ler_baseline(p)
+
+
+def _git(repo: Path, *args: str) -> None:
+    subprocess.run(
+        ["git", "-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false", *args],
+        cwd=repo, check=True, capture_output=True,
+    )
+
+
+@pytest.fixture
+def repo_git(tmp_path):
+    if shutil.which("git") is None:
+        pytest.skip("git indisponível")
+    repo = tmp_path / "repo"
+    (repo / "tests" / "data").mkdir(parents=True)
+    _git(repo, "init", "-q")
+    _git(repo, "symbolic-ref", "HEAD", "refs/heads/pq/revisao-2-redacao")
+    return repo
+
+
+def test_baseline_da_base_le_o_merge_base(repo_git):
+    rel = lp.BASELINE_RELATIVO
+    base = {"versao": 2, "violacoes": {"a": {"regra": "R01", "arquivo": "x", "trecho": "t"}}}
+    (repo_git / rel).write_text(json.dumps(base), encoding="utf-8")
+    _git(repo_git, "add", "-A")
+    _git(repo_git, "commit", "-q", "-m", "base")
+    _git(repo_git, "checkout", "-q", "-b", "feature")
+    # o ramo de trabalho afrouxa o baseline (entrada nova) sem commitar: o merge-base não muda
+    atual = {"versao": 2, "violacoes": {**base["violacoes"], "z": {"regra": "R02", "arquivo": "x", "trecho": "u"}}}
+    (repo_git / rel).write_text(json.dumps(atual), encoding="utf-8")
+    lido, motivo = lp.baseline_da_base(repo_git)
+    assert lido == base, motivo
+    assert lp.afrouxamentos(atual, lido) == ["z"]
+    assert lp.afrouxamentos(base, lido) == []
+
+
+def test_baseline_da_base_pula_sem_v2_ou_sem_ramo(repo_git):
+    rel = lp.BASELINE_RELATIVO
+    (repo_git / rel).write_text(json.dumps({"versao": 1, "contagens": {}}), encoding="utf-8")
+    _git(repo_git, "add", "-A")
+    _git(repo_git, "commit", "-q", "-m", "v1")
+    lido, motivo = lp.baseline_da_base(repo_git)
+    assert lido is None and "versão 2" in motivo
+    lido, motivo = lp.baseline_da_base(repo_git, refs=("ramo/inexistente",))
+    assert lido is None and "merge-base" in motivo
+
+
+def test_baseline_da_base_fora_de_repositorio_git(tmp_path):
+    vazio = tmp_path / "sem_git"
+    vazio.mkdir()
+    lido, motivo = lp.baseline_da_base(vazio)
+    # dentro de tmp_path não há repositório git (a menos que o ambiente de teste o crie acima)
+    if lido is not None or "git" not in motivo:
+        pytest.skip("o diretório temporário está dentro de um repositório git")
+    assert lido is None
 
 
 def _cli(tmp_path: Path, *extra: str) -> int:
@@ -631,39 +795,85 @@ def _cli(tmp_path: Path, *extra: str) -> int:
 
 def test_cli_gera_baseline_e_relatorio(tmp_path):
     (tmp_path / "x.tex").write_text("A zona cinzenta \u2014 aqui.\n\nOutra vinculação.\n", encoding="utf-8")
-    assert _cli(tmp_path, "--gerar-baseline") == 0
+    assert _cli(tmp_path, "--gerar-baseline", "--forcar") == 0
     baseline = json.loads((tmp_path / "out" / "baseline.json").read_text(encoding="utf-8"))
-    assert baseline["versao"] == 1
+    assert baseline["versao"] == 2
     assert baseline["gerado_em"]
-    assert baseline["contagens"] == {"R01": {"x.tex": 1}, "R02": {"x.tex": 2}}
+    assert sorted(e["regra"] for e in baseline["violacoes"].values()) == ["R01", "R02", "R02"]
+    assert all(e["arquivo"] == "x.tex" and e["trecho"] for e in baseline["violacoes"].values())
     relatorio = (tmp_path / "out" / "relatorio.md").read_text(encoding="utf-8")
     assert "`x.tex:1` [prosa, erro]" in relatorio
     assert "`x.tex:3` [prosa, erro]" in relatorio
-    assert "| R02 | `x.tex` | 2 | 2 |" in relatorio
+    assert "| 2 | 0 | 2 | 2 | 0 |" in relatorio  # resumo da R02: 2 erros, 0 avisos, baseline 2, 0 novos
+    assert "| R02 | `x.tex` | 2 | 0 | 2 |" in relatorio
+
+
+def test_cli_gerar_baseline_exige_forcar_e_avisa(tmp_path, capsys):
+    (tmp_path / "x.tex").write_text("A zona cinzenta aqui.\n", encoding="utf-8")
+    assert _cli(tmp_path, "--gerar-baseline") == 2
+    assert not (tmp_path / "out" / "baseline.json").exists()
+    assert "--forcar" in capsys.readouterr().err
+    assert _cli(tmp_path, "--gerar-baseline", "--forcar") == 0
+    assert "AVISO" in capsys.readouterr().err
+    assert (tmp_path / "out" / "baseline.json").is_file()
 
 
 def test_cli_confere_o_baseline_e_so_deixa_encolher(tmp_path):
     raiz = tmp_path / "x.tex"
     raiz.write_text("A zona cinzenta \u2014 aqui.\n", encoding="utf-8")
-    assert _cli(tmp_path, "--gerar-baseline") == 0
+    assert _cli(tmp_path, "--gerar-baseline", "--forcar") == 0
     assert _cli(tmp_path) == 0
 
-    raiz.write_text("A zona cinzenta \u2014 aqui.\nOutra vinculação.\n", encoding="utf-8")
+    # erro novo, afastado das violações já registradas
+    raiz.write_text("A zona cinzenta \u2014 aqui." + SEPARADOR + "Outra vinculação.\n", encoding="utf-8")
     assert _cli(tmp_path) == 1
+    relatorio = (tmp_path / "out" / "relatorio.md").read_text(encoding="utf-8")
+    assert "## Erros novos (fora do baseline)" in relatorio
+    assert "**novo**" in relatorio
     antes = (tmp_path / "out" / "baseline.json").read_text(encoding="utf-8")
     assert _cli(tmp_path, "--atualizar-baseline") == 1
     assert (tmp_path / "out" / "baseline.json").read_text(encoding="utf-8") == antes
 
+    # trocar uma violação por outra também falha (a contagem seria a mesma)
+    raiz.write_text("A zona cinzenta aqui." + SEPARADOR + "Outra vinculação.\n", encoding="utf-8")
+    assert _cli(tmp_path) == 1
+
+    # voltar ao texto original passa; resolver tudo e --atualizar-baseline remove as entradas
+    raiz.write_text("A zona cinzenta \u2014 aqui.\n", encoding="utf-8")
+    assert _cli(tmp_path) == 0
     raiz.write_text("Texto limpo.\n", encoding="utf-8")
     assert _cli(tmp_path, "--atualizar-baseline") == 0
     baseline = json.loads((tmp_path / "out" / "baseline.json").read_text(encoding="utf-8"))
-    assert baseline["contagens"] == {}
+    assert baseline["violacoes"] == {}
+    assert baseline["versao"] == 2
     assert _cli(tmp_path) == 0
+
+
+def test_cli_aviso_nao_falha_o_gate_mas_aparece_no_relatorio(tmp_path, capsys):
+    raiz = tmp_path / "x.tex"
+    raiz.write_text("Texto limpo.\n", encoding="utf-8")
+    assert _cli(tmp_path, "--gerar-baseline", "--forcar") == 0
+    raiz.write_text("O padrão-ouro foi usado. Um método robusto!\n", encoding="utf-8")
+    capsys.readouterr()
+    assert _cli(tmp_path) == 0
+    assert "avisos informativos" in capsys.readouterr().out
+    relatorio = (tmp_path / "out" / "relatorio.md").read_text(encoding="utf-8")
+    assert "[prosa, aviso]" in relatorio
 
 
 def test_cli_sem_baseline_falha(tmp_path):
     (tmp_path / "x.tex").write_text("Texto limpo.\n", encoding="utf-8")
     assert _cli(tmp_path) == 2
+
+
+def test_cli_baseline_v1_e_recusado(tmp_path):
+    (tmp_path / "x.tex").write_text("Texto limpo.\n", encoding="utf-8")
+    (tmp_path / "out").mkdir()
+    (tmp_path / "out" / "baseline.json").write_text(
+        json.dumps({"versao": 1, "contagens": {}}), encoding="utf-8"
+    )
+    assert _cli(tmp_path) == 2
+    assert _cli(tmp_path, "--atualizar-baseline") == 2
 
 
 # ---------------------------------------------------------------------------
@@ -672,21 +882,35 @@ def test_cli_sem_baseline_falha(tmp_path):
 def test_tese_real_nao_piora_o_baseline():
     if not BASELINE_REAL.is_file():
         pytest.skip(
-            f"baseline ausente ({BASELINE_REAL}); gere com: python scripts/linter_prosa.py --gerar-baseline"
+            f"baseline ausente ({BASELINE_REAL}); gere com: "
+            "python scripts/linter_prosa.py --gerar-baseline --forcar"
         )
     arvore = lp.carregar_arvore(lp.TESE_PADRAO, base=lp.REPO)
     assert "text/latex/capitulo1.tex" in {a.rel for a in arvore.arquivos.values()}
     assert not any(a.rel.endswith("tese_rev_diff.tex") for a in arvore.arquivos.values())
     violacoes = lp.lintar(arvore)
-    baseline = lp.ler_baseline(BASELINE_REAL)
-    assert baseline["versao"] == 1
-    excessos = lp.comparar(lp.contar(violacoes), baseline["contagens"])
-    detalhe = []
-    for regra, arquivo, atual, limite in excessos:
-        detalhe.append(f"{regra} em {arquivo}: {atual} (baseline {limite})")
-        detalhe += [
-            f"    {v.arquivo}:{v.linha} {v.mensagem}: {v.trecho}"
-            for v in violacoes
-            if v.regra == regra and v.arquivo == arquivo
-        ][:5]
-    assert not excessos, "o linter piorou frente ao baseline:\n" + "\n".join(detalhe)
+    baseline = lp.ler_baseline(BASELINE_REAL)  # ValueError se não for a versão 2
+    assert baseline["versao"] == 2
+    novas = lp.novas_violacoes(violacoes, baseline)  # avisos nunca entram
+    detalhe = [f"{v.regra} {v.arquivo}:{v.linha} {v.mensagem}: {v.trecho}" for v in novas[:20]]
+    assert not novas, f"{len(novas)} erro(s) novo(s) fora do baseline:\n" + "\n".join(detalhe)
+
+
+def test_baseline_nao_afrouxou():
+    """O baseline só pode encolher frente ao do merge-base com ``pq/revisao-2-redacao``."""
+    if not BASELINE_REAL.is_file():
+        pytest.skip(f"baseline ausente ({BASELINE_REAL})")
+    base, descricao = lp.baseline_da_base()
+    if base is None:
+        pytest.skip(f"sem baseline v2 de referência no git: {descricao}")
+    atual = lp.ler_baseline(BASELINE_REAL)
+    novas = lp.afrouxamentos(atual, base)
+    detalhe = [
+        f"{fp}: {atual['violacoes'][fp].get('regra')} {atual['violacoes'][fp].get('arquivo')}: "
+        f"{atual['violacoes'][fp].get('trecho')}"
+        for fp in novas[:20]
+    ]
+    assert not novas, (
+        f"o baseline ganhou {len(novas)} entrada(s) ausente(s) do {descricao}; "
+        "corrija a violação em vez de registrá-la:\n" + "\n".join(detalhe)
+    )
