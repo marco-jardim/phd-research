@@ -365,7 +365,8 @@
   valores:
     - {nome: e_fp_previstos_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: e_FP_previstas}, transformacao: dec2, texto_pt: "9,06"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [e_fp_previstos_vig, fp_P_vig]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [e_fp_previstos_vig, fp_P_vig]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [e_fp_previstos_vig, fp_P_vig]}
 
@@ -522,7 +523,8 @@
     - {nome: perda_PMATCH_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: P_MATCH_ao_humano}, coluna: perda_total}, transformacao: dec1, texto_pt: "569,2"}
     - {nome: perda_O2_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: O2_recuperacao_equivalente}, coluna: perda_total}, texto_pt: "551"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
   ressalvas: "Exploratório post hoc, revisor perfeito, C_LLM = 0,005; limiar C_LLM 0,0116 e custo 0,0146 (17,5 s) não registrados como valores (sem coluna de origem)."
@@ -602,7 +604,8 @@
   valores:
     - {nome: perda_O3_96rev, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: O3_mesma_carga_humana_P}, coluna: perda_total}, texto_pt: "796"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [perda_O3_96rev, "1.172,5"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [perda_O3_96rev, "1.172,5"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [perda_O3_96rev, "1.172,5"]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perda_O3_96rev, "1.172,5"]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perda_O3_96rev, "1.172,5"]}
   pendente: "1.172,5 (perda do filtro) não tem artefato de origem localizado (não consta de custos_equivalentes_exploratorios.csv nem de filtro_llm.csv); permanece como literal nas ocorrências até haver script/CSV que o gere."
@@ -656,7 +659,8 @@
     - {nome: ppv_P_passo6, fonte: {arquivo: data/equidade_arranjo_den30_excluidos.csv, filtro: {decisao: arranjo_P_vigilancia, dimension: passo, metric: ppv, group_a: passo_11, group_b: passo_6}, coluna: rate_b}, transformacao: pct1, texto_pt: "97,4"}
     - {nome: den_ppv_passo11, fonte: {arquivo: data/equidade_arranjo_den30_excluidos.csv, filtro: {decisao: arranjo_P_vigilancia, dimension: passo, metric: ppv, group_a: passo_11, group_b: passo_6}, coluna: n1}, texto_pt: "25"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [ppv_P_passo11, ppv_P_passo6, den_ppv_passo11]}
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: sempre, exige: [ppv_P_passo11, ppv_P_passo6, den_ppv_passo11]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [ppv_P_passo11, ppv_P_passo6, den_ppv_passo11]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [ppv_P_passo11, den_ppv_passo11]}
   ressalvas: "O slide cita linhas erradas de equidade_arranjo_den30_excluidos.csv (65-67); as corretas são 30-31 (vigilância) e 92-93 (confirmação) (I2)."
 
@@ -673,7 +677,8 @@
     - {nome: rej_casc_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_confirmacao}, coluna: rejeicoes_depois}, texto_pt: "1"}
     - {nome: testes_casc_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_confirmacao}, coluna: testes_depois}, texto_pt: "21"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [[rej_P_vig, "três"], testes_P_vig, [rej_P_conf, "duas"], [rej_casc_vig, "seis"], testes_casc_vig, [rej_casc_conf, "uma"], testes_casc_conf]}
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: sempre, exige: [[rej_P_vig, "três"], testes_P_vig, [rej_P_conf, "duas"], [rej_casc_vig, "seis"], testes_casc_vig, [rej_casc_conf, "uma"], testes_casc_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [[rej_P_vig, "três"], testes_P_vig, [rej_P_conf, "duas"], [rej_casc_vig, "seis"], testes_casc_vig, [rej_casc_conf, "uma"], testes_casc_conf]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: ["3/26", "2/26", "6/28", "1/21"]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: ["3/26", "2/26", "6/28", "1/21"]}
 
@@ -716,7 +721,8 @@
     - {nome: amplitude_integral, fonte: {arquivo: data/cenarios_sensibilidade_humana_amplitude.csv, filtro: {modo: vigilancia, estrategia: humano_integral}, coluna: amplitude_pp}, transformacao: dec2, texto_pt: "0,73"}
     - {nome: amplitude_reduzida, fonte: {arquivo: data/cenarios_sensibilidade_humana_amplitude.csv, filtro: {modo: vigilancia, estrategia: O3, k: 440}, coluna: amplitude_pp}, transformacao: dec2, texto_pt: "0,53"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [amplitude_integral, amplitude_reduzida]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [amplitude_integral, amplitude_reduzida]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [amplitude_integral, amplitude_reduzida]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [amplitude_integral, amplitude_reduzida]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [amplitude_integral, amplitude_reduzida]}
   ressalvas: "Limites por construção (5% de erro sobre 36 de 247), não achado empírico."
@@ -728,7 +734,8 @@
     - {nome: horas_P_vig, fonte: {arquivo: data/esforco_arranjo.csv, filtro: {modo: vigilancia, braco: P, carga: K1_humana}, coluna: horas}, texto_pt: "32"}
     - {nome: horas_poupadas_P_vig, fonte: {arquivo: data/esforco_arranjo.csv, filtro: {modo: vigilancia, braco: P, carga: K1_humana}, coluna: horas_poupadas}, transformacao: int, texto_pt: "687"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [horas_P_vig, carga_passo]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [carga_passo]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [horas_P_vig, carga_passo]}  # 32 e 687 seguem protegidos pela tabela tab_cap8_esforco (regeneração em test_s8a; manifesto tests/data/tabelas_tese.yaml)
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [horas_P_vig, horas_poupadas_P_vig]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [horas_poupadas_P_vig, carga_passo]}
   ressalvas: "Horas são ordem de grandeza (20 min por par é hipótese de planejamento); as 687 horas comparam metas diferentes."
@@ -745,7 +752,9 @@
     - {nome: reducao_historica_vig, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: vigilancia, arm: on_vs_off, metric: review_reduction_percent}, coluna: historical_mean}, transformacao: dec1, texto_pt: "14,5"}
     - {nome: reducao_historica_conf, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: confirmacao, arm: on_vs_off, metric: review_reduction_percent}, coluna: historical_mean}, transformacao: dec1, texto_pt: "17,6"}
   ocorrencias:
-    - {arquivo: text/latex/conclusao.tex, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf, f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf, f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf, f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
   ressalvas: "F1 esperado, não observado; sem chamada a LLM."
 
