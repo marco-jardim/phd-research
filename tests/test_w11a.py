@@ -10,6 +10,7 @@ import yaml
 
 from scripts.probe_dossie_v5_agregado import FIELDS, generate, utility
 from scripts.v4_candidata_registro import FILES, build_registry
+from terminologia import contem
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -164,7 +165,7 @@ def test_propagation_and_bayesian_evidence_limits():
     assert (post("VP"), post("aceitacoes")) == (11, 26)
     assert post("VPP") == pytest.approx(11 / 26)
     assert float(one(data, modo="vigilancia", variante="P-LLM", tipo="aceitacao", metrica="VPP")["valor"]) == .16
-    assert "42,3\\% (11 vínculos em 26 aceitações)" in text()
+    assert contem(text(), "42,3\\% (11 vínculos em 26 aceitações)")  # migrado: terminologia 3.6
     assert "58,3\\% dos PAR~=~2" in text()
     assert "não constitui validação aninhada integral" in text()
 

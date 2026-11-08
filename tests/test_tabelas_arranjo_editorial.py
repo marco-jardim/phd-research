@@ -15,6 +15,7 @@ import pytest
 from scripts import equidade_arranjo as historical
 from scripts.tabelas_arranjo_editorial import generate, render_reference, step_ppv_note
 from scripts.tabelas_review2_w3 import equity_tables
+from terminologia import normalizar_terminologia
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
@@ -105,13 +106,13 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     for original, current in zip(old, new):
         if original[0] == "Corte + revisão manual do serviço":
             assert current[2] == "cenário $\\geq " + bound + "$"
-            assert current[0] == "Corte + revisão clerical de origem"
+            assert normalizar_terminologia(current[0]) == normalizar_terminologia("Corte + revisão clerical de origem")  # migrado: terminologia 3.6
             assert original[1] == current[1] and original[3:] == current[3:]
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
             assert original[:2] == current[:2] and original[3:] == current[3:]
         elif original[0] == "CdR, revisão humana da área cinza":
-            assert current[0] == "CdR, revisão humana da área cinza da nota"
+            assert normalizar_terminologia(current[0]) == normalizar_terminologia("CdR, revisão humana da área cinza da nota")  # migrado: terminologia 3.6
             assert original[1:] == current[1:]
         elif original[0] == "CdR, limiar da nota em 8":
             assert current[0] == r"CdR, decisão de limiar (nota $\geq 8$)"

@@ -9,6 +9,7 @@ import pandas as pd
 
 from scripts import tabelas_banca_b_editorial as tables
 from scripts.banca_b_encerramento_agregado import summarize_situence
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
@@ -56,7 +57,7 @@ def test_uniform_nb02_nb03_are_single_sources_with_documented_discrepancy():
     gb = next(row for row in nb02["all_results"] if row["Modelo"].startswith("GB +"))
     assert tables.d(gb["Recall"]) == "0,932"
     assert tables.d(gb["Precision"]) == "0,885"
-    assert "sensibilidade de 0,932 e precisão de 0,885" in text
+    assert contem(text, "sensibilidade de 0,932 e precisão de 0,885")  # migrado: terminologia 3.6
     assert "não são adotados como resultado desta seção" in text
     assert r"XGBoost \cite{Chen2016xgboost} com 200 estimadores" in text
 

@@ -9,6 +9,7 @@ import pytest
 from scripts.tabelas_s8a1_editorial import generate, subsampling, llm_filter, human_sensitivity
 from scripts.tabelas_s8_editorial import effort, same_load
 from scripts.transcrever_prompts_editorial import generate as prompts_generate, role_payloads
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 L = ROOT / 'text/latex'
@@ -122,7 +123,7 @@ def test_acceptances_split_true_and_false_and_match_to_human_comparator():
 def test_effort_uses_saved_hours_per_lost_link_and_keeps_llm_separate():
     data = pd.read_csv(ROOT / 'data/esforco_arranjo.csv')
     text = effort(data)
-    assert 'Horas poupadas' in text and 'por vínculo perdido' in text
+    assert 'Horas poupadas' in text and contem(text, 'por vínculo perdido')  # migrado: terminologia 3.6
     assert 'Pares LLM' in text and 'sem equivalência temporal' in text
     changed = data.copy()
     changed['horas_poupadas_por_vinculo_perdido'] += 100
@@ -143,7 +144,7 @@ def test_hypothesis_bias_and_recommendation_are_not_claimed_as_validation():
     assert 'O LLM pode atuar somente como filtro' in conclusion
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in conclusion
     assert 'Os potenciais pares fora do orçamento não são examinados e devem ser registrados como não examinados' in conclusion
-    assert 'a regra de duas ações (revisar ou não vincular) atribui-lhes não vínculo por custo' in conclusion
+    assert contem(conclusion, 'a regra de duas ações (revisar ou não vincular) atribui-lhes não vínculo por custo')  # migrado: terminologia 3.6
     assert 'não equivale a óbito não notificado' in conclusion
     assert 'validação registrada em dados novos' in conclusion
 

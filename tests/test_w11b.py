@@ -8,6 +8,7 @@ import re
 import pytest
 
 from test_w10b import APPROVED
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -49,8 +50,8 @@ def test_person_propagation_is_limited_to_published_recovery():
             if r["regra"] == "R1_UNIAO" and r["passo"] == "TOTAL"]
     assert int(row["par2"]) == int(row["propagados"]) == 2
     assert "Propagação por pessoa: dois vínculos" in answer(87)
-    assert "propagação por pessoa recuperou somente dois vínculos, com alcance restrito" in text(
-        "text/latex/conclusao.tex")
+    assert contem(text("text/latex/conclusao.tex"),  # migrado: terminologia 3.6
+                  "propagação por pessoa recuperou somente dois vínculos, com alcance restrito")
 
 
 def test_llm_evidence_vpp_and_caution_track_same_baseline():

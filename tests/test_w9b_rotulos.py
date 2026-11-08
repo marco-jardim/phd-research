@@ -13,6 +13,8 @@ import re
 
 import pytest
 
+from terminologia import normalizar_terminologia
+
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / 'text/latex'
 OWNED = (
@@ -32,7 +34,7 @@ GLOSS_WORDS = {
     'K1': (('humana', 'humano', 'data de nascimento exata'),),
     'K2': (('mista', 'misto', 'llm'), ('carga', 'orçamento', 'avaliações')),
     'K3': (('custo', 'ponderad'),),
-    'NONMATCH': (('não vínculo', 'não-vínculo', 'non-link'),),
+    'NONMATCH': (('não vínculo', 'não-vínculo', 'não par', 'não-par', 'non-link'),),  # migrado: terminologia 3.6
     'passo de blocagem': (('geração', 'chaves'),),
     'blocking step': (('candidate-generation', 'keys'),),
 }
@@ -54,8 +56,8 @@ def assert_unit_first_mentions(text):
     for paragraph in re.split(r'\n\s*\n', prose(text)):
         for token, groups in GLOSS_WORDS.items():
             if token not in seen and occurrences(paragraph, token):
-                normalized = paragraph.lower().replace('~', ' ')
-                assert all(any(word in normalized for word in alternatives)
+                normalized = normalizar_terminologia(paragraph)  # migrado: terminologia 3.6
+                assert all(any(normalizar_terminologia(word) in normalized for word in alternatives)
                            for alternatives in groups), (token, paragraph)
                 seen.add(token)
 

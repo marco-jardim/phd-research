@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from terminologia import contem
 from gzcmd import arranjo_robustez as robust
 from gzcmd.arranjo_corte import crossfit_rates
 from scripts.carga_abaixo_corte_horas import generate as hours_generate
@@ -59,7 +60,7 @@ def test_arrangement_editorial_preserves_every_number():
     assert numeric(arrangement_expected_notes(original)) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
-    assert 'área cinza da nota' in current
+    assert contem(current, 'área cinza da nota')  # migrado: terminologia 3.6
 
 
 def test_workload_hours_reproduce_source_and_historical_time_assumption(tmp_path):
@@ -144,7 +145,7 @@ def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
     assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
     assert 'hipótese exploratória a validar em dados novos' in recommendation
-    assert 'nas condições avaliadas, não deve aceitar vínculos sozinho' in recommendation
+    assert contem(recommendation, 'nas condições avaliadas, não deve aceitar vínculos sozinho')  # migrado: terminologia 3.6
     assert 'posição de precaução, não estimativa transferível' in recommendation
     assert 'validação registrada em dados novos' in recommendation
 

@@ -8,6 +8,7 @@ import pandas as pd
 import pytest
 
 from scripts.tabelas_s8_editorial import generate, same_load, effort
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 L = ROOT / 'text/latex'
@@ -68,7 +69,7 @@ def test_fp_position_and_loss_qualification_follow_sources():
     for mode, expected in [('vigilancia', [17, 11]), ('confirmacao', [4, 4])]:
         assert above.loc[above.modo.eq(mode), 'FP'].tolist() == expected
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem' in conclusion
+    assert contem(conclusion, 'não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem')  # migrado: terminologia 3.6
     assert 'aceita 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in conclusion
     assert '4 e 8 são PAR~=~2' in conclusion
     assert 'pior em todo desfecho' not in conclusion
@@ -80,7 +81,10 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         text = (L / name).read_text(encoding='utf-8')
         for term in ('curva de esforço', 'separação entre vínculos aceitos pelo corte e recuperados na revisão', 'ancoragem', 'resultado negativo',
                      'registro interno', 'orçamento humano'):
-            assert term in text, (name, term)
+            # migrado: terminologia 3.6
+            # "revisão clerical" e "revisão manual" viram o mesmo marcador, então o final "na revisão"
+            # é aceito com ou sem o qualificador.
+            assert (contem(text, term) or contem(text, term + ' clerical') if 'vínculo' in term else term in text), (name, term)
         if name == 'capitulo1.tex':
             assert 'ordem decrescente' in text
         else:

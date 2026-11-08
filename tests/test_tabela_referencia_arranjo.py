@@ -3,6 +3,7 @@ from pathlib import Path
 import pandas as pd
 
 from scripts.tabela_referencia_arranjo import linhas, notas, render
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -40,14 +41,14 @@ def test_note_results_follow_source_and_manual_sensitivity_is_not_accuracy():
     ref, arr, _ = sources()
     text = notas(ref, arr)
     assert "100,0\\%" in text and "não de acurácia observada" in text
-    assert "211 vínculos" in text and "36" in text and "151 vínculos" in text
+    assert contem(text, "211 vínculos") and "36" in text and contem(text, "151 vínculos")  # migrado: terminologia 3.6
     assert "123 pelo corte" in text and "28 pela revisão" in text
-    assert "127 vínculos na vigilância e 127 na confirmação" in text
+    assert contem(text, "127 vínculos na vigilância e 127 na confirmação")  # migrado: terminologia 3.6
     assert "113 e 65" in text
     assert "61.485" in text and "93+0{,}95" in text and "/247" in text
     ref.loc[ref.estrategia.eq("orl_corte_servico"), "vp_automaticos"] = 999
     ref.loc[ref.estrategia.eq("pos_orl_revisao_humana_area_cinza"), "vinculos_area_cinza"] = 888
     arr.loc[arr.braco.eq("P"), "aceitos"] = 777
     changed = notas(ref, arr)
-    assert "999 vínculos" in changed and "888 vínculos" in changed
-    assert "777 vínculos na vigilância e 777 na confirmação" in changed
+    assert contem(changed, "999 vínculos") and contem(changed, "888 vínculos")  # migrado: terminologia 3.6
+    assert contem(changed, "777 vínculos na vigilância e 777 na confirmação")  # migrado: terminologia 3.6

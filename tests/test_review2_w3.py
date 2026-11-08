@@ -5,6 +5,7 @@ import re
 import pandas as pd
 
 from scripts import tabelas_review2_w3 as tables
+from terminologia import conta
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
@@ -38,7 +39,7 @@ def test_ablation_appendix_is_generated_expected_not_llm_observation():
             assert f" & {int(count)} " + r"\\" in text
             assert f" & {int(count)},0 " + r"\\" not in text
         assert f"data/ablation_comprec_{arm}.csv" in text
-    assert text.count("Cada teste contém 74 vínculos") == 4
+    assert conta(text, "Cada teste contém 74 vínculos") == 4  # migrado: terminologia 3.6
 
 
 def test_origin_and_family_importance_have_no_personal_attribution():

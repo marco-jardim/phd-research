@@ -7,6 +7,8 @@ import re
 
 import pandas as pd
 
+from terminologia import GREY_AREA, contem, normalizar_terminologia
+
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / 'text/latex'
 DATA = ROOT / 'data'
@@ -23,7 +25,7 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    assert 'no máximo um vínculo adicional' in pt
+    assert contem(pt, 'no máximo um vínculo adicional')  # migrado: terminologia 3.6
     assert '344 pares avaliados pelo modelo de linguagem de grande porte (LLM)' in pt
     assert 'at most one additional link' in en
     assert '344 LLM-reviewed pairs' in en
@@ -42,7 +44,7 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
         reviewer = llm.loc[llm.braco.eq('P') & llm.modo.eq(mode)].iloc[0]
         assert rows.loc['MATCH_LLM', 'nao_vinculos'] == reviewer.FP == observed.fp
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert 'a cadeia aceitou 196 vínculos' in study
+    assert contem(study, 'a cadeia aceitou 196 vínculos')  # migrado: terminologia 3.6
     assert 'o Sonnet como revisor aceitou' not in study
 
 
@@ -85,7 +87,7 @@ def test_conclusion_separates_registration_from_negative_finding_and_has_compara
     assert fmt(cut.sens_automatica * 100) + r'\%' in text
     assert fmt(review.sens_com_humano * 100) + r'\%' in text
     assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in text
-    assert 'área cinza da nota projetaria' in text
+    assert contem(text, 'área cinza da nota projetaria')  # migrado: terminologia 3.6
 
 
 def test_editorial_area_review_is_a_ceiling_without_numeric_change():
@@ -114,7 +116,8 @@ def test_study_grey_zone_model_version_chronology_and_range_are_unambiguous():
     for prefix in ('Nos 21.620', r'A Tabela~\ref{tab:e4-desempenho-faixas-oof}',
                    'O escore de Brier', r'A Tabela~\ref{tab:cap8-ancoras-decisao}'):
         paragraph = next(p for p in study.split('\n\n') if p.startswith(prefix))
-        assert not re.search(r'área cinza(?! da nota)', paragraph)
+        # migrado: terminologia 3.6 (a glosa "(área cinza)" vira o mesmo marcador de \textit{grey area})
+        assert not re.search(f'{GREY_AREA}(?! da nota)', normalizar_terminologia(paragraph))
     assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in study
     assert r'S3 às 02:11:52 UTC, conforme \path{data/arranjo_corte_metadata.json} na versão \texttt{16d5876}' in study
     assert 'não no JSON atual' in study

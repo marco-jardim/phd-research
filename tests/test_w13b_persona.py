@@ -5,6 +5,7 @@ import re
 
 from test_s4a_texto import abstracts
 from test_w10b import APPROVED
+from terminologia import contem
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,7 +27,8 @@ def test_persona_blockers_in_bilingual_summaries_and_ceiling():
                      'zero, demais', 'separação entre vínculos aceitos pelo corte e recuperados na revisão',
                      'influência das saídas do motor na resposta do LLM (ancoragem)',
                      'P-Platt é análise de sensibilidade', 'recuperação obtida por P'):
-        assert fragment in pt
+        # migrado: terminologia 3.6
+        assert contem(pt, fragment) if ('vínculo' in fragment or 'clerical' in fragment) else fragment in pt
     for fragment in ('one, accepted by the cut-off', 'two, recovered by clerical review below it',
                      'zero, others', 'recovery obtained by P', "P's automatic sensitivity",
                      'separating links accepted by the cut-off from those recovered by review',
