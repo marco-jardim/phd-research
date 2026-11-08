@@ -1,0 +1,852 @@
+"""Testes de scripts/cruzamento_ancoras.py (cruzamento da tese com as âncoras) com a API mockada."""
+
+from __future__ import annotations
+
+import json
+import re
+import threading
+from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
+
+from scripts import cruzamento_ancoras as cli
+from scripts.atestado.common import write_jsonl_atomic
+from scripts.cruzamento import adjudicar as adj
+from scripts.cruzamento import cruzar as crz
+from scripts.cruzamento import execucao as ex
+from scripts.cruzamento import fatiar as ft
+from scripts.cruzamento import mapear as mp
+from scripts.cruzamento import relatorio as rel
+from scripts.cruzamento.comum import (
+    FATIAS_NOME,
+    MAPA_NOME,
+    PARES_NOME,
+    carregar_ancoras,
+    extrair_objeto,
+    id_curto,
+    indexar_fatia,
+    localizar_trecho,
+    numerar,
+)
+
+REPO = Path(__file__).resolve().parents[1]
+
+ANCORAS = [
+    {"id": "C01", "origem": "atual", "texto": "Texto da âncora um.", "ressalva": ""},
+    {"id": "C02", "origem": "proposta", "texto": "Texto da âncora dois.", "ressalva": "Com ressalva."},
+]
+
+
+# ---------------------------------------------------------------------------
+# Projeto LaTeX de teste
+# ---------------------------------------------------------------------------
+ROOT_TEX = """\\documentclass{book}
+\\begin{document}
+\\input{cap1.tex}
+\\input{cap1_diff.tex}
+\\end{document}
+"""
+
+CAP1_TEX = """\\begin{chapter}{Introdução}\\label{cap:intro}
+Primeiro parágrafo da introdução com algumas palavras de teste.
+
+Segundo parágrafo da introdução, também com palavras.
+
+\\section{Métodos}
+Texto de métodos com a meta 23 no passo.
+
+\\input{tables/tab_a.tex}
+
+\\subsection{Detalhe}
+Texto do detalhe.
+\\end{chapter}
+"""
+
+TAB_TEX = """\\begin{table}\\caption{Tabela A}\\label{tab:a}
+\\begin{tabular}{l}
+x \\\\
+\\end{tabular}
+\\end{table}
+"""
+
+DIFF_TEX = "\\chapter{Capítulo de diff}\nTexto de diff que não deve aparecer.\n"
+ORFAO_TEX = "\\chapter{Órfão}\nTexto órfão fora da árvore.\n"
+
+SLIDES_TEX = """\\documentclass{beamer}
+\\begin{document}
+\\begin{frame}
+\\titlepage
+\\end{frame}
+% \\begin{frame}{Comentado}
+\\section{Resultados}
+\\begin{frame}{Estudo com \\textit{expected loss}}
+Texto do slide um.
+
+Outro bloco do slide.
+\\end{frame}
+\\end{document}
+"""
+
+ROTEIRO_MD = """# Roteiro
+
+## Cronometragem
+
+Tempo total de 30 minutos.
+
+## Fala-guia
+
+### 1. Capa
+
+Fala da capa com texto.
+
+### 2. Dados
+
+Fala dos dados com 23 casos.
+"""
+
+
+def escrever(caminho: Path, texto: str) -> Path:
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    caminho.write_text(texto, encoding="utf-8", newline="\n")
+    return caminho
+
+
+@pytest.fixture()
+def projeto(tmp_path: Path) -> Path:
+    escrever(tmp_path / "tese.tex", ROOT_TEX)
+    escrever(tmp_path / "cap1.tex", CAP1_TEX)
+    escrever(tmp_path / "tables" / "tab_a.tex", TAB_TEX)
+    escrever(tmp_path / "cap1_diff.tex", DIFF_TEX)
+    escrever(tmp_path / "orfao.tex", ORFAO_TEX)
+    escrever(tmp_path / "slides" / "defesa.tex", SLIDES_TEX)
+    escrever(tmp_path / "slides" / "roteiro.md", ROTEIRO_MD)
+    return tmp_path
+
+
+# ---------------------------------------------------------------------------
+# fatiar
+# ---------------------------------------------------------------------------
+def test_fatiar_tese_e_deterministico(projeto: Path) -> None:
+    primeira = ft.fatiar_tese(projeto / "tese.tex", projeto)
+    segunda = ft.fatiar_tese(projeto / "tese.tex", projeto)
+    assert primeira == segunda and primeira
+    ids = [f["id"] for f in primeira]
+    assert len(ids) == len(set(ids))
+    for f in primeira:
+        assert f["id"] == id_curto(f["arquivo"], str(f["linha_inicio"]), f["texto"])
+        assert len(f["linhas"]) == len(f["texto"].split("\n"))
+        assert f["fonte"] == "tese"
+
+
+def test_fatiar_tese_ignora_diff_e_arquivos_fora_da_arvore(projeto: Path) -> None:
+    fatias = ft.fatiar_tese(projeto / "tese.tex", projeto)
+    arquivos = {f["arquivo"] for f in fatias}
+    assert "cap1.tex" in arquivos and "tables/tab_a.tex" in arquivos
+    assert "cap1_diff.tex" not in arquivos and "orfao.tex" not in arquivos
+    juntos = "\n".join(f["texto"] for f in fatias)
+    assert "Texto de diff" not in juntos and "Texto órfão" not in juntos
+
+
+def test_arquivo_excluido() -> None:
+    assert ft.arquivo_excluido("text/latex/tese_rev_diff.tex")
+    assert ft.arquivo_excluido("text/latex/cap1_diff.tex")
+    assert ft.arquivo_excluido("text/latex/tese_diff_work/a.tex")
+    assert not ft.arquivo_excluido("text/latex/cap1.tex")
+
+
+def test_fatiar_tese_secao_e_tabela_na_secao_que_a_inclui(projeto: Path) -> None:
+    fatias = ft.fatiar_tese(projeto / "tese.tex", projeto)
+    tabela = [f for f in fatias if f["arquivo"] == "tables/tab_a.tex"]
+    assert tabela and all(f["secao"] == "Cap. 1 Introdução > 1.1 Métodos" for f in tabela)
+    assert fatias[0]["secao"] == "Cap. 1 Introdução"
+
+
+def test_fatiar_tese_nao_corta_paragrafo(projeto: Path) -> None:
+    # com limite de 1 palavra cada parágrafo vira uma fatia só dele (nunca é cortado)
+    fatias = ft.fatiar_tese(projeto / "tese.tex", projeto, max_palavras=1)
+    assert all("\n\n" not in f["texto"] for f in fatias)
+    textos = [f["texto"] for f in fatias]
+    assert any("Segundo parágrafo da introdução, também com palavras." == t for t in textos)
+    assert any(t.startswith("\\section{Métodos}\nTexto de métodos com a meta 23 no passo.") for t in textos)
+    # com o limite padrão os parágrafos da mesma seção e arquivo se juntam
+    padrao = ft.fatiar_tese(projeto / "tese.tex", projeto)
+    assert len(padrao) < len(fatias)
+
+
+def _paragrafo(inicio: int, palavras: int) -> tuple[int, list[str]]:
+    return inicio, [" ".join(["palavra"] * palavras)]
+
+
+def test_empacotar_respeita_limite_de_palavras() -> None:
+    paragrafos = [_paragrafo(1, 30), _paragrafo(3, 30), _paragrafo(5, 30), _paragrafo(7, 100), _paragrafo(9, 10)]
+    grupos = ft.empacotar(paragrafos, 70)
+    assert [[p[0] for p in g] for g in grupos] == [[1, 3], [5], [7], [9]]
+    for grupo in grupos:
+        total = sum(len(p[1][0].split()) for p in grupo)
+        assert total <= 70 or len(grupo) == 1  # só um parágrafo sozinho pode passar do limite
+
+
+def test_fatiar_slides_um_frame_por_fatia(projeto: Path) -> None:
+    fatias = ft.fatiar_slides(projeto / "slides" / "defesa.tex", projeto)
+    assert len(fatias) == 2  # o frame comentado não conta
+    assert fatias[0]["secao"] == "Slides > Slide 1"
+    assert fatias[1]["secao"] == "Slides > Resultados > Slide 2: Estudo com expected loss"
+    assert (fatias[0]["linha_inicio"], fatias[0]["linha_fim"]) == (3, 5)
+    assert (fatias[1]["linha_inicio"], fatias[1]["linha_fim"]) == (8, 12)
+    assert fatias[1]["arquivo"] == "slides/defesa.tex"
+    assert "Outro bloco do slide." in fatias[1]["texto"] and "Comentado" not in "".join(f["texto"] for f in fatias)
+
+
+def test_fatiar_roteiro_por_secao(projeto: Path) -> None:
+    fatias = ft.fatiar_roteiro(projeto / "slides" / "roteiro.md", projeto)
+    assert [f["secao"] for f in fatias] == [
+        "Roteiro > Cronometragem", "Roteiro > Fala-guia > 1. Capa", "Roteiro > Fala-guia > 2. Dados",
+    ]
+    capa = fatias[1]
+    assert capa["texto"] == "### 1. Capa\n\nFala da capa com texto."
+    assert capa["linhas"] == [9, 0, 11] and (capa["linha_inicio"], capa["linha_fim"]) == (9, 11)
+    assert capa["arquivo"] == "slides/roteiro.md"
+
+
+def test_cli_fatiar_grava_e_e_deterministico(projeto: Path) -> None:
+    out = projeto / "saida"
+    argv = ["fatiar", "--tese", str(projeto / "tese.tex"), "--slides", str(projeto / "slides" / "defesa.tex"),
+            "--roteiro", str(projeto / "slides" / "roteiro.md"), "--base", str(projeto), "--out", str(out)]
+    assert cli.main(argv) == 0
+    primeiro = (out / FATIAS_NOME).read_bytes()
+    assert cli.main(argv) == 0
+    assert (out / FATIAS_NOME).read_bytes() == primeiro
+    fontes = {json.loads(linha)["fonte"] for linha in primeiro.decode("utf-8").splitlines()}
+    assert fontes == {"tese", "slides", "roteiro"}
+
+
+# ---------------------------------------------------------------------------
+# Âncoras, numeração e verificação literal de trechos
+# ---------------------------------------------------------------------------
+def test_carregar_ancoras(tmp_path: Path) -> None:
+    caminho = escrever(tmp_path / "a.yaml", (
+        "- id: C01\n  origem: atual\n  texto: Primeira âncora.\n"
+        "- id: C01r\n  origem: proposta\n  texto: Segunda.\n  ressalva: Com ressalva.\n"
+    ))
+    ancoras = carregar_ancoras(caminho)
+    assert [a["id"] for a in ancoras] == ["C01", "C01r"]
+    assert ancoras[1]["ressalva"] == "Com ressalva." and ancoras[0]["ressalva"] == ""
+    ruim = escrever(tmp_path / "b.yaml", "- id: X\n  origem: inventada\n  texto: t\n")
+    with pytest.raises(ValueError):
+        carregar_ancoras(ruim)
+
+
+def fatia_exemplo() -> dict:
+    return {"id": "f1", "arquivo": "x.tex", "linha_inicio": 10, "linha_fim": 13, "secao": "S", "fonte": "tese",
+            "texto": "Linha um com  espaços\nsegue aqui.\n\nOutro parágrafo.", "linhas": [10, 11, 0, 13]}
+
+
+def test_numerar_prefixa_o_numero_da_linha() -> None:
+    texto = numerar(fatia_exemplo()).split("\n")
+    assert texto[0].strip().startswith("10|") and texto[1].strip().startswith("11|")
+    assert texto[2] == "" and texto[3].strip().startswith("13|")
+
+
+def test_localizar_trecho_normaliza_espacos_e_devolve_a_linha() -> None:
+    indice = indexar_fatia(fatia_exemplo())
+    assert localizar_trecho(indice, "com espaços segue aqui.") == 10
+    assert localizar_trecho(indice, "aqui. Outro   parágrafo.") == 11
+    assert localizar_trecho(indice, "Outro parágrafo.") == 13
+    assert localizar_trecho(indice, "texto inexistente") is None
+    assert localizar_trecho(indice, "   ") is None
+
+
+def test_processar_resultado_verifica_trechos_sem_descartar() -> None:
+    fatia = fatia_exemplo()
+    resultado = {
+        "relacoes": [
+            {"ancora_id": "C01", "relacao": "afirma", "trecho": "segue aqui.", "linha": 99, "justificativa": "j"},
+            {"ancora_id": "C01", "relacao": "contradiz", "trecho": "frase parafraseada", "linha": 10},
+            {"ancora_id": "C77", "relacao": "inventada", "trecho": "Outro parágrafo.", "linha": 13},
+            "não é objeto",
+        ],
+        "afirmacoes": [
+            {"trecho": "Outro parágrafo.", "linha": 13, "tipo": "resultado", "topicos": ["P_vigilancia", "xx"],
+             "numeros": ["23"], "polaridade": "afirma", "escopo": "e"},
+        ],
+    }
+    saida = mp.processar_resultado(fatia, resultado, {"C01", "C02"})
+    valida, invalida, estranha = saida["relacoes"]
+    assert valida["trecho_valido"] and valida["linha"] == 11 and "linha_corrigida" in valida["flags"]
+    assert not invalida["trecho_valido"] and "trecho_invalido" in invalida["flags"] and invalida["linha"] == 10
+    assert "relacao_invalida" in estranha["flags"] and "ancora_desconhecida" in estranha["flags"]
+    assert saida["malformados"] == 1
+    af = saida["afirmacoes"][0]
+    assert af["topicos"] == ["P_vigilancia"] and "topico_fora_da_taxonomia" in af["flags"]
+    assert "numero_fora_do_trecho" in af["flags"]
+
+
+def test_extrair_objeto_aceita_cerca_e_rejeita_lixo() -> None:
+    assert extrair_objeto('```json\n{"a": 1}\n```') == {"a": 1}
+    with pytest.raises(ValueError):
+        extrair_objeto("sem json")
+    with pytest.raises(ValueError):
+        extrair_objeto("{quebrado")
+
+
+# ---------------------------------------------------------------------------
+# Cliente mockado
+# ---------------------------------------------------------------------------
+class ErroApi(Exception):
+    def __init__(self, status: int) -> None:
+        super().__init__(f"status {status}")
+        self.status_code = status
+
+
+class APIConnectionError(Exception):
+    """Erro de rede (sem status_code), reconhecido pelo nome da classe."""
+
+
+def mensagem(conteudo) -> SimpleNamespace:
+    texto = conteudo if isinstance(conteudo, str) else json.dumps(conteudo, ensure_ascii=False)
+    return SimpleNamespace(
+        content=[SimpleNamespace(type="text", text=texto)],
+        usage=SimpleNamespace(input_tokens=100, output_tokens=50,
+                              cache_creation_input_tokens=10, cache_read_input_tokens=5),
+        stop_reason="end_turn",
+    )
+
+
+class LotesFalsos:
+    def __init__(self, responder, pronto: bool = True) -> None:
+        self.responder = responder
+        self.pronto = pronto
+        self.criados: list[str] = []
+        self.guardados: dict[str, list] = {}
+
+    def create(self, requests):
+        lote = f"msgbatch_{len(self.criados) + 1}"
+        self.criados.append(lote)
+        self.guardados[lote] = requests
+        return SimpleNamespace(id=lote, processing_status="in_progress")
+
+    def retrieve(self, lote):
+        return SimpleNamespace(id=lote, processing_status="ended" if self.pronto else "in_progress")
+
+    def results(self, lote):
+        for pedido in self.guardados[lote]:
+            yield SimpleNamespace(
+                custom_id=pedido["custom_id"],
+                result=SimpleNamespace(type="succeeded", message=mensagem(self.responder(pedido["params"]))),
+            )
+
+
+class MensagensFalsas:
+    def __init__(self, responder, erros=(), ao_chamar=None, pronto: bool = True) -> None:
+        self.responder = responder
+        self.erros = list(erros)
+        self.ao_chamar = ao_chamar
+        self.chamadas: list[dict] = []
+        self.trava = threading.Lock()
+        self.batches = LotesFalsos(responder, pronto)
+
+    def create(self, **params):
+        with self.trava:
+            self.chamadas.append(params)
+            erro = self.erros.pop(0) if self.erros else None
+            if self.ao_chamar is not None:
+                self.ao_chamar(len(self.chamadas))
+        if erro is not None:
+            raise erro
+        return mensagem(self.responder(params))
+
+
+def cliente_falso(responder, **kw) -> SimpleNamespace:
+    return SimpleNamespace(messages=MensagensFalsas(responder, **kw))
+
+
+def fatia_sintetica(i: int) -> dict:
+    linhas = [f"Primeira frase da fatia {i} com número {i}.", f"Segunda linha da fatia {i}."]
+    texto = "\n".join(linhas)
+    base = 10 * i + 1
+    return {
+        "id": id_curto("a.tex", str(base), texto), "arquivo": "a.tex" if i % 2 == 0 else "b.tex",
+        "linha_inicio": base, "linha_fim": base + 1, "secao": f"Cap > Seção {i}", "fonte": "tese",
+        "palavras": 12, "texto": texto, "linhas": [base, base + 1],
+    }
+
+
+@pytest.fixture()
+def fatias() -> list[dict]:
+    return [fatia_sintetica(i) for i in range(6)]
+
+
+def responder_mapear_de(fatias: list[dict], trecho_ruim_na_fatia: int | None = None):
+    por_id = {f["id"]: (n, f) for n, f in enumerate(fatias)}
+
+    def responder(params):
+        texto = params["messages"][0]["content"][0]["text"]
+        n, fatia = por_id[re.search(r"^Fatia (\S+)$", texto, re.M).group(1)]
+        primeira, segunda = fatia["texto"].split("\n")
+        trecho = "Texto que não existe na fatia." if n == trecho_ruim_na_fatia else primeira
+        return {
+            "relacoes": [{"ancora_id": "C01", "relacao": "afirma" if n % 2 == 0 else "contradiz",
+                          "trecho": trecho, "linha": fatia["linhas"][0], "justificativa": "j"}],
+            "afirmacoes": [{"trecho": segunda, "linha": fatia["linhas"][1], "tipo": "resultado",
+                            "topicos": ["P_vigilancia"], "numeros": [], "polaridade": "afirma", "escopo": "esc"}],
+        }
+
+    return responder
+
+
+def rodar_mapear(out: Path, fatias, cliente, modo="sync", concorrencia=1, sleeps=None, settings=None):
+    settings = settings or ex.criar_settings("modelo-teste", modo, 1000, concorrencia)
+    sleep = sleeps.append if sleeps is not None else (lambda s: None)
+    return mp.run_mapear(fatias=fatias, ancoras=ANCORAS, out=out, settings=settings, client=cliente, sleep=sleep)
+
+
+# ---------------------------------------------------------------------------
+# mapear: requisições, sync, retry, retomada
+# ---------------------------------------------------------------------------
+def test_requisicoes_sem_temperature_e_com_cache_no_sistema(tmp_path: Path, fatias) -> None:
+    cliente = cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path / "sync", fatias, cliente)
+    cliente_lote = cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path / "lote", fatias, cliente_lote, modo="batch")
+    pedidos = [p["params"] for lote in cliente_lote.messages.batches.guardados.values() for p in lote]
+    todos = [*cliente.messages.chamadas, *pedidos]
+    assert len(todos) == 12
+    for params in todos:
+        assert "temperature" not in params
+        assert params["system"][0]["cache_control"] == {"type": "ephemeral"}
+        assert "Texto da âncora um." in params["system"][0]["text"]  # âncoras no bloco em cache
+        assert "P_vigilancia" in params["system"][0]["text"]  # taxonomia no bloco em cache
+
+
+def test_concorrencia_maior_que_um_produz_o_mesmo_resultado(tmp_path: Path, fatias) -> None:
+    serial = rodar_mapear(tmp_path / "c1", fatias, cliente_falso(responder_mapear_de(fatias)), concorrencia=1)
+    paralelo = rodar_mapear(tmp_path / "c4", fatias, cliente_falso(responder_mapear_de(fatias)), concorrencia=4)
+    assert serial["linhas"] == paralelo["linhas"]
+    assert (tmp_path / "c1" / MAPA_NOME).read_bytes() == (tmp_path / "c4" / MAPA_NOME).read_bytes()
+    assert serial["pendentes"] == 0 and paralelo["pendentes"] == 0 and not paralelo["incompleto"]
+    checkpoint = json.loads((tmp_path / "c4" / "mapear.checkpoint.json").read_text(encoding="utf-8"))
+    assert len(checkpoint["requisicoes"]) == 6
+
+
+@pytest.mark.parametrize("erro", [ErroApi(429), ErroApi(529), APIConnectionError()])
+def test_erro_transitorio_e_refeito_com_backoff(tmp_path: Path, fatias, erro) -> None:
+    cliente = cliente_falso(responder_mapear_de(fatias), erros=[erro])
+    sleeps: list[float] = []
+    resultado = rodar_mapear(tmp_path, fatias, cliente, concorrencia=3, sleeps=sleeps)
+    assert resultado["pendentes"] == 0 and not resultado["incompleto"]
+    assert len(cliente.messages.chamadas) == 7  # 6 fatias + a tentativa que falhou
+    assert sleeps == [3.0]  # primeiro passo do backoff exponencial
+    assert all(linha["erro"] is None for linha in resultado["linhas"])
+
+
+def test_backoff_exponencial_e_erro_permanente_nao_e_repetido(tmp_path: Path, fatias) -> None:
+    cliente = cliente_falso(responder_mapear_de(fatias[:1]), erros=[ErroApi(429), ErroApi(429), ErroApi(529)])
+    sleeps: list[float] = []
+    resultado = rodar_mapear(tmp_path / "a", fatias[:1], cliente, sleeps=sleeps)
+    assert sleeps == [3.0, 6.0, 12.0] and resultado["pendentes"] == 0
+    recusado = cliente_falso(responder_mapear_de(fatias[:1]), erros=[ErroApi(400)])
+    resultado = rodar_mapear(tmp_path / "b", fatias[:1], recusado, sleeps=[])
+    assert len(recusado.messages.chamadas) == 1 and resultado["pendentes"] == 1 and resultado["incompleto"]
+    estado = json.loads((tmp_path / "b" / "mapear.checkpoint.json").read_text(encoding="utf-8"))
+    assert len(estado["falhas"]) == 1 and estado["requisicoes"] == {}
+
+
+def test_retomada_nao_reenvia_fatias_ja_respondidas(tmp_path: Path, fatias) -> None:
+    primeiro = cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path, fatias[:3], primeiro)
+    assert len(primeiro.messages.chamadas) == 3
+    segundo = cliente_falso(responder_mapear_de(fatias))
+    resultado = rodar_mapear(tmp_path, fatias, segundo, concorrencia=4)
+    assert len(segundo.messages.chamadas) == 3  # só as três que faltavam
+    enviadas = {re.search(r"^Fatia (\S+)$", c["messages"][0]["content"][0]["text"], re.M).group(1)
+                for c in segundo.messages.chamadas}
+    assert enviadas == {f["id"] for f in fatias[3:]}
+    assert resultado["pendentes"] == 0 and all(linha["erro"] is None for linha in resultado["linhas"])
+    terceiro = cliente_falso(responder_mapear_de(fatias))
+    rodar_mapear(tmp_path, fatias, terceiro)
+    assert terceiro.messages.chamadas == []
+
+
+def test_checkpoint_e_gravado_a_cada_resposta(tmp_path: Path, fatias) -> None:
+    caminho = tmp_path / "mapear.checkpoint.json"
+    vistos: list[int] = []
+
+    def ao_chamar(_n: int) -> None:
+        vistos.append(len(json.loads(caminho.read_text(encoding="utf-8"))["requisicoes"]) if caminho.exists() else 0)
+
+    rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias), ao_chamar=ao_chamar))
+    assert vistos == [0, 1, 2, 3, 4, 5]  # a resposta anterior já estava no disco antes de cada chamada
+
+
+def test_json_invalido_fica_registrado_sem_derrubar_a_execucao(tmp_path: Path, fatias) -> None:
+    boa = responder_mapear_de(fatias)
+
+    def responder(params):
+        texto = params["messages"][0]["content"][0]["text"]
+        return "isto não é JSON" if fatias[2]["id"] in texto else boa(params)
+
+    resultado = rodar_mapear(tmp_path, fatias, cliente_falso(responder), concorrencia=2)
+    com_erro = [linha for linha in resultado["linhas"] if linha["erro"]]
+    assert len(com_erro) == 1 and com_erro[0]["fatia_id"] == fatias[2]["id"]
+    assert com_erro[0]["erro"].startswith("json_invalido")
+    assert resultado["erros"] == 1 and resultado["pendentes"] == 0
+    estado = json.loads((tmp_path / "mapear.checkpoint.json").read_text(encoding="utf-8"))
+    registrado = [e for e in estado["requisicoes"].values() if e["erro"]]
+    assert len(registrado) == 1 and registrado[0]["resultado"] is None and registrado[0]["amostra"].startswith("isto")
+    # --refazer-falhas reenvia só a fatia com erro
+    novo = cliente_falso(boa)
+    settings = ex.criar_settings("modelo-teste", "sync", 1000, 1, refazer_falhas=True)
+    refeito = rodar_mapear(tmp_path, fatias, novo, settings=settings)
+    assert len(novo.messages.chamadas) == 1 and refeito["erros"] == 0
+
+
+def test_resposta_truncada_e_registrada() -> None:
+    mensagem_cortada = mensagem('{"relacoes": [')
+    mensagem_cortada.stop_reason = "max_tokens"
+    req = SimpleNamespace(key="k", passada=1, ids=["k"])
+    entrada = ex.nova_entrada(mensagem_cortada, req, "sync")
+    assert entrada["erro"] == "resposta_truncada" and entrada["resultado"] is None
+
+
+def test_trecho_invalido_vai_ao_relatorio_sem_ser_descartado(tmp_path: Path, fatias) -> None:
+    resultado = rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias, trecho_ruim_na_fatia=0)))
+    assert resultado["trechos_invalidos"] == 1
+    linha = resultado["linhas"][0]
+    assert linha["relacoes"][0]["trecho_valido"] is False and "trecho_invalido" in linha["relacoes"][0]["flags"]
+    write_jsonl_atomic(tmp_path / FATIAS_NOME, fatias)
+    saida = rel.gerar_relatorio(tmp_path, ANCORAS)
+    texto = saida["relatorio"].read_text(encoding="utf-8")
+    assert "### Trechos inválidos (1)" in texto and "Texto que não existe na fatia." in texto
+    assert "C01;a.tex;2;0;0;0;0;2" in saida["matriz"].read_text(encoding="utf-8")  # a inválida não conta
+
+
+# ---------------------------------------------------------------------------
+# mapear em lote (Message Batches)
+# ---------------------------------------------------------------------------
+def test_lote_e_retomavel_sem_reenvio(tmp_path: Path, fatias) -> None:
+    cliente = cliente_falso(responder_mapear_de(fatias), pronto=False)
+    settings = ex.criar_settings("modelo-teste", "batch", 1000)
+    settings.espera_max_s = 0.0  # não esperar o lote: simula interromper a execução
+    primeiro = rodar_mapear(tmp_path, fatias, cliente, modo="batch", settings=settings)
+    assert primeiro["incompleto"] and primeiro["pendentes"] == 6
+    assert cliente.messages.batches.criados == ["msgbatch_1"]
+    assert all(linha["erro"] == "pendente" for linha in primeiro["linhas"])
+    cliente.messages.batches.pronto = True
+    segundo = rodar_mapear(tmp_path, fatias, cliente, modo="batch", settings=settings)
+    assert cliente.messages.batches.criados == ["msgbatch_1"]  # o lote registrado foi consultado, não reenviado
+    assert not segundo["incompleto"] and all(linha["erro"] is None for linha in segundo["linhas"])
+    rodar_mapear(tmp_path, fatias, cliente, modo="batch")
+    assert cliente.messages.batches.criados == ["msgbatch_1"]
+    assert cliente.messages.chamadas == []  # modo lote não usa messages.create
+
+
+# ---------------------------------------------------------------------------
+# cruzar
+# ---------------------------------------------------------------------------
+def afirmacao(i: int, fatia_id: str, topicos=("P_vigilancia",), valido: bool = True) -> dict:
+    return {
+        "id": f"af{i:03d}", "fatia_id": fatia_id, "arquivo": "a.tex" if i % 2 == 0 else "b.tex",
+        "trecho": f"Trecho literal número {i}.", "linha": 10 + i, "tipo": "resultado", "topicos": list(topicos),
+        "numeros": [str(i)], "polaridade": "afirma", "escopo": "esc", "trecho_valido": valido, "flags": [],
+    }
+
+
+def mapa_sintetico(fatias: list[dict]) -> list[dict]:
+    f0, f1 = fatias[0]["id"], fatias[1]["id"]
+    relacao = {
+        "id": "r1", "fatia_id": f0, "arquivo": "a.tex", "ancora_id": "C01", "relacao": "contradiz",
+        "trecho": "Primeira frase da fatia 0 com número 0.", "linha": 1, "justificativa": "j",
+        "trecho_valido": True, "flags": [],
+    }
+    base = {"erro": None, "malformados": 0}
+    return [
+        {**base, "fatia_id": f0, "arquivo": "a.tex", "afirmacoes": [afirmacao(i, f0) for i in (1, 2, 3)],
+         "relacoes": [relacao, {**relacao, "id": "r2", "relacao": "afirma"},
+                      {**relacao, "id": "r3", "relacao": "exagera", "trecho_valido": False}]},
+        {**base, "fatia_id": f1, "arquivo": "b.tex", "afirmacoes": [afirmacao(i, f1) for i in (4, 5)],
+         "relacoes": []},
+    ]
+
+
+def test_agrupamento_por_topico(fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    extra = [afirmacao(6, "f", topicos=("P_vigilancia", "custos")), afirmacao(7, "f", topicos=("outro",)),
+             afirmacao(8, "f", valido=False)]
+    mapa.append({"fatia_id": "f", "afirmacoes": extra, "relacoes": []})
+    validas = crz.afirmacoes_validas(mapa)
+    assert "af008" not in {a["id"] for a in validas}  # trecho inválido não é cruzado
+    grupos = crz.agrupar_por_topico(validas)
+    assert list(grupos) == ["P_vigilancia", "custos"]  # "outro" fora; ordem da taxonomia
+    assert len(grupos["P_vigilancia"]) == 6 and [a["id"] for a in grupos["custos"]] == ["af006"]
+    assert "outro" in crz.agrupar_por_topico(validas, incluir_outro=True)
+
+
+def test_divisao_de_lotes() -> None:
+    assert [len(l) for l in crz.dividir_lotes(list(range(130)), 60)] == [60, 60, 10]
+    assert [len(l) for l in crz.dividir_lotes(list(range(5)), 60)] == [5]
+
+
+def test_planejamento_de_cruzar_divide_topicos_grandes(fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    settings = ex.criar_settings("modelo-teste", "sync", 1000)
+    um = crz.planejar_cruzar(mapa, settings)
+    assert len(um) == 1 and um[0].b is None and len(um[0].a) == 5
+    assert "cache_control" not in um[0].req.params["messages"][0]["content"][0]
+    # 5 afirmações em lotes de 2: (0,0), (0,1), (0,2), (1,1), (1,2); o lote de 1 não tem par interno
+    dividido = crz.planejar_cruzar(mapa, settings, max_afirmacoes=2)
+    assert [(len(p.a), len(p.b) if p.b else 0) for p in dividido] == [(2, 0), (2, 2), (2, 1), (2, 0), (2, 1)]
+    for plano in dividido:
+        assert plano.req.params["messages"][0]["content"][0]["cache_control"] == {"type": "ephemeral"}
+        assert "temperature" not in plano.req.params
+    assert len({p.req.custom_id for p in dividido}) == 5
+    outro = crz.planejar_cruzar(mapa, settings, max_afirmacoes=2)
+    assert [p.req.custom_id for p in outro] == [p.req.custom_id for p in dividido]  # estável
+
+
+def responder_cruzar(params):
+    texto = "\n".join(b["text"] for b in params["messages"][0]["content"])
+    pares = []
+    if "[A1]" in texto and "[A2]" in texto:
+        pares.append({"a": "A1", "b": "A2", "tipo": "numero_divergente", "justificativa": "números diferentes"})
+        pares.append({"a": "A1", "b": "A9", "tipo": "escopo_trocado", "justificativa": "rótulo inexistente"})
+    return {"pares": pares}
+
+
+def rodar_cruzar(out: Path, mapa, cliente, concorrencia=2, modo="sync", max_afirmacoes=60):
+    settings = ex.criar_settings("modelo-teste", modo, 1000, concorrencia)
+    return crz.run_cruzar(mapa=mapa, out=out, settings=settings, client=cliente,
+                          max_afirmacoes=max_afirmacoes, sleep=lambda s: None)
+
+
+def test_cruzar_usa_trechos_do_mapa_e_registra_rotulos_invalidos(tmp_path: Path, fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    cliente = cliente_falso(responder_cruzar)
+    resultado = rodar_cruzar(tmp_path, mapa, cliente)
+    assert resultado["requisicoes"] == 1 and not resultado["incompleto"]
+    assert len(resultado["pares"]) == 1
+    par = resultado["pares"][0]
+    # ordem por arquivo e linha: A1 = af002 (a.tex:12), A2 = af004 (a.tex:14)
+    assert (par["a"]["arquivo"], par["a"]["linha"], par["a"]["trecho"]) == ("a.tex", 12, "Trecho literal número 2.")
+    assert (par["b"]["arquivo"], par["b"]["linha"]) == ("a.tex", 14)
+    assert par["tipo"] == "numero_divergente" and par["topico"] == "P_vigilancia"
+    assert [p["motivo"] for p in resultado["problemas"]] == ["rotulo_invalido"]
+    params = cliente.messages.chamadas[0]
+    assert "temperature" not in params and params["system"][0]["cache_control"] == {"type": "ephemeral"}
+    assert (tmp_path / PARES_NOME).is_file() and (tmp_path / "pares_problemas.jsonl").is_file()
+
+
+def test_cruzar_concorrencia_e_retomada(tmp_path: Path, fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    a = rodar_cruzar(tmp_path / "c1", mapa, cliente_falso(responder_cruzar), concorrencia=1, max_afirmacoes=2)
+    b = rodar_cruzar(tmp_path / "c4", mapa, cliente_falso(responder_cruzar), concorrencia=4, max_afirmacoes=2)
+    assert a["pares"] == b["pares"] and a["problemas"] == b["problemas"]
+    novo = cliente_falso(responder_cruzar)
+    rodar_cruzar(tmp_path / "c4", mapa, novo, max_afirmacoes=2)
+    assert novo.messages.chamadas == []
+
+
+# ---------------------------------------------------------------------------
+# adjudicar
+# ---------------------------------------------------------------------------
+def responder_adjudicar(params):
+    texto = "\n".join(b["text"] for b in params["messages"][0]["content"])
+    if "APONTAMENTO (par" in texto:
+        return {"veredito": "CONFIRMADO", "correcao": "Ajustar o número em b.tex:11.", "justificativa": "j"}
+    return {"veredito": "DEPENDE_DE_ESCOPO", "correcao": "Explicitar o escopo.", "justificativa": "j"}
+
+
+def rodar_adjudicar(out: Path, pares, mapa, fatias, cliente, concorrencia=2):
+    settings = ex.criar_settings("opus-teste", "sync", 1000, concorrencia)
+    return adj.run_adjudicar(pares=pares, mapa=mapa, fatias=fatias, ancoras=ANCORAS, out=out,
+                             settings=settings, client=cliente, sleep=lambda s: None)
+
+
+def test_adjudicar_envia_pares_e_so_relacoes_contradiz_exagera_validas(tmp_path: Path, fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    pares = rodar_cruzar(tmp_path / "x", mapa, cliente_falso(responder_cruzar))["pares"]
+    cliente = cliente_falso(responder_adjudicar)
+    resultado = rodar_adjudicar(tmp_path, pares, mapa, fatias, cliente)
+    # um par e a relação r1 (a "afirma" e a "exagera" com trecho inválido ficam de fora)
+    assert resultado["requisicoes"] == 2
+    assert resultado["vereditos"] == {"CONFIRMADO": 1, "DEPENDE_DE_ESCOPO": 1}
+    por_tipo = {linha["alvo_tipo"]: linha for linha in resultado["linhas"]}
+    assert por_tipo["par"]["veredito"] == "CONFIRMADO" and por_tipo["par"]["correcao"].startswith("Ajustar")
+    assert por_tipo["relacao"]["alvo_id"] == "r1"
+    for params in cliente.messages.chamadas:
+        assert params["model"] == "opus-teste" and "temperature" not in params
+        assert params["system"][0]["cache_control"] == {"type": "ephemeral"}
+        # as fatias completas, com número de linha, vão na requisição
+        corpo = "\n".join(b["text"] for b in params["messages"][0]["content"])
+        assert "Primeira frase da fatia 0" in corpo
+    novo = cliente_falso(responder_adjudicar)
+    rodar_adjudicar(tmp_path, pares, mapa, fatias, novo)
+    assert novo.messages.chamadas == []  # retomada sem reenvio
+
+
+def test_adjudicar_veredito_invalido_e_registrado(tmp_path: Path, fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    resultado = rodar_adjudicar(tmp_path, [], mapa, fatias, cliente_falso(lambda p: {"veredito": "TALVEZ"}))
+    assert resultado["requisicoes"] == 1 and resultado["erros"] == 1
+    assert resultado["linhas"][0]["erro"] == "veredito_invalido" and resultado["linhas"][0]["veredito"] is None
+
+
+def test_adjudicar_fatia_ausente_falha_com_mensagem(fatias) -> None:
+    mapa = mapa_sintetico(fatias)
+    with pytest.raises(ValueError, match="fatiar"):
+        adj.planejar_adjudicar([], mapa, fatias[1:], ANCORAS, ex.criar_settings("m", "sync", 10))
+
+
+# ---------------------------------------------------------------------------
+# relatório
+# ---------------------------------------------------------------------------
+def test_relatorio_conta_custo_a_partir_do_usage(tmp_path: Path, fatias) -> None:
+    rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias)))
+    write_jsonl_atomic(tmp_path / FATIAS_NOME, fatias)
+    saida = rel.gerar_relatorio(tmp_path, ANCORAS)
+    texto = saida["relatorio"].read_text(encoding="utf-8")
+    assert "| mapear | sync | 6 | 600 | 60 | 30 | 300 |" in texto
+    assert "| **Total** | | 6 | 600 | 60 | 30 | 300 |" in texto
+    assert "### C01 (atual)" in texto and "`a.tex:1`" in texto  # afirma: a.tex:1, 21, 41
+    linhas = saida["matriz"].read_text(encoding="utf-8").splitlines()
+    assert linhas[0] == "ancora_id;arquivo;afirma;contradiz;enfraquece;exagera;omite_ressalva;total"
+    assert "C01;a.tex;3;0;0;0;0;3" in linhas and "C01;b.tex;0;3;0;0;0;3" in linhas
+    assert "C02" in texto and "nenhuma ocorrência" in texto
+
+
+def test_uso_soma_modos_e_etapas_separados(tmp_path: Path, fatias) -> None:
+    rodar_mapear(tmp_path, fatias[:2], cliente_falso(responder_mapear_de(fatias)), modo="sync")
+    rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias)), modo="batch")
+    uso = rel.uso_por_etapa(tmp_path)
+    assert uso["mapear"]["sync"]["requisicoes"] == 2 and uso["mapear"]["batch"]["requisicoes"] == 4
+    assert uso["mapear"]["batch"]["output_tokens"] == 200
+
+
+def test_candidatas_a_ancora_contam_afirmacoes_sem_ancora() -> None:
+    def af(n: int, linha: int, numeros=("23",)) -> dict:
+        return {"id": f"x{n}", "trecho": f"A meta de 23 aparece aqui {n}.", "linha": linha, "arquivo": f"f{n}.tex",
+                "tipo": "resultado", "topicos": ["P_vigilancia"], "numeros": list(numeros), "polaridade": "afirma",
+                "escopo": "meta", "trecho_valido": True}
+
+    mapa = [
+        {"relacoes": [], "afirmacoes": [af(1, 5), af(2, 6), af(3, 7)]},
+        {"relacoes": [{"trecho": "A meta de 23 aparece aqui 4.", "linha": 9, "trecho_valido": True}],
+         "afirmacoes": [af(4, 9)]},  # coberta por uma relação com âncora
+        {"relacoes": [], "afirmacoes": [af(5, 3, numeros=("12,4%",))]},
+    ]
+    grupos = rel.candidatas_a_ancora(mapa, min_ocorrencias=3)
+    assert len(grupos) == 1 and grupos[0]["ocorrencias"] == 3 and grupos[0]["numeros"] == ["23"]
+    assert grupos[0]["locais"] == ["f1.tex:5", "f2.tex:6", "f3.tex:7"]
+
+
+def test_fluxo_completo_e_relatorio_de_contradicoes(tmp_path: Path, fatias) -> None:
+    write_jsonl_atomic(tmp_path / FATIAS_NOME, fatias)
+    mapeado = rodar_mapear(tmp_path, fatias, cliente_falso(responder_mapear_de(fatias)), concorrencia=3)
+    cruzado = rodar_cruzar(tmp_path, mapeado["linhas"], cliente_falso(responder_cruzar))
+    assert len(cruzado["pares"]) == 1
+    adjudicado = rodar_adjudicar(tmp_path, cruzado["pares"], mapeado["linhas"], fatias,
+                                 cliente_falso(responder_adjudicar))
+    assert adjudicado["vereditos"] == {"CONFIRMADO": 1, "DEPENDE_DE_ESCOPO": 3}
+    texto = rel.gerar_relatorio(tmp_path, ANCORAS)["relatorio"].read_text(encoding="utf-8")
+    assert "#### P_vigilancia" in texto and "numero_divergente" in texto and "Ajustar o número em b.tex:11." in texto
+    assert "### Depende de escopo" in texto and "Explicitar o escopo." in texto
+    assert "| cruzar | sync | 1 |" in texto and "| adjudicar | sync | 4 |" in texto
+
+
+# ---------------------------------------------------------------------------
+# CLI: --estimar, padrões, sem segredos, .gitignore
+# ---------------------------------------------------------------------------
+def preparar_saida(out: Path, fatias, ancoras_yaml: Path) -> None:
+    write_jsonl_atomic(out / FATIAS_NOME, fatias)
+    write_jsonl_atomic(out / MAPA_NOME, mapa_sintetico(fatias))
+    escrever(ancoras_yaml, "".join(
+        f"- id: {a['id']}\n  origem: {a['origem']}\n  texto: {a['texto']}\n" for a in ANCORAS))
+
+
+def test_estimar_nao_chama_a_api_nem_grava_checkpoint(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    par = {"id": "p1", "tipo": "numero_divergente", "topico": "P_vigilancia", "topicos": ["P_vigilancia"],
+           "justificativa": "j", "flags": [],
+           "a": {"afirmacao_id": "af002", "fatia_id": fatias[0]["id"], "arquivo": "a.tex", "linha": 12, "trecho": "t"},
+           "b": {"afirmacao_id": "af004", "fatia_id": fatias[1]["id"], "arquivo": "a.tex", "linha": 14, "trecho": "u"}}
+    write_jsonl_atomic(out / PARES_NOME, [par])
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+
+    def proibido(chave):
+        raise AssertionError("a estimativa não pode criar cliente da API")
+
+    monkeypatch.setattr(cli.av, "make_client", proibido)
+    base = ["--out", str(out)]
+    assert cli.main(["mapear", "--estimar", "--ancoras", str(yaml_path), *base]) == 0
+    assert cli.main(["cruzar", "--estimar", *base]) == 0
+    assert cli.main(["adjudicar", "--estimar", "--ancoras", str(yaml_path), *base]) == 0
+    saida = capsys.readouterr().out
+    assert re.search(r"^mapear: 6 requisições; entrada ≈ [\d.]+ tokens; saída ≈ [\d.]+ tokens", saida, re.M)
+    assert re.search(r"^cruzar: 1 requisições; entrada ≈", saida, re.M)
+    assert re.search(r"^adjudicar: 2 requisições; entrada ≈", saida, re.M)
+    assert not list(out.glob("*.checkpoint.json")) and not (out / "lotes").exists()
+
+
+def test_estimar_mapear_cresce_com_o_texto(fatias) -> None:
+    settings = ex.criar_settings("m", "sync", 4000)
+    pequeno = mp.estimar_mapear(fatias[:2], ANCORAS, settings)
+    grande = mp.estimar_mapear(fatias, ANCORAS, settings)
+    assert pequeno["requisicoes"] == 2 and grande["requisicoes"] == 6
+    assert grande["entrada"] > pequeno["entrada"] and grande["saida"] > pequeno["saida"] > 0
+
+
+def test_cli_mapear_sync_ponta_a_ponta_sem_vazar_a_chave(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    preparar_saida(out, fatias, yaml_path)
+    segredo = "chave-falsa-para-teste-123"
+    monkeypatch.setenv("ANTHROPIC_API_KEY", segredo)
+    cliente = cliente_falso(responder_mapear_de(fatias))
+    chaves: list[str] = []
+
+    def fabrica(chave):
+        chaves.append(chave)
+        return cliente
+
+    monkeypatch.setattr(cli.av, "make_client", fabrica)
+    argv = ["mapear", "--modo", "sync", "--concorrencia", "3", "--ancoras", str(yaml_path), "--out", str(out)]
+    assert cli.main(argv) == 0
+    assert chaves == [segredo] and len(cliente.messages.chamadas) == 6
+    assert cli.main(argv) == 0 and len(cliente.messages.chamadas) == 6  # retomada: nada reenviado
+    capturado = capsys.readouterr()
+    assert segredo not in capturado.out and segredo not in capturado.err
+    for arquivo in out.rglob("*"):
+        if arquivo.is_file():
+            assert segredo not in arquivo.read_text(encoding="utf-8", errors="ignore")
+
+
+def test_cli_sem_chave_e_sem_fatias(tmp_path: Path, fatias, monkeypatch, capsys) -> None:
+    out = tmp_path / "saida"
+    yaml_path = tmp_path / "ancoras.yaml"
+    assert cli.main(["mapear", "--out", str(out), "--ancoras", str(yaml_path)]) == 2  # sem fatias.jsonl
+    preparar_saida(out, fatias, yaml_path)
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    monkeypatch.setattr(cli, "load_env_var", lambda nome: "")
+    assert cli.main(["mapear", "--out", str(out), "--ancoras", str(yaml_path)]) == 2
+    assert "ANTHROPIC_API_KEY ausente" in capsys.readouterr().err
+
+
+def test_padroes_da_linha_de_comando() -> None:
+    parser = cli.build_parser()
+    for etapa in ("mapear", "cruzar", "adjudicar"):
+        args = parser.parse_args([etapa])
+        assert args.concorrencia == 8 and args.modo == "batch" and args.estimar is False
+        assert args.out == ".local/cruzamento"
+    assert parser.parse_args(["mapear"]).modelo == "claude-sonnet-5-5"
+    assert parser.parse_args(["cruzar"]).modelo == "claude-sonnet-5-5"
+    assert parser.parse_args(["adjudicar"]).modelo == "claude-opus-5-5"
+    assert parser.parse_args(["cruzar"]).max_afirmacoes == 60
+    assert parser.parse_args(["mapear", "--modo", "sync", "--concorrencia", "2"]).concorrencia == 2
+
+
+def test_saidas_ficam_em_pasta_ignorada_pelo_git() -> None:
+    linhas = {linha.strip() for linha in (REPO / ".gitignore").read_text(encoding="utf-8").splitlines()}
+    assert ".local/" in linhas
+    assert cli.DEFAULT_OUT.startswith(".local/")
