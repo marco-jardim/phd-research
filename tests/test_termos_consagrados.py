@@ -8,8 +8,10 @@ import re
 from pathlib import Path
 
 import pytest
+import requests
 
 from scripts import termos_consagrados as tc
+from scripts.hosts_bloqueados import url_bloqueada
 
 RAIZ = Path(__file__).resolve().parents[1]
 YAML_REAL = RAIZ / "scripts" / "termos_consagrados_candidatos.yaml"
@@ -288,6 +290,48 @@ def test_mailto_enviado_quando_ha_email_valido():
     assert tc.montar_user_agent("a@b.org").endswith("(mailto:a@b.org)")
 
 
+def test_api_key_nunca_aparece_em_erros_nem_em_cache(tmp_path, monkeypatch, capsys):
+    segredo = "segredo-xyz-123"
+    monkeypatch.setenv("OPENALEX_API_KEY", segredo)
+
+    class SessaoQueFalha:
+        def get(self, url, params=None, headers=None, timeout=None, allow_redirects=True):
+            raise requests.ConnectionError(
+                f"HTTPSConnectionPool(host='api.openalex.org'): Max retries exceeded with url: "
+                f"/works?filter=author.id:A1&page=1&api_key={segredo} (Caused by timeout)"
+            )
+
+    http = tc.Http(tmp_path / "falha", session=SessaoQueFalha(), intervalo=0, dormir=lambda s: None)
+    with pytest.raises(tc.FetchError) as exc:
+        tc.listar_obras_autor(http, ["A1"], None)
+    assert segredo not in str(exc.value) and "api_key=***" in str(exc.value)
+
+    # Corpo de erro que repete a chave (401) também sai redigido.
+    eco = f"invalid api_key={segredo}".encode()
+    sessao401 = SessaoGravadora([FakeResp(401, eco)] * 3)
+    http401 = tc.Http(tmp_path / "c401", session=sessao401, intervalo=0, dormir=lambda s: None)
+    with pytest.raises(tc.FetchError) as exc401:
+        tc.listar_obras_autor(http401, ["A1"], None)
+    assert segredo not in str(exc401.value)
+
+    # Resposta 200 que repete a chave não a grava no cache; o nome do arquivo não depende dela.
+    corpo = {"meta": {"count": 1, "note": f"api_key={segredo}"}, "results": [obra_openalex(3, "Outra", 9)]}
+    cache = tmp_path / "ok"
+    http_ok = tc.Http(cache, session=SessaoGravadora([resp_json(corpo)]), intervalo=0)
+    tc.listar_obras_autor(http_ok, ["A1"], None)
+    arquivos = list(cache.iterdir())
+    assert arquivos
+    assert all(segredo.encode() not in a.read_bytes() and segredo not in a.name for a in arquivos)
+
+    saida = capsys.readouterr()
+    assert segredo not in saida.out and segredo not in saida.err
+
+
+def test_redigir_troca_valor_do_parametro_api_key():
+    assert tc.redigir("GET /w?api_key=abc&x=1") == "GET /w?api_key=***&x=1"
+    assert tc.redigir("API-KEY=abc") == "API-KEY=***"
+
+
 def test_works_401_repete_sem_mailto_e_depois_sem_select(tmp_path):
     vazio = resp_json({"meta": {"count": 1}, "results": [obra_openalex(3, "Outra", 9)]})
     sessao = SessaoGravadora([FakeResp(401, b'{"error":"x"}'), FakeResp(401, b'{"error":"y"}'), vazio])
@@ -402,6 +446,13 @@ def test_extrair_europepmc_body_sem_lista_de_referencias():
 # ---------------------------------------------------------------------------
 HOSTS_SOMBRA = [
     "https://annas-archive.org/md5/abc",
+    "https://booksc.org/x",
+    "https://singlelogin.re/x",
+    "https://gen.lib.rus.ec/book",
+    "https://library.lol/main/abc",
+    "https://libstc.cc/x",
+    "https://dokumen.pub/x.html",
+    "https://b-ok.cc/x",
     "https://pt.annas-archive.se/x",
     "https://sci-hub.se/10.1/abc",
     "https://www.sci-hub.ru/abc",
@@ -464,7 +515,7 @@ def test_obter_texto_nunca_pede_host_sombra_e_usa_localizacao_aberta(tmp_path):
     assert "linkage e sensibilidade" in texto
     assert "https://repo.example.org/paper.html" in sessao.calls
     for url in sessao.calls:
-        assert not any(t in url for t in tc.SHADOW_TOKENS), url
+        assert not url_bloqueada(url), url
     assert any("bloqueado" in a for a in avisos)
 
 

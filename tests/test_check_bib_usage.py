@@ -1,5 +1,6 @@
 """Contrato de ``scripts/check_bib_usage.py``: chaves ausentes do .bib falham; órfãs avisam."""
 
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -92,6 +93,35 @@ def test_so_a_arvore_de_tese_tex_conta(tmp_path):
     assert result.returncode == 0, result.stdout + result.stderr
     assert "FantasmaDoDiff2026" not in result.stdout
     assert "OutroFantasma2026" not in result.stdout
+
+
+def test_input_ausente_e_erro_de_uso(tmp_path):
+    raiz = _projeto(
+        tmp_path,
+        r"\begin{document}\input{cap_inexistente}\cite{Example2026}\end{document}\bibliography{referencias}",
+        BIB,
+    )
+    result = _rodar(raiz)
+    assert result.returncode == 2, result.stdout + result.stderr
+    assert "arquivo incluído não encontrado" in result.stderr
+    assert "cap_inexistente" in result.stderr
+
+
+def test_include_ausente_tambem_e_erro_de_uso(tmp_path):
+    raiz = _projeto(
+        tmp_path,
+        r"\begin{document}\include{outro_inexistente}\end{document}\bibliography{referencias}",
+        BIB,
+    )
+    assert _rodar(raiz).returncode == 2
+
+
+def test_workflow_bib_reage_a_mudanca_nos_scripts():
+    texto = (SCRIPT.parents[1] / ".github" / "workflows" / "latex.yml").read_text(encoding="utf-8")
+    for evento in ("push", "pull_request"):
+        bloco = re.split(r"\n  (?=\S)", texto.split(f"\n  {evento}:", 1)[1], maxsplit=1)[0]
+        for caminho in ("scripts/check_bib_usage.py", "scripts/citacoes_contexto.py"):
+            assert caminho in bloco, (evento, caminho)
 
 
 def test_citacao_comentada_nao_conta(tmp_path):

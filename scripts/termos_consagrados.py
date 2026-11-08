@@ -44,10 +44,16 @@ from collections import Counter, defaultdict, deque
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import quote, urlencode, urljoin, urlparse
+from urllib.parse import quote, quote_plus, urlencode, urljoin, urlparse
 
 import requests
 import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.hosts_bloqueados import host_bloqueado  # noqa: E402
 
 OPENALEX = "https://api.openalex.org"
 EUROPEPMC = "https://www.ebi.ac.uk/europepmc/webservices/rest"
@@ -90,21 +96,6 @@ TERMOS_INSTITUICAO = (
     "estado do rio de janeiro",
     "uerj",
     "universidade federal fluminense",
-)
-
-SHADOW_TOKENS = (
-    "annas-archive",
-    "annasarchive",
-    "sci-hub",
-    "scihub",
-    "sci.hub",
-    "libgen",
-    "z-lib",
-    "zlibrary",
-    "1lib",
-    "b-ok",
-    "bookfi",
-    "library.lol",
 )
 
 MIN_CHARS = 1500
@@ -219,6 +210,23 @@ def escrever_atomico(caminho: Path, dados: str | bytes) -> None:
 # ---------------------------------------------------------------------------
 # HTTP: cache, ritmo, tentativas e bloqueio de bibliotecas sombra
 # ---------------------------------------------------------------------------
+_RE_API_KEY = re.compile(r"(?i)(api[_-]?key=)[^&\s'\"<>)]+")
+
+
+def redigir(texto: str) -> str:
+    """Troca por ``***`` o valor de ``api_key`` e a chave ``OPENALEX_API_KEY`` em qualquer texto.
+
+    O OpenAlex só aceita a chave como parâmetro de consulta; por isso toda mensagem de erro,
+    aviso ou arquivo de cache que possa carregar a URL passa por esta função antes de sair.
+    """
+    texto = _RE_API_KEY.sub(r"\1***", texto)
+    chave = (os.environ.get("OPENALEX_API_KEY") or "").strip()
+    if chave:
+        for forma in {chave, quote(chave, safe=""), quote_plus(chave)}:
+            texto = texto.replace(forma, "***")
+    return texto
+
+
 class FetchError(RuntimeError):
     """Falha ao obter um endereço depois das tentativas."""
 
@@ -233,9 +241,8 @@ def verificar_host(url: str) -> None:
     if partes.scheme not in ("http", "https"):
         raise FetchError(f"esquema não permitido: {url}")
     host = (partes.hostname or "").lower()
-    for token in SHADOW_TOKENS:
-        if token in host:
-            raise ShadowHostError(f"host bloqueado (biblioteca sombra): {host}")
+    if host_bloqueado(host):
+        raise ShadowHostError(f"host bloqueado (biblioteca sombra): {host}")
 
 
 @dataclass
@@ -287,7 +294,9 @@ class Http:
 
     @staticmethod
     def _chave(url: str, params: dict | None) -> str:
-        base = url + "?" + urlencode(sorted((params or {}).items()))
+        # A chave de API não entra na chave de cache (nem, portanto, em nome de arquivo).
+        visiveis = {k: v for k, v in (params or {}).items() if k != "api_key"}
+        base = url + "?" + urlencode(sorted(visiveis.items()))
         return hashlib.sha256(base.encode("utf-8")).hexdigest()[:32]
 
     def _ler_cache(self, chave: str) -> Resp | None:
@@ -299,8 +308,11 @@ class Http:
         return Resp(info["status"], corpo.read_bytes(), info.get("content_type", ""), info.get("url", ""))
 
     def _gravar_cache(self, chave: str, resp: Resp) -> None:
-        escrever_atomico(self.cache_dir / f"{chave}.bin", resp.content)
-        meta = {"status": resp.status, "content_type": resp.content_type, "url": resp.url}
+        corpo = redigir(resp.content.decode("utf-8", errors="surrogateescape")).encode(
+            "utf-8", errors="surrogateescape"
+        )
+        escrever_atomico(self.cache_dir / f"{chave}.bin", corpo)
+        meta = {"status": resp.status, "content_type": resp.content_type, "url": redigir(resp.url)}
         escrever_atomico(self.cache_dir / f"{chave}.json", json.dumps(meta, ensure_ascii=False))
 
     def _esperar(self) -> None:
@@ -341,7 +353,7 @@ class Http:
             try:
                 resp = self._uma_vez(url, params, headers)
             except requests.RequestException as exc:
-                motivo = f"{type(exc).__name__}: {exc}"
+                motivo = redigir(f"{type(exc).__name__}: {exc}")
                 self.dormir(self.recuo**tentativa)
                 continue
             if resp.status in (429, 500, 502, 503, 504):
@@ -351,7 +363,7 @@ class Http:
             if resp.status in (200, 404, 410):
                 self._gravar_cache(chave, resp)
             return resp
-        raise FetchError(f"{url}: {motivo or 'sem resposta'}")
+        raise FetchError(redigir(f"{url}: {motivo or 'sem resposta'}"))
 
 
 # ---------------------------------------------------------------------------
@@ -465,7 +477,7 @@ def _params_openalex(email: str | None, **extra: object) -> dict:
 
 
 def _trecho_corpo(resp: "Resp", teto: int = 300) -> str:
-    return " ".join(resp.text.split())[:teto]
+    return redigir(" ".join(resp.text.split()))[:teto]
 
 
 def buscar_candidatos_autor(http: Http, nome: str, email: str | None) -> list[dict]:

@@ -5,7 +5,7 @@
 * Os caminhos partem da raiz do repositório (``--raiz``), não do diretório atual.
 * Código de saída: 1 se alguma chave citada não estiver no .bib; 0 caso contrário. Entradas do
   .bib nunca citadas saem como aviso, e só viram falha com ``--estrito``. 2 indica erro de uso
-  (``tese.tex`` ou ``\\bibliography`` ausentes).
+  (``tese.tex`` ou ``\\bibliography`` ausentes, ou arquivo de ``\\input``/``\\include`` não encontrado).
 """
 
 from __future__ import annotations
@@ -22,6 +22,8 @@ if str(ROOT) not in sys.path:
 from scripts import citacoes_contexto as cc  # noqa: E402
 
 _COMMAND_RE = re.compile(r"\\([A-Za-z]+)(\*?)")
+# Início do aviso que ``citacoes_contexto.Flattener.include`` emite para \input/\include ausente.
+MISSING_INCLUDE_PREFIX = "arquivo incluído não encontrado"
 
 
 def cited_keys(doc: cc.Document) -> set[str]:
@@ -41,6 +43,10 @@ def analyse(raiz: Path, tex: str = "text/latex/tese.tex") -> dict:
     if not tex_path.is_file():
         raise FileNotFoundError(f"arquivo não encontrado: {tex_path}")
     doc = cc.build_document(tex_path, raiz)
+    ausentes = [w for w in doc.warnings if w.startswith(MISSING_INCLUDE_PREFIX)]
+    if ausentes:
+        # Um capítulo que não foi lido deixaria suas citações fora da conferência: erro, não aviso.
+        raise ValueError("; ".join(ausentes))
     if not cc.find_bib_files(doc):
         raise ValueError(f"{tex_path} não declara \\bibliography{{...}}")
     entries, bib_files = cc.load_bib(doc)

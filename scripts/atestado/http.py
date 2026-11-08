@@ -14,23 +14,8 @@ import urllib.request
 from collections.abc import Callable
 from dataclasses import dataclass
 
-FORBIDDEN_HOST_MARKERS = (
-    "annas-archive",
-    "annas-blog",
-    "anna-archive",
-    "sci-hub",
-    "scihub",
-    "sci-net",
-    "libgen",
-    "library.lol",
-    "z-lib",
-    "zlibrary",
-    "z-library",
-    "1lib.",
-    "b-ok.",
-    "bookfi",
-    "pdfdrive",
-)
+from scripts.hosts_bloqueados import url_bloqueada
+
 MAX_BYTES = 40 * 1024 * 1024
 RETRY_STATUS = {408, 425, 429, 500, 502, 503, 504, 529}
 NOT_FOUND_STATUS = {400, 401, 403, 404, 405, 406, 410, 451}
@@ -49,8 +34,7 @@ def host_of(url: str) -> str:
 
 
 def is_forbidden_host(url: str) -> bool:
-    host = host_of(url)
-    return any(marker in host for marker in FORBIDDEN_HOST_MARKERS)
+    return url_bloqueada(url)
 
 
 def assert_allowed(url: str) -> None:
