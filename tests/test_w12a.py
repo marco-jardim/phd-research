@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from latex_fontes import fontes_tex
 from scripts.tabela_tamanho_modelo_editorial import OUTPUT, generate, render
 
 
@@ -127,7 +128,7 @@ def test_bibliography_keys_and_protocol_are_consistent(name):
     bib = text(name)
     for removed in ("Doidge2018demystifying", "Paixao2017linkageevaluation", "DuVall2010extending", "Gienapp2025relevance"):
         assert removed not in bib
-        assert all(removed not in path.read_text(encoding="utf-8") for path in LATEX.rglob("*.tex"))
+        assert all(removed not in path.read_text(encoding="utf-8") for path in fontes_tex(LATEX, recursivo=True))
     assert bib.count("@inproceedings{Gienapp2026relevance,") == 1
     protocol = re.search(r"(?m)^@book\{MS2017ProtocoloObitoTB,\n[\s\S]*?^\}", bib)
     source = re.search(r"(?m)^@book\{MS2017ProtocoloObitoTB,\n[\s\S]*?^\}", text("referencias.bib"))

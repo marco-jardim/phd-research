@@ -7,6 +7,7 @@ import re
 
 import pandas as pd
 
+from latex_fontes import fontes_tex
 from terminologia import GREY_AREA, contem, normalizar_terminologia
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,7 +63,7 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     assert r'the sensitivity analysis using Platt scaling' in en
     assert '42,5' in pt and '42.5' in en
     assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    for path in LATEX.glob('*.tex'):
+    for path in fontes_tex(LATEX):
         text = path.read_text(encoding='utf-8')
         assert not re.search(r'calibração sigmoidal|sigmoid calibration', text, re.I), path
         for line in text.splitlines():

@@ -9,6 +9,7 @@ import pytest
 from scripts.tabelas_s8a1_editorial import generate, subsampling, llm_filter, human_sensitivity
 from scripts.tabelas_s8_editorial import effort, same_load
 from scripts.transcrever_prompts_editorial import generate as prompts_generate, role_payloads
+from latex_fontes import fontes_tex
 from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +28,7 @@ def test_control_detector_rejects_nonprinting_characters(value):
 
 def test_all_tex_files_have_no_control_characters():
     violations = {str(path.relative_to(ROOT)): forbidden_controls(path.read_text(encoding='utf-8'))
-                  for path in (ROOT / 'text').rglob('*.tex')}
+                  for path in fontes_tex(ROOT / 'text', recursivo=True)}
     assert not {path: values for path, values in violations.items() if values}
 
 

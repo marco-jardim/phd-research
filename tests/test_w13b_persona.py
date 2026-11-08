@@ -3,6 +3,7 @@
 from pathlib import Path
 import re
 
+from latex_fontes import fontes_tex
 from test_s4a_texto import abstracts
 from test_w10b import APPROVED
 from terminologia import contem
@@ -81,7 +82,7 @@ def test_new_glossary_entries_and_abbreviations_are_present_and_refs_resolve():
         row = next(line for line in text('siglas.tex').splitlines() if line.startswith(code + ' '))
         assert definition in row
         assert row.endswith(r'\\[6pt]')
-    all_tex = '\n'.join(path.read_text(encoding='utf-8') for path in LATEX.rglob('*.tex'))
+    all_tex = '\n'.join(path.read_text(encoding='utf-8') for path in fontes_tex(LATEX, recursivo=True))
     labels = set(re.findall(r'\\label\{([^}]+)\}', all_tex))
     assert set(re.findall(r'\\ref\{([^}]+)\}', glossary)) <= labels
 
