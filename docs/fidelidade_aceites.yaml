@@ -18,7 +18,17 @@
 # Reeditar o parágrafo muda o hash e invalida o aceite (aparece como "sem correspondência").
 # Formato plano: o analisador interno aceita escalares, listas inline ([a, b]) e listas em bloco.
 #
-# Comparação por capítulo (--modo capitulo|ambos): a seção `aceites_numeros` libera, por
+# Modo do portão (--modo, padrão `auto`): arquivo listado em tests/data/arquivos_revisados.yaml
+# é comparado só por capítulo (números por arquivo; o sentido já é protegido pelas âncoras do
+# registro de invariantes e pela revisão de fidelidade independente, e a comparação por
+# parágrafo só gera ruído de fusão e remoção); arquivo não listado segue em `ambos` (parágrafo
+# e capítulo). Nos arquivos revisados, só a seção `aceites_numeros` vale; entradas de `aceites`
+# para eles não casam com nada. `--modo capitulo|paragrafo|ambos` forçam um modo para todos.
+# Na comparação por capítulo, números de rótulo (passo, capítulo, seção, figura, tabela,
+# equação, estudo, objetivo, meta) são isentos, e um número é coberto quando é o texto_pt de
+# qualquer valor exigido por ocorrência do registro que cite o arquivo.
+#
+# Comparação por capítulo (--modo auto|capitulo|ambos): a seção `aceites_numeros` libera, por
 # arquivo, um número novo, mais frequente ou removido que o portão bloquearia:
 #
 #   - arquivo: text/latex/estudo4_gzcmd.tex     # caminho relativo à raiz, com "/"

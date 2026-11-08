@@ -986,6 +986,163 @@ def test_aceite_por_arquivo_libera(repo):
     assert pf.main(["--raiz", str(repo), "--modo", "capitulo"]) == 1
 
 
+# ---------------------------------------------------------------------------
+# Modo auto, valor referenciado por nome e rótulos isentos
+# ---------------------------------------------------------------------------
+
+FUNDIDO_BASE = "A teve 12 casos.\n\nB teve 30 casos.\n\nC fecha.\n"
+FUNDIDO_NOVO = "A teve 12 casos e B teve 30 casos.\n\nC fecha.\n"
+REVISADOS_YAML = "# revisados\n- text/latex/cap.tex\n"
+
+
+def _repo_fundido(repo, alterar=("cap", "outro")):
+    base_commit(
+        repo, {"text/latex/cap.tex": FUNDIDO_BASE, "text/latex/outro.tex": FUNDIDO_BASE}
+    )
+    escrever(repo, "tests/data/arquivos_revisados.yaml", REVISADOS_YAML)
+    for nome in alterar:
+        escrever(repo, f"text/latex/{nome}.tex", FUNDIDO_NOVO)
+
+
+def test_modo_padrao_e_auto():
+    assert pf.MODO_PADRAO == "auto" and "auto" in pf.MODOS
+    assert {"capitulo", "paragrafo", "ambos"} <= set(pf.MODOS)
+
+
+def test_auto_aplica_capitulo_a_revisado_e_ambos_a_nao_revisado(repo):
+    _repo_fundido(repo)
+    res = pf.analisar_repositorio(repo)  # padrão: auto
+    assert res.modo == "auto"
+    assert res.modos_arquivo == {"text/latex/cap.tex": "capitulo", "text/latex/outro.tex": "ambos"}
+    # o revisado não passa pelo alinhamento por parágrafo; o não revisado, sim
+    assert {a.arquivo for a in res.achados} == {"text/latex/outro.tex"}
+    assert set(res.contagens) == {"text/latex/outro.tex"}
+    assert {p.arquivo for p in res.pendentes} == {"text/latex/outro.tex"}
+    assert res.n_pendentes > 0
+    md = pf.renderizar_markdown(res)
+    assert "Modo: `auto`" in md and "`text/latex/cap.tex`" in md.split("## ")[0]
+    # o não revisado também passa pela comparação por capítulo (aqui sem diferença de números)
+    assert res.numeros == []
+
+
+def test_auto_so_com_revisado_fundido_passa(repo):
+    _repo_fundido(repo, alterar=("cap",))
+    assert pf.analisar_repositorio(repo).n_pendentes == 0
+    assert pf.main(["--raiz", str(repo)]) == 0
+    # um número novo no revisado continua bloqueando, por capítulo
+    escrever(repo, "text/latex/cap.tex", FUNDIDO_NOVO + "\nMais 77 perdas.\n")
+    res = pf.analisar_repositorio(repo)
+    assert res.achados == [] and [(n.numero, n.status) for n in res.numeros] == [("77", "pendente")]
+    assert pf.main(["--raiz", str(repo)]) == 1
+
+
+def test_auto_sem_lista_de_revisados_equivale_a_ambos(repo):
+    base_commit(repo, {"text/latex/cap.tex": FUNDIDO_BASE})
+    escrever(repo, "text/latex/cap.tex", FUNDIDO_NOVO)
+    res = pf.analisar_repositorio(repo)
+    assert res.modos_arquivo == {"text/latex/cap.tex": "ambos"}
+    assert res.n_pendentes == pf.analisar_repositorio(repo, modo="ambos").n_pendentes > 0
+
+
+def test_chaves_de_secao_nao_mudam_o_modo_do_arquivo(repo):
+    _repo_fundido(repo, alterar=("outro",))
+    escrever(repo, "tests/data/arquivos_revisados.yaml", "- text/latex/outro.tex#resumo\n")
+    res = pf.analisar_repositorio(repo)
+    assert res.modos_arquivo == {"text/latex/outro.tex": "ambos"}
+
+
+def test_modos_explicitos_ignoram_a_lista_de_revisados(repo):
+    _repo_fundido(repo)
+    par = pf.analisar_repositorio(repo, modo="paragrafo")
+    assert {a.arquivo for a in par.achados} == {"text/latex/cap.tex", "text/latex/outro.tex"}
+    assert par.numeros == [] and par.n_pendentes > 0
+    assert set(par.modos_arquivo.values()) == {"paragrafo"}
+    amb = pf.analisar_repositorio(repo, modo="ambos")
+    assert {a.arquivo for a in amb.achados} == {"text/latex/cap.tex", "text/latex/outro.tex"}
+    cap = pf.analisar_repositorio(repo, modo="capitulo")
+    assert cap.achados == [] and cap.n_pendentes == 0
+    assert pf.main(["--raiz", str(repo), "--modo", "paragrafo"]) == 1
+    assert pf.main(["--raiz", str(repo), "--modo", "capitulo"]) == 0
+
+
+def test_aceite_de_paragrafo_em_arquivo_so_capitulo_nao_e_orfao(repo):
+    _repo_fundido(repo, alterar=("cap",))
+    ace = [aceite_valido(arquivo="text/latex/cap.tex")]
+    assert pf.analisar_repositorio(repo, aceites=ace).orfaos == []
+    assert len(pf.analisar_repositorio(repo, modo="ambos", aceites=ace).orfaos) == 1
+
+
+REGISTRO_POR_NOME = """\
+- id: N01
+  descricao: "define o valor"
+  tipo: numero
+  valores:
+    - {nome: n_total, fonte: {arquivo: data/x.csv, filtro: {m: a}, coluna: v}, texto_pt: "61.696"}
+  ocorrencias:
+    - {arquivo: text/latex/y.tex, exige: [n_total]}
+- id: N09
+  descricao: "só referencia o valor de N01 por nome"
+  tipo: numero
+  valores:
+    - {nome: abaixo, fonte: {arquivo: data/x.csv, filtro: {m: b}, coluna: v}, texto_pt: "61.485"}
+  ocorrencias:
+    - {arquivo: "@ARQ@", exige: [abaixo, n_total], mesma_frase: ["grey area"]}
+"""
+
+
+def test_valor_referenciado_por_nome_em_outra_entrada_conta_como_coberto(tmp_path):
+    reg = tmp_path / "registro.yaml"
+    reg.write_text(REGISTRO_POR_NOME.replace("@ARQ@", ARQ), encoding="utf-8")
+    inv = pf.carregar_invariantes(reg)
+    assert inv.cobertura[ARQ]["61485"] == ["N09"]
+    assert inv.cobertura[ARQ]["61696"] == ["N09"]  # definido em N01, exigido por N09
+    assert "61696" not in inv.cobertura.get("text/latex/z.tex", {})
+    ach = numeros("Havia 10 casos.", "Havia 10 casos em 61.696 pares.", invariantes=inv)
+    assert [(a.numero, a.status, a.invariantes) for a in ach] == [("61696", "coberto", ["N09"])]
+    assert pendentes_numeros(ach) == []
+    # arquivo que não cita a ocorrência não é coberto
+    outro = numeros(
+        "Havia 10 casos.", "Havia 10 casos em 61.696 pares.", arquivo="text/latex/z.tex", invariantes=inv
+    )
+    assert len(pendentes_numeros(outro)) == 1
+
+
+def test_registro_real_cobre_valor_por_nome_do_capitulo3():
+    inv = pf.carregar_invariantes(ROOT / pf.REGISTRO_PADRAO)
+    assert "N09" in inv.cobertura["text/latex/capitulo3.tex"]["61696"]
+
+
+@pytest.mark.parametrize(
+    "rotulo",
+    [
+      "no passo 11 da blocagem",
+      "no Passo~11",
+      "nos passos 2 e 11",
+      "na Tabela~3",
+      "no Capítulo 4",
+      "na Seção 2.1",
+      "na Figura 5",
+      "na Equação 7",
+      "no Estudo 2",
+      "no objetivo 3",
+      "na meta 4",
+    ],
+)
+def test_rotulos_sao_isentos_na_comparacao_por_capitulo(rotulo):
+    assert numeros("Havia 10 casos.", f"Havia 10 casos {rotulo}.") == []
+    # no alinhamento por parágrafo o número continua contando
+    assert sum(pf.extrair_tokens(f"Havia 10 casos {rotulo}.")["numeros"].values()) >= 2
+
+
+def test_numero_depois_do_rotulo_e_numero_antes_da_palavra_continuam_contando():
+    ach = numeros("Havia 10 casos.", "Havia 10 casos no passo 11 com 77 perdas.")
+    assert [(a.numero, a.tipo) for a in ach] == [("77", "novo")]
+    ach = numeros("Havia 10 casos.", "Havia 10 casos em 11 passos.")
+    assert [(a.numero, a.tipo) for a in ach] == [("11", "novo")]
+    # rótulo na base e no alvo: nada a comparar
+    assert numeros("Ver o passo 11 e depois 5 casos.", "Ver 5 casos no passo 11.") == []
+
+
 def test_modo_invalido(repo):
     base_commit(repo, {"text/latex/cap.tex": TEX_BASE})
     with pytest.raises(ValueError):

@@ -7,7 +7,7 @@ números, negadores, quantificadores e marcadores de força da afirmação,
 chaves de citação, alvos de ``\\ref``/``\\label``, siglas e alvos de ``\\path``.
 Um revisor independente só precisa olhar os parágrafos sinalizados.
 
-Há duas verificações, escolhidas por ``--modo``:
+Há duas verificações, escolhidas por ``--modo`` (padrão ``auto``):
 
 * ``paragrafo``: o alinhamento parágrafo a parágrafo descrito acima (parágrafos
   modificados, adicionados e removidos).
@@ -25,14 +25,27 @@ Há duas verificações, escolhidas por ``--modo``:
   - número removido (contagem menor): só registrado no relatório, salvo se for valor
     de invariante exigido (``exige``) pelo registro nesse arquivo e deixar de
     aparecer nele; nesse caso é pendência (o mesmo aceite por arquivo a libera);
-  - número movido (mesma contagem no arquivo): não gera nada.
+  - número movido (mesma contagem no arquivo): não gera nada;
+  - números de rótulo ("passo 11", "Tabela 3", "seção 2.1", capítulo, figura, equação,
+    estudo, objetivo, meta...) não entram na contagem: mesma regra de isenção ``rotulo``
+    de ``scripts/cobertura_numeros.py`` (importada, não duplicada);
+  - um número conta como coberto por invariante quando é o ``texto_pt`` de qualquer valor
+    exigido por alguma ocorrência do registro que cite o arquivo, onde quer que o valor
+    esteja definido (valor definido em N01 e só referenciado por nome em N09 cobre N09).
 
-* ``ambos`` (padrão): as duas verificações.
+* ``ambos``: as duas verificações.
+* ``auto`` (padrão): decide por arquivo. Arquivo listado em
+  ``tests/data/arquivos_revisados.yaml`` (revisado pelo regime aprovado pela autora) passa
+  pela comparação ``capitulo``, porque nele o sentido é protegido pelas âncoras do registro
+  de invariantes (``vigencia: pos_revisao``) e pela revisão de fidelidade independente, e a
+  comparação por parágrafo só gera ruído de fusão, movimento e remoção. Arquivo não listado
+  segue em ``ambos``. Só vale o arquivo inteiro; chaves ``arquivo#secao`` (resumo e
+  abstract de ``tese.tex``) não mudam o modo, pois o portão não trata seções.
 
 Uso:
     python scripts/portao_fidelidade.py [--base pre-revisao-2]
         [--alvo WORKTREE|<ref>] [--arquivos text/latex/x.tex ...]
-        [--modo capitulo|paragrafo|ambos] [--registro caminho.yaml]
+        [--modo auto|capitulo|paragrafo|ambos] [--registro caminho.yaml]
         [--saida .local/fidelidade/relatorio.md] [--json saida.json]
 
 Código de saída: 0 se não há alertas pendentes; 1 se há; 2 em erro de uso
@@ -63,8 +76,9 @@ ACEITES_PADRAO = "docs/fidelidade_aceites.yaml"
 SAIDA_PADRAO = ".local/fidelidade/relatorio.md"
 REGISTRO_PADRAO = "tests/data/registro_invariantes.yaml"
 SECAO_ACEITES_NUMEROS = "aceites_numeros"
-MODOS = ("capitulo", "paragrafo", "ambos")
-MODO_PADRAO = "ambos"
+MODOS = ("auto", "capitulo", "paragrafo", "ambos")
+MODO_PADRAO = "auto"
+REVISADOS_PADRAO = "tests/data/arquivos_revisados.yaml"
 ARQUIVO_EXTRA = "text/slides/defesa.tex"
 EXCLUIDOS = {"tese_rev_diff.tex"}
 MARCA_GERADA = "Gerada por scripts/"
@@ -220,8 +234,39 @@ def normalizar_numero(bruto: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def extrair_tokens(par: str) -> dict[str, Counter]:
-    """Multiconjuntos de itens com sentido, por categoria."""
+_RE_ROTULO_CACHE: list = []
+
+
+def _re_rotulo() -> re.Pattern:
+    """Regra de rótulo (passo, capítulo, seção, figura, tabela...) de ``cobertura_numeros``.
+
+    Importada sob demanda: ``cobertura_numeros`` importa este módulo.
+    """
+    if not _RE_ROTULO_CACHE:
+        ultimo: ImportError | None = None
+        for nome in ("scripts.cobertura_numeros", "cobertura_numeros"):
+            try:
+                _RE_ROTULO_CACHE.append(importlib.import_module(nome)._RE_ROTULO)
+                break
+            except ImportError as exc:
+                ultimo = exc
+        else:
+            raise ErroInvariantes(f"regra de rótulos indisponível (cobertura_numeros): {ultimo}")
+    return _RE_ROTULO_CACHE[0]
+
+
+def _e_rotulo(texto: str, inicio: int) -> bool:
+    """O número que começa em ``texto[inicio]`` é rótulo ("passo 11", "Tabela 3", "seção 2.1")?"""
+    antes = re.sub(r"\s+", " ", texto[max(0, inicio - 120) : inicio].replace("~", " "))
+    return bool(_re_rotulo().search(antes))
+
+
+def extrair_tokens(par: str, isentar_rotulos: bool = False) -> dict[str, Counter]:
+    """Multiconjuntos de itens com sentido, por categoria.
+
+    Com ``isentar_rotulos``, os números de rótulo (passo, capítulo, seção, figura, tabela,
+    equação, estudo, objetivo, meta...) não entram em ``numeros`` nem na ordem dos números.
+    """
     tok = {cat: Counter() for cat in CATEGORIAS}
     trabalho = par
 
@@ -241,9 +286,14 @@ def extrair_tokens(par: str) -> dict[str, Counter]:
 
     numerico = RE_SEP_MILHAR.sub("", trabalho.replace("{,}", ","))
     sequencia_paragrafo = []
+    posicao = 0
     for frase in RE_FRASE.split(numerico):
+        inicio_frase = numerico.find(frase, posicao)
+        posicao = inicio_frase + len(frase)
         sequencia = []
         for m in RE_NUMERO.finditer(frase):
+            if isentar_rotulos and _e_rotulo(numerico, inicio_frase + m.start("num")):
+                continue
             item = normalizar_numero(m.group("num"))
             if m.group("sinal"):
                 item = "-" + item
@@ -810,9 +860,13 @@ def _importar_registro():
 def carregar_invariantes(caminho: Path) -> Invariantes:
     """Lê as entradas N## do registro; arquivo ausente equivale a registro vazio.
 
-    A cobertura de um arquivo reúne os ``texto_pt`` de todos os valores de cada
-    entrada que o cita nas ocorrências. Os exigidos reúnem só os números puros
-    listados em ``exige`` (por nome de valor ou literal) nas ocorrências do arquivo.
+    A cobertura de um arquivo reúne (1) os ``texto_pt`` de todos os valores de cada
+    entrada que o cita nas ocorrências e (2) os ``texto_pt`` dos valores exigidos
+    (``exige``, ``exige_todos``, ``exige_algum``) por qualquer ocorrência que cite o
+    arquivo, onde quer que o valor esteja definido (um valor definido em N01 e só
+    referenciado por nome em N09 cobre o arquivo de N09). Os exigidos reúnem só os
+    números puros listados em ``exige`` (por nome de valor ou literal) nas ocorrências
+    do arquivo.
     """
     inv = Invariantes()
     if not caminho.is_file():
@@ -828,6 +882,7 @@ def carregar_invariantes(caminho: Path) -> Invariantes:
         for v in e.get("valores") or []
         if isinstance(v, dict) and "nome" in v
     }
+    conhecidos = {str(t) for t in textos.values() if t is not None}
     for e in reg.entradas:
         ident = str(e.get("id", ""))
         if not ident.startswith("N"):
@@ -843,6 +898,16 @@ def carregar_invariantes(caminho: Path) -> Invariantes:
             for t in textos_entrada:
                 for chave in extrair_tokens(t)["numeros"]:
                     cob.setdefault(_frouxa(chave), []).append(ident)
+            for campo in ("exige", "exige_todos", "exige_algum"):
+                for token in oc.get(campo) or []:
+                    for alt in (token if isinstance(token, list) else [token]):
+                        alt = str(alt)
+                        # nome de valor (definido em qualquer entrada) ou literal igual a um texto_pt
+                        texto = textos.get(alt) if alt in textos else (alt if alt in conhecidos else None)
+                        if texto is None:
+                            continue
+                        for chave in extrair_tokens(str(texto))["numeros"]:
+                            cob.setdefault(_frouxa(chave), []).append(ident)
             exi = inv.exigidos.setdefault(arquivo, {})
             for token in oc.get("exige") or []:
                 if isinstance(token, list):
@@ -861,10 +926,14 @@ def carregar_invariantes(caminho: Path) -> Invariantes:
 
 
 def contar_numeros(texto: str) -> Counter:
-    """Multiconjunto de números do arquivo, pela mesma extração dos parágrafos."""
+    """Multiconjunto de números do arquivo, pela mesma extração dos parágrafos.
+
+    Os números de rótulo ("passo 11", "Tabela 3", "seção 2.1") ficam de fora: são
+    isentos pela regra ``rotulo`` de ``scripts/cobertura_numeros.py``.
+    """
     total: Counter = Counter()
     for par in segmentar(texto):
-        total.update(extrair_tokens(par)["numeros"])
+        total.update(extrair_tokens(par, isentar_rotulos=True)["numeros"])
     return total
 
 
@@ -1036,6 +1105,7 @@ class Resultado:
     numeros: list = field(default_factory=list)  # AchadoNumero, comparação por arquivo
     orfaos_numeros: list = field(default_factory=list)
     modo: str = MODO_PADRAO
+    modos_arquivo: dict = field(default_factory=dict)  # arquivo -> modo efetivo (capitulo|paragrafo|ambos)
 
     @property
     def pendentes(self) -> list:
@@ -1065,6 +1135,11 @@ class Resultado:
         return [a for a in self.achados if a.status == "aceito"]
 
 
+def _arquivo_revisado(arquivo: str, revisados: frozenset[str] | None) -> bool:
+    """O arquivo inteiro consta da lista de revisados (chaves ``arq#secao`` não valem aqui)?"""
+    return arquivo.replace("\\", "/") in (revisados or frozenset())
+
+
 def _sem_eol(texto: str) -> str:
     return texto.replace("\r\n", "\n").replace("\r", "\n")
 
@@ -1085,6 +1160,18 @@ def aceitar_tabela(ent: dict, aceites: list[dict], usados: set) -> None:
         return
 
 
+def carregar_revisados(raiz: Path) -> frozenset[str]:
+    """Chaves de ``tests/data/arquivos_revisados.yaml`` do repositório (vazio se ausente)."""
+    caminho = raiz / REVISADOS_PADRAO
+    if not caminho.is_file():
+        return frozenset()
+    ri = _importar_registro()
+    try:
+        return ri.chaves_revisadas(caminho)
+    except (OSError, ValueError, TypeError, ri.ErroRegistro, ri.yaml.YAMLError) as exc:
+        raise ErroInvariantes(f"lista de arquivos revisados ilegível ({caminho}): {exc}") from exc
+
+
 def analisar_repositorio(
     raiz: Path,
     base: str = BASE_PADRAO,
@@ -1095,9 +1182,17 @@ def analisar_repositorio(
     invariantes: Invariantes | None = None,
     aceites_numeros: list[dict] | None = None,
     registro: Path | None = None,
+    revisados: frozenset[str] | None = None,
 ) -> Resultado:
+    """Compara base e alvo.
+
+    ``modo="auto"``: arquivo listado em ``arquivos_revisados.yaml`` (``revisados``) passa
+    pela comparação ``capitulo``; os demais, por ``ambos``.
+    """
     if modo not in MODOS:
         raise ValueError(f"modo inválido: {modo} (use {', '.join(MODOS)})")
+    if modo == "auto" and revisados is None:
+        revisados = carregar_revisados(raiz)
     if modo != "paragrafo" and invariantes is None:
         invariantes = carregar_invariantes(
             _resolver(raiz, str(registro)) if registro else raiz / REGISTRO_PADRAO
@@ -1142,21 +1237,28 @@ def analisar_repositorio(
             aceitar_tabela(ent, aceites, usados)
             res.gerados.append(ent)
             continue
-        if modo != "capitulo":
+        if modo == "auto":
+            efetivo = "capitulo" if _arquivo_revisado(arq, revisados) else "ambos"
+        else:
+            efetivo = modo
+        res.modos_arquivo[arq] = efetivo
+        if efetivo != "capitulo":
             achados, cont = analisar_textos(arq, antigo or "", novo or "", aceites, usados)
             res.achados.extend(achados)
             res.contagens[arq] = cont
-        if modo != "paragrafo":
+        if efetivo != "paragrafo":
             res.numeros.extend(
                 analisar_numeros_arquivo(
                     arq, antigo or "", novo or "", invariantes, aceites_numeros, usados_numeros
                 )
             )
     if modo != "capitulo":
+        # aceite de parágrafo de arquivo comparado só por capítulo não tem o que casar
+        so_capitulo = {a for a, m in res.modos_arquivo.items() if m == "capitulo"}
         res.orfaos = [
             {"arquivo": a["arquivo"], "hash_paragrafo_novo": a["hash_paragrafo_novo"]}
             for a in aceites
-            if (a["arquivo"], a["hash_paragrafo_novo"]) not in usados
+            if (a["arquivo"], a["hash_paragrafo_novo"]) not in usados and a["arquivo"] not in so_capitulo
         ]
     if modo != "paragrafo":
         res.orfaos_numeros = [
@@ -1196,6 +1298,14 @@ def renderizar_markdown(res: Resultado) -> str:
     out = ["# Portão de fidelidade", ""]
     out.append(f"Base: `{res.base}`. Alvo: `{res.alvo}`. Modo: `{res.modo}`.")
     out.append("")
+    if res.modo == "auto":
+        cap = sorted(a for a, m in res.modos_arquivo.items() if m == "capitulo")
+        out.append(
+            "Arquivos revisados (comparação por capítulo): "
+            + (", ".join(f"`{a}`" for a in cap) if cap else "nenhum")
+            + "."
+        )
+        out.append("")
     veredito = "FALHA" if res.n_pendentes else "OK"
     out.append(
         f"**Resultado: {veredito}** ({res.n_pendentes} alertas pendentes, "
@@ -1320,6 +1430,7 @@ def resultado_json(res: Resultado) -> dict:
         "pendentes_tabelas": len(res.gerados_pendentes),
         "aceitos": res.n_aceitos,
         "modo": res.modo,
+        "modos_arquivo": res.modos_arquivo,
         "pendentes_numeros": len(res.numeros_pendentes),
         "achados": [asdict(a) for a in res.achados],
         "numeros": [asdict(n) for n in res.numeros],
@@ -1358,7 +1469,8 @@ def main(argv: list[str] | None = None) -> int:
         "--modo",
         choices=MODOS,
         default=MODO_PADRAO,
-        help="capitulo (números por arquivo), paragrafo (alinhamento por parágrafo) ou ambos (padrão)",
+        help="auto (padrão: capitulo nos arquivos de tests/data/arquivos_revisados.yaml, ambos nos demais), "
+        "capitulo (números por arquivo), paragrafo (alinhamento por parágrafo) ou ambos",
     )
     ap.add_argument("--registro", default=REGISTRO_PADRAO, help="registro de invariantes (YAML)")
     args = ap.parse_args(argv)

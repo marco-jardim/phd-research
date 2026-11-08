@@ -11,7 +11,7 @@ das tabelas (extração de ``portao_fidelidade``) e classifica:
 - ``isento``: não é dado a registrar. Motivos: ``latex`` (dentro de matemática,
   ``\\texttt``, citação, ``\\ref``, medida etc.), ``data`` e ``ano`` (1900 a 2100 em
   contexto de data ou citação), ``rotulo`` (capítulo, seção, figura, tabela, equação,
-  passo, estudo...), ``norma`` (ABNT NBR, ISO, Lei, Resolução, CID...) e
+  passo, estudo, objetivo, meta...; regra compartilhada com ``portao_fidelidade``), ``norma`` (ABNT NBR, ISO, Lei, Resolução, CID...) e
   ``identificador`` (dígito colado a letra: O3, H1, K2.5, COVID-19);
 - ``descoberto``: o resto.
 
@@ -160,7 +160,7 @@ _PALAVRAS_ROTULO = (
     r"cap[íi]tulos?|caps?\.|se[çc][ãa]o|se[çc][õo]es|subse[çc][ãa]o|subse[çc][õo]es|"
     r"tabelas?|tabs?\.|figuras?|figs?\.|quadros?|equa[çc][ãa]o|equa[çc][õo]es|eqs?\.|"
     r"ap[êe]ndices?|anexos?|passos?|etapas?|f[óo]rmulas?|p[áa]ginas?|pp?\.|linhas?|"
-    r"itens?|algoritmos?|listagens?|hip[óo]teses?|estudos?|experimentos?")
+    r"itens?|algoritmos?|listagens?|hip[óo]teses?|estudos?|experimentos?|objetivos?|metas?")
 _RE_ROTULO = re.compile(
     r"(?<!\w)(?:" + _PALAVRAS_ROTULO + r")\s*"
     r"(?:\d+(?:[.,]\d+)*\s*(?:,|e|ou|a|-|\u2013|--)\s*)*(?:[A-Z]{1,2}[.-])?$", re.I)
