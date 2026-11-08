@@ -480,6 +480,11 @@ def _legacy_evidence_unchanged(state: dict, key: str, ctx_id: str, evidence_text
     return False
 
 
+def _same_sentence(a: str, b: str) -> bool:
+    """Igualdade de sentenças ignorando só diferenças de espaço em branco."""
+    return " ".join(a.split()) == " ".join(b.split())
+
+
 def find_reusable(
     contexts: list[dict],
     evidence_text: dict[str, str],
@@ -488,11 +493,19 @@ def find_reusable(
 ) -> dict[str, tuple[str, dict]]:
     """Vereditos finais de execuções anteriores (``reuse_root/*/avaliacoes.jsonl``) reaproveitáveis.
 
-    Vale quando o id do contexto (chave + sentença normalizada) tem veredito final e a evidência
-    enviada é a mesma (fingerprint). Devolve ``{id: (execução_de_origem, linha_anterior)}``. Na própria
-    pasta de trabalho só entram linhas que já eram reaproveitadas (preserva a origem).
+    Vale quando o id do contexto tem veredito final e a evidência enviada é a mesma (fingerprint).
+    Também casa linhas cujo ``id`` é o ``id_legado`` do contexto (fórmula antiga: chave + sentença
+    normalizada). Se um id antigo corresponde a vários contextos novos (a mesma chave citada duas
+    vezes na sentença), só vale para o contexto cuja ``sentence_text`` é idêntica à da linha antiga;
+    sem esse texto na linha antiga, os contextos são reavaliados. Devolve
+    ``{id_atual: (execução_de_origem, linha_anterior)}``. Na própria pasta de trabalho só entram linhas
+    que já eram reaproveitadas (preserva a origem).
     """
     wanted = {c["id"]: c for c in contexts}
+    by_legacy: dict[str, list[dict]] = {}
+    for c in contexts:
+        if c.get("id_legado"):
+            by_legacy.setdefault(c["id_legado"], []).append(c)
     found: dict[str, tuple[str, dict]] = {}
     if not wanted or not reuse_root.is_dir():
         return found
@@ -501,30 +514,47 @@ def find_reusable(
         own = run_dir.resolve() == current
         state: dict | None = None
         for old in read_jsonl(run_dir / "avaliacoes.jsonl"):
-            ctx_id = old.get("id")
-            ctx = wanted.get(ctx_id)
-            if ctx is None or ctx_id in found or old.get("key") != ctx["key"] or not is_final_row(old):
-                continue
-            if own and not old.get("reaproveitado_de"):
-                continue
-            text = evidence_text[ctx["key"]]
-            if old.get("evidencia_fingerprint"):
-                unchanged = old["evidencia_fingerprint"] == evidence_fingerprint(text)
+            old_id = old.get("id")
+            if old_id in wanted:
+                targets = [wanted[old_id]]
             else:
-                if state is None:
-                    state = read_json(run_dir / "checkpoint.json", default={}) or {}
-                unchanged = _legacy_evidence_unchanged(state, ctx["key"], ctx_id, text)
-            if unchanged:
-                found[ctx_id] = (old.get("reaproveitado_de") or run_dir.name, old)
+                targets = by_legacy.get(old_id, [])
+                if len(targets) > 1:
+                    old_sentence = old.get("sentence_text")
+                    targets = [
+                        c for c in targets
+                        if old_sentence and _same_sentence(old_sentence, c.get("sentence_text", ""))
+                    ]
+            if not targets or not is_final_row(old) or (own and not old.get("reaproveitado_de")):
+                continue
+            for ctx in targets:
+                if ctx["id"] in found or old.get("key") != ctx["key"]:
+                    continue
+                text = evidence_text[ctx["key"]]
+                if old.get("evidencia_fingerprint"):
+                    unchanged = old["evidencia_fingerprint"] == evidence_fingerprint(text)
+                else:
+                    if state is None:
+                        state = read_json(run_dir / "checkpoint.json", default={}) or {}
+                    unchanged = _legacy_evidence_unchanged(state, ctx["key"], old_id, text)
+                if unchanged:
+                    found[ctx["id"]] = (old.get("reaproveitado_de") or run_dir.name, old)
     return found
 
 
 def reused_row(
     ctx: dict, old: dict, origin: str, evidence_text: str, fingerprint: str, trechos: list[dict] | None = None
 ) -> dict:
-    """Cópia do veredito anterior com a localização atual e a marca ``reaproveitado_de``."""
+    """Cópia do veredito anterior com id, localização atuais e a marca ``reaproveitado_de``.
+
+    A linha leva o ``id`` novo do contexto; ``id_legado`` é o do contexto (ou, na falta, o da linha anterior).
+    """
     row = dict(old)
+    legacy_id = ctx.get("id_legado") or old.get("id_legado")
+    if legacy_id:
+        row["id_legado"] = legacy_id
     row.update(
+        id=ctx["id"],
         file=ctx.get("file", ""), line=ctx.get("line", 0), chapter=ctx.get("chapter", ""),
         section_path=ctx.get("section_path", []), evidencia_fingerprint=fingerprint,
         trechos_enviados=trechos or [], reaproveitado_de=origin,

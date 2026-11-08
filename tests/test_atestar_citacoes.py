@@ -1465,6 +1465,80 @@ def test_reuse_of_legacy_rows_without_fingerprint_uses_old_checkpoint(tmp_path, 
         assert final["id01"]["reaproveitado_de"] == "introducao" and [sent_ids(p) for p in seen] == [["id02"]]
 
 
+def new_ctx(i, legacy, key="kA", **kw):
+    return {**ctx(i, key, **kw), "id": f"new{i:02d}", "id_legado": legacy}
+
+
+def test_reuse_matches_prior_row_by_id_legado_and_writes_new_id(tmp_path):
+    write_evidence(tmp_path, "kA")
+    prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]
+    write_prior(tmp_path, "introducao", prior)  # id antigo: id01
+    client, seen = spy_client()
+    result = run_global(tmp_path, [new_ctx(1, "id01"), new_ctx(2, "id02", chapter="Métodos")], client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert set(final) == {"new01", "new02"}
+    assert final["new01"]["reaproveitado_de"] == "introducao" and final["new01"]["id_legado"] == "id01"
+    assert final["new01"]["veredito_final"] == "SUSTENTA"
+    assert "reaproveitado_de" not in final["new02"]
+    assert [sent_ids(p) for p in seen] == [["new02"]]
+    assert result["metadados"]["contextos_reaproveitados"] == 1
+
+    again_client, again_seen = spy_client()  # a pasta tese já tem o id novo; nada é reenviado
+    again = run_global(tmp_path, [new_ctx(1, "id01"), new_ctx(2, "id02", chapter="Métodos")], again_client)
+    assert again_seen == [] and {r["id"] for r in again["rows"]} == {"new01", "new02"}
+
+
+def test_reuse_by_id_legado_requires_unchanged_fingerprint(tmp_path):
+    write_evidence(tmp_path, "kA")
+    prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]
+    write_prior(tmp_path, "introducao", prior)
+    write_evidence(tmp_path, "kA", abstract=ABSTRACT + " An extra sentence changes the evidence.")
+    client, seen = spy_client()
+    result = run_global(tmp_path, [new_ctx(1, "id01")], client)
+    assert [sent_ids(p) for p in seen] == [["new01"]]
+    assert all("reaproveitado_de" not in r for r in result["rows"])
+
+
+def test_reuse_by_id_legado_of_rows_without_fingerprint_uses_old_checkpoint(tmp_path):
+    write_evidence(tmp_path, "kA")
+    record = common.read_json(tmp_path / "evidencias" / "kA.json")
+    old_text = prompts.build_evidence_block(record, av.Settings().max_chars)[0]
+    cid = av.make_custom_id(1, "kA", ["id01"], common.DEFAULT_MODEL, old_text)  # o checkpoint antigo guarda o id antigo
+    checkpoint = {"versao": 1, "modelo": common.DEFAULT_MODEL,
+                  "requisicoes": {cid: {"key": "kA", "passada": 1, "ids": ["id01"]}}}
+    write_prior(tmp_path, "introducao", [row(1, "kA", "SUSTENTA", "resumo", QUOTE, True)], checkpoint)
+    client, seen = spy_client()
+    result = run_global(tmp_path, [new_ctx(1, "id01"), new_ctx(2, "id02", chapter="Métodos")], client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert final["new01"]["reaproveitado_de"] == "introducao" and [sent_ids(p) for p in seen] == [["new02"]]
+
+
+def test_ambiguous_id_legado_is_reused_only_for_the_identical_sentence(tmp_path):
+    write_evidence(tmp_path, "kA")
+    first, second = "A [cit] e B [ref] afirmam 92%.", "A [ref] e B [cit] afirmam 92%."
+    prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "sentence_text": first,
+              "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]
+    write_prior(tmp_path, "introducao", prior)
+    contexts = [new_ctx(1, "id01", sentence=first), new_ctx(2, "id01", sentence=second)]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    final = {r["id"]: r for r in result["rows"]}
+    assert final["new01"]["reaproveitado_de"] == "introducao"
+    assert "reaproveitado_de" not in final["new02"]
+    assert [sent_ids(p) for p in seen] == [["new02"]]
+
+
+def test_ambiguous_id_legado_without_old_sentence_text_is_regraded(tmp_path):
+    write_evidence(tmp_path, "kA")
+    prior = [{**row(1, "kA", "SUSTENTA", "resumo", QUOTE, True), "evidencia_fingerprint": evidence_fp(tmp_path, "kA")}]
+    write_prior(tmp_path, "introducao", prior)
+    contexts = [new_ctx(1, "id01", sentence="A [cit] e B [ref]."), new_ctx(2, "id01", sentence="A [ref] e B [cit].")]
+    client, seen = spy_client()
+    result = run_global(tmp_path, contexts, client)
+    assert sorted(sent_ids(p) for p in seen) == [["new01", "new02"]]
+    assert result["metadados"]["contextos_reaproveitados"] == 0
+
+
 def test_cli_global_scope_end_to_end_report_has_chapter_and_key_tables(tmp_path, monkeypatch):
     contexts = [ctx(1, "kA", chapter="Introdução"), ctx(2, "kA", chapter="Métodos")]
     bib = write_inputs(tmp_path, contexts)
