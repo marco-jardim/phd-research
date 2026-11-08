@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from scripts.tabelas_s8a1_editorial import human_sensitivity
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
@@ -63,7 +64,7 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
     study = text("estudo4_gzcmd.tex")
     assert "compatíveis com ancoragem ou abstenção generalizada" in study
     assert "1.845 revisões" in study and "1.582" in study
-    assert "Não há controle negativo com não vínculos" in study
+    assert contem(study, "Não há controle negativo com não vínculos")  # migrado: terminologia 3.6
     assert "retira somente o grupo" in study
     assert "versão do prompt não está registrada" in study
     assert "proxies adicionais" not in study

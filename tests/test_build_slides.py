@@ -47,10 +47,17 @@ def slide_frames():
     return re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", source, re.S)
 
 
+class Termo(str):
+    """Fragmento comparado com `contem` (equivalência terminológica do guia, seção 3.6)."""
+
+
 def assert_fragments(frame, required):
     normalized = frame.replace("{,}", ",")
     for fragment in required:
-        assert fragment in normalized, fragment
+        if isinstance(fragment, Termo):
+            assert contem(normalized, fragment), fragment  # migrado: terminologia 3.6
+        else:
+            assert fragment in normalized, fragment
 
 
 def load_builder():
@@ -178,7 +185,7 @@ def scientific_requirements(csv_loader=read_csv):
         13: ["OOF", "REFREC", "A política v3.1 compara custos, não usa esse corte único"],
         19: [r"S3 (avaliação com os \textit{labels})"],
         18: [r"p\geq C_H/C_{FN}", "Restantes: não examinados", "não ausência de notificação",
-             "restrito às ações revisor humano e não vínculo"],
+             Termo("restrito às ações revisor humano e não vínculo")],  # migrado: terminologia 3.6
         20: ["figures/curva_esforco.pgf", "não registrada", "Revisor perfeito é hipótese dos dois lados",
              "Se a revisão histórica seguiu o escore", "favoreceria O1", "mesmos", "verificados"],
         21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
@@ -596,9 +603,10 @@ def test_slide_backup_cascade_rows_from_csv():
                                ("pares_humano", "Potenciais pares ao humano"),
                                ("pares_llm", "Potenciais pares ao LLM"),
                                ("fp", "Falsos positivos")):
+            # migrado: terminologia 3.6 (cabeçalho e quadro comparados após normalizar)
             assert re.search(
-                rf"{heading} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
-                frames[reserve - 1],
+                rf"{re.escape(normalizar_terminologia(heading))} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
+                normalizar_terminologia(frames[reserve - 1]),
             ), (reserve, field)
 
 

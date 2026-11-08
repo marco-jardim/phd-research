@@ -17,14 +17,30 @@ Classes (formas antigas e novas, singular e plural, mesmo marcador):
 - SIH_SUS: "SIH-SUS", "SIH/SUS".
 
 "zona cinzenta" não pertence a nenhuma classe: continua proibida e passa intacta.
+
+Dois modos, escolhidos pelo argumento opcional `arquivo` de `contem`/`conta`/`normalizar_terminologia`:
+- transicional (padrão, e arquivos fora de tests/data/arquivos_revisados.yaml): as classes acima.
+- estrito (arquivo listado em arquivos_revisados.yaml): só as formas canônicas viram marcador;
+  as formas antigas passam intactas ("não vínculo(s)", "não-par", "revisão clerical",
+  "relacionamento de registros", "vinculação (de registros)", "record linkage", "precisão", "SIH-SUS"),
+  e "vínculo(s)" (VINCULO) deixa de ser equivalente a "par(es) verdadeiro(s)" (PAR).
+  Um capítulo entra na lista quando a sua revisão é encerrada.
 """
 
 from __future__ import annotations
 
+import functools
 import re
 import unicodedata
+from pathlib import Path
+
+import yaml
+
+REPO = Path(__file__).resolve().parents[1]
+ARQUIVOS_REVISADOS_YAML = Path(__file__).resolve().parent / "data" / "arquivos_revisados.yaml"
 
 PAR = "⟦par⟧"
+VINCULO = "⟦vinculo⟧"  # só no modo estrito: o vínculo aceito, distinto do par verdadeiro
 NAO_PAR = "⟦nao_par⟧"
 GREY_AREA = "⟦grey_area⟧"
 REVISAO_MANUAL = "⟦revisao_manual⟧"
@@ -68,17 +84,61 @@ _CLASSES: tuple[tuple[str, tuple[str, ...]], ...] = (
     (SIH_SUS, (r"sih[-/]sus",)),
 )
 
-_NOMES = {
-    "c%d" % i: marcador for i, (marcador, _) in enumerate(_CLASSES)
-}
-_PADRAO = re.compile(
-    # ⟦ e ⟧ delimitam os marcadores: excluí-los das fronteiras torna a normalização idempotente.
-    r"(?<![\w⟦])(?:"
-    + "|".join(
-        "(?P<c%d>%s)" % (i, "|".join(alts)) for i, (_, alts) in enumerate(_CLASSES)
-    )
-    + r")(?![\w⟧])"
+# Modo estrito (arquivos já revisados, ver tests/data/arquivos_revisados.yaml): só as formas
+# canônicas viram marcador. "vínculo" (vínculo aceito) e "par verdadeiro" (classe segundo a
+# referência) têm marcadores distintos. Marcador `None` = forma proibida: passa intacta, de modo
+# que o literal antigo só casa com o texto antigo e o pino falha se o texto o reintroduzir.
+_CLASSES_ESTRITO: tuple[tuple[str | None, tuple[str, ...]], ...] = (
+    (
+        None,
+        (
+            r"não[ -]vínculos?",
+            r"não-par(?:es)?",
+            r"revisões clericais",
+            r"revisão clerical",
+            r"relacionamento de registros",
+            r"vinculação de registros",
+            r"record linkage",
+            r"vinculação",
+            r"precisão",
+            r"sih-sus",
+        ),
+    ),
+    (NAO_PAR, (r"não par(?:es)?",)),
+    (PAR, (r"par(?:es)? verdadeiros?",)),
+    (VINCULO, (r"vínculos?",)),
+    (
+        GREY_AREA,
+        (
+            r"grey areas \(áreas cinza\)",
+            r"grey area \(área cinza\)",
+            r"grey areas",
+            r"grey area",
+            r"áreas cinza",
+            r"área cinza",
+        ),
+    ),
+    (REVISAO_MANUAL, (r"revisões manuais", r"revisão manual")),
+    (VPP, (r"valor preditivo positivo \(vpp\)", r"valor preditivo positivo", r"vpp")),
+    (LINKAGE, (r"linkage \(relacionamento de registros\)", r"linkage")),
+    (SINAN, (r"sinan",)),
+    (SIH_SUS, (r"sih/sus",)),
 )
+
+
+def _compilar(classes) -> tuple[re.Pattern, dict[str, str | None]]:
+    nomes = {"c%d" % i: marcador for i, (marcador, _) in enumerate(classes)}
+    padrao = re.compile(
+        # ⟦ e ⟧ delimitam os marcadores: excluí-los das fronteiras torna a normalização idempotente.
+        r"(?<![\w⟦])(?:"
+        + "|".join("(?P<c%d>%s)" % (i, "|".join(alts)) for i, (_, alts) in enumerate(classes))
+        + r")(?![\w⟧])"
+    )
+    return padrao, nomes
+
+
+_PADRAO, _NOMES = _compilar(_CLASSES)
+_PADRAO_ESTRITO, _NOMES_ESTRITO = _compilar(_CLASSES_ESTRITO)
 _ESTILO = re.compile(r"\\(?:textit|emph|textsc)\{([^{}]*)\}")
 
 
@@ -92,16 +152,44 @@ def _trivia(texto: str) -> str:
     return " ".join(texto.casefold().split())
 
 
-def normalizar_terminologia(texto: str) -> str:
-    """Normaliza trivia de LaTeX e troca cada forma equivalente pelo marcador da classe."""
-    return _PADRAO.sub(lambda m: _NOMES[m.lastgroup], _trivia(texto))
+@functools.lru_cache(maxsize=None)
+def _revisados(caminho: Path) -> frozenset[Path]:
+    dados = yaml.safe_load(caminho.read_text(encoding="utf-8")) or []
+    if not isinstance(dados, list):
+        raise ValueError(f"{caminho}: esperada uma lista de caminhos")
+    return frozenset((REPO / str(item)).resolve() for item in dados)
 
 
-def contem(texto: str, literal: str) -> bool:
-    """Presença do literal no texto, aceitando as formas equivalentes."""
-    return normalizar_terminologia(literal) in normalizar_terminologia(texto)
+def arquivos_revisados() -> list[Path]:
+    """Caminhos absolutos dos arquivos da lista `tests/data/arquivos_revisados.yaml`."""
+    return sorted(_revisados(ARQUIVOS_REVISADOS_YAML))
 
 
-def conta(texto: str, literal: str) -> int:
-    """Número de ocorrências (sem sobreposição) do literal, aceitando as formas equivalentes."""
-    return normalizar_terminologia(texto).count(normalizar_terminologia(literal))
+def modo_estrito(arquivo: str | Path | None) -> bool:
+    """True quando `arquivo` consta da lista de arquivos revisados (caminho relativo à raiz do repositório)."""
+    if arquivo is None:
+        return False
+    return (REPO / Path(arquivo)).resolve() in _revisados(ARQUIVOS_REVISADOS_YAML)
+
+
+def normalizar_terminologia(texto: str, arquivo: str | Path | None = None) -> str:
+    """Normaliza trivia de LaTeX e troca cada forma equivalente pelo marcador da classe.
+
+    Sem `arquivo`, ou com arquivo fora da lista de revisados, vale a equivalência transicional.
+    Com arquivo revisado, só as formas canônicas viram marcador (modo estrito).
+    """
+    if modo_estrito(arquivo):
+        padrao, nomes = _PADRAO_ESTRITO, _NOMES_ESTRITO
+    else:
+        padrao, nomes = _PADRAO, _NOMES
+    return padrao.sub(lambda m: nomes[m.lastgroup] or m.group(0), _trivia(texto))
+
+
+def contem(texto: str, literal: str, arquivo: str | Path | None = None) -> bool:
+    """Presença do literal no texto, aceitando as formas equivalentes do modo do `arquivo`."""
+    return normalizar_terminologia(literal, arquivo) in normalizar_terminologia(texto, arquivo)
+
+
+def conta(texto: str, literal: str, arquivo: str | Path | None = None) -> int:
+    """Número de ocorrências (sem sobreposição) do literal, aceitando as formas equivalentes do modo do `arquivo`."""
+    return normalizar_terminologia(texto, arquivo).count(normalizar_terminologia(literal, arquivo))

@@ -2,6 +2,7 @@
 
 import pytest
 
+import terminologia
 from terminologia import (
     GREY_AREA,
     LINKAGE,
@@ -10,6 +11,7 @@ from terminologia import (
     REVISAO_MANUAL,
     SIH_SUS,
     SINAN,
+    VINCULO,
     VPP,
     conta,
     contem,
@@ -113,6 +115,78 @@ def test_presenca_ausencia_e_contagem():
     assert conta(texto, "não vínculo") == 1
     assert conta("de dois a quatro vínculos a mais; de dois a quatro pares verdadeiros a mais",
                  "de dois a quatro vínculos a mais") == 2
+
+
+REVISADO = "text/latex/revisado.tex"
+NAO_REVISADO = "text/latex/nao_revisado.tex"
+
+
+@pytest.fixture
+def lista_revisados(tmp_path, monkeypatch):
+    yaml_tmp = tmp_path / "arquivos_revisados.yaml"
+    yaml_tmp.write_text(f"- {REVISADO}\n", encoding="utf-8")
+    monkeypatch.setattr(terminologia, "ARQUIVOS_REVISADOS_YAML", yaml_tmp)
+    return yaml_tmp
+
+
+def test_yaml_real_e_uma_lista():
+    assert isinstance(terminologia.arquivos_revisados(), list)
+
+
+def test_modo_estrito_so_para_arquivo_listado(lista_revisados):
+    assert terminologia.modo_estrito(REVISADO)
+    assert terminologia.modo_estrito(terminologia.REPO / REVISADO)
+    assert not terminologia.modo_estrito(NAO_REVISADO)
+    assert not terminologia.modo_estrito(None)
+
+
+def test_estrito_vinculo_e_par_verdadeiro_sao_marcadores_distintos(lista_revisados):
+    assert norm("vínculos", REVISADO) == VINCULO
+    assert norm("par verdadeiro", REVISADO) == norm("pares verdadeiros", REVISADO) == PAR
+    assert not contem("dois pares verdadeiros", "dois vínculos", REVISADO)
+    assert not contem("dois vínculos", "dois pares verdadeiros", REVISADO)
+    assert contem("dois vínculos aceitos", "vínculos aceitos", REVISADO)
+    # transicional: continuam equivalentes
+    assert contem("dois pares verdadeiros", "dois vínculos")
+    assert contem("dois pares verdadeiros", "dois vínculos", NAO_REVISADO)
+
+
+@pytest.mark.parametrize("antiga,canonica", [
+    ("não vínculo", "não par"),
+    ("não vínculos", "não pares"),
+    ("não-par", "não par"),
+    ("revisão clerical", "revisão manual"),
+    ("relacionamento de registros", r"\textit{linkage}"),
+    ("record linkage", r"\textit{linkage}"),
+    ("vinculação de registros", r"\textit{linkage}"),
+    ("sensibilidade e precisão", "sensibilidade e VPP"),
+    ("SIH-SUS", "SIH/SUS"),
+])
+def test_estrito_nao_normaliza_forma_antiga(lista_revisados, antiga, canonica):
+    assert norm(antiga) == norm(canonica)  # transicional: equivalentes
+    assert norm(antiga, REVISADO) != norm(canonica, REVISADO)
+    assert contem(f"há {canonica} aqui", canonica, REVISADO)
+    assert not contem(f"há {antiga} aqui", canonica, REVISADO)
+    assert not contem(f"há {canonica} aqui", antiga, REVISADO)
+    assert contem(f"há {antiga} aqui", antiga, REVISADO)
+    assert contem(f"há {antiga} aqui", canonica, NAO_REVISADO)
+
+
+def test_estrito_formas_canonicas_continuam_com_variantes_de_estilo(lista_revisados):
+    assert norm(r"A \textit{grey area} (área cinza) da nota", REVISADO) == f"a {GREY_AREA} da nota"
+    assert norm(r"O \textit{linkage} (relacionamento de registros) é", REVISADO) == f"o {LINKAGE} é"
+    assert norm("valor preditivo positivo (VPP)", REVISADO) == norm("VPP", REVISADO) == VPP
+    assert norm("Sinan", REVISADO) == norm("SINAN", REVISADO) == SINAN
+    assert norm("SIH/SUS", REVISADO) == SIH_SUS
+    assert norm("revisões manuais", REVISADO) == REVISAO_MANUAL
+    assert norm("não pares", REVISADO) == NAO_PAR
+    assert conta("um vínculo, outro vínculo e um par verdadeiro", "vínculo", REVISADO) == 2
+    assert conta("um vínculo, outro vínculo e um par verdadeiro", "vínculo") == 3
+
+
+def test_estrito_e_idempotente(lista_revisados):
+    base = "Dois vínculos, um não vínculo, um não par e um par verdadeiro (precisão)."
+    assert norm(norm(base, REVISADO), REVISADO) == norm(base, REVISADO)
 
 
 def test_idempotencia_e_numeros_preservados():

@@ -99,7 +99,10 @@ def test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade(tm
                 "ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. "
                 "v3.1 distingue revisão humana da revisão por modelo de linguagem; v4 são as instruções sem as saídas decisórias do motor.")
     expected = expected.replace(r"\end{longtable}", r"\end{longtable}" + "\n" + glossary + "\n")
-    assert (tmp_path / names[-1]).read_text(encoding="utf-8") == expected
+    # migrado: terminologia 3.6 (igualdade exata, com a forma antiga ou a canônica "não par" no glossário)
+    canonical = expected.replace("NONMATCH: não vínculo;", "NONMATCH: não par;")
+    assert canonical != expected
+    assert (tmp_path / names[-1]).read_text(encoding="utf-8") in (expected, canonical)
     for file in ("estudo4_gzcmd.tex", "estudo5_equidade.tex"):
         chapter = (ROOT / "text/latex" / file).read_text(encoding="utf-8")
         for name in names:
