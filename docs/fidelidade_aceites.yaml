@@ -17,5 +17,15 @@
 #
 # Reeditar o parágrafo muda o hash e invalida o aceite (aparece como "sem correspondência").
 # Formato plano: o analisador interno aceita escalares, listas inline ([a, b]) e listas em bloco.
+#
+# Comparação por capítulo (--modo capitulo|ambos): a seção `aceites_numeros` libera, por
+# arquivo, um número novo, mais frequente ou removido que o portão bloquearia:
+#
+#   - arquivo: text/latex/estudo4_gzcmd.tex     # caminho relativo à raiz, com "/"
+#     numero: "39,3"                            # um só número, entre aspas (pt-BR ou en)
+#     autora_aprovou: true                      # só "true" libera
+#     motivo: "Número novo conferido em data/x.csv."
 
 aceites: []
+
+aceites_numeros: []

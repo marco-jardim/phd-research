@@ -7,13 +7,37 @@ números, negadores, quantificadores e marcadores de força da afirmação,
 chaves de citação, alvos de ``\\ref``/``\\label``, siglas e alvos de ``\\path``.
 Um revisor independente só precisa olhar os parágrafos sinalizados.
 
+Há duas verificações, escolhidas por ``--modo``:
+
+* ``paragrafo``: o alinhamento parágrafo a parágrafo descrito acima (parágrafos
+  modificados, adicionados e removidos).
+* ``capitulo``: compara, por arquivo ``.tex`` alterado, o multiconjunto de números
+  da base com o do alvo (mesma extração de números dos parágrafos), sem alinhar
+  parágrafos. Serve a revisões que fundem, movem e cortam parágrafos: remoções e
+  fusões de parágrafo não geram pendência por parágrafo, só valem estas regras:
+
+  - número novo (ausente na base) ou com contagem maior que na base: pendência,
+    salvo se o valor for texto (``texto_pt``) de uma entrada N## do registro de
+    invariantes (``tests/data/registro_invariantes.yaml``) que liste o arquivo nas
+    ocorrências, ou se houver aceite por arquivo na seção ``aceites_numeros`` de
+    ``docs/fidelidade_aceites.yaml`` (``{arquivo, numero, autora_aprovou: true,
+    motivo}``, com o número entre aspas);
+  - número removido (contagem menor): só registrado no relatório, salvo se for valor
+    de invariante exigido (``exige``) pelo registro nesse arquivo e deixar de
+    aparecer nele; nesse caso é pendência (o mesmo aceite por arquivo a libera);
+  - número movido (mesma contagem no arquivo): não gera nada.
+
+* ``ambos`` (padrão): as duas verificações.
+
 Uso:
     python scripts/portao_fidelidade.py [--base pre-revisao-2]
         [--alvo WORKTREE|<ref>] [--arquivos text/latex/x.tex ...]
+        [--modo capitulo|paragrafo|ambos] [--registro caminho.yaml]
         [--saida .local/fidelidade/relatorio.md] [--json saida.json]
 
 Código de saída: 0 se não há alertas pendentes; 1 se há; 2 em erro de uso
-ou de git. Somente biblioteca padrão (PyYAML é usado se estiver instalado).
+ou de git. Somente biblioteca padrão (PyYAML é usado se estiver instalado; o
+registro de invariantes exige PyYAML).
 """
 
 from __future__ import annotations
@@ -21,6 +45,7 @@ from __future__ import annotations
 import argparse
 import difflib
 import hashlib
+import importlib
 import json
 import re
 import subprocess
@@ -36,6 +61,10 @@ LIMIAR_JACCARD = 0.35
 MAX_TRECHO = 300
 ACEITES_PADRAO = "docs/fidelidade_aceites.yaml"
 SAIDA_PADRAO = ".local/fidelidade/relatorio.md"
+REGISTRO_PADRAO = "tests/data/registro_invariantes.yaml"
+SECAO_ACEITES_NUMEROS = "aceites_numeros"
+MODOS = ("capitulo", "paragrafo", "ambos")
+MODO_PADRAO = "ambos"
 ARQUIVO_EXTRA = "text/slides/defesa.tex"
 EXCLUIDOS = {"tese_rev_diff.tex"}
 MARCA_GERADA = "Gerada por scripts/"
@@ -401,8 +430,33 @@ def _lista_inline(s: str) -> list:
     return [_escalar(x) for x in interior.split(",") if x.strip()]
 
 
-def parse_aceites_simples(texto: str) -> list[dict]:
-    """Analisador mínimo para o formato plano de ``fidelidade_aceites.yaml``."""
+RE_SECAO = re.compile(r"^([A-Za-z_]\w*)\s*:")
+
+
+def _secoes_toplevel(texto: str) -> dict[str, list[str]]:
+    """Linhas de cada seção de nível zero (chave sem indentação), cabeçalho incluso."""
+    secoes: dict[str, list[str]] = {}
+    atual: str | None = None
+    for linha in texto.splitlines():
+        m = RE_SECAO.match(linha)
+        if m:
+            atual = m.group(1)
+            secoes[atual] = [linha]
+        elif atual is not None:
+            secoes[atual].append(linha)
+    return secoes
+
+
+def parse_aceites_simples(texto: str, secao: str = "aceites") -> list[dict]:
+    """Analisador mínimo para o formato plano de ``fidelidade_aceites.yaml``.
+
+    Se o arquivo tem mais de uma seção de nível zero (``aceites`` e
+    ``aceites_numeros``), analisa só a seção pedida.
+    """
+    chaves = {m.group(1) for ln in texto.splitlines() if (m := RE_SECAO.match(ln))}
+    if chaves and chaves != {"aceites"}:
+        linhas = _secoes_toplevel(texto).get(secao, [])
+        texto = "\n".join(["aceites:", *linhas[1:]])
     entradas: list[dict] = []
     atual: dict | None = None
     chave_lista: str | None = None
@@ -516,6 +570,57 @@ def carregar_aceites(caminho: Path) -> list[dict]:
                 "itens": [str(x) for x in itens],
                 "justificativa": str(e.get("justificativa") or ""),
                 "autora_aprovou": e.get("autora_aprovou") is True,
+            }
+        )
+    return saida
+
+
+def chave_numero(texto: str) -> str | None:
+    """Forma canônica do único número de ``texto`` (a mesma da extração); ``None`` se não for um só."""
+    chaves = list(extrair_tokens(texto)["numeros"])
+    return chaves[0] if len(chaves) == 1 else None
+
+
+def _frouxa(chave: str) -> str:
+    """Chave sem o ``%`` final, para casar ``39,3`` do registro com ``39,3\\%`` do texto."""
+    return chave[:-1] if chave.endswith("%") else chave
+
+
+def ler_entradas_aceites_numeros(caminho: Path) -> list:
+    """Entradas da seção ``aceites_numeros`` do YAML de aceites, como vieram."""
+    if not caminho.exists():
+        return []
+    texto = caminho.read_text(encoding="utf-8")
+    try:
+        import yaml  # type: ignore
+    except ImportError:
+        return parse_aceites_simples(texto, SECAO_ACEITES_NUMEROS)
+    dados = yaml.safe_load(texto)
+    if isinstance(dados, dict):
+        return list(dados.get(SECAO_ACEITES_NUMEROS) or [])
+    return []
+
+
+def carregar_aceites_numeros(caminho: Path) -> list[dict]:
+    """Aceites por arquivo e número: ``{arquivo, numero, autora_aprovou, motivo}``."""
+    saida = []
+    for e in ler_entradas_aceites_numeros(caminho):
+        if not isinstance(e, dict):
+            raise ErroAceites(f"aceite por arquivo que não é um mapeamento: {e!r}")
+        arquivo = str(e.get("arquivo") or "").replace("\\", "/").strip()
+        numero = e.get("numero")
+        chave = None if numero is None or isinstance(numero, bool) else chave_numero(str(numero))
+        if not arquivo or chave is None:
+            raise ErroAceites(
+                f"aceite por arquivo inválido: arquivo={e.get('arquivo')!s} numero={numero!s}; "
+                "informe `arquivo` e `numero` (um só número, entre aspas)"
+            )
+        saida.append(
+            {
+                "arquivo": arquivo,
+                "numero": chave,
+                "autora_aprovou": e.get("autora_aprovou") is True,
+                "motivo": str(e.get("motivo") or ""),
             }
         )
     return saida
@@ -661,6 +766,189 @@ def aplicar_aceites(achados: list[Achado], aceites: list[dict], usados: set) -> 
 
 
 # ---------------------------------------------------------------------------
+# Números por capítulo (arquivo)
+# ---------------------------------------------------------------------------
+
+RE_NUMERO_PURO = re.compile(r"^[-\u2212]?\d[\d.,]*\s*(?:\\?%)?$")
+
+
+class ErroInvariantes(ValueError):
+    """Registro de invariantes ilegível ou módulo do registro indisponível."""
+
+
+@dataclass
+class Invariantes:
+    """Números do registro (entradas N##) por arquivo, em chaves sem ``%`` final."""
+
+    cobertura: dict = field(default_factory=dict)  # arquivo -> {número: [ids]}: números aceitos como novos
+    exigidos: dict = field(default_factory=dict)  # arquivo -> {número: [ids]}: números que o arquivo deve ter
+
+
+@dataclass
+class AchadoNumero:
+    arquivo: str
+    numero: str
+    tipo: str  # novo | aumentado | removido | removido_invariante | (movido não gera achado)
+    contagem_base: int
+    contagem_alvo: int
+    alerta: bool
+    status: str  # pendente | aceito | coberto | info
+    nota: str = ""
+    invariantes: list = field(default_factory=list)
+
+
+def _importar_registro():
+    ultimo: ImportError | None = None
+    for nome in ("scripts.registro_invariantes", "registro_invariantes"):
+        try:
+            return importlib.import_module(nome)
+        except ImportError as exc:
+            ultimo = exc
+    raise ErroInvariantes(f"registro de invariantes indisponível: {ultimo}")
+
+
+def carregar_invariantes(caminho: Path) -> Invariantes:
+    """Lê as entradas N## do registro; arquivo ausente equivale a registro vazio.
+
+    A cobertura de um arquivo reúne os ``texto_pt`` de todos os valores de cada
+    entrada que o cita nas ocorrências. Os exigidos reúnem só os números puros
+    listados em ``exige`` (por nome de valor ou literal) nas ocorrências do arquivo.
+    """
+    inv = Invariantes()
+    if not caminho.is_file():
+        return inv
+    ri = _importar_registro()
+    try:
+        reg = ri.carregar_registro(caminho)
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, ri.ErroRegistro, ri.yaml.YAMLError) as exc:
+        raise ErroInvariantes(f"registro de invariantes ilegível ({caminho}): {exc}") from exc
+    textos = {
+        v["nome"]: v.get("texto_pt")
+        for e in reg.entradas
+        for v in e.get("valores") or []
+        if isinstance(v, dict) and "nome" in v
+    }
+    for e in reg.entradas:
+        ident = str(e.get("id", ""))
+        if not ident.startswith("N"):
+            continue
+        textos_entrada = [
+            str(v["texto_pt"]) for v in e.get("valores") or [] if isinstance(v, dict) and v.get("texto_pt") is not None
+        ]
+        for oc in e.get("ocorrencias") or []:
+            arquivo = str(oc.get("arquivo", "")).replace("\\", "/")
+            if not arquivo:
+                continue
+            cob = inv.cobertura.setdefault(arquivo, {})
+            for t in textos_entrada:
+                for chave in extrair_tokens(t)["numeros"]:
+                    cob.setdefault(_frouxa(chave), []).append(ident)
+            exi = inv.exigidos.setdefault(arquivo, {})
+            for token in oc.get("exige") or []:
+                if isinstance(token, list):
+                    continue  # sublista = alternativas (OU): nenhuma é exigida sozinha
+                texto = textos.get(token) if token in textos else token
+                if texto is None or not RE_NUMERO_PURO.match(str(texto).strip()):
+                    continue
+                chave = chave_numero(str(texto))
+                if chave is not None:
+                    exi.setdefault(_frouxa(chave), []).append(ident)
+    for tabela in (inv.cobertura, inv.exigidos):
+        for por_numero in tabela.values():
+            for chave, ids in por_numero.items():
+                por_numero[chave] = sorted(set(ids))
+    return inv
+
+
+def contar_numeros(texto: str) -> Counter:
+    """Multiconjunto de números do arquivo, pela mesma extração dos parágrafos."""
+    total: Counter = Counter()
+    for par in segmentar(texto):
+        total.update(extrair_tokens(par)["numeros"])
+    return total
+
+
+def _agregar_frouxo(contagem: Counter) -> Counter:
+    total: Counter = Counter()
+    for chave, n in contagem.items():
+        total[_frouxa(chave)] += n
+    return total
+
+
+def analisar_numeros_arquivo(
+    arquivo: str,
+    texto_base: str,
+    texto_alvo: str,
+    invariantes: Invariantes | None = None,
+    aceites_numeros: list[dict] | None = None,
+    usados: set | None = None,
+) -> list[AchadoNumero]:
+    """Compara os multiconjuntos de números de um arquivo na base e no alvo.
+
+    Número novo ou com contagem maior: pendente, salvo cobertura por invariante
+    (``coberto``) ou aceite por arquivo (``aceito``). Contagem menor: ``info``, salvo
+    quando o número é exigido pelo registro neste arquivo e deixa de aparecer nele
+    (``removido_invariante``, pendente, liberado só por aceite). Mesma contagem
+    (número movido): nada.
+    """
+    inv = invariantes or Invariantes()
+    cobertura = inv.cobertura.get(arquivo, {})
+    exigidos = inv.exigidos.get(arquivo, {})
+    aceites: dict[tuple[str, str], dict] = {}
+    for a in aceites_numeros or []:
+        chave_a = (a["arquivo"], _frouxa(a["numero"]))
+        if chave_a not in aceites or a["autora_aprovou"]:
+            aceites[chave_a] = a
+
+    base = contar_numeros(texto_base)
+    alvo = contar_numeros(texto_alvo)
+    alvo_frouxo = _agregar_frouxo(alvo)
+    achados: list[AchadoNumero] = []
+
+    def pendencia(ach: AchadoNumero) -> None:
+        ent = aceites.get((arquivo, _frouxa(ach.numero)))
+        if ent is None:
+            return
+        if usados is not None:
+            usados.add((ent["arquivo"], _frouxa(ent["numero"])))
+        if ent["autora_aprovou"]:
+            ach.status = "aceito"
+            ach.alerta = False
+            ach.nota = ent["motivo"]
+        else:
+            ach.nota = "aceite sem aprovação da autora (autora_aprovou: false)"
+
+    for numero in sorted(set(base) | set(alvo)):
+        antes, depois = base[numero], alvo[numero]
+        if depois == antes:
+            continue  # inclusive número movido de parágrafo
+        frouxo = _frouxa(numero)
+        if depois > antes:
+            ach = AchadoNumero(
+                arquivo, numero, "novo" if antes == 0 else "aumentado", antes, depois, True, "pendente"
+            )
+            ids = cobertura.get(frouxo)
+            if ids:
+                ach.alerta = False
+                ach.status = "coberto"
+                ach.invariantes = list(ids)
+                ach.nota = "valor de invariante do registro: " + ", ".join(ids)
+            else:
+                pendencia(ach)
+        elif frouxo in exigidos and alvo_frouxo[frouxo] == 0:
+            ach = AchadoNumero(
+                arquivo, numero, "removido_invariante", antes, depois, True, "pendente",
+                invariantes=list(exigidos[frouxo]),
+            )  # fmt: skip
+            ach.nota = "valor de invariante exigido neste arquivo: " + ", ".join(exigidos[frouxo])
+            pendencia(ach)
+        else:
+            ach = AchadoNumero(arquivo, numero, "removido", antes, depois, False, "info")
+        achados.append(ach)
+    return achados
+
+
+# ---------------------------------------------------------------------------
 # Git
 # ---------------------------------------------------------------------------
 
@@ -745,10 +1033,22 @@ class Resultado:
     gerados: list = field(default_factory=list)
     contagens: dict = field(default_factory=dict)
     orfaos: list = field(default_factory=list)
+    numeros: list = field(default_factory=list)  # AchadoNumero, comparação por arquivo
+    orfaos_numeros: list = field(default_factory=list)
+    modo: str = MODO_PADRAO
 
     @property
     def pendentes(self) -> list:
         return [a for a in self.achados if a.alerta and a.status == "pendente"]
+
+    @property
+    def numeros_pendentes(self) -> list:
+        return [n for n in self.numeros if n.alerta and n.status == "pendente"]
+
+    @property
+    def n_aceitos(self) -> int:
+        """Alertas aceitos, de parágrafo e de número por arquivo."""
+        return len(self.aceitos) + sum(1 for n in self.numeros if n.status == "aceito")
 
     @property
     def gerados_pendentes(self) -> list:
@@ -758,7 +1058,7 @@ class Resultado:
     @property
     def n_pendentes(self) -> int:
         """Total que conta para o código de saída."""
-        return len(self.pendentes) + len(self.gerados_pendentes)
+        return len(self.pendentes) + len(self.gerados_pendentes) + len(self.numeros_pendentes)
 
     @property
     def aceitos(self) -> list:
@@ -791,7 +1091,17 @@ def analisar_repositorio(
     alvo: str = ALVO_WORKTREE,
     arquivos: list[str] | None = None,
     aceites: list[dict] | None = None,
+    modo: str = MODO_PADRAO,
+    invariantes: Invariantes | None = None,
+    aceites_numeros: list[dict] | None = None,
+    registro: Path | None = None,
 ) -> Resultado:
+    if modo not in MODOS:
+        raise ValueError(f"modo inválido: {modo} (use {', '.join(MODOS)})")
+    if modo != "paragrafo" and invariantes is None:
+        invariantes = carregar_invariantes(
+            _resolver(raiz, str(registro)) if registro else raiz / REGISTRO_PADRAO
+        )
     if not ref_valida(raiz, base):
         raise ErroGit(f"base inexistente: {base}")
     if alvo.upper() != ALVO_WORKTREE and not ref_valida(raiz, alvo):
@@ -803,9 +1113,11 @@ def analisar_repositorio(
     else:
         lista = arquivos_alterados(raiz, base, alvo)
 
-    res = Resultado(base=base, alvo=alvo)
+    res = Resultado(base=base, alvo=alvo, modo=modo)
     usados: set = set()
+    usados_numeros: set = set()
     aceites = aceites or []
+    aceites_numeros = aceites_numeros or []
     for arq in lista:
         antigo = ler_ref(raiz, base, arq)
         if alvo.upper() == ALVO_WORKTREE:
@@ -830,14 +1142,28 @@ def analisar_repositorio(
             aceitar_tabela(ent, aceites, usados)
             res.gerados.append(ent)
             continue
-        achados, cont = analisar_textos(arq, antigo or "", novo or "", aceites, usados)
-        res.achados.extend(achados)
-        res.contagens[arq] = cont
-    res.orfaos = [
-        {"arquivo": a["arquivo"], "hash_paragrafo_novo": a["hash_paragrafo_novo"]}
-        for a in aceites
-        if (a["arquivo"], a["hash_paragrafo_novo"]) not in usados
-    ]
+        if modo != "capitulo":
+            achados, cont = analisar_textos(arq, antigo or "", novo or "", aceites, usados)
+            res.achados.extend(achados)
+            res.contagens[arq] = cont
+        if modo != "paragrafo":
+            res.numeros.extend(
+                analisar_numeros_arquivo(
+                    arq, antigo or "", novo or "", invariantes, aceites_numeros, usados_numeros
+                )
+            )
+    if modo != "capitulo":
+        res.orfaos = [
+            {"arquivo": a["arquivo"], "hash_paragrafo_novo": a["hash_paragrafo_novo"]}
+            for a in aceites
+            if (a["arquivo"], a["hash_paragrafo_novo"]) not in usados
+        ]
+    if modo != "paragrafo":
+        res.orfaos_numeros = [
+            {"arquivo": a["arquivo"], "numero": a["numero"]}
+            for a in aceites_numeros
+            if (a["arquivo"], _frouxa(a["numero"])) not in usados_numeros
+        ]
     return res
 
 
@@ -867,14 +1193,13 @@ def _fmt_itens(lista: list[str]) -> str:
 
 
 def renderizar_markdown(res: Resultado) -> str:
-    ace = res.aceitos
     out = ["# Portão de fidelidade", ""]
-    out.append(f"Base: `{res.base}`. Alvo: `{res.alvo}`.")
+    out.append(f"Base: `{res.base}`. Alvo: `{res.alvo}`. Modo: `{res.modo}`.")
     out.append("")
     veredito = "FALHA" if res.n_pendentes else "OK"
     out.append(
         f"**Resultado: {veredito}** ({res.n_pendentes} alertas pendentes, "
-        f"{len(ace)} aceitos)."
+        f"{res.n_aceitos} aceitos)."
     )
     out.append("")
     por_arquivo: dict[str, list[Achado]] = {}
@@ -926,6 +1251,41 @@ def renderizar_markdown(res: Resultado) -> str:
             if a.novo:
                 out.append(f"> Depois: {a.novo}")
             out.append("")
+    if res.modo != "paragrafo":
+        out.append("## Números por capítulo")
+        out.append("")
+        out.append(
+            "Comparação do multiconjunto de números de cada arquivo alterado com a base. "
+            "Número novo ou mais frequente é pendência, salvo valor de invariante do registro "
+            "ou aceite por arquivo; número removido só é registrado, salvo valor de invariante "
+            "exigido no arquivo; número movido não aparece."
+        )
+        out.append("")
+        por_arq_num: dict[str, list[AchadoNumero]] = {}
+        for n in res.numeros:
+            por_arq_num.setdefault(n.arquivo, []).append(n)
+        if not por_arq_num:
+            out.append("Sem diferenças de números entre os arquivos alterados.")
+            out.append("")
+        rotulos = {"pendente": "PENDENTE", "aceito": "ACEITO", "coberto": "COBERTO", "info": "REGISTRADO"}
+        for arq in sorted(por_arq_num):
+            out.append(f"### {arq}")
+            out.append("")
+            for n in por_arq_num[arq]:
+                linha = (
+                    f"- `{n.numero}` {n.tipo.replace('_', ' ')} "
+                    f"(base ×{n.contagem_base}, alvo ×{n.contagem_alvo}) [{rotulos.get(n.status, n.status)}]"
+                )
+                if n.nota:
+                    linha += f". {n.nota}"
+                out.append(linha)
+            out.append("")
+        if res.orfaos_numeros:
+            out.append("Aceites por arquivo sem correspondência (número sem diferença atual ou aceite obsoleto):")
+            out.append("")
+            for o in res.orfaos_numeros:
+                out.append(f"- `{o['arquivo']}` número `{o['numero']}`")
+            out.append("")
     if res.gerados:
         out.append("## Tabelas geradas por script: regenerar e conferir")
         out.append("")
@@ -958,11 +1318,15 @@ def resultado_json(res: Resultado) -> dict:
         "alvo": res.alvo,
         "pendentes": res.n_pendentes,
         "pendentes_tabelas": len(res.gerados_pendentes),
-        "aceitos": len(res.aceitos),
+        "aceitos": res.n_aceitos,
+        "modo": res.modo,
+        "pendentes_numeros": len(res.numeros_pendentes),
         "achados": [asdict(a) for a in res.achados],
+        "numeros": [asdict(n) for n in res.numeros],
         "gerados": res.gerados,
         "contagens": res.contagens,
         "orfaos": res.orfaos,
+        "orfaos_numeros": res.orfaos_numeros,
     }
 
 
@@ -990,13 +1354,31 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--json", dest="json_saida", help="relatório JSON opcional")
     ap.add_argument("--aceites", default=ACEITES_PADRAO, help="YAML de alertas reconhecidos")
     ap.add_argument("--raiz", help="raiz do repositório (padrão: toplevel do cwd)")
+    ap.add_argument(
+        "--modo",
+        choices=MODOS,
+        default=MODO_PADRAO,
+        help="capitulo (números por arquivo), paragrafo (alinhamento por parágrafo) ou ambos (padrão)",
+    )
+    ap.add_argument("--registro", default=REGISTRO_PADRAO, help="registro de invariantes (YAML)")
     args = ap.parse_args(argv)
 
     try:
         raiz = Path(args.raiz).resolve() if args.raiz else raiz_git(Path.cwd())
-        aceites = carregar_aceites(_resolver(raiz, args.aceites))
-        res = analisar_repositorio(raiz, args.base, args.alvo, args.arquivos, aceites)
-    except (ErroGit, ErroAceites, OSError) as exc:
+        caminho_aceites = _resolver(raiz, args.aceites)
+        aceites = carregar_aceites(caminho_aceites)
+        aceites_numeros = carregar_aceites_numeros(caminho_aceites)
+        res = analisar_repositorio(
+            raiz,
+            args.base,
+            args.alvo,
+            args.arquivos,
+            aceites,
+            modo=args.modo,
+            aceites_numeros=aceites_numeros,
+            registro=Path(args.registro),
+        )
+    except (ErroGit, ErroAceites, ErroInvariantes, OSError) as exc:
         print(f"erro: {exc}", file=sys.stderr)
         return 2
 
@@ -1010,8 +1392,9 @@ def main(argv: list[str] | None = None) -> int:
 
     print(
         f"Portão de fidelidade: {res.n_pendentes} alertas pendentes "
-        f"({len(res.gerados_pendentes)} de tabelas geradas), "
-        f"{len(res.aceitos)} aceitos, {len(res.gerados)} tabelas geradas alteradas. "
+        f"({len(res.gerados_pendentes)} de tabelas geradas, "
+        f"{len(res.numeros_pendentes)} de números por arquivo), "
+        f"{res.n_aceitos} aceitos, {len(res.gerados)} tabelas geradas alteradas. "
         f"Relatório: {saida}"
     )
     return 1 if res.n_pendentes else 0

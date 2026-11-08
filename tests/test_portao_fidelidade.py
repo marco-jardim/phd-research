@@ -731,6 +731,270 @@ def test_portao_no_repositorio_real(tmp_path):
     assert codigo == 0, relatorio[:6000]
 
 
+def test_portao_no_repositorio_real_por_capitulo(tmp_path):
+    """Mesma comparação, só por arquivo, com o registro de invariantes real."""
+    if shutil.which("git") is None:
+        pytest.skip("git indisponível")
+    try:
+        raiz = pf.raiz_git(ROOT)
+        base_ok = pf.ref_valida(raiz, "pre-revisao-2") and pf.ref_valida(raiz, "HEAD")
+    except (pf.ErroGit, OSError):
+        pytest.skip("repositório git indisponível")
+    if not base_ok:
+        pytest.skip("tag pre-revisao-2 ausente (clone raso ou sem tags)")
+    saida = tmp_path / "relatorio.md"
+    codigo = pf.main(
+        [
+            "--raiz", str(raiz),
+            "--base", "pre-revisao-2",
+            "--alvo", "HEAD",
+            "--modo", "capitulo",
+            "--saida", str(saida),
+        ]
+    )  # fmt: skip
+    relatorio = saida.read_text(encoding="utf-8") if saida.exists() else "(sem relatório)"
+    assert codigo == 0, relatorio[:6000]
+    assert "Números por capítulo" in relatorio
+
+
+def test_registro_real_cobre_numero_central_do_capitulo_de_dados():
+    inv = pf.carregar_invariantes(ROOT / pf.REGISTRO_PADRAO)
+    assert "N01" in inv.cobertura["text/latex/capitulo_dados.tex"]["61696"]
+    assert "N01" in inv.exigidos["text/latex/capitulo_dados.tex"]["61696"]
+
+
+# ---------------------------------------------------------------------------
+# Números por capítulo (arquivo)
+# ---------------------------------------------------------------------------
+
+ARQ = "text/latex/x.tex"
+REGISTRO_YAML = """\
+- id: N05
+  descricao: "teste"
+  tipo: numero
+  valores:
+    - {nome: n_total, fonte: {arquivo: data/x.csv, filtro: {m: a}, coluna: v}, texto_pt: "61.696"}
+    - {nome: n_vinc, fonte: {arquivo: data/x.csv, filtro: {m: b}, coluna: v}, texto_pt: "247"}
+  ocorrencias:
+    - {arquivo: "@ARQ@", exige: [n_total, n_vinc]}
+- id: N06
+  descricao: "outro arquivo"
+  tipo: numero
+  valores:
+    - {nome: n_outro, fonte: {arquivo: data/x.csv, filtro: {m: c}, coluna: v}, texto_pt: "99"}
+  ocorrencias:
+    - {arquivo: text/latex/y.tex, exige: [n_outro]}
+"""
+
+
+def numeros(antigo, novo, arquivo=ARQ, **kw):
+    return pf.analisar_numeros_arquivo(arquivo, antigo, novo, **kw)
+
+
+def pendentes_numeros(achados):
+    return [a for a in achados if a.alerta and a.status == "pendente"]
+
+
+@pytest.fixture
+def invariantes(tmp_path):
+    reg = tmp_path / "registro.yaml"
+    reg.write_text(REGISTRO_YAML.replace("@ARQ@", ARQ), encoding="utf-8")
+    return pf.carregar_invariantes(reg)
+
+
+def test_numero_novo_bloqueia():
+    ach = numeros("Havia 10 casos.", "Havia 10 casos e 77 perdas.")
+    assert [(a.numero, a.tipo, a.status) for a in ach] == [("77", "novo", "pendente")]
+    assert pendentes_numeros(ach) == ach
+
+
+def test_numero_novo_coberto_por_invariante_passa(invariantes):
+    ach = numeros("Havia 10 casos.", "Havia 10 casos em 61.696 pares.", invariantes=invariantes)
+    assert [(a.numero, a.status, a.invariantes) for a in ach] == [("61696", "coberto", ["N05"])]
+    assert pendentes_numeros(ach) == []
+    # invariante de outro arquivo não cobre este
+    outro = numeros(
+        "Havia 10 casos.", "Havia 10 casos em 61.696 pares.", arquivo="text/latex/z.tex", invariantes=invariantes
+    )
+    assert len(pendentes_numeros(outro)) == 1
+    outro = numeros("Havia 10 casos.", "Havia 10 casos e 99 perdas.", invariantes=invariantes)
+    assert len(pendentes_numeros(outro)) == 1  # o 99 é invariante de y.tex, não de x.tex
+
+
+def test_contagem_aumentada_bloqueia():
+    ach = numeros("Foram 12 casos.", "Foram 12 casos. Mais 12 depois.")
+    assert [(a.numero, a.tipo, a.contagem_base, a.contagem_alvo, a.status) for a in ach] == [
+        ("12", "aumentado", 1, 2, "pendente")
+    ]
+
+
+def test_remocao_e_registrada_sem_bloquear():
+    ach = numeros("Foram 12 casos e 7 perdas.", "Foram 12 casos.")
+    assert [(a.numero, a.tipo, a.status, a.alerta) for a in ach] == [("7", "removido", "info", False)]
+    assert pendentes_numeros(ach) == []
+    # contagem menor que ainda deixa o número no arquivo também só é registrada
+    menor = numeros("Foram 12 casos. Outros 12.", "Foram 12 casos.")
+    assert [(a.tipo, a.alerta) for a in menor] == [("removido", False)]
+
+
+def test_remocao_de_valor_de_invariante_bloqueia(invariantes):
+    ach = numeros("Foram 247 vínculos e 7 perdas.", "Foram 7 perdas.", invariantes=invariantes)
+    pend = pendentes_numeros(ach)
+    assert [(a.numero, a.tipo, a.invariantes) for a in pend] == [("247", "removido_invariante", ["N05"])]
+    # exigido só em x.tex: em y.tex a remoção é apenas registrada
+    y = numeros("Foram 247 vínculos e 7 perdas.", "Foram 7 perdas.", arquivo="text/latex/y.tex", invariantes=invariantes)
+    assert pendentes_numeros(y) == []
+    # o valor continua no arquivo (outra ocorrência): não bloqueia
+    resta = numeros("Foram 247 vínculos. De novo 247.", "Foram 247 vínculos.", invariantes=invariantes)
+    assert pendentes_numeros(resta) == []
+
+
+def test_numero_movido_nao_gera_nada():
+    assert numeros("A teve 12 casos.\n\nB teve 30 casos.\n", "B teve 30 casos.\n\nA teve 12 casos.\n") == []
+    assert numeros("Dados: 12 e 30.\n\nOutro.\n", "Dados.\n\nOutro com 12 e 30.\n") == []
+
+
+def test_extracao_de_numeros_do_capitulo_usa_a_do_paragrafo():
+    total = pf.contar_numeros("Taxa de 39,3\\% em 84.368 pares.\n\nOutra de 39.3\\% % comentário 77\n")
+    assert total == {"39.3%": 2, "84368": 1}
+
+
+def test_aceite_por_arquivo_unitario():
+    ace = [{"arquivo": ARQ, "numero": "77", "autora_aprovou": True, "motivo": "conferido"}]
+    usados = set()
+    ach = numeros("Havia 10.", "Havia 10 e 77.", aceites_numeros=ace, usados=usados)
+    assert [(a.status, a.alerta, a.nota) for a in ach] == [("aceito", False, "conferido")]
+    assert usados == {(ARQ, "77")}
+    nao = numeros("Havia 10.", "Havia 10 e 77.", aceites_numeros=[dict(ace[0], autora_aprovou=False)])
+    assert [(a.status, a.alerta) for a in nao] == [("pendente", True)]
+    outro = numeros("Havia 10.", "Havia 10 e 77.", aceites_numeros=[dict(ace[0], arquivo="text/latex/z.tex")])
+    assert len(pendentes_numeros(outro)) == 1
+
+
+def test_parser_simples_separa_secoes_de_aceites():
+    texto = (
+        "aceites:\n"
+        "  - arquivo: a.tex\n"
+        '    hash_paragrafo_novo: "0123456789abcdef"\n'
+        "    itens: [numeros:-1]\n"
+        "    autora_aprovou: true\n"
+        "aceites_numeros:\n"
+        "  - arquivo: b.tex\n"
+        '    numero: "77"\n'
+        "    autora_aprovou: true\n"
+        "    motivo: ok\n"
+    )
+    par = pf.parse_aceites_simples(texto)
+    assert [e["arquivo"] for e in par] == ["a.tex"]
+    num = pf.parse_aceites_simples(texto, pf.SECAO_ACEITES_NUMEROS)
+    assert num == [{"arquivo": "b.tex", "numero": "77", "autora_aprovou": True, "motivo": "ok"}]
+    assert pf.parse_aceites_simples("aceites: []\n\naceites_numeros: []\n") == []
+
+
+def test_carregar_aceites_numeros_normaliza_e_valida(tmp_path):
+    arq = tmp_path / "a.yaml"
+    arq.write_text(
+        "aceites: []\n\naceites_numeros:\n"
+        "  - arquivo: text\\latex\\x.tex\n"
+        '    numero: "39,3%"\n'
+        "    autora_aprovou: true\n"
+        "    motivo: ok\n",
+        encoding="utf-8",
+    )
+    assert pf.carregar_aceites_numeros(arq) == [
+        {"arquivo": "text/latex/x.tex", "numero": "39.3%", "autora_aprovou": True, "motivo": "ok"}
+    ]
+    assert pf.carregar_aceites(arq) == []
+    arq.write_text("aceites_numeros:\n  - arquivo: x.tex\n    autora_aprovou: true\n", encoding="utf-8")
+    with pytest.raises(pf.ErroAceites):
+        pf.carregar_aceites_numeros(arq)
+    assert pf.main(["--raiz", str(tmp_path), "--aceites", str(arq)]) == 2
+
+
+def test_fusao_de_paragrafos_com_mesmos_numeros_passa_em_capitulo(repo):
+    base_commit(repo, {"text/latex/cap.tex": "A teve 12 casos.\n\nB teve 30 casos.\n\nC fecha.\n"})
+    escrever(repo, "text/latex/cap.tex", "A teve 12 casos e B teve 30 casos.\n\nC fecha.\n")
+    cap = pf.analisar_repositorio(repo, modo="capitulo")
+    assert cap.n_pendentes == 0 and cap.achados == [] and cap.numeros == []
+    # o modo por parágrafo continua acusando a fusão (e não olha números por arquivo)
+    par = pf.analisar_repositorio(repo, modo="paragrafo")
+    assert par.n_pendentes > 0 and par.numeros == []
+    assert pf.analisar_repositorio(repo).n_pendentes > 0  # padrão: ambos
+    assert pf.main(["--raiz", str(repo), "--modo", "capitulo"]) == 0
+    assert pf.main(["--raiz", str(repo), "--modo", "paragrafo"]) == 1
+    assert pf.main(["--raiz", str(repo)]) == 1
+
+
+def test_capitulo_bloqueia_numero_novo_no_repositorio(repo):
+    base_commit(repo, {"text/latex/cap.tex": "Havia 10 casos.\n"})
+    escrever(repo, "text/latex/cap.tex", "Havia 10 casos e 77 perdas.\n")
+    res = pf.analisar_repositorio(repo, modo="capitulo")
+    assert res.n_pendentes == 1 and res.achados == []
+    md = pf.renderizar_markdown(res)
+    assert "FALHA" in md and "Números por capítulo" in md and "`77`" in md and "PENDENTE" in md
+    assert pf.main(["--raiz", str(repo), "--modo", "capitulo"]) == 1
+
+
+def test_capitulo_registra_remocao_no_relatorio(repo):
+    base_commit(repo, {"text/latex/cap.tex": "Havia 10 casos e 7 perdas.\n"})
+    escrever(repo, "text/latex/cap.tex", "Havia 10 casos.\n")
+    res = pf.analisar_repositorio(repo, modo="capitulo")
+    assert res.n_pendentes == 0
+    md = pf.renderizar_markdown(res)
+    assert "OK" in md and "REGISTRADO" in md and "`7` removido" in md
+
+
+def test_capitulo_usa_registro_do_repositorio(repo):
+    base_commit(repo, {"text/latex/cap.tex": "Vínculos 247 e perdas 7.\n"})
+    escrever(repo, "tests/data/registro_invariantes.yaml", REGISTRO_YAML.replace("@ARQ@", "text/latex/cap.tex"))
+    escrever(repo, "text/latex/cap.tex", "Perdas 7 em 61.696 pares.\n")
+    res = pf.analisar_repositorio(repo, modo="capitulo")
+    # 61.696 é coberto por N05; 247 sumiu e N05 o exige em cap.tex
+    assert [(n.numero, n.tipo, n.status) for n in res.numeros] == [
+        ("247", "removido_invariante", "pendente"),
+        ("61696", "novo", "coberto"),
+    ]
+    assert res.n_pendentes == 1
+    ace = [{"arquivo": "text/latex/cap.tex", "numero": "247", "autora_aprovou": True, "motivo": "cortado de propósito"}]
+    assert pf.analisar_repositorio(repo, modo="capitulo", aceites_numeros=ace).n_pendentes == 0
+
+
+def test_aceite_por_arquivo_libera(repo):
+    base_commit(repo, {"text/latex/cap.tex": "Havia 10 casos.\n"})
+    escrever(repo, "text/latex/cap.tex", "Havia 10 casos e 77 perdas.\n")
+    ace = {"arquivo": "text/latex/cap.tex", "numero": "77", "autora_aprovou": True, "motivo": "conferido"}
+    res = pf.analisar_repositorio(repo, modo="capitulo", aceites_numeros=[ace])
+    assert res.n_pendentes == 0 and res.n_aceitos == 1 and res.orfaos_numeros == []
+    assert "ACEITO" in pf.renderizar_markdown(res)
+    sem = pf.analisar_repositorio(repo, modo="capitulo", aceites_numeros=[dict(ace, autora_aprovou=False)])
+    assert sem.n_pendentes == 1
+    outro = pf.analisar_repositorio(
+        repo, modo="capitulo", aceites_numeros=[dict(ace, arquivo="text/latex/outro.tex")]
+    )
+    assert outro.n_pendentes == 1 and len(outro.orfaos_numeros) == 1
+
+    aceites = repo / "aceites.yaml"
+    aceites.write_text(
+        "aceites: []\n\naceites_numeros:\n"
+        "  - arquivo: text/latex/cap.tex\n"
+        '    numero: "77"\n'
+        "    autora_aprovou: true\n"
+        '    motivo: "conferido"\n',
+        encoding="utf-8",
+    )
+    assert pf.main(["--raiz", str(repo), "--modo", "capitulo", "--aceites", str(aceites)]) == 0
+    assert pf.main(["--raiz", str(repo), "--modo", "capitulo"]) == 1
+
+
+def test_modo_invalido(repo):
+    base_commit(repo, {"text/latex/cap.tex": TEX_BASE})
+    with pytest.raises(ValueError):
+        pf.analisar_repositorio(repo, modo="nenhum")
+    with pytest.raises(SystemExit) as exc:
+        pf.main(["--raiz", str(repo), "--modo", "nenhum"])
+    assert exc.value.code == 2
+
+
 def test_cli_como_subprocesso(repo):
     base_commit(repo, {"text/latex/cap.tex": TEX_BASE})
     escrever(repo, "text/latex/cap.tex", TEX_NOVO)
