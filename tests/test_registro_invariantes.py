@@ -270,6 +270,128 @@ def test_slides_beamer_usam_o_quadro_como_unidade(tmp_path, monkeypatch):
     assert _verificar(tmp_path, monkeypatch, fora, "X", "", "numero", oc)
 
 
+# --- mesma_frase: coocorrência do valor com a entidade na mesma frase ---------
+
+def _reg_mesma_frase():
+    return ri.Registro([{
+        "id": "N99", "tipo": "numero", "ocorrencias": [],
+        "valores": [
+            {"nome": "rec_o3", "fonte": {"arquivo": "x.csv"}, "texto_pt": "125"},
+            {"nome": "vpp_o3", "fonte": {"arquivo": "x.csv"}, "texto_pt": "87,5"},
+            {"nome": "total", "fonte": {"arquivo": "x.csv"}, "texto_pt": "1.234"},
+        ]}])
+
+
+def _checar_frase(tmp_path, monkeypatch, texto, oc):
+    monkeypatch.setattr(ri, "ROOT", tmp_path)
+    ri.paragrafos.cache_clear()
+    (tmp_path / "t.tex").write_text(texto, encoding="utf-8")
+    reg = _reg_mesma_frase()
+    try:
+        return ri.verificar_ocorrencia(reg, reg.por_id["N99"], dict(oc, arquivo="t.tex"))
+    finally:
+        ri.paragrafos.cache_clear()
+
+
+OC_O3 = {"exige": ["rec_o3"], "mesma_frase": ["O3", "vigilância"]}
+
+
+def test_mesma_frase_valor_na_frase_certa_passa(tmp_path, monkeypatch):
+    texto = "Na vigilância, o O3 recuperou 125 pares. O1 recuperou 87 pares.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, OC_O3) == []
+
+
+def test_mesma_frase_valor_em_frase_sem_a_entidade_falha(tmp_path, monkeypatch):
+    texto = "O O3 opera na vigilância. O total foi de 125 pares.\n"
+    falha = _checar_frase(tmp_path, monkeypatch, texto, OC_O3)
+    assert falha and "125" in falha[0] and "mesma frase" in falha[0]
+
+
+def test_mesma_frase_valor_trocado_de_entidade_falha(tmp_path, monkeypatch):
+    texto = "Na vigilância, o O1 recuperou 125 pares. O O3 recuperou 87 pares.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, OC_O3)
+    # ponto e vírgula também separa: o 125 fica na oração do O1
+    texto = "Na vigilância, o O1 recuperou 125 pares; o O3 recuperou 87 pares.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, OC_O3)
+    # sem o campo, o registro antigo continua passando com o mesmo texto
+    assert _checar_frase(tmp_path, monkeypatch, texto, {"exige": ["rec_o3"]}) == []
+
+
+def test_mesma_frase_aceita_alternativas(tmp_path, monkeypatch):
+    oc = {"exige": ["rec_o3"],
+          "mesma_frase": [["O3", "O-3"], ["vigilância", "vigilancia"]]}
+    assert _checar_frase(
+        tmp_path, monkeypatch, "Na vigilancia, o O-3 recuperou 125 pares.\n", oc) == []
+    assert _checar_frase(
+        tmp_path, monkeypatch, "Na vigilância, o O3 recuperou 125 pares.\n", oc) == []
+    assert _checar_frase(
+        tmp_path, monkeypatch, "Na confirmação, o O3 recuperou 125 pares.\n", oc)
+
+
+def test_mesma_frase_exige_todos_os_termos(tmp_path, monkeypatch):
+    texto = "Na confirmação, o O3 recuperou 125 pares. A vigilância é outro modo.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, OC_O3)
+
+
+def test_mesma_frase_cada_valor_precisa_da_sua_frase(tmp_path, monkeypatch):
+    oc = {"exige": ["rec_o3", "vpp_o3"], "mesma_frase": ["O3"]}
+    ok = "O O3 recuperou 125 pares. Para o O3, a VPP foi de 87,5\\%.\n"
+    assert _checar_frase(tmp_path, monkeypatch, ok, oc) == []
+    ruim = "O O3 recuperou 125 pares. A VPP do O1 foi de 87,5\\%.\n"
+    falha = _checar_frase(tmp_path, monkeypatch, ruim, oc)
+    assert falha and "87,5" in falha[0]
+
+
+def test_mesma_frase_nao_quebra_em_abreviacao_nem_decimal(tmp_path, monkeypatch):
+    texto = "O O3 em vigilância (cf. Tab. 2) recuperou 125 pares com VPP de 87,5\\%.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, OC_O3) == []
+    texto = "Na vigilância, o O3 teve 1.234 pares e VPP de 87,5\\%.\n"
+    oc = {"exige": ["total", "vpp_o3"], "mesma_frase": ["O3", "vigilância"]}
+    assert _checar_frase(tmp_path, monkeypatch, texto, oc) == []
+
+
+def test_mesma_frase_so_vale_para_valores_do_registro(tmp_path, monkeypatch):
+    # token literal (não é nome de valor) continua exigindo só o parágrafo
+    oc = {"exige": ["rec_o3", "pares"], "mesma_frase": ["O3"]}
+    texto = "O O3 recuperou 125. Foram os pares avaliados.\n"
+    assert _checar_frase(tmp_path, monkeypatch, texto, oc) == []
+
+
+def test_mesma_frase_sem_valor_exigido_e_erro_de_registro(tmp_path, monkeypatch):
+    oc = {"exige": ["pares"], "mesma_frase": ["O3"]}
+    with pytest.raises(ri.ErroRegistro):
+        _checar_frase(tmp_path, monkeypatch, "O O3 recuperou os pares.\n", oc)
+
+
+def test_estrutura_valida_mesma_frase():
+    def reg_com(mf):
+        return ri.Registro([{
+            "id": "N98", "tipo": "numero",
+            "valores": [{"nome": "v", "fonte": {"arquivo": "x.csv"}, "texto_pt": "1"}],
+            "ocorrencias": [{"arquivo": "t.tex", "exige": ["v"], "mesma_frase": mf}]}])
+
+    assert ri.verificar_estrutura(reg_com(["O3", ["a", "b"]])) == []
+    assert ri.verificar_estrutura(reg_com([]))
+    assert ri.verificar_estrutura(reg_com("O3"))
+    assert ri.verificar_estrutura(reg_com([["a", 3]]))
+
+
+def test_segmentar_frases():
+    seg = ri.segmentar_frases
+    assert seg("Foram 125 pares. Em O3 não houve.") == ["Foram 125 pares.", "Em O3 não houve."]
+    assert seg("Ver Fig. 3 e Tab. 2. Fim.") == ["Ver Fig. 3 e Tab. 2.", "Fim."]
+    assert seg("Silva et al. mostraram 3,5 vezes. Outro.") == [
+        "Silva et al. mostraram 3,5 vezes.", "Outro."]
+    assert seg("Total de 1.234,5 pares. Fim") == ["Total de 1.234,5 pares.", "Fim"]
+    assert seg("Foi 125. O3 não.") == ["Foi 125.", "O3 não."]
+    assert seg("Isso, i.e. aquilo, vale. Sim? Não! Talvez") == [
+        "Isso, i.e. aquilo, vale.", "Sim?", "Não!", "Talvez"]
+    assert seg("A. B. Silva fez 2 testes etc. e voltou.") == [
+        "A. B. Silva fez 2 testes etc. e voltou."]
+    assert seg("um; dois") == ["um;", "dois"]
+    assert seg("") == []
+
+
 def test_markdown_continua_separado_por_linha_em_branco(tmp_path, monkeypatch):
     monkeypatch.setattr(ri, "ROOT", tmp_path)
     ri.paragrafos.cache_clear()

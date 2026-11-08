@@ -11,6 +11,10 @@ afirmações centrais da tese. Este módulo faz duas verificações independente
    exige que exista ao menos um parágrafo contendo todos os tokens exigidos.
    Não se fixa frase alguma: só âncoras de conceito (números e termos técnicos).
 
+Campo opcional ``mesma_frase`` por ocorrência (lista de termos, cada um texto ou lista
+de alternativas): cada valor exigido tem de aparecer, no arquivo (ou seção), numa frase
+que contenha também todos esses termos (``segmentar_frases``).
+
 Uso::
 
     python scripts/registro_invariantes.py [--relatorio .local/fase0/registro_relatorio.md]
@@ -465,6 +469,73 @@ def contem(paragrafo: str, token: str, dobrar: bool = False) -> bool:
     return re.search(pad, paragrafo) is not None
 
 
+# Abreviações comuns (minúsculas, sem o ponto final) que não encerram frase.
+_ABREVIACOES = frozenset({
+    "fig", "figs", "tab", "tabs", "eq", "eqs", "cap", "caps", "sec", "seç", "art",
+    "arts", "cf", "vs", "ex", "al", "et", "pp", "pág", "págs", "vol", "vols", "ed",
+    "eds", "obs", "ref", "refs", "aprox", "dr", "dra", "prof", "profa", "sr", "sra",
+    "apud", "ibid", "op", "cit", "resp", "inc", "ltda", "e.g", "i.e", "s.d", "c.f",
+    "approx", "no", "nº", "n.º",
+})
+# Fim de frase: . ! ? ou ; seguido de espaço (ou do fim), com fechamentos opcionais.
+_FIM_DE_FRASE = re.compile(r"[.!?;]+[)\]\"'\u201d\u2019]*(?=\s|$)")
+# "no." fecha frase com frequência; só vale como abreviação quando seguido de número.
+_ABREVIACAO_COM_NUMERO = frozenset({"no", "nº", "n.º"})
+
+
+def _e_abreviacao(antes: str, depois: str) -> bool:
+    """O ponto que termina ``antes`` pertence a uma abreviação ou inicial?"""
+    m = re.search(r"(\S+)$", antes)
+    if not m:
+        return False
+    palavra = m.group(1).lstrip("([\"'\u201c\u2018").casefold()
+    if palavra in _ABREVIACOES:
+        return palavra not in _ABREVIACAO_COM_NUMERO or depois[:1].isdigit()
+    if len(palavra) != 1 or not palavra.isalpha():
+        return False
+    if palavra.islower():  # "p. 12", "n. 5"
+        return True
+    # Inicial maiúscula ("A. B. Silva"): só se vier outra inicial junto, para que
+    # "recuperação de P. O3 ..." continue dividindo a frase.
+    return bool(re.match(r"[A-ZÀ-Ý]\.", depois)
+                or re.search(r"(?:^|\s)[A-ZÀ-Ý]\.\s+[A-ZÀ-Ý]$", antes))
+
+
+def spans_frases(texto: str) -> list[tuple[int, int]]:
+    """Posições ``(início, fim)`` das frases de ``texto``, sem espaços nas bordas."""
+    cortes: list[tuple[int, int]] = []
+    inicio = 0
+    for m in _FIM_DE_FRASE.finditer(texto):
+        fim = m.end()
+        if m.group(0)[0] == ".":
+            resto = texto[fim:].lstrip()
+            if _e_abreviacao(texto[inicio:m.start()], resto):
+                continue
+            if resto[:1].islower():
+                continue
+        cortes.append((inicio, fim))
+        inicio = fim
+    cortes.append((inicio, len(texto)))
+    spans = []
+    for a, b in cortes:
+        pedaco = texto[a:b]
+        esq = len(pedaco) - len(pedaco.lstrip())
+        if pedaco.strip():
+            spans.append((a + esq, a + len(pedaco.rstrip())))
+    return spans
+
+
+def segmentar_frases(texto: str) -> list[str]:
+    """Divide o texto em frases (ou orações separadas por ``;``).
+
+    Termina em ``.``, ``!``, ``?`` ou ``;`` seguido de espaço. Não divide em:
+    abreviações comuns (``Fig.``, ``et al.``, ``cf.``), iniciais (``A. B.``),
+    decimais e milhares (``87,5``, ``1.234``, sem espaço depois do separador) e ponto
+    final seguido de minúscula (``etc. e``). O ``;`` sempre divide.
+    """
+    return [texto[a:b] for a, b in spans_frases(texto)]
+
+
 def _expandir(reg: Registro, token, idioma: str, tipo: str):
     """Token -> lista de alternativas já normalizadas."""
     alternativas = token if isinstance(token, list) else [token]
@@ -477,6 +548,47 @@ def _expandir(reg: Registro, token, idioma: str, tipo: str):
     return saida
 
 
+def _valores_exigidos(reg: Registro, oc: dict, idioma: str) -> list[list[str]]:
+    """Valores do registro exigidos pela ocorrência: uma lista de textos por token.
+
+    Só entram os tokens de ``exige``/``exige_todos`` em que ao menos uma alternativa é
+    nome de valor; as alternativas literais do mesmo token ficam de fora.
+    """
+    saida = []
+    for token in [*(oc.get("exige") or []), *(oc.get("exige_todos") or [])]:
+        alternativas = token if isinstance(token, list) else [token]
+        textos = [normalizar(reg.texto(str(a), idioma))
+                  for a in alternativas if str(a) in reg.valores]
+        if textos:
+            saida.append(textos)
+    return saida
+
+
+def _verificar_mesma_frase(reg: Registro, oc: dict, paras, idioma: str,
+                           dobrar: bool) -> list[str]:
+    """``mesma_frase``: cada valor exigido aparece numa frase que traz todos os termos.
+
+    Cada termo é um texto ou uma lista de alternativas (qualquer uma). As frases são as
+    do arquivo (ou da seção) inteiro, não de um único parágrafo.
+    """
+    termos_cfg = oc.get("mesma_frase")
+    if not termos_cfg:
+        return []
+    termos = [_expandir(reg, t, idioma, "numero") for t in termos_cfg]
+    frases = [f for p in paras for f in segmentar_frases(p)]
+    onde = oc["arquivo"] + (f" [{oc['secao']}]" if oc.get("secao") else "")
+    problemas = []
+    for textos in _valores_exigidos(reg, oc, idioma):
+        if not any(
+                any(contem(f, v, dobrar) for v in textos)
+                and all(any(contem(f, t, dobrar) for t in alts) for alts in termos)
+                for f in frases):
+            problemas.append(
+                f"{onde}: valor {' | '.join(textos)} não aparece na mesma frase que "
+                f"{termos_cfg}")
+    return problemas
+
+
 def verificar_ocorrencia(reg: Registro, entrada: dict, oc: dict) -> list[str]:
     arquivo, secao = oc["arquivo"], oc.get("secao")
     paras = paragrafos(arquivo, secao)
@@ -487,6 +599,10 @@ def verificar_ocorrencia(reg: Registro, entrada: dict, oc: dict) -> list[str]:
     algum = [normalizar(str(t)) for t in (oc.get("exige_algum") or [])]
     if not todos and not algum:
         raise ErroRegistro(f"{entrada['id']}: ocorrência sem exigências")
+    if oc.get("mesma_frase") and not _valores_exigidos(reg, oc, idioma):
+        raise ErroRegistro(
+            f"{entrada['id']}: 'mesma_frase' exige ao menos um valor do registro em "
+            "'exige'/'exige_todos'")
 
     melhor, melhor_pt, melhor_falta = None, -1, []
     for p in paras:
@@ -495,7 +611,7 @@ def verificar_ocorrencia(reg: Registro, entrada: dict, oc: dict) -> list[str]:
         pontos = len(todos) - len(falta)
         falta_algum = bool(algum) and not any(contem(p, a, dobrar) for a in algum)
         if not falta and not falta_algum:
-            return []
+            return _verificar_mesma_frase(reg, oc, paras, idioma, dobrar)
         pontos += 0 if falta_algum else 1
         if pontos > melhor_pt:
             melhor, melhor_pt = p, pontos
@@ -572,6 +688,26 @@ def verificar_estrutura(reg: Registro) -> list[str]:
                 problemas.append(f"{eid}: ocorrência {oc['arquivo']} sem exigências")
             if oc.get("secao") and oc["secao"] not in _MARCADORES:
                 problemas.append(f"{eid}: seção inválida {oc['secao']!r}")
+            if "mesma_frase" in oc:
+                mf = oc["mesma_frase"]
+                itens_ok = isinstance(mf, list) and bool(mf) and all(
+                    (isinstance(t, str) and t != "")
+                    or (isinstance(t, list) and t
+                        and all(isinstance(a, str) and a != "" for a in t))
+                    for t in mf)
+                if not itens_ok:
+                    problemas.append(
+                        f"{eid}: 'mesma_frase' em {oc['arquivo']} deve ser lista não "
+                        "vazia de textos ou listas de alternativas")
+                else:
+                    try:
+                        sem_valor = not _valores_exigidos(reg, oc, "pt")
+                    except ErroRegistro as exc:
+                        problemas.append(f"{eid}: 'mesma_frase' em {oc['arquivo']}: {exc}")
+                    else:
+                        if sem_valor:
+                            problemas.append(
+                                f"{eid}: 'mesma_frase' em {oc['arquivo']} sem valor exigido")
     return problemas
 
 
