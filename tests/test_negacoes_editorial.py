@@ -42,7 +42,7 @@ FORMULAS = (
 # Número de ocorrências dos quatro negadores por frase consecutiva.
 # Retrato aprovado pelo autor, não meta de redução: valores 3 são deliberados.
 EXPECTED_NEGATIONS = {
-    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0, 0],
+    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0],  # revisão 2: mapa dos capítulos com três frases, sem negação
     "O novo pseudônimo é o HMAC-SHA256": [0, 4, 1],
     "A matriz restrita não foi depositada": [3, 1],
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],
