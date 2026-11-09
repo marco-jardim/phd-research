@@ -20,7 +20,7 @@ RECOMMENDATION_C08R = (
     "Recomenda-se, a validar em coorte nova com referência cega, preservar o corte do OpenRecLink e, "
     "abaixo dele, ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, "
     "isolada (O3) ou fundida ao escore do OpenRecLink por posição recíproca (F4; F3 quando houver as MACD), "
-    "escolhendo entre elas pela curva de esforço conforme o orçamento humano."
+    "escolhendo entre elas, e entre estimadores, pela curva de esforço conforme o orçamento humano."
 )
 MODELS = (
     ("claude-haiku-5-5", "Claude Haiku 5.5", "historico"),

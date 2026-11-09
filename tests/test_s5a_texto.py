@@ -49,7 +49,7 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     assert "13 não foram recuperados" in conclusion
     assert "foram 27 pares verdadeiros perdidos" in conclusion
     assert "ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida" in conclusion
-    assert "escolhendo entre elas pela curva de esforço" in conclusion
+    assert "escolhendo entre elas, e entre estimadores, pela curva de esforço" in conclusion
     assert "a diferença entre O3 e as fusões não foi demonstrada" in conclusion
     assert "coorte nova com referência cega" in conclusion
     hypothesis = conclusion.split(r"\label{sec:concl-trabalhos-futuros}")[1].split("\n\n")[1]

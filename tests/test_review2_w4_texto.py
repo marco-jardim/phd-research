@@ -95,7 +95,7 @@ def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
         assert f"data/ablation_comprec_{arm}.csv" in section
         assert f"data/ablation_comprec_{arm}_allowlist.csv" in appendix
     assert "200 árvores" in section and "profundidade máxima 10" in section
-    assert "pesos balanceados" in section and "validação cruzada interna" in section
+    assert "pesos de classe balanceados" in section and "validação cruzada interna" in section
     assert "29 subescores e à nota final" in section
     assert "se sobrepõem" in section and "otimistas" in section
     assert "não pode ser atribuída somente ao escore" in section

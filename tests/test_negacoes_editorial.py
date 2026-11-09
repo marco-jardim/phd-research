@@ -57,7 +57,7 @@ EXPECTED_NEGATIONS = {
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
-    "A ordenação dos classificadores depende da métrica": [1, 1, 1, 0, 0, 2],  # QA final: seis frases
+    "A ordenação dos classificadores depende da métrica": [1, 1, 2, 1, 0, 0, 2],  # redação nova (2026-11-09): sete frases; AUC-PR com IC da diferença e "não se distinguiu ... nem", e "não permite ordenar" (frases 3 e 4)
     "As duas implementações não são equivalentes": [1, 2, 1],  # C15 revista (2026-11-08): frase dos erros do Java, equivalência não demonstrada e efeito não medido
 }
 

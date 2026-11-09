@@ -1201,6 +1201,54 @@ aceites:
       - numeros:+7154
     justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
     autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex
+    hash_paragrafo_novo: "95fb1cbc1fbc32bc"
+    itens:
+      - caminhos:+data/ancoras_decisao_simulada.csv
+      - numeros:+2193
+      - numeros:-2192
+    justificativa: "Revisão 2 (correção de build de 2026-11-09): só \\path virou \\protect\\path na legenda gerada; números iguais ao aceite anterior desta tabela."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "6bf743614974a9b9"
+    itens:
+      - negadores:+nem
+      - negadores:+nenhum
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+1
+      - numeros:+1203
+      - numeros:+125
+      - numeros:+29
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+51
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): troca de 'do classificador' por 'do XGBoost' (Resumo) e 'of the classifier' por 'of XGBoost' (Abstract) na definição de O3; números inalterados."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "ffdd0d5215cb2a40"
+    itens:
+      - numeros:+1
+      - numeros:+1.203
+      - numeros:+125
+      - numeros:+29
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+51
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): troca de 'do classificador' por 'do XGBoost' (Resumo) e 'of the classifier' por 'of XGBoost' (Abstract) na definição de O3; números inalterados."
+    autora_aprovou: true
 aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
@@ -2078,3 +2126,35 @@ aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "17,8", autora_aprovou: true, motivo: "Revisão 2 (decisão da autora de 2026-11-08: Estudo 3 sem objetivo próprio, detalhe em apêndice): movido de estudo3_estrategias.tex, mesmo valor"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "50,0", autora_aprovou: true, motivo: "Revisão 2 (decisão da autora de 2026-11-08: Estudo 3 sem objetivo próprio, detalhe em apêndice): movido de estudo3_estrategias.tex, mesmo valor"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "71,5", autora_aprovou: true, motivo: "Revisão 2 (decisão da autora de 2026-11-08: Estudo 3 sem objetivo próprio, detalhe em apêndice): movido de estudo3_estrategias.tex, mesmo valor"}
+
+  - {arquivo: text/latex/conclusao.tex, numero: "0,973", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv (0,973 = AUC-PR do RF+SMOTE em data/nb01_results.json) e data/o3_estimador_rf.csv"}
+  - {arquivo: text/latex/conclusao.tex, numero: "498", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/o3_estimador_rf.csv (k_min_equivalente_P, O3_RF, vigilância: 498)"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "-0,004", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "-0,025", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "-0,033", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,004", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,016", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,032", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,039", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,041", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,052", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,073", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,105", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,112", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,156", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,253", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,271", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,284", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,30", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,317", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,323", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,385", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,501", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,964", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,968", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "2.000", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/nb01_bootstrap_ic.csv e data/nb01_bootstrap_ic_metadata.json"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "0,160", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/o3_estimador_rf.csv"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "498", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, texto aprovado pela autora): número novo do texto aprovado, conferido em data/o3_estimador_rf.csv"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "200", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, pacote de ajustes aprovado pela autora após revisão independente): conferido em 200 árvores do Random Forest (rf_params em data/o3_estimador_rf_metadata.json) e 200 desempates aleatórios, já usados para O3"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "486", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, pacote de ajustes aprovado pela autora após revisão independente): conferido em mínimo de k_min_equivalente_P na vigilância com 200 desempates, bloco empates de data/o3_estimador_rf.csv"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "592", autora_aprovou: true, motivo: "Revisão 2 (análises 1 e 2 de 2026-11-09, pacote de ajustes aprovado pela autora após revisão independente): conferido em máximo de k_min_equivalente_P na vigilância com 200 desempates, bloco empates de data/o3_estimador_rf.csv"}

@@ -1,0 +1,509 @@
+{
+  "analysis": "nb01_bootstrap_ic",
+  "cpu_only": true,
+  "llm_calls": 0,
+  "date_utc": "2026-11-09T19:55:09.192302+00:00",
+  "seed": 20261109,
+  "replicas": 2000,
+  "replicas_validas": 2000,
+  "replicas_sem_par_verdadeiro": 0,
+  "rng": "numpy.default_rng PCG64; uma chamada rng.integers por réplica",
+  "grupos_REFREC_no_teste": 1184,
+  "linhas_teste": 18509,
+  "pares_verdadeiros_teste": 74,
+  "classificadores": [
+    "Logistic Regression",
+    "Random Forest",
+    "Gradient Boosting",
+    "SVM (RBF)",
+    "MLP Neural Network",
+    "RF + SMOTE",
+    "Stacking Ensemble"
+  ],
+  "metricas": [
+    "VPP",
+    "Sensibilidade",
+    "F1",
+    "AUC-PR"
+  ],
+  "diferencas_pareadas": [
+    "F1",
+    "AUC-PR"
+  ],
+  "limiar": 0.5,
+  "tolerancia_reproducao": 0.0001,
+  "decisao": "pontos publicados no texto; IC do rerun no ambiente atual (decisão da autora, 2026-11-09)",
+  "base_do_ic": "predições do rerun no ambiente atual, para todos os modelos e pares (coluna ponto_rerun); ponto_publicado vem de data/nb01_results.json",
+  "divergencia_ambiente": {
+    "modelos": {
+      "Logistic Regression": "divergência de ambiente: regressão logística sobre atributos não padronizados, mal condicionada; lbfgs determinístico e convergido (n_iter < max_iter), mas o ponto de parada depende do ambiente (sklearn/scipy/BLAS); X idêntico bit a bit nas duas cargas e padrões antigos do sklearn sem efeito (diagnóstico .local/diag_nb01.json, 2026-11-09)",
+      "Stacking Ensemble": "divergência de ambiente: contém a mesma regressão logística sem padronização como estimador de base (lbfgs); causa provável idêntica, não isolada no diagnóstico (.local/diag_nb01.json, 2026-11-09)"
+    },
+    "diagnostico": ".local/diag_nb01.json e .local/diag_nb01.log (locais, não versionados; 2026-11-09)",
+    "regra": "modelo da lista que não reproduz não aborta (publicado e rerun lado a lado, reproduz=False, motivo); modelo fora da lista que não reproduz aborta",
+    "nao_reproduzidos": [
+      "Logistic Regression",
+      "Stacking Ensemble"
+    ]
+  },
+  "reproducao": {
+    "tolerancia": 0.0001,
+    "status": {
+      "Logistic Regression": {
+        "reproduz": false,
+        "na_lista_divergencia": true,
+        "motivo": "divergência de ambiente: regressão logística sobre atributos não padronizados, mal condicionada; lbfgs determinístico e convergido (n_iter < max_iter), mas o ponto de parada depende do ambiente (sklearn/scipy/BLAS); X idêntico bit a bit nas duas cargas e padrões antigos do sklearn sem efeito (diagnóstico .local/diag_nb01.json, 2026-11-09)"
+      },
+      "Random Forest": {
+        "reproduz": true,
+        "na_lista_divergencia": false,
+        "motivo": ""
+      },
+      "Gradient Boosting": {
+        "reproduz": true,
+        "na_lista_divergencia": false,
+        "motivo": ""
+      },
+      "SVM (RBF)": {
+        "reproduz": true,
+        "na_lista_divergencia": false,
+        "motivo": ""
+      },
+      "MLP Neural Network": {
+        "reproduz": true,
+        "na_lista_divergencia": false,
+        "motivo": ""
+      },
+      "RF + SMOTE": {
+        "reproduz": true,
+        "na_lista_divergencia": false,
+        "motivo": ""
+      },
+      "Stacking Ensemble": {
+        "reproduz": false,
+        "na_lista_divergencia": true,
+        "motivo": "divergência de ambiente: contém a mesma regressão logística sem padronização como estimador de base (lbfgs); causa provável idêntica, não isolada no diagnóstico (.local/diag_nb01.json, 2026-11-09)"
+      }
+    },
+    "registros": [
+      {
+        "classificador": "Logistic Regression",
+        "metrica": "VPP",
+        "publicado": 0.3216,
+        "rerun": 0.3173913043478261,
+        "diferenca_rerun_menos_publicado": -0.0042086956521739105,
+        "reproduz_metrica": false
+      },
+      {
+        "classificador": "Logistic Regression",
+        "metrica": "Sensibilidade",
+        "publicado": 0.9865,
+        "rerun": 0.9864864864864865,
+        "diferenca_rerun_menos_publicado": -1.3513513513530029e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Logistic Regression",
+        "metrica": "F1",
+        "publicado": 0.485,
+        "rerun": 0.48026315789473684,
+        "diferenca_rerun_menos_publicado": -0.00473684210526315,
+        "reproduz_metrica": false
+      },
+      {
+        "classificador": "Logistic Regression",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9991,
+        "rerun": 0.9991218232064449,
+        "diferenca_rerun_menos_publicado": 2.1823206444948617e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Logistic Regression",
+        "metrica": "AUC-PR",
+        "publicado": 0.9667,
+        "rerun": 0.9636204768710224,
+        "diferenca_rerun_menos_publicado": -0.003079523128977635,
+        "reproduz_metrica": false
+      },
+      {
+        "classificador": "Random Forest",
+        "metrica": "VPP",
+        "publicado": 0.9296,
+        "rerun": 0.9295774647887324,
+        "diferenca_rerun_menos_publicado": -2.2535211267604716e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Random Forest",
+        "metrica": "Sensibilidade",
+        "publicado": 0.8919,
+        "rerun": 0.8918918918918919,
+        "diferenca_rerun_menos_publicado": -8.108108108140222e-06,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Random Forest",
+        "metrica": "F1",
+        "publicado": 0.9103,
+        "rerun": 0.9103448275862069,
+        "diferenca_rerun_menos_publicado": 4.482758620694138e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Random Forest",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9997,
+        "rerun": 0.9997133830331553,
+        "diferenca_rerun_menos_publicado": 1.3383033155234259e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Random Forest",
+        "metrica": "AUC-PR",
+        "publicado": 0.9564,
+        "rerun": 0.9564152815239493,
+        "diferenca_rerun_menos_publicado": 1.5281523949250975e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Gradient Boosting",
+        "metrica": "VPP",
+        "publicado": 0.9375,
+        "rerun": 0.9375,
+        "diferenca_rerun_menos_publicado": 0.0,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Gradient Boosting",
+        "metrica": "Sensibilidade",
+        "publicado": 0.8108,
+        "rerun": 0.8108108108108109,
+        "diferenca_rerun_menos_publicado": 1.0810810810890636e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Gradient Boosting",
+        "metrica": "F1",
+        "publicado": 0.8696,
+        "rerun": 0.8695652173913043,
+        "diferenca_rerun_menos_publicado": -3.478260869571592e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Gradient Boosting",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9538,
+        "rerun": 0.9538370754806881,
+        "diferenca_rerun_menos_publicado": 3.707548068809796e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Gradient Boosting",
+        "metrica": "AUC-PR",
+        "publicado": 0.9045,
+        "rerun": 0.9044720359390063,
+        "diferenca_rerun_menos_publicado": -2.7964060993701523e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "SVM (RBF)",
+        "metrica": "VPP",
+        "publicado": 0.3806,
+        "rerun": 0.38064516129032255,
+        "diferenca_rerun_menos_publicado": 4.5161290322559555e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "SVM (RBF)",
+        "metrica": "Sensibilidade",
+        "publicado": 0.7973,
+        "rerun": 0.7972972972972973,
+        "diferenca_rerun_menos_publicado": -2.7027027027504147e-06,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "SVM (RBF)",
+        "metrica": "F1",
+        "publicado": 0.5153,
+        "rerun": 0.5152838427947598,
+        "diferenca_rerun_menos_publicado": -1.6157205240174832e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "SVM (RBF)",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9973,
+        "rerun": 0.997263577654139,
+        "diferenca_rerun_menos_publicado": -3.6422345860986916e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "SVM (RBF)",
+        "metrica": "AUC-PR",
+        "publicado": 0.5715,
+        "rerun": 0.5715335453475815,
+        "diferenca_rerun_menos_publicado": 3.3545347581487306e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "MLP Neural Network",
+        "metrica": "VPP",
+        "publicado": 0.8806,
+        "rerun": 0.8805970149253731,
+        "diferenca_rerun_menos_publicado": -2.9850746269266537e-06,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "MLP Neural Network",
+        "metrica": "Sensibilidade",
+        "publicado": 0.7973,
+        "rerun": 0.7972972972972973,
+        "diferenca_rerun_menos_publicado": -2.7027027027504147e-06,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "MLP Neural Network",
+        "metrica": "F1",
+        "publicado": 0.8369,
+        "rerun": 0.8368794326241135,
+        "diferenca_rerun_menos_publicado": -2.056737588651547e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "MLP Neural Network",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9954,
+        "rerun": 0.9954449160307581,
+        "diferenca_rerun_menos_publicado": 4.491603075817974e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "MLP Neural Network",
+        "metrica": "AUC-PR",
+        "publicado": 0.936,
+        "rerun": 0.9359837520997495,
+        "diferenca_rerun_menos_publicado": -1.624790025056555e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "RF + SMOTE",
+        "metrica": "VPP",
+        "publicado": 0.8846,
+        "rerun": 0.8846153846153846,
+        "diferenca_rerun_menos_publicado": 1.538461538452829e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "RF + SMOTE",
+        "metrica": "Sensibilidade",
+        "publicado": 0.9324,
+        "rerun": 0.9324324324324325,
+        "diferenca_rerun_menos_publicado": 3.2432432432449865e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "RF + SMOTE",
+        "metrica": "F1",
+        "publicado": 0.9079,
+        "rerun": 0.9078947368421053,
+        "diferenca_rerun_menos_publicado": -5.263157894730419e-06,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "RF + SMOTE",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9999,
+        "rerun": 0.9998614562487629,
+        "diferenca_rerun_menos_publicado": -3.854375123713005e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "RF + SMOTE",
+        "metrica": "AUC-PR",
+        "publicado": 0.9726,
+        "rerun": 0.9726216213387373,
+        "diferenca_rerun_menos_publicado": 2.1621338737287665e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Stacking Ensemble",
+        "metrica": "VPP",
+        "publicado": 0.2711,
+        "rerun": 0.2835249042145594,
+        "diferenca_rerun_menos_publicado": 0.012424904214559385,
+        "reproduz_metrica": false
+      },
+      {
+        "classificador": "Stacking Ensemble",
+        "metrica": "Sensibilidade",
+        "publicado": 1.0,
+        "rerun": 1.0,
+        "diferenca_rerun_menos_publicado": 0.0,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Stacking Ensemble",
+        "metrica": "F1",
+        "publicado": 0.4265,
+        "rerun": 0.4417910447761194,
+        "diferenca_rerun_menos_publicado": 0.015291044776119422,
+        "reproduz_metrica": false
+      },
+      {
+        "classificador": "Stacking Ensemble",
+        "metrica": "AUC-ROC",
+        "publicado": 0.9997,
+        "rerun": 0.9997287767832926,
+        "diferenca_rerun_menos_publicado": 2.877678329260558e-05,
+        "reproduz_metrica": true
+      },
+      {
+        "classificador": "Stacking Ensemble",
+        "metrica": "AUC-PR",
+        "publicado": 0.9609,
+        "rerun": 0.9601042185929394,
+        "diferenca_rerun_menos_publicado": -0.0007957814070606029,
+        "reproduz_metrica": false
+      }
+    ]
+  },
+  "lr_faixa_otimizadores": {
+    "parametros_fixos_do_nb01": {
+      "C": 1.0,
+      "class_weight": "balanced",
+      "dual": false,
+      "fit_intercept": true,
+      "intercept_scaling": 1,
+      "l1_ratio": 0.0,
+      "max_iter": 1000,
+      "n_jobs": null,
+      "penalty": "deprecated",
+      "random_state": 42,
+      "tol": 0.0001,
+      "verbose": 0,
+      "warm_start": false
+    },
+    "solvers": {
+      "lbfgs": {
+        "VPP": 0.3173913043478261,
+        "Sensibilidade": 0.9864864864864865,
+        "F1": 0.48026315789473684,
+        "AUC-PR": 0.9636204768710224,
+        "AUC-ROC": 0.9991218232064449,
+        "TP": 73,
+        "FP": 157,
+        "FN": 1,
+        "n_iter": 405,
+        "max_abs_dif_proba_vs_rerun": 0.0
+      },
+      "liblinear": {
+        "VPP": 0.3201754385964912,
+        "Sensibilidade": 0.9864864864864865,
+        "F1": 0.48344370860927155,
+        "AUC-PR": 0.9653727147925986,
+        "AUC-ROC": 0.9989634874907455,
+        "TP": 73,
+        "FP": 155,
+        "FN": 1,
+        "n_iter": 22,
+        "max_abs_dif_proba_vs_rerun": 0.10439448257068351
+      },
+      "newton-cholesky": {
+        "VPP": 0.3230088495575221,
+        "Sensibilidade": 0.9864864864864865,
+        "F1": 0.4866666666666667,
+        "AUC-PR": 0.9675694385048447,
+        "AUC-ROC": 0.9989326999904706,
+        "TP": 73,
+        "FP": 153,
+        "FN": 1,
+        "n_iter": 10,
+        "max_abs_dif_proba_vs_rerun": 0.399081256356342
+      }
+    },
+    "faixa": {
+      "VPP": {
+        "minimo": 0.3173913043478261,
+        "maximo": 0.3230088495575221
+      },
+      "Sensibilidade": {
+        "minimo": 0.9864864864864865,
+        "maximo": 0.9864864864864865
+      },
+      "F1": {
+        "minimo": 0.48026315789473684,
+        "maximo": 0.4866666666666667
+      },
+      "AUC-PR": {
+        "minimo": 0.9636204768710224,
+        "maximo": 0.9675694385048447
+      },
+      "FP": {
+        "minimo": 153,
+        "maximo": 157
+      }
+    }
+  },
+  "carga_extrato": "load_extract: dtype=str e to_numeric em todas as colunas (vírgula decimal), no lugar de feature_engineering.load_data, que no pandas 3 deixa texto como string Arrow",
+  "replicas_com_VPP_zero_por_classificador": {
+    "Logistic Regression": 0,
+    "Random Forest": 0,
+    "Gradient Boosting": 0,
+    "SVM (RBF)": 0,
+    "MLP Neural Network": 0,
+    "RF + SMOTE": 0,
+    "Stacking Ensemble": 0
+  },
+  "nota_particao": "A partição do NB01 é por linha (train_test_split estratificado, seed 42); o bootstrap é por óbito (REFREC) dentro do teste. Óbitos podem ter linhas no treino e no teste; o IC é condicional aos modelos já treinados (não reajusta os classificadores).",
+  "bootstrap": "REFREC reamostrado com reposição dentro do teste; multiplicidades viram pesos das linhas",
+  "diferenca": "A menos B; mesma réplica para os dois classificadores",
+  "zero_division": "VPP, sensibilidade e F1 = 0 quando o denominador é zero (como no NB01)",
+  "replicas_sem_par_verdadeiro_regra": "descartadas para todos os classificadores",
+  "confidence_interval": "percentil 2,5/97,5 (quantil linear)",
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "scipy": "1.17.1",
+    "sklearn": "1.8.0",
+    "pandas": "3.0.1",
+    "imblearn": "0.14.2",
+    "threadpoolctl": "3.6.0"
+  },
+  "plataforma": "Windows-11-10.0.22631-SP0",
+  "threadpools": [
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "version": "0.3.31.dev",
+      "num_threads": 16
+    },
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "version": null,
+      "num_threads": 16
+    },
+    {
+      "user_api": "blas",
+      "internal_api": "openblas",
+      "version": "0.3.30",
+      "num_threads": 16
+    }
+  ],
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/nb01_results.json": "ca762a5006cf5812ddecd8841cccb2936900fd80e5568f9e26018d554a479a51",
+    "scripts/run_nb01_uniform.py": "14c2a0a7bf8498cdace8ce107b11a0755b081fa495be996fb6e91a6ec234de77",
+    "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163"
+  },
+  "code_sha256": {
+    "scripts/nb01_bootstrap_ic.py": "d513700f48d5be61c694653f3f05efabdc7bd6a0c682ba2c0ad03e4b44cab528",
+    "tests/test_nb01_bootstrap_ic.py": "7afe946854996f376bf9a3cef3f02ad8c8a335c787dbab6911983bfd811bbb6f"
+  },
+  "output_sha256": {
+    "nb01_bootstrap_ic.csv": "78b646e0e90812264100dff23cdf1c811efc4ef070c4fd83ab5e16f21f93626d"
+  },
+  "elapsed_seconds": 113.62956539998413,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/nb01_bootstrap_ic.py --replicas 2000 --seed 20261109 --saida data"
+}

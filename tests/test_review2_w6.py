@@ -176,6 +176,7 @@ def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
         "O1": ("escore do OpenRecLink", "OpenRecLink score"),
         "O2": ("nota final do CdR", "nota do CdR", "final score of the CdR", "CdR final score"),
         "O3": ("probabilidade calibrada fora da amostra do classificador",
+               "probabilidade calibrada fora da amostra do XGBoost",
                "probabilidade isotônica fora da amostra",
                "out-of-sample calibrated probability"),
         "O4": ("probabilidade recalibrada de ASR", "recalibrated probability of ASR"),

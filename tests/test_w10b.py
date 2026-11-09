@@ -15,8 +15,8 @@ APPROVED = (
     r"Recomenda-se, a validar em coorte nova com referência cega, preservar o corte do "
     r"OpenRecLink e, abaixo dele, ordenar a fila de revisão manual pela probabilidade "
     r"calibrada fora da amostra, isolada (O3) ou fundida ao escore do OpenRecLink por "
-    r"posição recíproca (F4; F3 quando houver as MACD), escolhendo entre elas pela curva "
-    r"de esforço."
+    r"posição recíproca (F4; F3 quando houver as MACD), escolhendo entre elas, e entre "
+    r"estimadores, pela curva de esforço."
 )
 
 
