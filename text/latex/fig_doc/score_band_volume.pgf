@@ -542,7 +542,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=4.917123in,y=0.390123in,,top]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}10+}}%
+\pgftext[x=4.917123in,y=0.390123in,,top]{\color{textcolor}{\rmfamily\fontsize{9.000000}{10.800000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}$\geq$10}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
@@ -1415,16 +1415,16 @@
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetstrokeopacity{0.800000}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{3.510031in}{2.579012in}}%
+\pgfpathmoveto{\pgfqpoint{3.546104in}{2.579012in}}%
 \pgfpathlineto{\pgfqpoint{5.217361in}{2.579012in}}%
 \pgfpathquadraticcurveto{\pgfqpoint{5.240972in}{2.579012in}}{\pgfqpoint{5.240972in}{2.602623in}}%
 \pgfpathlineto{\pgfqpoint{5.240972in}{2.917361in}}%
 \pgfpathquadraticcurveto{\pgfqpoint{5.240972in}{2.940972in}}{\pgfqpoint{5.217361in}{2.940972in}}%
-\pgfpathlineto{\pgfqpoint{3.510031in}{2.940972in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{3.486420in}{2.940972in}}{\pgfqpoint{3.486420in}{2.917361in}}%
-\pgfpathlineto{\pgfqpoint{3.486420in}{2.602623in}}%
-\pgfpathquadraticcurveto{\pgfqpoint{3.486420in}{2.579012in}}{\pgfqpoint{3.510031in}{2.579012in}}%
-\pgfpathlineto{\pgfqpoint{3.510031in}{2.579012in}}%
+\pgfpathlineto{\pgfqpoint{3.546104in}{2.940972in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{3.522493in}{2.940972in}}{\pgfqpoint{3.522493in}{2.917361in}}%
+\pgfpathlineto{\pgfqpoint{3.522493in}{2.602623in}}%
+\pgfpathquadraticcurveto{\pgfqpoint{3.522493in}{2.579012in}}{\pgfqpoint{3.546104in}{2.579012in}}%
+\pgfpathlineto{\pgfqpoint{3.546104in}{2.579012in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -1437,11 +1437,11 @@
 \definecolor{currentstroke}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{3.533642in}{2.811111in}}%
-\pgfpathlineto{\pgfqpoint{3.769753in}{2.811111in}}%
-\pgfpathlineto{\pgfqpoint{3.769753in}{2.893750in}}%
-\pgfpathlineto{\pgfqpoint{3.533642in}{2.893750in}}%
-\pgfpathlineto{\pgfqpoint{3.533642in}{2.811111in}}%
+\pgfpathmoveto{\pgfqpoint{3.569715in}{2.811111in}}%
+\pgfpathlineto{\pgfqpoint{3.805826in}{2.811111in}}%
+\pgfpathlineto{\pgfqpoint{3.805826in}{2.893750in}}%
+\pgfpathlineto{\pgfqpoint{3.569715in}{2.893750in}}%
+\pgfpathlineto{\pgfqpoint{3.569715in}{2.811111in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -1449,7 +1449,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=3.864198in,y=2.811111in,left,base]{\color{textcolor}{\rmfamily\fontsize{8.500000}{10.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Total de potenciais pares}}%
+\pgftext[x=3.900271in,y=2.811111in,left,base]{\color{textcolor}{\rmfamily\fontsize{8.500000}{10.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Total de potenciais pares}}%
 \end{pgfscope}%
 \begin{pgfscope}%
 \pgfsetbuttcap%
@@ -1460,11 +1460,11 @@
 \definecolor{currentstroke}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{currentstroke}%
 \pgfsetdash{}{0pt}%
-\pgfpathmoveto{\pgfqpoint{3.533642in}{2.647839in}}%
-\pgfpathlineto{\pgfqpoint{3.769753in}{2.647839in}}%
-\pgfpathlineto{\pgfqpoint{3.769753in}{2.730478in}}%
-\pgfpathlineto{\pgfqpoint{3.533642in}{2.730478in}}%
-\pgfpathlineto{\pgfqpoint{3.533642in}{2.647839in}}%
+\pgfpathmoveto{\pgfqpoint{3.569715in}{2.647839in}}%
+\pgfpathlineto{\pgfqpoint{3.805826in}{2.647839in}}%
+\pgfpathlineto{\pgfqpoint{3.805826in}{2.730478in}}%
+\pgfpathlineto{\pgfqpoint{3.569715in}{2.730478in}}%
+\pgfpathlineto{\pgfqpoint{3.569715in}{2.647839in}}%
 \pgfpathclose%
 \pgfusepath{stroke,fill}%
 \end{pgfscope}%
@@ -1472,7 +1472,7 @@
 \definecolor{textcolor}{rgb}{0.000000,0.000000,0.000000}%
 \pgfsetstrokecolor{textcolor}%
 \pgfsetfillcolor{textcolor}%
-\pgftext[x=3.864198in,y=2.647839in,left,base]{\color{textcolor}{\rmfamily\fontsize{8.500000}{10.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Pares verdadeiros}}%
+\pgftext[x=3.900271in,y=2.647839in,left,base]{\color{textcolor}{\rmfamily\fontsize{8.500000}{10.200000}\selectfont\catcode`\^=\active\def^{\ifmmode\sp\else\^{}\fi}\catcode`\%=\active\def%{\%}Pares verdadeiros}}%
 \end{pgfscope}%
 \end{pgfpicture}%
 \makeatother%

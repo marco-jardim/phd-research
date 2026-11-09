@@ -37,6 +37,19 @@ ROTULOS = [
     ("naive-threshold", "decisão de limiar"),
     ("Naive threshold", "Decisão de limiar"),
     ("Naive ", "Limiar "),
+    # Decisão de limiar da nota final, como na tabela de impacto (epi_*) e na validação cruzada.
+    # A ordem importa: o rótulo completo antes da troca genérica de ">=" e "≥" por $\geq$.
+    ("Limiar >=", "Decisão de limiar >="),
+    ("Limiar ≥", "Decisão de limiar ≥"),
+    (">=", "≥"),
+    ("≥", r"$\geq$"),
+    # A unidade do custo é o par verdadeiro, não o óbito.
+    ("Custo por óbito detectado", "Revisões por par verdadeiro detectado"),
+    ("SHAP importância", "Importância SHAP"),
+    # Modelo de robustness_analysis.py: RandomForestClassifier(n_estimators=150, max_depth=12).
+    ("RF, 200 árvores", "RF, 150 árvores"),
+    ("F1-score (média ± desvio, 5-fold CV)",
+     r"$F_1$ (média ± desvio, validação cruzada de 5 partições; eixo iniciado em 0,75)"),
     ("Class weight + SMOTE", "Pesos de classe + SMOTE"),
     ("Class weight=balanced", "Pesos de classe balanceados"),
     ("No balancing", "Sem balanceamento"),

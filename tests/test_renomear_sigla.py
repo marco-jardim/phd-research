@@ -152,7 +152,7 @@ def _tex_esperado() -> str:
         ("Arranjo sequencial P}", "Arranjo sequencial ASR}"),
         ("O braço P recupera", "O braço ASR recupera"),
         ("de P-Platt foi", "de ASR-Platt foi"),
-        ("a de P-PAR2-grey,", "a de ASR-PAR2-grey,"),
+        ("a de P-PAR2-grey,", "a de ASR-PAR2-faixa,"),
         ("$P\\cup B1$", "$\\mathrm{ASR}\\cup B1$"),
         ("perfeito, P, \\texttt", "perfeito, ASR, \\texttt"),
         ("pares; P com", "pares; ASR com"),
@@ -167,7 +167,7 @@ def _tex_esperado() -> str:
 # Mapeamento único
 # ---------------------------------------------------------------------------
 def test_mapeamento_unico_de_rotulos():
-    assert rot.ROTULO_BRACO == {"P": "ASR", "P-Platt": "ASR-Platt", "P-PAR2-grey": "ASR-PAR2-grey",
+    assert rot.ROTULO_BRACO == {"P": "ASR", "P-Platt": "ASR-Platt", "P-PAR2-grey": "ASR-PAR2-faixa",
                                 "P_MATCH_ao_humano": r"ASR, \texttt{MATCH} ao humano"}
     assert rot.ROTULO_MATH["P"] == r"\mathrm{ASR}"
     assert rot.substituicao_token("P-Platt") == "ASR-Platt"

@@ -22,7 +22,7 @@ def arrangement_expected_notes(text):
         r'PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. '
         r'B1: mantém a base inteira e a probabilidade original, substituindo apenas as proporções de erro do revisor. '
         r'A3: restringe também o treinamento do classificador à região abaixo do corte. '
-        r'ASR-PAR2-grey: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. '
+        r'ASR-PAR2-faixa: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. '
         r'ASR-Platt: análise de sensibilidade de ASR com \textit{Platt scaling} abaixo do corte. '
         r'Braço \textit{a posteriori}: cascata publicada aplicada abaixo do corte, sem recalibração. '
         r'Viés de incorporação: uso, na construção da referência, das mesmas evidências avaliadas pelo método.'

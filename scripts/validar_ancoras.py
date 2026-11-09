@@ -15,13 +15,19 @@ sys.path para importar um repositório vizinho implicitamente.
 Saídas:
     data/ancoras_validacao.csv          tabela A+/A- (N, acertos, erros, pureza)
     data/ancoras_calibracao_faixas.csv  taxa observada vs p_cal por faixa
+    data/ancoras_brier.json             escore de Brier por cenário na faixa intermediária da nota final
     text/latex/tables/tab_cap8_ancoras.tex
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import os
 import sys
+import time
+from datetime import datetime, timezone
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 import numpy as np
@@ -43,6 +49,11 @@ BANDS = [(5, 6), (6, 7), (7, 8), (8, 9)]
 def fmt(n: int) -> str:
     """Milhar com ponto, conforme a tese."""
     return f"{n:,}".replace(",", ".")
+
+
+def meia_unidade_acima(value: float) -> int:
+    """Inteiro mais próximo com meia unidade para cima (o ``round`` do Python arredonda ao par: 2192,5 -> 2192)."""
+    return int(Decimal(str(value)).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
 
 
 def fit_anchor_platt(s: np.ndarray, a_plus: np.ndarray, a_minus: np.ndarray, r_plus: float, r_minus: float):
@@ -112,6 +123,26 @@ def main() -> None:
         faixas.append(row)
     g = (s >= T_MINUS) & (s < T_PLUS)
     brier = {k: brier_score_loss(y[g], expit(w[0] * s[g] + w[1])) for k, w in cenarios.items()}
+    brier_artefato = {
+        "descricao": "Escore de Brier por cenário de calibração na faixa intermediária da nota final (5 <= nota < 9)",
+        "script": "scripts/validar_ancoras.py",
+        "gerado_em_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "n_pares_faixa": int(g.sum()),
+        "n_pares_verdadeiros_faixa": int(y[g].sum()),
+        "brier_faixa_intermediaria": {k: float(v) for k, v in brier.items()},
+        "brier_preditor_constante": float(brier_score_loss(y[g], np.full(int(g.sum()), y[g].mean()))),
+    }
+    brier_dest = ROOT / "data" / "ancoras_brier.json"
+    brier_tmp = brier_dest.with_suffix(".json.tmp")
+    brier_tmp.write_text(json.dumps(brier_artefato, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    for tentativa in range(5):  # o Windows pode bloquear o arquivo de destino por instantes
+        try:
+            os.replace(brier_tmp, brier_dest)
+            break
+        except PermissionError:
+            if tentativa == 4:
+                raise
+            time.sleep(0.5 * (tentativa + 1))
 
     # Política de decisão por custo esperado na área cinza, executada pelo próprio motor do
     # framework (gzcmd/gzcmd_v3_policy_engine.py: PolicyEngineV3.triage), sem regras de guarda
@@ -153,14 +184,14 @@ def main() -> None:
     tex2 = [
         "% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)",
         r"\begin{table}[!ht]", r"\centering",
-        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e proporções de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as proporções de erro configuradas.}",
+        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e proporções de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as proporções de erro configuradas, em unidades da política, arredondadas ao inteiro (meia unidade para cima). Fonte: \path{data/ancoras_decisao_simulada.csv}.}",
         r"\label{tab:cap8-ancoras-decisao}", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}", r"\begin{tabular}{|l|l|r|r|r|r|r|}", r"\hline",
         r"Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\", r"\hline",
     ]
     for mode in modes:
         for k in cenarios:
             r = dec[(dec.modo == mode) & (dec.calibracao == k)].iloc[0]
-            tex2.append(f"{'Vigilância' if mode == 'vigilancia' else 'Confirmação'} & {nomes[k]} & {fmt(int(r.revisao))} & {int(r.fn_auto)} & {int(r.fp_auto)} & {fmt(int(round(r.perda_revisor_perfeito)))} & {fmt(int(round(r.perda_revisor_config)))} \\\\")
+            tex2.append(f"{'Vigilância' if mode == 'vigilancia' else 'Confirmação'} & {nomes[k]} & {fmt(int(r.revisao))} & {int(r.fn_auto)} & {int(r.fp_auto)} & {fmt(meia_unidade_acima(r.perda_revisor_perfeito))} & {fmt(meia_unidade_acima(r.perda_revisor_config))} \\\\")
         tex2.append(r"\hline")
     tex2 += [r"\end{tabular}", r"\end{table}"]
     (ROOT / "text" / "latex" / "tables" / "tab_cap8_ancoras_decisao.tex").write_text("\n".join(tex2) + "\n", encoding="utf-8")
@@ -176,7 +207,11 @@ def main() -> None:
     for r in rows:
         crit = r"$s\geq 9{,}0$" if r["conjunto"] == "A+" else r"$s<5{,}0$"
         nome = "$A^+$ (âncoras positivas)" if r["conjunto"] == "A+" else "$A^-$ (âncoras negativas)"
-        pureza = f"{r['pureza_pct']:.2f}".replace(".", ",")
+        # Uma casa decimal, a partir da razão exata (o texto da tese usa 97,9%). Se o arredondamento
+        # chegar a 100,0 com erros, escreve-se "> 99,9" para não ocultar os erros.
+        pureza_1 = Decimal(r["acertos"] * 100) / Decimal(r["N"])
+        pureza_1 = pureza_1.quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+        pureza = r"$>99{,}9$" if (pureza_1 >= 100 and r["erros"] > 0) else f"{pureza_1}".replace(".", ",")
         tex.append(f"{nome} & {crit} & {fmt(r['N'])} & {fmt(r['acertos'])} & {r['erros']} & {pureza} \\\\")
         tex.append(r"\hline")
     tex += [r"\end{tabular}", r"\end{table}"]

@@ -37,6 +37,390 @@
 #     motivo: "Número novo conferido em data/x.csv."
 
 aceites:
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "c3ee160acd1f6d3a"
+    itens:
+      - negadores:-não
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_ablation_top10.tex
+    hash_paragrafo_novo: "7966170331fb77b5"
+    itens:
+      - metricas:+VPP
+      - numeros:-8
+      - numeros:-9
+      - siglas:+VPP
+      - siglas:-OR
+      - siglas:-RF
+      - siglas:-SMOTE
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_blocagem_rendimento.tex
+    hash_paragrafo_novo: "8f8fdfb621509658"
+    itens:
+      - numeros:+0.1
+      - numeros:-0.07
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_blocagem_rendimento.tex
+    hash_paragrafo_novo: "d25851c45cc3da3f"
+    itens:
+      - negadores:+sem
+      - numeros:+0.07%
+      - numeros:+0.1%
+      - numeros:+11
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_ancoras.tex
+    hash_paragrafo_novo: "c0ec21557c89636a"
+    itens:
+      - numeros:+97.9
+      - numeros:+99.9
+      - numeros:-97.89
+      - numeros:-99.99
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex
+    hash_paragrafo_novo: "30876a9ec49e0c92"
+    itens:
+      - caminhos:+data/ancoras_decisao_simulada.csv
+      - numeros:+2193
+      - numeros:-2192
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex
+    hash_paragrafo_novo: "4a078386b1a5feab"
+    itens:
+      - comparativos:+abaixo
+      - numeros:+1.42
+      - numeros:+1.52
+      - numeros:-1
+      - numeros:-2
+      - siglas:+ASR
+      - siglas:+FP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex
+    hash_paragrafo_novo: "740edb1263931c51"
+    itens:
+      - metricas:+sensibilidade
+      - negadores:+sem
+      - numeros:+96
+      - numeros:-2
+      - siglas:-PAR
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_vies_referencia.tex
+    hash_paragrafo_novo: "5a7c5f1507fdae2d"
+    itens:
+      - comparativos:+abaixo
+      - numeros:-3
+      - siglas:+ASR
+      - siglas:+LLM
+      - siglas:-MACD
+      - siglas:-OpenRecLink
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex
+    hash_paragrafo_novo: "9f7ef40084bfe604"
+    itens:
+      - negadores:-nem
+      - negadores:-não
+      - numeros:-6.0
+      - numeros:-7452
+      - siglas:+ASR
+      - siglas:+NONMATCH
+      - siglas:-OpenRecLink
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo_rejeicoes_arranjo_P_confirmacao.tex
+    hash_paragrafo_novo: "37e54b953416f0aa"
+    itens:
+      - siglas:+ASR
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo_rejeicoes_arranjo_P_vigilancia.tex
+    hash_paragrafo_novo: "99f59e1dbce32d17"
+    itens:
+      - siglas:+ASR
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo_rejeicoes_cascata_v31_confirmacao.tex
+    hash_paragrafo_novo: "4439e5a067b968ea"
+    itens:
+      - siglas:+ASR
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex
+    hash_paragrafo_novo: "99482828b2a83665"
+    itens:
+      - siglas:+ASR
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_equidade_v31.tex
+    hash_paragrafo_novo: "077506bfe5fdee0c"
+    itens:
+      - comparativos:-abaixo
+      - numeros:+100.00
+      - numeros:+88.24
+      - numeros:+99.88
+      - numeros:+99.94
+      - numeros:-100.0
+      - numeros:-3.1
+      - numeros:-88.2
+      - numeros:-99.9
+      - siglas:-OR
+      - siglas:-OpenRecLink
+      - siglas:-REFREC
+      - siglas:-SIM
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_equidade_v31_rejeicoes_cascata.tex
+    hash_paragrafo_novo: "21e0aa3a61fc282e"
+    itens:
+      - comparativos:-abaixo
+      - siglas:-OpenRecLink
+      - siglas:-REFREC
+      - siglas:-SIM
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_nb02_recall.tex
+    hash_paragrafo_novo: "48447d6eb7d3c5fd"
+    itens:
+      - metricas:+VPP
+      - metricas:+vigilância
+      - metricas:-sensibilidade
+      - numeros:+0.877
+      - numeros:+0.932
+      - numeros:+0.959
+      - numeros:-0.8765
+      - numeros:-0.931
+      - numeros:-0.960
+      - siglas:+VPP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_nb03_precision.tex
+    hash_paragrafo_novo: "74aa1ca9fb5ccd54"
+    itens:
+      - metricas:+VPP
+      - metricas:+confirmação
+      - siglas:+VPP
+      - siglas:-ML
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_nb03_precision.tex
+    hash_paragrafo_novo: "8f44da7d09f3069b"
+    itens:
+      - metricas:+VPP
+      - metricas:+confirmação
+      - numeros:+03
+      - siglas:+ML
+      - siglas:+VPP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_pareto_frontier.tex
+    hash_paragrafo_novo: "f543518689c96e30"
+    itens:
+      - metricas:+VPP
+      - negadores:+sem
+      - negadores:-não
+      - numeros:+0
+      - numeros:-1.0
+      - siglas:+VPP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_qw1_deep_learning.tex
+    hash_paragrafo_novo: "5762b94c7cf9e04c"
+    itens:
+      - metricas:+VPP
+      - numeros:+0.048
+      - numeros:+0.870
+      - numeros:+0.881
+      - numeros:+0.971
+      - numeros:-0.049
+      - numeros:-0.871
+      - numeros:-0.882
+      - numeros:-0.972
+      - siglas:+VPP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections.tex
+    hash_paragrafo_novo: "0be559241e27ee27"
+    itens:
+      - comparativos:-abaixo
+      - numeros:-3.1
+      - siglas:+OR
+      - siglas:-OpenRecLink
+      - siglas:-REFREC
+      - siglas:-SIM
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex
+    hash_paragrafo_novo: "afdbd34b30ed962f"
+    itens:
+      - comparativos:-abaixo
+      - numeros:+0.01
+      - numeros:+0.02
+      - numeros:+0.03
+      - numeros:+0.09
+      - numeros:+113.23
+      - numeros:+121.20
+      - numeros:+224.68
+      - numeros:+91.95
+      - numeros:-0.005
+      - numeros:-0.017
+      - numeros:-0.025
+      - numeros:-0.094
+      - numeros:-113.2
+      - numeros:-121.2
+      - numeros:-224.7
+      - numeros:-3.1
+      - numeros:-91.9
+      - siglas:+OR
+      - siglas:-OpenRecLink
+      - siglas:-REFREC
+      - siglas:-SIM
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_qw3_group_metrics.tex
+    hash_paragrafo_novo: "27c2762c064ee089"
+    itens:
+      - caminhos:-data/equidade_v31_global.csv
+      - caminhos:-data/equidade_v31_maxdiff.csv
+      - caminhos:-data/equidade_v31_pairwise_tests.csv
+      - comparativos:-abaixo
+      - negadores:-não
+      - numeros:-30
+      - qualificadores:-pelo menos
+      - siglas:-OR
+      - siglas:-OpenRecLink
+      - siglas:-REFREC
+      - siglas:-SIM
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_score_bands.tex
+    hash_paragrafo_novo: "8c9c511ab93a91c6"
+    itens:
+      - numeros:+0.1%
+      - numeros:-0.0%
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/tab_cap8_ancoras.tex
+    hash_paragrafo_novo: "76fa7f194c545518"
+    itens:
+      - numeros:+97.9
+      - numeros:+99.9
+      - numeros:-97.89
+      - numeros:-99.99
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/tab_cap8_ancoras_decisao.tex
+    hash_paragrafo_novo: "e29af84fb63bf219"
+    itens:
+      - caminhos:+data/ancoras_decisao_simulada.csv
+      - numeros:+2193
+      - numeros:-2192
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/tab_desempenho_faixas.tex
+    hash_paragrafo_novo: "5f82b75b52f6af8d"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "1cc9d0f32954e780"
+    itens:
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61696
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "ab6794a732de9293"
+    itens:
+      - negadores:+nem
+      - negadores:+nenhum
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+1
+      - numeros:+1203
+      - numeros:+125
+      - numeros:+29
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+51
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "4cbb8e4484ccf516"
+    itens:
+      - negadores:+nenhuma
+      - negadores:+não
+      - numeros:+11
+      - numeros:+3
+      - numeros:+42.5%
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "299b11222b4bbb86"
+    itens:
+      - numeros:+1
+      - numeros:+1.203
+      - numeros:+125
+      - numeros:+29
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+51
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_arranjo_corte.tex
+    hash_paragrafo_novo: "8933302399058185"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_referencia.tex
+    hash_paragrafo_novo: "524e721912bbf560"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_reruns.tex
+    hash_paragrafo_novo: "ad2c1142362c45c7"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_robustez_arranjo.tex
+    hash_paragrafo_novo: "3cdbc1e8826cb19e"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_qw2_confusion.tex
+    hash_paragrafo_novo: "26dc4cc5f3b301fb"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"
+    autora_aprovou: true
   - arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex
     hash_paragrafo_novo: "4e71480e0b5073ce"
     itens:
@@ -818,6 +1202,67 @@ aceites:
     justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
     autora_aprovou: true
 aceites_numeros:
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,877", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,8977", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,8984", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_estrategias.tex, numero: "71", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_gzcmd.tex, numero: "0,0629", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/apendice_gzcmd.tex, numero: "0,32", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/capitulo2.tex, numero: "0,913", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/capitulo2.tex, numero: "0,924", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/conclusao.tex, numero: "0,956", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/conclusao.tex, numero: "0,967", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo1_comparador.tex, numero: "15", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,002", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,037", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,1%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,8803", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,9175", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "0,986", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo2_classificadores.tex, numero: "4,0%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "0,088", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "0,8421", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "0,9306", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "27", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "40", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "74", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo5_equidade.tex, numero: "0,039%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/estudo5_equidade.tex, numero: "0,136%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_blocagem_rendimento.tex, numero: "0,1", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_blocagem_rendimento.tex, numero: "0,1%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_ancoras.tex, numero: "97,9", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_ancoras.tex, numero: "99,9", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex, numero: "2.193", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "1,42", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "1,52", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "96", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_equidade_v31.tex, numero: "100,00", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_equidade_v31.tex, numero: "88,24", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_equidade_v31.tex, numero: "99,88", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_equidade_v31.tex, numero: "99,94", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_nb02_recall.tex, numero: "0,877", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_nb02_recall.tex, numero: "0,932", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_nb02_recall.tex, numero: "0,959", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_pareto_frontier.tex, numero: "0", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw1_deep_learning.tex, numero: "0,048", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw1_deep_learning.tex, numero: "0,870", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw1_deep_learning.tex, numero: "0,881", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw1_deep_learning.tex, numero: "0,971", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "0,01", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "0,02", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "0,03", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "0,09", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "113,23", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "121,20", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "224,68", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_qw3_fairness_rejections_corte6.tex, numero: "91,95", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/editorial/tab_score_bands.tex, numero: "0,1%", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/tab_cap8_ancoras.tex, numero: "97,9", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/tab_cap8_ancoras.tex, numero: "99,9", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
+  - {arquivo: text/latex/tables/tab_cap8_ancoras_decisao.tex, numero: "2.193", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
   - {arquivo: text/latex/capitulo1.tex, numero: "61.485", autora_aprovou: true, motivo: "Revisão 2 (pedido da autora, leitura de 2026-11-08, seção 1.2): desbalanceamento justificando o tempo de revisão; valores do registro (N09 61.485 abaixo do corte; N01 61.696) já em capitulo3 e capitulo_dados"}
   - {arquivo: text/latex/capitulo1.tex, numero: "61.696", autora_aprovou: true, motivo: "Revisão 2 (pedido da autora, leitura de 2026-11-08, seção 1.2): desbalanceamento justificando o tempo de revisão; valores do registro (N09 61.485 abaixo do corte; N01 61.696) já em capitulo3 e capitulo_dados"}
   - {arquivo: text/latex/capitulo2.tex, numero: "0,01", autora_aprovou: true, motivo: "Revisão 2 (pedido da autora, leitura de 2026-11-08, seção 2.3 com dados, desbalanceamento e faixa de cada estudo, conferidos no texto completo): linha Esta tese da Tabela 2.2: diferença de F1 XGBoost x RF (estudo2_classificadores.tex)"}

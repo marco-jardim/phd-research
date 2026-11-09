@@ -77,13 +77,15 @@ def tabela_nb03() -> None:
         return f"{rotulo} & {limiar} & {p} & {d3(rec)} & {d3(f1)} & {n_pos} \\\\"
 
     ind = ["XGBoost", "LightGBM", "RF Calibrado", "Stacking"]
+    # Rótulo exibido; a chave do artefato (nb03_results.json) continua em inglês.
+    exibido = {"Stacking": "Empilhamento"}
     ind_rows = sorted(
         ((m, r[f"{m} (th=0.9)"]) for m in ind), key=lambda t: -t[1]["Precision"]
     )
     linhas = [
         r"\begin{table}[htbp]",
         r"\centering",
-        r"\caption{Desempenho dos modelos na estratégia de máxima precisão (NB03). "
+        r"\caption{Desempenho dos modelos na estratégia de confirmação (NB03). "
         f"Conjunto de teste com {d['pos_test']} pares verdadeiros dentre {milhar(d['n_test'])} pares candidatos "
         f"(treino com {milhar(d['n_train'])} pares e {d['pos_train']} verdadeiros; {d['n_features']} atributos). "
         r"Resultados ordenados por precisão decrescente em cada bloco.}",
@@ -95,14 +97,15 @@ def tabela_nb03() -> None:
         r"\textbf{Modelo} & \textbf{Limiar} & \textbf{Precisão} & \textbf{Sensibilidade} & \boldmath$F_1$ & \textbf{N} \\",
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Abordagens compostas}} \\[2pt]",
-        linha("Regras de negócio", r"escore $\geq 8$", "Regras (score≥8)", True),
+        linha("Regras", r"escore $\geq 8$", "Regras (score≥8)", True),
         linha("Consenso (unanimidade)", r"unanimidade\textsuperscript{a}", "Consensus (unanimidade)"),
-        linha("Híbrido ML + Regras (AND)", r"ML${\geq}$0,6; R${\geq}$6", "Hybrid AND (ML≥0.6, Rules≥6)"),
+        # No script, o "ML" do híbrido é a probabilidade do empilhamento (proba_stacking).
+        linha("Híbrido empilhamento + Regras (AND)", r"ML${\geq}$0,6; R${\geq}$6\textsuperscript{b}", "Hybrid AND (ML≥0.6, Rules≥6)"),
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Modelos individuais com limiar 0,9}} \\[2pt]",
     ]
     for m, _ in ind_rows:
-        linhas.append(linha(m, "0,9", f"{m} (th=0.9)"))
+        linhas.append(linha(exibido.get(m, m), "0,9", f"{m} (th=0.9)"))
     linhas += [
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Efeito da variação de limiar (LightGBM)}} \\[2pt]",
@@ -113,7 +116,7 @@ def tabela_nb03() -> None:
         "XGBoost": "XGBoost (th=0.9)",
         "LightGBM": "LightGBM (th=0.9)",
         "Consenso": "Consensus (unanimidade)",
-        "Stacking": "Stacking (th=0.9)",
+        "Empilhamento": "Stacking (th=0.9)",
         "RF Calibrado": "RF Calibrado (th=0.9)",
         "Regras": "Regras (score≥8)",
     }
@@ -126,6 +129,7 @@ def tabela_nb03() -> None:
         r"\footnotesize",
         r"\textsuperscript{a}~Consenso por unanimidade entre os modelos base do caderno 03; o artefato "
         r"\texttt{data/nb03\_results.json} registra o desempenho do consenso, mas não o limiar de cada modelo base.",
+        r"\textsuperscript{b}~ML: probabilidade estimada pelo empilhamento (\texttt{scripts/run\_nb03\_uniform.py}); R: escore de regras.",
         r"N~=~número de pares classificados como positivos no conjunto de teste. "
         r"Os limiares foram avaliados no próprio conjunto de teste, sem conjunto de validação, e a semente aleatória é 42 "
         r"(\texttt{scripts/run\_nb03\_uniform.py}).",
@@ -158,7 +162,7 @@ def tabela_faixas() -> None:
         r"\toprule",
         r"& & & \multicolumn{3}{c}{RF+SMOTE} & \multicolumn{3}{c}{\textit{Gradient Boosting}} \\",
         r"\cmidrule(lr){4-6} \cmidrule(l){7-9}",
-        r"Faixa & Pares & \shortstack{Pares\\verdadeiros} & VP/FP/FN & Sensib. & VPP & VP/FP/FN & Sensib. & VPP \\",
+        r"Faixa & \shortstack{Potenciais\\pares} & \shortstack{Pares\\verdadeiros} & VP/FP/FN & Sensib. & VPP & VP/FP/FN & Sensib. & VPP \\",
         r"\midrule",
     ]
     for faixa in ordem:

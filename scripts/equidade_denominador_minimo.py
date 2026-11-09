@@ -49,6 +49,9 @@ def generate(data, editorial):
         "tab:equidade-arranjo}", "tab:equidade-arranjo-den30}").replace(
         "preservando as omissões por denominador zero",
         "após excluir comparações com denominador menor que 30 em qualquer grupo")
+    # A linha do corte 6,0 (7.452 preditos positivos) não consta desta tabela, só de tab_equidade_v31.
+    text = text.replace(" A referência histórica de 7.452 preditos positivos pertence ao corte 6,0 da nota final, "
+                        "não ao corte SCORE do OpenRecLink nem ao braço P.", "")
     text = text.replace("O gabarito compartilha", "A referência operacional compartilha").replace(
         "corte SCORE do OpenRecLink", "corte do escore OpenRecLink")
     # Especificidade com duas casas, como na tabela editorial principal e no texto do Estudo 4.
@@ -77,7 +80,7 @@ def generate(data, editorial):
         text = path.read_text(encoding="utf-8").replace(
             r"\end{table}", r"\par\footnotesize Fonte: "
             r"\path{data/equidade_arranjo_den30_pairwise_tests.csv}. "
-            r"OR é razão de chances; as colunas de denominadores referem-se à métrica testada. "
+            r"OR é razão de chances. "
             r"Família definida separadamente por decisão, após o filtro de denominador." + "\n" + r"\end{table}")
         if decision in ("arranjo_P_vigilancia", "cascata_v31_vigilancia"):
             text = text.replace(r"\begin{tabular}", r"\resizebox{\linewidth}{!}{%" + "\n" + r"\begin{tabular}")

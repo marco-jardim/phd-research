@@ -9,6 +9,7 @@ A regeneração editorial sem essa opção não depende de data/qw1/.
 """
 from pathlib import Path
 import argparse
+from decimal import ROUND_HALF_UP, Decimal
 import re
 import sys
 
@@ -83,11 +84,45 @@ def ablation_tables(out):
                     rows[i] = row.replace(r"Regras$\geq$9", r"Regras$\geq$8", 1)
             text = "\n".join(rows) + "\n"
         text = text.replace("é agora a mesma", "é a mesma")
+        # O empate 8/9 do Híbrido OR do RF+SMOTE só se aplica à tabela por categoria; essa
+        # configuração não está entre as dez de maior F1.
+        empate = (r"Os limiares de regras 8 e 9 empatam no Híbrido OR do RF+SMOTE; apresenta-se 8, "
+                  r"como na validação cruzada. " if name == "tab_ablation_best_category.tex" else "")
         text = note(text, r"Teste com 18.509 potenciais pares e 74 vínculos. OR é união; AND é interseção. "
-                    r"Os limiares de regras 8 e 9 empatam no Híbrido OR do RF+SMOTE; apresenta-se 8, "
-                    r"como na validação cruzada. A ordenação pelo $F_1$ não demonstra diferença entre "
+                    + empate + r"A ordenação pelo $F_1$ não demonstra diferença entre "
                     r"as dez primeiras configurações nem equivalência estatística.")
         write(name, text, out)
+
+
+def percent_exact(count, total):
+    """Percentual com 1 casa, meia unidade para cima, calculado das contagens (sem arredondar duas vezes)."""
+    q = (Decimal(count) * 100 / Decimal(total)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+    return f"{q}".replace(".", ",")
+
+
+def score_band_percentages(text):
+    """Recalcula '% pares verdadeiros' de tab_score_bands a partir de data/tab_score_bands_proveniencia.csv.
+
+    A tabela histórica guarda 2 casas; arredondá-las de novo daria, por exemplo, 0,0 para 3/34.645.
+    Faixa com pares verdadeiros e percentual arredondado 0,0 sai como <0,1; o rótulo 10+ sai como ≥10.
+    """
+    counts = pd.read_csv(ROOT / "data/tab_score_bands_proveniencia.csv").set_index("band")
+    row = re.compile(r"^(\s*)(\S+) & ([0-9.]+) & ([0-9]+) & [0-9,]+\\% \\\\$")
+    lines = []
+    for line in text.splitlines():
+        match = row.match(line)
+        if match:
+            band = match[2]
+            total, pairs = int(counts.loc[band, "n"]), int(counts.loc[band, "vinculos"])
+            if (match[3].replace(".", ""), match[4]) != (str(total), str(pairs)):
+                raise ValueError(f"Contagens de {band} divergem de tab_score_bands_proveniencia.csv")
+            shown = percent_exact(pairs, total)
+            if pairs > 0 and shown == "0,0":
+                shown = "$<$0,1"
+            label = r"$\geq$10" if band == "10+" else band
+            line = f"{match[1]}{label} & {match[3]} & {match[4]} & {shown}" + r"\% \\"
+        lines.append(line)
+    return "\n".join(lines) + "\n"
 
 
 def historical_tables(out):
@@ -110,8 +145,7 @@ def historical_tables(out):
             text = re.sub(r"\\textbf\{([^{}]*)\}", r"\1", text)
         if name == "tab_score_bands.tex":
             text = text.replace(r"Total & Pares & \% Pares", r"Total & Pares verdadeiros & \% pares verdadeiros")
-            text = re.sub(r"(?<![0-9])([0-9]+),([0-9]{2})(?![0-9])",
-                          lambda m: number(float(m[0].replace(",", ".")), 1), text)
+            text = score_band_percentages(text)
         write(name, note(text, source), out)
 
 
@@ -134,7 +168,7 @@ def equity_tables(out):
 
 
 def appendix_ablation():
-    lines = [r"MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
+    lines = [r"MACD designa as Medidas Contínuas de Diferença de Datas de nascimento, atributos derivados dessas datas; "
              r"v3 identifica a política histórica de três ações (aceitar como vínculo, rejeitar e revisão por modelo de linguagem).",
              "", r"As tabelas deste apêndice descrevem a ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), "
              r"nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta "

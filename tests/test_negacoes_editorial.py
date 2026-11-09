@@ -50,7 +50,7 @@ EXPECTED_NEGATIONS = {
     r"O \texttt{pair\_id} histórico": [2, 0, 1, 3],
     "Os pesos internos do comparador permanecem fixos": [0, 1, 1, 1],  # estudo1 revisado (revisão 2)
     "Entre as configurações originais da Tabela": [0, 1, 1, 1],
-    "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 1],  # estudo3 revisado (revisão 2): Coeli2021 (NAO_SUSTENTA) retirado, frase final com "sem medir"
+    "A razão hipotética de revisões por vínculo também favoreceu": [1, 1, 1, 0, 1],  # estudo3 revisado (revisão 2): Coeli2021 (NAO_SUSTENTA) retirado, frase final com "sem medir"; auditoria 2026-11-09: 1ª frase explicita que as figuras mostram o limiar >= 8 "e não a >= 9"
     "A organização reprodutível das configurações": [1, 1, 0],
     "As estratégias de vigilância e confirmação descritas": [1, 0, 1],
     "Na cascata v3.1 sobre a base inteira, Claude Sonnet": [0, 2],

@@ -68,6 +68,11 @@ def render_reference(referencia, arranjo, cascata, carga):
         (f"A revisão integral abaixo do corte é cenário de até {ceiling} potenciais pares, não carga histórica medida.",
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
+        # M3 da auditoria de 2026-11-09: a classe da referência é "par verdadeiro"; "vínculo" é só a decisão.
+        ("o arranjo aceita 127 vínculos na vigilância e 127 na confirmação, incluindo 123 pelo corte em cada modo; "
+         "a cascata sobre a base inteira aceita 113 e 65.",
+         "o arranjo aceita 127 pares verdadeiros na vigilância e 127 na confirmação, incluindo 123 pelo corte em cada modo; "
+         "a cascata sobre a base inteira aceita 113 e 65 pares verdadeiros."),
         ("CdR, revisão humana da área cinza &", "CdR, revisão humana da área cinza da nota &"),
         ("CdR, limiar da nota em 8 &", r"CdR, decisão de limiar (nota $\geq 8$) &"),
         ("A revisão da área cinza do CdR é cenário", "A revisão da área cinza da nota do CdR é cenário"),
@@ -129,6 +134,10 @@ def render_arrangement(historical):
             line = replace_once(line, r"$S_A$ (IC 95\%)", r"$S_A$ (\%)")
         lines.append(line)
     text = "\n".join(lines) + "\n"
+    # M2 da auditoria de 2026-11-09: V_A conta pares verdadeiros aceitos (a classe), não decisões de vínculo.
+    text = replace_once(text, "$V_A$: vínculos aceitos automaticamente", "$V_A$: pares verdadeiros aceitos automaticamente")
+    # Mesma grandeza (FP aceitos automaticamente) com um nome só em todas as tabelas do arranjo.
+    text = text.replace("FP (abaixo)", "FP automáticos (abaixo)")
     text = replace_once(text,
         r"IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do padrão-ouro. ", "")
     text = replace_once(text,

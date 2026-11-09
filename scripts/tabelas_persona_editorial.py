@@ -24,6 +24,21 @@ EDITORIAL_TEMPLATES = ("tab_cap8_fusao_robustez", "tab_cap8_vies_referencia")
 P = "ASR: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
 PAR2 = "PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. "
 REFREC = "REFREC identifica o registro do SIM. "
+# Tabelas de equidade sem coluna ou linha de ASR: não recebem a glosa de ASR nem a de REFREC.
+SEM_ASR = ("tab_equidade_v31", "tab_equidade_v31_rejeicoes_cascata", "tab_qw3_group_metrics",
+           "tab_qw3_fairness_rejections", "tab_qw3_fairness_rejections_corte6")
+# OR do corte 6,0 com duas casas (valores completos em data/equidade_v31_pairwise_tests.csv);
+# OR abaixo de 0,005 aparece como <0,01.
+CORTE6_OR_DUAS_CASAS = (
+    ("$-$13{,}0 & 0{,}025 \\\\", "$-$13{,}0 & 0{,}03 \\\\"),
+    ("$-$13{,}3 & 0{,}005 \\\\", "$-$13{,}3 & $<$0{,}01 \\\\"),
+    ("$-$13{,}4 & 0{,}017 \\\\", "$-$13{,}4 & 0{,}02 \\\\"),
+    ("$-$15{,}1 & 0{,}094 \\\\", "$-$15{,}1 & 0{,}09 \\\\"),
+    ("$+$78{,}3 & 224{,}7 \\\\", "$+$78{,}3 & 224{,}68 \\\\"),
+    ("$+$76{,}6 & 113{,}2 \\\\", "$+$76{,}6 & 113{,}23 \\\\"),
+    ("$+$76{,}8 & 121{,}2 \\\\", "$+$76{,}8 & 121{,}20 \\\\"),
+    ("$+$75{,}8 & 91{,}9 \\\\", "$+$75{,}8 & 91{,}95 \\\\"),
+)
 FUSION = ("F4: fusão por posição recíproca de O1 (escore do OpenRecLink) e O3 "
           "(probabilidade calibrada); F3: mesma combinação acrescida de O3 com MACD "
           "(Medidas Contínuas de Diferença de Datas de nascimento). ")
@@ -108,7 +123,7 @@ TERMINOLOGIA_REVISAO2 = (
     (r"Precis\~ao", "VPP"),
     ("para sensibilidade e precisão", "para sensibilidade e VPP"),
     ("F$_1$, precisão e sensibilidade", "F$_1$, VPP e sensibilidade"),
-    ("estratégia de máxima precisão", "estratégia de máximo VPP"),
+    ("estratégia de máxima precisão", "estratégia de confirmação"),
     ("ordenados por precisão decrescente", "ordenados por VPP decrescente"),
     ("maximização do VPP", "maximização do VPP"),
     (r"no plano precisão $\times$ sensibilidade", r"no plano VPP $\times$ sensibilidade"),
@@ -184,7 +199,7 @@ def transform(name, text):
         text = re.sub(r"teste interno QW1(?! \(comparação de classificadores tabulares\))",
                       "teste interno QW1 (comparação de classificadores tabulares)", text)
     if name in ("tab_cap8_revisores", "tab_e4_desempenho_faixas_oof",
-                "tab_cap8_ancoras_decisao"):
+                "tab_cap8_ancoras_decisao", "tab_cap8_ancoras"):
         text = text.replace("$s", "$v").replace(" s<", " v<").replace(r" s\geq", r" v\geq")
         text = text.replace("nota final $v$ do comparador", "nota final $v$ do Comparador de Registros (CdR)")
         text = text.replace("nota final do CdR ($v$)", "nota final do Comparador de Registros (CdR), $v$")
@@ -198,13 +213,13 @@ def transform(name, text):
     text = text.replace("meta nominal de 64\\%", "meta de 23 dos 36 PAR~=~2 (64\\%)")
     if name == "tab_cap8_arranjo_corte":
         text = text.replace("O \\textit{a posteriori} reutiliza a cascata sobre a base inteira sem recalibração.",
-                            "O braço \\textit{a posteriori} preserva o corte e aplica a cascata publicada abaixo dele, sem recalibração.")
+                            "O braço \\textit{a posteriori} preserva o corte e aplica a cascata sobre a base inteira abaixo dele, sem recalibração.")
         text = add_note(text, P + PAR2 +
             "B1: mantém a base inteira e a probabilidade original, substituindo apenas as proporções de erro do revisor. "
             "A3: restringe também o treinamento do classificador à região abaixo do corte. "
-            "ASR-PAR2-grey: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. "
+            "ASR-PAR2-faixa: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. "
             "ASR-Platt: análise de sensibilidade de ASR com \\textit{Platt scaling} abaixo do corte. "
-            "Braço \\textit{a posteriori}: cascata publicada aplicada abaixo do corte, sem recalibração. "
+            "Braço \\textit{a posteriori}: cascata sobre a base inteira aplicada abaixo do corte, sem recalibração. "
             "Viés de incorporação: uso, na construção da referência, das mesmas evidências avaliadas pelo método.")
     notes = {
         "tab_cap8_mesma_carga": P + PAR2 + "$k$: número de revisões humanas na ordenação. CdR: Comparador de Registros.",
@@ -214,7 +229,7 @@ def transform(name, text):
             "Numérico e Partição: réplicas com dominância de ASR-Platt sobre ASR, em 20 reexecuções de cada bloco. "
             "Inversa: réplicas com dominância de ASR sobre ASR-Platt nos blocos numérico e de partição, respectivamente.",
         "tab_cap8_filtro_llm": PAR2 + "NONMATCH: decisão de não aceitar como vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pela probabilidade calibrada com o mesmo número de revisões humanas após o filtro. O topo de 440 pares não teve todas as respostas.",
-        "tab_cap8_subamostragem": "A ordenação usa a probabilidade calibrada do classificador. A linha de referência corresponde ao treino sem subamostragem, não à referência operacional de pares verdadeiros.",
+        "tab_cap8_subamostragem": "A ordenação usa a probabilidade calibrada do classificador. A linha Sem subamostragem corresponde ao treino sem subamostragem, não à referência operacional de pares verdadeiros.",
         "tab_cap8_ancoras": "Conjuntos âncora: potenciais pares de nota extrema usados para calibrar. CdR: Comparador de Registros.",
         "tab_cap8_ancoras_decisao": "Conjuntos âncora: potenciais pares de nota extrema usados para calibrar. CdR: Comparador de Registros; $v$: sua nota final. A faixa intermediária da nota final não é a região abaixo do corte do OpenRecLink.",
         "tab_cap8_referencia": P + PAR2 + "CdR: Comparador de Registros. Faixa intermediária da nota final: nota final do CdR em $[5,9)$.",
@@ -226,17 +241,17 @@ def transform(name, text):
         "tab_dossie_campos": "Dossiê: documento estruturado com os subescores disponíveis para a revisão por modelo de linguagem. CdR: Comparador de Registros.",
         "tab_cv_5fold": "QW1: comparação de classificadores tabulares. Validação cruzada: avaliações com alternância das partições de treinamento e validação.",
         "tab_qw1_deep_learning": "QW1: comparação de classificadores tabulares. A0: controle com a partição original do QW1.",
-        "tab_nb02_recall": "NB02: estratégia de maximização da sensibilidade; RF: Random Forest; MLP: perceptron multicamada.",
-        "tab_nb03_precision": "NB03: estratégia de maximização do VPP; consenso: unanimidade entre modelos; empilhamento: combinação das predições por um meta-aprendiz.",
+        "tab_nb02_recall": "NB02: estratégia de vigilância (maximização da sensibilidade); RF: Random Forest; MLP: perceptron multicamada.",
+        "tab_nb03_precision": "NB03: estratégia de confirmação (maximização do VPP); consenso: unanimidade entre modelos; empilhamento: combinação das predições por um meta-aprendiz.",
         "tab_pareto_frontier": "RF: Random Forest. SMOTE: sobreamostragem sintética da classe minoritária. Fluxo Modal: execução em nuvem que acrescentou o XGBoost à ablação (remoção ou isolamento de componentes).",
         "tab_perfil_recuperados": "ML: aprendizado de máquina. Recuperados: vínculos detectados pelo Random Forest com SMOTE e não pelo limiar 8 da nota final do Comparador de Registros (CdR).",
         "tab_sensibilidade_qw1": "QW1: comparação de classificadores tabulares. A e B: partição por linha, respectivamente com e sem indicadores de óbito. C e D: partição agrupada por REFREC, respectivamente com e sem esses indicadores. " + REFREC,
         "tab_sensibilidade_2x2": REFREC + "A e B: partição por linha, com e sem indicadores de óbito; C e D: partição por REFREC, com e sem esses indicadores.",
-        "tab_cap8_vies_referencia": P + PAR2 + "C1: VPP de ASR inferior a 50\\%; C2: perdas de PAR~=~2 de ASR; C3: margem de O3 frente a O1 na meta de 23 pares verdadeiros; C4: vantagem de F4 frente a O1. O1: escore do OpenRecLink; O3: probabilidade calibrada. " + FUSION,
+        "tab_cap8_vies_referencia": P + PAR2 + "C1: VPP das aceitações do LLM abaixo do corte inferior a 50\\%; C2: perdas de PAR~=~2 de ASR; C3: margem de O3 frente a O1 na meta de 23 pares verdadeiros; C4: vantagem de F4 frente a O1. O1: escore do OpenRecLink; O3: probabilidade calibrada; F4: fusão por posição recíproca de O1 e O3. ",
     }
     if name == "tab_cap8_reruns":
         text = text.replace("Avaliação dos revisores no Exp2 segundo o dossiê e a versão do prompt.",
-            "Avaliação dos revisores no Experimento 2 (revisão assistida por LLM), segundo o dossiê e as instruções v3 (com saídas do motor) ou v4 (sem elas).")
+            "Avaliação dos revisores no Experimento 2 (revisão assistida por LLM), segundo o dossiê (completo ou sem as saídas do motor, MO) e as instruções (v3, que solicitam essas saídas, ou v4, que não as solicitam), eixos independentes: há combinações como \\textit{Sem MO/v3}.")
         text = text.replace("MO: bloco \\texttt{model\\_outputs}.", "MO: bloco de saídas decisórias do motor.")
         text = add_note(text, REFREC + "QW2: registro das execuções de revisão por modelo de linguagem.")
     if name == "tab_sensibilidade_qw1":
@@ -246,8 +261,25 @@ def transform(name, text):
         text = text.replace("corte 6{,}0 da nota (", "corte 6{,}0 da nota final do CdR (")
         text = text.replace("corte 6,0,", "corte 6,0 da nota final do CdR,")
         text = re.sub(r"corte 6\{,\}0(?! da nota final do CdR)", "corte 6{,}0 da nota final do CdR", text)
-        text = add_note(text, P + "CdR: Comparador de Registros. " + REFREC +
-            "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
+        base_name = name.removesuffix(".tex")
+        if base_name in ("tab_qw3_fairness_rejections", "tab_qw3_fairness_rejections_corte6"):
+            # Sem ASR, REFREC nem cascata: só CdR e OR aparecem nestas tabelas.
+            text = add_note(text, "CdR: Comparador de Registros. OR é razão de chances.")
+        elif base_name in SEM_ASR:
+            # Tabelas da comparação (corte 6,0, XGBoost, cascata sobre a base inteira): sem ASR nem REFREC.
+            text = add_note(text, "CdR: Comparador de Registros. "
+                "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
+        else:
+            text = add_note(text, P + "CdR: Comparador de Registros. " + REFREC +
+                "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
+        if base_name == "tab_qw3_fairness_rejections_corte6":
+            text = text.replace("Encerramento   &", r"Encerramento da notifica\c{c}\~ao &")
+            for old, new in CORTE6_OR_DUAS_CASAS:
+                if text.count(old) == 0 and text.count(new) == 1:
+                    continue  # já transformada: a função é idempotente
+                if text.count(old) != 1:
+                    raise ValueError(f"Linha do corte 6 divergente: {old!r}")
+                text = text.replace(old, new)
     if name in notes:
         text = add_note(text, notes[name])
     return terminologia_revisao2(text)

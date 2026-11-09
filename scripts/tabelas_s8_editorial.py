@@ -59,16 +59,16 @@ def effort(data):
              r'\caption{Cargas de revisão e conversão hipotética a 20 minutos por par. As colunas de horas poupadas usam um cenário de meta diferente, não uma economia observada.}',
              r'\label{tab:cap8-esforco}', r'\setlength{\tabcolsep}{3pt}',
              r'\resizebox{\linewidth}{!}{\begin{tabular}{lllrrrrrrr}', r'\toprule',
-             r'Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & h poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\', r'\midrule']
+             r'Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & Horas poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\', r'\midrule']
     for _, row in data.iterrows():
         mode = 'Vig.' if row.modo == 'vigilancia' else 'Conf.'
         # Chave de dados (P) -> rótulo de apresentação (ASR); O3 e demais ordenações passam intactas.
         cells = [mode, ROTULO_BRACO.get(row.braco, row.braco), row.carga.split('_')[0], number(row.revisoes), number(row.pares_llm), number(row.par2_recuperados),
                  number(row.horas), number(row.horas_poupadas),
-                 number(row.horas_poupadas_por_vinculo_perdido), number(row.horas_por_fp)]
+                 number(row.horas_poupadas_por_vinculo_perdido), number(row.horas_por_fp, 2)]
         lines.append(' & '.join(cells) + r' \\')
     return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de ASR na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em ASR, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de ASR na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em ASR, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros, exceto h/FP, com duas casas decimais. h/FP: horas de revisão divididas pelos FP automáticos (abaixo do corte), não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
 
 
 def generate(root=ROOT, output=None):
@@ -80,12 +80,20 @@ def generate(root=ROOT, output=None):
         if name.endswith('robustez_arranjo'):
             text = replace_once(text, r'N ($k/20$) & P ($k/20$) & Inversa (N; P)',
                                 r'Numérico ($k/20$) & Partição ($k/20$) & Inversa (num.; part.)')
+            # Auditoria de 2026-11-09: a dominância conta pares verdadeiros aceitos (classe), não decisões de vínculo.
+            text = replace_once(text, 'nos vínculos aceitos', 'nos pares verdadeiros aceitos')
         else:
             # Uma substituição verificada por linha, incluindo as duas linhas com 247.
             lines = []
             for line in text.splitlines():
                 if 'rótulos' in line:
                     line = replace_once(line, 'rótulos', r'\textit{labels}')
+                if 'Beta + restrição cinza' in line:
+                    # Decisão da autora de 2026-11-09: "cinza" não designa a faixa [5,9).
+                    line = replace_once(line, 'Beta + restrição cinza', 'Beta + restrição na faixa intermediária')
+                if 'Beta+ usa posteriores' in line:
+                    line = replace_once(line, 'Beta+ usa posteriores',
+                                        'Beta+ (Beta + restrição na faixa intermediária) usa posteriores')
                 if 'Platt (nota)' in line:
                     line = replace_once(line, 'Platt (nota)', r'\textit{Platt scaling} (nota, supervisionado)')
                 if 'Platt por âncoras (ML)' in line:

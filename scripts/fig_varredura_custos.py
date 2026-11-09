@@ -118,7 +118,7 @@ def draw_figure(tables: dict[str, pd.DataFrame], output_base: Path) -> None:
                     secondary = table[np.isclose(table.C_llm, cost) & np.isclose(table.e_fp_h, error)].sort_values("orcamento_humano")
                     axes[2, col].plot(x, secondary.sens_esperada_com_humano * 100, color=color, ls=linestyle, marker="o", ms=2.5, lw=1.2)
             axes[0, col].set_ylabel(f"{name}\nSensibilidade esperada (%)\nC$_{{LLM}}$ = 0,005")
-            axes[0, col].set_ylim(50, 100)
+            axes[0, col].set_ylim(40, 100)
             axes[1, col].set_ylabel(f"{name}\nLote LLM (pares)\nC$_{{LLM}}$ = 0,005")
             axes[1, col].set_ylim(bottom=0)
             axes[2, col].set_ylabel(f"{name}\nSensibilidade com humano (%)")
@@ -223,7 +223,7 @@ def plot_np_figure(table, comparison, output_base: Path) -> None:
                      va="top", fontsize=9, color=".35")
         axes[1].set_ylim(bottom=0)
         axes[1].set_ylabel("Pares encaminhados (n)")
-        axes[1].set_xlabel("Limite esperado de falsos vínculos entre MATCH automáticos (log)")
+        axes[1].set_xlabel("Limite esperado de falsos positivos entre os MATCH automáticos (log)")
         cost = comparison[comparison.policy_kind.eq("cost")].iloc[0]
         axes[0].axhline(cost.sens_esperada_com_humano * 100, color=".4", ls=":", lw=1)
         errors = [Line2D([0], [0], color=c, lw=1.5, label=f"Erro humano: {e:.0%}") for c, e in zip(colors, HUMAN_ERRORS)]

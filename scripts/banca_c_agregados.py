@@ -138,15 +138,16 @@ def render_qw2(rows):
     def decimal(value):
         return f"{value:.3f}".replace(".", ",")
 
-    for row in rows:
+    for index, row in enumerate(rows):
         tp, fp, fn, tn, n, consensus, arbiter = (
             int(row[k]) for k in ("vp", "fp", "fn", "vn", "n", "consenso", "arbitro"))
         mode = names[row["modo"]]
         matrices.extend([
-            f"{mode} & Positivo & {integer(tp)} & {integer(fn)} & {integer(tp + fn)}"
+            f"{mode} & Par verdadeiro & {integer(tp)} & {integer(fn)} & {integer(tp + fn)}"
             f" & consenso: {integer(consensus)}; \\'arbitro: {integer(arbiter)} " + r"\\",
-            f"{mode} & Negativo & {integer(fp)} & {integer(tn)} & {integer(fp + tn)}"
-            + r" & -- \\ \midrule",
+            f"{mode} & N\\~ao par & {integer(fp)} & {integer(tn)} & {integer(fp + tn)}"
+            # Sem filete duplo: o \midrule só separa os modos; o último segue direto ao \bottomrule.
+            + (r" & -- \\ \midrule" if index < len(rows) - 1 else r" & -- \\"),
         ])
         values = (tp / (tp + fp), tp / (tp + fn), 2 * tp / (2 * tp + fp + fn),
                   tn / (tn + fp), (tp + tn) / n)

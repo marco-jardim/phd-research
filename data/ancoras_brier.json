@@ -1,0 +1,14 @@
+{
+  "descricao": "Escore de Brier por cenário de calibração na faixa intermediária da nota final (5 <= nota < 9)",
+  "script": "scripts/validar_ancoras.py",
+  "gerado_em_utc": "2026-11-09T18:00:29+00:00",
+  "n_pares_faixa": 21620,
+  "n_pares_verdadeiros_faixa": 151,
+  "brier_faixa_intermediaria": {
+    "supervisionado": 0.006150105169427693,
+    "ancoras_medidas": 0.007228344696325384,
+    "ancoras_apriori_0.99_0.001": 0.016504776940543656,
+    "ancoras_apriori_0.99_0.0001": 0.008969418007968848
+  },
+  "brier_preditor_constante": 0.006935493739736308
+}

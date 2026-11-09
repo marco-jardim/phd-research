@@ -60,7 +60,7 @@ def test_model_comparison_uses_acceptance_stratum_not_total_sample():
 def test_conclusion_preserves_denominators_and_glossary_defines_new_models():
     conclusion = text("text/latex/conclusao.tex")
     # Conclusão reescrita: esses denominadores e glosas permanecem nos capítulos e apêndices de origem.
-    sources = {"apendice_estrategias.tex": ("Random Forest com pesos extremos da estratégia de sensibilidade (NB02) no limiar de 0,3",),
+    sources = {"apendice_estrategias.tex": ("Random Forest com pesos extremos da estratégia de vigilância (NB02) no limiar de 0,3",),
                "estudo4_gzcmd.tex": (r"28,9\% (13 pares verdadeiros em 45 aceitações)",
                                      r"42,3\% (11 pares verdadeiros em 26 aceitações)",
                                      "recuperou dois dos 36 pares verdadeiros (PAR~=~2) sem propagar PAR~=~0"),

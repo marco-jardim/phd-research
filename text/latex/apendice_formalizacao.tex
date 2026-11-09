@@ -178,7 +178,7 @@ a_N & \text{se } p < 0{,}5
 Isso equivale à regra de decisão por máxima probabilidade \textit{a posteriori} (MAP), desde que $p$ seja a probabilidade posterior correta. A regra MAP coincide com a decisão por máxima verossimilhança quando as classes têm \textit{prior} uniforme; incorporar um \textit{prior} não uniforme à calibração não estabelece essa coincidência.
 \end{proof}
 
-\textbf{Observação.} Para custos assimétricos e revisor perfeito, a revisão é estritamente ótima em $C_{LLM}/C_{FN}<p<1-C_{LLM}/C_{FP}$, intervalo não vazio se, e somente se, $C_{LLM}<H$. Para $C_{LLM}\ge H$, a decisão automática utiliza o limiar $p^*=C_{FP}/(C_{FP}+C_{FN})$, com vínculo na igualdade, recuperando a regra bayesiana com custos assimétricos quando $p$ é a posterior correta \cite{Sadinle2017}.
+\textbf{Observação.} Para custos assimétricos e revisor perfeito, a revisão é estritamente ótima em $C_{LLM}/C_{FN}<p<1-C_{LLM}/C_{FP}$, intervalo não vazio se, e somente se, $C_{LLM}<\bar C$. Para $C_{LLM}\ge\bar C$, a decisão automática utiliza o limiar $p^*=C_{FP}/(C_{FP}+C_{FN})$, com vínculo na igualdade, recuperando a regra bayesiana com custos assimétricos quando $p$ é a posterior correta \cite{Sadinle2017}.
 
 \subsubsection{Recuperação de uma regra de dois limiares}
 
@@ -192,7 +192,7 @@ Suponha que o modelo discriminativo produz probabilidades perfeitamente calibrad
 p = \frac{\pi \cdot R}{\pi \cdot R + (1 - \pi)}
 \]
 
-onde $\pi = P(M)\in(0,1)$ é conhecida e denota a prevalência de pares verdadeiros na população de candidatos. Suponha adicionalmente que o revisor é perfeito ($e_{FP} = e_{FN} = 0$), que os custos $C_{FP},C_{FN}>0$ são constantes e que $0<C_{LLM}<H=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. Sem randomização nas fronteiras, com preferência por ações automáticas nos empates, a política ótima define dois limiares:
+onde $\pi = P(M)\in(0,1)$ é conhecida e denota a prevalência de pares verdadeiros na população de candidatos. Suponha adicionalmente que o revisor é perfeito ($e_{FP} = e_{FN} = 0$), que os custos $C_{FP},C_{FN}>0$ são constantes e que $0<C_{LLM}<\bar C=C_{FP}C_{FN}/(C_{FP}+C_{FN})$. Sem randomização nas fronteiras, com preferência por ações automáticas nos empates, a política ótima define dois limiares:
 
 \[
 T_\mu^{GZ} = \frac{1-\pi}{\pi} \cdot \frac{C_{FP} - C_{LLM}}{C_{LLM}} \quad \text{(limiar superior)}
@@ -209,7 +209,7 @@ Declara-se vínculo se $R\ge T_\mu^{GZ}$ e rejeição se $R\le T_\lambda^{GZ}$, 
 Com $e_{FP} = e_{FN} = 0$, as condições de decisão em termos de $p$ são:
 
 \begin{itemize}
-\item \textbf{Vínculo} ($a_M$): $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_R\mid p)$ e $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_N\mid p)$. A primeira condição requer $(1-p) \cdot C_{FP} \le C_{LLM}$, ou seja, $p \ge 1 - C_{LLM}/C_{FP}$. A segunda requer $p \ge C_{FP}/(C_{FP}+C_{FN})$. Pelo Corolário~\ref{cor:cllm-critical}, a revisão estritamente ótima existe quando $C_{LLM}<H$, o que implica $1 - C_{LLM}/C_{FP} > C_{FP}/(C_{FP}+C_{FN})$. Logo, a condição vinculante é $p \ge 1 - C_{LLM}/C_{FP}$.
+\item \textbf{Vínculo} ($a_M$): $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_R\mid p)$ e $\mathcal{L}(a_M\mid p) \le \mathcal{L}(a_N\mid p)$. A primeira condição requer $(1-p) \cdot C_{FP} \le C_{LLM}$, ou seja, $p \ge 1 - C_{LLM}/C_{FP}$. A segunda requer $p \ge C_{FP}/(C_{FP}+C_{FN})$. Pelo Corolário~\ref{cor:cllm-critical}, a revisão estritamente ótima existe quando $C_{LLM}<\bar C$, o que implica $1 - C_{LLM}/C_{FP} > C_{FP}/(C_{FP}+C_{FN})$. Logo, a condição vinculante é $p \ge 1 - C_{LLM}/C_{FP}$.
 
 \item \textbf{Rejeição} ($a_N$): Analogamente, a condição vinculante é $p \le C_{LLM}/C_{FN}$.
 
@@ -226,12 +226,12 @@ T_\mu^{GZ} = \frac{1 - C_{LLM}/C_{FP}}{C_{LLM}/C_{FP}} \cdot \frac{1-\pi}{\pi} =
 T_\lambda^{GZ} = \frac{C_{LLM}/C_{FN}}{1 - C_{LLM}/C_{FN}} \cdot \frac{1-\pi}{\pi} = \frac{C_{LLM}}{C_{FN} - C_{LLM}} \cdot \frac{1-\pi}{\pi}
 \]
 
-Os denominadores são positivos porque $C_{LLM}<H<\min(C_{FP},C_{FN})$. As derivadas em relação a $C_{LLM}$ são, respectivamente, $-\frac{1-\pi}{\pi}\frac{C_{FP}}{C_{LLM}^2}<0$ e $\frac{1-\pi}{\pi}\frac{C_{FN}}{(C_{FN}-C_{LLM})^2}>0$.
+Os denominadores são positivos porque $C_{LLM}<\bar C<\min(C_{FP},C_{FN})$. As derivadas em relação a $C_{LLM}$ são, respectivamente, $-\frac{1-\pi}{\pi}\frac{C_{FP}}{C_{LLM}^2}<0$ e $\frac{1-\pi}{\pi}\frac{C_{FN}}{(C_{FN}-C_{LLM})^2}>0$.
 \end{proof}
 
 \begin{corollary}[Caso limite sem revisão]
 \label{cor:gz-deterministic}
-Sob as hipóteses de posterior correta, $\pi\in(0,1)$ conhecida, revisor perfeito e custos de erro positivos constantes, quando $C_{LLM}\to0^+$, tem-se $T_\mu^{GZ}\to\infty$ e $T_\lambda^{GZ}\to0$. Quando $C_{LLM}\uparrow H$, ambos convergem a $R^*=\frac{C_{FP}}{C_{FN}}\frac{1-\pi}{\pi}$. Para todo $C_{LLM}\ge H$, a revisão não é estritamente ótima e a política, sem revisão nos empates, declara vínculo se $R\ge R^*$ e rejeita se $R<R^*$. Em $C_{LLM}=H$, o intervalo aberto de revisão é vazio e há empate entre as três ações apenas em $R=R^*$, resolvido como vínculo. As expressões dos dois limiares da Proposição~\ref{prop:threshold-recovery} não devem ser extrapoladas como limiares de triagem para $C_{LLM}\ge H$.
+Sob as hipóteses de posterior correta, $\pi\in(0,1)$ conhecida, revisor perfeito e custos de erro positivos constantes, quando $C_{LLM}\to0^+$, tem-se $T_\mu^{GZ}\to\infty$ e $T_\lambda^{GZ}\to0$. Quando $C_{LLM}\uparrow\bar C$, ambos convergem a $R^*=\frac{C_{FP}}{C_{FN}}\frac{1-\pi}{\pi}$. Para todo $C_{LLM}\ge\bar C$, a revisão não é estritamente ótima e a política, sem revisão nos empates, declara vínculo se $R\ge R^*$ e rejeita se $R<R^*$. Em $C_{LLM}=\bar C$, o intervalo aberto de revisão é vazio e há empate entre as três ações apenas em $R=R^*$, resolvido como vínculo. As expressões dos dois limiares da Proposição~\ref{prop:threshold-recovery} não devem ser extrapoladas como limiares de triagem para $C_{LLM}\ge\bar C$.
 \end{corollary}
 
 \begin{corollary}[Recuperação da regra clássica de dois limiares]
@@ -241,7 +241,7 @@ Qualquer par de limiares finitos $0<T_\lambda<T_\mu<\infty$ de Fellegi e Sunter 
 \end{corollary}
 
 \begin{proof}
-Defina-se $\theta=\pi/(1-\pi)>0$ e, para $j\in\{\lambda,\mu\}$, $t_j=\theta T_j/(1+\theta T_j)$. A transformação é estritamente crescente, de modo que $0<t_\lambda<t_\mu<1$. Escolham-se $C_{LLM}=1$, $C_{FN}=1/t_\lambda$ e $C_{FP}=1/(1-t_\mu)$. Então $C_{LLM}/C_{FN}=t_\lambda$ e $1-C_{LLM}/C_{FP}=t_\mu$, reproduzindo as fronteiras em probabilidade e em razão de verossimilhança. Como $1/H=1/C_{FP}+1/C_{FN}=1-t_\mu+t_\lambda$, a condição $C_{LLM}<H$ equivale a $t_\lambda<t_\mu$. A regra determinística nas fronteiras completa a correspondência.
+Defina-se $\theta=\pi/(1-\pi)>0$ e, para $j\in\{\lambda,\mu\}$, $t_j=\theta T_j/(1+\theta T_j)$. A transformação é estritamente crescente, de modo que $0<t_\lambda<t_\mu<1$. Escolham-se $C_{LLM}=1$, $C_{FN}=1/t_\lambda$ e $C_{FP}=1/(1-t_\mu)$. Então $C_{LLM}/C_{FN}=t_\lambda$ e $1-C_{LLM}/C_{FP}=t_\mu$, reproduzindo as fronteiras em probabilidade e em razão de verossimilhança. Como $1/\bar C=1/C_{FP}+1/C_{FN}=1-t_\mu+t_\lambda$, a condição $C_{LLM}<\bar C$ equivale a $t_\lambda<t_\mu$. A regra determinística nas fronteiras completa a correspondência.
 \end{proof}
 
 \textbf{Observação.} A equivalência requer que a probabilidade produzida coincida com a posterior derivada de $R$ e $\pi$, condição que na prática é apenas aproximada. As restrições por âncoras não asseguram essa condição, sobretudo na região intermediária. A pureza de $A^+$ e $A^-$ e a adequação da hipótese sigmoide devem ser avaliadas com dados com \textit{labels} independentes. A propagação da incerteza de calibração para as fronteiras de decisão permanece como trabalho futuro, sem garantia de robustez estabelecida aqui.

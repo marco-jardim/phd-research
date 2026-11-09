@@ -18,7 +18,7 @@ NOME_NOVO = "ASR"
 ROTULO_BRACO: dict[str, str] = {
     "P": "ASR",
     "P-Platt": "ASR-Platt",
-    "P-PAR2-grey": "ASR-PAR2-grey",
+    "P-PAR2-grey": "ASR-PAR2-faixa",  # decisão da autora de 2026-11-09: "grey" não designa a faixa [5,9)
     "P_MATCH_ao_humano": r"ASR, \texttt{MATCH} ao humano",
 }
 

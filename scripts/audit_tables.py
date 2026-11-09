@@ -588,13 +588,14 @@ def audit_qw1_deep_learning(idx: int) -> None:
         return
 
     # Esperado CV: (model_pattern, f1_mean, f1_std, prec_mean, prec_std, rec_mean, rec_std)
-    # Valores do .tex: XGBoost 0,924±0,030  P=0,951±0,031  R=0,901±0,046
+    # Valores conferidos contra data/review2_qw1_resumo.csv (média e DP com 3 casas, meia unidade
+    # para cima): XGBoost 0,924±0,030  P=0,951±0,036  R=0,901±0,048
     expected_cv = [
-        ("XGBoost",               0.924, 0.030, 0.951, 0.031, 0.901, 0.046),
-        ("RandomForest",          0.913, 0.029, 0.972, 0.022, 0.863, 0.049),
-        (r"MLP.*64.*32|MLP.*64,.*32",  0.882, 0.037, 0.956, 0.032, 0.822, 0.059),
-        (r"MLP.*128.*64|MLP.*128,.*64", 0.872, 0.038, 0.938, 0.048, 0.820, 0.057),
-        ("TabNet",                0.821, 0.055, 0.871, 0.051, 0.789, 0.074),
+        ("XGBoost",               0.924, 0.030, 0.951, 0.036, 0.901, 0.048),
+        ("RandomForest",          0.913, 0.029, 0.971, 0.031, 0.863, 0.048),
+        (r"MLP.*64.*32|MLP.*64,.*32",  0.881, 0.037, 0.956, 0.049, 0.822, 0.061),
+        (r"MLP.*128.*64|MLP.*128,.*64", 0.872, 0.038, 0.938, 0.048, 0.820, 0.068),
+        ("TabNet",                0.821, 0.055, 0.870, 0.090, 0.789, 0.085),
     ]
 
     for pat, ef1, ef1s, ep, eps, er, ers in expected_cv:

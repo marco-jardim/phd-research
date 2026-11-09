@@ -31,7 +31,7 @@ tabelas:
   # Capítulo de dados
   - arquivo: editorial/tab_blocagem_rendimento.tex
     protecao: sha256
-    sha256: 5c6d99d06eb947f92d4b00708e2a524855a81bed1440350d2983d63c1dd66352
+    sha256: 5d4418431cd701ca7460c07e93ea7c197fcb265729c45b4f10de157bb1080dd3
     motivo: "Versão editorial da tabela histórica tables/tab_blocagem_rendimento.tex (auditoria scripts/m8_auditoria_blocagem.py); sem teste de regeneração do arquivo editorial."
 
   # Estudo 1
@@ -57,7 +57,7 @@ tabelas:
     teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
   - arquivo: tab_desempenho_faixas.tex
     protecao: sha256
-    sha256: 44f8351b7bff9e01d4de5e512875d854d3acf7a68e6fe67ab6ed3ad0a157f167
+    sha256: c82583bc45bca42984c8916d03d1854aa267437005d2394bfed6d6df990001ca
     motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py; tests/test_desempenho_faixas.py::test_gerador_tex_nd_virgula_ic_e_hifen gera em diretório temporário e confere só a forma (cabeçalho, n.d., vírgula decimal), sem comparar com o arquivo versionado."
 
   # Estudo 3
@@ -127,7 +127,7 @@ tabelas:
     motivo: "Sem teste que regenere ou compare o arquivo; os testes da ablação do dossiê cobrem os agregados em data/, não a tabela. Tabela sem gerador testado."
   - arquivo: editorial/tab_cap8_reruns.tex
     protecao: sha256
-    sha256: de9b876280c0bd789fed54b32955090dd0315a20e59f57c57f972b0095929257
+    sha256: ddfc75887afb7c18195eb679d37ab992ecaefec619cbad40974659a0fdcd4bf2
     motivo: "tests/test_w14_rotulos.py::test_reruns_caption_expands_experiment_label confere transform(tables/tab_cap8_reruns.tex) == editorial; a tabela histórica de entrada (scripts/avaliar_reruns_exp2.py) não tem teste de regeneração, então os números não ficam protegidos pelo teste."
   - arquivo: editorial/tab_cap8_cascata_v31.tex
     protecao: regeneracao
@@ -165,7 +165,7 @@ tabelas:
     gerador: tabelas_s8a1_editorial
   - arquivo: editorial/tab_cap8_vies_referencia.tex
     protecao: sha256
-    sha256: 6ac78bad1d7c67b5ed3c246cd8e9f1d43c49586c339dbbed3b69347612f2a1e9
+    sha256: 66e5f95cbff0483f476bcfea5172276bff8b4014af7b4af193a67f2b63eeddfc
     motivo: "tests/test_w10a.py confere células selecionadas contra data/vies_referencia*.csv e a contagem de colunas, não o arquivo inteiro."
   - arquivo: editorial/tab_cap8_tamanho_modelo.tex
     protecao: regeneracao
@@ -208,9 +208,9 @@ tabelas:
     teste: test_s8c.py::test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade
   - arquivo: editorial/tab_qw3_fairness_rejections.tex
     protecao: sha256
-    sha256: cbe873ddf5e5865fe6aee09b0bd90a08409655a57f49dc6e2dc95b2ac1fed3fa
+    sha256: e1f0069d139d8c23cdf21401071fc7672d880418809979e2d59981e474043f16
     motivo: "Versão editorial de tables/tab_qw3_fairness_rejections.tex (scripts/equidade_v31.py, histórico congelado); sem teste que compare o arquivo editorial."
   - arquivo: editorial/tab_qw3_fairness_rejections_corte6.tex
     protecao: sha256
-    sha256: 14fda5004a4b6077649bb9d9f2f4565b45051e570086b33b2fbf50ca0be7f6e9
+    sha256: d7ce10730b574a55defc285c86519c82faceb3bf8b7c3f9c066569b9a1e6eb57
     motivo: "Versão editorial da tabela do corte 6; sem gerador testado nem teste que compare o arquivo."
