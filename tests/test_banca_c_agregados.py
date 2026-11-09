@@ -114,10 +114,10 @@ def test_editorial_order_and_limitations_remain_explicit():
     # Revisão 2 (D2/C01r): a Discussão abre pela ordenação; P é o braço do registro interno,
     # nunca o "resultado principal".
     assert discussion.startswith("Nesta coorte, abaixo do corte do OpenRecLink, a redução da revisão manual veio da ordenação")
-    assert "braço P" in discussion
+    assert "braço ASR" in discussion
     assert "resultado principal" not in section.split(r"\subsection{Limitações}")[0]
-    assert "P é o braço do registro interno e não o resultado principal do capítulo" in text
-    acceptor = next(p for p in section.split("\n\n") if p.startswith("Abaixo do corte, o ganho automático de P veio do LLM"))
+    assert "ASR é o braço do registro interno e não o resultado principal do capítulo" in text
+    acceptor = next(p for p in section.split("\n\n") if p.startswith("Abaixo do corte, o ganho automático de ASR veio do LLM"))
     assert "25 e 12 potenciais pares" in acceptor and "dos quais 21 e 4" in acceptor
     assert "fig_custo_computacional.pdf" not in text
     assert "fig:cap8-cascata-reducao" not in text

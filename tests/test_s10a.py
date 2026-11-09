@@ -33,7 +33,7 @@ def test_local_editorial_redundancies_and_number_forms():
         else:
             # Conclusão reescrita: a carga de 96 revisões de P permanece na síntese; o filtro de NONMATCH
             # (96 pares enviados ao LLM, nove dos 22 descartados) fica no Estudo 4, sem repetição na conclusão.
-            assert 'P submeteu 344 potenciais pares ao LLM, com 755 chamadas, e encaminhou 96 ao revisor humano' in text
+            assert 'ASR submeteu 344 potenciais pares ao LLM, com 755 chamadas, e encaminhou 96 ao revisor humano' in text
             assert 'descartou nove dos 22 PAR~=~2 do topo' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
         # capitulo1.tex (revisado, modo estrito): "pares verdadeiros" é a classe segundo a referência (terminologia 3.6).

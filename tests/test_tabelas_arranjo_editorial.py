@@ -14,12 +14,13 @@ import pytest
 
 from scripts import equidade_arranjo as historical
 from scripts.tabelas_arranjo_editorial import generate, render_reference, replace_once, step_ppv_note
+from scripts.tabelas_persona_editorial import rotulos_braco
 from scripts.tabelas_review2_w3 import equity_tables
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
 EDITORIAL = TABLES / "editorial"
-EQUITY_GLOSS = ("P: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
+EQUITY_GLOSS = ("ASR: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
                 "CdR: Comparador de Registros. REFREC identifica o registro do SIM. "
                 "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
 
@@ -48,13 +49,15 @@ def test_editorial_versions_reproduce_without_overwriting_historical(tmp_path):
 
 
 def test_equity_numeric_cells_only_change_specificity_precision():
-    original_text = (TABLES / "tab_equidade_arranjo.tex").read_text(encoding="utf-8")
+    # A tabela histórica segue com P; a editorial exibe ASR (rotulos_braco), sem outra mudança de célula.
+    original_text = rotulos_braco((TABLES / "tab_equidade_arranjo.tex").read_text(encoding="utf-8"))
     editorial_text = (EDITORIAL / "tab_equidade_arranjo.tex").read_text(encoding="utf-8")
     old = rows(original_text)
     new = rows(editorial_text)
     frame = pd.read_csv(ROOT / "data/equidade_arranjo_global.csv")
     assert len(old) == len(new)
-    labels = {label: decision for decision, label in historical.LABELS.items()}
+    labels = {rotulos_braco(label): decision for decision, label in historical.LABELS.items()}
+    assert "Arranjo ASR (vigil.)" in labels and "Arranjo ASR (confirm.)" in labels
     allowed_numbers = numbers(original_text)
     for original, current in zip(old, new):
         assert len(original) == len(current)
@@ -84,7 +87,8 @@ def test_group_and_rejection_tables_preserve_all_cells_and_only_translate_note()
     for path in EDITORIAL.glob("tab_equidade_arranjo_*.tex"):
         original = (TABLES / path.name).read_text(encoding="utf-8")
         current = path.read_text(encoding="utf-8")
-        renamed = original.replace("grupo A menos grupo B", "grupo 1 menos grupo 2").replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2")
+        renamed = rotulos_braco(
+            original.replace("grupo A menos grupo B", "grupo 1 menos grupo 2").replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2"))
         if "grupos" in path.name:
             # Revisão 2: a coluna conta pares verdadeiros (classe segundo a referência), não vínculos aceitos.
             renamed = replace_once(renamed, " & Vínculos & ", r" & \shortstack{Pares\\verdadeiros} & ")
@@ -100,7 +104,8 @@ def test_group_and_rejection_tables_preserve_all_cells_and_only_translate_note()
 
 
 def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
-    old = rows((TABLES / "tab_cap8_referencia.tex").read_text(encoding="utf-8"))
+    # A histórica segue com P; a editorial exibe ASR (rotulos_braco) e "Braço do registro interno" (decisão D2).
+    old = rows(rotulos_braco((TABLES / "tab_cap8_referencia.tex").read_text(encoding="utf-8")))
     new = rows((EDITORIAL / "tab_cap8_referencia.tex").read_text(encoding="utf-8"))
     carga = pd.read_csv(ROOT / "data/carga_abaixo_corte.csv")
     total = carga.loc[carga.passo.eq("TOTAL")].set_index("limiar")
@@ -129,8 +134,13 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
         else:
             assert original == current
     text = (EDITORIAL / "tab_cap8_referencia.tex").read_text(encoding="utf-8")
-    assert "2.522" in text and "não limiar escolhido para P" in text
-    original_text = (TABLES / "tab_cap8_referencia.tex").read_text(encoding="utf-8")
+    assert "2.522" in text and "não limiar escolhido para ASR" in text
+    historical_text = (TABLES / "tab_cap8_referencia.tex").read_text(encoding="utf-8")
+    original_text = rotulos_braco(historical_text)
+    # Decisão D2: o arranjo é o braço do registro interno, não o resultado principal (só rótulo, sem célula numérica).
+    assert r"\multicolumn{8}{l}{\textit{Resultado principal}}" in historical_text
+    assert r"\multicolumn{8}{l}{\textit{Braço do registro interno}}" in text
+    assert "Resultado principal" not in text and "resultado principal" not in text
     # As células permanecem intactas; a nota agora explicita os três cenários S9.
     global_bound = f"{int(total.loc['global', 'pares_acima_limiar']):,}".replace(",", ".")
     # S3 explicita também a etapa anterior à qual o registro interno se refere.

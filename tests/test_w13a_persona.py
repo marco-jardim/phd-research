@@ -40,10 +40,10 @@ def test_primary_arm_and_comparisons_are_unambiguous():
     assert "comparador de mesma carga" not in source
     assert "A comparação na mesma carga" in source
     assert r"braço \textit{a posteriori} preserva o corte e aplica a cascata publicada abaixo dele, sem recalibração" in source
-    assert "P-Platt é a sensibilidade" not in source
+    assert "ASR-Platt é a sensibilidade" not in source
     # Revisão 2: P-Platt é definida na legenda da estabilidade e na descrição do arranjo (método).
-    assert r"P-Platt (análise de sensibilidade de P com \textit{Platt scaling} abaixo do corte)" in source
-    assert r"P-Platt, com \textit{Platt scaling} no lugar da isotônica abaixo do corte, foi reclassificada por emenda como análise de sensibilidade" in source
+    assert r"ASR-Platt (análise de sensibilidade de ASR com \textit{Platt scaling} abaixo do corte)" in source
+    assert r"ASR-Platt, com \textit{Platt scaling} no lugar da isotônica abaixo do corte, foi reclassificada por emenda como análise de sensibilidade" in source
     assert "percentil 97,5" in source and "percentis 10 a 90" in source
     assert "P97,5" not in source and "P10 a P90" not in source
     assert r"constante $k=60$" not in source

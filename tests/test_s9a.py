@@ -72,7 +72,7 @@ def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_pro
 
 
 @pytest.mark.parametrize('mode', ['vigilancia', 'confirmacao'])
-@pytest.mark.parametrize('strategy,title', [('P', 'P'), ('P_MATCH_ao_humano', r'P, \texttt{MATCH} ao humano')])
+@pytest.mark.parametrize('strategy,title', [('P', 'ASR'), ('P_MATCH_ao_humano', r'ASR, \texttt{MATCH} ao humano')])
 def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, strategy, title):
     data = pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv')
     scenarios = pd.read_csv(ROOT / 'data/cenarios_sensibilidade_humana.csv')
@@ -104,8 +104,8 @@ def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, stra
     assert value(mutated[4]) == pytest.approx(expected + 2 * scenario.s)
     assert value(mutated[5]) != value(row[5])
     text = same_load(data, scenarios=scenarios)
-    assert contem(text, 'em P, os vínculos aceitos pelo LLM não recebem desconto', arquivo='text/latex/tables/editorial/tab_cap8_mesma_carga.tex')  # migrado: terminologia 3.6
-    assert 'em P com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
+    assert contem(text, 'em ASR, os vínculos aceitos pelo LLM não recebem desconto', arquivo='text/latex/tables/editorial/tab_cap8_mesma_carga.tex')  # migrado: terminologia 3.6
+    assert 'em ASR com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
     assert 'h/FP: horas de revisão divididas pelos FP automáticos' in effort(pd.read_csv(ROOT / 'data/esforco_arranjo.csv'))
 
 
@@ -118,8 +118,8 @@ def test_english_convention_expansions_denominators_and_surveillance():
     assert 'falsos positivos' in pt and not re.search(r'\bFP\b', pt)
     assert 'large language model (LLM)' in en and 'false positives' in en and not re.search(r'\bFP\b', en)
     assert '247' in pt and '247' in en
-    assert r'a sensibilidade automática de P na vigilância foi de 42,5\%' in pt
-    assert r'In blocking step 11 (candidate-generation stage), the automatic sensitivity of P in surveillance was 42.5\%' in en
+    assert r'a sensibilidade automática de ASR na vigilância foi de 42,5\%' in pt
+    assert r'In blocking step 11 (candidate-generation stage), the automatic sensitivity of ASR in surveillance was 42.5\%' in en
     for summary in (pt, en):
         assert len(summary.split()) <= 500
         assert r'\textit{Platt scaling}' not in en and r'\textit{Linkage}' not in en

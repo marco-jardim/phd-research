@@ -70,7 +70,7 @@ def human_sensitivity(data, curve=None):
         (data.estrategia.eq('O3') & ((data.modo.eq('vigilancia') & data.k.isin([96, 125, 440])) |
                                      (data.modo.eq('confirmacao') & data.k.isin([17, 29, 58])))) |
         (data.estrategia.eq('filtro_LLM') & data.k.isin([96, 125]))]
-    labels = {'humano_integral': 'Integral', 'P': 'P', 'P_MATCH_ao_humano': r'P, MATCH ao humano',
+    labels = {'humano_integral': 'Integral', 'P': 'ASR', 'P_MATCH_ao_humano': r'ASR, MATCH ao humano',
               'O3': 'O3', 'filtro_LLM': 'Filtro'}
     rows = []
     for (mode, strategy, k), group in selected.groupby(['modo', 'estrategia', 'k'], sort=False):

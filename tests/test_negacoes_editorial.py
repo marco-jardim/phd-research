@@ -152,7 +152,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
     conclusion = paragraph("conclusao.tex", "A ordenação dos classificadores depende da métrica")
     assert r"não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados" in conclusion
-    assert r"Esses estudos não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados, e o GZ-CMD e o arranjo P, que preserva o corte, não usam os indicadores." in conclusion
+    assert r"Esses estudos não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados, e o GZ-CMD e o arranjo ASR, que preserva o corte, não usam os indicadores." in conclusion
     assert "impede transferir o resultado ao XGBoost" in conclusion
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
@@ -160,7 +160,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 
 
 @pytest.mark.parametrize("filename,expected", [
-    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
+    ("estudo4_gzcmd.tex", "A redução de FP de ASR-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
     ("estudo2_classificadores.tex", "A análise original usou validação cruzada estratificada com cinco partições da base completa, sem repetições"),
     ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),

@@ -537,8 +537,9 @@ def test_effort_figure_is_regenerated_from_csv(tmp_path):
     plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
     output = plot["generate"](
         ROOT / "data/comparador_mesma_carga_curva.csv",
-        ROOT / "data/comparador_mesma_carga.csv", tmp_path / "curve.pgf",
+        ROOT / "data/comparador_mesma_carga.csv", tmp_path / "curve.pgf", plot["ARM_SLIDES"],
     )
+    assert plot["ARM_SLIDES"] == "P"
     assert output.read_bytes() == (SLIDES / "figures/curva_esforco.pgf").read_bytes()
     content = output.read_text(encoding="utf-8")
     for mode, label in (("vigilancia", "P vig."), ("confirmacao", "P conf.")):
@@ -551,12 +552,13 @@ def test_effort_figure_is_regenerated_from_csv(tmp_path):
         expected = sorted((int(r["k"]), int(r["par2_topk"])) for r in curves if r["ordenacao"] == order)
         assert plot["curve_series"](curves, order) == expected
     assert len(set(plot["LINE_STYLES"].values())) == len(plot["ORDERS"])
-    assert_figure_series_styles(content, plot)
+    assert_figure_series_styles(content, plot, plot["ARM_SLIDES"])
     assert "Eixo x limitado a 2.522 revisões" in content
 
 
-def assert_figure_series_styles(content, plot):
+def assert_figure_series_styles(content, plot, arm):
     for i, (order, label, color) in enumerate(plot["ORDERS"]):
+        label = label.format(arm=arm)
         style = plot["LINE_STYLES"][order]
         # Vincular cor, estilo e caminho da série: os pontos de P também usam sólido.
         curve = "\n".join((rf"\color{{{color}}}", style, r"\pgfsetlinewidth{0.9pt}", r"\pgfpathmoveto"))
@@ -578,7 +580,7 @@ def test_effort_styles_reject_missing_series_style_even_with_p_markers(order_ind
     content = content.replace(original, rf"\color{{{color}}}", 1)
     assert r"\color{red}" + "\n" + r"\pgfsetdash{}{0pt}" in content
     with pytest.raises(AssertionError, match=order):
-        assert_figure_series_styles(content, plot)
+        assert_figure_series_styles(content, plot, plot["ARM_SLIDES"])
 
 
 def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
@@ -590,8 +592,9 @@ def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
     plot["main"]()
     thesis = tmp_path / "text/latex/figures/curva_esforco.pgf"
     slides = tmp_path / "text/slides/figures/curva_esforco.pgf"
-    assert thesis.read_bytes() == slides.read_bytes()
+    assert thesis.read_bytes() == (ROOT / "text/latex/figures/curva_esforco.pgf").read_bytes()
     assert slides.read_bytes() == (SLIDES / "figures/curva_esforco.pgf").read_bytes()
+    assert b"ASR vig." in thesis.read_bytes() and b"ASR vig." not in slides.read_bytes()
 
 
 def test_slide_backup_cascade_rows_from_csv():

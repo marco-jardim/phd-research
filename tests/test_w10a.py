@@ -65,7 +65,7 @@ def test_approved_recommendation_and_analysis_boundaries():
     assert RECOMMENDATION_C08R in body
     assert APPROVED not in body
     assert "Nenhuma ordenação dominou em todas as cargas" in body
-    assert "entre as estratégias O1 a O4 e P, nenhuma ordenação domina" in body
+    assert "entre as estratégias O1 a O4 e ASR, nenhuma ordenação domina" in body
     assert "posição de precaução diante do VPP observado e da incerteza da referência" in body
     assert "A referência operacional como fonte de erro" in body
     assert "Tamanho do modelo como revisor" in body

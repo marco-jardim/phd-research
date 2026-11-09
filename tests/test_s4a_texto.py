@@ -25,7 +25,7 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert len(text.split("\n\n")) == 4
         assert not re.search("—|–", text)
         # Revisão 2: P-Platt e XGBoost saíram do Resumo e do Abstract; constam do Estudo 4 e do Estudo 2 (abaixo).
-        assert "P-Platt" in (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+        assert "ASR-Platt" in (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
         assert "XGBoost" in (LATEX / "estudo2_classificadores.tex").read_text(encoding="utf-8")
         # Inclui o denominador 247.
         assert '247' in text
@@ -69,7 +69,7 @@ def test_reuse_caveat_present_in_method_limitations_and_conclusion():
     limits = study.split(r"\label{sec:e4-limitacoes}")[1]
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "reutilizam majoritariamente" in method
-    assert r"$P\cup B1$" in method and "14" in method
+    assert r"$\mathrm{ASR}\cup B1$" in method and "14" in method
     # Conclusão reescrita (2026-11-08): a ressalva de reutilização das chamadas ao LLM permanece no método e nas
     # limitações do Estudo 4; a conclusão a resume como análise \textit{post hoc} sob revisor simulado.
     for text in (method, limits):
@@ -90,7 +90,7 @@ def test_final_editorial_contract_and_table_placement():
         assert "quatro contra dez" not in text
         assert r"\ref{sec:e4-mesma-carga}" in text or r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "P recuperaria 23 pares verdadeiros com 121 revisões" in conclusion
+    assert "ASR recuperaria 23 pares verdadeiros com 121 revisões" in conclusion
     assert "contra 22 de O3, no máximo um a mais na mesma carga humana" in conclusion
     assert "introduziu 21 falsos positivos" in conclusion
     assert "Na confirmação, foram 27 pares verdadeiros perdidos e 4 falsos positivos" in conclusion
@@ -162,7 +162,7 @@ def test_review3_scope_and_experiment1_caveats():
     # estudo1, na conclusão e no apêndice de sensibilidade; o estudo2 remete ao vazamento sem repeti-los
     # A conclusão reescrita não retoma o Experimento 1; as ressalvas ficam nos capítulos e apêndices de origem.
     # Revisão 2: o apêndice de sensibilidade chama P de "braço P do registro interno" (o Estudo 1 mantém "arranjo P").
-    designacao_p = {"estudo1_comparador.tex": "arranjo P", "apendice_sensibilidade.tex": "braço P do registro interno"}
+    designacao_p = {"estudo1_comparador.tex": "arranjo ASR", "apendice_sensibilidade.tex": "braço ASR do registro interno"}
     for name in ("estudo1_comparador.tex", "apendice_sensibilidade.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
         assert "GZ-CMD v3.1" in text and designacao_p[name] in text

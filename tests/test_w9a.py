@@ -62,7 +62,7 @@ def test_sensibilidade_text_matches_csv_by_variant_and_metric():
     assert f"(AP) abaixo do corte caiu de {ap[0]} para {ap[1]}" in paragraph
     assert f"(AUC) aumentou de {auc[0]} para {auc[1]}" in paragraph
     assert "encurtou a cauda, mas piorou o topo" in paragraph
-    assert "não modifica o calibrador de P nem a hipótese fixada" in paragraph
+    assert "não modifica o calibrador de ASR nem a hipótese fixada" in paragraph
 
 
 @pytest.mark.parametrize("queue", ["F1", "F2", "F3", "F4", "A1", "A2"])
@@ -149,7 +149,7 @@ def test_fusion_interpretation_keeps_f1_exception_and_all_six_variants():
 
 def test_census_first_mentions_and_captions_are_self_contained():
     text = study()
-    union = next(p for p in text.split("\n\n") if r"na união $P\cup B1$" in p)
+    union = next(p for p in text.split("\n\n") if r"na união $\mathrm{ASR}\cup B1$" in p)
     assert "B1, ponte que mantém a probabilidade original" in union
     first_k2 = next(p for p in text.split("\n\n") if re.search(r"\bK2\b(?!\.\d)", p))
     assert "K2, soma das avaliações humanas e LLM" in first_k2
@@ -158,9 +158,9 @@ def test_census_first_mentions_and_captions_are_self_contained():
     for label, source, phrases in (
         ("tab:cap8-revisao-desempenho", appendix, ("Experimento 2 (Exp2, revisão assistida)",
                                                    "incluindo as saídas decisórias do motor", "versão histórica que solicita")),
-        ("tab:cap8-robustez-arranjo", text, ("P-Platt (análise de sensibilidade de P com", "P (arranjo sequencial", "reexecuções com outra")),
+        ("tab:cap8-robustez-arranjo", text, ("ASR-Platt (análise de sensibilidade de ASR com", "ASR (arranjo sequencial", "reexecuções com outra")),
         ("fig:cap8-curva-esforco", text, ("O1 ordena", "O2, pela nota", "O3, pela probabilidade", "O4, pela probabilidade",
-                                         "P é o arranjo sequencial", "sem falso positivo humano")),
+                                         "ASR é o arranjo sequencial", "sem falso positivo humano")),
     ):
         before = source.split(r"\label{" + label + "}", 1)[0]
         caption = before.rsplit(r"\caption{", 1)[1]

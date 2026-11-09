@@ -6,8 +6,13 @@ Não lê o extrato, não ajusta modelos e não executa chamadas externas.
 """
 from pathlib import Path
 import re
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.rotulos_apresentacao import ROTULO_BRACO  # noqa: E402
+
 TABLES = ROOT / "text/latex/tables"
 SUPPLEMENTAL = (
     "tab_cap8_revisores", "tab_e4_desempenho_faixas_oof", "tab_cap8_reruns",
@@ -16,7 +21,7 @@ SUPPLEMENTAL = (
 )
 EDITORIAL_TEMPLATES = ("tab_cap8_fusao_robustez", "tab_cap8_vies_referencia")
 
-P = "P: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
+P = "ASR: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
 PAR2 = "PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. "
 REFREC = "REFREC identifica o registro do SIM. "
 FUSION = ("F4: fusão por posição recíproca de O1 (escore do OpenRecLink) e O3 "
@@ -45,8 +50,8 @@ def add_note(text, note):
 # Ordem importa: as formas mais longas vêm antes das mais curtas.
 TERMINOLOGIA_REVISAO2 = (
     # P é o braço do registro interno, não o resultado principal (decisão D2 da autora, 2026-11-08)
-    ("P: arranjo principal, que preserva", "P: arranjo sequencial do registro interno, que preserva"),
-    ("P permanece o braço principal", "P permanece o braço do registro interno"),
+    ("P: arranjo principal, que preserva", "ASR: arranjo sequencial do registro interno, que preserva"),
+    ("P permanece o braço principal", "ASR permanece o braço do registro interno"),
     # FP de P reclassificados na referência: a classe é "par verdadeiro"
     ("FP reclassificados uniformemente como vínculos", "FP reclassificados uniformemente como pares verdadeiros"),
     # revisão manual (sem "revisão clerical")
@@ -120,9 +125,43 @@ def texttt_codigos(text):
     return re.sub(r"(?<![\\\w{_])((?:NON)?MATCH)(?![\w}])", r"\\texttt{\1}", text)
 
 
+# Renomeação P -> ASR (decisão da autora de 2026-11-08; ``docs/plans/PLANO_RENOMEAR_P.md``). No registro
+# interno e nos dados o arranjo continua ``P``; só o rótulo exibido muda, e só em contextos ancorados.
+# Nunca ``str.replace("P", ...)``: probabilidade, ``\label{...-P-...}``, caminhos e códigos de dados ficam.
+# Idempotente: ``ASR`` não casa com nenhuma regra. Variantes mais longas vêm antes das mais curtas.
+_ASR = ROTULO_BRACO["P"]
+_FIM_TOKEN = r"(?![\w-])"
+ROTULOS_BRACO_REGRAS = tuple((re.compile(padrao), novo) for padrao, novo in (
+    # variantes A2 e A3
+    (r"(?<![\w\\-])P-PAR2-grey" + _FIM_TOKEN, ROTULO_BRACO["P-PAR2-grey"]),
+    (r"(?<![\w\\-])P-Platt" + _FIM_TOKEN, ROTULO_BRACO["P-Platt"]),
+    # A5: ``P, \texttt{MATCH} ao humano`` troca só o P inicial
+    (r"(?<![\w\\-])P(?=, \\texttt\{MATCH\} ao humano)", _ASR),
+    # A1 em célula: ``P & ...`` no início da linha, ``... & P & ...`` e ``... & P \\``
+    (r"(?m)(?:^|(?<= & ))P(?= &| \\\\)", _ASR),
+    # A1 em rótulo de linha ou de grupo e em prosa de nota/legenda
+    (r"(\bArranjo sequencial )P" + _FIM_TOKEN, r"\1" + _ASR),
+    (r"(\bArranjo )P" + _FIM_TOKEN, r"\1" + _ASR),
+    (r"(\bbraço )P" + _FIM_TOKEN, r"\1" + _ASR),
+    (r"(?<![\w\\-])P(?= (?:vigil|confirm)\.)", _ASR),
+    (r"(?<![\w\\-])P(?=: arranjo sequencial)", _ASR),
+    (r"(\bsobre )P" + _FIM_TOKEN, r"\1" + _ASR),
+    (r"(\b(?:VPP|PAR~=~2) de )P" + _FIM_TOKEN, r"\1" + _ASR),
+    (r"(\bsensibilidade de )P(?= com\b)", r"\1" + _ASR),
+))
+
+
+def rotulos_braco(text):
+    """Troca o rótulo do arranjo (P) pelo de apresentação (ASR) só em contextos ancorados."""
+    for regra, novo in ROTULOS_BRACO_REGRAS:
+        text = regra.sub(novo, text)
+    return text
+
+
 def terminologia_revisao2(text):
     for old, new in TERMINOLOGIA_REVISAO2:
         text = text.replace(old, new)
+    text = rotulos_braco(text)
     text = CONTAGEM_CLASSE.sub(r"\1 pares verdadeiros", text)
     text = texttt_codigos(text)
     return CABECALHO_CLASSE.sub(lambda _: r"\shortstack{Pares\\verdadeiros}", text)
@@ -150,7 +189,7 @@ def transform(name, text):
         text = text.replace("nota final $v$ do comparador", "nota final $v$ do Comparador de Registros (CdR)")
         text = text.replace("nota final do CdR ($v$)", "nota final do Comparador de Registros (CdR), $v$")
         text = text.replace("área cinza ($5", "faixa intermediária da nota final do CdR ($5")
-    text = text.replace("sensibilidade com \\textit{Platt scaling}", "análise de sensibilidade de P com \\textit{Platt scaling}")
+    text = text.replace("sensibilidade com \\textit{Platt scaling}", "análise de sensibilidade de ASR com \\textit{Platt scaling}")
     text = text.replace("Numérico ($k/20$)", "Numérico")
     text = text.replace("Partição ($k/20$)", "Partição")
     text = text.replace("O3: \\texttt{p\\_cal\\_ml}", "O3: probabilidade calibrada do classificador na base inteira")
@@ -163,17 +202,17 @@ def transform(name, text):
         text = add_note(text, P + PAR2 +
             "B1: mantém a base inteira e a probabilidade original, substituindo apenas as proporções de erro do revisor. "
             "A3: restringe também o treinamento do classificador à região abaixo do corte. "
-            "P-PAR2-grey: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. "
-            "P-Platt: análise de sensibilidade de P com \\textit{Platt scaling} abaixo do corte. "
+            "ASR-PAR2-grey: estima a omissão do revisor somente nos pares verdadeiros PAR~=~2 e agrupa as faixas da nota final em $[5,9)$. "
+            "ASR-Platt: análise de sensibilidade de ASR com \\textit{Platt scaling} abaixo do corte. "
             "Braço \\textit{a posteriori}: cascata publicada aplicada abaixo do corte, sem recalibração. "
             "Viés de incorporação: uso, na construção da referência, das mesmas evidências avaliadas pelo método.")
     notes = {
         "tab_cap8_mesma_carga": P + PAR2 + "$k$: número de revisões humanas na ordenação. CdR: Comparador de Registros.",
         "tab_cap8_esforco": P + PAR2 + "O3: ordenação pela probabilidade calibrada do classificador na base inteira. A meta de recuperar os 36 pares verdadeiros é cenário, não carga observada.",
         "tab_cap8_fusao_robustez": FUSION,
-        "tab_cap8_robustez_arranjo": P + "P-Platt: análise de sensibilidade de P com \\textit{Platt scaling} abaixo do corte. "
-            "Numérico e Partição: réplicas com dominância de P-Platt sobre P, em 20 reexecuções de cada bloco. "
-            "Inversa: réplicas com dominância de P sobre P-Platt nos blocos numérico e de partição, respectivamente.",
+        "tab_cap8_robustez_arranjo": P + "ASR-Platt: análise de sensibilidade de ASR com \\textit{Platt scaling} abaixo do corte. "
+            "Numérico e Partição: réplicas com dominância de ASR-Platt sobre ASR, em 20 reexecuções de cada bloco. "
+            "Inversa: réplicas com dominância de ASR sobre ASR-Platt nos blocos numérico e de partição, respectivamente.",
         "tab_cap8_filtro_llm": PAR2 + "NONMATCH: decisão de não aceitar como vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pela probabilidade calibrada com o mesmo número de revisões humanas após o filtro. O topo de 440 pares não teve todas as respostas.",
         "tab_cap8_subamostragem": "A ordenação usa a probabilidade calibrada do classificador. A linha de referência corresponde ao treino sem subamostragem, não à referência operacional de pares verdadeiros.",
         "tab_cap8_ancoras": "Conjuntos âncora: potenciais pares de nota extrema usados para calibrar. CdR: Comparador de Registros.",
@@ -193,7 +232,7 @@ def transform(name, text):
         "tab_perfil_recuperados": "ML: aprendizado de máquina. Recuperados: vínculos detectados pelo Random Forest com SMOTE e não pelo limiar 8 da nota final do Comparador de Registros (CdR).",
         "tab_sensibilidade_qw1": "QW1: comparação de classificadores tabulares. A e B: partição por linha, respectivamente com e sem indicadores de óbito. C e D: partição agrupada por REFREC, respectivamente com e sem esses indicadores. " + REFREC,
         "tab_sensibilidade_2x2": REFREC + "A e B: partição por linha, com e sem indicadores de óbito; C e D: partição por REFREC, com e sem esses indicadores.",
-        "tab_cap8_vies_referencia": P + PAR2 + "C1: VPP de P inferior a 50\\%; C2: perdas de PAR~=~2 de P; C3: margem de O3 frente a O1 na meta de 23 pares verdadeiros; C4: vantagem de F4 frente a O1. O1: escore do OpenRecLink; O3: probabilidade calibrada. " + FUSION,
+        "tab_cap8_vies_referencia": P + PAR2 + "C1: VPP de ASR inferior a 50\\%; C2: perdas de PAR~=~2 de ASR; C3: margem de O3 frente a O1 na meta de 23 pares verdadeiros; C4: vantagem de F4 frente a O1. O1: escore do OpenRecLink; O3: probabilidade calibrada. " + FUSION,
     }
     if name == "tab_cap8_reruns":
         text = text.replace("Avaliação dos revisores no Exp2 segundo o dossiê e a versão do prompt.",

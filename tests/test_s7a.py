@@ -65,7 +65,7 @@ def test_cutoffs_remain_three_points_not_a_confidence_interval():
 def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     pt, en = abstracts()
     # Redação nova (revisão 2): a análise de sensibilidade com Platt scaling saiu do resumo; consta do Estudo 4.
-    assert r'análise de sensibilidade de P com \textit{Platt scaling}' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+    assert r'análise de sensibilidade de ASR com \textit{Platt scaling}' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
     assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     for path in fontes_tex(LATEX):
@@ -84,7 +84,7 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
 def test_conclusion_separates_registration_from_negative_finding_and_has_comparators():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
     # Conclusão reescrita: o registro interno de P é separado do resultado negativo (leitura posterior ao registro).
-    assert 'P teve registro interno anterior à avaliação, sem critério de sucesso, de modo que a leitura como resultado negativo é posterior' in text
+    assert 'ASR teve registro interno anterior à avaliação, sem critério de sucesso, de modo que a leitura como resultado negativo é posterior' in text
     assert 'a fixação anterior ao cálculo não constitui pré-registro' in text
     assert 'registrado antes da avaliação:' not in text
     assert text.count('pior em todo desfecho medido contra') == 0

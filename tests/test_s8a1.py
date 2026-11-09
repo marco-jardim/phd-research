@@ -121,7 +121,7 @@ def test_acceptances_split_true_and_false_and_match_to_human_comparator():
             assert 'Na confirmação, foram 27 pares verdadeiros perdidos e 4 falsos positivos' in text
         assert 'aceita 25 e 12 potenciais pares abaixo do corte que o serviço rejeitou' not in text
     text = same_load(pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv'))
-    assert 'P, \\texttt{MATCH} ao humano' in text
+    assert 'ASR, \\texttt{MATCH} ao humano' in text
     assert '344 (755)' in text
     assert 'revisor perfeito dos dois lados' in text
 

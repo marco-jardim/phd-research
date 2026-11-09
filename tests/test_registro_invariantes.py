@@ -205,7 +205,7 @@ def test_c07_reescrita_passa_e_inversao_falha(tmp_path, monkeypatch):
 
 
 def test_c02_reescrita_passa_e_inversao_falha(tmp_path, monkeypatch):
-    base = (r"A hipótese seria refutada se O3 não atingisse a recuperação de P com "
+    base = (r"A hipótese seria refutada se O3 não atingisse a recuperação de ASR com "
             r"pelo menos 25\% {} revisões que O1, pelo limite inferior do IC de 95\%.")
     assert _verificar(tmp_path, monkeypatch, base.format("menos"), "C02", "conclusao.tex") == []
     assert _verificar(tmp_path, monkeypatch, base.format("mais"), "C02", "conclusao.tex")

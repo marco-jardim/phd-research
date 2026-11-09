@@ -32,7 +32,7 @@ GLOSS_WORDS = {
     'O2': (('nota', 'final score'), ('comparador', 'cdr', 'comparator')),
     'O3': (('probabilidade', 'probability'), ('calibrada', 'isotônica', 'classificador', 'calibrated', 'classifier')),
     'O4': (('probabilidade', 'probability'), ('recalibrada', 'recalibração', 'recalibrated', 'recalibration')),
-    'P': (('corte', 'cut-off'), ('preserva', 'preservação', 'preservado', 'preserved',
+    'ASR': (('corte', 'cut-off'), ('preserva', 'preservação', 'preservado', 'preserved',
                                 'recalibração isotônica', 'isotonic recalibration')),
     'K1': (('humana', 'humano', 'data de nascimento exata', 'human', 'exact birth date'),),
     'K2': (('mista', 'misto', 'llm', 'mixed'), ('carga', 'orçamento', 'avaliações', 'load', 'budget', 'evaluations')),

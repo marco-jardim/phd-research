@@ -11,10 +11,10 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
     study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
     appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
     for text in (
-        "P foi dominado por P-Platt na avaliação original",
+        "ASR foi dominado por ASR-Platt na avaliação original",
         # Revisão 2 (D2): P é o braço do registro interno, não o "resultado principal".
-        "P é o braço do registro interno e não o resultado principal do capítulo",
-        "dominância de P-Platt sobre P não foi sustentada",
+        "ASR é o braço do registro interno e não o resultado principal do capítulo",
+        "dominância de ASR-Platt sobre ASR não foi sustentada",
         "7/20", "4/20", "5/20", "0/20", "20/20", "19/20",
         "0,427", "0,65",
         "16,0\\%", "9,06 FP", "66,7\\%", "57,1\\%",
@@ -25,7 +25,7 @@ def test_main_arm_robustness_and_method_deviations_are_explicit():
         r"\ref{tab:cap8-robustez-arranjo}",
     ):
         assert text in study, text
-    assert "P permanece o resultado principal do registro interno" not in study
+    assert "ASR permanece o resultado principal do registro interno" not in study
     # Revisão 2: custos das chamadas e suplemento foram para o apêndice do Estudo 4.
     for text in ("US\\$~0,6255", "US\\$~0,8703", "O suplemento, com 69 potenciais pares"):
         assert text in appendix, text
@@ -54,7 +54,7 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     assert "coorte nova com referência cega" in conclusion
     hypothesis = conclusion.split(r"\label{sec:concl-trabalhos-futuros}")[1].split("\n\n")[1]
     assert "A hipótese exige outra coorte ou período" in hypothesis
-    assert "se a ordenação pela probabilidade calibrada (O3) não atingisse a recuperação obtida por P" in hypothesis
+    assert "se a ordenação pela probabilidade calibrada (O3) não atingisse a recuperação obtida por ASR" in hypothesis
     assert r"25\% menos revisões que a ordenação pelo escore do OpenRecLink (O1)" in hypothesis
     assert "limite inferior" in hypothesis
     assert "em cada uma das duas metas" in hypothesis

@@ -8,8 +8,8 @@
 \toprule
 Decisão & Pred.$+$ & VP & FP & FN & Sens. & VPP & Espec. & Rejeições \\
 \midrule
-Arranjo P (vigil.) & 236 & 215 & 21 & 32 & 87{,}0 & 91{,}1 & 99{,}97 & 3/26 \\
-Arranjo P (confirm.) & 223 & 219 & 4 & 28 & 88{,}7 & 98{,}2 & 99{,}99 & 2/26 \\
+Arranjo ASR (vigil.) & 236 & 215 & 21 & 32 & 87{,}0 & 91{,}1 & 99{,}97 & 3/26 \\
+Arranjo ASR (confirm.) & 223 & 219 & 4 & 28 & 88{,}7 & 98{,}2 & 99{,}99 & 2/26 \\
 Base inteira v3.1 (vigil., comparação) & 228 & 194 & 34 & 53 & 78{,}5 & 85{,}1 & 99{,}94 & 6/28 \\
 Base inteira v3.1 (confirm., comparação) & 132 & 132 & 0 & 115 & 53{,}4 & 100{,}0 & 100{,}00 & 1/21 \\
 \bottomrule
@@ -18,7 +18,7 @@ Base inteira v3.1 (confirm., comparação) & 132 & 132 & 0 & 115 & 53{,}4 & 100{
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{llrrrr}
 \toprule
-Dimensão & Métrica & P vigil. & P confirm. & Base inteira vigil. (comparação) & Base inteira confirm. (comparação) \\
+Dimensão & Métrica & ASR vigil. & ASR confirm. & Base inteira vigil. (comparação) & Base inteira confirm. (comparação) \\
 \midrule
 Sexo & Sens. & 2{,}4 & 0{,}1 & 4{,}4 & 10{,}0 \\
 Sexo & VPP & 7{,}0 & 3{,}9 & 3{,}9 & 0{,}0 \\
@@ -39,7 +39,7 @@ Completude & VPP & n.a. & n.a. & n.a. & n.a. \\
 \bottomrule
 \end{tabular}}
 \par\smallskip
-\begin{minipage}{\linewidth}\footnotesize FN inclui todos os pares verdadeiros não aceitos automaticamente, inclusive os encaminhados ao revisor humano; não corresponde apenas a \texttt{NONMATCH}. BH é aplicada separadamente por decisão aos valores de $p$ definidos, após excluir comparações com denominador menor que 30 em qualquer grupo. Ausência de rejeição não demonstra paridade; pares com o mesmo REFREC são dependentes e os testes não ajustam essa correlação. A comparação entre decisões não é um teste formal. A referência operacional compartilha o corte e os dados de treinamento, com ressalvas de verificação e incorporação. A referência histórica de 7.452 preditos positivos pertence ao corte 6,0 da nota final, não ao corte do escore OpenRecLink nem ao braço P.\end{minipage}
+\begin{minipage}{\linewidth}\footnotesize FN inclui todos os pares verdadeiros não aceitos automaticamente, inclusive os encaminhados ao revisor humano; não corresponde apenas a \texttt{NONMATCH}. BH é aplicada separadamente por decisão aos valores de $p$ definidos, após excluir comparações com denominador menor que 30 em qualquer grupo. Ausência de rejeição não demonstra paridade; pares com o mesmo REFREC são dependentes e os testes não ajustam essa correlação. A comparação entre decisões não é um teste formal. A referência operacional compartilha o corte e os dados de treinamento, com ressalvas de verificação e incorporação. A referência histórica de 7.452 preditos positivos pertence ao corte 6,0 da nota final, não ao corte do escore OpenRecLink nem ao braço ASR.\end{minipage}
 \par\footnotesize Fonte: \path{data/equidade_arranjo_global.csv}, \path{data/equidade_arranjo_maxdiff.csv} e \path{data/equidade_arranjo_den30_pairwise_tests.csv}. Universo: 61.696 potenciais pares e 247 pares verdadeiros. Os denominadores são os pares verdadeiros na sensibilidade e os positivos preditos no VPP. As rejeições exigem pelo menos 30 observações em cada denominador, antes de Benjamini-Hochberg por decisão. FN inclui pares verdadeiros encaminhados ao revisor humano, não somente decisões \texttt{NONMATCH}.
-\par\footnotesize P: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
+\par\footnotesize ASR: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
 \end{table}

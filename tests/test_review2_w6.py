@@ -67,7 +67,7 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
     assert r"limite inferior do intervalo de 95\% entre partições predefinidas" in criterion
     assert "em cada uma das duas metas" in criterion
     assert "os 23 PAR~=~2 da vigilância e os nove da confirmação" in criterion
-    assert "P supera O3 por um par verdadeiro na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
+    assert "ASR supera O3 por um par verdadeiro na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
     assert "de 9 a 21 perdas na vigilância e de 21 a 29 na confirmação" in criterion
     assert "Nenhuma dessas avaliações foi realizada" in criterion
     for name in ("defesa.tex", "roteiro_defesa.md"):
@@ -178,7 +178,7 @@ def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
         "O3": ("probabilidade calibrada fora da amostra do classificador",
                "probabilidade isotônica fora da amostra",
                "out-of-sample calibrated probability"),
-        "O4": ("probabilidade recalibrada de P", "recalibrated probability of P"),
+        "O4": ("probabilidade recalibrada de ASR", "recalibrated probability of ASR"),
     }
     # Forma de definição usada na conclusão: "ordenação pela probabilidade calibrada fora da amostra (O3)".
     definitions_conclusion = dict(definitions, O3=definitions["O3"] + ("probabilidade calibrada fora da amostra (O3)",))

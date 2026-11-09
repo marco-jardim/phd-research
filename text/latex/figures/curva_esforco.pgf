@@ -282,14 +282,14 @@
 \pgfsetlinewidth{0.35pt}
 \pgfpathmoveto{\pgfpoint{6.64303cm}{1.98056cm}}
 \pgfpathlineto{\pgfpoint{0.35000cm}{2.58000cm}}\pgfusepath{stroke}
-\pgftext[left,at={\pgfpoint{0.35000cm}{2.70000cm}}]{\scriptsize P vig.: (96, 23), 21 FP, +344 LLM}
+\pgftext[left,at={\pgfpoint{0.35000cm}{2.70000cm}}]{\scriptsize ASR vig.: (96, 23), 21 FP, +344 LLM}
 \color{red}
 \pgfsetdash{}{0pt}
 \pgfpathcircle{\pgfpoint{4.12351cm}{0.77500cm}}{2pt}\pgfusepath{fill}
 \pgfsetlinewidth{0.35pt}
 \pgfpathmoveto{\pgfpoint{4.12351cm}{0.77500cm}}
 \pgfpathlineto{\pgfpoint{6.30000cm}{0.18000cm}}\pgfusepath{stroke}
-\pgftext[left,at={\pgfpoint{6.30000cm}{0.30000cm}}]{\scriptsize P conf.: (17, 9), 4 FP, +41 LLM}
+\pgftext[left,at={\pgfpoint{6.30000cm}{0.30000cm}}]{\scriptsize ASR conf.: (17, 9), 4 FP, +41 LLM}
 \color{gray}
 \pgfsetdash{}{0pt}
 \pgfpathmoveto{\pgfpoint{0.00cm}{-1.00cm}}
@@ -309,7 +309,7 @@
 \pgfsetdash{{4pt}{1.5pt}{1pt}{1.5pt}}{0pt}
 \pgfpathmoveto{\pgfpoint{5.90cm}{-1.38cm}}
 \pgfpathlineto{\pgfpoint{6.35cm}{-1.38cm}}\pgfusepath{stroke}
-\pgftext[left,at={\pgfpoint{6.45000cm}{-1.38000cm}}]{\scriptsize O4: probabilidade recalibrada de P}
+\pgftext[left,at={\pgfpoint{6.45000cm}{-1.38000cm}}]{\scriptsize O4: probabilidade recalibrada de ASR}
 \color{black}
 \pgfsetdash{}{0pt}
 \pgftext[at={\pgfpoint{5.70000cm}{-1.80000cm}}]{\scriptsize Eixo x limitado a 2.522 revisões}

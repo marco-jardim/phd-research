@@ -28,7 +28,7 @@ def test_step11_note_distinguishes_maximum_difference_from_pairwise_tests():
     note = step_ppv_note(maximum, groups, tests)
     assert 'não para os testes pareados de VPP' in note
     assert 'que incluem o passo 11' in note
-    labels = {'arranjo_P_vigilancia': 'Arranjo P (vigil.)', 'arranjo_P_confirmacao': 'Arranjo P (confirm.)',
+    labels = {'arranjo_P_vigilancia': 'Arranjo ASR (vigil.)', 'arranjo_P_confirmacao': 'Arranjo ASR (confirm.)',
               'cascata_v31_vigilancia': 'Base inteira v3.1 (vigil., comparação)',
               'cascata_v31_confirmacao': 'Base inteira v3.1 (confirm., comparação)'}
     for decision, label in labels.items():
@@ -169,14 +169,14 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     # menos 95% nos passos 6 e 9 consta do Estudo 5; o resumo traz o passo 11 e a ausência de dominância.
     study4 = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'que preserva o corte e decide os demais potenciais pares pela política v3.1, com recalibração isotônica abaixo do corte' in study4
-    assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling}' in study4
+    assert r'ASR-Platt (análise de sensibilidade de ASR com \textit{Platt scaling}' in study4
     # QA final: o Resumo relata o arranjo P pelos pares verdadeiros aceitos (215 dos 247: 211 pelo corte e 4 abaixo).
-    assert 'o arranjo P, que preserva o corte, aceitou 215 dos 247 pares verdadeiros' in pt
-    assert 'arrangement P, with the cut-off preserved, accepted 215 of 247 true pairs' in en
+    assert 'o arranjo ASR, que preserva o corte, aceitou 215 dos 247 pares verdadeiros' in pt
+    assert 'arrangement ASR, with the cut-off preserved, accepted 215 of 247 true pairs' in en
     assert 'pelo menos 95,0' in (LATEX / 'estudo5_equidade.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
-    assert 'a sensibilidade automática de P na vigilância foi de 42,5\\%: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
-    assert 'the automatic sensitivity of P in surveillance was 42.5\\%: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
+    assert 'a sensibilidade automática de ASR na vigilância foi de 42,5\\%: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
+    assert 'the automatic sensitivity of ASR in surveillance was 42.5\\%: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
     assert 'pois nenhuma dominou em todas as cargas' in pt
     assert 'since no ordering was dominant in every workload' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')

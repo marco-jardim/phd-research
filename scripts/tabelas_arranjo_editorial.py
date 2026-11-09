@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo as equity
 from scripts import tabela_referencia_arranjo as reference
-from scripts.tabelas_persona_editorial import transform
+from scripts.tabelas_persona_editorial import rotulos_braco, transform
 
 
 def replace_once(text, old, new):
@@ -36,7 +36,8 @@ def step_ppv_note(maximum, groups, tests):
         if not (paired.group_a.eq("passo_11") | paired.group_b.eq("passo_11")).any():
             raise ValueError("O passo 11 não aparece nos testes pareados do CSV")
         status = "incluído" if int(step.n_pred_pos) >= equity.legacy.N_MIN else "excluído"
-        parts.append(f"{label}: {int(row.n_grupos_den_ge_30)} de {int(row.n_grupos_elegiveis)} grupos; "
+        # A chave de dados e LABELS históricos dizem P; a nota exibida diz ASR.
+        parts.append(f"{rotulos_braco(label)}: {int(row.n_grupos_den_ge_30)} de {int(row.n_grupos_elegiveis)} grupos; "
                      f"passo 11 {status}, com {int(step.n_pred_pos)} preditos positivos")
     return (" A diferença máxima de VPP por passo exige pelo menos "
             f"{equity.legacy.N_MIN} preditos positivos por grupo. " + "; ".join(parts) +
@@ -52,6 +53,9 @@ def render_reference(referencia, arranjo, cascata, carga):
     ceiling = reference.inteiro(totals.loc["por_passo", "total_abaixo_corte"])
     changes = [
         ("scripts/tabela_referencia_arranjo.py", "scripts/tabelas_arranjo_editorial.py"),
+        # O arranjo é o braço do registro interno, não o resultado principal (decisão D2 da autora, 2026-11-08).
+        (r"\multicolumn{8}{l}{\textit{Resultado principal}}", r"\multicolumn{8}{l}{\textit{Braço do registro interno}}"),
+        ("arranjo sequencial (resultado principal)", "arranjo sequencial (braço do registro interno)"),
         ("Corte + revisão manual do serviço & ambos & n.d.",
          "Corte + revisão manual do serviço & ambos & cenário $\\geq " + lower + "$"),
         (f"Corte + revisão humana integral (cenário) & ambos & até {ceiling}",
@@ -71,7 +75,7 @@ def render_reference(referencia, arranjo, cascata, carga):
          r"Zero FP acima do corte também decorre do \textit{label}."),
         ("revisão do serviço incorporada ao rótulo", r"revisão do serviço incorporada ao \textit{label}"),
         ("n.a.: não se aplica.",
-         "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica."),
+         "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para ASR. n.a.: não se aplica."),
         ("registro prévio versionado no repositório, com emendas e suplemento, não a registro público",
          r"registro interno versionado antes da avaliação com os \textit{labels} (S3), com emendas e suplemento"),
         (r"Fontes: \path{data/referencia_comparador_pos_orl.csv}",

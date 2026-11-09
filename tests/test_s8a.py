@@ -38,11 +38,11 @@ def test_editorial_tables_regenerate_and_historical_numeric_cells_stay(tmp_path)
             assert rows(actual) == rows(historical)
     robust = (tmp_path / 'tab_cap8_robustez_arranjo.tex').read_text(encoding='utf-8')
     assert 'Numérico' in robust and 'Partição' in robust
-    assert 'P ($k/20$)' not in robust
+    assert 'ASR ($k/20$)' not in robust
     assert 'Modo & Numérico & Partição & Inversa (num.; part.) & Classificação' in robust
     assert '(réplicas/20)' not in robust
     assert 'em 20 reexecuções de cada bloco' in robust
-    assert 'Inversa: réplicas com dominância de P sobre P-Platt' in robust
+    assert 'Inversa: réplicas com dominância de ASR sobre ASR-Platt' in robust
 
 
 def test_same_load_rows_and_effort_are_generated_from_versioned_artifacts():
@@ -74,7 +74,7 @@ def test_fp_position_and_loss_qualification_follow_sources():
     # Conclusão reescrita: as perdas e as aceitações do LLM mudaram de redação; os detalhes por região ficam no Estudo 4.
     assert '13 não foram recuperados' in conclusion
     assert 'foram 27 pares verdadeiros perdidos e 4 falsos positivos' in conclusion
-    assert 'o LLM fez todas as 25 aceitações de P abaixo do corte, das quais 4 eram pares verdadeiros e 21 eram falsos positivos' in conclusion
+    assert 'o LLM fez todas as 25 aceitações de ASR abaixo do corte, das quais 4 eram pares verdadeiros e 21 eram falsos positivos' in conclusion
     assert 'dez falsos positivos situados em região sem revisão documentada' in conclusion
     assert contem(study, 'não reproduz 13 e 27 dos 36 pares verdadeiros recuperados pela revisão manual de origem', arquivo='text/latex/estudo4_gzcmd.tex')
     assert 'aceita, pelo LLM, 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in study
@@ -128,7 +128,7 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         assert '42,5' in text or '42.5' in text
         # P-Platt saiu do resumo (consta do Estudo 4).
         assert 'MATCH' in text
-        assert 'P-Platt' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+        assert 'ASR-Platt' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
         assert 'preregistered' not in text and 'intervals overlapping' not in text
 
 
@@ -162,9 +162,11 @@ def test_frozen_code_sha256s_are_not_relaxed():
 
 
 def test_effort_figure_uses_the_same_generator_as_slides(tmp_path):
-    from scripts.figura_curva_esforco import generate
+    from scripts.figura_curva_esforco import ARM_SLIDES, ARM_THESIS, generate
     target = tmp_path / 'curva.pgf'
     generate(ROOT / 'data/comparador_mesma_carga_curva.csv',
-             ROOT / 'data/comparador_mesma_carga.csv', target)
+             ROOT / 'data/comparador_mesma_carga.csv', target, ARM_THESIS)
     assert target.read_bytes() == (L / 'figures/curva_esforco.pgf').read_bytes()
+    generate(ROOT / 'data/comparador_mesma_carga_curva.csv',
+             ROOT / 'data/comparador_mesma_carga.csv', target, ARM_SLIDES)
     assert target.read_bytes() == (ROOT / 'text/slides/figures/curva_esforco.pgf').read_bytes()

@@ -31,16 +31,16 @@ def test_persona_blockers_in_bilingual_summaries_and_ceiling():
     for fragment in ('preservando os vínculos aceitos pelo corte',
                      'recuperados abaixo do corte pela revisão manual de origem',
                      'O LLM fez todas as aceitações abaixo do corte',
-                     'sensibilidade automática de P na vigilância'):
+                     'sensibilidade automática de ASR na vigilância'):
         # migrado: terminologia 3.6
         assert contem(pt, fragment, arquivo='text/latex/tese.tex') if 'vínculo' in fragment else fragment in pt
     for fragment in ('preserving the links accepted by the cut-off',
                      'recovered below the cut-off by the original manual review',
                      'The LLM made all acceptances below the cut-off',
-                     "the automatic sensitivity of P in surveillance"):
+                     "the automatic sensitivity of ASR in surveillance"):
         assert fragment in en
     estudo4 = text('estudo4_gzcmd.tex')
-    assert 'P-Platt (análise de sensibilidade de P com \\textit{Platt scaling}' in estudo4
+    assert 'ASR-Platt (análise de sensibilidade de ASR com \\textit{Platt scaling}' in estudo4
     assert 'Revisor de referência, ancoragem e cascata na base inteira' in estudo4
     assert 'decomposição por PAR' not in pt
     assert 'PAR decomposition' not in en
@@ -68,7 +68,7 @@ def test_conclusion_disambiguates_collisions_without_changing_recommendation():
     assert not re.search(r'(?<![\w.])K[1-4](?![\w.])', source)
     assert 'comparador sem recalibração' not in source
     assert 'comparador de mesma carga' not in source
-    assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling}' in text('estudo4_gzcmd.tex')
+    assert r'ASR-Platt (análise de sensibilidade de ASR com \textit{Platt scaling}' in text('estudo4_gzcmd.tex')
     assert 'de 22, na execução única sem subamostragem, para medianas de 13 e 18,5' in source
     assert 'partição por linha, com indicadores de óbito' in text('apendice_estrategias.tex')
     assert 'partição original do QW1' in text('glossario.tex')
