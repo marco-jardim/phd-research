@@ -130,6 +130,9 @@ def transform(name, text):
     # Aplica a terminologia antes das notas, para que add_note reconheça notas já presentes
     # na fonte histórica com a redação antiga e não as duplique.
     text = terminologia_revisao2(text)
+    if name == "tab_cap8_cascata_v31":
+        # Os rótulos da revisão 2 (pares verdadeiros, \texttt{}) alargam a primeira coluna; fonte menor só aqui.
+        text = text.replace("\\footnotesize\n\\setlength{\\tabcolsep}{3pt}", "\\scriptsize\n\\setlength{\\tabcolsep}{3pt}", 1)
     text = text.replace("grupo A menos grupo B", "grupo 1 menos grupo 2")
     text = text.replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2")
     if name in ("tab_ablation_top10", "tab_ablation_best_category", "tab_qw1_deep_learning", "tab_cv_5fold",

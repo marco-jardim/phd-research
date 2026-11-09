@@ -111,6 +111,7 @@ def test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade(tm
     # Guia 3.6: MATCH e NONMATCH entre \texttt{} (só marcação; nenhuma célula numérica muda).
     from scripts.tabelas_persona_editorial import texttt_codigos
     expected = texttt_codigos(expected)
+    expected = expected.replace("\\footnotesize\n\\setlength{\\tabcolsep}{3pt}", "\\scriptsize\n\\setlength{\\tabcolsep}{3pt}", 1)
     assert (tmp_path / names[-1]).read_text(encoding="utf-8") == expected
     for file in ("estudo4_gzcmd.tex", "estudo5_equidade.tex"):
         chapter = (ROOT / "text/latex" / file).read_text(encoding="utf-8")
