@@ -1111,11 +1111,12 @@
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"]], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
 
 - id: C15
-  descricao: "Estudo 1: as implementações Java e Python do CdR não são equivalentes, e os subescores analisados são os da implementação Python"
+  descricao: "Estudo 1: o Python corrige erros de implementação do protótipo Java e diverge de Lucena em pontos documentados; a equivalência não foi demonstrada e o efeito em dados reais não foi medido; os subescores analisados são os da implementação Python. Classificação por tipo (erros do Java, divergências de critério em relação a Lucena, melhorias do Python), em lugar de 'sem eleger uma implementação como correta'"
   tipo: afirmacao
-  aprovado_por_autora: "2026-11-08"
+  aprovado_por_autora: "2026-11-08, revisada (Java x Python por tipo)"
   ocorrencias:
-    - {arquivo: text/latex/estudo1_comparador.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "subescores"], exige_algum: ["não são equivalentes", "não equivalentes", "não é equivalente", "não equivalem", "não foi demonstrad", "não demonstrad"]}
+    - {arquivo: text/latex/estudo1_comparador.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "subescores", "erros de implementação", "Lucena", "não foi medido"], exige_algum: ["não são equivalentes", "não foi demonstrada", "não foi demonstrado"]}
+    - {arquivo: text/latex/capitulo2.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "erros de implementação", "Lucena", "não foi medido"], exige_algum: ["não foi demonstrada", "não foi demonstrado"]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "subescores"], exige_algum: ["não são equivalentes", "não equivalentes", "não é equivalente", "não equivalem", "não foi demonstrad", "não demonstrad"]}
 
 - id: C16

@@ -135,7 +135,7 @@ def test_encerramento_aggregate_is_complete_and_contains_no_pair_rows():
 
 def test_limiar_rules_and_comparator_neutrality_are_explicit():
     e1, e3 = study(1), study(3)
-    assert "não elege uma implementação como a correta" in e1
+    assert "corrige erros de implementação do protótipo Java" in e1  # revisão 2: C15 revista pela autora (Java x Python por tipo)
     # estudo1 revisado (revisão 2): "peso" qualificado como peso de concordância (guia 3.6)
     assert "afastamento do Python em relação ao peso de concordância 0,8" in e1
     assert "núcleo metodológico" not in e1

@@ -58,7 +58,7 @@ EXPECTED_NEGATIONS = {
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
     "A ordenação dos classificadores depende da métrica": [1, 1, 1, 0, 0, 2],  # QA final: seis frases
-    "As duas implementações não são equivalentes": [1, 1],  # QA final: parágrafo dividido pela Subseção de limitações (sec:e1-limitacoes)
+    "As duas implementações não são equivalentes": [1, 2, 1],  # C15 revista (2026-11-08): frase dos erros do Java, equivalência não demonstrada e efeito não medido
 }
 
 
