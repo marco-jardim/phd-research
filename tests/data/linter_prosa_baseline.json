@@ -1,121 +1,21 @@
 {
-  "gerado_em": "2026-11-08T21:37:54",
+  "gerado_em": "2026-11-08T22:27:26",
   "versao": 2,
   "violacoes": {
-    "09b6aac80528": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "aixa corresponde à região abaixo do corte do OpenRecLink. A área cinza da nota designa outra região, o intervalo $[5,9)$ da nota f"
-    },
-    "0b8224dec3e1": {
-      "arquivo": "text/latex/apendice_algoritmo.tex",
-      "regra": "R02",
-      "trecho": "enRecLink e GZ-CMD v3.1 (política de quatro ações: vínculo, não vínculo, revisão por modelo de linguagem e revisão humana), resulta"
-    },
-    "0bacf55e5c9e": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de"
-    },
-    "0c1b9d60f15a": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "óbito custe mais que investigar um falso vínculo, embora um falso vínculo também possa levar ao encerramento indevido de um caso (Seç"
-    },
-    "0c9cd140d6f6": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "\\qquad UNSURE & 58 (9) & 31 (6) & 16 (8) & 3 (3) \\\\ \\qquad NONMATCH & 1.237 (14) & 283 (7) & 329 (10) & 17 (1) \\\\ \\quad Humano"
-    },
-    "0f8b0a952411": {
-      "arquivo": "text/latex/apendice_sensibilidade.tex",
-      "regra": "R02",
-      "trecho": "ge}, também denominado relacionamento de registros (\\textit{record linkage}), a avaliação de potenciais pares não equivale à avaliação"
-    },
-    "11dbc59f9a35": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "am do aprendizado de máquina na classificação de pares e na revisão clerical, e da avaliação desses classificadores. \\begin{table}[htbp"
-    },
-    "12345928ebfb": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "r $p = P(y=1\\mid s)$, onde $y=1$ denota um vínculo (\\textit{match}). Neste apêndice, $s$ denota somente o escore bruto a cali"
-    },
-    "15ad6f7ef40b": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "são clerical abaixo do corte. CdR: Comparador de Registros. Área cinza da nota: nota do CdR em $[5,9)$. \\end{table}"
-    },
-    "1a1c70f4382b": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "ao humano no denominador. A especificidade mede ausência de falso vínculo automático, não acerto humano; preservam-se três casas deci"
-    },
-    "1a962e1680c5": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "de máquina'' OR supervised) AND (Brasil OR Brazil OR SIM OR SINAN OR DATASUS) \\end{quote} Para avaliar a sensibilidade da ca"
-    },
     "1ac529738fef": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_vies_referencia.tex",
       "regra": "R02",
       "trecho": "a mudança na grade com 5\\% dos PAR~=~2 retirados; com 20\\%, perdas esperadas de 10,4 e 21,6. \\\\ C3: margem de 25\\% de O3 frente a O1, me"
-    },
-    "1c12bd331d13": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "& 0 & 0 & 51,4 & 70 & 120 & n.a. \\\\ CdR, revisão humana da área cinza da nota & ambos & 21.620 & 0 & 37,7 & 2 & 3 & 95,7 \\\\ \\bott"
-    },
-    "1d82a7f32b90": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "LLM e humano direto particionam cada faixa. MATCH, UNSURE e NONMATCH subdividem apenas o ramo LLM. O subtotal humano soma humano"
     },
     "1ea69a7972a1": {
       "arquivo": "text/latex/tables/editorial/tab_nb03_precision.tex",
       "regra": "R06",
       "trecho": "o.} \\label{tab:nb03-precision} \\renewcommand{\\arraystretch}{1.15} \\small \\begin{tabular}{@{}llcccc@{}} \\toprule \\textbf{Mode"
     },
-    "1f3bd00c126f": {
-      "arquivo": "text/latex/apendice_pacote.tex",
-      "regra": "R03",
-      "trecho": "tes de pós-processamento de potenciais pares produzidos por \\textit{linkage}, também denominado relacionamento de registros (\\textit{rec"
-    },
-    "220d8c9a2cfe": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "lerical} & 2020 & Internacional & Aprendizado de máquina na revisão clerical \\\\ \\citeonline{Jiao2021hybrid} & 2021 & Internacional & \\te"
-    },
-    "233310bde1bc": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": "esize Recuperação pressupõe revisor perfeito após o filtro. MATCH e UNSURE vão ao humano. Somente orçamentos com cobertura co"
-    },
     "2420bfde2672": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R02",
       "trecho": "lidade. 7. Vigilância em saúde. 8. Modelos de linguagem. 9. Área cinza. I. Pinheiro, Rejane Sobrino, orient. II. Universidade Fede"
-    },
-    "246efc5ffdd7": {
-      "arquivo": "text/latex/tables/editorial/tab_qw1_deep_learning.tex",
-      "regra": "R02",
-      "trecho": "iação interna (\\textit{holdout}, 30\\%). Valores de F$_1$, precisão e sensibilidade referem-se à classe positiva (vínculo). O"
-    },
-    "3026082aac89": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "revisor somente nos vínculos PAR~=~2 e agrupa as faixas da área cinza da nota. P-Platt: análise de sensibilidade de P com \\textit"
-    },
-    "319c5b298537": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": "clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pe"
-    },
-    "3270b5af6c91": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex",
-      "regra": "R02",
-      "trecho": "{Efeito da calibração sobre a decisão por custo esperado na área cinza da nota do CdR ($5\\leq v<9$; 21.620 pares, 151 vínculos), p"
     },
     "36c0b73a2e59": {
       "arquivo": "text/latex/siglas.tex",
@@ -127,46 +27,6 @@
       "regra": "R02",
       "trecho": "v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem). As tabelas deste apênd"
     },
-    "3c363860a06a": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "notesize $V_A$: vínculos aceitos automaticamente, inclusive MATCH do modelo de linguagem (LLM); $V_N$: vínculos perdidos por"
-    },
-    "3d8d740a6158": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "A} = \\{a_M, a_N, a_R\\}$, correspondendo a vincular (\\textit{Match}), não vincular (\\textit{Non-match}) e revisar (\\textit{Rev"
-    },
-    "3dbef5c3507b": {
-      "arquivo": "text/latex/apendice_algoritmo.tex",
-      "regra": "R02",
-      "trecho": "\\label{alg:gzcmd-pipeline} A política v3 distingue vínculo, não vínculo e revisão por modelo de linguagem de grande porte (LLM); v3"
-    },
-    "43e0c9a0efa8": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "$(93+0{,}95\\times151)/247$. As células com humano, salvo a revisão clerical de origem incorporada ao \\textit{label}, exibem o cenário d"
-    },
-    "440110243aa6": {
-      "arquivo": "text/latex/apendice_sensibilidade.tex",
-      "regra": "R03",
-      "trecho": "dos principais como registro dos experimentos originais. No \\textit{linkage}, também denominado relacionamento de registros (\\textit{rec"
-    },
-    "44f05419f403": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "pondendo a vincular (\\textit{Match}), não vincular (\\textit{Non-match}) e revisar (\\textit{Review}), respectivamente. As proposiç"
-    },
-    "4858628832a1": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "4). Para os três passos exportados, a ordem entre o CdR e a revisão clerical não está documentada na monografia, e a disponibilidade da"
-    },
-    "49d52ac1a830": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "ar inferior)} \\] Declara-se vínculo se $R\\ge T_\\mu^{GZ}$ e não-vínculo se $R\\le T_\\lambda^{GZ}$, com revisão estritamente ótima em"
-    },
     "4ec562b2910a": {
       "arquivo": "text/latex/apendice_prompts.tex",
       "regra": "R06",
@@ -177,35 +37,10 @@
       "regra": "R06",
       "trecho": "forte. \\end{verbatim} } \\subsection*{Agent-B} {\\fontsize{4.5}{6}\\selectfont \\begin{verbatim} Você é o Agent-B. Analise"
     },
-    "51af9026528d": {
-      "arquivo": "text/latex/tables/editorial/tab_e4_desempenho_faixas_oof.tex",
-      "regra": "R02",
-      "trecho": "5; 0,983)} & \\shortstack{0,978\\\\(0,923; 0,994)} \\\\ \\midrule Área cinza & 21.620 & 151 & 0,995 & 0,862 & 0,0022 & 119 & 28 & 32 & \\"
-    },
-    "52cf21f0f9d3": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. v3.1 distingue revisão humana da rev"
-    },
-    "583c47ec0bf8": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex",
-      "regra": "R02",
-      "trecho": "ibrar. CdR: Comparador de Registros; $v$: sua nota final. A área cinza da nota não é a região abaixo do corte do OpenRecLink. \\end"
-    },
-    "5a050db1f394": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "ara os passos probabilísticos, registra a revisão manual da área cinza sem nomear a ferramenta (p.~34). Para os três passos export"
-    },
     "5a132a0248cc": {
       "arquivo": "text/latex/tables/editorial/tab_qw2_confusion.tex",
       "regra": "R02",
       "trecho": "sion} \\begin{tabular}{llrrrl} \\toprule Modo & Classe real & MATCH & NONMATCH & Total & Protocolo \\\\ \\midrule Vigilância & Pos"
-    },
-    "5adda133bb7f": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "ior) e $T_\\mu$ (superior), que minimizam a probabilidade de revisão clerical para níveis fixos de erro $\\mu$ (falso positivo) e $\\lambda"
     },
     "5b716dcb8672": {
       "arquivo": "text/latex/tese.tex",
@@ -217,220 +52,45 @@
       "regra": "R02",
       "trecho": "M/U/N} & \\shortstack{Ablação\\\\M/U/N} & \\shortstack{FN para\\\\MATCH} & \\shortstack{FN para\\\\UNSURE} & \\shortstack{McNemar\\\\$p$}"
     },
-    "6147369d16fb": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R03",
-      "trecho": "m classificadores supervisionados como pós-processamento do \\textit{linkage} probabilístico. Este apêndice documenta a base empírica des"
-    },
-    "61a68e952575": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. B1: mantém a base inteira e a probabilidad"
-    },
-    "63d194bc5a0b": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "do modelo de linguagem (LLM); $V_N$: vínculos perdidos por NONMATCH; $H$: potenciais pares ao revisor humano, com vínculos $V_H"
-    },
-    "65344ea7d546": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "& 94,7 \\\\ \\midrule \\multicolumn{10}{l}{\\textbf{Vigilância: área cinza da nota $[5,9)$}} \\\\ (i) Corte & 123 & 81,5 & 0 (0) & 28 &"
-    },
-    "658cf5e17faf": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "M. ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. v3.1 distingue revisão"
-    },
-    "66652c290ae9": {
-      "arquivo": "text/latex/tables/editorial/tab_e4_desempenho_faixas_oof.tex",
-      "regra": "R02",
-      "trecho": "Entre parênteses, IC de Wilson de 95\\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. Fon"
-    },
-    "688497d76565": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "ge}, também denominado relacionamento de registros (\\textit{record linkage}), é o domínio do levantamento, e o objeto de interesse são"
-    },
     "68eff5c336b3": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R05",
       "trecho": "Antônio e Marco muitas vezes estiveram no meu colo enquanto eu escrevia, programava ou rodava simulações. Perguntavam o qu"
-    },
-    "69117ea11fa8": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_esforco.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. O3: ordenação pela probabilidade calibrada"
-    },
-    "6a7bec354684": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "o corte. Vínculos perdidos são apenas os classificados como não-vínculo, excluindo encaminhamentos pendentes. (e) A revisão da área"
-    },
-    "6b36a172b73f": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "estimadas. Essa formulação internaliza o compromisso entre precisão e sensibilidade (controlado pela razão $C_{FP}/C_{FN}$) e a"
     },
     "6bee384dcb97": {
       "arquivo": "text/latex/tables/editorial/tab_blocagem_rendimento.tex",
       "regra": "R02",
       "trecho": "ta final é calculada sobre todas as linhas de cada passo. A área cinza da nota corresponde à nota final do Comparador de Registros"
     },
-    "6c16d3c69097": {
-      "arquivo": "text/latex/tables/editorial/tab_equidade_arranjo_grupos_vigilancia.tex",
-      "regra": "R02",
-      "trecho": "age}{\\linewidth}\\footnotesize A aceitação automática inclui MATCH do motor ou do modelo de linguagem; UNSURE e DEFERRED segue"
-    },
-    "6c9ea62b5be5": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "lhor desempenho do LightGBM & Brasil (Espírito Santo); SIM, SIH-SUS, Sinan e e-SUS VS \\\\ \\bottomrule \\multicolumn{5}{p{13.2cm}}"
-    },
-    "6d112b478aeb": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "\\\\ \\qquad UNSURE & 3 (3) & 0 (0) & 9 (9) & 3 (3) \\\\ \\qquad NONMATCH & 5 (5) & 0 (0) & 11 (10) & 7 (5) \\\\ \\quad Humano direto &"
-    },
     "726561ca0d71": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R02",
       "trecho": "se. Mortalidade. Vigilância em saúde. Modelos de linguagem. Área cinza."
-    },
-    "766d4fab8c5e": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "o fluxo de registros. O \\textit{linkage}, também denominado relacionamento de registros (\\textit{record linkage}), é o domínio do levantamento, e o"
-    },
-    "7980755cbf0b": {
-      "arquivo": "text/latex/tables/editorial/tab_den30_equidade_arranjo.tex",
-      "regra": "R02",
-      "trecho": "los encaminhados ao revisor humano, não somente decisões de não vínculo. \\par\\footnotesize P: arranjo principal, que preserva o cor"
-    },
-    "7b7156830768": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "s 6, 9 e 11, não estão documentados a ordem entre o CdR e a revisão clerical, a data da revisão, o pré-processamento dos campos e o que"
     },
     "7d261cbb148d": {
       "arquivo": "text/latex/siglas.tex",
       "regra": "R08",
       "trecho": "Ambulatoriais do Sistema Único de Saúde \\\\[6pt] SIH-SUS & Sistema de Informações Hospitalares do Sistema Único de Saúde \\\\[6pt] SIM & Sistema de Informação sob…"
     },
-    "802d36f78493": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_sensibilidade_humana.tex",
-      "regra": "R02",
-      "trecho": "g. & P & 96 & 96 & 94{,}35 & 94{,}66 & 94{,}74 \\\\ Vig. & P, MATCH ao humano & 121 & 121 & 94{,}27 & 94{,}64 & 94{,}74 \\\\ Vig."
-    },
-    "81cc9bebc3ea": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "(0) \\\\ \\quad LLM & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\\\ \\qquad MATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\\\ \\qquad UNSURE & 0 (0) &"
-    },
     "841f05c4291e": {
       "arquivo": "text/latex/apendice_busca.tex",
       "regra": "R06",
       "trecho": "agem.} \\label{tab:busca-fluxo} \\renewcommand{\\arraystretch}{0.95} \\begin{tabular}{>{\\raggedright\\arraybackslash}p{2.3cm}>{\\r"
-    },
-    "89ea40ac8978": {
-      "arquivo": "text/latex/apendice_algoritmo.tex",
-      "regra": "R02",
-      "trecho": "min\\{L_M, L_N, L_H, L_L\\}$, com desempate na ordem vínculo, não-vínculo, humano e LLM \\ENDFOR \\medskip \\STATE \\textbf{Fase 4: Orça"
     },
     "8ae24a09dc84": {
       "arquivo": "text/latex/apendice_prompts.tex",
       "regra": "R06",
       "trecho": "justo. \\end{verbatim} } \\subsection*{Arbiter} {\\fontsize{4.5}{6}\\selectfont \\begin{verbatim} Você é o Árbitro. Dois re"
     },
-    "8c8681ed58a8": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_mesma_carga.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. $k$: número de revisões humanas na ordenaç"
-    },
     "8d01e343a04f": {
       "arquivo": "text/latex/tables/editorial/tab_nb03_precision.tex",
       "regra": "R02",
       "trecho": "cripts/run\\_nb03\\_uniform.py}). AUC-PR (área sob a curva de precisão e sensibilidade, independente de limiar): XGBoost~0,982; Li"
     },
-    "8f7ae75ee845": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": "s na revisão clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: orden"
-    },
-    "91524a0dba7c": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "\\\\ \\qquad UNSURE & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\\\ \\qquad NONMATCH & 0 (0) & 0 (0) & 0 (0) & 0 (0) \\\\ \\quad Humano direto & 0"
-    },
-    "9299df43f839": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_tamanho_modelo.tex",
-      "regra": "R02",
-      "trecho": "}{!}{ \\begin{tabular}{lrrrrrr} \\toprule Modelo & V1: $n$ & MATCH & FP & VPP (\\%) & V2: $n$ & Recuperados/descartados/UNSURE"
-    },
-    "9a2aa83da6ef": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "s ALWAYS, AUTO, LLM e humano direto particionam cada faixa. MATCH, UNSURE e NONMATCH subdividem apenas o ramo LLM. O subtotal"
-    },
-    "9ae39f837802": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_tamanho_modelo.tex",
-      "regra": "R02",
-      "trecho": "nal: 1, vínculo aceito pelo corte; 2, vínculo recuperado na revisão clerical abaixo do corte; 0, demais potenciais pares. \\end{table}"
-    },
-    "9cbaaf68900f": {
-      "arquivo": "text/latex/tables/tab_desempenho_faixas.tex",
-      "regra": "R02",
-      "trecho": "inida (sem vínculos ou sem predições positivas na faixa). A área cinza corresponde às faixas de 5 a 9. Fonte: \\texttt{data/desempe"
-    },
-    "9eb6053459fa": {
-      "arquivo": "text/latex/apendice_sensibilidade.tex",
-      "regra": "R02",
-      "trecho": "erimentos originais. No \\textit{linkage}, também denominado relacionamento de registros (\\textit{record linkage}), a avaliação de potenciais pares"
-    },
-    "a161b0ca628e": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "\\ \\quad LLM & 22 (22) & 0 (0) & 58 (57) & 14 (12) \\\\ \\qquad MATCH & 14 (14) & 0 (0) & 38 (38) & 4 (4) \\\\ \\qquad UNSURE & 3 (3"
-    },
-    "a36c92099603": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. CdR: Comparador de Registros. Área cinza d"
-    },
     "a3a4d7c4f78d": {
       "arquivo": "text/latex/siglas.tex",
       "regra": "R08",
       "trecho": "s Hospitalares do Sistema Único de Saúde \\\\[6pt] SIM & Sistema de Informação sobre Mortalidade \\\\[6pt] Sinan & Sistema de Informação de Agravos de Noti"
-    },
-    "ac5979d36f27": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "ção vinculante é $p \\ge 1 - C_{LLM}/C_{FP}$. \\item \\textbf{Não-vínculo} ($a_N$): Analogamente, a condição vinculante é $p \\le C_{L"
-    },
-    "b386fc8e4323": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "rda ao contexto de aplicação. \\subsection{Revisão Humana e Não Vínculo sob Orçamento} Esta derivação é exclusivamente teórica e n"
-    },
-    "b3bd1033259d": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "ínculos referentes a pessoas diferentes, por ela denominada área cinza (p.~34); nesta tese, essa faixa corresponde à região abaixo"
-    },
-    "ba5cbf131b93": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": "{table}[!htbp] \\centering\\scriptsize \\caption{Filtro LLM de NONMATCH antes do revisor humano: análise exploratória. $k$ é a fila"
-    },
-    "bba7b9c69586": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "dições subótimas na atenção primária do Rio de Janeiro, com revisão clerical extensiva, e \\citeonline{Morsoleto2025infant} combinam apre"
-    },
-    "c0f61e99fc36": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "culo, excluindo encaminhamentos pendentes. (e) A revisão da área cinza da nota do CdR é cenário com aceitação de notas $\\geq9$ e d"
     },
     "c127c6200a74": {
       "arquivo": "text/latex/apendice_prompts.tex",
@@ -442,35 +102,10 @@
       "regra": "R02",
       "trecho": "DataPop, agradeço pela preparação do extrato pós-CdR e pela revisão clerical que deu origem à referência operacional deste trabalho. A L"
     },
-    "c1fe7d53d67e": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "revisor somente nos vínculos PAR~=~2 e agrupa as faixas da área cinza da nota. P-Platt: análise de sensibilidade de P com \\textit"
-    },
-    "c2e8cb02bb65": {
-      "arquivo": "text/latex/apendice_algoritmo.tex",
-      "regra": "R02",
-      "trecho": "algorithm}: política v3.1 do GZ-CMD (quatro ações: vínculo, não vínculo, revisão por modelo de linguagem de grande porte, LLM, e re"
-    },
     "c620d4e59a78": {
       "arquivo": "text/latex/apendice_prompts.tex",
       "regra": "R06",
       "trecho": "} } \\subsection*{Modo em lote: instrução JSON} {\\fontsize{4.5}{6}\\selectfont \\begin{verbatim} CRITICAL: Output ONLY the"
-    },
-    "c765335386e1": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "e perder o vínculo de um óbito custe mais que investigar um falso vínculo, embora um falso vínculo também possa levar ao encerramento"
-    },
-    "cc9e066a686c": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "ado. Admitam-se apenas as ações revisar e não vincular, com perdas esperadas $C_H$ e $C_{FN}p_i$, respectivamente. Sem restrição de orça"
-    },
-    "cdc6ad57f539": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": ": registro do SIM. ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. v3.1"
     },
     "cde17be87d5d": {
       "arquivo": "text/latex/tables/editorial/tab_qw2_confusion.tex",
@@ -482,130 +117,15 @@
       "regra": "R05",
       "trecho": "-00. Joyce, minha esposa, preparava pratos e pães enquanto eu estudava, cuidava das crianças e me encorajava. Foi também"
     },
-    "d1748fa71868": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
-      "regra": "R02",
-      "trecho": "e isolado & ambos & 0 & 0 & 85,4 & 0 & 36 & n.a. \\\\ Corte + revisão clerical de origem & ambos & cenário $\\geq 2.156$ & 0 & 85,4 & 0 & 0"
-    },
-    "d253b08ee2a0": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "sem revisão humana & 35 & 34 & 6 & 0 \\\\ Vínculos perdidos (NONMATCH) & 91 & 15 & 130 & 28 \\\\ Vínculos encaminhados ao humano &"
-    },
-    "d28722ad92cc": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": "a.csv}.} \\par\\footnotesize PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: v"
-    },
-    "d49170b662af": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. B1: mantém a base inteira e a probabilidad"
-    },
     "d7d8b9fc579b": {
       "arquivo": "text/latex/apendice_ablacao.tex",
       "regra": "R02",
       "trecho": "mentes e média $\\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, $F_1$ e $F_\\beta$ são esperadas, calculadas"
     },
-    "dab229a22013": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
-      "regra": "R02",
-      "trecho": ": vínculos recuperados na revisão clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: vínculo; UNSURE: inconclusi"
-    },
-    "dc42124d39a5": {
-      "arquivo": "text/latex/tables/tab_desempenho_faixas.tex",
-      "regra": "R02",
-      "trecho": "Entre parênteses, IC de Wilson de 95\\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. n.d"
-    },
-    "df0ec4877962": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_ablacao_dossie.tex",
-      "regra": "R02",
-      "trecho": "); U: \\texttt{UNSURE} (inconclusivo); N: \\texttt{NONMATCH} (não-vínculo). FN: falsos negativos do braço controle, não da execução o"
-    },
-    "e0296f1cf12f": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
-      "regra": "R02",
-      "trecho": "LLM & 1.388 (82) & 347 (28) & 377 (44) & 30 (14) \\\\ \\qquad MATCH & 93 (59) & 33 (15) & 32 (26) & 10 (10) \\\\ \\qquad UNSURE &"
-    },
-    "e12726fa3c8d": {
-      "arquivo": "text/latex/tables/editorial/tab_den30_equidade_arranjo.tex",
-      "regra": "R02",
-      "trecho": "os encaminhados ao revisor humano; não corresponde apenas a NONMATCH. BH é aplicada separadamente por decisão aos valores de $p$"
-    },
-    "e37b289acb6d": {
-      "arquivo": "text/latex/tables/editorial/tab_equidade_arranjo_grupos_confirmacao.tex",
-      "regra": "R02",
-      "trecho": "age}{\\linewidth}\\footnotesize A aceitação automática inclui MATCH do motor ou do modelo de linguagem; UNSURE e DEFERRED segue"
-    },
-    "e38f0e143b74": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_ancoras_beta.tex",
-      "regra": "R02",
-      "trecho": "table}[!ht] \\centering \\footnotesize \\caption{Calibração na área cinza definida pela nota do comparador ($5\\leq v<9$; 21.620 poten"
-    },
-    "e9e6757bc52f": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "upervisionado) AND (Brasil OR Brazil OR Brazilian OR SIM OR SINAN OR DATASUS) \\end{quote} O período considerado foi de 2010"
-    },
-    "eb435aa74789": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "trata separadamente da restrição às ações revisão humana e não vínculo. Sejam $C_{FP}>0$ e $C_{FN}>0$ os custos unitários de um f"
-    },
-    "ebbc4bddb5ab": {
-      "arquivo": "text/latex/apendice_pacote.tex",
-      "regra": "R02",
-      "trecho": "is pares produzidos por \\textit{linkage}, também denominado relacionamento de registros (\\textit{record linkage}), com vistas à classificação e ao"
-    },
     "eccc5c2ec6eb": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R05",
       "trecho": "u rodava simulações. Perguntavam o que eu estava fazendo, e eu tentava explicar um assunto tão complexo para crianças tão"
-    },
-    "f05623efb9aa": {
-      "arquivo": "text/latex/apendice_pacote.tex",
-      "regra": "R02",
-      "trecho": "ge}, também denominado relacionamento de registros (\\textit{record linkage}), com vistas à classificação e ao encaminhamento para revi"
-    },
-    "f075460d5d29": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_vies_referencia.tex",
-      "regra": "R02",
-      "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. C1: VPP de P inferior a 50\\%; C2: perdas d"
-    },
-    "f43fc133d8bf": {
-      "arquivo": "text/latex/apendice_busca.tex",
-      "regra": "R02",
-      "trecho": "tic} & 2022 & México & Modelo de Fellegi e Sunter com e sem revisão clerical \\\\ \\citeonline{Foxcroft2024classratio} & 2024 & Internacion"
-    },
-    "f45b694f3fef": {
-      "arquivo": "text/latex/apendice_formalizacao.tex",
-      "regra": "R02",
-      "trecho": "a, sem revisão nos empates, declara vínculo se $R\\ge R^*$ e não-vínculo se $R<R^*$. Em $C_{LLM}=H$, o intervalo aberto de revisão é"
-    },
-    "f628797f2669": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_sensibilidade_humana.tex",
-      "regra": "R02",
-      "trecho": ". & P & 17 & 17 & 89{,}05 & 89{,}06 & 89{,}07 \\\\ Conf. & P, MATCH ao humano & 29 & 29 & 88{,}89 & 89{,}03 & 89{,}07 \\\\ Conf."
-    },
-    "fbe7c75db59c": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
-      "regra": "R02",
-      "trecho": "& 89,4 \\\\ \\midrule \\multicolumn{10}{l}{\\textbf{Confirmação: área cinza da nota $[5,9)$}} \\\\ (i) Corte & 123 & 81,5 & 0 (0) & 28 &"
-    },
-    "fd2861c30f16": {
-      "arquivo": "text/latex/tables/editorial/tab_cap8_mesma_carga.tex",
-      "regra": "R02",
-      "trecho": "tos pelo LLM não recebem desconto por erro humano; em P com MATCH ao humano, todos os recuperáveis passam pelo humano. O1 a O"
-    },
-    "ff4441f3f5ee": {
-      "arquivo": "text/latex/apendice_linkage_origem.tex",
-      "regra": "R02",
-      "trecho": "campos e da nota final no Comparador de Registros (CdR) e a revisão clerical que originou os PAR~=~2 (vínculos recuperados abaixo do cor"
-    },
-    "ff81e2d8240d": {
-      "arquivo": "text/latex/tables/editorial/tab_e4_desempenho_faixas_oof.tex",
-      "regra": "R02",
-      "trecho": "os e falsos negativos com \\texttt{p\\_cal\\_ml} $\\geq 0{,}5$. Área cinza: $5\\leq v<9$. Entre parênteses, IC de Wilson de 95\\% para s"
     }
   }
 }

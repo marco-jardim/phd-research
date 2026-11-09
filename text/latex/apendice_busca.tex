@@ -1,7 +1,7 @@
 \chapter{Protocolo de busca bibliográfica sobre classificação de pares de \textit{linkage}}
 \label{ap:protocolo-busca}
 
-A justificativa desta tese afirma que são escassos, no contexto brasileiro, os estudos que empregam classificadores supervisionados como pós-processamento do \textit{linkage} probabilístico. Este apêndice documenta a base empírica dessa afirmação, isto é, a busca realizada em 3 de novembro de 2026, complementada pela Scopus em 4 de novembro de 2026, com as bases consultadas, as cadeias de busca, os critérios de seleção e o fluxo de registros. O \textit{linkage}, também denominado relacionamento de registros (\textit{record linkage}), é o domínio do levantamento, e o objeto de interesse são os estudos que classificam potenciais pares com um classificador treinado em pares rotulados. A busca não constitui uma revisão sistemática com protocolo registrado, pois a triagem foi conduzida por um único revisor, sem leitura na íntegra dos textos; seu propósito é registrar a base empírica da afirmação de escassez, e não estimar a produção total sobre o tema. Os registros, as cadeias exatas, as datas e as decisões de triagem do levantamento inicial encontram-se em \texttt{data/protocolo\_busca\_T6.csv}, e a coleta no PubMed e no OpenAlex pode ser repetida com o \textit{script} \texttt{scripts/protocolo\_busca\_T6.py}, que regera o arquivo a partir dos dados brutos versionados em \texttt{data/}.
+A justificativa desta tese afirma que são escassos, no contexto brasileiro, os estudos que empregam classificadores supervisionados como pós-processamento do \textit{linkage} (relacionamento de registros) probabilístico. Este apêndice documenta a base empírica dessa afirmação, isto é, a busca realizada em 3 de novembro de 2026, complementada pela Scopus em 4 de novembro de 2026, com as bases consultadas, as cadeias de busca, os critérios de seleção e o fluxo de registros. O \textit{linkage} é o domínio do levantamento, e o objeto de interesse são os estudos que classificam potenciais pares com um classificador treinado em pares rotulados. A busca não constitui uma revisão sistemática com protocolo registrado, pois a triagem foi conduzida por um único revisor, sem leitura na íntegra dos textos; seu propósito é registrar a base empírica da afirmação de escassez, e não estimar a produção total sobre o tema. Os registros, as cadeias exatas, as datas e as decisões de triagem do levantamento inicial encontram-se em \texttt{data/protocolo\_busca\_T6.csv}, e a coleta no PubMed e no OpenAlex pode ser repetida com o \textit{script} \texttt{scripts/protocolo\_busca\_T6.py}, que regera o arquivo a partir dos dados brutos versionados em \texttt{data/}.
 
 \section{Bases consultadas}
 
@@ -19,14 +19,14 @@ A cadeia principal combina três blocos, em português e inglês, para o domíni
 
 \begin{quote}
 \small
-(``record linkage'' OR ``relacionamento de registros'' OR ``pareamento probabilístico'') AND (``machine learning'' OR ``aprendizado de máquina'' OR supervised) AND (Brasil OR Brazil OR SIM OR SINAN OR DATASUS)
+(``record linkage'' OR ``relacionamento de registros'' OR ``pareamento probabilístico'') AND (``machine learning'' OR ``aprendizado de máquina'' OR supervised) AND (Brasil OR Brazil OR SIM OR \texttt{SINAN} OR DATASUS)
 \end{quote}
 
 Para avaliar a sensibilidade da cadeia principal, foi executada uma cadeia ampliada, que acrescenta variantes de nomenclatura do \textit{linkage} e do aprendizado supervisionado:
 
 \begin{quote}
 \small
-(``record linkage'' OR ``data linkage'' OR ``relacionamento de registros'' OR ``relacionamento probabilístico'' OR ``linkage probabilístico'' OR ``pareamento de registros'' OR ``pareamento probabilístico'') AND (``machine learning'' OR ``aprendizado de máquina'' OR supervised OR supervisionado) AND (Brasil OR Brazil OR Brazilian OR SIM OR SINAN OR DATASUS)
+(``record linkage'' OR ``data linkage'' OR ``relacionamento de registros'' OR ``relacionamento probabilístico'' OR ``linkage probabilístico'' OR ``pareamento de registros'' OR ``pareamento probabilístico'') AND (``machine learning'' OR ``aprendizado de máquina'' OR supervised OR supervisionado) AND (Brasil OR Brazil OR Brazilian OR SIM OR \texttt{SINAN} OR DATASUS)
 \end{quote}
 
 O período considerado foi de 2010 a 2026. No PubMed, as cadeias foram aplicadas sem rótulos de campo, de modo que o sistema as traduziu por mapeamento automático de termos, o que amplia a recuperação e também admite ruído, pois a sigla SIM e o termo \textit{supervised} são mapeados para vocabulários alheios ao tema; por isso foram executadas variantes restritas a título e resumo e uma variante sem restrição de país, para referência internacional. No OpenAlex, as cadeias foram aplicadas em título e resumo (filtro \texttt{title\_and\_abstract.search}) e também no parâmetro \texttt{search}, que inclui o texto integral quando indexado; como a interface limita o número de operadores booleanos, a cadeia ampliada nesse parâmetro foi reduzida aos termos novos. A Tabela~\ref{tab:busca-fluxo} apresenta cada consulta e o número de registros recuperados; as cadeias exatas, os filtros, as \textit{URL} da primeira página e o número de páginas de cada coleta no OpenAlex constam do arquivo de registros.
@@ -113,13 +113,13 @@ Autores & Ano & Base de recuperação & Método & País e base de dados \\
 \citeonline{Pita2017trainable} & 2017 & OpenAlex e Scopus & Árvore de decisão, \textit{naïve Bayes}, regressão logística, Random Forest, SVM linear e \textit{gradient boosting} & Brasil; base não detalhada no resumo (incluído com ressalva) \\
 \citeonline{Pereira2024supervised} & 2024 & OpenAlex & Random Forest, LightGBM, XGBoost e redes neurais & Brasil; dados do SUS \\
 \citeonline{Paiva2025comparador} & 2025 & Item conhecido & Árvore de decisão & Brasil; SIM e Sinan-TB \\
-\citeonline{Lages2026trauma} & 2026 & OpenAlex e Consensus & Seis algoritmos, com melhor desempenho do LightGBM & Brasil (Espírito Santo); SIM, SIH-SUS, Sinan e e-SUS VS \\
+\citeonline{Lages2026trauma} & 2026 & OpenAlex e Consensus & Seis algoritmos, com melhor desempenho do LightGBM & Brasil (Espírito Santo); SIM, SIH/SUS, Sinan e e-SUS VS \\
 \bottomrule
 \multicolumn{5}{p{13.2cm}}{\footnotesize Fonte: \texttt{data/protocolo\_busca\_T6.csv}.}
 \end{tabular}
 \end{table}
 
-A Tabela~\ref{tab:busca-relacionados} reúne os estudos relacionados que não atendem ao critério estrito, mas que delimitam o entorno do tema, entre eles os que o Consensus apontou. Do lado brasileiro, \citeonline{Coeli2021suboptimal} descrevem o \textit{linkage} em condições subótimas na atenção primária do Rio de Janeiro, com revisão clerical extensiva, e \citeonline{Morsoleto2025infant} combinam aprendizado de máquina e \textit{entity matching} em dados do SUS para a predição da mortalidade infantil. Do lado internacional, os estudos tratam do aprendizado de máquina na classificação de pares e na revisão clerical, e da avaliação desses classificadores.
+A Tabela~\ref{tab:busca-relacionados} reúne os estudos relacionados que não atendem ao critério estrito, mas que delimitam o entorno do tema, entre eles os que o Consensus apontou. Do lado brasileiro, \citeonline{Coeli2021suboptimal} descrevem o \textit{linkage} em condições subótimas na atenção primária do Rio de Janeiro, com revisão manual extensiva, e \citeonline{Morsoleto2025infant} combinam aprendizado de máquina e \textit{entity matching} em dados do SUS para a predição da mortalidade infantil. Do lado internacional, os estudos tratam do aprendizado de máquina na classificação de pares e na revisão manual, e da avaliação desses classificadores.
 
 \begin{table}[htbp]
 \centering
@@ -136,9 +136,9 @@ Autores & Ano & Origem & Tema \\
 \citeonline{Coeli2021suboptimal} & 2021 & Brasil & \textit{Linkage} em condições subótimas na atenção primária do Rio de Janeiro; conjunto de pares revisados \\
 \citeonline{Morsoleto2025infant} & 2025 & Brasil & Aprendizado de máquina e \textit{entity matching} em dados do SUS para a mortalidade infantil \\
 \citeonline{McNutt2020comparison} & 2020 & Estados Unidos & Aprendizado supervisionado versus \textit{linkage} probabilístico; texto integral não conferido \\
-\citeonline{Shahriar2020clerical} & 2020 & Internacional & Aprendizado de máquina na revisão clerical \\
+\citeonline{Shahriar2020clerical} & 2020 & Internacional & Aprendizado de máquina na revisão manual \\
 \citeonline{Jiao2021hybrid} & 2021 & Internacional & \textit{Linkage} probabilístico combinado a aprendizado de máquina \\
-\citeonline{QuezadaSanchez2022probabilistic} & 2022 & México & Modelo de Fellegi e Sunter com e sem revisão clerical \\
+\citeonline{QuezadaSanchez2022probabilistic} & 2022 & México & Modelo de Fellegi e Sunter com e sem revisão manual \\
 \citeonline{Foxcroft2024classratio} & 2024 & Internacional & Razão de classes no treinamento e desempenho do classificador \\
 \citeonline{Rochner2024machine} & 2024 & Internacional & Aprendizado de máquina para reduzir o esforço manual em registros de câncer \\
 \citeonline{Powers2025recovering} & 2025 & Internacional & \textit{Linkage} assistido por aprendizado de máquina frente à classificação manual \\

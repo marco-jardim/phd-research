@@ -6,7 +6,7 @@
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lrrrrrr}
 \toprule
-Modelo & V1: $n$ & MATCH & FP & VPP (\%) & V2: $n$ & Recuperados/descartados/UNSURE \\
+Modelo & V1: $n$ & \texttt{MATCH} & FP & VPP (\%) & V2: $n$ & Recuperados/descartados/UNSURE \\
 \midrule
 Claude Haiku 5.5 & 25 & 25 & 21 & 16,0 & 13 & 0/6/7 \\
 Claude Sonnet 5.5 & 21 & 21 & 17 & 19,0 & 7 & 1/2/4 \\
@@ -27,5 +27,5 @@ Claude Fable 5.1 & 41 & 72,7 & 0,818/0,900 & 0,1082 & ND \\
 \bottomrule
 \end{tabular}}
 \par\footnotesize Fonte: \path{data/probe_frontier_agregado.csv}, \path{data/probe_frontier_custos.csv} e \path{data/probe_frontier_metadata.json}. V1: 25 aceitações históricas do Haiku na vigilância; V2: 13 PAR~=~2 não aceitos por ele; V3: 24 PAR~=~0 com decisões discordantes entre Haiku e Sonnet; V4: amostra de 88 dos 282 potenciais pares restantes da vigilância. $n$ indica resultados disponíveis, não tamanho original do estrato; ausências não são UNSURE. Haiku e Sonnet: passada histórica; Opus e Fable: passada principal. $\kappa$ entre a passada de referência e uma réplica, nos casos completos comuns: vigilância/confirmação (V/C), com 137/38 pares para Haiku e 62/41 para Opus e Fable; sem réplica Sonnet. ND: não disponível. Custos estimados por decisão final válida, incluindo pilotos, falhas e réplicas no numerador e contando novamente as decisões de réplicas no denominador; Haiku probe por lote, Opus/Fable por lote e acesso direto, históricos por acesso direto. Não são comparação controlada de tarifas nem fatura.
-\par\footnotesize PAR é a classificação da referência operacional: 1, vínculo aceito pelo corte; 2, vínculo recuperado na revisão clerical abaixo do corte; 0, demais potenciais pares.
+\par\footnotesize PAR é a classificação da referência operacional: 1, vínculo aceito pelo corte; 2, par verdadeiro recuperado na revisão manual de origem abaixo do corte; 0, demais potenciais pares.
 \end{table}

@@ -100,16 +100,16 @@ def historical_tables(out):
             r"\path{scripts/robustness_analysis.py}. Cinco partições dos 61.696 potenciais pares, "
             r"com 247 vínculos; reamostragem restrita ao treinamento. Média e desvio-padrão entre partições, "
             r"não intervalo de confiança da diferença pareada.",
-        "tab_score_bands.tex": r"Total: 61.696 potenciais pares, 247 vínculos. "
+        "tab_score_bands.tex": r"Total: 61.696 potenciais pares, 247 pares verdadeiros. "
             r"Fonte agregada: \path{data/tab_score_bands_proveniencia.csv}. "
-            r"Vínculo significa PAR igual a 1 ou 2.",
+            r"Par verdadeiro significa PAR igual a 1 ou 2.",
     }
     for name, source in sources.items():
         text = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
         if name == "tab_cv_5fold.tex":
             text = re.sub(r"\\textbf\{([^{}]*)\}", r"\1", text)
         if name == "tab_score_bands.tex":
-            text = text.replace(r"Total & Pares & \% Pares", r"Total & Vínculos & \% Vínculos")
+            text = text.replace(r"Total & Pares & \% Pares", r"Total & Pares verdadeiros & \% pares verdadeiros")
             text = re.sub(r"(?<![0-9])([0-9]+),([0-9]{2})(?![0-9])",
                           lambda m: number(float(m[0].replace(",", ".")), 1), text)
         write(name, note(text, source), out)

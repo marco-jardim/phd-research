@@ -5,7 +5,7 @@
 \setlength{\tabcolsep}{3pt}
 \resizebox{\linewidth}{!}{\begin{tabular}{lllrrrrrrr}
 \toprule
-Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & h poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\
+Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & h poupadas & \shortstack{Horas poupadas\\por par verdadeiro perdido} & h/FP \\
 \midrule
 Vig. & P & K1 & 96 & 344 & 23 & 32 & 687 & 53 & 2 \\
 Vig. & O3 & K1 & 96 & 0 & 22 & 32 & 687 & 49 & n.a. \\
@@ -17,6 +17,6 @@ Conf. & P & K2 & 17 & 41 & 9 & 6 & 713 & 26 & 1 \\
 Conf. & O3 & K2 & 58 & 0 & 20 & 19 & 699 & 44 & n.a. \\
 \bottomrule
 \end{tabular}}
-\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de P na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}
-\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. O3: ordenação pela probabilidade calibrada do classificador na base inteira. A meta de recuperar os 36 vínculos é cenário, não carga observada.
+\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 pares verdadeiros, meta distinta dos 23 de P na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em P, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros. h/FP: horas de revisão divididas pelos FP automáticos, não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}
+\par\footnotesize P: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. O3: ordenação pela probabilidade calibrada do classificador na base inteira. A meta de recuperar os 36 pares verdadeiros é cenário, não carga observada.
 \end{table}

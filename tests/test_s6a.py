@@ -60,7 +60,10 @@ def test_arrangement_editorial_preserves_every_number():
     assert numeric(arrangement_expected_notes(original)) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
-    assert contem(current, 'área cinza da nota', arquivo='text/latex/tables/editorial/tab_cap8_arranjo_corte.tex')  # migrado: terminologia 3.6
+    # Revisão 2: [5,9) é a "faixa intermediária da nota final"; "área cinza" fica só para a região abaixo do corte.
+    arquivo = 'text/latex/tables/editorial/tab_cap8_arranjo_corte.tex'
+    assert contem(current, r'faixa intermediária da nota final $[5,9)$', arquivo=arquivo)
+    assert 'área cinza' not in current and 'grey area' not in current
 
 
 def test_workload_hours_reproduce_source_and_historical_time_assumption(tmp_path):

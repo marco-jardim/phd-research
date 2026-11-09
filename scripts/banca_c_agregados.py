@@ -175,7 +175,7 @@ def render_qw2(rows):
         "tab_qw2_llm_comparison.tex": table(
             "Desempenho de Kimi K2.5 na execução anterior da revisão assistida "
             "de pares residuais, por modo de operação.", "tab:qw2-llm-comparison", "lrrrrrr",
-            r"Modo & $n$ & Precis\~ao & Sensibilidade & $F_1$ & Especif. & Acur\'acia \\",
+            r"Modo & $n$ & VPP & Sensibilidade & $F_1$ & Especif. & Acur\'acia \\",
             metrics),
     }
 

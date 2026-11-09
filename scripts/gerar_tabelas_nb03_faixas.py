@@ -148,7 +148,7 @@ def tabela_faixas() -> None:
         r"\begin{table}[htbp]",
         r"\centering",
         r"\caption{Desempenho do RF+SMOTE e do \textit{Gradient Boosting} por faixa da nota final do comparador, no conjunto de teste "
-        f"({n_teste} potenciais pares; {n_vinc} vínculos), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, "
+        f"({n_teste} potenciais pares; {n_vinc} pares verdadeiros), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, "
         r"limiar de decisão 0,5, selecionado entre 0,3, 0,5 e 0,7 no conjunto de teste da ablação "
         r"(Apêndice~\ref{sec:cap5-ablacao-pareto}), e semente 42.}",
         r"\label{tab:desempenho-faixas}",
@@ -158,7 +158,7 @@ def tabela_faixas() -> None:
         r"\toprule",
         r"& & & \multicolumn{3}{c}{RF+SMOTE} & \multicolumn{3}{c}{\textit{Gradient Boosting}} \\",
         r"\cmidrule(lr){4-6} \cmidrule(l){7-9}",
-        r"Faixa & Pares & Vínculos & VP/FP/FN & Sensib. & Prec. & VP/FP/FN & Sensib. & Prec. \\",
+        r"Faixa & Pares & \shortstack{Pares\\verdadeiros} & VP/FP/FN & Sensib. & VPP & VP/FP/FN & Sensib. & VPP \\",
         r"\midrule",
     ]
     for faixa in ordem:
@@ -179,9 +179,9 @@ def tabela_faixas() -> None:
         r"\vspace{2pt}",
         r"\par\footnotesize Nota: VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos. "
         r"Faixas fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. "
-        r"Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. "
-        r"n.d.: razão não definida (sem vínculos ou sem predições positivas na faixa). "
-        r"A área cinza corresponde às faixas de 5 a 9. Fonte: \texttt{data/desempenho\_faixas\_ablacao.csv}.",
+        r"Entre parênteses, IC de Wilson de 95\% para sensibilidade e VPP, descritivos e sem ajuste para dependência entre pares. "
+        r"n.d.: razão não definida (sem pares verdadeiros ou sem predições positivas na faixa). "
+        r"A faixa intermediária da nota final corresponde às faixas de 5 a 9. Fonte: \texttt{data/desempenho\_faixas\_ablacao.csv}.",
         r"\end{table}",
         "",
     ]
@@ -198,7 +198,7 @@ def tabela_e4_oof() -> None:
         "7-8": "7-8",
         "8-9": "8-9",
         ">=9": r"$\geq9$",
-        "area_cinza": "Área cinza",
+        "area_cinza": "Faixa intermediária",
         "total": "Total",
     }
     tot = f.loc["total"]
@@ -209,14 +209,14 @@ def tabela_e4_oof() -> None:
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
         r"\caption{Desempenho do estimador \texttt{p\_cal\_ml} (XGBoost com calibração isotônica) por faixa da nota final $s$ do comparador, "
-        f"nos {milhar(tot.n)} potenciais pares e {int(tot.vinculos)} vínculos do extrato. "
+        f"nos {milhar(tot.n)} potenciais pares e {int(tot.vinculos)} pares verdadeiros do extrato. "
         r"As probabilidades são estimativas fora da amostra agrupadas por REFREC; contagens e razões usam o limiar 0,5, fixado antes da análise e não otimizado. "
         r"AUC e AP: área sob a curva ROC e precisão média; Brier: escore de Brier. "
         r"n.d.: AUC e AP não exibidas quando a classe minoritária tem menos de cinco casos, ou razão não definida por denominador zero.}",
         r"\label{tab:e4-desempenho-faixas-oof}",
         r"\begin{tabular}{@{}lrrcccccccc@{}}",
         r"\toprule",
-        r"Faixa & Pares & Vínculos & AUC & AP & Brier & VP & FP & FN & Sensib. & Prec. \\",
+        r"Faixa & Pares & \shortstack{Pares\\verdadeiros} & AUC & AP & Brier & VP & FP & FN & Sensib. & VPP \\",
         r"\midrule",
     ]
     for chave, nome in rot.items():
@@ -233,7 +233,7 @@ def tabela_e4_oof() -> None:
         "",
         r"\vspace{2pt}",
         r"\par\footnotesize Nota: faixas fechadas à esquerda e abertas à direita. VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos "
-        r"com \texttt{p\_cal\_ml} $\geq 0{,}5$. Área cinza: $5\leq s<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, "
+        r"com \texttt{p\_cal\_ml} $\geq 0{,}5$. Faixa intermediária: $5\leq s<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e VPP, "
         r"descritivos e sem ajuste para dependência entre pares. Fonte: \texttt{data/desempenho\_faixas\_oof\_refrec.csv}.",
         r"\end{table}",
         "",

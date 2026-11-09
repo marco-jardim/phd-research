@@ -106,7 +106,7 @@ def tabela_impacto() -> None:
              r"\caption{Comparação de métodos: vínculos detectados, perdidos, revisões e sensibilidade.}",
              r"\label{tab:impacto-epidemiologico}", r"\footnotesize",
              r"\begin{tabular}{@{}lrrrrr@{}}", r"\toprule",
-             r"Método & Det. & Perd. & Rev. & Prec. & Sensib. \\", r"\midrule"]
+             r"Método & Det. & Perd. & Rev. & VPP & Sensib. \\", r"\midrule"]
     for _, row in data.iterrows():
         method = str(row.method)
         for old, new in [("Naive threshold", "Decisão de limiar"), ("Hybrid-OR", "Híbrido OR"),
@@ -127,7 +127,7 @@ def tabela_impacto() -> None:
                  f"{d(selected.recall, 2)} " + r"\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\footnotesize Fonte: "
               r"\path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; "
-              r"Prec.: precisão; Sensib.: sensibilidade. Teste com 18.509 potenciais pares e 74 vínculos. "
+              r"VPP: valor preditivo positivo; Sensib.: sensibilidade. Teste com 18.509 potenciais pares e 74 pares verdadeiros. "
               r"O custo por vínculo (inverso do VPP), representado na figura, não é coluna desta tabela. "
               r"As linhas XGBoost provêm do fluxo Modal, não da ablação original. A união com regras "
               r"usa o ponto de probabilidade 0,7 e escore de regras 8 da ablação, com 68 VP e zero FP "

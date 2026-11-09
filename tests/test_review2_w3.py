@@ -15,7 +15,10 @@ def test_editorial_w3_regenerates_without_changing_historical(tmp_path):
     historical = {p.name: p.read_bytes() for p in (LATEX / "tables").glob("*.tex")}
     tables.generate(tmp_path)
     for path in tmp_path.glob("*.tex"):
-        assert path.read_bytes() == (LATEX / "tables/editorial" / path.name).read_bytes()
+        # .gitattributes fixa eol=lf em tables/editorial/*.tex; o gerador grava CRLF nas tabelas de grupos
+        # no Windows. O conteúdo tem de coincidir byte a byte, exceto pelo fim de linha.
+        gerado = path.read_bytes().replace(b"\r\n", b"\n")
+        assert gerado == (LATEX / "tables/editorial" / path.name).read_bytes().replace(b"\r\n", b"\n")
         for source in re.findall(r"\\path\{(data/[^}]+)\}", path.read_text(encoding="utf-8")):
             assert (ROOT / source).is_file(), source
     assert historical == {p.name: p.read_bytes() for p in (LATEX / "tables").glob("*.tex")}

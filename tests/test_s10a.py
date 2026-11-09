@@ -50,4 +50,6 @@ def test_local_editorial_redundancies_and_number_forms():
     assert r'proposição de duas ações (Proposição~\ref{prop:duas-acoes-orcamento})' in discussion
     assert 'Isso não fixa O3' not in discussion
     formal = (L / 'apendice_formalizacao.tex').read_text(encoding='utf-8')
-    assert contem(formal, r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}', arquivo='text/latex/apendice_formalizacao.tex')  # migrado: terminologia 3.6
+    # Revisão 2: "não vínculo" saiu do título (guia 3.6); a decisão de não aceitar é "rejeição".
+    assert contem(formal, r'\subsection{Revisão Humana e Rejeição sob Orçamento}', arquivo='text/latex/apendice_formalizacao.tex')
+    assert 'Não Vínculo' not in formal

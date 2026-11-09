@@ -60,7 +60,9 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
 def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_proof():
     text = (L / 'apendice_formalizacao.tex').read_text(encoding='utf-8')
     assert r'\label{prop:duas-acoes-orcamento}' in text
-    section = text.split(r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}')[1]
+    # Revisão 2: o título passou de "Não Vínculo" para "Rejeição" (guia 3.6).
+    assert r'\subsection{Revisão Humana e Rejeição sob Orçamento}' in text
+    section = text.split(r'\subsection{Revisão Humana e Rejeição sob Orçamento}')[1]
     assert 'exclusivamente teórica' in section
     assert r'p_i\geq C_H/C_{FN}' in section
     assert r'C_{FN}(p_j-p_i)<0' in section

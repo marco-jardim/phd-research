@@ -28,7 +28,11 @@ FIGURAS = [
 ]
 
 ROTULOS = [
-    ("Zona cinzenta", "Área cinza"),
+    ("Zona cinzenta", "Faixa intermediária"),
+    (r"\textit{Área cinza}", "Faixa intermediária"),
+    ("Área cinza", "Faixa intermediária"),
+    ("Vínculos", "Pares verdadeiros"),
+    ("Precisão", "VPP"),
     ("Faixa do escore agregado", "Nota final do comparador"),
     ("naive-threshold", "decisão de limiar"),
     ("Naive threshold", "Decisão de limiar"),

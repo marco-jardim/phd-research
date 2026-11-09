@@ -3,7 +3,7 @@
 \begin{table}[!ht]
 \centering
 \footnotesize
-\caption{Ablação conjunta das saídas do motor no dossiê de revisão, em 18 vínculos verdadeiros selecionados por falso negativo compartilhado no modo vigilância.}
+\caption{Ablação conjunta das saídas do motor no dossiê de revisão, em 18 pares verdadeiros selecionados por falso negativo compartilhado no modo vigilância.}
 \label{tab:cap8-ablacao-dossie}
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lccrrrc}
@@ -16,6 +16,6 @@ Claude Haiku 5.5 & 0/9/9 & 7/11/0 & 2 & 7 & 0,016 & 13/18 \\
 \end{tabular}%
 }
 \par\smallskip
-\parbox{\linewidth}{\footnotesize M: \texttt{MATCH} (vínculo); U: \texttt{UNSURE} (inconclusivo); N: \texttt{NONMATCH} (não-vínculo). FN: falsos negativos do braço controle, não da execução original. Ablação: retirada de todo o grupo \texttt{model\_outputs}. McNemar exato bilateral para \texttt{MATCH} versus demais decisões, sem ajuste de multiplicidade. A mudança para \texttt{UNSURE} não constitui reconhecimento correto do vínculo. Fonte: \texttt{data/sprint3b/ablacao/resumo.json} \cite{Jardim2026phdrepo}.}
+\parbox{\linewidth}{\footnotesize M: \texttt{MATCH} (vínculo); U: \texttt{UNSURE} (inconclusivo); N: \texttt{NONMATCH} (não aceito como vínculo). FN: falsos negativos do braço controle, não da execução original. Ablação: retirada de todo o grupo \texttt{model\_outputs}. McNemar exato bilateral para \texttt{MATCH} versus demais decisões, sem ajuste de multiplicidade. A mudança para \texttt{UNSURE} não constitui reconhecimento correto do vínculo. Fonte: \texttt{data/sprint3b/ablacao/resumo.json} \cite{Jardim2026phdrepo}.}
 \par\footnotesize Ablação: retirada conjunta das saídas decisórias do motor do dossiê, documento estruturado com os subescores disponíveis para a revisão.
 \end{table}

@@ -1,7 +1,7 @@
 \label{apendice:gzcmd}
 
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1 (política de quatro ações: vínculo, não vínculo, revisão por modelo de linguagem e revisão humana), resultado principal do Capítulo~\ref{cap:estudo4}.
+\noindent\textbf{Algoritmo~\thealgorithm}: arranjo sequencial do corte do OpenRecLink e GZ-CMD v3.1 (política de quatro ações: aceitar como vínculo, rejeitar, revisão por modelo de linguagem e revisão humana), braço P do registro interno do Capítulo~\ref{cap:estudo4}.
 \label{alg:gzcmd-arranjo}
 
 \noindent\rule{\textwidth}{0.4pt}
@@ -29,7 +29,7 @@
 \refstepcounter{algorithm}%
 \noindent\textbf{Algoritmo~\thealgorithm}: desenho avaliado do GZ-CMD com alternativa de calibração por conjuntos âncora, guardas e triagem da política v3, conforme \path{gzcmd/guardrails.py} e \path{gzcmd/gzcmd_v3_policy_engine.py}, e registro de decisões, sem exercício independente de auditoria das justificativas. A revisão histórica usou \textit{Platt scaling} supervisionado da nota; o Experimento~1 (ablação das Medidas Contínuas de Diferença de Datas de nascimento, MACD) usou Random Forest calibrado por sigmoide. Essas execuções não usaram a Fase~1 por âncoras. A versão v3.1 é descrita no Algoritmo seguinte. As etapas de margem estreita e cardinalidade foram previstas, mas não implementadas e não integram as etapas abaixo (Seção~\ref{sec:e4-regras-guarda}).
 \label{alg:gzcmd-pipeline}
-A política v3 distingue vínculo, não vínculo e revisão por modelo de linguagem de grande porte (LLM); v3.1 acrescenta a revisão humana como ação distinta. EVR designa o valor esperado da revisão, e CdR, o Comparador de Registros.
+A política v3 distingue aceitar como vínculo, rejeitar e revisão por modelo de linguagem de grande porte (LLM); v3.1 acrescenta a revisão humana como ação distinta. EVR designa o valor esperado da revisão, e CdR, o Comparador de Registros.
 
 \noindent\rule{\textwidth}{0.4pt}
 \begin{algorithmic}[1]
@@ -115,7 +115,7 @@ A política v3 distingue vínculo, não vínculo e revisão por modelo de lingua
 \bigskip
 % Algoritmo da política v3.1 (quatro ações)
 \refstepcounter{algorithm}%
-\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD (quatro ações: vínculo, não vínculo, revisão por modelo de linguagem de grande porte, LLM, e revisão humana), com probabilidades fora da amostra (OOF) agrupadas por REFREC, guardas da nota e decisão por \textit{expected loss}, dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
+\noindent\textbf{Algoritmo~\thealgorithm}: política v3.1 do GZ-CMD (quatro ações: aceitar como vínculo, rejeitar, revisão por modelo de linguagem de grande porte, LLM, e revisão humana), com probabilidades fora da amostra (OOF) agrupadas por REFREC, guardas da nota e decisão por \textit{expected loss}, dossiê sem as saídas do motor e encaminhamento humano dos inconclusivos.
 \label{alg:gzcmd-v31}
 
 \noindent\rule{\textwidth}{0.4pt}
@@ -150,7 +150,7 @@ A política v3 distingue vínculo, não vínculo e revisão por modelo de lingua
     \STATE $L_M \leftarrow (1-p_i)\,C_{FP}$; \quad $L_N \leftarrow p_i\,C_{FN}$
     \STATE $L_H \leftarrow C_H + p_i\,e_{FN,h}\,C_{FN} + (1-p_i)\,e_{FP,h}\,C_{FP}$
     \STATE $L_L \leftarrow C_{LLM} + p_i\,e_{FN}\,C_{FN} + (1-p_i)\,e_{FP}\,C_{FP} + u\,L_H$
-    \STATE $d_i \leftarrow \arg\min\{L_M, L_N, L_H, L_L\}$, com desempate na ordem vínculo, não-vínculo, humano e LLM
+    \STATE $d_i \leftarrow \arg\min\{L_M, L_N, L_H, L_L\}$, com desempate na ordem aceitar, rejeitar, humano e LLM
 \ENDFOR
 
 \medskip

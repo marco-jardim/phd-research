@@ -21,11 +21,11 @@ tabelas:
   # Apêndice de sensibilidade
   - arquivo: editorial/tab_sensibilidade_2x2.tex
     protecao: sha256
-    sha256: 8a6ba37a6daeff396c222bfe257eb2ed5fa05b6b5be6ef8787cc462f73dbc410
+    sha256: 4e04225367e6394bd11865438383fc5f2fd7439b4aad0f4557207fed3b832ee1
     motivo: "Versão editorial (tabelas_persona_editorial.transform) da tabela de scripts/gerar_tabela_sensibilidade.py; nenhum teste compara o arquivo editorial."
   - arquivo: editorial/tab_sensibilidade_qw1.tex
     protecao: sha256
-    sha256: 59b6ee3f76a298e72af8e71f98b7ecc16338436c932cfee2adc12371540a8009
+    sha256: 2e73cf17fe2cade04070d11f3a7156ee01dec4de8d38d880d1c15d5060052940
     motivo: "Versão editorial da tabela de scripts/qw1_sensibilidade_gpu.py; tests/test_qw1_sensibilidade_gpu.py compara só a tabela histórica (tables/tab_sensibilidade_qw1.tex), não a editorial."
 
   # Capítulo de dados
@@ -57,7 +57,7 @@ tabelas:
     teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
   - arquivo: tab_desempenho_faixas.tex
     protecao: sha256
-    sha256: 1b4b274334ecc4481a707939ae37800c566a9c68ccab31a8781e63167b168e16
+    sha256: 44f8351b7bff9e01d4de5e512875d854d3acf7a68e6fe67ab6ed3ad0a157f167
     motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py; tests/test_desempenho_faixas.py::test_gerador_tex_nd_virgula_ic_e_hifen gera em diretório temporário e confere só a forma (cabeçalho, n.d., vírgula decimal), sem comparar com o arquivo versionado."
 
   # Estudo 3
@@ -95,7 +95,7 @@ tabelas:
   # Estudo 4
   - arquivo: editorial/tab_e4_desempenho_faixas_oof.tex
     protecao: sha256
-    sha256: 086323c04ec2f6b103a799b4980d52bbb6c4eb1601b690c45009c43881507dc2
+    sha256: 2cf9d4790eba5c442e6e9bc53cf07c13fa2d7735d938ea98237ed2d9c6dbe76e
     motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py e ajustada por tabelas_persona_editorial; tests/test_desempenho_faixas.py confere só a forma da saída em diretório temporário, não o arquivo editorial versionado."
   - arquivo: editorial/tab_cap8_ancoras.tex
     protecao: regeneracao
@@ -119,11 +119,11 @@ tabelas:
     gerador: banca_c_agregados
   - arquivo: editorial/tab_cap8_revisores.tex
     protecao: sha256
-    sha256: 8d954e4e241fdf547f9d6aa8cac7b17a888e0920aad4ebe8d13ef1b497d0ef23
+    sha256: 916b5dc8bea4714a5465ebca998fee0d7462ea1f1644384bbdb4cc7d7555d5f9
     motivo: "Sem teste que regenere ou compare o arquivo; tests/test_w13a_persona.py confere só trechos de texto. Tabela sem gerador testado."
   - arquivo: editorial/tab_cap8_ablacao_dossie.tex
     protecao: sha256
-    sha256: ae4fbedf78dc60f90ebe8a23243e3189a0e95cf0f789fb5db4dfc5a5abcc96e8
+    sha256: 947bff94d8240c6b217d2f0143e9ce404051a712b34ce409201847eb902f489d
     motivo: "Sem teste que regenere ou compare o arquivo; os testes da ablação do dossiê cobrem os agregados em data/, não a tabela. Tabela sem gerador testado."
   - arquivo: editorial/tab_cap8_reruns.tex
     protecao: sha256
@@ -165,7 +165,7 @@ tabelas:
     gerador: tabelas_s8a1_editorial
   - arquivo: editorial/tab_cap8_vies_referencia.tex
     protecao: sha256
-    sha256: 2db91d906165a11b43d71e1a34c66105a4815936f3a70a5bcef253d6226e8d46
+    sha256: 3788d498fab224048cb1bc97060d0361edb4e07101df5e4fd98b34a5d796ed6e
     motivo: "tests/test_w10a.py confere células selecionadas contra data/vies_referencia*.csv e a contagem de colunas, não o arquivo inteiro."
   - arquivo: editorial/tab_cap8_tamanho_modelo.tex
     protecao: regeneracao
@@ -208,9 +208,9 @@ tabelas:
     teste: test_s8c.py::test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade
   - arquivo: editorial/tab_qw3_fairness_rejections.tex
     protecao: sha256
-    sha256: 0584ecde568fe5ac2ce52837113b0322394c0ac0a45cec0ed8963e9a2baf4b84
+    sha256: acf670304281b30ffed0658e2bd1fffd81f586b66bc2ee74189f371ed85486c6
     motivo: "Versão editorial de tables/tab_qw3_fairness_rejections.tex (scripts/equidade_v31.py, histórico congelado); sem teste que compare o arquivo editorial."
   - arquivo: editorial/tab_qw3_fairness_rejections_corte6.tex
     protecao: sha256
-    sha256: 8076c6d29ae4112ad2a1eb26420dc6ca5b6dbfe95a968118701b5dc1b331c572
+    sha256: cef182e3777ac62f82229c5b1adb6a1bd1345253fc71d4c43ba360a96396b294
     motivo: "Versão editorial da tabela do corte 6; sem gerador testado nem teste que compare o arquivo."

@@ -13,15 +13,13 @@ import pandas as pd
 import pytest
 
 from scripts import equidade_arranjo as historical
-from scripts.tabelas_arranjo_editorial import generate, render_reference, step_ppv_note
+from scripts.tabelas_arranjo_editorial import generate, render_reference, replace_once, step_ppv_note
 from scripts.tabelas_review2_w3 import equity_tables
-from terminologia import normalizar_terminologia
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLES = ROOT / "text/latex/tables"
 EDITORIAL = TABLES / "editorial"
-ARQUIVO_REFERENCIA = "text/latex/tables/editorial/tab_cap8_referencia.tex"
-EQUITY_GLOSS = ("P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
+EQUITY_GLOSS = ("P: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. "
                 "CdR: Comparador de Registros. REFREC identifica o registro do SIM. "
                 "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
 
@@ -41,7 +39,9 @@ def test_editorial_versions_reproduce_without_overwriting_historical(tmp_path):
     equity_tables(tmp_path)
     assert len(list(tmp_path.glob("*.tex"))) == 10
     for path in tmp_path.glob("*.tex"):
-        assert path.read_bytes() == (EDITORIAL / path.name).read_bytes()
+        # .gitattributes fixa eol=lf em tables/editorial/*.tex; alguns geradores gravam CRLF no Windows.
+        # O conteúdo tem de coincidir byte a byte, exceto pelo fim de linha.
+        assert path.read_bytes().replace(b"\r\n", b"\n") == (EDITORIAL / path.name).read_bytes().replace(b"\r\n", b"\n")
     assert before == {p.name: p.read_bytes() for p in TABLES.glob("*.tex")}
     with pytest.raises(ValueError, match="históricas"):
         generate(ROOT / "data", TABLES)
@@ -85,6 +85,9 @@ def test_group_and_rejection_tables_preserve_all_cells_and_only_translate_note()
         original = (TABLES / path.name).read_text(encoding="utf-8")
         current = path.read_text(encoding="utf-8")
         renamed = original.replace("grupo A menos grupo B", "grupo 1 menos grupo 2").replace("Grupo A & Grupo B", "Grupo 1 & Grupo 2")
+        if "grupos" in path.name:
+            # Revisão 2: a coluna conta pares verdadeiros (classe segundo a referência), não vínculos aceitos.
+            renamed = replace_once(renamed, " & Vínculos & ", r" & \shortstack{Pares\\verdadeiros} & ")
         assert rows(renamed) == rows(current)
         if "grupos" in path.name:
             assert "ao menos 30 observações no denominador de cada métrica" in current
@@ -105,15 +108,20 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     ceiling = f"{int(total.loc['por_passo', 'total_abaixo_corte']):,}".replace(",", ".")
     assert len(old) == len(new)
     for original, current in zip(old, new):
-        if original[0] == "Corte + revisão manual do serviço":
+        if original[0] == "Estratégia":
+            # Cabeçalho: a coluna conta pares verdadeiros (classe segundo a referência), não vínculos aceitos.
+            assert original[6] == "Vínculos perdidos" and current[6] == "Pares verdadeiros perdidos"
+            assert original[:6] == current[:6] and original[7:] == current[7:]
+        elif original[0] == "Corte + revisão manual do serviço":
             assert current[2] == "cenário $\\geq " + bound + "$"
-            assert normalizar_terminologia(current[0], arquivo=ARQUIVO_REFERENCIA) == normalizar_terminologia("Corte + revisão clerical de origem", arquivo=ARQUIVO_REFERENCIA)  # migrado: terminologia 3.6
+            assert current[0] == "Corte + revisão manual de origem"  # revisão 2: sem "revisão clerical"
             assert original[1] == current[1] and original[3:] == current[3:]
         elif original[0] == "Corte + revisão humana integral (cenário)":
             assert current[2] == ceiling + " (teto)"
             assert original[:2] == current[:2] and original[3:] == current[3:]
         elif original[0] == "CdR, revisão humana da área cinza":
-            assert normalizar_terminologia(current[0], arquivo=ARQUIVO_REFERENCIA) == normalizar_terminologia("CdR, revisão humana da área cinza da nota", arquivo=ARQUIVO_REFERENCIA)  # migrado: terminologia 3.6
+            # Revisão 2: [5,9) é a "faixa intermediária da nota final"; "área cinza" é só a região abaixo do corte.
+            assert current[0] == "CdR, revisão humana da faixa intermediária da nota final"
             assert original[1:] == current[1:]
         elif original[0] == "CdR, limiar da nota em 8":
             assert current[0] == r"CdR, decisão de limiar (nota $\geq 8$)"

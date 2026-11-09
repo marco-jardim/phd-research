@@ -117,7 +117,9 @@ def test_canonical_names_and_operational_area_cinza_definition():
         assert r"\textit{Random Forest}" not in text
     formal = (LATEX / "apendice_formalizacao.tex").read_text(encoding="utf-8")
     assert r"\textit{labels}" in formal
-    assert contem(formal, "Essas regiões não redefinem a área cinza da nota", arquivo="text/latex/apendice_formalizacao.tex")  # migrado: terminologia 3.6
+    # Revisão 2: [5,9) é a "faixa intermediária da nota final"; "área cinza" designa a região abaixo do corte.
+    assert contem(formal, "Essas regiões não redefinem a faixa intermediária da nota final", arquivo="text/latex/apendice_formalizacao.tex")
+    assert "área cinza da nota" not in formal
     assert r"$[5,9)$" in formal and r"\ref{sec:area-cinza}" in formal
     for name in ("capitulo1.tex", "glossario.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
@@ -159,9 +161,11 @@ def test_review3_scope_and_experiment1_caveats():
     # estudo2 revisado (revisão 2): o Experimento 1 e data/exp1_vazamento_comparacao.csv ficam no
     # estudo1, na conclusão e no apêndice de sensibilidade; o estudo2 remete ao vazamento sem repeti-los
     # A conclusão reescrita não retoma o Experimento 1; as ressalvas ficam nos capítulos e apêndices de origem.
+    # Revisão 2: o apêndice de sensibilidade chama P de "braço P do registro interno" (o Estudo 1 mantém "arranjo P").
+    designacao_p = {"estudo1_comparador.tex": "arranjo P", "apendice_sensibilidade.tex": "braço P do registro interno"}
     for name in ("estudo1_comparador.tex", "apendice_sensibilidade.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
-        assert "GZ-CMD v3.1" in text and "arranjo P" in text
+        assert "GZ-CMD v3.1" in text and designacao_p[name] in text
         assert r"\path{data/exp1_vazamento_comparacao.csv}" in text
         assert "situação de encerramento" in text
     estudo4 = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
