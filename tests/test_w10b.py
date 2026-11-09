@@ -67,7 +67,9 @@ def test_bootstrap_claims_match_published_csv():
 
 
 # W5: o bloco limítrofe e o filtro literal foram movidos do capítulo de dados para o apêndice de origem.
-@pytest.mark.parametrize("name", ["conclusao.tex", "apendice_linkage_origem.tex", "glossario.tex"])
+# Revisão 2: o glossário passou a só definir termos (definições de uma linha, sem resultados numéricos);
+# o bloco limítrofe fica protegido no apêndice de origem e na conclusão.
+@pytest.mark.parametrize("name", ["conclusao.tex", "apendice_linkage_origem.tex"])
 def test_boundary_precision_is_explained_and_matches_metadata(name):
     metadata = json.loads(text("data/fusao_robustez_metadata.json"))["faixa"]
     assert metadata["operational_n"] == 2522
@@ -78,7 +80,7 @@ def test_boundary_precision_is_explained_and_matches_metadata(name):
     assert metadata["operational_min_score"] < metadata["literal_threshold"]
     body = text(f"text/latex/{name}").replace("{,}", ",")
     # A conclusão reescrita traz só o limiar arredondado e as contagens do filtro literal; as casas extras
-    # do bloco limítrofe ficam no apêndice de origem e no glossário.
+    # do bloco limítrofe ficam no apêndice de origem.
     fragments = (("-5,648", "2.495 potenciais pares e 31 pares verdadeiros", "2.522 potenciais pares de maior escore")
                  if name == "conclusao.tex"
                  else ("-5,6485", "-5,64846", "literal", "2.495 candidatos", "31 PAR"))

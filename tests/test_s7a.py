@@ -26,10 +26,12 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    assert contem(pt, 'no máximo um vínculo adicional', arquivo='text/latex/tese.tex')  # migrado: terminologia 3.6
-    assert '344 pares avaliados pelo modelo de linguagem de grande porte (LLM)' in pt
-    assert 'at most one additional link' in en
-    assert '344 LLM-reviewed pairs' in en
+    # Redação nova (revisão 2): "no máximo um par verdadeiro adicional" e "344 pares avaliados pelo LLM"
+    # (o LLM é expandido na primeira frase do resumo).
+    assert contem(pt, 'no máximo um par verdadeiro adicional', arquivo='text/latex/tese.tex')  # migrado: terminologia 3.6
+    assert '344 pares avaliados pelo LLM' in pt
+    assert 'at most one additional true pair' in en
+    assert '344 pairs evaluated by the LLM' in en
     assert 'VPP' in pt and 'PPV' in en
     assert '22 revisões humanas' in pt and '22 human reviews' in en
     losses = pd.read_csv(DATA / 'arranjo_corte_perdas_mecanismo.csv')
@@ -62,8 +64,8 @@ def test_cutoffs_remain_three_points_not_a_confidence_interval():
 
 def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     pt, en = abstracts()
-    assert r'análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert r'the sensitivity analysis using Platt scaling' in en
+    # Redação nova (revisão 2): a análise de sensibilidade com Platt scaling saiu do resumo; consta do Estudo 4.
+    assert r'análise de sensibilidade de P com \textit{Platt scaling}' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
     assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     for path in fontes_tex(LATEX):

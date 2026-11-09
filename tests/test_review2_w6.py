@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import pytest
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from scripts.perfil_obitos_agregado import table
 from scripts.tabelas_review2_w3 import historical_tables
 
@@ -108,7 +109,8 @@ def test_summary_period_and_numeric_ceiling_are_preserved():
         begin = source.index(start)
         abstract = source[begin:source.index(r"\vspace{15pt}", begin)]
         assert period in abstract
-        assert len(re.findall(r"\d+(?:[.,]\d+)*", abstract)) <= 18
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(abstract)) <= TETO_NUMEROS_RESULTADO
         assert "211" not in abstract
         assert len(abstract.split()) <= 500
     assert "À Daniela Medina Coeli Bastos" in source
@@ -169,12 +171,14 @@ def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
     Na tese.tex (resumo), em cada parágrafo. Na conclusão reescrita (2026-11-08), que define as filas na primeira
     menção do capítulo e depois usa só o código, exige-se a definição no parágrafo da primeira menção.
     """
+    # As formas em inglês valem para os parágrafos do Abstract de tese.tex (revisão 2).
     definitions = {
-        "O1": ("escore do OpenRecLink",),
-        "O2": ("nota final do CdR", "nota do CdR"),
+        "O1": ("escore do OpenRecLink", "OpenRecLink score"),
+        "O2": ("nota final do CdR", "nota do CdR", "final score of the CdR", "CdR final score"),
         "O3": ("probabilidade calibrada fora da amostra do classificador",
-               "probabilidade isotônica fora da amostra"),
-        "O4": ("probabilidade recalibrada de P",),
+               "probabilidade isotônica fora da amostra",
+               "out-of-sample calibrated probability"),
+        "O4": ("probabilidade recalibrada de P", "recalibrated probability of P"),
     }
     # Forma de definição usada na conclusão: "ordenação pela probabilidade calibrada fora da amostra (O3)".
     definitions_conclusion = dict(definitions, O3=definitions["O3"] + ("probabilidade calibrada fora da amostra (O3)",))

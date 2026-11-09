@@ -4,6 +4,7 @@ import re
 import pandas as pd
 from local_data import DATA_ROOT, requires_files
 from scripts.referencia_pos_orl import carregar, resumo_extrato
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,25 +24,33 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
         assert len(text.split()) <= 500
         assert len(text.split("\n\n")) == 4
         assert not re.search("—|–", text)
-        assert "P-Platt" in text and "XGBoost" in text
-        # Inclui o denominador 247 sem elevar o limite original de 12 números.
+        # Revisão 2: P-Platt e XGBoost saíram do Resumo e do Abstract; constam do Estudo 4 e do Estudo 2 (abaixo).
+        assert "P-Platt" in (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+        assert "XGBoost" in (LATEX / "estudo2_classificadores.tex").read_text(encoding="utf-8")
+        # Inclui o denominador 247.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
-    assert r"PAR é o \textit{label} da referência" in resumo
-    assert "registered internally before evaluation" in abstract
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(text)) <= TETO_NUMEROS_RESULTADO
+    # Revisão 2: PAR~=~2 na referência operacional (a definição de PAR como campo da referência está no Estudo 4).
+    assert "têm PAR~=~2 na referência operacional" in resumo
+    assert "have PAR~=~2 in the operational reference" in abstract
+    assert "PAR é o campo da referência operacional" in (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+    assert "after its internal registration, which had no success criterion" in abstract
     assert "preregistered" not in abstract
-    assert "Supondo revisor perfeito e o mesmo número de revisões humanas" in resumo
+    assert "Sob revisor perfeito simulado" in resumo
     assert "nove com 29 revisões" in resumo
-    assert "the same perfect-reviewer assumption" in abstract
+    assert "Under a simulated perfect reviewer" in abstract
     assert "nine with 29 reviews" in abstract
-    assert "verificação seletiva" in resumo.lower() and "incorporação" in resumo
-    assert "Selective verification" in abstract and "incorporation" in abstract
+    assert "Sem suposições sobre a verificação e a incorporação das evidências do comparador" in resumo
+    assert "Without assumptions about the verification and the incorporation of comparator evidence" in abstract
     assert "intervalos sobrepostos" not in resumo and "intervals overlapping" not in abstract
     assert "16,0" in resumo and "16.0" in abstract
-    assert "curva de esforço" in resumo and "effort-versus-recovered-links curve" in abstract
-    assert "orçamento humano" in resumo and "human budget" in abstract
-    assert "validação registrada em dados novos" in resumo
-    assert "registered validation on new data" in abstract
+    assert "curva de esforço" in resumo and "effort curve" in abstract
+    # O orçamento humano como critério do ponto de parada ficou na conclusão; o resumo traz o ponto de parada.
+    assert "ponto de parada" in resumo and "stopping point" in abstract
+    assert "orçamento humano" in (LATEX / "conclusao.tex").read_text(encoding="utf-8")
+    assert "a validar em coorte nova" in resumo
+    assert "to be validated in a new cohort" in abstract
 
 
 def test_every_study5_input_table_is_referenced_in_chapter():
@@ -114,7 +123,7 @@ def test_canonical_names_and_operational_area_cinza_definition():
         text = (LATEX / name).read_text(encoding="utf-8")
         # Decisão da autora de 2026-11-08: no capítulo 1 (revisado), a faixa [5,9) é "faixa intermediária da
         # nota final" e a grey area (área cinza) designa a região abaixo do corte do OpenRecLink.
-        nome_faixa = "faixa intermediária da nota final" if name == "capitulo1.tex" else "área cinza da nota"
+        nome_faixa = "faixa intermediária da nota final"  # glossário revisado na revisão 2 (mesma decisão)
         assert contem(text, nome_faixa, arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
         assert contem(text, "área cinza", arquivo=f"text/latex/{name}")  # migrado: terminologia 3.6
     intro = (LATEX / "capitulo1.tex").read_text(encoding="utf-8")

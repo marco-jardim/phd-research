@@ -7,6 +7,7 @@ import re
 import pandas as pd
 import pytest
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from scripts.tabelas_s8_editorial import generate, same_load, effort
 from terminologia import contem
 
@@ -118,13 +119,16 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         i = thesis.index(prefix)
         text = thesis[i:thesis.index(r'\vspace{15pt}', i)]
         assert len(text.split()) <= 500
-        # O denominador 247 cabe no limite original de 12 números do resumo.
         assert '247' in text
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
-        assert '36 PAR~=~2' in text
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(text)) <= TETO_NUMEROS_RESULTADO
+        # Redação nova: "36 pares verdadeiros, ..., têm PAR~=~2" / "36 true pairs, ..., have PAR~=~2".
+        assert re.search(r'36 (?:pares verdadeiros|true pairs)[^.]*PAR~=~2', text)
         assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text
-        assert 'MATCH' in text and 'P-Platt' in text
+        # P-Platt saiu do resumo (consta do Estudo 4).
+        assert 'MATCH' in text
+        assert 'P-Platt' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
         assert 'preregistered' not in text and 'intervals overlapping' not in text
 
 

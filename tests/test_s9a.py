@@ -112,16 +112,20 @@ def test_english_convention_expansions_denominators_and_surveillance():
     pt = text.split(r'O \textit{linkage} integra', 1)[1].split(r'\vspace{15pt}')[0]
     en = text.split('Linkage integrates', 1)[1].split(r'\vspace{15pt}')[0]
     assert 'modelo de linguagem de grande porte (LLM)' in pt
-    assert 'falsos positivos (FP)' in pt
-    assert 'large language model (LLM)' in en and 'false positives (FP)' in en
+    # Redação nova (revisão 2): "falsos positivos" por extenso, sem a sigla FP no resumo.
+    assert 'falsos positivos' in pt and not re.search(r'\bFP\b', pt)
+    assert 'large language model (LLM)' in en and 'false positives' in en and not re.search(r'\bFP\b', en)
     assert '247' in pt and '247' in en
-    assert r'42,5\% na vigilância' in pt and 'surveillance blocking step 11' in en
+    assert r'a sensibilidade automática de P na vigilância foi de 42,5\%' in pt
+    assert r'In blocking step 11 (candidate-generation stage), the automatic sensitivity of P in surveillance was 42.5\%' in en
     for summary in (pt, en):
         assert len(summary.split()) <= 500
         assert r'\textit{Platt scaling}' not in en and r'\textit{Linkage}' not in en
     assert 'nos dois lados' not in pt and 'pontos completos' not in pt
-    assert 'Se a ordenação usar probabilidade aprendida' in pt
-    assert 'If ordering uses learned probabilities' in en
+    # A condição sobre probabilidade aprendida com subamostragem consta de capitulo1 e conclusao (teste acima);
+    # o resumo recomenda a probabilidade calibrada fora da amostra, isolada (O3) ou nas fusões.
+    assert 'probabilidade calibrada fora da amostra do classificador, isolada (O3) ou nas fusões' in pt
+    assert 'out-of-sample calibrated probability of the classifier, alone (O3) or in the fusions' in en
 
 
 def test_ic_scope_and_filter_cost_are_explicit():

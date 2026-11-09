@@ -162,16 +162,23 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
     assert len(pt.split()) <= 500 and len(en.split()) <= 500
-    assert 'P preserva o corte e decide abaixo dele com recalibração isotônica' in pt
-    assert r'P-Platt é análise de sensibilidade com \textit{Platt scaling}' in pt
+    # Redação nova (revisão 2): a recalibração isotônica e o P-Platt constam do Estudo 4; a sensibilidade de pelo
+    # menos 95% nos passos 6 e 9 consta do Estudo 5; o resumo traz o passo 11 e a ausência de dominância.
+    study4 = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+    assert 'que preserva o corte e decide os demais potenciais pares pela política v3.1, com recalibração isotônica abaixo do corte' in study4
+    assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling}' in study4
+    assert 'o arranjo P, que preserva o corte e decide abaixo dele' in pt
+    assert 'arrangement P, with the cut-off preserved and decisions made below it' in en
+    assert 'pelo menos 95,0' in (LATEX / 'estudo5_equidade.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
-    assert 'pelo menos 95' in pt and 'at least 95' in en
-    assert 'nenhuma das estratégias comparadas é melhor em todos os desfechos' in pt
-    assert 'none of the compared decision strategies dominates' in en
+    assert 'e nos demais foi superior: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
+    assert 'and higher in the others: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
+    assert 'pois nenhuma dominou em todas as cargas' in pt
+    assert 'since no ordering was dominant in every workload' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
     assert not result.reject_fdr
     # A ausência de rejeição demográfica foi substituída pelo resultado operacional.
-    assert 'BH-adjusted' not in en and 'pelo menos' in pt
+    assert 'BH-adjusted' not in en and 'não demográfico' in pt
     assert r'\textit{Linkage}' not in en and r'\textit{Platt scaling}' not in en

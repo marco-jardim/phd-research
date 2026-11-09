@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 
 from latex_fontes import fontes_tex
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from test_s4a_texto import abstracts
 from test_w10b import APPROVED
 from terminologia import contem
@@ -21,23 +22,28 @@ def test_persona_blockers_in_bilingual_summaries_and_ceiling():
     pt, en = abstracts()
     for body in (pt, en):
         assert len(body.split()) <= 500
-        assert len(re.findall(r'\d+(?:[.,]\d+)*', body)) <= 18
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(body)) <= TETO_NUMEROS_RESULTADO
         assert not re.search('—|–', body)
         assert len(body.split('\n\n')) == 4
-    for fragment in ('um, aceito pelo corte', 'dois, recuperado na revisão clerical abaixo dele',
-                     'zero, demais', 'separação entre vínculos aceitos pelo corte e recuperados na revisão',
-                     'influência das saídas do motor na resposta do LLM (ancoragem)',
-                     'P-Platt é análise de sensibilidade', 'recuperação obtida por P'):
+    # Redação nova (revisão 2): a decomposição por PAR (um, dois, zero), P-Platt e a ancoragem saíram do resumo;
+    # P-Platt consta do Estudo 4 (legenda da dominância) e a ancoragem da seção do revisor de referência.
+    for fragment in ('preservando os vínculos aceitos pelo corte',
+                     'recuperados abaixo do corte pela revisão manual de origem',
+                     'O LLM fez todas as aceitações abaixo do corte',
+                     'sensibilidade automática de P na vigilância'):
         # migrado: terminologia 3.6
-        assert contem(pt, fragment, arquivo='text/latex/tese.tex') if ('vínculo' in fragment or 'clerical' in fragment) else fragment in pt
-    for fragment in ('one, accepted by the cut-off', 'two, recovered by clerical review below it',
-                     'zero, others', 'recovery obtained by P', "P's automatic sensitivity",
-                     'separating links accepted by the cut-off from those recovered by review',
-                     'influence of engine outputs on LLM responses (anchoring)'):
+        assert contem(pt, fragment, arquivo='text/latex/tese.tex') if 'vínculo' in fragment else fragment in pt
+    for fragment in ('preserving the links accepted by the cut-off',
+                     'recovered below the cut-off by the original manual review',
+                     'The LLM made all acceptances below the cut-off',
+                     "the automatic sensitivity of P in surveillance"):
         assert fragment in en
+    estudo4 = text('estudo4_gzcmd.tex')
+    assert 'P-Platt (análise de sensibilidade de P com \\textit{Platt scaling}' in estudo4
+    assert 'Revisor de referência, ancoragem e cascata na base inteira' in estudo4
     assert 'decomposição por PAR' not in pt
     assert 'PAR decomposition' not in en
-    assert 'arrangement' not in en
 
 
 def test_conclusion_reference_resolves_to_actual_study5_limitations():

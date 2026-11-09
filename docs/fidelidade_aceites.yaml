@@ -37,6 +37,158 @@
 #     motivo: "Número novo conferido em data/x.csv."
 
 aceites:
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "959434f3f17438de"
+    itens:
+      - comparativos:+abaixo
+      - metricas:+VPP
+      - metricas:-sensibilidade
+      - metricas:-vigilância
+      - negadores:+não
+      - negadores:-nenhuma
+      - negadores:-sem
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+4
+      - numeros:-11
+      - numeros:-42.5%
+      - numeros:-95%
+      - qualificadores:-pelo menos
+      - siglas:+LLM
+      - siglas:+VPP
+      - siglas:-FP
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "2dbd0e3bdf68af5e"
+    itens:
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+4
+      - numeros:-11
+      - numeros:-42.5%
+      - numeros:-95%
+      - siglas:+LLM
+      - siglas:+PPV
+      - siglas:-FP
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "9eaecfc40eff8be7"
+    itens:
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61696
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "38de327d775a7630"
+    itens:
+      - negadores:+nem
+      - negadores:+nenhum
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+1
+      - numeros:+1203
+      - numeros:+125
+      - numeros:+3
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+95%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "b0f8f7ca6b721530"
+    itens:
+      - negadores:+nenhuma
+      - negadores:+não
+      - numeros:+11
+      - numeros:+3
+      - numeros:+42.5%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "5bf914f1653fdda6"
+    itens:
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61.696
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "51c8c32559c47b17"
+    itens:
+      - numeros:+1
+      - numeros:+1.203
+      - numeros:+125
+      - numeros:+3
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+95%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "c3692e5178960989"
+    itens:
+      - numeros:+11
+      - numeros:+3
+      - numeros:+42.5%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "8cbc8aa1da163955"
+    itens:
+      - negadores:-não
+      - negadores:-sem
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "65e6bc1826744b13"
+    itens:
+      - negadores:-nem
+      - negadores:-sem
+      - numeros:-2
+      - numeros:-2019
+      - numeros:-2022
+      - numeros:-36
+      - numeros:-61696
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "96829f38f03238f1"
+    itens:
+      - negadores:-não
+      - numeros:-16.0%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "a75fc921c770522a"
+    itens:
+      - numeros:-2
+      - numeros:-2019
+      - numeros:-2022
+      - numeros:-36
+      - numeros:-61.696
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "fc9ceac41c76acf9"
+    itens:
+      - numeros:-16.0%
+    justificativa: "Revisão 2: Resumo e Abstract reescritos (decisões da autora de 2026-11-08: objetivo geral, âncoras C10, C01r, C11 a C14, C08r, C03r, C05r, C09r e N*); números conferidos contra a conclusão revisada e o registro de invariantes (tests/test_registro_invariantes.py, seções resumo e abstract)"
+    autora_aprovou: true
   - arquivo: text/latex/apendice_linkage_origem.tex
     hash_paragrafo_novo: "6ae40f960e718081"
     itens:
@@ -106,6 +258,9 @@ aceites:
     justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
     autora_aprovou: true
 aceites_numeros:
+  - {arquivo: text/latex/tese.tex, numero: "1.203", autora_aprovou: true, motivo: "Revisão 2 (Resumo reescrito, âncora N26): mediana de F4 menos O1 na meta de 36, de estudo4_gzcmd.tex e conclusao.tex"}
+  - {arquivo: text/latex/tese.tex, numero: "1,203", autora_aprovou: true, motivo: "Revisão 2 (Abstract reescrito, âncora N26): 1,203 é a forma inglesa de 1.203 (milhar), lida pelo portão como decimal; mesmo valor do Resumo"}
+  - {arquivo: text/latex/glossario.tex, numero: "20", autora_aprovou: true, motivo: "Revisão 2 (glossário enxugado): limite de 20 anos na definição das MACD, como em estudo4_gzcmd.tex; sem valor novo"}
   - {arquivo: text/latex/conclusao.tex, numero: "0,216", autora_aprovou: true, motivo: "Revisão 2 (fidelidade da conclusão, achado B15 da revisão independente): valor de estudo4_gzcmd.tex (calibração fora da amostra na faixa intermediária da nota final)"}
   - {arquivo: text/latex/conclusao.tex, numero: "0,862", autora_aprovou: true, motivo: "Revisão 2 (fidelidade da conclusão, achado B15 da revisão independente): valor de estudo4_gzcmd.tex (calibração fora da amostra na faixa intermediária da nota final)"}
   - {arquivo: text/latex/conclusao.tex, numero: "71", autora_aprovou: true, motivo: "Revisão 2 (fidelidade da conclusão, achado B4 da revisão independente): valor de estudo5_equidade.tex"}

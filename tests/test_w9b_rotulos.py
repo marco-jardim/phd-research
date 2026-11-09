@@ -13,6 +13,7 @@ import re
 
 import pytest
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from terminologia import normalizar_terminologia
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,14 +27,16 @@ OWNED = (
 )
 GLOSS_WORDS = {
     'O1': (('escore', 'score'), ('openreclink',)),
-    'O2': (('nota',), ('comparador', 'cdr')),
-    'O3': (('probabilidade',), ('calibrada', 'isotônica', 'classificador')),
-    'O4': (('probabilidade',), ('recalibrada', 'recalibração')),
+    # Alternativas em inglês para o Abstract (revisão 2): o texto em inglês define as filas com
+    # "out-of-sample calibrated probability of the classifier", "OpenRecLink score" etc.
+    'O2': (('nota', 'final score'), ('comparador', 'cdr', 'comparator')),
+    'O3': (('probabilidade', 'probability'), ('calibrada', 'isotônica', 'classificador', 'calibrated', 'classifier')),
+    'O4': (('probabilidade', 'probability'), ('recalibrada', 'recalibração', 'recalibrated', 'recalibration')),
     'P': (('corte', 'cut-off'), ('preserva', 'preservação', 'preservado', 'preserved',
                                 'recalibração isotônica', 'isotonic recalibration')),
-    'K1': (('humana', 'humano', 'data de nascimento exata'),),
-    'K2': (('mista', 'misto', 'llm'), ('carga', 'orçamento', 'avaliações')),
-    'K3': (('custo', 'ponderad'),),
+    'K1': (('humana', 'humano', 'data de nascimento exata', 'human', 'exact birth date'),),
+    'K2': (('mista', 'misto', 'llm', 'mixed'), ('carga', 'orçamento', 'avaliações', 'load', 'budget', 'evaluations')),
+    'K3': (('custo', 'ponderad', 'cost', 'weighted'),),
     'NONMATCH': (('não vínculo', 'não-vínculo', 'não par', 'não-par', 'non-link'),),  # migrado: terminologia 3.6
     'passo de blocagem': (('geração', 'chaves'),),
     'blocking step': (('candidate-generation', 'keys'),),
@@ -87,7 +90,8 @@ def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
     text = summary_bodies()[body]
     assert_unit_first_mentions(text, arquivo='text/latex/tese.tex')
     assert len(text.split()) <= 500
-    assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
+    # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+    assert len(numeros_de_resultado(text)) <= TETO_NUMEROS_RESULTADO
     assert 'NONMATCH' in text
     assert ('blocking step' if body else 'passo de blocagem') in text
 
