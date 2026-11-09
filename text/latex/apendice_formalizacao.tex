@@ -131,7 +131,7 @@ abaixo do qual a revisão é economicamente justificável para ao menos alguns p
 
 \textbf{Observação.} No caso particular de revisor perfeito ($e_{FP} = e_{FN} = 0$), tem-se $C_{LLM}^* = C_{FP} \cdot C_{FN} / (C_{FP} + C_{FN})$. Na escala da vigilância da tese, com $C_{FP}=10$ e $C_{FN}=50$ (\path{gzcmd/gzcmd_v3_config.yaml}), o limiar é $C_{LLM}^*=500/60\approx8{,}33$, cálculo da tese. Normalizando ambos os custos por $C_{FP}$, obtém-se $5/6\approx0{,}83$: a revisão é justificável com custo inferior a 83,3\% do custo do falso positivo. O valor normalizado não é o custo na escala original da política.
 
-\subsection{Relaxamento das Hipóteses de Fellegi e Sunter}
+\subsection{Relaxamento das hipóteses do modelo de dois limiares}
 
 O modelo clássico de Fellegi e Sunter \cite{Fellegi1969theory} fundamenta-se na razão de verossimilhança $R = P(\gamma\mid M) / P(\gamma\mid U)$ e na determinação de dois limiares, $T_\lambda$ (inferior) e $T_\mu$ (superior), que minimizam a probabilidade de revisão manual para níveis fixos de erro $\mu$ (falso positivo) e $\lambda$ (falso negativo). Extensões desse modelo permitem o tratamento de dados de tipos mistos \cite{Vo2023extending}. O GZ-CMD adota outra parametrização da triagem, com duas diferenças:
 
@@ -180,7 +180,7 @@ Isso equivale à regra de decisão por máxima probabilidade \textit{a posterior
 
 \textbf{Observação.} Para custos assimétricos e revisor perfeito, a revisão é estritamente ótima em $C_{LLM}/C_{FN}<p<1-C_{LLM}/C_{FP}$, intervalo não vazio se, e somente se, $C_{LLM}<H$. Para $C_{LLM}\ge H$, a decisão automática utiliza o limiar $p^*=C_{FP}/(C_{FP}+C_{FN})$, com vínculo na igualdade, recuperando a regra bayesiana com custos assimétricos quando $p$ é a posterior correta \cite{Sadinle2017}.
 
-\subsubsection{Recuperação dos limiares de Fellegi e Sunter}
+\subsubsection{Recuperação de uma regra de dois limiares}
 
 A conexão entre as duas parametrizações pode ser estabelecida sob hipóteses de calibração perfeita, revisor perfeito e prevalência conhecida, expressando-se os limiares no espaço da razão de verossimilhança.
 
@@ -234,7 +234,7 @@ Os denominadores são positivos porque $C_{LLM}<H<\min(C_{FP},C_{FN})$. As deriv
 Sob as hipóteses de posterior correta, $\pi\in(0,1)$ conhecida, revisor perfeito e custos de erro positivos constantes, quando $C_{LLM}\to0^+$, tem-se $T_\mu^{GZ}\to\infty$ e $T_\lambda^{GZ}\to0$. Quando $C_{LLM}\uparrow H$, ambos convergem a $R^*=\frac{C_{FP}}{C_{FN}}\frac{1-\pi}{\pi}$. Para todo $C_{LLM}\ge H$, a revisão não é estritamente ótima e a política, sem revisão nos empates, declara vínculo se $R\ge R^*$ e rejeita se $R<R^*$. Em $C_{LLM}=H$, o intervalo aberto de revisão é vazio e há empate entre as três ações apenas em $R=R^*$, resolvido como vínculo. As expressões dos dois limiares da Proposição~\ref{prop:threshold-recovery} não devem ser extrapoladas como limiares de triagem para $C_{LLM}\ge H$.
 \end{corollary}
 
-\begin{corollary}[Recuperação de Fellegi e Sunter clássico]
+\begin{corollary}[Recuperação da regra clássica de dois limiares]
 \label{cor:gz-degenerate}
 \label{prop:fs-as-special-case}
 Qualquer par de limiares finitos $0<T_\lambda<T_\mu<\infty$ de Fellegi e Sunter pode ser reproduzido pela política de custos sob as hipóteses da Proposição~\ref{prop:threshold-recovery}, com posterior perfeitamente calibrada, revisor perfeito e $\pi\in(0,1)$ conhecida, desde que se adotem decisões automáticas nas fronteiras, sem randomização. Essa correspondência entre limiares não garante equivalência fora dessas hipóteses, nem que custos arbitrários satisfaçam níveis de erro $\mu$ e $\lambda$ previamente fixados.

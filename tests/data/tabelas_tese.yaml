@@ -31,7 +31,7 @@ tabelas:
   # Capítulo de dados
   - arquivo: editorial/tab_blocagem_rendimento.tex
     protecao: sha256
-    sha256: cafc48ec53a88de24adf078d855a046dbfce5af4ec8f2dfa45c4ef496182f717
+    sha256: 5c6d99d06eb947f92d4b00708e2a524855a81bed1440350d2983d63c1dd66352
     motivo: "Versão editorial da tabela histórica tables/tab_blocagem_rendimento.tex (auditoria scripts/m8_auditoria_blocagem.py); sem teste de regeneração do arquivo editorial."
 
   # Estudo 1
@@ -165,7 +165,7 @@ tabelas:
     gerador: tabelas_s8a1_editorial
   - arquivo: editorial/tab_cap8_vies_referencia.tex
     protecao: sha256
-    sha256: 3788d498fab224048cb1bc97060d0361edb4e07101df5e4fd98b34a5d796ed6e
+    sha256: f6ad4c17c309e87e7cf74e7a78fb156c08964290cfc5303b49b711321a0054d5
     motivo: "tests/test_w10a.py confere células selecionadas contra data/vies_referencia*.csv e a contagem de colunas, não o arquivo inteiro."
   - arquivo: editorial/tab_cap8_tamanho_modelo.tex
     protecao: regeneracao

@@ -42,7 +42,7 @@ def expected_ablation_appendix():
                        f"(maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.")
             assert expected.count(caption) == 1
     gloss = ("MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
-             "v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).\n\n")
+             "v3 identifica a política histórica de três ações (aceitar como vínculo, rejeitar e revisão por modelo de linguagem).\n\n")
     assert expected.startswith(gloss)
     return expected
 

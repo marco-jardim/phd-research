@@ -46,6 +46,9 @@ def add_note(text, note):
 TERMINOLOGIA_REVISAO2 = (
     # P é o braço do registro interno, não o resultado principal (decisão D2 da autora, 2026-11-08)
     ("P: arranjo principal, que preserva", "P: arranjo sequencial do registro interno, que preserva"),
+    ("P permanece o braço principal", "P permanece o braço do registro interno"),
+    # FP de P reclassificados na referência: a classe é "par verdadeiro"
+    ("FP reclassificados uniformemente como vínculos", "FP reclassificados uniformemente como pares verdadeiros"),
     # revisão manual (sem "revisão clerical")
     ("revisão clerical de origem", "revisão manual de origem"),
     ("revisão clerical abaixo do corte", "revisão manual de origem abaixo do corte"),

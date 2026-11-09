@@ -106,8 +106,12 @@ Na Figura~\ref{fig:shap-summary}, parte dos atributos de maior importância é c
 
 \section{Discussão}\label{sec:e1-discussao}
 
-As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python. As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java. A comparação com registros reais do estudo não foi realizada, e o lote sintético não permite estimar a frequência nem o efeito dessas divergências nesses dados. O limiar de nomes comuns também difere da formulação de \citeonline{Lucena2013algoritmos}, e a equivalência da base de normalização das proporções permanece não confirmada (Subseção~\ref{sub:nomes-comuns}). Os indicadores de óbito derivados da situação de encerramento constituem vazamento de alvo e são tratados na Seção~\ref{sec:e2-limitacoes}.
+As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python. As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java (Subseção~\ref{sec:e1-limitacoes}).
 
-A importância atribuída a cada subescore por SHAP descreve a contribuição para a decisão do classificador, sem interpretação causal nem ordenação identificável entre atributos redundantes; os subescores e os atributos derivados aqui documentados constituem a entrada dos classificadores avaliados no Capítulo~\ref{cap:estudo2}.
+A importância atribuída a cada subescore por SHAP descreve a contribuição para a decisão do classificador; os subescores e os atributos derivados aqui documentados constituem a entrada dos classificadores avaliados no Capítulo~\ref{cap:estudo2}.
+
+\subsection{Limitações}\label{sec:e1-limitacoes}
+
+A comparação com registros reais do estudo não foi realizada, e o lote sintético não permite estimar a frequência nem o efeito das divergências entre as implementações nesses dados. O limiar de nomes comuns também difere da formulação de \citeonline{Lucena2013algoritmos}, e a equivalência da base de normalização das proporções permanece não confirmada (Subseção~\ref{sub:nomes-comuns}). Os indicadores de óbito derivados da situação de encerramento constituem vazamento de alvo e são tratados na Seção~\ref{sec:e2-limitacoes}. A importância por SHAP não tem interpretação causal nem ordenação identificável entre atributos redundantes.
 
 \end{chapter}

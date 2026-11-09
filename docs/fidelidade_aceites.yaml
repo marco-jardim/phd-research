@@ -37,6 +37,173 @@
 #     motivo: "Número novo conferido em data/x.csv."
 
 aceites:
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "21c6937e65fc56a2"
+    itens:
+      - negadores:-não
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "477c1861a5562f73"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "186bb61a339178e1"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "f7658146831d4e46"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "8f36ebaf22aae730"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/apendice_ablacao.tex
+    hash_paragrafo_novo: "1dbf4a4a5da4efb4"
+    itens:
+      - metricas:+VPP
+      - siglas:+VPP
+    justificativa: "Revisão 2 (QA final contra o DoD, C5): apêndice gerado por tabelas_review2_w3.appendix_ablation com a terminologia do guia 3.6 ('aceitar como vínculo, rejeitar', 'VPP', 'pares verdadeiros'); valores numéricos são os gerados"
+    autora_aprovou: true
+  - arquivo: text/latex/siglas.tex
+    hash_paragrafo_novo: "be98c599e217ad01"
+    itens:
+      - numeros:-6
+      - siglas:+SUS
+      - siglas:-RL
+    justificativa: "Revisão 2 (QA final, C5): nomes oficiais (SIH/SUS, SIM, Sinasc, CID-10) e retirada da sigla RL, não usada no texto"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "16a30fb2f209a2f0"
+    itens:
+      - comparativos:+abaixo
+      - metricas:+VPP
+      - metricas:-sensibilidade
+      - metricas:-vigilância
+      - negadores:+não
+      - negadores:-nenhuma
+      - negadores:-sem
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+4
+      - numeros:-11
+      - numeros:-42.5%
+      - numeros:-95%
+      - qualificadores:-pelo menos
+      - siglas:+LLM
+      - siglas:+VPP
+      - siglas:-FP
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "7d8b69ecea4acc4d"
+    itens:
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+4
+      - numeros:-11
+      - numeros:-42.5%
+      - numeros:-95%
+      - siglas:+LLM
+      - siglas:+PPV
+      - siglas:-FP
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "444771590cf46364"
+    itens:
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61696
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "28a79cdf95123f11"
+    itens:
+      - negadores:+nem
+      - negadores:+nenhum
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+1
+      - numeros:+1203
+      - numeros:+125
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "af80b100af659fb0"
+    itens:
+      - negadores:+nenhuma
+      - negadores:+não
+      - numeros:+11
+      - numeros:+3
+      - numeros:+42.5%
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "687f446a280e4047"
+    itens:
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61.696
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "d149fa8042956868"
+    itens:
+      - numeros:+1
+      - numeros:+1.203
+      - numeros:+125
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "92d4aec68f36e765"
+    itens:
+      - numeros:+11
+      - numeros:+3
+      - numeros:+42.5%
+    justificativa: "Revisão 2 (QA final, MA2 e MA3): Resumo e Abstract com '215 dos 247 pares verdadeiros (211 pelo corte e 4 abaixo dele)', resultados dos objetivos 1 e 2 e ressalvas; números conferidos contra a conclusão e o registro de invariantes"
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_robustez_arranjo.tex
+    hash_paragrafo_novo: "db53f3ff218733c1"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (QA final, C5): nota da robustez com P como braço do registro interno (decisão D2); células inalteradas"
+    autora_aprovou: true
   - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex
     hash_paragrafo_novo: "5ce13204876ea79a"
     itens:
@@ -413,6 +580,17 @@ aceites:
     justificativa: "W5 (decisão da autora): parágrafo movido de capitulo_dados.tex para o apêndice, mesmos valores da versão pré-revisão."
     autora_aprovou: true
 aceites_numeros:
+  - {arquivo: text/latex/capitulo2.tex, numero: "20.000", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): texto completo de McNutt2020 (.local/fontes/McNutt2020comparison.txt): 20.000 pares no conjunto de óbitos"}
+  - {arquivo: text/latex/capitulo2.tex, numero: "33.005", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): texto completo de McNutt2020: 33.005 pares no registro de saúde pública"}
+  - {arquivo: text/latex/capitulo2.tex, numero: "5,9%", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): texto completo de McNutt2020: 5,9% de duplicatas verdadeiras"}
+  - {arquivo: text/latex/capitulo2.tex, numero: "84,3%", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): texto completo de McNutt2020: 84,3% de pares verdadeiros"}
+  - {arquivo: text/latex/capitulo3.tex, numero: "9", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): ressalva acoplada da âncora C01r restaurada (metas de 9 e de 36)"}
+  - {arquivo: text/latex/conclusao.tex, numero: "16", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): F4 recupera 16 PAR=2 com 17 revisões (data/fusao_filas.csv, F4,par2_top_17)"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "0,089", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): diferença 0,931 menos 0,842 (F1 do RF+SMOTE contra a regra de limiar único, tabela de ablação)"}
+  - {arquivo: text/latex/estudo3_estrategias.tex, numero: "61,1%", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): 151/247 (forma com uma casa decimal do guia)"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "119", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): mínimo dos 200 desempates de O3 na vigilância (data/ordenacao_empates_o3.csv; análise autorizada pela autora em 2026-11-08)"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "16.953", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): mínimo dos 200 desempates de O3 para os 36 (data/ordenacao_empates_o3.csv)"}
+  - {arquivo: text/latex/estudo4_gzcmd.tex, numero: "25.262", autora_aprovou: true, motivo: "Revisão 2 (QA final contra o DoD): máximo dos 200 desempates de O3 para os 36 (data/ordenacao_empates_o3.csv)"}
   - {arquivo: text/latex/tese.tex, numero: "1.203", autora_aprovou: true, motivo: "Revisão 2 (Resumo reescrito, âncora N26): mediana de F4 menos O1 na meta de 36, de estudo4_gzcmd.tex e conclusao.tex"}
   - {arquivo: text/latex/tese.tex, numero: "1,203", autora_aprovou: true, motivo: "Revisão 2 (Abstract reescrito, âncora N26): 1,203 é a forma inglesa de 1.203 (milhar), lida pelo portão como decimal; mesmo valor do Resumo"}
   - {arquivo: text/latex/glossario.tex, numero: "20", autora_aprovou: true, motivo: "Revisão 2 (glossário enxugado): limite de 20 anos na definição das MACD, como em estudo4_gzcmd.tex; sem valor novo"}

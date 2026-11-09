@@ -6,7 +6,7 @@
 \setlength{\tabcolsep}{4pt}
 \begin{tabular}{crrrrr}
 \toprule
-Passo & \shortstack{Potenciais\\pares} & Vínculos & \shortstack{Proporção de\\vínculos (\%)} & \shortstack{Mediana da\\nota final} & \shortstack{Vínculos na área\\cinza da nota (\%)} \\
+Passo & \shortstack{Potenciais\\pares} & \shortstack{Pares\\verdadeiros} & \shortstack{Proporção de pares\\verdadeiros (\%)} & \shortstack{Mediana da\\nota final} & \shortstack{Pares verdadeiros na\\faixa intermediária (\%)} \\
 \midrule
 6  & 2.649  & 80  & 3,0  & 6,48 & 22,5 \\
 9  & 1.449  & 127 & 8,8  & 4,64 & 82,7 \\
@@ -16,5 +16,5 @@ Passo & \shortstack{Potenciais\\pares} & Vínculos & \shortstack{Proporção de\
 
 \smallskip
 {\footnotesize\textit{Fonte}: elaboração própria, auditoria da blocagem do extrato pós-CdR (\path{scripts/m8_auditoria_blocagem.py}); versão editorial de \path{tables/tab_blocagem_rendimento.tex}, com os mesmos valores.
-\par\textit{Nota}: potenciais pares e vínculos são contados distintamente em cada passo; a proporção corresponde ao número de vínculos dividido pelo número de potenciais pares do passo. A mediana da nota final é calculada sobre todas as linhas de cada passo. A área cinza da nota corresponde à nota final do Comparador de Registros (CdR) em $[5,9)$, com a fração desta tabela calculada entre os vínculos do passo; não corresponde à região abaixo do corte do OpenRecLink.}
+\par\textit{Nota}: potenciais pares e pares verdadeiros são contados distintamente em cada passo; a proporção corresponde ao número de pares verdadeiros dividido pelo número de potenciais pares do passo. A mediana da nota final é calculada sobre todas as linhas de cada passo. A faixa intermediária da nota final corresponde à nota final do Comparador de Registros (CdR) em $[5,9)$, com a fração desta tabela calculada entre os pares verdadeiros do passo; não corresponde à região abaixo do corte do OpenRecLink.}
 \end{table}

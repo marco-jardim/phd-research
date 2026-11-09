@@ -42,7 +42,7 @@ FORMULAS = (
 # Número de ocorrências dos quatro negadores por frase consecutiva.
 # Retrato aprovado pelo autor, não meta de redução: valores 3 são deliberados.
 EXPECTED_NEGATIONS = {
-    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0],  # revisão 2: mapa dos capítulos com três frases, sem negação
+    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0, 0],  # QA final: mapa dos capítulos com quatro frases (voltou a frase do Glossário), sem negação
     "O novo pseudônimo é o HMAC-SHA256": [0, 4, 1],
     "A matriz restrita não foi depositada": [3, 1],
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],
@@ -57,8 +57,8 @@ EXPECTED_NEGATIONS = {
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
-    "A ordenação dos classificadores depende da métrica": [1, 1, 1, 0, 0, 2, 0],
-    "As duas implementações não são equivalentes": [1, 1, 3, 1, 0],
+    "A ordenação dos classificadores depende da métrica": [1, 1, 1, 0, 0, 2],  # QA final: seis frases
+    "As duas implementações não são equivalentes": [1, 1],  # QA final: parágrafo dividido pela Subseção de limitações (sec:e1-limitacoes)
 }
 
 
@@ -156,7 +156,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "impede transferir o resultado ao XGBoost" in conclusion
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
-    assert "As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java." in comparator
+    assert r"As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java (Subseção~\ref{sec:e1-limitacoes})." in (LATEX / "estudo1_comparador.tex").read_text(encoding="utf-8")  # revisão 2: a frase saiu do parágrafo de abertura ao criar as Limitações
 
 
 @pytest.mark.parametrize("filename,expected", [

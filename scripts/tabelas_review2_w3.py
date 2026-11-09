@@ -135,10 +135,10 @@ def equity_tables(out):
 
 def appendix_ablation():
     lines = [r"MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
-             r"v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).",
+             r"v3 identifica a política histórica de três ações (aceitar como vínculo, rejeitar e revisão por modelo de linguagem).",
              "", r"As tabelas deste apêndice descrevem a ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), "
              r"nos modos confirmação e vigilância, com MACD ativado ou desativado. Cada tabela apresenta "
-             r"cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de precisão, sensibilidade, "
+             r"cinco sementes e média $\pm$ desvio-padrão amostral. As métricas de VPP, sensibilidade, "
              r"$F_1$ e $F_\beta$ são esperadas, calculadas com as proporções de erro por faixa da configuração "
              r"(\path{gzcmd/eval.py}), sem chamadas a modelo de linguagem. Encaminhados é a contagem "
              r"selecionada para revisão simulada, não o número de respostas de um LLM. "
@@ -171,7 +171,7 @@ def appendix_ablation():
                       rf"\caption{{Ablação restrita aos subescores e à nota final, com partição por COMPREC (registro do Sinan), MACD {state} (Medidas Contínuas de Diferença de Datas de nascimento), modo {label} (maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.}}",
                       rf"\label{{tab:ablacao-comprec-{mode}-macd-{tag}}}", r"\small",
                       r"\resizebox{\textwidth}{!}{%", r"\begin{tabular}{lrrrrrrr}", r"\toprule",
-                      r"Semente & $n$ teste & Precisão & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\",
+                      r"Semente & $n$ teste & VPP & Sensibilidade & $F_1$ & $F_\beta$ & Cobertura autom. & Encaminhados \\",
                       r"\midrule"]
             for _, row in group.iterrows():
                 values = [number(row[c]) for c in columns[:-1]] + [str(int(row.llm_used))]
@@ -181,7 +181,7 @@ def appendix_ablation():
             lines += [r"Média $\pm$ DP & n.a. & " + " & ".join(means) + r" \\", r"\bottomrule", r"\end{tabular}}",
                       r"\par\footnotesize Fonte: \path{" + source + "} e resumo no arquivo "
                       r"\path{data/ablation_comprec_" + suffix + r"_allowlist_summary.csv}. "
-                      r"Cada teste contém 74 vínculos. $\beta=" + number(beta[0], 1).replace(",", "{,}") + r"$. "
+                      r"Cada teste contém 74 pares verdadeiros. $\beta=" + number(beta[0], 1).replace(",", "{,}") + r"$. "
                       r"Contagens por semente são inteiras; a média de encaminhados pode ser fracionária.",
                       r"\end{table}", ""]
     return "\n".join(lines)

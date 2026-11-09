@@ -170,12 +170,13 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     study4 = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'que preserva o corte e decide os demais potenciais pares pela política v3.1, com recalibração isotônica abaixo do corte' in study4
     assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling}' in study4
-    assert 'o arranjo P, que preserva o corte e decide abaixo dele' in pt
-    assert 'arrangement P, with the cut-off preserved and decisions made below it' in en
+    # QA final: o Resumo relata o arranjo P pelos pares verdadeiros aceitos (215 dos 247: 211 pelo corte e 4 abaixo).
+    assert 'o arranjo P, que preserva o corte, aceitou 215 dos 247 pares verdadeiros' in pt
+    assert 'arrangement P, with the cut-off preserved, accepted 215 of 247 true pairs' in en
     assert 'pelo menos 95,0' in (LATEX / 'estudo5_equidade.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
-    assert 'e nos demais foi superior: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
-    assert 'and higher in the others: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
+    assert 'a sensibilidade automática de P na vigilância foi de 42,5\\%: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
+    assert 'the automatic sensitivity of P in surveillance was 42.5\\%: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
     assert 'pois nenhuma dominou em todas as cargas' in pt
     assert 'since no ordering was dominant in every workload' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
