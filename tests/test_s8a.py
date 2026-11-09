@@ -69,18 +69,31 @@ def test_fp_position_and_loss_qualification_follow_sources():
     for mode, expected in [('vigilancia', [17, 11]), ('confirmacao', [4, 4])]:
         assert above.loc[above.modo.eq(mode), 'FP'].tolist() == expected
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
-    assert contem(conclusion, 'não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem', arquivo='text/latex/conclusao.tex')  # migrado: terminologia 3.6
-    assert 'aceita 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in conclusion
-    assert '4 e 8 são PAR~=~2' in conclusion
+    study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+    # Conclusão reescrita: as perdas e as aceitações do LLM mudaram de redação; os detalhes por região ficam no Estudo 4.
+    assert '13 não foram recuperados' in conclusion
+    assert 'foram 27 pares verdadeiros perdidos e 4 falsos positivos' in conclusion
+    assert 'o LLM fez todas as 25 aceitações de P abaixo do corte, das quais 4 eram pares verdadeiros e 21 eram falsos positivos' in conclusion
+    assert 'dez falsos positivos situados em região sem revisão documentada' in conclusion
+    assert contem(study, 'não reproduz 13 e 27 dos 36 pares verdadeiros recuperados pela revisão manual de origem', arquivo='text/latex/estudo4_gzcmd.tex')
+    assert 'aceita, pelo LLM, 25 e 12 potenciais pares abaixo do corte, dos quais 21 e 4' in study
+    assert '4 e 8 são PAR~=~2' in study
     assert 'pior em todo desfecho' not in conclusion
-    assert '17 dos 21 FP' in conclusion and '11 acima do limiar por passo' in conclusion
+    assert '17 dos 21 FP' in study and '11 acima do limiar por passo' in study
 
 
 def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        for term in ('curva de esforço', 'separação entre vínculos aceitos pelo corte e recuperados na revisão', 'ancoragem', 'resultado negativo',
-                     'registro interno', 'orçamento humano'):
+        # Conclusão reescrita: a separação entre aceitos pelo corte e recuperados na revisão vem como "pares verdadeiros"
+        # (contribuição da medida) e a ancoragem do LLM fica no Estudo 4.
+        if name == 'conclusao.tex':
+            terms = ('curva de esforço', 'A tese separa os pares verdadeiros aceitos pelo corte', 'resultado negativo',
+                     'registro interno', 'orçamento humano')
+        else:
+            terms = ('curva de esforço', 'separação entre vínculos aceitos pelo corte e recuperados na revisão', 'ancoragem', 'resultado negativo',
+                     'registro interno', 'orçamento humano')
+        for term in terms:
             # migrado: terminologia 3.6
             # "revisão clerical" e "revisão manual" viram o mesmo marcador, então o final "na revisão"
             # é aceito com ou sem o qualificador.
@@ -91,12 +104,13 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         else:
             # W10a substituiu a recomendação genérica pela fusão exploratória,
             # sem dispensar validação independente nem parada por orçamento.
+            # A recomendação aprovada é O3 isolada ou fundida (F4; F3 com MACD), pela curva de esforço, e não só F4.
             for term in (
-                'Recomenda-se a fusão como ordenação da fila de revisão',
-                'no lugar da ordenação pelo escore do OpenRecLink',
+                'ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida',
+                'preservar o corte do OpenRecLink e, abaixo dele, ordenar',
                 'a validar em coorte nova com referência cega',
-                'sua vantagem sobre a probabilidade calibrada não foi demonstrada',
-                'escolhe-se o ponto de parada pela curva de esforço conforme o orçamento humano',
+                'a diferença entre O3 e as fusões não foi demonstrada',
+                'O ponto de parada deve ser fixado pelo orçamento humano, lido nessa curva',
             ):
                 assert term in text, (name, term)
     thesis = (L / 'tese.tex').read_text(encoding='utf-8')

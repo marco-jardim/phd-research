@@ -24,7 +24,9 @@ def test_falsification_is_prospective_with_explicit_margin_not_point_differences
         assert "outra coorte ou período" in normalized
         assert r"25\%" in normalized and "limite inferior" in normalized
         assert "2/36" not in normalized and "5,6 pontos percentuais" not in normalized
-        assert "réplicas predefinidas" in normalized or "réplicas de partição predefinidas" in normalized
+        # A conclusão reescrita escreve "entre partições predefinidas".
+        assert ("réplicas predefinidas" in normalized or "réplicas de partição predefinidas" in normalized
+                or "entre partições predefinidas" in normalized)
         assert "referência cega" in normalized.lower()
         assert "nota calibrada" not in normalized
     slides = (ROOT / "text/slides/defesa.tex").read_text(encoding="utf-8")
@@ -36,6 +38,7 @@ def test_falsification_is_prospective_with_explicit_margin_not_point_differences
     assert "outra coorte" in slides
     assert "2/36" not in slides and "5,6 pontos percentuais" not in slides
     assert ("não foi testado" in text("conclusao.tex")
+            or "não foi testada" in text("conclusao.tex")
             or "não foi estimada nem testada" in text("conclusao.tex"))
     assert "nenhuma dessas avaliações foi realizada" in text("estudo4_gzcmd.tex").lower()
 
@@ -45,7 +48,8 @@ def test_dossier_coverage_matches_aggregate_and_no_auditability_is_claimed():
         rows = list(csv.DictReader(stream))
     assert len(rows) == 29
     assert sum(row["enviado"] == "sim" for row in rows) == 14
-    for name in ("estudo4_gzcmd.tex", "conclusao.tex", "apendice_prompts.tex"):
+    # A conclusão reescrita não detalha o dossiê enviado ao LLM; a cobertura permanece no Estudo 4 e no apêndice de prompts.
+    for name in ("estudo4_gzcmd.tex", "apendice_prompts.tex"):
         source = text(name)
         assert "14 dos 29 subescores" in source
         assert "penalidade por nome comum da mãe" in source
@@ -53,6 +57,7 @@ def test_dossier_coverage_matches_aggregate_and_no_auditability_is_claimed():
         assert "evidência ausente" in source or "evidências ausentes" in source
     assert r"\input{tables/editorial/tab_dossie_campos.tex}" in text("estudo4_gzcmd.tex")
     assert "política auditável" not in text("conclusao.tex")
+    assert "não houve exercício independente de auditoria das justificativas" in text("conclusao.tex")
     assert "não demonstra auditabilidade" in text("estudo4_gzcmd.tex")
 
 

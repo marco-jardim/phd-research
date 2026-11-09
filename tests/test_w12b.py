@@ -54,11 +54,18 @@ def test_model_comparison_uses_acceptance_stratum_not_total_sample():
 
 def test_conclusion_preserves_denominators_and_glossary_defines_new_models():
     conclusion = text("text/latex/conclusao.tex")
-    for fragment in ("configuração de sensibilidade do NB02", "Random Forest com pesos extremos, limiar 0,3",
-                     r"28,9\% (13 em 45)", r"42,3\% (11 em 26)",
-                     "por exemplo após mudança de estado civil", "Soundex do primeiro e do último fragmentos",
-                     "Experimento~1 do Estudo~4", "propagação por pessoa recuperou somente dois vínculos"):
-        assert fragment in conclusion
+    # Conclusão reescrita: esses denominadores e glosas permanecem nos capítulos e apêndices de origem.
+    sources = {"apendice_estrategias.tex": ("Random Forest com pesos extremos da estratégia de sensibilidade (NB02) no limiar de 0,3",),
+               "estudo4_gzcmd.tex": (r"28,9\% (13 pares verdadeiros em 45 aceitações)",
+                                     r"42,3\% (11 pares verdadeiros em 26 aceitações)",
+                                     "recuperou dois dos 36 pares verdadeiros (PAR~=~2) sem propagar PAR~=~0"),
+               "estudo5_equidade.tex": ("por exemplo após mudança de estado civil",
+                                        "Soundex do primeiro e do último fragmentos"),
+               "estudo1_comparador.tex": ("Experimento~1 do Estudo~4",)}
+    for name, fragments in sources.items():
+        for fragment in fragments:
+            assert fragment in text(f"text/latex/{name}"), (name, fragment)
+    assert "LLM não deve aceitar vínculos sozinho" in conclusion
     glossary = text("text/latex/glossario.tex")
     for name in ("Claude Opus 5.5", "Claude Fable 5.1"):
         assert rf"\item[{name}]" in glossary

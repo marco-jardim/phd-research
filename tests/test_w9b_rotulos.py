@@ -137,10 +137,10 @@ def test_future_comparisons_and_script_values_track_aggregate_sources():
     with (ROOT / 'data/fusao_filas.csv').open(encoding='utf-8') as handle:
         rows = {(r['fila'], r['metrica']): r for r in csv.DictReader(handle)}
     conclusion = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    for key in ('Fisch2024stratppi', 'Callaghan2020stopping', 'Lewis2021certifying', 'Lam2026clerical'):
+    # Conclusão reescrita: Fisch2024stratppi, "sem encerramento automático" e "não foi avaliada" saíram (concisão).
+    for key in ('Callaghan2020stopping', 'Lewis2021certifying', 'Lam2026clerical'):
         assert key in conclusion
-    for phrase in ('1.387 revisões', '2.521 pela ordenação', 'cerca de 96',
-                   'sem encerramento automático', 'não foi avaliada'):
+    for phrase in ('F4, 1.387 e O3, 23.443', 'O1 exige 2.521 revisões', 'exigiu em média 96 revisões'):
         assert phrase in conclusion
     script = (ROOT / 'text/slides/roteiro_defesa.md').read_text(encoding='utf-8')
     questions = script.split('## Perguntas prováveis')[1].split('## Figuras e critérios')[0]

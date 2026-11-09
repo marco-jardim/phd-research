@@ -45,21 +45,25 @@ def test_objectives_and_conclusion_do_not_recommend_failed_recalibration():
     assert "O objetivo específico 4 mantém" not in objectives
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "pior em todo desfecho" not in conclusion
-    assert "não reproduz 13 e 27 dos 36" in conclusion
-    assert "Recomenda-se a fusão como ordenação da fila de revisão" in conclusion
-    assert "sua vantagem sobre a probabilidade calibrada não foi demonstrada" in conclusion
+    # Conclusão reescrita: as perdas de P (13 e 27 dos 36) e a recomendação (O3 isolada ou fundida, F4) mudaram de redação.
+    assert "13 não foram recuperados" in conclusion
+    assert "foram 27 pares verdadeiros perdidos" in conclusion
+    assert "ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida" in conclusion
+    assert "escolhendo entre elas pela curva de esforço" in conclusion
+    assert "a diferença entre O3 e as fusões não foi demonstrada" in conclusion
     assert "coorte nova com referência cega" in conclusion
-    hypothesis = conclusion.split("\n\n")[1]
-    assert "probabilidade calibrada fora da amostra do classificador (O3)" in hypothesis
-    assert r"25\% menos revisões que O1" in hypothesis
+    hypothesis = conclusion.split(r"\label{sec:concl-trabalhos-futuros}")[1].split("\n\n")[1]
+    assert "A hipótese exige outra coorte ou período" in hypothesis
+    assert "se a ordenação pela probabilidade calibrada (O3) não atingisse a recuperação obtida por P" in hypothesis
+    assert r"25\% menos revisões que a ordenação pelo escore do OpenRecLink (O1)" in hypothesis
     assert "limite inferior" in hypothesis
     assert "em cada uma das duas metas" in hypothesis
     assert "$2/36$" not in hypothesis
-    assert "validação registrada em dados novos" in conclusion
+    assert "Constitui hipótese a validar em outra coorte" in conclusion
     assert "Recomenda-se a adoção de dois" not in conclusion
-    recommendation = conclusion.split(r"\label{sec:concl-recomendacoes}")[1].split(r"\section{Trabalhos futuros}")[0]
+    recommendation = conclusion.split(r"\label{sec:concl-recomendacoes}")[1].split(r"\section{Validação e próximos passos}")[0]
     assert "recalibração isotônica" not in recommendation
-    assert "validação" in recommendation and "hipótese" in recommendation
+    assert "a validar em coorte nova" in recommendation
     assert "quantifica-se o custo de revisão manual" not in conclusion
     assert "sem demonstrar manutenção integral" not in conclusion
     for path in [LATEX / name for name in ("capitulo1.tex", "capitulo3.tex", "conclusao.tex",

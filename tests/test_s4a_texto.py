@@ -61,11 +61,15 @@ def test_reuse_caveat_present_in_method_limitations_and_conclusion():
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "reutilizam majoritariamente" in method
     assert r"$P\cup B1$" in method and "14" in method
-    for text in (method, limits, conclusion):
+    # Conclusão reescrita (2026-11-08): a ressalva de reutilização das chamadas ao LLM permanece no método e nas
+    # limitações do Estudo 4; a conclusão a resume como análise \textit{post hoc} sob revisor simulado.
+    for text in (method, limits):
         assert "não é prospectiva" in text
-    for text in (limits, conclusion):
+    for text in (limits,):
         assert r"\ref{sec:e4-arranjo-metodo}" in text
         assert "reutilização" in text
+    assert r"O achado é \textit{post hoc}" in conclusion
+    assert "revisor humano simulado sem erros (revisor perfeito)" in conclusion
 
 
 def test_final_editorial_contract_and_table_placement():
@@ -77,12 +81,14 @@ def test_final_editorial_contract_and_table_placement():
         assert "quatro contra dez" not in text
         assert r"\ref{sec:e4-mesma-carga}" in text or r"\ref{tab:cap8-arranjo-corte-par2}" in text
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "P usaria 121 revisões para 23" in conclusion
-    assert "O3 recuperaria 22 na mesma carga" in conclusion
-    assert "21 e 4 foram rejeitados ou não examinados" in conclusion
-    assert "344 potenciais pares avaliados pelo LLM" in conclusion
+    assert "P recuperaria 23 pares verdadeiros com 121 revisões" in conclusion
+    assert "contra 22 de O3, no máximo um a mais na mesma carga humana" in conclusion
+    assert "introduziu 21 falsos positivos" in conclusion
+    assert "Na confirmação, foram 27 pares verdadeiros perdidos e 4 falsos positivos" in conclusion
+    # Os lotes de 344 potenciais pares avaliados pelo LLM saíram da conclusão por concisão; constam do apêndice.
+    assert "344 potenciais pares" in (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
     assert "revisor perfeito" in conclusion
-    assert "Sob a mesma hipótese de revisor e na mesma carga, entre O1 a O4 e P, nenhuma domina" in conclusion
+    assert "Nenhuma ordenação da fila dominou as demais em todas as cargas" in conclusion
     chapter = (LATEX / "estudo5_equidade.tex").read_text(encoding="utf-8")
     active = re.sub(r"(?m)^%.*$", "", chapter)
     cutoff = active.index(r"\subsection{Comparação com o corte 6,0}")
@@ -143,18 +149,25 @@ def test_notification_year_aggregates_reproduce_from_private_input():
 def test_review3_scope_and_experiment1_caveats():
     # estudo2 revisado (revisão 2): o Experimento 1 e data/exp1_vazamento_comparacao.csv ficam no
     # estudo1, na conclusão e no apêndice de sensibilidade; o estudo2 remete ao vazamento sem repeti-los
-    for name in ("estudo1_comparador.tex", "conclusao.tex", "apendice_sensibilidade.tex"):
+    # A conclusão reescrita não retoma o Experimento 1; as ressalvas ficam nos capítulos e apêndices de origem.
+    for name in ("estudo1_comparador.tex", "apendice_sensibilidade.tex"):
         text = (LATEX / name).read_text(encoding="utf-8")
         assert "GZ-CMD v3.1" in text and "arranjo P" in text
         assert r"\path{data/exp1_vazamento_comparacao.csv}" in text
         assert "situação de encerramento" in text
+    estudo4 = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
+    for phrase in ("0,941", "0,916", r"55,0\%", r"34,7\%", "as cinco partições de teste se sobrepõem"):
+        assert phrase in estudo4, phrase
+    assert "atributos restritos" in (LATEX / "apendice_sensibilidade.tex").read_text(encoding="utf-8")
+    assert "amostra revisada de forma independente" in (LATEX / "glossario.tex").read_text(encoding="utf-8")
     text = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    for phrase in ("0,941", "0,916", r"55,0\%", r"34,7\%", "conjuntos de teste sobrepostos", "atributos restritos", "amostra revisada de forma independente", "não examinados", "API externa", "causa associada", "direção dominante não é identificável"):
+    for phrase in ("não examinados", "provedores externos", "a direção dominante e a magnitude do viés não são identificáveis"):
         assert phrase in text, phrase
     objectives = (LATEX / "capitulo3.tex").read_text(encoding="utf-8")
     assert "investigação desnecessária" in objectives
     assert "sem investigação" not in objectives
-    for name in ("estudo5_equidade.tex", "conclusao.tex"):
+    # A ressalva sobre a geração de candidatos permanece no Estudo 5; a conclusão reescrita não a repete.
+    for name in ("estudo5_equidade.tex",):
         source = (LATEX / name).read_text(encoding="utf-8")
         assert "não detecta" in source
         assert "nem compara óbitos vinculados e não vinculados" in source

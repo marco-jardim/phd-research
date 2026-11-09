@@ -41,7 +41,8 @@ def test_objectives_and_contribution_do_not_claim_audited_policy_or_wrong_incomp
         assert "decisões auditáveis" not in source
         if name != "capitulo3.tex":  # C3-04: frase retirada do objetivo
             assert "sem exercício independente de auditoria das justificativas" in source
-    assert "não pela política de quatro ações" in text("conclusao.tex").split("\n\n")[1]
+    opening = text("conclusao.tex").split(r"\section{Resposta aos objetivos}")[0]
+    assert "e não da automação das decisões pela política de quatro ações" in opening
 
 
 def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
@@ -76,12 +77,14 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
 
 def test_f1_comparison_has_false_positives_and_explicit_calculation():
     conclusion = text("conclusao.tex")
-    assert "um ou dois VP e até três FP" in conclusion
-    assert "diferenças de 0,012 a 0,027" in conclusion
+    # Conclusão reescrita: a comparação de F1 fica como "variou de 0,880 a 0,918, diferença que não permite ordenar os métodos";
+    # o cálculo por VP e FP e o intervalo de 0,012 a 0,027 deixaram de constar (nenhum capítulo os repete) por concisão.
+    assert "o $F_1$ médio variou de 0,880 a 0,918, diferença que não permite ordenar os métodos" in conclusion
     assert "abaixo da variação" not in conclusion
     # Revisão 2: o trecho da variação entre controles A e A0 do Estudo 3 está no apêndice das estratégias.
-    for name in ("apendice_estrategias.tex", "conclusao.tex"):
+    for name in ("apendice_estrategias.tex",):
         source = text(name)
+        assert "um ou dois verdadeiros positivos" in source
         assert re.search(r"XGBoost e Random Forest entre os controles A(?: \([^)]*\))? e A0", source)
         assert "cálculo da tese" in source or "calculada na tese" in source
         assert "partição original do comparativo" in source
@@ -147,9 +150,8 @@ def test_remaining_editorial_caveats_and_reductions():
     assert "cobre $C_{LLM}$ de 0,005 a 0,25" in study
     for name in ("estudo4_gzcmd.tex", "apendice_pacote.tex", "capitulo_dados.tex"):
         assert not re.search(r"\bbandas?\b", text(name))
-    conclusion = text("conclusao.tex")
-    assert "A versão do prompt dos braços selecionados não foi identificada" in conclusion
-    assert "As limitações do filtro são discutidas" in conclusion
+    # Conclusão reescrita: a versão do prompt dos braços selecionados e as limitações do filtro permanecem no Estudo 4.
+    assert "a versão do prompt não está registrada nos arquivos originais dos braços selecionados" in study
     assert "a tese não participou dessas etapas" not in text("capitulo1.tex")
     assert "sem distingui-la de abstenção generalizada" in text("capitulo1.tex")
     assert "não mede concordância entre registros" in text("estudo1_comparador.tex")
@@ -162,6 +164,11 @@ def test_remaining_editorial_caveats_and_reductions():
 
 
 def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
+    """Cada código de fila (O1 a O4) é definido onde aparece.
+
+    Na tese.tex (resumo), em cada parágrafo. Na conclusão reescrita (2026-11-08), que define as filas na primeira
+    menção do capítulo e depois usa só o código, exige-se a definição no parágrafo da primeira menção.
+    """
     definitions = {
         "O1": ("escore do OpenRecLink",),
         "O2": ("nota final do CdR", "nota do CdR"),
@@ -169,10 +176,18 @@ def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
                "probabilidade isotônica fora da amostra"),
         "O4": ("probabilidade recalibrada de P",),
     }
+    # Forma de definição usada na conclusão: "ordenação pela probabilidade calibrada fora da amostra (O3)".
+    definitions_conclusion = dict(definitions, O3=definitions["O3"] + ("probabilidade calibrada fora da amostra (O3)",))
     for name in ("conclusao.tex", "tese.tex"):
         source = text(name)
+        known = definitions_conclusion if name == "conclusao.tex" else definitions
         for code in set(re.findall(r"\bO[1-4]\b", source)):
-            assert any(term in source for term in definitions[code]), (name, code)
+            assert any(term in source for term in known[code]), (name, code)
+        if name == "conclusao.tex":
+            for code in sorted(set(re.findall(r"\bO[1-4]\b", source))):
+                first = next(p for p in source.split("\n\n") if re.search(rf"\b{code}\b", p))
+                assert any(term in first for term in definitions_conclusion[code]), (name, code, first)
+            continue
         for paragraph in source.split("\n\n"):
             for code in set(re.findall(r"\bO[1-4]\b", paragraph)):
                 terms = definitions[code]

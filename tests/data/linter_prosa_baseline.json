@@ -1,26 +1,11 @@
 {
-  "gerado_em": "2026-11-08T20:21:54",
+  "gerado_em": "2026-11-08T21:12:01",
   "versao": 2,
   "violacoes": {
-    "0704b5e66c8e": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "ge}, também denominado relacionamento de registros (\\textit{record linkage}), foi examinada a partir da sensibilidade e do valor predi"
-    },
     "09b6aac80528": {
       "arquivo": "text/latex/apendice_linkage_origem.tex",
       "regra": "R02",
       "trecho": "aixa corresponde à região abaixo do corte do OpenRecLink. A área cinza da nota designa outra região, o intervalo $[5,9)$ da nota f"
-    },
-    "0adb92edf932": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "O3 e O4 recuperam os 23 PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte) que P recuperou na vigilância com 125 e 10"
-    },
-    "0b3d4ef26bf2": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "atribui-lhes não vínculo por custo. Na vigilância do óbito, não vínculo por esgotamento do orçamento não equivale a óbito não notif"
     },
     "0b8224dec3e1": {
       "arquivo": "text/latex/apendice_algoritmo.tex",
@@ -31,11 +16,6 @@
       "arquivo": "text/latex/apendice_formalizacao.tex",
       "regra": "R02",
       "trecho": "prioridades epidemiológicas. Essas regiões não redefinem a área cinza da nota nos resultados, fixada em $[5,9)$ do Comparador de"
-    },
-    "0bc29114138b": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "identificados, em ambiente de acesso controlado. No M7, na área cinza da nota, um escore programado obteve área sob a curva ROC d"
     },
     "0c1b9d60f15a": {
       "arquivo": "text/latex/apendice_formalizacao.tex",
@@ -52,11 +32,6 @@
       "regra": "R02",
       "trecho": "ge}, também denominado relacionamento de registros (\\textit{record linkage}), a avaliação de potenciais pares não equivale à avaliação"
     },
-    "0f98b1c1399e": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "idade é descritiva, e a proporção de falsos positivos entre não vínculos (FPR) é seu complemento. A referência operacional mantém 24"
-    },
     "11dbc59f9a35": {
       "arquivo": "text/latex/apendice_busca.tex",
       "regra": "R02",
@@ -66,11 +41,6 @@
       "arquivo": "text/latex/apendice_formalizacao.tex",
       "regra": "R02",
       "trecho": "r $p = P(y=1\\mid s)$, onde $y=1$ denota um vínculo (\\textit{match}). Neste apêndice, $s$ denota somente o escore bruto a cali"
-    },
-    "143fb6993f5d": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "a de sensibilidade e de proporção de falsos positivos entre não vínculos simultaneamente (\\textit{equalized odds}), para decisões im"
     },
     "15ad6f7ef40b": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
@@ -96,11 +66,6 @@
       "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
       "regra": "R02",
       "trecho": "& 0 & 0 & 51,4 & 70 & 120 & n.a. \\\\ CdR, revisão humana da área cinza da nota & ambos & 21.620 & 0 & 37,7 & 2 & 3 & 95,7 \\\\ \\bott"
-    },
-    "1c6cb76170a7": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "os pela revisão clerical de origem, perdidos por decisão de não vínculo sem chegar ao revisor; aceita 25 e 12 potenciais pares abai"
     },
     "1d82a7f32b90": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
@@ -177,11 +142,6 @@
       "regra": "R02",
       "trecho": "\\label{alg:gzcmd-pipeline} A política v3 distingue vínculo, não vínculo e revisão por modelo de linguagem de grande porte (LLM); v3"
     },
-    "4390a15a4a9e": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "regra de duas ações (revisar ou não vincular) atribui-lhes não vínculo por custo. Na vigilância do óbito, não vínculo por esgotame"
-    },
     "43e0c9a0efa8": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
       "regra": "R02",
@@ -192,20 +152,10 @@
       "regra": "R03",
       "trecho": "dos principais como registro dos experimentos originais. No \\textit{linkage}, também denominado relacionamento de registros (\\textit{rec"
     },
-    "44bd40b04176": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "t{Cascata v3.1 sobre a base inteira, comparação}: aceita os MATCH (decisão de vínculo) do motor ou do LLM sem preservar previ"
-    },
     "44f05419f403": {
       "arquivo": "text/latex/apendice_formalizacao.tex",
       "regra": "R02",
       "trecho": "pondendo a vincular (\\textit{Match}), não vincular (\\textit{Non-match}) e revisar (\\textit{Review}), respectivamente. As proposiç"
-    },
-    "451f2911c8f0": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "eparação entre vínculos aceitos pelo corte e recuperados na revisão clerical abaixo dele; a curva de esforço aplicada a este fluxo como"
     },
     "4858628832a1": {
       "arquivo": "text/latex/apendice_linkage_origem.tex",
@@ -217,30 +167,10 @@
       "regra": "R02",
       "trecho": "ar inferior)} \\] Declara-se vínculo se $R\\ge T_\\mu^{GZ}$ e não-vínculo se $R\\le T_\\lambda^{GZ}$, com revisão estritamente ótima em"
     },
-    "4a09e6df75a2": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R03",
-      "trecho": "on{Método}\\label{sec:e5-metodo} A equidade das decisões de \\textit{linkage}, também denominado relacionamento de registros (\\textit{rec"
-    },
-    "4b50eff89464": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "recuperaria 37,7\\%; a revisão integral dos 21.620 pares da área cinza da nota projetaria 95,7\\%, sob sensibilidade humana hipotét"
-    },
     "4ec562b2910a": {
       "arquivo": "text/latex/apendice_prompts.tex",
       "regra": "R06",
       "trecho": "} } ''' \\end{verbatim} } \\subsection*{Agent-A} {\\fontsize{4.5}{6}\\selectfont \\begin{verbatim} Você é o Agent-A. Analise"
-    },
-    "5066d361e3d0": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "com pesos de classe balanceados, mas a área sob a curva de precisão e sensibilidade (AUC-PR) da regressão logística foi de 0,96"
-    },
-    "5145d6298af1": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "centa dois e quatro dos 25 PAR~=~2 (vínculos recuperados na revisão clerical abaixo do corte) desse passo; na vigilância, fica abaixo da"
     },
     "5182f947eca7": {
       "arquivo": "text/latex/apendice_prompts.tex",
@@ -257,11 +187,6 @@
       "regra": "R02",
       "trecho": "guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. v3.1 distingue revisão humana da rev"
     },
-    "54feb83cb8f8": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "encaminhados ao humano, diferindo dos vínculos perdidos por não vínculo do Estudo~4, que não chegam ao revisor. \\section{Resultado"
-    },
     "565f7968d3bf": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R08",
@@ -271,16 +196,6 @@
       "arquivo": "text/latex/tables/editorial/tab_cap8_ancoras_decisao.tex",
       "regra": "R02",
       "trecho": "ibrar. CdR: Comparador de Registros; $v$: sua nota final. A área cinza da nota não é a região abaixo do corte do OpenRecLink. \\end"
-    },
-    "585bf7e854cc": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "ificador (O3). Como filtro de \\texttt{NONMATCH} (decisão de não vínculo) antes do revisor humano, com 96 pares enviados ao LLM na v"
-    },
-    "58a116bb1d02": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "quidade das decisões de \\textit{linkage}, também denominado relacionamento de registros (\\textit{record linkage}), foi examinada a partir da sensib"
     },
     "5a050db1f394": {
       "arquivo": "text/latex/apendice_linkage_origem.tex",
@@ -337,11 +252,6 @@
       "regra": "R02",
       "trecho": "Entre parênteses, IC de Wilson de 95\\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. Fon"
     },
-    "687706e91041": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "score do OpenRecLink, os PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte) recuperados tenderiam a se concentrar no t"
-    },
     "688497d76565": {
       "arquivo": "text/latex/apendice_busca.tex",
       "regra": "R02",
@@ -357,11 +267,6 @@
       "regra": "R02",
       "trecho": "ção isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. O3: ordenação pela probabilidade calibrada"
     },
-    "697f9a678eaf": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "esquemas de blocagem e comparadores sobre a distribuição da área cinza e a estabilidade dos modelos; e (vi) investigação de arquit"
-    },
     "6a7bec354684": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_referencia.tex",
       "regra": "R02",
@@ -371,11 +276,6 @@
       "arquivo": "text/latex/apendice_formalizacao.tex",
       "regra": "R02",
       "trecho": "estimadas. Essa formulação internaliza o compromisso entre precisão e sensibilidade (controlado pela razão $C_{FP}/C_{FN}$) e a"
-    },
-    "6b7a8691bba2": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "correspondem a nove e 36 PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte). O1 designa a ordenação pelo escore do Ope"
     },
     "6bee384dcb97": {
       "arquivo": "text/latex/tables/editorial/tab_blocagem_rendimento.tex",
@@ -396,11 +296,6 @@
       "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
       "regra": "R02",
       "trecho": "\\\\ \\qquad UNSURE & 3 (3) & 0 (0) & 9 (9) & 3 (3) \\\\ \\qquad NONMATCH & 5 (5) & 0 (0) & 11 (10) & 7 (5) \\\\ \\quad Humano direto &"
-    },
-    "7084376ad80b": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "no processo de \\textit{linkage} de origem (corte seguido de revisão clerical) e, quanto à carga, frente a ordenações de mesma carga. O1"
     },
     "726561ca0d71": {
       "arquivo": "text/latex/tese.tex",
@@ -447,11 +342,6 @@
       "regra": "R02",
       "trecho": "min\\{L_M, L_N, L_H, L_L\\}$, com desempate na ordem vínculo, não-vínculo, humano e LLM \\ENDFOR \\medskip \\STATE \\textbf{Fase 4: Orça"
     },
-    "8a30dddae264": {
-      "arquivo": "text/latex/estudo5_equidade.tex",
-      "regra": "R02",
-      "trecho": "o acompanhar proporções distintas de falsos positivos entre não vínculos. Não equivale a exigir VPP e \\textit{equalized odds} simult"
-    },
     "8ae24a09dc84": {
       "arquivo": "text/latex/apendice_prompts.tex",
       "regra": "R06",
@@ -481,11 +371,6 @@
       "arquivo": "text/latex/tables/editorial/tab_cap8_tamanho_modelo.tex",
       "regra": "R02",
       "trecho": "}{!}{ \\begin{tabular}{lrrrrrr} \\toprule Modelo & V1: $n$ & MATCH & FP & VPP (\\%) & V2: $n$ & Recuperados/descartados/UNSURE"
-    },
-    "9928894499f1": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "eferência recupera os 36 PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte) por definição do \\textit{label}, e o códig"
     },
     "9a2aa83da6ef": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
@@ -537,11 +422,6 @@
       "regra": "R02",
       "trecho": "ínculos referentes a pessoas diferentes, por ela denominada área cinza (p.~34); nesta tese, essa faixa corresponde à região abaixo"
     },
-    "b42a6f8d0fbb": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "lores que não são comparáveis aos da ablação. A redução da revisão clerical de 21.620 para 41 pares, de 99,8\\%, contrapunha a área cinz"
-    },
     "ba5cbf131b93": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
       "regra": "R02",
@@ -587,11 +467,6 @@
       "regra": "R02",
       "trecho": "e perder o vínculo de um óbito custe mais que investigar um falso vínculo, embora um falso vínculo também possa levar ao encerramento"
     },
-    "cb9487d5b931": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "mo de cinco; entre os 13 PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte) que ele não aceitara, dois foram recuperad"
-    },
     "cc9e066a686c": {
       "arquivo": "text/latex/apendice_formalizacao.tex",
       "regra": "R02",
@@ -607,16 +482,6 @@
       "regra": "R02",
       "trecho": "egin{tabular}{llrrrl} \\toprule Modo & Classe real & MATCH & NONMATCH & Total & Protocolo \\\\ \\midrule Vigilância & Positivo & 72"
     },
-    "ce3ba40dd76f": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "clerical de 21.620 para 41 pares, de 99,8\\%, contrapunha a área cinza da nota aos 41 inconclusivos encaminhados ao humano pela ca"
-    },
-    "cf524bc35f93": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "OpenRecLink, e dois são PAR~=~2 (vínculos recuperados pela revisão clerical abaixo do corte); esses 27 vínculos pertencem a 24 registro"
-    },
     "cf8b64caa153": {
       "arquivo": "text/latex/tese.tex",
       "regra": "R05",
@@ -627,11 +492,6 @@
       "regra": "R02",
       "trecho": "e isolado & ambos & 0 & 0 & 85,4 & 0 & 36 & n.a. \\\\ Corte + revisão clerical de origem & ambos & cenário $\\geq 2.156$ & 0 & 85,4 & 0 & 0"
     },
-    "d1bc15a5b194": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R03",
-      "trecho": "não corresponde ao corte por passo aplicado no processo de \\textit{linkage} de origem (\\path{data/epidemiological_impact.csv}). Dos 27"
-    },
     "d253b08ee2a0": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_cascata_v31.tex",
       "regra": "R02",
@@ -641,11 +501,6 @@
       "arquivo": "text/latex/tables/editorial/tab_cap8_filtro_llm.tex",
       "regra": "R02",
       "trecho": "a.csv}.} \\par\\footnotesize PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: v"
-    },
-    "d2a9fc869313": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "}). P não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem, perdidos por decisão de não vínculo sem chegar a"
     },
     "d49170b662af": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",
@@ -742,20 +597,10 @@
       "regra": "R02",
       "trecho": "a, sem revisão nos empates, declara vínculo se $R\\ge R^*$ e não-vínculo se $R<R^*$. Em $C_{LLM}=H$, o intervalo aberto de revisão é"
     },
-    "f4b1bb22366e": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "DeepSeek V4.1 Flash teve zero \\texttt{NONMATCH} (decisão de não vínculo) em 1.845 revisões completas com v4, sem saídas do motor (\\"
-    },
     "f628797f2669": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_sensibilidade_humana.tex",
       "regra": "R02",
       "trecho": ". & P & 17 & 17 & 89{,}05 & 89{,}06 & 89{,}07 \\\\ Conf. & P, MATCH ao humano & 29 & 29 & 88{,}89 & 89{,}03 & 89{,}07 \\\\ Conf."
-    },
-    "f71679aa55cb": {
-      "arquivo": "text/latex/conclusao.tex",
-      "regra": "R02",
-      "trecho": "humana observada; o filtro de \\texttt{NONMATCH} (decisão de não vínculo) requer respostas de uma única execução, com protocolo regi"
     },
     "fbe7c75db59c": {
       "arquivo": "text/latex/tables/editorial/tab_cap8_arranjo_corte.tex",

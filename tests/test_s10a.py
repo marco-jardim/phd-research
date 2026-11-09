@@ -24,24 +24,25 @@ def test_note_numeric_contract_rejects_changed_scenarios(old, new):
 
 def test_local_editorial_redundancies_and_number_forms():
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
-    recommendation = conclusion.split(r'\label{sec:concl-recomendacoes}')[1].split(r'\section{Trabalhos futuros}')[0]
-    assert recommendation.lower().count('nenhuma ordenação domina em todas as cargas') == 1
+    recommendation = conclusion.split(r'\label{sec:concl-recomendacoes}')[1].split(r'\section{Validação e próximos passos}')[0]
+    assert recommendation.lower().count('nenhuma ordenação dominou em todas as cargas') == 1
     for name in ('capitulo1.tex','conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
         if name == 'capitulo1.tex':
             assert 'na vigilância, em $k=96$' in text
         else:
-            # W6 remete as limitações na seção de contribuições; a síntese
-            # mantém a carga e as perdas do filtro, sem repetir o parágrafo.
-            assert 'com 96 pares enviados ao LLM na vigilância' in text
-            assert r'As limitações do filtro são discutidas na Seção~\ref{sec:e4-filtro}' in text
+            # Conclusão reescrita: a carga de 96 revisões de P permanece na síntese; o filtro de NONMATCH
+            # (96 pares enviados ao LLM, nove dos 22 descartados) fica no Estudo 4, sem repetição na conclusão.
+            assert 'P submeteu 344 potenciais pares ao LLM, com 755 chamadas, e encaminhou 96 ao revisor humano' in text
+            assert 'descartou nove dos 22 PAR~=~2 do topo' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
         assert 'no topo de 96 pares da vigilância, em $k=96$' not in text
         # capitulo1.tex (revisado, modo estrito): "pares verdadeiros" é a classe segundo a referência (terminologia 3.6).
         if name == 'capitulo1.tex':
             # o "22" saiu desta frase por ambiguidade; N27 do registro exige 22, k=96 e "nove" no parágrafo.
             assert contem(text, 'descartou nove dos pares verdadeiros do topo', arquivo=f'text/latex/{name}')
         else:
-            assert contem(text, 'descartou nove dos 22 pares verdadeiros', arquivo=f'text/latex/{name}') or '9 dos 22 PAR~=~2' in text  # migrado: terminologia 3.6
+            # Conclusão reescrita: o detalhe do filtro saiu da conclusão e permanece no Estudo 4 (verificado acima).
+            assert 'descartou nove dos 22' not in text
     study = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert 'O2 recupera 9 PAR~=~2 com 11 revisões' in study
     assert 'no feminino, a queda é de 10 pontos' in study

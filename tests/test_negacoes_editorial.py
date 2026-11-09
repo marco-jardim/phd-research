@@ -28,7 +28,8 @@ PARAGRAPHS = [
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A paridade simultânea de sensibilidade e VPP adotada"),
     ("estudo5_equidade.tex", "A construção da referência operacional limita a inferência"),
-    ("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais"),
+    # Conclusão reescrita (2026-11-08): o parágrafo dos Estudos 2 e 3 abre a resposta ao objetivo de classificadores.
+    ("conclusao.tex", "A ordenação dos classificadores depende da métrica"),
     ("estudo1_comparador.tex", "As duas implementações não são equivalentes"),
 ]
 FORMULAS = (
@@ -56,7 +57,7 @@ EXPECTED_NEGATIONS = {
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
-    "O terceiro objetivo comparou estratégias operacionais": [0, 0, 0, 2, 1],
+    "A ordenação dos classificadores depende da métrica": [1, 1, 1, 0, 0, 2, 0],
     "As duas implementações não são equivalentes": [1, 1, 3, 1, 0],
 }
 
@@ -149,10 +150,10 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
-    conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")
-    assert r"não fundamentam a adoção dos \textit{pipelines} avaliados" in conclusion
-    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico dessas estratégias." in conclusion
-    assert "seu efeito não se transfere automaticamente ao XGBoost" in conclusion
+    conclusion = paragraph("conclusao.tex", "A ordenação dos classificadores depende da métrica")
+    assert r"não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados" in conclusion
+    assert r"Esses estudos não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados, e o GZ-CMD e o arranjo P, que preserva o corte, não usam os indicadores." in conclusion
+    assert "impede transferir o resultado ao XGBoost" in conclusion
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
     assert "As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java." in comparator
@@ -161,7 +162,6 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
 @pytest.mark.parametrize("filename,expected", [
     ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
     ("estudo2_classificadores.tex", "A análise original usou validação cruzada estratificada com cinco partições da base completa, sem repetições"),
-    ("conclusao.tex", r"A análise de estabilidade descreve a estabilidade interna entre réplicas, não validação em novos dados \cite{Jardim2026phdrepo}."),
     ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),

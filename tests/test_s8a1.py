@@ -112,8 +112,13 @@ def test_acceptances_split_true_and_false_and_match_to_human_comparator():
     assert tuple(data.loc['confirmacao', ['P_revisoes_humanas_total', 'P_par2_recuperados', 'O3_par2_mesma_carga', 'O3_k_min_igualar_P']]) == (29, 9, 9, 29)
     for name in ('estudo4_gzcmd.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        assert 'dos quais 21 e 4 foram rejeitados ou não examinados' in text
-        assert '4 e 8 são PAR~=~2' in text
+        if name == 'estudo4_gzcmd.tex':
+            assert 'dos quais 21 e 4 foram rejeitados ou não examinados' in text
+            assert '4 e 8 são PAR~=~2' in text
+        else:
+            # Conclusão reescrita: as 25 aceitações da vigilância separadas em verdadeiras e falsas.
+            assert 'das quais 4 eram pares verdadeiros e 21 eram falsos positivos' in text
+            assert 'Na confirmação, foram 27 pares verdadeiros perdidos e 4 falsos positivos' in text
         assert 'aceita 25 e 12 potenciais pares abaixo do corte que o serviço rejeitou' not in text
     text = same_load(pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv'))
     assert 'P, \\texttt{MATCH} ao humano' in text
@@ -134,20 +139,21 @@ def test_effort_uses_saved_hours_per_lost_link_and_keeps_llm_separate():
 def test_hypothesis_bias_and_recommendation_are_not_claimed_as_validation():
     intro = (L / 'capitulo1.tex').read_text(encoding='utf-8')
     conclusion = (L / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'gerou a hipótese' in intro and 'A avaliação gerou a hipótese' in conclusion
+    # Conclusão reescrita: a hipótese é declarada como "Constitui hipótese a validar em outra coorte"; a seção
+    # "O que a tese sustenta e o que não sustenta" lista as afirmações, e "A tese sustenta" como frase corrida não ocorre.
+    assert 'gerou a hipótese' in intro and 'Constitui hipótese a validar em outra coorte' in conclusion
     assert 'A tese sustenta' not in conclusion
-    for text, expected in (
-        (intro, 'investigação do LLM como aceitador'),
-        (conclusion, 'a investigação do LLM como aceitador e como filtro de descarte antes do revisor humano, associada à investigação de sua ancoragem'),
-    ):
-        assert 'Se a revisão' in text and 'O3 e O4 também' in text
-        assert expected in text
-    assert 'O LLM pode atuar somente como filtro' in conclusion
-    assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in conclusion
-    assert 'Os potenciais pares fora do orçamento não são examinados e devem ser registrados como não examinados' in conclusion
-    assert contem(conclusion, 'a regra de duas ações (revisar ou não vincular) atribui-lhes não vínculo por custo', arquivo='text/latex/conclusao.tex')  # migrado: terminologia 3.6
+    assert 'Se a revisão' in intro and 'O3 e O4 também' in intro
+    assert 'investigação do LLM como aceitador' in intro
+    assert 'O3 e O4 foram, ainda, treinadas sobre os mesmos \\textit{labels}' in conclusion
+    assert r'como filtro de \texttt{NONMATCH} ou fonte de evidência para a probabilidade, permanecem hipóteses exploratórias' in conclusion
+    assert r'Se for usado, o \texttt{MATCH} segue ao revisor humano' in conclusion
+    assert 'Os potenciais pares abaixo do ponto de parada não são examinados e devem ser registrados como não examinados' in conclusion
+    # A coincidência entre a regra de duas ações e a ordenação com parada por orçamento permanece no Estudo 4.
+    study4 = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+    assert 'a ordenação com parada por orçamento coincide com a regra de duas ações' in study4
     assert 'não equivale a óbito não notificado' in conclusion
-    assert 'validação registrada em dados novos' in conclusion
+    assert 'A hipótese exige outra coorte ou período, não usados para fixar o corte nem as regras' in conclusion
 
 
 def test_tables_figure_and_derivation_have_explicit_references():

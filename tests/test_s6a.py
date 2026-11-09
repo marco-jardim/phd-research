@@ -143,11 +143,16 @@ def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
 def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
-    assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
-    assert 'hipótese exploratória a validar em dados novos' in recommendation
-    assert contem(recommendation, 'nas condições avaliadas, não deve aceitar vínculos sozinho', arquivo='text/latex/conclusao.tex')  # migrado: terminologia 3.6
-    assert 'posição de precaução, não estimativa transferível' in recommendation
-    assert 'validação registrada em dados novos' in recommendation
+    assert r'Se for usado, o \texttt{MATCH} segue ao revisor humano' in recommendation
+    # Conclusão reescrita: os usos subordinados ao revisor são hipóteses exploratórias (objetivo 4); a validação é a da última seção.
+    assert 'seus usos subordinados ao revisor humano, como filtro de \\texttt{NONMATCH} ou fonte de evidência para a probabilidade, permanecem hipóteses exploratórias' in text
+    assert contem(recommendation, 'O LLM não deve aceitar vínculos sozinho', arquivo='text/latex/conclusao.tex')
+    assert contem(text, 'nas condições avaliadas, o LLM não deve aceitar vínculos sozinho', arquivo='text/latex/conclusao.tex')
+    assert 'valor que estaria subestimado se algum dos dez falsos positivos' in recommendation
+    assert 'A hipótese exige outra coorte ou período, não usados para fixar o corte nem as regras' in recommendation
+    assert 'Com ordenação e orçamento fixados antes dos desfechos e referência cega independente' in recommendation
+    # "posição de precaução, não estimativa transferível" permanece no Estudo 4 (restrição à aceitação autônoma pelo LLM).
+    assert 'posição de precaução' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
 
 
 def test_abstract_definitions_and_nonrejection_follow_source():

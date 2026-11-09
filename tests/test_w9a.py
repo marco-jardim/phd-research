@@ -93,9 +93,11 @@ def test_nine_keys_are_unique_have_exact_dois_and_are_cited(name):
         assert bib.lower().count(doi.lower()) == 1, (key, "DOI duplicado")
         assert re.search(r"doi\s*=\s*\{" + re.escape(doi) + r"\}", entries[0])
         # W11a separou o registro da v4 das propostas de continuidade da conclusão.
-        cited_text = ((LATEX / "conclusao.tex").read_text(encoding="utf-8")
-                      if key == "Fisch2024stratppi" else study())
-        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", cited_text)
+        # Conclusão reescrita: Fisch2024stratppi deixou de ser citada em qualquer capítulo; a entrada
+        # (DOI exato, única) segue verificada no .bib, e a citação só é exigida das demais chaves.
+        if key == "Fisch2024stratppi":
+            continue
+        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", study())
     fisch = next(entry for key, entry in blocks if key == "Fisch2024stratppi")
     assert "preprint" in fisch and "arXiv" in fisch
     gienapp = next(entry for key, entry in blocks if key == "Gienapp2026relevance")
@@ -122,12 +124,11 @@ def test_primary_criterion_is_preserved_and_secondary_is_registered_candidate():
     for key in ("Callaghan2020stopping", "Lewis2021certifying",
                 "DiNunzio2026stopping", "Lam2026clerical"):
         assert key in paragraph
+    # Conclusão reescrita: o parágrafo de continuidade com Fisch2024stratppi foi removido por concisão; a
+    # conclusão mantém a referência cega por amostragem estratificada e a recomendação sem fixar o registro da v4.
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    continuity = next(p for p in conclusion.split("\n\n") if "Fisch2024stratppi" in p)
-    for phrase in (r"correção dos \textit{labels} de LLM por amostra humana estratificada",
-                   r"\cite{Fisch2024stratppi}", "permanecem propostas de continuidade",
-                   "distintas das comparações fixadas no registro da v4 candidata"):
-        assert phrase in continuity
+    assert "Fisch2024stratppi" not in conclusion
+    assert r"A referência da coorte nova pode ser obtida por amostragem estratificada \cite{Lam2026clerical}" in conclusion
 
 
 def test_ablation_keeps_generated_values_with_exact_editorial_glosses():

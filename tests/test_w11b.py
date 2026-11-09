@@ -50,9 +50,8 @@ def test_person_propagation_is_limited_to_published_recovery():
             if r["regra"] == "R1_UNIAO" and r["passo"] == "TOTAL"]
     assert int(row["par2"]) == int(row["propagados"]) == 2
     assert "Propagação por pessoa: dois vínculos" in answer(87)
-    assert contem(text("text/latex/conclusao.tex"),  # migrado: terminologia 3.6
-                  "propagação por pessoa recuperou somente dois vínculos, com alcance restrito",
-                  arquivo="text/latex/conclusao.tex")
+    # Conclusão reescrita: a propagação por pessoa fica no Estudo 4.
+    assert "recuperou dois dos 36 pares verdadeiros (PAR~=~2) sem propagar PAR~=~0" in text("text/latex/estudo4_gzcmd.tex")
 
 
 def test_llm_evidence_vpp_and_caution_track_same_baseline():
@@ -65,9 +64,10 @@ def test_llm_evidence_vpp_and_caution_track_same_baseline():
             mode, "O3", "aceitacao", "VPP"]
         assert metrics[mode, "O3-post", "aceitacao", "FP"] > 0
     conclusion = text("text/latex/conclusao.tex")
-    for phrase in ("sem dispensar revisão humana", "cobertura parcial e selecionada",
-                   "não equivalem à validação aninhada integral"):
-        assert phrase in conclusion
+    study = text("text/latex/estudo4_gzcmd.tex")
+    for phrase in ("A cobertura foi seletiva", "não constitui validação aninhada integral"):
+        assert phrase in study
+    assert "permanecem hipóteses exploratórias" in conclusion
 
 
 def test_expanded_dossier_numbers_and_failed_criterion_follow_public_artifacts():
@@ -88,25 +88,22 @@ def test_expanded_dossier_numbers_and_failed_criterion_follow_public_artifacts()
            and r["estrato"] == "S1" and r["passada"] == "v5"]
     assert (int(s1["VP"]), int(s1["MATCH"])) == (4, 18)
     assert float(s1["VPP"]) == utility["VPP_S1"]
-    conclusion = text("text/latex/conclusao.tex")
-    for fragment in ("três dos 21 FP", "mínimo de cinco", "dois foram recuperados",
-                     "mínimo de três", r"22,2\% (quatro vínculos em 18)", r"35,0\%",
-                     "nenhuma condição do critério de utilidade pré-registrado foi atingida",
-                     f'{metadata["pares_sem_decisao"]} pares ficaram sem decisão completa'):
-        assert fragment in conclusion
+    # Conclusão reescrita: o dossiê ampliado (v5) e o critério de utilidade não constam mais da conclusão
+    # (removidos por concisão; os números seguem protegidos pelo artefato acima e pela resposta 87 do roteiro).
+    assert "dossiê v5" not in text("text/latex/conclusao.tex")
 
 
 def test_v4_candidate_is_prospective_and_does_not_replace_approved_recommendation():
     conclusion = text("text/latex/conclusao.tex")
     assert conclusion.count(APPROVED) == 1
     future = conclusion.split(r"\label{sec:concl-trabalhos-futuros}")[1]
-    for phrase in ("mais promissores para a cauda", "não demonstrou vantagem sobre a F4",
-                   "antes do acesso aos dados novos", "comparação primária",
-                   "comparações secundárias", "nem substitui a recomendação da F4",
-                   "distintas das comparações fixadas no registro da v4 candidata",
-                   "parâmetros da parada permanecem pendentes de escolha"):
+    # Conclusão reescrita: o registro prospectivo fixa F4 e CM como comparações secundárias (F3 com as MACD),
+    # com ordenação, orçamento e ponto de parada declarados antes do acesso aos dados.
+    for phrase in ("F4 e CM como comparações secundárias (F3 entra quando houver as MACD, também exigidas por CM)",
+                   "antes do acesso aos dados, a ordenação, o orçamento e o ponto de parada",
+                   "o tamanho da coorte nova deve vir de cálculo de poder"):
         assert phrase in future
-    for name in ("text/latex/conclusao.tex", "text/latex/capitulo1.tex",
+    for name in ("text/latex/capitulo1.tex",
                  "text/latex/glossario.tex", "text/slides/roteiro_defesa.md"):
         assert "gzcmd/M_v4_candidata.md" in text(name)
     glossary = text("text/latex/glossario.tex")

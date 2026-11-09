@@ -81,17 +81,22 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
 
 def test_conclusion_separates_registration_from_negative_finding_and_has_comparators():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'não lhe confere força confirmatória' in text
+    # Conclusão reescrita: o registro interno de P é separado do resultado negativo (leitura posterior ao registro).
+    assert 'P teve registro interno anterior à avaliação, sem critério de sucesso, de modo que a leitura como resultado negativo é posterior' in text
+    assert 'a fixação anterior ao cálculo não constitui pré-registro' in text
     assert 'registrado antes da avaliação:' not in text
     assert text.count('pior em todo desfecho medido contra') == 0
+    # Os comparadores do corte hipotético da nota em 9 e da revisão da faixa intermediária ficam no capítulo 3 e na tabela de referência.
     reference = pd.read_csv(DATA / 'referencia_comparador_pos_orl.csv').set_index('estrategia')
     cut = reference.loc['pos_orl_corte_nota_9']
     review = reference.loc['pos_orl_revisao_humana_area_cinza']
     fmt = lambda value: f'{value:.1f}'.replace('.', ',')
-    assert fmt(cut.sens_automatica * 100) + r'\%' in text
-    assert fmt(review.sens_com_humano * 100) + r'\%' in text
-    assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in text
-    assert contem(text, 'área cinza da nota projetaria', arquivo='text/latex/conclusao.tex')  # migrado: terminologia 3.6
+    objectives = (LATEX / 'capitulo3.tex').read_text(encoding='utf-8')
+    table = (LATEX / 'tables/editorial/tab_cap8_referencia.tex').read_text(encoding='utf-8')
+    assert fmt(cut.sens_automatica * 100) + r'\%' in objectives
+    assert fmt(review.sens_com_humano * 100) in table
+    assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in objectives
+    assert 'Ela é distinta da faixa intermediária da nota final' in objectives
 
 
 def test_editorial_area_review_is_a_ceiling_without_numeric_change():

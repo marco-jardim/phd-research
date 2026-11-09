@@ -44,8 +44,11 @@ def test_conclusion_reference_resolves_to_actual_study5_limitations():
     conclusion = text('conclusao.tex')
     study = text('estudo5_equidade.tex')
     assert r'\ref{sec:e5-limitacoes}' not in conclusion
+    # Conclusão reescrita: remete ao capítulo do Estudo 5 (cap:estudo5), não a uma subseção; o capítulo e a
+    # subseção de discussão (onde estão as limitações) existem e carregam as ressalvas abaixo.
+    assert r'\ref{cap:estudo5}' in conclusion
+    assert r'\label{cap:estudo5}' in study
     target = 'sec:e5-discussao-equidade'
-    assert rf'\ref{{{target}}}' in conclusion
     section = study.split(rf'\label{{{target}}}', 1)[1]
     assert 'limita a inferência' in section
     assert 'não detecta' in section
@@ -54,18 +57,15 @@ def test_conclusion_reference_resolves_to_actual_study5_limitations():
 def test_conclusion_disambiguates_collisions_without_changing_recommendation():
     source = text('conclusao.tex')
     assert source.count(APPROVED) == 1
-    assert 'chaves alternativas CH1 (data de nascimento exata' in source
-    assert 'CH4 (unidade federativa no lugar do município)' in source
+    # Conclusão reescrita: as glosas de CH1/CH4, do braço a posteriori e das partições A/A0 saíram da conclusão
+    # (concisão); as de P-Platt e das partições permanecem no Estudo 4, no apêndice das estratégias e no glossário.
     assert not re.search(r'(?<![\w.])K[1-4](?![\w.])', source)
     assert 'comparador sem recalibração' not in source
     assert 'comparador de mesma carga' not in source
-    assert r'braço \textit{a posteriori} (cascata publicada aplicada abaixo do corte, sem recalibração)' in source
-    assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling})' in source
-    assert 'contra 22 do treino sem subamostragem' in source
-    assert 'regra de duas ações (revisar ou não vincular)' in source
-    assert 'partição por linha, com indicadores de óbito' in source
-    assert 'partição original do QW1' in source
-    assert 'partição agrupada por REFREC, registro do SIM, sem indicadores de óbito' in source
+    assert r'P-Platt (análise de sensibilidade de P com \textit{Platt scaling}' in text('estudo4_gzcmd.tex')
+    assert 'de 22, na execução única sem subamostragem, para medianas de 13 e 18,5' in source
+    assert 'partição por linha, com indicadores de óbito' in text('apendice_estrategias.tex')
+    assert 'partição original do QW1' in text('glossario.tex')
     assert not re.search(r'\) \(recuperados pela revisão', source)
 
 

@@ -34,12 +34,17 @@ def test_dal_pozzolo_case_with_project_bibliography_style(tmp_path):
 def test_recommendation_does_not_fix_a_learned_probability_order():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        assert 'fusão por posição recíproca' in text
+        # Conclusão reescrita: mesma recomendação (O3 isolada ou fundida por posição recíproca), com outra redação.
+        fusao = {'capitulo1.tex': 'fusão por posição recíproca',
+                 'conclusao.tex': 'fundida ao escore do OpenRecLink por posição recíproca'}
+        assert fusao[name] in text
         assert 'referência cega' in text
-        assert 'Se a ordenação usar probabilidade aprendida' in text
+        subamostragem = {'capitulo1.tex': 'Se a ordenação usar probabilidade aprendida',
+                         'conclusao.tex': 'Se a probabilidade for aprendida com subamostragem dos negativos'}
+        assert subamostragem[name] in text
         expected = {
             'capitulo1.tex': 'a curva de esforço aplicada a este fluxo',
-            'conclusao.tex': 'a curva de esforço aplicada a este fluxo como instrumento de escolha da ordenação e do ponto de parada',
+            'conclusao.tex': 'usa a curva de esforço para escolher a ordenação e o ponto de parada',
         }
         assert expected[name] in text
         assert r'\citeonline{Sariyar2010recordlinkage}' in text
