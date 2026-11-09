@@ -184,7 +184,7 @@ def main() -> None:
     tex2 = [
         "% Gerado por scripts/validar_ancoras.py (simulação simplificada da política de decisão na área cinza)",
         r"\begin{table}[!ht]", r"\centering",
-        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e proporções de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as proporções de erro configuradas, em unidades da política, arredondadas ao inteiro (meia unidade para cima). Fonte: \path{data/ancoras_decisao_simulada.csv}.}",
+        r"\caption{Efeito da calibração sobre a decisão por custo esperado na área cinza ($5\leq s<9$; 21.620 pares, 151 vínculos), por modo operacional. Executado pelo motor de decisão do \textit{framework}, sem regras de guarda nem restrições de consistência; custos, tetos, orçamento e proporções de erro do revisor conforme a configuração. Perda realizada com revisor perfeito e com as proporções de erro configuradas, em unidades da política, arredondadas ao inteiro (meia unidade para cima). Fonte: \protect\path{data/ancoras_decisao_simulada.csv}.}",
         r"\label{tab:cap8-ancoras-decisao}", r"\scriptsize", r"\setlength{\tabcolsep}{3pt}", r"\begin{tabular}{|l|l|r|r|r|r|r|}", r"\hline",
         r"Modo & Calibração & Revisão & FN auto & FP auto & Perda (rev.\ perfeito) & Perda (rev.\ config.) \\", r"\hline",
     ]

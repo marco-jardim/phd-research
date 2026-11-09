@@ -182,6 +182,35 @@ def terminologia_revisao2(text):
     return CABECALHO_CLASSE.sub(lambda _: r"\shortstack{Pares\\verdadeiros}", text)
 
 
+_CAPTION = re.compile(r"\\caption(?=[\[{])")
+_CAMINHO_FRAGIL = re.compile(r"(?<!\\protect)\\(path|url)\{")
+
+
+def proteger_caminhos_legenda(text):
+    r"""\path e \url são frágeis em argumento móvel: dentro de \caption[...]{...} recebem \protect.
+
+    Só muda o comando, nunca o caminho; idempotente (``\protect\path`` não casa de novo).
+    """
+    out, pos = [], 0
+    for match in _CAPTION.finditer(text):
+        if match.start() < pos:
+            continue
+        i = match.end()
+        for opening, closing in (("[", "]"), ("{", "}")):
+            if i >= len(text) or text[i] != opening:
+                continue
+            depth, i = 1, i + 1
+            while depth and i < len(text):
+                if text[i] == "\\":
+                    i += 2
+                    continue
+                depth += (text[i] == opening) - (text[i] == closing)
+                i += 1
+        out += [text[pos:match.start()], _CAMINHO_FRAGIL.sub(r"\\protect\\\1{", text[match.start():i])]
+        pos = i
+    return "".join(out + [text[pos:]])
+
+
 def transform(name, text):
     name = Path(name).stem
     # Aplica a terminologia antes das notas, para que add_note reconheça notas já presentes
@@ -282,7 +311,7 @@ def transform(name, text):
                 text = text.replace(old, new)
     if name in notes:
         text = add_note(text, notes[name])
-    return terminologia_revisao2(text)
+    return proteger_caminhos_legenda(terminologia_revisao2(text))
 
 
 def generate(output=TABLES / "editorial"):
