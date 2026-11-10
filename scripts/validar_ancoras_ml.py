@@ -9,6 +9,7 @@ Reutiliza o núcleo numérico do pacote; a equivalência é testada sobre a nota
 from __future__ import annotations
 
 import argparse
+import importlib.metadata
 import hashlib
 import json
 import sys
@@ -313,7 +314,7 @@ def main():
     cache_path = ROOT / "data/ancoras_ml_margens_oof.csv"
     meta_path = cache_path.with_suffix(".json")
     fp = {**fingerprint, "script_sha256": sha(Path(__file__)), "m1_csv_sha256": sha(args.oof),
-          "package_sha256": sha(PACKAGE / "calibration.py")}
+          "package_version": importlib.metadata.version("gzcmd-record-linkage")}
     cache_metadata = json.loads(meta_path.read_text(encoding="utf-8")) if meta_path.exists() else {}
     if (args.reuse_margins and cache_path.exists() and cache_metadata.get("fingerprint") == fp
             and cache_metadata.get("csv_sha256") == sha(cache_path)):

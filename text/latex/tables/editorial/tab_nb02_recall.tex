@@ -1,21 +1,21 @@
 \begin{table}[htbp]
 \centering
-\caption{Estratégia de sensibilidade (NB02): resultados canônicos do script uniforme, em teste com 18.509 potenciais pares e 74 vínculos, com 58 atributos.}
+\caption{Estratégia de vigilância (NB02): resultados canônicos do script uniforme, em teste com 18.509 potenciais pares e 74 pares verdadeiros, com 58 atributos.}
 \label{tab:nb02-recall}
 \small
 \begin{tabular}{lcccc}
 \toprule
-Modelo & Limiar & Precisão & Sensibilidade & $F_1$ \\
+Modelo & Limiar & VPP & Sensibilidade & $F_1$ \\
 \midrule
-RF com pesos extremos & 0,3 & 0,944 & 0,919 & 0,931 \\
+RF com pesos extremos & 0,3 & 0,944 & 0,919 & 0,932 \\
 RF + SMOTE & 0,3 & 0,831 & 0,932 & 0,879 \\
-RF + BorderlineSMOTE & 0,3 & 0,8765 & 0,960 & 0,916 \\
+RF + BorderlineSMOTE & 0,3 & 0,877 & 0,959 & 0,916 \\
 Gradient Boosting + SMOTE & 0,3 & 0,885 & 0,932 & 0,908 \\
 AdaBoost + SMOTE & 0,3 & 0,007 & 1,000 & 0,014 \\
-MLP + SMOTE & 0,25 & 0,628 & 0,960 & 0,759 \\
+MLP + SMOTE & 0,25 & 0,628 & 0,959 & 0,759 \\
 Votação suave & 0,15 & 0,094 & 1,000 & 0,172 \\
 \bottomrule
 \end{tabular}
 \par\footnotesize Fonte: \path{data/nb02_results.json}, gerado por \path{scripts/run_nb02_uniform.py}. A diferença em relação ao caderno histórico não tem causa documentada; adota-se aqui apenas o artefato do script uniforme.
-\par\footnotesize NB02: estratégia de maximização da sensibilidade; RF: Random Forest; MLP: perceptron multicamada.
+\par\footnotesize NB02: estratégia de vigilância (maximização da sensibilidade); RF: Random Forest; MLP: perceptron multicamada.
 \end{table}

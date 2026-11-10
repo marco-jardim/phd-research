@@ -1,0 +1,221 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "authorized_by_author": "2026-11-09",
+  "registered": false,
+  "cpu_only": true,
+  "llm_calls": 0,
+  "date_utc": "2026-11-09T23:18:58.610292+00:00",
+  "question": "O efeito do tratamento do desbalanceamento observado no RF vale para o XGBoost, e as diferenças entre estratégias se distinguem da variação entre partições?",
+  "historical_script": "scripts/robustness_analysis.py::run_imbalance_sensitivity",
+  "partition": {
+    "unit": "linha (StratifiedKFold estratificado pelo rótulo PAR em {1,2}); não agrupa por óbito (REFREC)",
+    "k": 5,
+    "repetitions": 5,
+    "seed": 42,
+    "seed_by_repetition": {
+      "0": 42,
+      "1": 43,
+      "2": 44,
+      "3": 45,
+      "4": 46
+    },
+    "same_partition_for_all_estimators_and_strategies": true,
+    "repetition_0_is_historical_partition": "random_state=42, shuffle=True",
+    "seed_use": "a seed da repetição define a partição, os reamostradores e o estimador",
+    "limitation": "linhas do mesmo óbito (REFREC) podem cair em treino e teste; as demais análises da tese que usam partição por REFREC não se aplicam aqui"
+  },
+  "resampling": "só no treino de cada partição; teste intacto; k_neighbors=3 (n_neighbors=3 no ADASYN); mesma reamostragem para RF e XGBoost",
+  "threshold": 0.5,
+  "metrics": [
+    "VPP",
+    "Sensibilidade",
+    "F1",
+    "AUC-PR"
+  ],
+  "auc_pr": "average_precision_score sobre a probabilidade bruta, sem limiar",
+  "features": {
+    "n": 58,
+    "source": "scripts/feature_engineering.py::engineer_features (58 atributos, como o histórico)",
+    "note": "o XGBoost de gzcmd/ml_oof.py usa 30 atributos (numeric_features); aqui os 58 do RF, para comparar estimadores com os mesmos atributos"
+  },
+  "estimators": {
+    "rf": {
+      "class": "SerialPredictRandomForest (RandomForestClassifier com predict_proba serial)",
+      "params": {
+        "n_estimators": 150,
+        "max_depth": 12,
+        "random_state": "seed da repetição",
+        "n_jobs": -1
+      },
+      "weighted": "class_weight='balanced' (calculado sobre o treino já reamostrado)",
+      "unweighted": "class_weight=None"
+    },
+    "xgb": {
+      "factory": "gzcmd.ml_oof._classifier (estimador de O3)",
+      "params": "n_estimators=300, max_depth=6, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8, eval_metric=logloss, n_jobs=8, random_state=seed da repetição",
+      "weighted": "scale_pos_weight=n_neg/n_pos do treino já reamostrado (o padrão de _classifier)",
+      "unweighted": "scale_pos_weight=1,0 (a fábrica de O3 sempre pondera; aqui 'sem balanceamento' a desliga)",
+      "qw1_difference": "o XGBoost do QW1 (scripts/qw1_deep_learning_comparison.py) usa learning_rate=0.1, imputação pela mediana e sem scale_pos_weight; esta análise usa o do GZ-CMD (learning_rate=0.05)"
+    },
+    "effective_params_example": {
+      "rf": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "criterion": "gini",
+        "max_depth": 12,
+        "max_features": "sqrt",
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "n_estimators": 150,
+        "n_jobs": -1,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "xgb": {
+        "objective": "binary:logistic",
+        "colsample_bytree": 0.8,
+        "enable_categorical": false,
+        "eval_metric": "logloss",
+        "learning_rate": 0.05,
+        "max_depth": 6,
+        "missing": "nan",
+        "n_estimators": 300,
+        "n_jobs": 8,
+        "random_state": 42,
+        "scale_pos_weight": 1.0,
+        "subsample": 0.8,
+        "verbosity": 0
+      }
+    }
+  },
+  "strategies": {
+    "No balancing": {
+      "label_pt": "Sem balanceamento",
+      "kind": null,
+      "ratio": null,
+      "weighted": false
+    },
+    "Class weight=balanced": {
+      "label_pt": "Ponderação de classes",
+      "kind": null,
+      "ratio": null,
+      "weighted": true
+    },
+    "SMOTE 0.3": {
+      "label_pt": "SMOTE 0,3",
+      "kind": "smote",
+      "ratio": 0.3,
+      "weighted": false
+    },
+    "SMOTE 0.5": {
+      "label_pt": "SMOTE 0,5",
+      "kind": "smote",
+      "ratio": 0.5,
+      "weighted": false
+    },
+    "SMOTE 1.0": {
+      "label_pt": "SMOTE 1,0",
+      "kind": "smote",
+      "ratio": 1.0,
+      "weighted": false
+    },
+    "BorderlineSMOTE 0.3": {
+      "label_pt": "BorderlineSMOTE 0,3",
+      "kind": "borderline",
+      "ratio": 0.3,
+      "weighted": false
+    },
+    "ADASYN 0.3": {
+      "label_pt": "ADASYN 0,3",
+      "kind": "adasyn",
+      "ratio": 0.3,
+      "weighted": false
+    },
+    "SMOTETomek 0.3": {
+      "label_pt": "SMOTETomek 0,3",
+      "kind": "smotetomek",
+      "ratio": 0.3,
+      "weighted": false
+    },
+    "Class weight + SMOTE 0.3": {
+      "label_pt": "Ponderação + SMOTE 0,3",
+      "kind": "smote",
+      "ratio": 0.3,
+      "weighted": true
+    }
+  },
+  "paired_differences": {
+    "baseline": "No balancing",
+    "comparisons": [
+      "estratégia menos 'No balancing', por estimador, partição a partição",
+      "XGBoost menos RF, por estratégia, partição a partição"
+    ],
+    "confidence_interval": "Nadeau e Bengio (2003), teste t corrigido para validação cruzada repetida",
+    "rule": "d_i = diferença na partição i (n = k*r = 25); média d; s^2 amostral (ddof=1); variância corrigida da média = (1/n + n_teste/n_treino) * s^2; t = d / sqrt(variância corrigida), n-1 graus de liberdade; IC 95% = d ± t_{0,975, n-1} * erro-padrão corrigido; p bilateral",
+    "n_test_over_n_train": 0.25,
+    "reference": "Nadeau, C.; Bengio, Y. Inference for the generalization error. Machine Learning, 52(3), 239-281, 2003",
+    "multiplicity": "sem correção para comparações múltiplas (8 estratégias x 4 métricas x 2 estimadores, mais 9 x 4 de XGBoost menos RF); p e IC são descritivos",
+    "caveat": "a correção supõe partições de treino sobrepostas e dependência entre repetições; as repetições usam a mesma amostra de linhas e a partição é por linha (não por óbito)"
+  },
+  "historical_reproduction": {
+    "tolerancia": 0.0001,
+    "passou": true,
+    "max_diferenca_abs": 1.1102230246251565e-16,
+    "n_comparacoes": 54,
+    "file": "data/imbalance_sensitivity.csv",
+    "compared": "repetição 0, RF, VPP/sensibilidade/F1, média e dp (ddof=1) por estratégia"
+  },
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0",
+    "imblearn": "0.14.2"
+  },
+  "universe": {
+    "rows": 61696,
+    "positives": 247
+  },
+  "undefined_values": {
+    "rule": "nenhum valor indefinido é descartado ou trocado por 0 sem registro: a agregação interrompe se alguma métrica por partição não for finita; VPP sem previsão positiva usa zero_division=0 (como o histórico, necessário para reproduzi-lo) e entra nas médias como 0",
+    "partitions_with_vpp_zero": {},
+    "csv_empty_cells": "célula vazia = não se aplica ao tipo de linha (média e dp só em 'desempenho'; diferença, IC, t, gl e p só nas linhas de diferença); nenhuma linha de desempenho ou de diferença tem valor indefinido",
+    "csv_inf": "t = inf/-inf e p = 0 só se todas as diferenças pareadas forem iguais e não nulas (variância zero)",
+    "estimator_params_nonfinite": "parâmetros não finitos dos estimadores (XGBoost: missing=nan) aparecem como texto"
+  },
+  "checkpoint": {
+    "resumed_records": 450,
+    "total_records": 450,
+    "script_sha256_at_checkpoint": "8c1880695a9e8e4c220bb36901739bb2f0d680be92146fefe6d6c3b5f6b73fab",
+    "script_sha256_now": "ae9924674b6bf36c05b10055916832a2dc40203b797396ba36c17849303ac2af",
+    "note": "o hash do script não invalida o checkpoint (ver fingerprints_match); semente, repetições, partições, linhas, positivos, estratégias e tolerância invalidam"
+  },
+  "estimate": {
+    "pilot_partition_seconds": 51.23645959998248,
+    "partitions": 25,
+    "safety_factor": 1.3,
+    "estimated_minutes": 27.753082283323845,
+    "checkpoint_recommended": false
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/imbalance_sensitivity.csv": "dec56dcbad2f6bc17bfdf3221c3aea914905ecc70698d63cdf5dc52930bd7979"
+  },
+  "code_sha256": {
+    "scripts/balanceamento_xgb.py": "ae9924674b6bf36c05b10055916832a2dc40203b797396ba36c17849303ac2af",
+    "tests/test_balanceamento_xgb.py": "ddaf067e5132bf5f34be2ec3852c53765cb610ccd96730c04e7adeb493ed61c7",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "scripts/robustness_analysis.py": "9e16d0c1d023955e0ec15a09168a82d9dc2325919e9f805c2f5d2d00145dde99"
+  },
+  "output_sha256": {
+    "balanceamento_xgb.csv": "fc4f605c0c7fa8e4185d19b0ddd90a079c3e172f1da82821bd6a42005428ffa4"
+  },
+  "privacy": "só agregados; sem linhas do extrato nem pair_id",
+  "elapsed_seconds": 56.34364410000853,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/balanceamento_xgb.py"
+}

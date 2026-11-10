@@ -183,11 +183,11 @@
 \renewcommand{\nomname}{Lista de Símbolos}
 
 \nomenclature{SUS}{Sistema \'Unico de Sa\'ude}
-\nomenclature{SIM}{Sistema de Informa\c{c}\~ao sobre Mortalidade}
+\nomenclature{SIM}{Sistema de Informa\c{c}\~oes sobre Mortalidade}
 \nomenclature{Sinan}{Sistema de Informa\c{c}\~ao de Agravos de Notifica\c{c}\~ao}
-\nomenclature{SIH-SUS}{Sistema de Informa\c{c}\~oes Hospitalares do SUS}
+\nomenclature{SIH/SUS}{Sistema de Informa\c{c}\~oes Hospitalares do SUS}
 \nomenclature{SIA-SUS}{Sistema de Informa\c{c}\~oes Ambulatoriais do SUS}
-\nomenclature{Sinasc}{Sistema de Informa\c{c}\~ao sobre Nascidos Vivos}
+\nomenclature{Sinasc}{Sistema de Informa\c{c}\~oes sobre Nascidos Vivos}
 \nomenclature{GAL}{Gerenciador de Ambiente Laboratorial}
 \nomenclature{SITETB}{Sistema de Informa\c{c}\~ao de Tratamentos Especiais da Tuberculose}
 \nomenclature{TB}{Tuberculose}
@@ -210,6 +210,10 @@
 \makeindex
 
 \geometry{left=3cm, top=3cm, right=2cm, bottom=2cm} % ABNT NBR 14724
+
+% Terceira passada de quebra de linha só nos parágrafos sem solução viável (caminhos \path e termos
+% em \texttt perto da margem): evita caixas "Overfull \hbox" sem alterar o texto.
+\emergencystretch=4em
 
 \hypersetup{colorlinks=true, breaklinks=true, linkcolor=black, citecolor=black, urlcolor=black}
 
@@ -474,7 +478,7 @@ também pelo suporte quando as adversidades da vida de pai e trabalhador
 atravessavam os compromissos acadêmicos.
 
 À Daniela Medina Coeli Bastos, do LinkDataPop, agradeço pela preparação do
-extrato pós-CdR e pela revisão clerical que deu origem à referência operacional deste
+extrato pós-CdR e pela revisão manual que deu origem à referência operacional deste
 trabalho. A Luís Guilherme Buteri Alves, pelo pré-processamento.
 A Claudia Medina Coeli e Kenneth Rochel de Camargo Jr., do
 IESC/UFRJ, pela criação e manutenção do OpenRecLink. Agradeço aos amigos
@@ -541,13 +545,13 @@ a sociedade muda.''}\\[6pt]
 \end{center}
 \vspace*{35pt}
 
-O \textit{linkage} integra sistemas sem identificador comum. A hipótese \textit{post hoc}, a validar, propõe menos revisões pela probabilidade calibrada do classificador que pelo escore do OpenRecLink, para a recuperação obtida por P (corte preservado) abaixo desse corte. O ganho decorreria da ordenação, não da política de decisão.
+A tuberculose segue como causa importante de morte no Brasil, e vincular os óbitos do Sistema de Informações sobre Mortalidade (SIM) aos casos notificados no Sistema de Informação de Agravos de Notificação (Sinan) é parte de sua vigilância. Sem identificador unívoco, essa operação depende do \textit{linkage} (relacionamento de registros) probabilístico: o OpenRecLink aceita os potenciais pares no ponto de corte ou acima, e os de escore abaixo, a \textit{grey area} (área cinza), só são resolvidos por revisão manual, trabalhosa e de reprodutibilidade limitada.
 
-Utilizaram-se 61.696 potenciais pares dos Sistemas de Informação sobre Mortalidade e de Agravos de Notificação para tuberculose no Rio de Janeiro, com óbitos de 2019 a 2022. Reimplementou-se o comparador; avaliaram-se classificadores, estratégias e equidade. Nos estudos de classificadores e de estratégias, indicadores de encerramento por óbito introduziram vazamento. PAR é o \textit{label} da referência: um, aceito pelo corte; dois, recuperado na revisão clerical abaixo dele; zero, demais (36 PAR~=~2). Vigilância prioriza sensibilidade; confirmação, VPP (valor preditivo positivo). P preserva o corte e decide abaixo dele com recalibração isotônica (ajuste monotônico das probabilidades); P-Platt é análise de sensibilidade com \textit{Platt scaling}, no mesmo XGBoost fora da amostra. P teve registro interno pré-avaliação, sem critério de sucesso nem proteção contra reenquadramento. Verificação seletiva e possível incorporação das evidências do comparador à referência limitam a interpretação.
+Esta tese desenvolveu e avaliou um pós-processamento do \textit{linkage} entre o SIM e o Sinan-TB que reduzisse a revisão manual necessária para recuperar os pares verdadeiros na \textit{grey area}, sem alterar os vínculos aceitos pelo corte, e identificou qual de seus componentes responde pela redução: a probabilidade calibrada, a ordenação da fila, a decisão automática por \textit{expected loss} e a revisão assistida por modelo de linguagem de grande porte (LLM). Analisaram-se 61.696 potenciais pares de óbitos de 2019 a 2022; 36 pares verdadeiros, recuperados abaixo do corte pela revisão manual de origem (revisora única), têm PAR~=~2 na referência operacional.
 
-Na vigilância, P aceitou automaticamente 215 dos 247 vínculos, com 21 falsos positivos (FP) e 96 revisões humanas pendentes. Supondo revisor perfeito e o mesmo número de revisões humanas, nenhuma das estratégias comparadas é melhor em todos os desfechos. Com o \texttt{MATCH} (decisão de vínculo) ao humano, P recuperaria no máximo um vínculo adicional frente à ordenação pela probabilidade calibrada, com 344 pares avaliados pelo modelo de linguagem de grande porte (LLM); na confirmação, ambos recuperariam nove com 29 revisões, e a ordenação pela nota do comparador os iguala com menos revisões, sem LLM. Como filtro de \texttt{NONMATCH} (decisão de não vínculo), com 22 revisões humanas, o LLM recupera mais vínculos que a ordenação sem filtro, mas descarta nove vínculos entre os primeiros pares da fila. A sensibilidade automática de P foi de 42,5\% na vigilância no passo de blocagem 11 (etapa de geração de candidatos), contra pelo menos 95\% nos demais, disparidade herdada do corte.
+A redução da revisão manual não veio da automação nem do LLM, mas da ordem de revisão dos pares. Na vigilância, o arranjo que preserva o corte (ASR) aceitou 215 dos 247 pares verdadeiros, mas todas as aceitações abaixo do corte vieram do LLM, com 4 pares verdadeiros e 21 falsos positivos (valor preditivo positivo, VPP, de 16,0\%). Em análise \textit{post hoc}, sob revisor perfeito simulado, a fila ordenada pela probabilidade calibrada fora da amostra do XGBoost (O3) atingiu a recuperação de ASR com 125 revisões na vigilância, contra 501 na ordem do escore do OpenRecLink (O1), redução pontual de 75,0\%, e de 43,1\% na confirmação, sem intervalo de confiança (IC) que exclua zero. As fusões com o escore (F3 e F4) reduziram as revisões frente a O1 nas metas de 9 e 36, com IC abaixo de zero (F4: medianas de 38 e 1.203 a menos), mas nenhum IC frente a O3 ficou abaixo de zero. Sem suposições sobre a verificação e a incorporação das evidências do comparador, a direção e a magnitude do viés de verificação da referência não são identificáveis. No passo 11 da blocagem (geração de candidatos por chaves comuns), a sensibilidade automática de ASR na vigilância foi de 42,5\%, disparidade herdada do corte.
 
-Contribuições: separação entre vínculos aceitos pelo corte e recuperados na revisão, curva de esforço, influência das saídas do motor na resposta do LLM (ancoragem), código público e resultado com registro interno, interpretado como negativo. O VPP de 16,0\% do LLM e os FP previstos/observados são \textit{post hoc}; o filtro é exploratório. Recomenda-se preservar o corte e, abaixo dele, ordenar a fila pela fusão por posição recíproca do escore do OpenRecLink com a probabilidade calibrada, no lugar do escore isolado, a validar em coorte nova com referência cega; sua vantagem sobre a probabilidade calibrada não foi demonstrada. O ponto de parada da revisão segue curva de esforço e orçamento humano. Se a ordenação usar probabilidade aprendida, evitar subamostragem intensa dos negativos, que degradou a fila. O LLM não deve aceitar sozinho; o filtro exige validação em ambiente controlado. Pares fora do orçamento ficam não examinados, não óbitos não notificados; a curva exige amostra verificada independente. Exige validação registrada em dados novos.
+Como contribuições, a tese aplica a curva de esforço à revisão abaixo do corte, examina a ancoragem do LLM nas saídas do motor e disponibiliza o código. O fluxo recomendado, a validar em coorte nova, preserva o corte do OpenRecLink. Abaixo dele, o Comparador de Registros (CdR) calcula os subescores, o XGBoost os converte, com a nota final, em probabilidade, e a revisão manual segue, até o orçamento humano disponível, a fila ordenada pela probabilidade calibrada fora da amostra do classificador, isolada (O3) ou nas fusões, escolhida pela curva de esforço, pois nenhuma dominou em todas as cargas, com o LLM só como apoio.
 
 \vspace{15pt}
 
@@ -578,17 +582,17 @@ Contribuições: separação entre vínculos aceitos pelo corte e recuperados na
 \end{center}
 \vspace*{35pt}
 
-Linkage integrates systems without a common identifier. A post hoc hypothesis, requiring validation, was generated: ordering potential pairs below the OpenRecLink cut-off by the classifier's calibrated probability reaches the recovery obtained by P (preserved cut-off) with fewer reviews than ordering by the OpenRecLink score. Gains would come from ordering, not from the decision policy.
+Tuberculosis remains an important cause of death in Brazil, and linking the deaths in the Mortality Information System (SIM) to the cases notified in the Notifiable Diseases Information System (Sinan) is part of tuberculosis surveillance. Without a common unique identifier, this operation relies on probabilistic record linkage: OpenRecLink accepts the potential pairs at or above a cut-off, and those scoring below it, the grey area, are resolved only by manual review, which is laborious and of limited reproducibility.
 
-The 61,696 potential pairs came from the Mortality and Notifiable Diseases Information Systems for tuberculosis in Rio de Janeiro, with deaths from 2019 to 2022. The record comparator was reimplemented; classifiers, strategies and equity were evaluated. Death-closure indicators introduced target leakage (predictors anticipating the outcome) in the classifier and strategy studies. PAR is the reference label: one, accepted by the cut-off; two, recovered by clerical review below it; zero, others. The 36 PAR~=~2 came from that review. Surveillance prioritizes sensitivity; confirmation, positive predictive value (PPV). P preserves the cut-off and decides below it using isotonic recalibration (monotonic probability adjustment); P-Platt is the sensitivity analysis using Platt scaling, with the same out-of-fold XGBoost. P was registered internally before evaluation, without success criterion or protection against reframing. Selective verification and possible incorporation of comparator evidence into the reference limit interpretation.
+This thesis developed and evaluated a post-processing procedure for the linkage between SIM and Sinan-TB that would reduce the manual review needed to recover the true pairs in the grey area, without altering the links accepted by the cut-off, and identified which of its components accounts for that reduction: calibrated probability, review-queue ordering, the expected-loss decision, and review assisted by a large language model (LLM). The analysis covered 61,696 potential pairs involving deaths from 2019 to 2022; 36 true pairs, recovered below the cut-off by the original manual review (single reviewer), have PAR~=~2 in the operational reference.
 
-In surveillance, P automatically accepted 215/247 links, with 21 false positives (FP) and 96 human referrals. Under the same perfect-reviewer assumption and human workload, none of the compared decision strategies dominates. Sending large language model (LLM) \texttt{MATCH} (link decisions) to humans, P would recover at most one additional link over ordering by calibrated probability, with 344 LLM-reviewed pairs; in confirmation both would recover nine with 29 reviews, and ordering by the comparator score matches them with fewer reviews and no LLM. As a \texttt{NONMATCH} (non-link decisions) filter, with 22 human reviews, it recovers more links than unfiltered ordering but discards nine links from the queue head. P's automatic sensitivity was 42.5\% in surveillance blocking step 11 (candidate-generation stage) versus at least 95\% elsewhere, a disparity inherited from the cut-off.
+The reduction in manual review came from the order in which pairs are reviewed, rather than from automating the decisions or from the LLM. In surveillance, the arrangement with the cut-off preserved (ASR) accepted 215 of 247 true pairs, but all acceptances below the cut-off came from the LLM, with 4 true pairs and 21 false positives (positive predictive value, PPV, of 16.0\%). In a post hoc analysis under a simulated perfect reviewer, the queue ordered by the out-of-sample calibrated probability of XGBoost (O3) reached ASR's recovery with 125 reviews in surveillance, compared with 501 when ordered by the OpenRecLink score (O1), a point reduction of 75.0\%, and of 43.1\% in confirmation, with no confidence interval (CI) that excludes zero. Fusions of the calibrated probability with the score (F3 and F4) reduced reviews relative to O1 at the targets of 9 and 36, with CIs below zero (F4: medians of 38 and 1,203 fewer), but no CI relative to O3 fell below zero. Without assumptions about the verification and the incorporation of comparator evidence, the direction and magnitude of the verification bias in the reference are not identifiable. In blocking step 11 (candidate-generation stage), the automatic sensitivity of ASR in surveillance was 42.5\%, a disparity inherited from the cut-off.
 
-Contributions: separating links accepted by the cut-off from those recovered by review, the effort-versus-recovered-links curve, investigation of LLM acceptance, filtering and influence of engine outputs on LLM responses (anchoring), public code and an internally registered result, subsequently interpreted as negative. LLM PPV of 16.0\% and expected-versus-observed FP are post hoc; filtering is exploratory. Recommendation: preserve the cut-off and, below it, order the queue by reciprocal rank fusion of the OpenRecLink score and the calibrated probability instead of the score alone, to be validated in a new cohort with a blinded reference; its advantage over the calibrated probability was not demonstrated. Stopping is chosen from the effort curve and human budget. If ordering uses learned probabilities, avoid heavy undersampling of negatives, which degraded the queue. Under these conditions, LLMs should not accept links alone; filtering requires validation in a controlled environment. Out-of-budget pairs remain unexamined, not equivalent to unnotified deaths; the curve requires an independently verified sample. Requires registered validation on new data.
+As contributions, the thesis applies the effort curve to review below the cut-off, examines the anchoring of the LLM on the engine outputs, and makes the code available. The recommended workflow, to be validated in a new cohort, preserves the OpenRecLink cut-off. Below it, the Record Comparator (CdR) computes the subscores, XGBoost converts them, with the final score, into a probability, and manual review follows, up to the available human budget, the queue ordered by the out-of-sample calibrated probability of the classifier, alone (O3) or in the fusions, chosen from the effort curve since no ordering was dominant in every workload, with the LLM only as support.
 
 \vspace{15pt}
 
-\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance. Large language models. Grey zone.
+\textbf{Keywords:} Probabilistic record linkage. Machine learning. Class imbalance. Post-processing. Tuberculosis. Mortality. Health surveillance. Large language models. Grey area.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -677,6 +681,8 @@ Contributions: separating links accepted by the cut-off from those recovered by 
 \input{apendice_busca.tex}
 \input{apendice_pacote.tex}
 \input{apendice_sensibilidade.tex}
+\input{apendice_estrategias.tex}
+\input{apendice_gzcmd.tex}
 %\input{apendiceb.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

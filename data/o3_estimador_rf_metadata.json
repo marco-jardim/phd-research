@@ -1,0 +1,194 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "authorized_by_author": "2026-11-09",
+  "registered": false,
+  "cpu_only": true,
+  "llm_calls": 0,
+  "date_utc": "2026-11-09T19:46:26.311131+00:00",
+  "question": "A recomendação (ordenar abaixo do corte pela probabilidade calibrada, O3) depende do estimador XGBoost?",
+  "change": "só o estimador (XGBoost -> Random Forest); mesmos 30 atributos, partições aninhadas 5x5 por REFREC, seed e calibração isotônica de gzcmd/ml_oof.py",
+  "methods": {
+    "xgb": "nested-xgb-isotonic-5x5-v1",
+    "rf": "nested-rf-isotonic-5x5-v1"
+  },
+  "rf_params": {
+    "n_estimators": 200,
+    "max_depth": 10,
+    "class_weight": "balanced",
+    "random_state": 42,
+    "n_jobs": -1,
+    "source": "scripts/run_nb01_uniform.py (RF do NB01), sem ajuste de hiperparâmetros",
+    "class": "SerialPredictRandomForest (subclasse de RandomForestClassifier)",
+    "predict_proba_n_jobs": 1,
+    "determinism": "fit com n_jobs=-1 (árvores com random_state próprio, determinístico); predict_proba com n_jobs=1, porque a soma das árvores em threads varia na ordem de 1e-16 e poderia alterar empates e a fila O3-RF"
+  },
+  "features": [
+    "NOME prim frag igual",
+    "NOME ult frag igual",
+    "NOME qtd frag iguais",
+    "NOME qtd frag raros",
+    "NOME qtd frag comuns",
+    "NOME qtd frag muito parec",
+    "NOME qtd frag abrev",
+    "NOMEMAE prim frag igual",
+    "NOMEMAE ult frag igual",
+    "NOMEMAE qtd frag iguais",
+    "NOMEMAE qtd frag raros",
+    "NOMEMAE qtd frag comuns",
+    "NOMEMAE qtd frag muito parec",
+    "NOMEMAE qtd frag abrev",
+    "DTNASC dt iguais",
+    "DTNASC dt ap 1digi",
+    "DTNASC dt inv dia",
+    "DTNASC dt inv mes",
+    "DTNASC dt inv ano",
+    "CODMUNRES uf igual",
+    "CODMUNRES uf prox",
+    "CODMUNRES local igual",
+    "CODMUNRES local prox",
+    "ENDERECO via igual",
+    "ENDERECO via prox",
+    "ENDERECO numero igual",
+    "ENDERECO compl prox",
+    "ENDERECO texto prox",
+    "ENDERECO tokens jacc",
+    "nota final"
+  ],
+  "oof_seed": 42,
+  "universe": {
+    "below_cutoff": 61485,
+    "PAR2": 36,
+    "grupos_REFREC_abaixo": 1457
+  },
+  "xgb_reproduction": {
+    "max_abs_difference": 1.1102230246251565e-16,
+    "folds_identical": true,
+    "tolerance": 1e-09,
+    "passed": true,
+    "seconds": 18.855309100006707
+  },
+  "reference_checks": {
+    "orderings": [
+      "O1",
+      "O3_XGB"
+    ],
+    "file": "data/comparador_mesma_carga.csv",
+    "expected": {
+      "O3_XGB": {
+        "vigilancia/k_min_equivalente_P": 125,
+        "vigilancia/k_min_36": 23443,
+        "vigilancia/par2_topk_K1_humana": 22,
+        "confirmacao/k_min_equivalente_P": 29,
+        "confirmacao/k_min_36": 23443,
+        "confirmacao/par2_topk_K1_humana": 6
+      },
+      "O1": {
+        "vigilancia/k_min_equivalente_P": 501,
+        "vigilancia/k_min_36": 2521,
+        "vigilancia/par2_topk_K1_humana": 19,
+        "confirmacao/k_min_equivalente_P": 51,
+        "confirmacao/k_min_36": 2521,
+        "confirmacao/par2_topk_K1_humana": 3
+      }
+    },
+    "bootstrap_o3_xgb_o1": {
+      "checked": true,
+      "file": "data/ordenacao_bootstrap_o3_o1.csv",
+      "atol": 1e-09
+    }
+  },
+  "rf_oof_seconds": 6.079999729990959e-05,
+  "rf_oof_reused": true,
+  "bootstrap": {
+    "seed": 20261107,
+    "replicas": 2000,
+    "replicas_validas": 2000,
+    "rng": "numpy.default_rng PCG64; uma rng.integers por réplica, como scripts/ordenacao_bootstrap_o3_o1.py",
+    "targets": [
+      9,
+      23,
+      36
+    ],
+    "fractions_if_less_36": [
+      0.25,
+      0.64,
+      1.0
+    ],
+    "comparisons": [
+      "O3_RF-O1",
+      "O3_RF-O3_XGB",
+      "O3_XGB-O1"
+    ],
+    "sign": "primeiro menos segundo; negativo favorece o primeiro; proporcao_primeiro_menor = proporção de réplicas com o primeiro menor",
+    "confidence_interval": "percentil 2,5/97,5, quantis lineares; condicional às probabilidades OOF e aos rótulos fixos; não mede a variabilidade do treino dos classificadores",
+    "paired": "as três filas são reamostradas com os mesmos grupos em cada réplica"
+  },
+  "ties": {
+    "blocos_empatados_e_maior_bloco": {
+      "O1": [
+        65,
+        55555
+      ],
+      "O3_XGB": [
+        54,
+        24986
+      ],
+      "O3_RF": [
+        50,
+        39714
+      ]
+    },
+    "random_tie_break_run": true,
+    "seed": 20261108,
+    "replicas": 200
+  },
+  "tie_break": "escore decrescente, pair_id lexical crescente (exatamente k linhas), como scripts/comparador_mesma_carga.py",
+  "limitations": [
+    "Viés de verificação: os PAR=2 vêm da revisão do serviço, presumivelmente em ordem de SCORE, o que favorece O1.",
+    "Hiperparâmetros do RF copiados do NB01, sem ajuste; um único estimador alternativo não esgota a sensibilidade à escolha do modelo.",
+    "Análise post hoc, não registrada; revisor perfeito simulado por PAR=2."
+  ],
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "estimate": {
+    "pilot_fit_seconds": {
+      "xgb": 0.5879889999923762,
+      "rf": 0.6328242000017781
+    },
+    "nested_fits_per_estimator": 30,
+    "safety_factor": 1.5,
+    "estimated_minutes": {
+      "xgb": 0.44099174999428215,
+      "rf": 0.47461815000133356,
+      "bootstrap": 0.39322299999184906,
+      "total": 1.3088328999874648
+    },
+    "bootstrap_pilot_seconds_per_replica": 0.007864459999836981
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/comparador_mesma_carga.csv": "22309375a497830401e43d8fae2caf73c90658156209e636182342e49ac0bd5d",
+    "data/pcal_ml_oof_rf.csv": "14d65528aa1a91f5dd43d377344b1086bded74f5e83037ee8a0beff60c8973bc",
+    "data/ordenacao_bootstrap_o3_o1.csv": "05fc9fd30f864aa7c7989a6a96d315b4459531a9ba50837194b52787b3a67534"
+  },
+  "code_sha256": {
+    "scripts/o3_estimador_rf.py": "9fb57590de6e840a025e8b0e5f4c847ef81298e395339c820121e5c369328a90",
+    "tests/test_o3_estimador_rf.py": "70a2fbaf163209acf1824054819148af63f3c6a7582050868f0b78609c7046c7",
+    "gzcmd/ml_oof.py": "5e44e4f72921194a6fe4084baa74ed71f0e8f1e1cfacfe02b1d237e38a73e4d8",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b",
+    "scripts/ordenacao_bootstrap_o3_o1.py": "ceabc1a0b975d5c5cc1028d76f228884d57c0520cb2b52f1da219e29d62c0ca4",
+    "scripts/ordenacao_empates_o3.py": "a5fa1439bf63e9bf673258c9d0ced04a3153fb2978d643150dd09d5e89f93760"
+  },
+  "output_sha256": {
+    "o3_estimador_rf.csv": "80b96f85e5243151ce3ba3458d590dd5678613cf4a81bc23c5040af0fd101edc"
+  },
+  "elapsed_seconds": 41.77728740000748,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/o3_estimador_rf.py --replicas 2000 --seed 20261107 --reutilizar-rf"
+}

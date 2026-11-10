@@ -1,11 +1,11 @@
 \begin{table}[htbp]
 \centering
-\caption{Pontos exploratórios de RF+SMOTE e XGBoost no plano precisão $\times$ sensibilidade. Na grade apresentada, são dez pontos não dominados dentro de cada modelo (sete de RF+SMOTE e três de XGBoost); os dois pontos dominados do XGBoost são mantidos e assinalados para documentar a grade histórica. Os protocolos diferem entre os modelos. A pontuação de regras do fluxo Modal foi corrigida para reutilizar a função da ablação original; os pontos XGBoost desta grade não aplicam esse filtro. Os limiares foram explorados nos respectivos testes, sem avaliação independente de sua escolha.}
+\caption{Pontos exploratórios de RF+SMOTE e XGBoost no plano VPP $\times$ sensibilidade. Na grade apresentada, são dez pontos não dominados dentro de cada modelo (sete de RF+SMOTE e três de XGBoost); os dois pontos dominados do XGBoost são mantidos e assinalados para documentar a grade histórica. Os protocolos diferem entre os modelos. A pontuação de regras do fluxo Modal foi corrigida para reutilizar a função da ablação original; os pontos XGBoost desta grade não aplicam esse filtro. Os limiares foram explorados nos respectivos testes, sem avaliação independente de sua escolha.}
 \label{tab:pareto-frontier}
 \small
 \begin{tabular}{lcccccc}
 \toprule
-Modelo & $\theta_{\text{ML}}$ & $\theta_{\text{Regras}}$ & Precisão & Sensibilidade & F$_1$ & Situação \\
+Modelo & $\theta_{\text{ML}}$ & $\theta_{\text{Regras}}$ & VPP & Sensibilidade & F$_1$ & Situação \\
 \midrule
 RF+SMOTE & 0,10 & 2,0 & 0,655 & 1,000 & 0,791 & Não dominado \\
 RF+SMOTE & 0,30 & 0,0 & 0,869 & 0,986 & 0,924 & Não dominado \\
@@ -21,6 +21,6 @@ XGBoost & 0,70 & 0,0 & 1,000 & 0,892 & 0,943 & Não dominado \\
 XGBoost & 0,90 & 0,0 & 1,000 & 0,797 & 0,887 & Dominado \\
 \bottomrule
 \end{tabular}
-\par\footnotesize $\theta_{\text{ML}}$: probabilidade mínima; $\theta_{\text{Regras}}$: escore mínimo de regras, com zero indicando ausência desse filtro. XGBoost 0,50 e 0,90 são dominados por 0,70. A contagem é por modelo, não da união entre protocolos distintos. A grade é assimétrica: cinco pontos XGBoost sem regras contra a exploração mais extensa de RF+SMOTE. O limiar de regras 1,0 do XGBoost não restringe suas aceitações. No conjunto ampliado da ablação, a união XGBoost com regras $\geq8$ domina também os pontos XGBoost 0,30 e 0,70; não dominado nesta tabela não significa não dominado nesse conjunto. Teste: 18.509 potenciais pares, 74 vínculos. Fonte: \path{data/pareto_grid.csv} e \path{data/ablation_results.csv}.
+\par\footnotesize $\theta_{\text{ML}}$: probabilidade mínima; $\theta_{\text{Regras}}$: escore mínimo de regras, com zero indicando ausência desse filtro. XGBoost 0,50 e 0,90 são dominados por 0,70. A contagem é por modelo, não da união entre protocolos distintos. A grade é assimétrica: cinco pontos XGBoost sem regras contra a exploração mais extensa de RF+SMOTE. O limiar de regras do XGBoost é 0 nessa grade, isto é, sem filtro de regras. No conjunto ampliado da ablação, a união XGBoost com regras $\geq8$ domina também os pontos XGBoost 0,30 e 0,70; não dominado nesta tabela não significa não dominado nesse conjunto. Teste: 18.509 potenciais pares, 74 pares verdadeiros. Fonte: \path{data/pareto_grid.csv} e \path{data/ablation_results.csv}.
 \par\footnotesize RF: Random Forest. SMOTE: sobreamostragem sintética da classe minoritária. Fluxo Modal: execução em nuvem que acrescentou o XGBoost à ablação (remoção ou isolamento de componentes).
 \end{table}

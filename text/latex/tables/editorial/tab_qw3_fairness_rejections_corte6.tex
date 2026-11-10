@@ -2,24 +2,25 @@
 \centering
 \caption{Rejei\c{c}\~oes da hip\'otese de paridade para o corte 6{,}0 da nota final do CdR (an\'alise original, 36 testes; Benjamini-Hochberg, $\alpha = 0{,}05$). $\Delta$ em pontos percentuais (grupo 1 menos grupo 2).}
 \label{tab:qw3-fairness-rejections-corte6}
-\small
+\footnotesize
+\setlength{\tabcolsep}{4pt}
 \begin{tabular}{llllrrl}
 \toprule
 Dimens\~ao & M\'etrica & Grupo 1 & Grupo 2 & $p_{\mathrm{FDR}}$ & $\Delta$ & OR \\
 \midrule
-Nome (quartis) & VPP & Q3 & Q4 & $<$0{,}001 & $-$13{,}0 & 0{,}025 \\
-Nome (quartis) & VPP & Q2 & Q4 & $<$0{,}001 & $-$13{,}3 & 0{,}005 \\
-Nome (quartis) & VPP & Q1 & Q4 & $<$0{,}001 & $-$13{,}4 & 0{,}017 \\
-Encerramento   & VPP & Demais situa\c{c}\~oes & Encerrada por \'obito & $<$0{,}001 & $-$15{,}1 & 0{,}094 \\
-Faixa et\'aria  & VPP & 0 a 17 & 60 a 79 & $<$0{,}001 & $+$78{,}3 & 224{,}7 \\
-Faixa et\'aria  & VPP & 0 a 17 & 40 a 59 & $<$0{,}001 & $+$76{,}6 & 113{,}2 \\
-Faixa et\'aria  & VPP & 0 a 17 & 80+ & $<$0{,}001 & $+$76{,}8 & 121{,}2 \\
-Faixa et\'aria  & VPP & 0 a 17 & 18 a 39 & $<$0{,}001 & $+$75{,}8 & 91{,}9 \\
+Nome (quartis) & VPP & Q3 & Q4 & $<$0{,}001 & $-$13{,}0 & 0{,}03 \\
+Nome (quartis) & VPP & Q2 & Q4 & $<$0{,}001 & $-$13{,}3 & $<$0{,}01 \\
+Nome (quartis) & VPP & Q1 & Q4 & $<$0{,}001 & $-$13{,}4 & 0{,}02 \\
+Encerramento da notifica\c{c}\~ao & VPP & Demais situa\c{c}\~oes & Encerrada por \'obito & $<$0{,}001 & $-$15{,}1 & 0{,}09 \\
+Faixa et\'aria  & VPP & 0 a 17 & 60 a 79 & $<$0{,}001 & $+$78{,}3 & 224{,}68 \\
+Faixa et\'aria  & VPP & 0 a 17 & 40 a 59 & $<$0{,}001 & $+$76{,}6 & 113{,}23 \\
+Faixa et\'aria  & VPP & 0 a 17 & 80+ & $<$0{,}001 & $+$76{,}8 & 121{,}20 \\
+Faixa et\'aria  & VPP & 0 a 17 & 18 a 39 & $<$0{,}001 & $+$75{,}8 & 91{,}95 \\
 Faixa et\'aria  & VPP & 18 a 39 & 60 a 79 & $<$0{,}001 & $+$2{,}4 & 2{,}44 \\
 Faixa et\'aria  & VPP & 40 a 59 & 60 a 79 & $<$0{,}001 & $+$1{,}7 & 1{,}98 \\
 Faixa et\'aria  & Sens. & 18 a 39 & 40 a 59 & 0{,}039     & $-$10{,}7 & 0{,}25 \\
 Sexo           & VPP & F & M & $<$0{,}001 & $+$2{,}3 & 1{,}92 \\
 \bottomrule
 \end{tabular}
-\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
+\par\footnotesize CdR: Comparador de Registros. OR é razão de chances.
 \end{table}

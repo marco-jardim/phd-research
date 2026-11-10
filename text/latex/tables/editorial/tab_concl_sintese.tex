@@ -1,0 +1,47 @@
+% Gerada por scripts/tabela_sintese_conclusao.py; não editar manualmente.
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\setlength{\LTcapwidth}{\linewidth}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}p{0.40\linewidth}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.11\linewidth}}
+\caption[Síntese das abordagens avaliadas]{Síntese das abordagens avaliadas nos cinco estudos, agrupadas por pergunta, com o resultado principal, o uso recomendado e a remissão ao texto de origem.}\label{tab:concl-sintese}\\
+\toprule
+Abordagem & Pergunta & Resultado principal & Uso recomendado & Onde \\
+\endfirsthead
+\multicolumn{5}{l}{\textit{(continuação)}} \\
+\toprule
+Abordagem & Pergunta & Resultado principal & Uso recomendado & Onde \\
+\endhead
+\midrule
+\multicolumn{5}{r}{\textit{(continua)}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+\midrule
+CdR em Python & Qual comparador? & Não é equivalente ao protótipo em Java: nota final idêntica em 11,2\% dos pares de um lote sintético, valor que não estima a concordância no extrato & sim, como código aberto; não como equivalente ao protótipo em Java & Capítulo~\ref{cap:estudo1} \\
+CdR, corte da nota final em 9 (cenário) &  & Sensibilidade automática de 37,7\%, 2 falsos positivos e 154 pares verdadeiros perdidos & só como comparação & Tabela~\ref{tab:cap8-referencia} \\
+\midrule
+Random Forest (com ou sem SMOTE), Gradient Boosting e MLP, frente aos demais & Qual classificador e qual balanceamento? & Com limiar de 0,5, $F_1$ de 0,910 no Random Forest, sem diferença por IC 95\% para os outros três do grupo, e 0,485 na regressão logística; pela AUC-PR a ordem se inverte pontualmente (0,967 na regressão logística contra 0,956 no Random Forest), e o Random Forest com SMOTE tem 0,973; estimativas otimistas (vazamento de alvo, partição por linha) & não como base de adoção & Capítulo~\ref{cap:estudo2} \\
+Nove estratégias de balanceamento &  & $F_1$ médio de 0,880 a 0,918, sem ordenar os métodos & sem ganho demonstrado & Capítulo~\ref{cap:estudo2} \\
+\midrule
+Corte do OpenRecLink, isolado & Como decidir abaixo do corte? & Aceita 211 dos 247 pares verdadeiros (85,4\%); 36 ficam abaixo do corte & sim, preservar o corte & Tabela~\ref{tab:cap8-referencia} \\
+Corte mais revisão manual de origem &  & 211 mais 36 pares verdadeiros; sensibilidade de 100,0\% por definição da referência, não por acurácia observada & referência operacional, não arranjo avaliado & Tabela~\ref{tab:cap8-referencia} \\
+Arranjo ASR &  & Sensibilidade automática de 87,0\% e 88,7\%, com 21 e 4 falsos positivos, 13 e 27 pares verdadeiros perdidos e 96 e 17 pares encaminhados ao revisor humano & só como comparação & Tabela~\ref{tab:cap8-referencia} \\
+Cascatas v3.1 e v3, sobre a base inteira &  & Sensibilidade automática de 78,5\% e 53,4\% (v3.1, com 34 e 0 falsos positivos) e de 58,3\% e 40,5\% (v3, com 35 e 6); a diferença da v3.1 para ASR vem dos pares verdadeiros aceitos pelo corte & só como comparação & Tabela~\ref{tab:cap8-referencia}; Seção~\ref{sec:e4-arranjo} \\
+\midrule
+O1, escore do OpenRecLink & Em que ordem revisar a \textit{grey area}? & 501 e 51 revisões para recuperar os 23 e 9 pares verdadeiros de ASR; 2.521 para os 36 & como comparador (linha de base) & Seção~\ref{sec:e4-mesma-carga} \\
+O2, nota final do CdR &  & 4.163 e 11 revisões para os mesmos pares & só como comparação & Seção~\ref{sec:e4-mesma-carga} \\
+O3, probabilidade calibrada; O4, recalibrada de ASR &  & O3: 125 e 29 revisões (O4: 106 e 27); 23.443 para os 36, contra 2.521 de O1; IC de O3 menos O1 inclui zero nas três metas & O3, sim, escolhida pela curva de esforço; O4, comparação secundária no registro da coorte nova & Seção~\ref{sec:e4-mesma-carga} \\
+F3, fusão de O3, O1 e O3 com MACD &  & 25 pares verdadeiros com as 96 revisões da vigilância (O1: 19; O3: 22) e 1.777 revisões para os 36; frente a O1, IC inteiramente abaixo de zero nas metas de 9 e de 36; frente a O3, nenhum & sim, quando houver as MACD & Seção~\ref{sec:e4-mesma-carga} \\
+F4, fusão de O3 e O1 &  & 18 pares verdadeiros com as 96 revisões da vigilância (O1: 19; O3: 22) e 1.387 revisões para os 36; frente a O1, mediana de 38 e 1.203 revisões a menos nas metas de 9 e de 36, IC inteiramente abaixo de zero; frente a O3, nenhum & sim, escolhida pela curva de esforço & Seção~\ref{sec:e4-mesma-carga}; Tabela~\ref{tab:cap8-fusao-robustez} \\
+CM, O3 com contexto por óbito e MACD &  & IC inteiramente abaixo de zero frente a O1 só na meta de 36 (mediana de 1.296 revisões a menos); sem vantagem demonstrada sobre F4 & comparação secundária no registro da coorte nova & Seção~\ref{sec:e4-mesma-carga} \\
+\midrule
+Decisões de ASR, por passo & A decisão é equânime por estrato? & Sensibilidade automática de 42,5\% no passo 11 (vigilância), contra 95,0\% no passo 6 e 96,1\% no passo 9, disparidade herdada do corte; a equidade da ordenação recomendada não foi examinada & diagnóstico; paridade demográfica não demonstrada & Capítulo~\ref{cap:estudo5} \\
+\midrule
+LLM como aceitador (Claude Haiku 5.5, em ASR) & O LLM reduz a revisão manual? & 25 aceitações abaixo do corte na vigilância, com 4 pares verdadeiros e 21 falsos positivos; VPP de 16,0\% (IC 95\% de 6,4 a 34,7) & não como aceitador & Seção~\ref{sec:e4-discussao} \\
+LLM como filtro de \texttt{NONMATCH} &  & Na vigilância, com 22 revisões, 13 pares verdadeiros contra 6 de O3, mas 9 dos 22 pares verdadeiros do topo da fila descartados; a carga humana de 22 é a de uma réplica (18 na outra), e o filtro perdeu para O3 na unidade de custo da tese & só como hipótese exploratória & Seção~\ref{sec:e4-filtro} \\
+\end{longtable}
+\par\smallskip
+\noindent Quando há dois valores, o primeiro é da vigilância e o segundo, da confirmação. As revisões e os pares verdadeiros recuperados supõem revisor humano simulado sem erros, em análise \textit{post hoc}, frente à referência operacional. Meta: número de pares verdadeiros a recuperar (9, 23 ou 36; 36 é a totalidade dos pares verdadeiros abaixo do corte). CdR: Comparador de Registros. IC: intervalo de confiança de 95\%, por \textit{bootstrap} agrupado por óbito, salvo o do VPP do LLM, de Wilson. SMOTE: sobreamostragem sintética da classe minoritária. MLP: perceptron multicamadas. ASR: arranjo que preserva o corte do OpenRecLink e decide abaixo dele pela política de quatro ações. Cascatas v3 e v3.1: políticas de três e de quatro ações aplicadas à base inteira, sem preservar o corte. O1 a O4: filas ordenadas pelo escore do OpenRecLink, pela nota final do CdR, pela probabilidade calibrada e pela recalibrada de ASR. F3 e F4: fusões por posição recíproca. MACD: Medidas Contínuas de Diferença de Datas de nascimento. CM: O3 com atributos de contexto por óbito e MACD. AUC-PR: área sob a curva precisão-sensibilidade. Fonte: tabelas e seções da coluna Onde, com os números conferidos contra os agregados de \path{data/} por \path{scripts/tabela_sintese_conclusao.py}.
+\par
+\endgroup

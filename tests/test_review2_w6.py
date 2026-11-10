@@ -6,6 +6,7 @@ import re
 import pandas as pd
 import pytest
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from scripts.perfil_obitos_agregado import table
 from scripts.tabelas_review2_w3 import historical_tables
 
@@ -39,8 +40,10 @@ def test_objectives_and_contribution_do_not_claim_audited_policy_or_wrong_incomp
         source = text(name)
         assert "política auditável" not in source
         assert "decisões auditáveis" not in source
-        assert "sem exercício independente de auditoria das justificativas" in source
-    assert "não pela política de quatro ações" in text("conclusao.tex").split("\n\n")[1]
+        if name != "capitulo3.tex":  # C3-04: frase retirada do objetivo
+            assert "sem exercício independente de auditoria das justificativas" in source
+    opening = text("conclusao.tex").split(r"\section{Resposta aos objetivos}")[0]
+    assert "e não da automação das decisões pela política de quatro ações" in opening
 
 
 def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
@@ -64,7 +67,7 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
     assert r"limite inferior do intervalo de 95\% entre partições predefinidas" in criterion
     assert "em cada uma das duas metas" in criterion
     assert "os 23 PAR~=~2 da vigilância e os nove da confirmação" in criterion
-    assert "P supera O3 por um vínculo na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
+    assert "ASR supera O3 por um par verdadeiro na carga 96 da vigilância e por três na carga 17 da confirmação" in criterion
     assert "de 9 a 21 perdas na vigilância e de 21 a 29 na confirmação" in criterion
     assert "Nenhuma dessas avaliações foi realizada" in criterion
     for name in ("defesa.tex", "roteiro_defesa.md"):
@@ -75,11 +78,14 @@ def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
 
 def test_f1_comparison_has_false_positives_and_explicit_calculation():
     conclusion = text("conclusao.tex")
-    assert "um ou dois VP e até três FP" in conclusion
-    assert "diferenças de 0,012 a 0,027" in conclusion
+    # Conclusão reescrita: a comparação de F1 fica como "variou de 0,880 a 0,918, diferença que não permite ordenar os métodos";
+    # o cálculo por VP e FP e o intervalo de 0,012 a 0,027 deixaram de constar (nenhum capítulo os repete) por concisão.
+    assert "o $F_1$ médio variou de 0,880 a 0,918, diferença que não permite ordenar os métodos" in conclusion
     assert "abaixo da variação" not in conclusion
-    for name in ("estudo3_estrategias.tex", "conclusao.tex"):
+    # Revisão 2: o trecho da variação entre controles A e A0 do Estudo 3 está no apêndice das estratégias.
+    for name in ("apendice_estrategias.tex",):
         source = text(name)
+        assert "um ou dois verdadeiros positivos" in source
         assert re.search(r"XGBoost e Random Forest entre os controles A(?: \([^)]*\))? e A0", source)
         assert "cálculo da tese" in source or "calculada na tese" in source
         assert "partição original do comparativo" in source
@@ -98,12 +104,13 @@ def test_glossary_records_historical_alias_shared_agents_and_internal_holdout():
 
 def test_summary_period_and_numeric_ceiling_are_preserved():
     source = text("tese.tex")
-    for start, period in ((r"O \textit{linkage} integra", "óbitos de 2019 a 2022"),
-                          ("Linkage integrates systems", "deaths from 2019 to 2022")):
+    for start, period in (("A tuberculose segue como causa importante", "óbitos de 2019 a 2022"),
+                          ("Tuberculosis remains an important cause", "deaths from 2019 to 2022")):
         begin = source.index(start)
         abstract = source[begin:source.index(r"\vspace{15pt}", begin)]
         assert period in abstract
-        assert len(re.findall(r"\d+(?:[.,]\d+)*", abstract)) <= 18
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(abstract)) <= TETO_NUMEROS_RESULTADO
         assert "211" not in abstract
         assert len(abstract.split()) <= 500
     assert "À Daniela Medina Coeli Bastos" in source
@@ -139,18 +146,18 @@ def test_score_band_precision_follows_count_only_source(tmp_path):
 def test_remaining_editorial_caveats_and_reductions():
     study = text("estudo4_gzcmd.tex")
     assert "Essa proporção de referência é descritiva" in study
-    assert "As âncoras superestimam a probabilidade nas faixas $[7,9)$" in study
+    # Revisão 2: a validação das âncoras foi para o apêndice do Estudo 4.
+    assert "As âncoras superestimam a probabilidade nas faixas $[7,9)$" in text("apendice_gzcmd.tex")
     assert "Usar $1/240$ em vez de 0,005 não altera decisões" in study
     assert "cobre $C_{LLM}$ de 0,005 a 0,25" in study
     for name in ("estudo4_gzcmd.tex", "apendice_pacote.tex", "capitulo_dados.tex"):
         assert not re.search(r"\bbandas?\b", text(name))
-    conclusion = text("conclusao.tex")
-    assert "A versão do prompt dos braços selecionados não foi identificada" in conclusion
-    assert "As limitações do filtro são discutidas" in conclusion
+    # Conclusão reescrita: a versão do prompt dos braços selecionados e as limitações do filtro permanecem no Estudo 4.
+    assert "a versão do prompt não está registrada nos arquivos originais dos braços selecionados" in study
     assert "a tese não participou dessas etapas" not in text("capitulo1.tex")
     assert "sem distingui-la de abstenção generalizada" in text("capitulo1.tex")
     assert "não mede concordância entre registros" in text("estudo1_comparador.tex")
-    assert "7 é o limiar mínimo da nota no filtro de homonímia histórico v3" in text("capitulo_dados.tex")
+    assert "7 é o limiar mínimo da nota final no filtro de homonímia histórico v3" in text("capitulo_dados.tex")
     for value in ("0{,}5", "2{,}0"):
         assert r"$\beta=" + value + "$" in text("apendice_ablacao.tex")
     roteiro = (ROOT / "text/slides/roteiro_defesa.md").read_text(encoding="utf-8")
@@ -159,17 +166,33 @@ def test_remaining_editorial_caveats_and_reductions():
 
 
 def test_queue_codes_have_ordering_definitions_in_each_conclusion_paragraph():
+    """Cada código de fila (O1 a O4) é definido onde aparece.
+
+    Na tese.tex (resumo), em cada parágrafo. Na conclusão reescrita (2026-11-08), que define as filas na primeira
+    menção do capítulo e depois usa só o código, exige-se a definição no parágrafo da primeira menção.
+    """
+    # As formas em inglês valem para os parágrafos do Abstract de tese.tex (revisão 2).
     definitions = {
-        "O1": ("escore do OpenRecLink",),
-        "O2": ("nota final do CdR", "nota do CdR"),
+        "O1": ("escore do OpenRecLink", "OpenRecLink score"),
+        "O2": ("nota final do CdR", "nota do CdR", "final score of the CdR", "CdR final score"),
         "O3": ("probabilidade calibrada fora da amostra do classificador",
-               "probabilidade isotônica fora da amostra"),
-        "O4": ("probabilidade recalibrada de P",),
+               "probabilidade calibrada fora da amostra do XGBoost",
+               "probabilidade isotônica fora da amostra",
+               "out-of-sample calibrated probability"),
+        "O4": ("probabilidade recalibrada de ASR", "recalibrated probability of ASR"),
     }
+    # Forma de definição usada na conclusão: "ordenação pela probabilidade calibrada fora da amostra (O3)".
+    definitions_conclusion = dict(definitions, O3=definitions["O3"] + ("probabilidade calibrada fora da amostra (O3)",))
     for name in ("conclusao.tex", "tese.tex"):
         source = text(name)
+        known = definitions_conclusion if name == "conclusao.tex" else definitions
         for code in set(re.findall(r"\bO[1-4]\b", source)):
-            assert any(term in source for term in definitions[code]), (name, code)
+            assert any(term in source for term in known[code]), (name, code)
+        if name == "conclusao.tex":
+            for code in sorted(set(re.findall(r"\bO[1-4]\b", source))):
+                first = next(p for p in source.split("\n\n") if re.search(rf"\b{code}\b", p))
+                assert any(term in first for term in definitions_conclusion[code]), (name, code, first)
+            continue
         for paragraph in source.split("\n\n"):
             for code in set(re.findall(r"\bO[1-4]\b", paragraph)):
                 terms = definitions[code]

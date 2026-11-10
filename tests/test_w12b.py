@@ -2,6 +2,7 @@
 
 import re
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from test_s4a_texto import abstracts
 from test_w11b import answer, rows, text
 
@@ -10,15 +11,23 @@ def test_abstracts_recommend_fusion_without_changing_hypothesis_or_limits():
     pt, en = abstracts()
     for body in (pt, en):
         assert len(body.split()) <= 500
-        assert len(re.findall(r"\d+(?:[.,]\d+)*", body)) <= 18
+        # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+        assert len(numeros_de_resultado(body)) <= TETO_NUMEROS_RESULTADO
         assert "OpenRecLink" in body
-    for fragment in ("não da política de decisão", "fusão por posição recíproca",
-                     "coorte nova com referência cega", "sua vantagem sobre a probabilidade calibrada não foi demonstrada",
-                     "nenhuma das estratégias comparadas é melhor em todos os desfechos"):
+    # Redação nova do Resumo e do Abstract (revisão 2): a fusão por posição recíproca (F3) e a referência cega
+    # constam da conclusão e do Estudo 4; o resumo fixa a ordenação como origem da redução, a vantagem das fusões
+    # sobre O3 não demonstrada, a validação em coorte nova e a ausência de dominância.
+    # Resumo reescrito no estilo do grupo (decisão da autora de 2026-11-10): a frase da origem da redução foi
+    # unificada, "As fusões com o escore" encurtou e o MATCH ao humano ("nove com 29 revisões") saiu do Resumo.
+    for fragment in ("não veio da automação nem do LLM, mas da ordem de revisão dos pares",
+                     "As fusões com o escore (F3 e F4)",
+                     "a validar em coorte nova", "mas nenhum IC frente a O3 ficou abaixo de zero",
+                     "pois nenhuma dominou em todas as cargas"):
         assert fragment in pt
-    for fragment in ("not from the decision policy", "reciprocal rank fusion",
-                     "new cohort with a blinded reference", "its advantage over the calibrated probability was not demonstrated",
-                     "none of the compared decision strategies dominates", "nine links from the queue head"):
+    for fragment in ("came from the order in which pairs are reviewed, rather than from automating the decisions or from the LLM",
+                     "Fusions of the calibrated probability with the score (F3 and F4)",
+                     "to be validated in a new cohort", "but no CI relative to O3 fell below zero",
+                     "since no ordering was dominant in every workload"):
         assert fragment in en
     assert "por probabilidade ou escore" not in pt
     assert "by probability or score" not in en
@@ -54,11 +63,18 @@ def test_model_comparison_uses_acceptance_stratum_not_total_sample():
 
 def test_conclusion_preserves_denominators_and_glossary_defines_new_models():
     conclusion = text("text/latex/conclusao.tex")
-    for fragment in ("configuração de sensibilidade do NB02", "Random Forest com pesos extremos, limiar 0,3",
-                     r"28,9\% (13 em 45)", r"42,3\% (11 em 26)",
-                     "por exemplo após mudança de estado civil", "Soundex do primeiro e do último fragmentos",
-                     "Experimento~1 do Estudo~4", "propagação por pessoa recuperou somente dois vínculos"):
-        assert fragment in conclusion
+    # Conclusão reescrita: esses denominadores e glosas permanecem nos capítulos e apêndices de origem.
+    sources = {"apendice_estrategias.tex": ("Random Forest com pesos extremos da estratégia de vigilância (NB02) no limiar de 0,3",),
+               "estudo4_gzcmd.tex": (r"28,9\% (13 pares verdadeiros em 45 aceitações)",
+                                     r"42,3\% (11 pares verdadeiros em 26 aceitações)",
+                                     "recuperou dois dos 36 pares verdadeiros (PAR~=~2) sem propagar PAR~=~0"),
+               "estudo5_equidade.tex": ("por exemplo após mudança de estado civil",
+                                        "Soundex do primeiro e do último fragmentos"),
+               "estudo1_comparador.tex": ("Experimento~1 do Estudo~4",)}
+    for name, fragments in sources.items():
+        for fragment in fragments:
+            assert fragment in text(f"text/latex/{name}"), (name, fragment)
+    assert "LLM não deve aceitar vínculos sozinho" in conclusion
     glossary = text("text/latex/glossario.tex")
     for name in ("Claude Opus 5.5", "Claude Fable 5.1"):
         assert rf"\item[{name}]" in glossary

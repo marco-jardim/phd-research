@@ -7,7 +7,7 @@ import csv
 import hashlib
 import json
 import re
-from decimal import Decimal
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -80,7 +80,8 @@ def render_table(rows: list[dict[str, str]]) -> str:
         percent = f"{Decimal(row['concordancia']) * 100:.1f}"
         lines.append(
             f"{label(row['subescore'])} & {decimal_pt(percent)} & "
-            + decimal_pt(row["diferenca_maxima"])
+            # Duas casas em toda a coluna (1,00; 0,80; 0,25), sem misturar precisões.
+            + decimal_pt(f"{Decimal(row['diferenca_maxima']).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)}")
             + r" \\"
         )
     lines.extend([

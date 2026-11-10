@@ -1,0 +1,43 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "cpu_only": true,
+  "llm_calls": 0,
+  "date_utc": "2026-11-09T01:55:35.731939+00:00",
+  "seed": 20261108,
+  "rng": "numpy.default_rng PCG64; uma chamada rng.random(n) por réplica",
+  "n_replicas": 200,
+  "script": "scripts/ordenacao_empates_o3.py",
+  "ordering": "O3_p_cal_ml",
+  "universe": {
+    "below_cutoff": 61485,
+    "PAR2": 36
+  },
+  "ties": {
+    "blocos_empatados": 54,
+    "maior_bloco": 24986
+  },
+  "tie_break": "escore decrescente; ordem aleatória uniforme dentro de cada bloco empatado",
+  "original_tie_break": "pair_id lexical ascendente (comparador_mesma_carga.py)",
+  "original_reproduction": "valores conferidos contra data/comparador_mesma_carga.csv",
+  "quantiles": "mínimo, máximo e percentis 2,5/50/97,5 (método linear) das réplicas",
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1"
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/comparador_mesma_carga.csv": "22309375a497830401e43d8fae2caf73c90658156209e636182342e49ac0bd5d"
+  },
+  "code_sha256": {
+    "scripts/ordenacao_empates_o3.py": "a5fa1439bf63e9bf673258c9d0ced04a3153fb2978d643150dd09d5e89f93760",
+    "scripts/comparador_mesma_carga.py": "b056869c2e64731a4e8f46ee4ab704d709d9e7b8a7368cdb72dbc3b0b0e9c78b"
+  },
+  "output_sha256": {
+    "ordenacao_empates_o3.csv": "24cdc8693f39deeac94d597e966aea22d0e62c08863db79df95668153cac84b7"
+  },
+  "elapsed_seconds": 3.2584933000034653,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/ordenacao_empates_o3.py"
+}

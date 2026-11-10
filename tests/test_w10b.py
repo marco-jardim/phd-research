@@ -9,18 +9,14 @@ import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
+# Recomendação aprovada (decisão da autora de 2026-11-08, conclusão reescrita): preservar o corte e ordenar abaixo dele
+# pela probabilidade calibrada, isolada (O3) ou fundida (F4; F3 com as MACD), pela curva de esforço; não "só F4".
 APPROVED = (
-    r"Em análise exploratória posterior ao registro, a fusão por posição recíproca "
-    r"(RRF, $k=60$) das ordenações pelo escore do OpenRecLink e pela probabilidade "
-    r"calibrada reduziu as revisões necessárias frente à ordenação pelo escore isolado "
-    r"nas metas de nove e de 36 vínculos, com intervalos de 95\% por \textit{bootstrap} "
-    r"agrupado por óbito inteiramente abaixo de zero (mediana de 38 e de 1.203 revisões "
-    r"a menos), mas não na meta de 23 vínculos. Frente à probabilidade calibrada isolada, "
-    r"nenhuma diferença teve intervalo abaixo de zero, e parte do ganho na cauda decorre "
-    r"de a fusão priorizar a faixa de escore em que a revisão de origem se concentrou. "
-    r"Recomenda-se a fusão como ordenação da fila de revisão no lugar da ordenação pelo "
-    r"escore do OpenRecLink, a validar em coorte nova com referência cega; sua vantagem "
-    r"sobre a probabilidade calibrada não foi demonstrada."
+    r"Recomenda-se, a validar em coorte nova com referência cega, preservar o corte do "
+    r"OpenRecLink e, abaixo dele, ordenar a fila de revisão manual pela probabilidade "
+    r"calibrada fora da amostra, isolada (O3) ou fundida ao escore do OpenRecLink por "
+    r"posição recíproca (F4; F3 quando houver as MACD), escolhendo entre elas, e entre "
+    r"estimadores, pela curva de esforço."
 )
 
 
@@ -41,11 +37,17 @@ def test_approved_recommendation_is_literal_unique_and_in_recommendations():
     conclusion = text("text/latex/conclusao.tex")
     assert conclusion.count(APPROVED) == 1
     recommendations = conclusion.split(r"\label{sec:concl-recomendacoes}")[1].split(
-        r"\section{Trabalhos futuros}")[0]
+        r"\section{Validação e próximos passos}")[0]
     assert APPROVED in recommendations
-    assert "condicionais às probabilidades" in recommendations
-    assert "alterando o estimando" in recommendations
-    assert "sem vantagem demonstrada" in text("text/latex/capitulo1.tex")
+    # As ressalvas dos IC e do estimando estão na seção de limitações da conclusão reescrita.
+    assert "condicionais às probabilidades" in conclusion
+    assert "o que altera o estimando" in conclusion
+    assert "a diferença entre O3 e as fusões não foi demonstrada" in recommendations
+    # Capítulo 1 reescrito (âncora C08r): a recomendação é O3 isolada ou fundida (F4; F3 com as MACD),
+    # pela curva de esforço; o texto antigo "sem vantagem demonstrada" foi substituído.
+    intro = text("text/latex/capitulo1.tex")
+    assert "Nenhuma ordenação domina em todas as cargas" in intro
+    assert "não têm vantagem demonstrada" in intro
 
 
 def test_bootstrap_claims_match_published_csv():
@@ -56,7 +58,7 @@ def test_bootstrap_claims_match_published_csv():
         assert float(row["diferenca_revisoes_mediana"]) == median
         assert float(row["diferenca_revisoes_ic95_inf"]) < float(
             row["diferenca_revisoes_ic95_sup"]) < 0
-        assert pt(-median, 0) in APPROVED
+        assert pt(-median, 0) in text("text/latex/conclusao.tex")
     assert float(bootstrap["F4-O1", 23]["diferenca_revisoes_ic95_sup"]) > 0
     for target in (9, 23, 36):
         row = bootstrap["F4-O3", target]
@@ -64,7 +66,10 @@ def test_bootstrap_claims_match_published_csv():
             row["diferenca_revisoes_ic95_sup"])
 
 
-@pytest.mark.parametrize("name", ["conclusao.tex", "capitulo_dados.tex", "glossario.tex"])
+# W5: o bloco limítrofe e o filtro literal foram movidos do capítulo de dados para o apêndice de origem.
+# Revisão 2: o glossário passou a só definir termos (definições de uma linha, sem resultados numéricos);
+# o bloco limítrofe fica protegido no apêndice de origem e na conclusão.
+@pytest.mark.parametrize("name", ["conclusao.tex", "apendice_linkage_origem.tex"])
 def test_boundary_precision_is_explained_and_matches_metadata(name):
     metadata = json.loads(text("data/fusao_robustez_metadata.json"))["faixa"]
     assert metadata["operational_n"] == 2522
@@ -74,7 +79,12 @@ def test_boundary_precision_is_explained_and_matches_metadata(name):
     assert metadata["operational_min_score"] >= -5.6485
     assert metadata["operational_min_score"] < metadata["literal_threshold"]
     body = text(f"text/latex/{name}").replace("{,}", ",")
-    for fragment in ("-5,6485", "-5,64846", "literal", "2.495 candidatos", "31 PAR"):
+    # A conclusão reescrita traz só o limiar arredondado e as contagens do filtro literal; as casas extras
+    # do bloco limítrofe ficam no apêndice de origem.
+    fragments = (("-5,648", "2.495 potenciais pares e 31 pares verdadeiros", "2.522 potenciais pares de maior escore")
+                 if name == "conclusao.tex"
+                 else ("-5,6485", "-5,64846", "literal", "2.495 candidatos", "31 PAR"))
+    for fragment in fragments:
         assert fragment in body
 
 
@@ -124,9 +134,10 @@ def test_reference_turning_points_and_remaining_losses_match_csv():
     c1, = [r for r in turns if r["modo"] == "vigilancia" and r["eixo"] == "fp_uniforme"
            and r["conclusao"] == "C1_VPP_menor_50" and float(r["par2_nao_vinculo"]) == 0]
     assert float(c1["fracao_virada"]) == 0.5
-    conclusion = text("text/latex/conclusao.tex")
-    for fragment in ("pelas medianas", "posição de precaução", "cerca de 40", "antes da defesa"):
-        assert fragment in conclusion
+    # Conclusão reescrita: as ressalvas de viés da referência permanecem no Estudo 4 (Seção da referência).
+    study = text("text/latex/estudo4_gzcmd.tex")
+    for fragment in ("pela mediana", "posição de precaução", "cerca de 40", "antes da defesa"):
+        assert fragment in study
 
 
 def test_new_answers_remain_contiguous_short_and_slide_stays_under_budget():

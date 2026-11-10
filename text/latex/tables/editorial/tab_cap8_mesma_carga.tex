@@ -1,25 +1,26 @@
 \begin{table}[!htbp]
-\centering\scriptsize
-\caption{Ordenações abaixo do corte na mesma carga humana de P. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}
+\centering\footnotesize
+\caption{Ordenações abaixo do corte na mesma carga humana de ASR. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}
 \label{tab:cap8-mesma-carga}
-\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrrr}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.14\linewidth}>{\raggedleft\arraybackslash}p{0.055\linewidth}>{\raggedleft\arraybackslash}p{0.085\linewidth}>{\raggedleft\arraybackslash}p{0.115\linewidth}>{\raggedleft\arraybackslash}p{0.075\linewidth}>{\raggedleft\arraybackslash}p{0.12\linewidth}>{\raggedleft\arraybackslash}p{0.045\linewidth}>{\raggedleft\arraybackslash}p{0.085\linewidth}}
 \toprule
-Modo & Ordem & Revisões & PAR=2 & \shortstack{PAR=2\\com erro 5\%} & $S_{0,95}$ (\%) & Pares LLM (chamadas) & FP & $k$ para igualar P \\
+Modo & Ordem & Rev. & PAR=2 & \shortstack[r]{PAR=2 com\\erro 5\%} & \shortstack[r]{$S_{0,95}$\\(\%)} & \shortstack[r]{Pares LLM\\(chamadas)} & FP & \shortstack[r]{$k$ para\\igualar\\ASR} \\
 \midrule
 Vigilância & O1 & 96 & 19 & 18{,}05 & 92{,}73 & 0 (0) & 0 & 501 \\
 Vigilância & O2 & 96 & 12 & 11{,}40 & 90{,}04 & 0 (0) & 0 & 4.163 \\
 Vigilância & O3 & 96 & 22 & 20{,}90 & 93{,}89 & 0 (0) & 0 & 125 \\
 Vigilância & O4 & 96 & 22 & 20{,}90 & 93{,}89 & 0 (0) & 0 & 106 \\
-Vigilância & P & 96 & 23 & 22{,}05 & 94{,}35 & 344 (755) & 21 & n.a. \\
-Vigilância & P, \texttt{MATCH} ao humano & 121 & 23 & 21{,}85 & 94{,}27 & 344 (755) & 0 & n.a. \\
+Vigilância & ASR & 96 & 23 & 22{,}05 & 94{,}35 & 344 (755) & 21 & n.a. \\
+Vigilância & ASR, \texttt{MATCH} ao humano & 121 & 23 & 21{,}85 & 94{,}27 & 344 (755) & 0 & n.a. \\
 Confirmação & O1 & 17 & 3 & 2{,}85 & 86{,}58 & 0 (0) & 0 & 51 \\
 Confirmação & O2 & 17 & 9 & 8{,}55 & 88{,}89 & 0 (0) & 0 & 11 \\
 Confirmação & O3 & 17 & 6 & 5{,}70 & 87{,}73 & 0 (0) & 0 & 29 \\
 Confirmação & O4 & 17 & 5 & 4{,}75 & 87{,}35 & 0 (0) & 0 & 27 \\
-Confirmação & P & 17 & 9 & 8{,}95 & 89{,}05 & 41 (87) & 4 & n.a. \\
-Confirmação & P, \texttt{MATCH} ao humano & 29 & 9 & 8{,}55 & 88{,}89 & 41 (87) & 0 & n.a. \\
+Confirmação & ASR & 17 & 9 & 8{,}95 & 89{,}05 & 41 (87) & 4 & n.a. \\
+Confirmação & ASR, \texttt{MATCH} ao humano & 29 & 9 & 8{,}55 & 88{,}89 & 41 (87) & 0 & n.a. \\
 \bottomrule
-\end{tabular}}
-\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: probabilidade calibrada do classificador na base inteira; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% projeta a recuperação abaixo do corte, preservando as aceitações automáticas de cada estratégia: em P, os vínculos aceitos pelo LLM não recebem desconto por erro humano; em P com MATCH ao humano, todos os recuperáveis passam pelo humano. O1 a O4 vêm de \path{data/comparador_mesma_carga_erro05.csv}; as duas estratégias P, de \path{data/cenarios_sensibilidade_humana.csv}. Somada aos vínculos preservados pelo corte e dividida pelo total de vínculos, essa contagem reproduz $S_{0,95}$. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}
-\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. $k$: número de revisões humanas na ordenação. CdR: Comparador de Registros.
+\end{tabular}
+\par\smallskip\parbox{\linewidth}{\footnotesize Rev.: revisões humanas. O1: escore do OpenRecLink; O2: nota do CdR; O3: probabilidade calibrada do classificador na base inteira; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% projeta a recuperação abaixo do corte, preservando as aceitações automáticas de cada estratégia: em ASR, os vínculos aceitos pelo LLM não recebem desconto por erro humano; em ASR com \texttt{MATCH} ao humano, todos os recuperáveis passam pelo humano. O1 a O4 vêm de \path{data/comparador_mesma_carga_erro05.csv}; as duas estratégias ASR, de \path{data/cenarios_sensibilidade_humana.csv}. Somada aos vínculos preservados pelo corte e dividida pelo total de pares verdadeiros, essa contagem reproduz $S_{0,95}$. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}
+\par\footnotesize ASR: arranjo sequencial do registro interno, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. $k$: número de revisões humanas na ordenação. CdR: Comparador de Registros.
 \end{table}

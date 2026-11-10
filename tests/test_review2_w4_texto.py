@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from scripts.tabelas_s8a1_editorial import human_sensitivity
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
@@ -23,7 +24,9 @@ def test_falsification_is_prospective_with_explicit_margin_not_point_differences
         assert "outra coorte ou período" in normalized
         assert r"25\%" in normalized and "limite inferior" in normalized
         assert "2/36" not in normalized and "5,6 pontos percentuais" not in normalized
-        assert "réplicas predefinidas" in normalized or "réplicas de partição predefinidas" in normalized
+        # A conclusão reescrita escreve "entre partições predefinidas".
+        assert ("réplicas predefinidas" in normalized or "réplicas de partição predefinidas" in normalized
+                or "entre partições predefinidas" in normalized)
         assert "referência cega" in normalized.lower()
         assert "nota calibrada" not in normalized
     slides = (ROOT / "text/slides/defesa.tex").read_text(encoding="utf-8")
@@ -35,6 +38,7 @@ def test_falsification_is_prospective_with_explicit_margin_not_point_differences
     assert "outra coorte" in slides
     assert "2/36" not in slides and "5,6 pontos percentuais" not in slides
     assert ("não foi testado" in text("conclusao.tex")
+            or "não foi testada" in text("conclusao.tex")
             or "não foi estimada nem testada" in text("conclusao.tex"))
     assert "nenhuma dessas avaliações foi realizada" in text("estudo4_gzcmd.tex").lower()
 
@@ -44,7 +48,8 @@ def test_dossier_coverage_matches_aggregate_and_no_auditability_is_claimed():
         rows = list(csv.DictReader(stream))
     assert len(rows) == 29
     assert sum(row["enviado"] == "sim" for row in rows) == 14
-    for name in ("estudo4_gzcmd.tex", "conclusao.tex", "apendice_prompts.tex"):
+    # A conclusão reescrita não detalha o dossiê enviado ao LLM; a cobertura permanece no Estudo 4 e no apêndice de prompts.
+    for name in ("estudo4_gzcmd.tex", "apendice_prompts.tex"):
         source = text(name)
         assert "14 dos 29 subescores" in source
         assert "penalidade por nome comum da mãe" in source
@@ -52,6 +57,7 @@ def test_dossier_coverage_matches_aggregate_and_no_auditability_is_claimed():
         assert "evidência ausente" in source or "evidências ausentes" in source
     assert r"\input{tables/editorial/tab_dossie_campos.tex}" in text("estudo4_gzcmd.tex")
     assert "política auditável" not in text("conclusao.tex")
+    assert "não houve exercício independente de auditoria das justificativas" in text("conclusao.tex")
     assert "não demonstra auditabilidade" in text("estudo4_gzcmd.tex")
 
 
@@ -63,7 +69,7 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
     study = text("estudo4_gzcmd.tex")
     assert "compatíveis com ancoragem ou abstenção generalizada" in study
     assert "1.845 revisões" in study and "1.582" in study
-    assert "Não há controle negativo com não vínculos" in study
+    assert contem(study, "Não há controle negativo com não pares", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "retira somente o grupo" in study
     assert "versão do prompt não está registrada" in study
     assert "proxies adicionais" not in study
@@ -73,8 +79,9 @@ def test_ablation_is_not_a_negative_control_or_identified_mechanism():
 def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
     from test_w9a import expected_ablation_appendix
 
-    study = text("estudo4_gzcmd.tex")
-    section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\subsection{Experimento 2:")[0]
+    # Revisão 2: o Experimento 1 foi para o Apêndice do Estudo 4 (seção da ablação das MACD).
+    study = text("apendice_gzcmd.tex")
+    section = study.split(r"\label{sec:e4-exp1}")[1].split(r"\section{Registro interno do arranjo")[0]
     appendix = text("apendice_ablacao.tex")
     assert appendix == expected_ablation_appendix()
     for arm in ("macd", "nomacd"):
@@ -88,7 +95,7 @@ def test_exp1_allowlist_numbers_match_summaries_and_history_is_explicit():
         assert f"data/ablation_comprec_{arm}.csv" in section
         assert f"data/ablation_comprec_{arm}_allowlist.csv" in appendix
     assert "200 árvores" in section and "profundidade máxima 10" in section
-    assert "pesos balanceados" in section and "validação cruzada interna" in section
+    assert "pesos de classe balanceados" in section and "validação cruzada interna" in section
     assert "29 subescores e à nota final" in section
     assert "se sobrepõem" in section and "otimistas" in section
     assert "não pode ser atribuída somente ao escore" in section
@@ -156,7 +163,8 @@ def test_cardinality_counts_do_not_imply_an_implemented_rule():
     assert (vigil["fp_total"], vigil["refrec_ja_aceito"], vigil["comprec_ja_aceito"],
             vigil["nenhum_ja_aceito"]) == (21, 1, 0, 20)
     assert (conf["fp_total"], conf["comprec_ou_refrec_ja_aceito"]) == (4, 0)
-    source = text("estudo4_gzcmd.tex")
+    # Revisão 2: a contagem de cardinalidade foi para o Apêndice A.1 (política histórica v3).
+    source = text("apendice_gzcmd.tex")
     assert "previstos, mas não implementados" in source
     assert "não avalia conflitos entre novas aceitações" in source
     assert "um compartilha REFREC" in source and "os outros 20" in source

@@ -8,6 +8,7 @@ import pandas as pd
 import pytest
 
 from scripts.tabelas_s8_editorial import same_load, effort
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 L = ROOT / 'text/latex'
@@ -33,18 +34,23 @@ def test_dal_pozzolo_case_with_project_bibliography_style(tmp_path):
 def test_recommendation_does_not_fix_a_learned_probability_order():
     for name in ('capitulo1.tex', 'conclusao.tex'):
         text = (L / name).read_text(encoding='utf-8')
-        assert 'fusão por posição recíproca' in text
+        # Conclusão reescrita: mesma recomendação (O3 isolada ou fundida por posição recíproca), com outra redação.
+        fusao = {'capitulo1.tex': 'fusão por posição recíproca',
+                 'conclusao.tex': 'fundida ao escore do OpenRecLink por posição recíproca'}
+        assert fusao[name] in text
         assert 'referência cega' in text
-        assert 'Se a ordenação usar probabilidade aprendida' in text
+        subamostragem = {'capitulo1.tex': 'Se a ordenação usar probabilidade aprendida',
+                         'conclusao.tex': 'Se a probabilidade for aprendida com subamostragem dos negativos'}
+        assert subamostragem[name] in text
         expected = {
             'capitulo1.tex': 'a curva de esforço aplicada a este fluxo',
-            'conclusao.tex': 'a curva de esforço aplicada a este fluxo como instrumento de escolha da ordenação e do ponto de parada',
+            'conclusao.tex': 'usa a curva de esforço para escolher a ordenação e o ponto de parada',
         }
         assert expected[name] in text
         assert r'\citeonline{Sariyar2010recordlinkage}' in text
         assert 'dentro da variação de perdas' not in text
     text = (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert 'uma diferença de um vínculo em 36 não sustenta superioridade' in text
+    assert contem(text, 'uma diferença de um par verdadeiro em 36 não sustenta superioridade', arquivo='text/latex/estudo4_gzcmd.tex')  # revisão 2: classe, não decisão
     discussion = text.split(r'\label{sec:e4-discussao}')[1]
     assert 'as perdas são de cobertura, não de erro humano' in discussion
     assert 'o ótimo é dar ao revisor humano o topo da fila' in discussion
@@ -54,7 +60,9 @@ def test_recommendation_does_not_fix_a_learned_probability_order():
 def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_proof():
     text = (L / 'apendice_formalizacao.tex').read_text(encoding='utf-8')
     assert r'\label{prop:duas-acoes-orcamento}' in text
-    section = text.split(r'\subsection{Revisão Humana e Não Vínculo sob Orçamento}')[1]
+    # Revisão 2: o título passou de "Não Vínculo" para "Rejeição" (guia 3.6).
+    assert r'\subsection{Revisão Humana e Rejeição sob Orçamento}' in text
+    section = text.split(r'\subsection{Revisão Humana e Rejeição sob Orçamento}')[1]
     assert 'exclusivamente teórica' in section
     assert r'p_i\geq C_H/C_{FN}' in section
     assert r'C_{FN}(p_j-p_i)<0' in section
@@ -64,7 +72,7 @@ def test_theoretical_two_action_proposition_has_scope_threshold_and_exchange_pro
 
 
 @pytest.mark.parametrize('mode', ['vigilancia', 'confirmacao'])
-@pytest.mark.parametrize('strategy,title', [('P', 'P'), ('P_MATCH_ao_humano', r'P, \texttt{MATCH} ao humano')])
+@pytest.mark.parametrize('strategy,title', [('P', 'ASR'), ('P_MATCH_ao_humano', r'ASR, \texttt{MATCH} ao humano')])
 def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, strategy, title):
     data = pd.read_csv(ROOT / 'data/comparador_mesma_carga.csv')
     scenarios = pd.read_csv(ROOT / 'data/cenarios_sensibilidade_humana.csv')
@@ -96,26 +104,30 @@ def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, stra
     assert value(mutated[4]) == pytest.approx(expected + 2 * scenario.s)
     assert value(mutated[5]) != value(row[5])
     text = same_load(data, scenarios=scenarios)
-    assert 'em P, os vínculos aceitos pelo LLM não recebem desconto' in text
-    assert 'em P com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
+    assert contem(text, 'em ASR, os vínculos aceitos pelo LLM não recebem desconto', arquivo='text/latex/tables/editorial/tab_cap8_mesma_carga.tex')  # migrado: terminologia 3.6
+    assert 'em ASR com MATCH ao humano, todos os recuperáveis passam pelo humano' in text
     assert 'h/FP: horas de revisão divididas pelos FP automáticos' in effort(pd.read_csv(ROOT / 'data/esforco_arranjo.csv'))
 
 
 def test_english_convention_expansions_denominators_and_surveillance():
     text = (L / 'tese.tex').read_text(encoding='utf-8')
-    pt = text.split(r'O \textit{linkage} integra', 1)[1].split(r'\vspace{15pt}')[0]
-    en = text.split('Linkage integrates', 1)[1].split(r'\vspace{15pt}')[0]
+    pt = text.split('A tuberculose segue como causa importante', 1)[1].split(r'\vspace{15pt}')[0]
+    en = text.split('Tuberculosis remains an important cause', 1)[1].split(r'\vspace{15pt}')[0]
     assert 'modelo de linguagem de grande porte (LLM)' in pt
-    assert 'falsos positivos (FP)' in pt
-    assert 'large language model (LLM)' in en and 'false positives (FP)' in en
+    # Redação nova (revisão 2): "falsos positivos" por extenso, sem a sigla FP no resumo.
+    assert 'falsos positivos' in pt and not re.search(r'\bFP\b', pt)
+    assert 'large language model (LLM)' in en and 'false positives' in en and not re.search(r'\bFP\b', en)
     assert '247' in pt and '247' in en
-    assert r'42,5\% na vigilância' in pt and 'surveillance blocking step 11' in en
+    assert r'a sensibilidade automática de ASR na vigilância foi de 42,5\%' in pt
+    assert r'In blocking step 11 (candidate-generation stage), the automatic sensitivity of ASR in surveillance was 42.5\%' in en
     for summary in (pt, en):
         assert len(summary.split()) <= 500
         assert r'\textit{Platt scaling}' not in en and r'\textit{Linkage}' not in en
     assert 'nos dois lados' not in pt and 'pontos completos' not in pt
-    assert 'Se a ordenação usar probabilidade aprendida' in pt
-    assert 'If ordering uses learned probabilities' in en
+    # A condição sobre probabilidade aprendida com subamostragem consta de capitulo1 e conclusao (teste acima);
+    # o resumo recomenda a probabilidade calibrada fora da amostra, isolada (O3) ou nas fusões.
+    assert 'probabilidade calibrada fora da amostra do classificador, isolada (O3) ou nas fusões' in pt
+    assert 'out-of-sample calibrated probability of the classifier, alone (O3) or in the fusions' in en
 
 
 def test_ic_scope_and_filter_cost_are_explicit():
@@ -134,10 +146,8 @@ def test_ic_scope_and_filter_cost_are_explicit():
     data = (L / 'capitulo_dados.tex').read_text(encoding='utf-8')
     assert 'termo de consentimento' not in data
     # Decisão D2: o parecer cobre o depósito restrito, não um benchmark público.
-    assert 'sob os pareceres vinculados aos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
-    objectives = (L / 'capitulo3.tex').read_text(encoding='utf-8')
-    assert r'\ref{ap:protocolo-busca}' in objectives
-    assert 'Pacheco2008hierarchical,Rafael2024accuracy' in objectives
-    assert r'foi acrescentada \textit{post hoc}' in objectives
+    assert 'sob os pareceres dos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279' in data
+    # capitulo3.tex: pinos de protocolo de busca, Pacheco2008/Rafael2024 e "post hoc"
+    # retirados na reescrita (a âncora C01r do registro protege o caráter post hoc).
     bib = (L / 'referencias.bib').read_text(encoding='utf-8')
     assert r'author    = {{\relax Dal Pozzolo}, Andrea and Caelen' in bib

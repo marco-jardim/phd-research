@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from terminologia import contem
 from gzcmd import arranjo_robustez as robust
 from gzcmd.arranjo_corte import crossfit_rates
 from scripts.carga_abaixo_corte_horas import generate as hours_generate
@@ -27,7 +28,7 @@ def test_step11_note_distinguishes_maximum_difference_from_pairwise_tests():
     note = step_ppv_note(maximum, groups, tests)
     assert 'não para os testes pareados de VPP' in note
     assert 'que incluem o passo 11' in note
-    labels = {'arranjo_P_vigilancia': 'Arranjo P (vigil.)', 'arranjo_P_confirmacao': 'Arranjo P (confirm.)',
+    labels = {'arranjo_P_vigilancia': 'Arranjo ASR (vigil.)', 'arranjo_P_confirmacao': 'Arranjo ASR (confirm.)',
               'cascata_v31_vigilancia': 'Base inteira v3.1 (vigil., comparação)',
               'cascata_v31_confirmacao': 'Base inteira v3.1 (confirm., comparação)'}
     for decision, label in labels.items():
@@ -59,7 +60,10 @@ def test_arrangement_editorial_preserves_every_number():
     assert numeric(arrangement_expected_notes(original)) == numeric(current)
     assert current.count('61.485 (teto; 36)') == 2
     assert r'\textit{A posteriori}' in current
-    assert 'área cinza da nota' in current
+    # Revisão 2: [5,9) é a "faixa intermediária da nota final"; "área cinza" fica só para a região abaixo do corte.
+    arquivo = 'text/latex/tables/editorial/tab_cap8_arranjo_corte.tex'
+    assert contem(current, r'faixa intermediária da nota final $[5,9)$', arquivo=arquivo)
+    assert 'área cinza' not in current and 'grey area' not in current
 
 
 def test_workload_hours_reproduce_source_and_historical_time_assumption(tmp_path):
@@ -142,30 +146,44 @@ def test_chronology_uses_original_git_and_metadata_not_old_editorial_time():
 def test_new_recommendation_is_not_presented_as_an_evaluated_result():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
     recommendation = text.split(r'\label{sec:concl-recomendacoes}')[1]
-    assert r'Se for utilizado, seu \texttt{MATCH} vai ao revisor humano' in recommendation
-    assert 'hipótese exploratória a validar em dados novos' in recommendation
-    assert 'nas condições avaliadas, não deve aceitar vínculos sozinho' in recommendation
-    assert 'posição de precaução, não estimativa transferível' in recommendation
-    assert 'validação registrada em dados novos' in recommendation
+    assert r'Se for usado, o \texttt{MATCH} segue ao revisor humano' in recommendation
+    # Conclusão reescrita: os usos subordinados ao revisor são hipóteses exploratórias (objetivo 4); a validação é a da última seção.
+    assert 'seus usos subordinados ao revisor humano, como filtro de \\texttt{NONMATCH} ou fonte de evidência para a probabilidade, permanecem hipóteses exploratórias' in text
+    assert contem(recommendation, 'O LLM não deve aceitar vínculos sozinho', arquivo='text/latex/conclusao.tex')
+    assert contem(text, 'nas condições avaliadas, o LLM não deve aceitar vínculos sozinho', arquivo='text/latex/conclusao.tex')
+    assert 'valor que estaria subestimado se algum dos dez falsos positivos' in recommendation
+    assert 'A hipótese exige outra coorte ou período, não usados para fixar o corte nem as regras' in recommendation
+    assert 'Com ordenação e orçamento fixados antes dos desfechos e referência cega independente' in recommendation
+    # "posição de precaução, não estimativa transferível" permanece no Estudo 4 (restrição à aceitação autônoma pelo LLM).
+    assert 'posição de precaução' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
 
 
 def test_abstract_definitions_and_nonrejection_follow_source():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    start_pt = thesis.index(r'O \textit{linkage} integra')
-    start_en = thesis.index(r'Linkage integrates')
+    start_pt = thesis.index('A tuberculose segue como causa importante')
+    start_en = thesis.index('Tuberculosis remains an important cause')
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
     assert len(pt.split()) <= 500 and len(en.split()) <= 500
-    assert 'P preserva o corte e decide abaixo dele com recalibração isotônica' in pt
-    assert r'P-Platt é análise de sensibilidade com \textit{Platt scaling}' in pt
+    # Redação nova (revisão 2): a recalibração isotônica e o P-Platt constam do Estudo 4; a sensibilidade de pelo
+    # menos 95% nos passos 6 e 9 consta do Estudo 5; o resumo traz o passo 11 e a ausência de dominância.
+    study4 = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
+    assert 'que preserva o corte e decide os demais potenciais pares pela política v3.1, com recalibração isotônica abaixo do corte' in study4
+    assert r'ASR-Platt (análise de sensibilidade de ASR com \textit{Platt scaling}' in study4
+    # QA final: o Resumo relata o arranjo P pelos pares verdadeiros aceitos (215 dos 247: 211 pelo corte e 4 abaixo).
+    assert 'Na vigilância, o arranjo que preserva o corte (ASR) aceitou 215 dos 247 pares verdadeiros' in pt
+    assert 'In surveillance, the arrangement with the cut-off preserved (ASR) accepted 215 of 247 true pairs' in en
+    assert 'pelo menos 95,0' in (LATEX / 'estudo5_equidade.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
-    assert 'pelo menos 95' in pt and 'at least 95' in en
-    assert 'nenhuma das estratégias comparadas é melhor em todos os desfechos' in pt
-    assert 'none of the compared decision strategies dominates' in en
+    # Resumo reescrito (2026-11-10): o estrato do processo, não demográfico, permanece no Estudo 5 e na conclusão.
+    assert 'a sensibilidade automática de ASR na vigilância foi de 42,5\\%, disparidade herdada do corte' in pt
+    assert 'the automatic sensitivity of ASR in surveillance was 42.5\\%, a disparity inherited from the cut-off' in en
+    assert 'pois nenhuma dominou em todas as cargas' in pt
+    assert 'since no ordering was dominant in every workload' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
     result = tests.loc[tests.decisao.eq('arranjo_P_vigilancia') & tests.dimension.eq('sexo')
                        & tests.metric.eq('ppv')].iloc[0]
     assert not result.reject_fdr
     # A ausência de rejeição demográfica foi substituída pelo resultado operacional.
-    assert 'BH-adjusted' not in en and 'pelo menos' in pt
+    assert 'BH-adjusted' not in en and 'disparidade herdada do corte' in pt
     assert r'\textit{Linkage}' not in en and r'\textit{Platt scaling}' not in en

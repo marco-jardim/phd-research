@@ -171,14 +171,18 @@ def test_gerador_tex_nd_virgula_ic_e_hifen(tmp_path, monkeypatch):
     monkeypatch.setattr(tabelas, "OUT", tmp_path)
     tabelas.tabela_faixas()
     tabelas.tabela_e4_oof()
-    for nome in ("tab_desempenho_faixas.tex", "tab_e4_desempenho_faixas_oof.tex"):
+    cabecalhos = {
+        "tab_desempenho_faixas.tex": r"Faixa & \shortstack{Potenciais\\pares} &",
+        "tab_e4_desempenho_faixas_oof.tex": "Faixa & Pares &",
+    }
+    for nome, cabecalho in cabecalhos.items():
         texto = (tmp_path / nome).read_text(encoding="utf-8")
         assert texto.startswith("% Gerado por scripts/gerar_tabelas_nb03_faixas.py de data/")
         assert texto.endswith("\n")
         assert "n.d." in texto and "0," in texto
         assert "5-6" in texto and "5--6" not in texto
         assert "IC de Wilson" in texto and r"\shortstack" in texto
-        assert "Faixa & Pares &" in texto
+        assert cabecalho in texto
     texto = (tmp_path / "tab_e4_desempenho_faixas_oof.tex").read_text(encoding="utf-8")
     linha = next(l for l in texto.splitlines() if l.startswith("$<5$ &"))
     assert "& n.d. & n.d. &" in linha

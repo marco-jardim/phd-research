@@ -2,15 +2,37 @@ name: Compilar tese (LaTeX)
 
 on:
   push:
-    branches: [main, pos-qualificacao]
-    paths: ['text/latex/**', '.github/workflows/latex.yml']
+    branches: [main, pos-qualificacao, pq/revisao-2-redacao]
+    paths:
+      - 'text/latex/**'
+      - '.github/workflows/latex.yml'
+      - 'scripts/check_bib_usage.py'
+      - 'scripts/citacoes_contexto.py'
   pull_request:
-    branches: [main, pos-qualificacao]
-    paths: ['text/latex/**', '.github/workflows/latex.yml']
+    branches: [main, pos-qualificacao, pq/revisao-2-redacao]
+    paths:
+      - 'text/latex/**'
+      - '.github/workflows/latex.yml'
+      - 'scripts/check_bib_usage.py'
+      - 'scripts/citacoes_contexto.py'
   workflow_dispatch:
 
 jobs:
+  bib:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verificar chaves citadas x .bib
+        run: python scripts/check_bib_usage.py
+
   build:
+    needs: bib
     runs-on: ubuntu-latest
     container: texlive/texlive:latest # TODO: fixar tag da imagem
     timeout-minutes: 20

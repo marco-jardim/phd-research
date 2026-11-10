@@ -70,14 +70,14 @@ def render(table, output):
             top.yaxis.set_major_formatter(ticker.FuncFormatter(lambda v, _: f"{v:,.0f}".replace(",", ".")))
             top.set_ylabel(f"{name}\nPotenciais pares (escala log)")
             bottom.set_ylim(0, 275)
-            bottom.set_ylabel(f"{name}\nVínculos verdadeiros (n)")
+            bottom.set_ylabel(f"{name}\nPares verdadeiros (n)")
             for ax in (top, bottom):
                 ax.set_xticks(np.arange(len(LABELS)), LABELS)
                 ax.spines[["top", "right"]].set_visible(False)
                 ax.grid(axis="y", which="major", lw=.35, alpha=.4, zorder=0)
         handles, labels = axes[0, 0].get_legend_handles_labels()
         fig.legend(handles, labels, loc="upper center", ncol=2, frameon=False)
-        fig.text(.53, .025, "Ramos terminais disjuntos; revisor humano = encaminhamento direto + inconclusivos.\nClaude Haiku 5.5, prompt v4, dossiê sem saídas do motor.",
+        fig.text(.53, .025, "Ramos terminais disjuntos; revisor humano = encaminhamento direto + inconclusivos.\nClaude Haiku 5.5, instruções v4, dossiê sem saídas do motor.",
                  ha="center", fontsize=8)
         output.parent.mkdir(parents=True, exist_ok=True)
         for extension in ("pdf", "png"):

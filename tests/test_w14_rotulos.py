@@ -3,7 +3,7 @@
 from pathlib import Path
 import re
 
-from scripts.tabelas_persona_editorial import transform
+from scripts.tabelas_persona_editorial import legible_reruns_layout, transform
 from scripts.tabelas_review2_w3 import ablation_tables
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -12,7 +12,10 @@ LATEX = ROOT / "text/latex"
 
 def test_residual_fusion_labels_have_local_definitions():
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    assert "com a fusão F4 (posição recíproca de O1 e O3)" in conclusion
+    # Conclusão reescrita: F3/F4 e CM são definidos na primeira menção do capítulo.
+    assert "as fusões por posição recíproca (F3 e F4) da ordenação pela probabilidade calibrada fora da amostra (O3) com a ordenação pelo escore do OpenRecLink (O1)" in conclusion
+    assert "A fusão F4 de O1 e O3" in conclusion
+    assert "A fila CM, que acrescenta a O3 atributos de contexto por óbito e as MACD" in conclusion
     study = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
     bias = study.split("O diagnóstico de VPP inferior", 1)[1].split("\n\n", 1)[0]
     assert "F4 (fusão por posição recíproca de O1 e O3)" in bias
@@ -38,3 +41,8 @@ def test_reruns_caption_expands_experiment_label():
     editorial = (LATEX / "tables/editorial" / name).read_text(encoding="utf-8")
     assert "no Experimento 2 (revisão assistida por LLM)" in editorial
     assert transform(name, original) == editorial
+    # Layout legível: sem \resizebox, nomes em coluna que quebra linha, cabeçalho de UNSURE em duas linhas.
+    assert r"\resizebox" not in editorial
+    assert r">{\raggedright\arraybackslash}p{" in editorial and r">{\raggedleft\arraybackslash}p{" in editorial
+    assert r"\shortstack[r]{UNSURE\\(\%)}" in editorial
+    assert legible_reruns_layout(editorial) == editorial

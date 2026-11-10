@@ -5,6 +5,7 @@ import re
 import pandas as pd
 
 from scripts import tabelas_review2_w3 as tables
+from terminologia import conta
 
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / "text/latex"
@@ -14,7 +15,10 @@ def test_editorial_w3_regenerates_without_changing_historical(tmp_path):
     historical = {p.name: p.read_bytes() for p in (LATEX / "tables").glob("*.tex")}
     tables.generate(tmp_path)
     for path in tmp_path.glob("*.tex"):
-        assert path.read_bytes() == (LATEX / "tables/editorial" / path.name).read_bytes()
+        # .gitattributes fixa eol=lf em tables/editorial/*.tex; o gerador grava CRLF nas tabelas de grupos
+        # no Windows. O conteúdo tem de coincidir byte a byte, exceto pelo fim de linha.
+        gerado = path.read_bytes().replace(b"\r\n", b"\n")
+        assert gerado == (LATEX / "tables/editorial" / path.name).read_bytes().replace(b"\r\n", b"\n")
         for source in re.findall(r"\\path\{(data/[^}]+)\}", path.read_text(encoding="utf-8")):
             assert (ROOT / source).is_file(), source
     assert historical == {p.name: p.read_bytes() for p in (LATEX / "tables").glob("*.tex")}
@@ -38,7 +42,8 @@ def test_ablation_appendix_is_generated_expected_not_llm_observation():
             assert f" & {int(count)} " + r"\\" in text
             assert f" & {int(count)},0 " + r"\\" not in text
         assert f"data/ablation_comprec_{arm}.csv" in text
-    assert text.count("Cada teste contém 74 vínculos") == 4
+    assert conta(text, "Cada teste contém 74 pares verdadeiros", arquivo="text/latex/apendice_ablacao.tex") == 4  # QA final: pares verdadeiros
+    assert "As métricas de VPP, sensibilidade" in text and "Precisão" not in text
 
 
 def test_origin_and_family_importance_have_no_personal_attribution():
@@ -61,11 +66,13 @@ def test_reference_and_uncertainty_are_explicit_without_mechanism_claims():
         assert "referência" in text and "D" in text
         assert "0,846" in text or "0{,}846" in text
     e3 = (LATEX / "estudo3_estrategias.tex").read_text(encoding="utf-8")
-    assert "não estima isoladamente esse otimismo" in e3
-    assert "não permitem distinguir as dez primeiras" in e3
-    assert "sugere possível contribuição da diversidade" not in e3
+    # Revisão 2: o detalhe do Estudo 3 (delineamento, ablação, NB03) está no apêndice das estratégias.
+    ap = (LATEX / "apendice_estrategias.tex").read_text(encoding="utf-8")
+    assert "não estima isoladamente esse otimismo" in ap
+    assert "não permitem distinguir as dez primeiras" in ap
+    assert "sugere possível contribuição da diversidade" not in e3 + ap
     assert "70/67 não representa o esforço adicional" in e3
-    assert "dominando, nesse plano e nessa partição" in e3
+    assert "dominando, nesse plano e nessa partição" in ap
 
 
 def test_equity_uses_feasible_criteria_and_declares_review_limit():

@@ -5,25 +5,31 @@ import re
 
 import pytest
 
+from terminologia import conta, contem, normalizar_terminologia
+
 
 LATEX = Path(__file__).resolve().parents[1] / "text" / "latex"
 PARAGRAPHS = [
-    ("capitulo1.tex", "O percurso da tese abrange"),
-    ("capitulo_dados.tex", "O novo pseudônimo é calculado"),
+    ("capitulo1.tex", r"O Capítulo~\ref{cap:referencial} traz o referencial teórico"),
+    ("capitulo_dados.tex", "O novo pseudônimo é o HMAC-SHA256"),
     ("capitulo_dados.tex", "A matriz restrita não foi depositada"),
-    ("capitulo_dados.tex", r"O arquivo \path{qw3/qw3_analysis_frame.csv}"),
+    # W5: a auditoria do frame de equidade saiu do capítulo e vive no apêndice do pacote.
+    ("apendice_pacote.tex", r"O arquivo \path{qw3/qw3_analysis_frame.csv}"),
     ("capitulo_dados.tex", r"O relatório \path{k_anonymity_report.json}"),
     ("capitulo_dados.tex", r"O \texttt{pair\_id} histórico"),
     ("estudo1_comparador.tex", "Os pesos internos do comparador permanecem fixos"),
-    ("estudo3_estrategias.tex", "Entre as configurações originais da Tabela"),
+    # Revisão 2: o detalhe do Estudo 3 (validação cruzada, pipelines, contribuição) foi para o apêndice.
+    ("apendice_estrategias.tex", "Entre as configurações originais da Tabela"),
     ("estudo3_estrategias.tex", "A razão hipotética de revisões por vínculo também favoreceu"),
-    ("estudo3_estrategias.tex", "A organização reprodutível das configurações"),
-    ("estudo3_estrategias.tex", "As estratégias de vigilância e confirmação descritas"),
-    ("estudo4_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
+    ("apendice_estrategias.tex", "A organização reprodutível das configurações"),
+    ("apendice_estrategias.tex", "As estratégias de vigilância e confirmação descritas"),
+    # Revisão 2: o parágrafo do Sonnet na cascata foi para o Apêndice do Estudo 4 (A.4, custos).
+    ("apendice_gzcmd.tex", "Na cascata v3.1 sobre a base inteira, Claude Sonnet"),
     ("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade"),
     ("estudo5_equidade.tex", "A paridade simultânea de sensibilidade e VPP adotada"),
     ("estudo5_equidade.tex", "A construção da referência operacional limita a inferência"),
-    ("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais"),
+    # Conclusão reescrita (2026-11-08): o parágrafo dos Estudos 2 e 3 abre a resposta ao objetivo de classificadores.
+    ("conclusao.tex", "A ordenação dos classificadores depende da métrica"),
     ("estudo1_comparador.tex", "As duas implementações não são equivalentes"),
 ]
 FORMULAS = (
@@ -36,23 +42,23 @@ FORMULAS = (
 # Número de ocorrências dos quatro negadores por frase consecutiva.
 # Retrato aprovado pelo autor, não meta de redução: valores 3 são deliberados.
 EXPECTED_NEGATIONS = {
-    "O percurso da tese abrange": [0, 0, 0, 0],
-    "O novo pseudônimo é calculado": [0, 2, 2, 1, 0],
-    "A matriz restrita não foi depositada": [1, 2, 1],
+    r"O Capítulo~\ref{cap:referencial} traz o referencial teórico": [0, 0, 0, 0],  # QA final: mapa dos capítulos com quatro frases (voltou a frase do Glossário), sem negação
+    "O novo pseudônimo é o HMAC-SHA256": [0, 4, 1],
+    "A matriz restrita não foi depositada": [3, 1],
     r"O arquivo \path{qw3/qw3_analysis_frame.csv}": [0, 0, 0, 1, 3],
-    r"O relatório \path{k_anonymity_report.json}": [1, 0, 1, 0, 1, 1, 0, 0],
-    r"O \texttt{pair\_id} histórico": [2, 0, 0, 1, 1, 3],
-    "Os pesos internos do comparador permanecem fixos": [0, 1, 0, 2],
+    r"O relatório \path{k_anonymity_report.json}": [1, 1],
+    r"O \texttt{pair\_id} histórico": [2, 0, 1, 3],
+    "Os pesos internos do comparador permanecem fixos": [0, 1, 1, 1],  # estudo1 revisado (revisão 2)
     "Entre as configurações originais da Tabela": [0, 1, 1, 1],
-    "A razão hipotética de revisões por vínculo também favoreceu": [0, 1, 1, 0, 0],
+    "A razão hipotética de revisões por vínculo também favoreceu": [1, 1, 1, 0, 1],  # estudo3 revisado (revisão 2): Coeli2021 (NAO_SUSTENTA) retirado, frase final com "sem medir"; auditoria 2026-11-09: 1ª frase explicita que as figuras mostram o limiar >= 8 "e não a >= 9"
     "A organização reprodutível das configurações": [1, 1, 0],
     "As estratégias de vigilância e confirmação descritas": [1, 0, 1],
     "Na cascata v3.1 sobre a base inteira, Claude Sonnet": [0, 2],
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
-    "O terceiro objetivo comparou estratégias operacionais": [0, 0, 0, 2, 1],
-    "As duas implementações não são equivalentes": [1, 1, 3, 1, 0],
+    "A ordenação dos classificadores depende da métrica": [1, 1, 2, 1, 1, 0, 0, 2],  # redação nova (2026-11-09): oito frases; "não se distinguiu ... nem" (3), "não permite ordenar" (4) e, da análise 3, "nenhuma elevou o F1 nem a AUC-PR" (5)
+    "As duas implementações não são equivalentes": [1, 2, 1],  # C15 revista (2026-11-08): frase dos erros do Java, equivalência não demonstrada e efeito não medido
 }
 
 
@@ -60,7 +66,10 @@ def paragraph(filename, anchor):
     matches = [
         part.strip()
         for part in (LATEX / filename).read_text(encoding="utf-8").split("\n\n")
-        if part.strip().startswith(anchor)
+        # migrado: terminologia 3.6 (âncora comparada após normalizar; o parágrafo devolvido é o texto bruto)
+        if normalizar_terminologia(part.strip(), arquivo=f"text/latex/{filename}").startswith(
+            normalizar_terminologia(anchor, arquivo=f"text/latex/{filename}")
+        )
     ]
     assert len(matches) == 1, (filename, anchor, len(matches))
     return matches[0]
@@ -104,16 +113,22 @@ def test_formulas_no_maximo_uma_vez_por_capitulo(filename):
 
 
 def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
+    # Revisão 2: a magnitude aparece uma vez no capítulo (resultados) e uma vez no apêndice dos custos (A.4),
+    # em vez de duas vezes no capítulo; nos dois lugares é a mesma grandeza, "pares verdadeiros" a mais.
     text = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
-    magnitude = "de dois a quatro vínculos a mais"
-    assert text.count(magnitude) == 2
-    results, discussion = text.split(r"\label{sec:e4-reruns}", 1)[1].split(
-        "Na cascata v3.1 sobre a base inteira, Claude Sonnet", 1
-    )
-    assert magnitude in results
-    discussion = "Na cascata v3.1 sobre a base inteira, Claude Sonnet" + discussion
+    appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
+    magnitude = "de dois a quatro pares verdadeiros a mais"
+    recovered = magnitude
+    arquivo = "text/latex/estudo4_gzcmd.tex"
+    arquivo_ap = "text/latex/apendice_gzcmd.tex"
+    assert conta(text, magnitude, arquivo=arquivo) == 1
+    assert conta(appendix, recovered, arquivo=arquivo_ap) == 1
+    results = text.split(r"\label{sec:e4-reruns}", 1)[1].split(r"\label{sec:e4-arranjo}", 1)[0]
+    assert contem(results, magnitude, arquivo=arquivo)
+    discussion = "Na cascata v3.1 sobre a base inteira, Claude Sonnet" + appendix.split(
+        "Na cascata v3.1 sobre a base inteira, Claude Sonnet", 1)[1]
     discussion = discussion.split("\n\n", 1)[0]
-    assert magnitude in discussion
+    assert contem(discussion, recovered, arquivo=arquivo_ap)
     assert "mais inconclusivos e encaminhamentos humanos" in discussion
     assert r"vinte vezes mais caro por \textit{token}" in discussion
     assert "não constitui resultado do arranjo" in discussion
@@ -122,7 +137,7 @@ def test_repeticao_da_magnitude_mantida_por_decisao_do_autor():
 
 def test_ressalvas_de_fidelidade_permanecem_explicitas():
     calibration = paragraph("estudo4_gzcmd.tex", "A calibração por âncoras preservou a capacidade")
-    assert "não demonstrou calibração absoluta na área cinza da nota" in calibration
+    assert contem(calibration, "não demonstrou calibração absoluta na faixa intermediária da nota final", arquivo="text/latex/estudo4_gzcmd.tex")  # revisão 2: faixa intermediária da nota final
     assert "não corrigiria o viés" in calibration
     assert "não de impossibilidade geral do método" in calibration
     equity = paragraph("estudo5_equidade.tex", "A construção da referência operacional limita a inferência")
@@ -135,24 +150,25 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     assert "adota-se como hipótese de trabalho que o CdR precedeu a revisão, com nota e subescores disponíveis à revisora" in equity
     assert "menos rejeições não demonstram melhora de equidade" in equity
     assert "A validação em outras coortes e a observação da revisão humana são necessárias" in equity
-    conclusion = paragraph("conclusao.tex", "O terceiro objetivo comparou estratégias operacionais")
-    assert r"não fundamentam a adoção dos \textit{pipelines} avaliados" in conclusion
-    assert r"Por isso, os resultados não fundamentam a adoção dos \textit{pipelines} avaliados nem demonstram ganho epidemiológico dessas estratégias." in conclusion
-    assert "seu efeito não se transfere automaticamente ao XGBoost" in conclusion
+    conclusion = paragraph("conclusao.tex", "A ordenação dos classificadores depende da métrica")
+    assert r"não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados" in conclusion
+    assert r"Esses estudos não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados, e o GZ-CMD e o arranjo ASR, que preserva o corte, não usam os indicadores." in conclusion
+    assert "nenhuma elevou o $F_1$ nem a AUC-PR com IC acima de zero" in conclusion  # revisão 2, análise 3
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
-    assert "As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java." in comparator
+    assert r"As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java (Subseção~\ref{sec:e1-limitacoes})." in (LATEX / "estudo1_comparador.tex").read_text(encoding="utf-8")  # revisão 2: a frase saiu do parágrafo de abertura ao criar as Limitações
 
 
 @pytest.mark.parametrize("filename,expected", [
-    ("estudo4_gzcmd.tex", "A redução de FP de P-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
-    ("estudo2_classificadores.tex", "Para avaliar a estabilidade, a análise original utilizou validação cruzada estratificada com cinco partições da base completa, sem repetições."),
-    ("conclusao.tex", r"A análise de estabilidade descreve a estabilidade interna entre réplicas, não validação em novos dados \cite{Jardim2026phdrepo}."),
+    ("estudo4_gzcmd.tex", "A redução de FP de ASR-Platt, portanto, não demonstra melhora intrínseca do revisor: muda o lote selecionado. Essas proporções, estimadas em coortes que incluem pares mais fáceis, não foram validadas prospectivamente para a região de aplicação."),
+    ("estudo2_classificadores.tex", "A análise original usou validação cruzada estratificada com cinco partições da base completa, sem repetições"),
     ("estudo4_gzcmd.tex", "A análise de estabilidade descreve a estabilidade interna entre réplicas, não generalização"),
     ("estudo4_gzcmd.tex", r"a análise de estabilidade (Tabela~\ref{tab:cap8-robustez-arranjo}), não confirmatória, não justificam promover as análises alternativas a resultado principal sem novo registro"),
     ("estudo4_gzcmd.tex", "Na análise de estabilidade, o treinamento foi executado antes da aprovação da verificação de integridade do código"),
-    ("capitulo2.tex", r"A técnica apresenta robustez ao sobreajuste (\textit{overfitting}) e mecanismos intrínsecos para avaliação da importância de variáveis."),
-    ("capitulo3.tex", "A avaliação distingue resultados do arranjo sequencial, que preserva os vínculos aceitos pelo corte e aplica o GZ-CMD aos demais potenciais pares, comparações exploratórias com o mesmo número de revisões humanas e cenários de sensibilidade humana, sem pressupor superioridade da política nem transferência dos parâmetros a outras bases. A hipótese gerada de redução do esforço pela ordenação requer validação registrada em dados novos."),
+    ("capitulo2.tex", "A técnica é menos sujeita ao sobreajuste e dispõe de mecanismos intrínsecos para avaliação da importância de variáveis."),
+    ("capitulo3.tex", "de modo que constitui hipótese a validar em outra coorte, sem pressupor superioridade operacional nem transferência dos parâmetros a outras bases."),
 ])
 def test_repassada_final_preserva_termos_e_nexos(filename, expected):
-    assert expected in (LATEX / filename).read_text(encoding="utf-8")
+    text = (LATEX / filename).read_text(encoding="utf-8")
+    # migrado: terminologia 3.6
+    assert contem(text, expected, arquivo=f"text/latex/{filename}") if "vínculo" in expected else expected in text

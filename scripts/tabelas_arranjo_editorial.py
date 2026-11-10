@@ -10,7 +10,7 @@ sys.path.insert(0, str(ROOT))
 
 from scripts import equidade_arranjo as equity
 from scripts import tabela_referencia_arranjo as reference
-from scripts.tabelas_persona_editorial import transform
+from scripts.tabelas_persona_editorial import rotulos_braco, transform
 
 
 def replace_once(text, old, new):
@@ -36,7 +36,8 @@ def step_ppv_note(maximum, groups, tests):
         if not (paired.group_a.eq("passo_11") | paired.group_b.eq("passo_11")).any():
             raise ValueError("O passo 11 não aparece nos testes pareados do CSV")
         status = "incluído" if int(step.n_pred_pos) >= equity.legacy.N_MIN else "excluído"
-        parts.append(f"{label}: {int(row.n_grupos_den_ge_30)} de {int(row.n_grupos_elegiveis)} grupos; "
+        # A chave de dados e LABELS históricos dizem P; a nota exibida diz ASR.
+        parts.append(f"{rotulos_braco(label)}: {int(row.n_grupos_den_ge_30)} de {int(row.n_grupos_elegiveis)} grupos; "
                      f"passo 11 {status}, com {int(step.n_pred_pos)} preditos positivos")
     return (" A diferença máxima de VPP por passo exige pelo menos "
             f"{equity.legacy.N_MIN} preditos positivos por grupo. " + "; ".join(parts) +
@@ -52,6 +53,9 @@ def render_reference(referencia, arranjo, cascata, carga):
     ceiling = reference.inteiro(totals.loc["por_passo", "total_abaixo_corte"])
     changes = [
         ("scripts/tabela_referencia_arranjo.py", "scripts/tabelas_arranjo_editorial.py"),
+        # O arranjo é o braço do registro interno, não o resultado principal (decisão D2 da autora, 2026-11-08).
+        (r"\multicolumn{8}{l}{\textit{Resultado principal}}", r"\multicolumn{8}{l}{\textit{Braço do registro interno}}"),
+        ("arranjo sequencial (resultado principal)", "arranjo sequencial (braço do registro interno)"),
         ("Corte + revisão manual do serviço & ambos & n.d.",
          "Corte + revisão manual do serviço & ambos & cenário $\\geq " + lower + "$"),
         (f"Corte + revisão humana integral (cenário) & ambos & até {ceiling}",
@@ -64,6 +68,11 @@ def render_reference(referencia, arranjo, cascata, carga):
         (f"A revisão integral abaixo do corte é cenário de até {ceiling} potenciais pares, não carga histórica medida.",
          f"A revisão integral abaixo do corte é cenário de revisão de todos os {ceiling} candidatos, "
          "não carga histórica medida."),
+        # M3 da auditoria de 2026-11-09: a classe da referência é "par verdadeiro"; "vínculo" é só a decisão.
+        ("o arranjo aceita 127 vínculos na vigilância e 127 na confirmação, incluindo 123 pelo corte em cada modo; "
+         "a cascata sobre a base inteira aceita 113 e 65.",
+         "o arranjo aceita 127 pares verdadeiros na vigilância e 127 na confirmação, incluindo 123 pelo corte em cada modo; "
+         "a cascata sobre a base inteira aceita 113 e 65 pares verdadeiros."),
         ("CdR, revisão humana da área cinza &", "CdR, revisão humana da área cinza da nota &"),
         ("CdR, limiar da nota em 8 &", r"CdR, decisão de limiar (nota $\geq 8$) &"),
         ("A revisão da área cinza do CdR é cenário", "A revisão da área cinza da nota do CdR é cenário"),
@@ -71,7 +80,7 @@ def render_reference(referencia, arranjo, cascata, carga):
          r"Zero FP acima do corte também decorre do \textit{label}."),
         ("revisão do serviço incorporada ao rótulo", r"revisão do serviço incorporada ao \textit{label}"),
         ("n.a.: não se aplica.",
-         "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para P. n.a.: não se aplica."),
+         "O limiar 8 da nota é referência histórica do Estudo~3, não limiar escolhido para ASR. n.a.: não se aplica."),
         ("registro prévio versionado no repositório, com emendas e suplemento, não a registro público",
          r"registro interno versionado antes da avaliação com os \textit{labels} (S3), com emendas e suplemento"),
         (r"Fontes: \path{data/referencia_comparador_pos_orl.csv}",
@@ -84,7 +93,42 @@ def render_reference(referencia, arranjo, cascata, carga):
         r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     text = text.replace("revisão manual do serviço", "revisão clerical de origem")
     text = text.replace("revisão do serviço", "revisão clerical de origem")
-    return transform("tab_cap8_referencia", text)
+    return legible_reference_layout(transform("tab_cap8_referencia", text))
+
+
+def legible_reference_layout(text):
+    """Só apresentação: sem \\resizebox, coluna de estratégia que quebra linha e cabeçalhos curtos em duas linhas.
+
+    O preâmbulo não carrega tabularx; colunas p{} com frações de \\linewidth (soma de 0,88 mais o
+    preenchimento de 16 \\tabcolsep de 3 pt, cerca de 0,11 da largura útil). Células e ordem intactas.
+    """
+    right = r">{\raggedleft\arraybackslash}"
+    left = r">{\raggedright\arraybackslash}"
+    columns = (left + r"p{0.25\linewidth}" + left + r"p{0.115\linewidth}"
+               + right + r"p{0.08\linewidth}" + right + r"p{0.065\linewidth}"
+               + right + r"p{0.11\linewidth}" + right + r"p{0.065\linewidth}"
+               + right + r"p{0.08\linewidth}" + right + r"p{0.115\linewidth}")
+    text = replace_once(text, "\\resizebox{\\linewidth}{!}{%\n\\begin{tabular}{llrrrrrr}",
+                        "\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{" + columns + "}")
+    text = replace_once(text, "\\end{tabular}}\n", "\\end{tabular}\n")
+    text = replace_once(
+        text,
+        r"Estratégia & Modo & Pares ao humano & Pares ao LLM & Sens. automática (\%) & FP automáticos"
+        r" & Pares verdadeiros perdidos & Sens. com humano (\%) \\",
+        r"Estratégia & Modo & \shortstack[r]{Humano\\(pares)} & \shortstack[r]{LLM\\(pares)}"
+        r" & \shortstack[r]{Sens. auto.\\(\%)} & \shortstack[r]{FP\\auto.} & Perdidos"
+        r" & \shortstack[r]{Sens. com\\humano (\%)} \\")
+    text = replace_once(
+        text,
+        r"Pares verdadeiros perdidos são apenas os classificados como \texttt{NONMATCH}, excluindo encaminhamentos pendentes.",
+        r"Perdidos são apenas os pares verdadeiros classificados como \texttt{NONMATCH}, excluindo encaminhamentos pendentes.")
+    return replace_once(
+        text,
+        r"Faixa intermediária da nota final: nota final do CdR em $[5,9)$.",
+        r"Faixa intermediária da nota final: nota final do CdR em $[5,9)$. "
+        r"Humano e LLM: pares encaminhados ao revisor humano e ao LLM. "
+        r"Sens.: sensibilidade; auto.: automática, isto é, sem revisão humana; "
+        r"FP auto.: falsos positivos aceitos automaticamente.")
 
 
 def render_arrangement(historical):
@@ -125,6 +169,10 @@ def render_arrangement(historical):
             line = replace_once(line, r"$S_A$ (IC 95\%)", r"$S_A$ (\%)")
         lines.append(line)
     text = "\n".join(lines) + "\n"
+    # M2 da auditoria de 2026-11-09: V_A conta pares verdadeiros aceitos (a classe), não decisões de vínculo.
+    text = replace_once(text, "$V_A$: vínculos aceitos automaticamente", "$V_A$: pares verdadeiros aceitos automaticamente")
+    # Mesma grandeza (FP aceitos automaticamente) com um nome só em todas as tabelas do arranjo.
+    text = text.replace("FP (abaixo)", "FP automáticos (abaixo)")
     text = replace_once(text,
         r"IC de Wilson de 95\% descritivo, sem correção pela dependência entre potenciais pares ou pelos vieses do padrão-ouro. ", "")
     text = replace_once(text,

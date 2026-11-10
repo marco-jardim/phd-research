@@ -1,22 +1,22 @@
 \begin{table}[htbp]
 \centering
-\caption{Desempenho dos modelos na estratégia de máxima precisão (NB03). Conjunto de teste com 74 vínculos dentre 18.509 potenciais pares (treino com 43.187 pares e 173 verdadeiros; 58 atributos). Resultados ordenados por precisão decrescente em cada bloco.}
+\caption{Desempenho dos modelos na estratégia de confirmação (NB03). Conjunto de teste com 74 pares verdadeiros dentre 18.509 potenciais pares (treino com 43.187 pares e 173 verdadeiros; 58 atributos). Resultados ordenados por VPP decrescente em cada bloco.}
 \label{tab:nb03-precision}
 \renewcommand{\arraystretch}{1.15}
 \small
 \begin{tabular}{@{}llcccc@{}}
 \toprule
-\textbf{Modelo} & \textbf{Limiar} & \textbf{Precisão} & \textbf{Sensibilidade} & \boldmath$F_1$ & \textbf{N} \\
+\textbf{Modelo} & \textbf{Limiar} & \textbf{VPP} & \textbf{Sensibilidade} & \boldmath$F_1$ & \textbf{N} \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Abordagens compostas}} \\[2pt]
-Regras de negócio & escore $\geq 8$ & \textbf{1,000} & 0,486 & 0,655 & 36 \\
+Regras & escore $\geq 8$ & \textbf{1,000} & 0,486 & 0,655 & 36 \\
 Consenso (unanimidade) & unanimidade\textsuperscript{a} & 0,985 & 0,878 & 0,929 & 66 \\
-Híbrido ML + Regras (AND) & ML${\geq}$0,6; R${\geq}$6 & 0,900 & 0,851 & 0,875 & 70 \\
+Híbrido empilhamento + Regras (AND) & ML${\geq}$0,6; R${\geq}$6\textsuperscript{b} & 0,900 & 0,851 & 0,875 & 70 \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Modelos individuais com limiar 0,9}} \\[2pt]
 LightGBM & 0,9 & 0,945 & 0,932 & 0,939 & 73 \\
 RF Calibrado & 0,9 & 0,926 & 0,851 & 0,887 & 68 \\
-Stacking & 0,9 & 0,897 & 0,946 & 0,921 & 78 \\
+Empilhamento & 0,9 & 0,897 & 0,946 & 0,921 & 78 \\
 XGBoost & 0,9 & 0,872 & 0,919 & 0,895 & 78 \\
 \midrule
 \multicolumn{6}{@{}l}{\textit{Efeito da variação de limiar (LightGBM)}} \\[2pt]
@@ -30,7 +30,8 @@ LightGBM & 0,6 & 0,854 & 0,946 & 0,897 & 82 \\
 \vspace{4pt}
 \footnotesize
 \textsuperscript{a}~Consenso por unanimidade entre os modelos base do script uniforme NB03; o artefato \texttt{data/nb03\_results.json} registra o desempenho do consenso, mas não o limiar de cada modelo base.
+\textsuperscript{b}~ML: probabilidade estimada pelo empilhamento (\texttt{scripts/run\_nb03\_uniform.py}); R: escore de regras.
 Fonte canônica: \path{data/nb03_results.json}, gerado por \path{scripts/run_nb03_uniform.py}. A causa da diferença em relação ao caderno histórico não está documentada. N~=~número de pares classificados como positivos no conjunto de teste. Os limiares foram avaliados no próprio conjunto de teste, sem conjunto de validação, e a semente aleatória é 42 (\texttt{scripts/run\_nb03\_uniform.py}).
-AUC-PR (área sob a curva de precisão e sensibilidade, independente de limiar): XGBoost~0,982; LightGBM~0,985; Consenso~0,990; Stacking~0,981; RF Calibrado~0,963; Regras~0,825.
-\par\footnotesize NB03: estratégia de maximização da precisão; consenso: unanimidade entre modelos; empilhamento: combinação das predições por um meta-aprendiz.
+AUC-PR (área sob a curva de precisão e sensibilidade, independente de limiar): XGBoost~0,982; LightGBM~0,985; Consenso~0,990; Empilhamento~0,981; RF Calibrado~0,963; Regras~0,825.
+\par\footnotesize NB03: estratégia de confirmação (maximização do VPP); consenso: unanimidade entre modelos; empilhamento: combinação das predições por um meta-aprendiz.
 \end{table}
