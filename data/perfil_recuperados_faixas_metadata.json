@@ -1,0 +1,29 @@
+{
+  "fonte": "data/COMPARADORSEMIDENT.csv (privado, não versionado), teste original do RF+SMOTE histórico",
+  "definicao": "recuperados = RF+SMOTE >= 0,5, par verdadeiro (PAR 1 ou 2) e nota final < 8; ja_encontrados = RF+SMOTE >= 0,5, par verdadeiro e nota final >= 8; faixas [min, max)",
+  "seed": 42,
+  "limiar": 0.5,
+  "corte_nota": 8.0,
+  "controles": {
+    "test_n": 18509,
+    "test_positivos": 74,
+    "tp": 67,
+    "fp": 3,
+    "recuperados": 27
+  },
+  "procedimento": "retreino_reproducao_ablacao_historica",
+  "entrada_sha256": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+  "predicoes_sha256": null,
+  "fontes_sha256": {
+    "scripts/perfil_recuperados_faixas.py": "80fcc9636cc346b4565dc2788591d6987b5bc1b2495450097acc99dfc57ef335",
+    "scripts/banca_b_encerramento_agregado.py": "429867bfb3715c0d4fe81bfd02937a5c9d5ecb4ef0f228f49c89563c342c7aa5",
+    "scripts/feature_engineering.py": "1bc90c167cd73f79a57b127c373d5fcb16cba9e88fa83b1139fffd78987bd163"
+  },
+  "versoes": {
+    "python": "3.13.11",
+    "pandas": "3.0.1",
+    "scikit_learn": "1.8.0",
+    "imbalanced_learn": "0.14.2"
+  },
+  "csv_sha256": "c2ce7bc834c8e096ecc1c7ac5f200e2aa980fb9ee7eddea3cf9f9d1da44699af"
+}

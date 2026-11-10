@@ -303,6 +303,9 @@ def transform(name, text):
                 "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.")
         if base_name == "tab_qw3_fairness_rejections_corte6":
             text = text.replace("Encerramento   &", r"Encerramento da notifica\c{c}\~ao &")
+            # Com o rótulo editorial a tabela excede a largura do texto em 40 pt: fonte e espaçamento menores.
+            text = text.replace("\\small\n\\begin{tabular}",
+                                "\\footnotesize\n\\setlength{\\tabcolsep}{4pt}\n\\begin{tabular}", 1)
             for old, new in CORTE6_OR_DUAS_CASAS:
                 if text.count(old) == 0 and text.count(new) == 1:
                     continue  # já transformada: a função é idempotente
