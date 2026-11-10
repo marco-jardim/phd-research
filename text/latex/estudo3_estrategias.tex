@@ -71,7 +71,7 @@ A comparação dos dois \textit{pipelines}, de vigilância e de confirmação, e
 
 \subsection{Limitações}\label{sec:e3-limitacoes}
 
-Adota-se como hipótese de trabalho que o CdR precedeu a revisão manual de origem, com a nota final e os subescores disponíveis à revisora (Seção~\ref{sec:padrao-ouro} e Apêndice~\ref{ap:linkage-origem}); sob essa hipótese, a referência operacional pode incorporar parte dessa informação (viés de incorporação), e as métricas dos classificadores que a utilizam podem estar otimistas, em magnitude não estimada.
+Adota-se como hipótese de trabalho que o CdR precedeu a revisão manual de origem, com a nota final e os subescores disponíveis à revisora (Seção~\ref{sec:padrao-ouro} e Apêndice~\ref{ap:linkage-origem}); sob essa hipótese, a referência operacional pode incorporar parte dessa informação (viés de incorporação), e as métricas dos classificadores que a utilizam podem estar otimistas, em magnitude não estimada; a análise quantitativa de viés do Capítulo~\ref{cap:estudo2} (Seção~\ref{sec:e2-limitacoes}) examina se a comparação de classificadores do NB01 se mantém sob perturbações hipotéticas da referência, sem estimar essa magnitude.
 
 Os limiares de decisão do RF+SMOTE, do XGBoost e das regras foram escolhidos no conjunto de teste, pois a base foi dividida apenas em treino e teste, sem conjunto de validação. As métricas dos pontos selecionados são, portanto, otimistas, e a validação cruzada das mesmas configurações (Apêndice~\ref{sec:e3-ablacao-metodo}) não estima isoladamente esse otimismo; a seleção fora da amostra não foi refeita.
 
