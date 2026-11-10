@@ -11,6 +11,22 @@ from scripts.tabelas_arranjo_editorial import replace_once
 from scripts.tabelas_persona_editorial import transform
 
 
+# Colunas p{} em frações de \linewidth, sem \resizebox (o preâmbulo não carrega tabularx): a soma das frações
+# mais o preenchimento de 2 * \tabcolsep (3 pt) por coluna fica abaixo de 1,0 da largura útil.
+# Nomes e rótulos quebram linha; colunas numéricas alinhadas à direita.
+_ESQ = r'>{\raggedright\arraybackslash}'
+_DIR = r'>{\raggedleft\arraybackslash}'
+MESMA_CARGA_COLUNAS = (_ESQ + r'p{0.13\linewidth}' + _ESQ + r'p{0.14\linewidth}'
+                       + _DIR + r'p{0.055\linewidth}' + _DIR + r'p{0.085\linewidth}'
+                       + _DIR + r'p{0.115\linewidth}' + _DIR + r'p{0.075\linewidth}'
+                       + _DIR + r'p{0.12\linewidth}' + _DIR + r'p{0.045\linewidth}'
+                       + _DIR + r'p{0.085\linewidth}')
+ESFORCO_COLUNAS = (_ESQ + r'p{0.075\linewidth}' + _ESQ + r'p{0.07\linewidth}' + _ESQ + r'p{0.095\linewidth}'
+                   + _DIR + r'p{0.085\linewidth}' + _DIR + r'p{0.07\linewidth}' + _DIR + r'p{0.085\linewidth}'
+                   + _DIR + r'p{0.07\linewidth}' + _DIR + r'p{0.095\linewidth}'
+                   + _DIR + r'p{0.12\linewidth}' + _DIR + r'p{0.065\linewidth}')
+
+
 def number(value, decimals=0):
     if pd.isna(value):
         return 'n.a.'
@@ -28,10 +44,11 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
     matches = matches if matches is not None else pd.read_csv(ROOT / 'data/comparador_p_match_humano.csv')
     scenarios = scenarios if scenarios is not None else pd.read_csv(ROOT / 'data/cenarios_sensibilidade_humana.csv')
     metrics = metrics if metrics is not None else pd.read_csv(ROOT / 'data/arranjo_corte_metricas.csv')
-    lines = [r'\begin{table}[!htbp]', r'\centering\scriptsize',
+    lines = [r'\begin{table}[!htbp]', r'\centering\footnotesize',
              r'\caption{Ordenações abaixo do corte na mesma carga humana de ASR. Recuperação de PAR~=~2 sob revisor perfeito; análise exploratória, \textit{post hoc}, não registrada.}',
-             r'\label{tab:cap8-mesma-carga}', r'\resizebox{\linewidth}{!}{\begin{tabular}{llrrrrrrr}', r'\toprule',
-             r'Modo & Ordem & Revisões & PAR=2 & \shortstack{PAR=2\\com erro 5\%} & $S_{0,95}$ (\%) & Pares LLM (chamadas) & FP & $k$ para igualar ASR \\', r'\midrule']
+             r'\label{tab:cap8-mesma-carga}', r'\setlength{\tabcolsep}{3pt}',
+             r'\begin{tabular}{' + MESMA_CARGA_COLUNAS + '}', r'\toprule',
+             r'Modo & Ordem & Rev. & PAR=2 & \shortstack[r]{PAR=2 com\\erro 5\%} & \shortstack[r]{$S_{0,95}$\\(\%)} & \shortstack[r]{Pares LLM\\(chamadas)} & FP & \shortstack[r]{$k$ para\\igualar\\ASR} \\', r'\midrule']
     for mode, label in [('vigilancia', 'Vigilância'), ('confirmacao', 'Confirmação')]:
         for _, row in data.loc[data.modo.eq(mode) & data.carga.eq('K1_humana')].iterrows():
             lines.append(f'{label} & {row.ordenacao.split("_")[0]} & {number(row.k)} & '
@@ -50,16 +67,16 @@ def same_load(data, projections=None, matches=None, scenarios=None, metrics=None
             lines.append(f'{label} & {title} & {number(reviews)} & {number(match.P_par2_recuperados)} & {number(projected_count, 2)} & '
                          f'{number(projection.sensibilidade_total * 100, 2)} & '
                          f'{number(policy.pares_llm)} ({number(policy.chamadas_llm)}) & {number(fp)} & n.a. ' + r'\\')
-    return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% projeta a recuperação abaixo do corte, preservando as aceitações automáticas de cada estratégia: em ASR, os vínculos aceitos pelo LLM não recebem desconto por erro humano; em ASR com MATCH ao humano, todos os recuperáveis passam pelo humano. O1 a O4 vêm de \path{data/comparador_mesma_carga_erro05.csv}; as duas estratégias ASR, de \path{data/cenarios_sensibilidade_humana.csv}. Somada aos vínculos preservados pelo corte e dividida pelo total de vínculos, essa contagem reproduz $S_{0,95}$. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
+    return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}',
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize Rev.: revisões humanas. O1: escore do OpenRecLink; O2: nota do CdR; O3: \texttt{p\_cal\_ml}; O4: probabilidade recalibrada. PAR=2 recuperados pressupõe revisor perfeito dos dois lados; encaminhamento não é acerto observado. A coluna PAR=2 com erro 5\% projeta a recuperação abaixo do corte, preservando as aceitações automáticas de cada estratégia: em ASR, os vínculos aceitos pelo LLM não recebem desconto por erro humano; em ASR com MATCH ao humano, todos os recuperáveis passam pelo humano. O1 a O4 vêm de \path{data/comparador_mesma_carga_erro05.csv}; as duas estratégias ASR, de \path{data/cenarios_sensibilidade_humana.csv}. Somada aos vínculos preservados pelo corte e dividida pelo total de vínculos, essa contagem reproduz $S_{0,95}$. $S_{0,95}$ utiliza sensibilidade humana hipotética de 0,95, com especificidade perfeita; o cenário não modela falsos positivos do revisor humano. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana}. Fontes: \path{data/comparador_mesma_carga.csv}, \path{data/comparador_p_match_humano.csv}, \path{data/cenarios_sensibilidade_humana.csv} e \path{data/arranjo_corte_metricas.csv}.}', r'\end{table}', ''])
 
 
 def effort(data):
-    lines = [r'\begin{table}[!htbp]', r'\centering\scriptsize',
+    lines = [r'\begin{table}[!htbp]', r'\centering\footnotesize',
              r'\caption{Cargas de revisão e conversão hipotética a 20 minutos por par. As colunas de horas poupadas usam um cenário de meta diferente, não uma economia observada.}',
              r'\label{tab:cap8-esforco}', r'\setlength{\tabcolsep}{3pt}',
-             r'\resizebox{\linewidth}{!}{\begin{tabular}{lllrrrrrrr}', r'\toprule',
-             r'Modo & Braço & Cenário & Humano & Pares LLM & PAR=2 & Horas & Horas poupadas & \shortstack{Horas poupadas\\por vínculo perdido} & h/FP \\', r'\midrule']
+             r'\begin{tabular}{' + ESFORCO_COLUNAS + '}', r'\toprule',
+             r'Modo & Braço & Cenário & Humano & \shortstack[r]{Pares\\LLM} & PAR=2 & Horas & \shortstack[r]{Horas\\poupadas} & \shortstack[r]{Horas poup.\\por perdido} & h/FP \\', r'\midrule']
     for _, row in data.iterrows():
         mode = 'Vig.' if row.modo == 'vigilancia' else 'Conf.'
         # Chave de dados (P) -> rótulo de apresentação (ASR); O3 e demais ordenações passam intactas.
@@ -67,8 +84,8 @@ def effort(data):
                  number(row.horas), number(row.horas_poupadas),
                  number(row.horas_poupadas_por_vinculo_perdido), number(row.horas_por_fp, 2)]
         lines.append(' & '.join(cells) + r' \\')
-    return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}}',
-        r'\par\smallskip\parbox{\linewidth}{\footnotesize A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de ASR na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em ASR, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros, exceto h/FP, com duas casas decimais. h/FP: horas de revisão divididas pelos FP automáticos (abaixo do corte), não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
+    return '\n'.join(lines + [r'\bottomrule', r'\end{tabular}',
+        r'\par\smallskip\parbox{\linewidth}{\footnotesize Vig.: vigilância; Conf.: confirmação. Horas poup. por perdido: horas poupadas por par verdadeiro perdido. A referência de 2.156 revisões busca os 36 vínculos, meta distinta dos 23 de ASR na vigilância; não serve como comparação de mesma recuperação nem mede trabalho histórico. K1: mesma carga humana. K2: orçamento misto hipotético; em ASR, humano e LLM permanecem separados; em O3, o número total de avaliações é reservado ao humano, sem equivalência temporal entre LLM e humano. Horas arredondadas a inteiros, exceto h/FP, com duas casas decimais. h/FP: horas de revisão divididas pelos FP automáticos (abaixo do corte), não horas poupadas por FP. n.a.: FP zero. Recuperação pressupõe revisor perfeito; razões e fontes em \path{data/esforco_arranjo.csv}. Análise exploratória; cenários de sensibilidade na Tabela~\ref{tab:cap8-sensibilidade-humana}.}', r'\end{table}', ''])
 
 
 def generate(root=ROOT, output=None):

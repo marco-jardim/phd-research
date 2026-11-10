@@ -17,6 +17,51 @@ from scripts import equidade_arranjo as historical
 from scripts.tabelas_persona_editorial import transform
 
 
+def replace_once(text, old, new):
+    count = text.count(old)
+    if count != 1:
+        raise ValueError(f"Substituição de layout exige count == 1: {old!r}, count={count}")
+    return text.replace(old, new, 1)
+
+
+def legible_layout(text):
+    """Só apresentação: sem \\resizebox, colunas p{} que quebram linha e cabeçalhos curtos em duas linhas.
+
+    O preâmbulo não carrega tabularx; as frações de \\linewidth somam 0,82 (nove colunas) e 0,88 (seis colunas)
+    e o preenchimento de \\tabcolsep (3 pt) completa a largura útil (cerca de 0,94 e 0,96). Células, ordem e
+    legenda ficam intactas.
+    """
+    right = r">{\raggedleft\arraybackslash}"
+    left = r">{\raggedright\arraybackslash}"
+    first = (left + r"p{0.30\linewidth}" + right + r"p{0.07\linewidth}" + right + r"p{0.055\linewidth}"
+             + right + r"p{0.055\linewidth}" + right + r"p{0.055\linewidth}" + right + r"p{0.07\linewidth}"
+             + right + r"p{0.07\linewidth}" + right + r"p{0.08\linewidth}" + right + r"p{0.065\linewidth}")
+    second = (left + r"p{0.32\linewidth}" + left + r"p{0.10\linewidth}" + right + r"p{0.11\linewidth}"
+              + right + r"p{0.11\linewidth}" + right + r"p{0.12\linewidth}" + right + r"p{0.12\linewidth}")
+    text = replace_once(text, "\\footnotesize\n\\caption{", "\\footnotesize\n\\setlength{\\tabcolsep}{3pt}\n\\caption{")
+    text = replace_once(text, "\\resizebox{\\textwidth}{!}{%\n\\begin{tabular}{lrrrrrrrr}",
+                        "\\begin{tabular}{" + first + "}")
+    text = replace_once(text, "\\resizebox{\\textwidth}{!}{%\n\\begin{tabular}{llrrrr}",
+                        "\\begin{tabular}{" + second + "}")
+    if text.count("\\end{tabular}}\n") != 2:
+        raise ValueError("Esperadas duas tabelas com \\resizebox")
+    text = text.replace("\\end{tabular}}\n", "\\end{tabular}\n")
+    text = replace_once(
+        text, r"Decisão & Pred.$+$ & VP & FP & FN & Sens. & VPP & Espec. & Rejeições \\",
+        r"Decisão & \shortstack[r]{Pred.\\$+$} & VP & FP & FN & Sens. & VPP & Espec. & Rej. \\")
+    text = replace_once(
+        text,
+        r"Dimensão & Métrica & ASR vigil. & ASR confirm. & Base inteira vigil. (comparação)"
+        r" & Base inteira confirm. (comparação) \\",
+        r"Dimensão & Métrica & \shortstack[r]{ASR\\vigil.} & \shortstack[r]{ASR\\confirm.}"
+        r" & \shortstack[r]{Base int.\\vigil.} & \shortstack[r]{Base int.\\confirm.} \\")
+    return replace_once(
+        text, "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.",
+        "Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana. "
+        "Rej.: rejeições após Benjamini-Hochberg sobre o total de comparações da decisão. "
+        "Base int.: base inteira (comparação).")
+
+
 def recompute(source, minimum=30):
     eligible = source.loc[source.n1.ge(minimum) & source.n2.ge(minimum)].copy()
     for _, group in eligible.groupby("decisao", sort=False):
@@ -70,7 +115,7 @@ def generate(data, editorial):
                         r"As rejeições exigem pelo menos 30 observações em cada denominador, "
                         r"antes de Benjamini-Hochberg por decisão. FN inclui vínculos encaminhados "
                         r"ao revisor humano, não somente decisões de não vínculo." + "\n" + r"\end{table}")
-    path.write_text(transform(path.name, text), encoding="utf-8", newline="\n")
+    path.write_text(legible_layout(transform(path.name, text)), encoding="utf-8", newline="\n")
     for decision in historical.DECISIONS:
         path = editorial / f"tab_den30_equidade_arranjo_rejeicoes_{decision}.tex"
         historical.legacy.tabela_rejeicoes(

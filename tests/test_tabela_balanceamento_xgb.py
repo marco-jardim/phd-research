@@ -42,6 +42,16 @@ def esperado(valor):
 METRICAS = ("VPP", "Sensibilidade", "F1", "AUC-PR")
 
 
+def celula_ic(diferenca, inferior, superior):
+    """Célula do painel B: (diferença da 1ª linha, IC da 2ª); colchetes entre chaves."""
+    return (esperado(diferenca), r"{[}" + f"{esperado(inferior)}; {esperado(superior)}" + r"{]}")
+
+
+def ic_literal(diferenca, inferior, superior):
+    """Mesma célula escrita à mão a partir de valores já arredondados (sem passar por ``esperado``)."""
+    return (diferenca, r"{[}" + inferior + "; " + superior + r"{]}")
+
+
 def rotulos_historicos():
     """Rótulos da primeira coluna da tabela histórica, na ordem (lidos do arquivo, não copiados)."""
     rotulos = []
@@ -52,10 +62,17 @@ def rotulos_historicos():
 
 
 def linhas_de_dados(texto):
-    """{(estimador, painel 'A'|'B', rótulo da estratégia): células} a partir do corpo do tabular."""
+    """{(estimador, painel 'A'|'B', rótulo da estratégia): células} a partir do corpo do longtable.
+
+    Painel A: uma linha por estratégia (quatro médias). Painel B: duas linhas consecutivas por estratégia; a
+    primeira (nome e quatro diferenças) termina em ``\\\\*`` e a segunda, com o nome vazio, traz os quatro IC.
+    As células do painel B são tuplas (diferença, IC).
+    """
     estimador, painel, saida = None, None, {}
+    pendente = None  # (rótulo, diferenças) da primeira linha de uma estratégia do painel B
     for linha in texto.splitlines():
         if linha.startswith(r"\multicolumn"):
+            assert pendente is None, "linha de valores do painel B sem a linha de IC logo depois"
             for codigo, titulo in TITULOS.items():
                 if r"\textit{" + titulo + "}" in linha:
                     estimador, painel = codigo, None
@@ -64,10 +81,28 @@ def linhas_de_dados(texto):
             elif "Painel B" in linha:
                 painel = "B"
             continue
-        if estimador and painel and " & " in linha and linha.endswith(r"\\") and not linha.startswith("Estrat"):
-            celulas = [c.strip() for c in linha[:-2].split(" & ")]
+        if not (estimador and painel and " & " in linha) or linha.startswith("Estrat"):
+            assert pendente is None, "linha de valores do painel B sem a linha de IC logo depois"
+            continue
+        primeira_do_painel_b = linha.endswith(r"\\*")
+        assert primeira_do_painel_b or linha.endswith(r"\\")
+        celulas = [c.strip() for c in re.sub(r"\\\\\*?$", "", linha).split(" & ")]
+        if painel == "A":
+            assert not primeira_do_painel_b and pendente is None
             assert (estimador, painel, celulas[0]) not in saida
             saida[(estimador, painel, celulas[0])] = celulas[1:]
+        elif primeira_do_painel_b:
+            assert pendente is None and celulas[0]
+            pendente = (celulas[0], celulas[1:])
+        else:  # segunda linha: nome vazio e IC, imediatamente depois da primeira
+            assert pendente is not None and celulas[0] == ""
+            rotulo, valores = pendente
+            ics = celulas[1:]
+            assert len(valores) == len(ics) == 4
+            assert (estimador, painel, rotulo) not in saida
+            saida[(estimador, painel, rotulo)] = list(zip(valores, ics))
+            pendente = None
+    assert pendente is None
     return saida
 
 
@@ -105,8 +140,7 @@ def test_cada_numero_corresponde_ao_csv(dados, texto):
                        & (df.estrategia == chave) & (df.metrica == metrica)]
                 assert len(d) == 1
                 r = d.iloc[0]
-                assert celula == (f"{esperado(r.diferenca_media)} "
-                                  f"[{esperado(r.ic95_inf)}; {esperado(r.ic95_sup)}]"), (codigo, chave, metrica)
+                assert celula == celula_ic(r.diferenca_media, r.ic95_inf, r.ic95_sup), (codigo, chave, metrica)
 
 
 def test_valores_literais_do_csv(texto):
@@ -117,19 +151,19 @@ def test_valores_literais_do_csv(texto):
     # xgb, sem balanceamento: F1 0,92930...
     assert linhas[("xgb", "A", "Sem balanceamento")][2] == "0,929"
     # rf, pesos de classe: dVPP -0,06062 [-0,09506; -0,02619]; dSens 0,01864 [-0,01766; 0,05495]
-    assert linhas[("rf", "B", "Pesos de classe balanceados")][0] == "$-$0,061 [$-$0,095; $-$0,026]"
-    assert linhas[("rf", "B", "Pesos de classe balanceados")][1] == "0,019 [$-$0,018; 0,055]"
+    assert linhas[("rf", "B", "Pesos de classe balanceados")][0] == ic_literal("$-$0,061", "$-$0,095", "$-$0,026")
+    assert linhas[("rf", "B", "Pesos de classe balanceados")][1] == ic_literal("0,019", "$-$0,018", "0,055")
     # rf, pesos de classe: dF1 -0,01796 [-0,04098; 0,00507]; dAUC-PR -0,01830 [-0,03264; -0,00395]
-    assert linhas[("rf", "B", "Pesos de classe balanceados")][2] == "$-$0,018 [$-$0,041; 0,005]"
-    assert linhas[("rf", "B", "Pesos de classe balanceados")][3] == "$-$0,018 [$-$0,033; $-$0,004]"
+    assert linhas[("rf", "B", "Pesos de classe balanceados")][2] == ic_literal("$-$0,018", "$-$0,041", "0,005")
+    assert linhas[("rf", "B", "Pesos de classe balanceados")][3] == ic_literal("$-$0,018", "$-$0,033", "$-$0,004")
     # rf, SMOTE 0,3: dSens 0,04620 [0,01010; 0,08231]
-    assert linhas[("rf", "B", "SMOTE 0,3")][1] == "0,046 [0,010; 0,082]"
+    assert linhas[("rf", "B", "SMOTE 0,3")][1] == ic_literal("0,046", "0,010", "0,082")
     # xgb, pesos de classe: dVPP -0,08685 [-0,12266; -0,05103] (valores citados no Estudo 2)
-    assert linhas[("xgb", "B", "Pesos de classe balanceados")][0] == "$-$0,087 [$-$0,123; $-$0,051]"
+    assert linhas[("xgb", "B", "Pesos de classe balanceados")][0] == ic_literal("$-$0,087", "$-$0,123", "$-$0,051")
     # xgb, ADASYN 0,3: dAUC-PR 0,00344 [-0,00781; 0,01470]
-    assert linhas[("xgb", "B", "ADASYN 0,3")][3] == "0,003 [$-$0,008; 0,015]"
+    assert linhas[("xgb", "B", "ADASYN 0,3")][3] == ic_literal("0,003", "$-$0,008", "0,015")
     # xgb, SMOTETomek 0,3: dF1 -2,3e-05 [-0,01717; 0,01712] vira 0,000, sem sinal
-    assert linhas[("xgb", "B", "SMOTETomek 0,3")][2] == "0,000 [$-$0,017; 0,017]"
+    assert linhas[("xgb", "B", "SMOTETomek 0,3")][2] == ic_literal("0,000", "$-$0,017", "0,017")
 
 
 def test_rotulos_iguais_aos_da_tabela_historica(dados, texto):
@@ -155,14 +189,55 @@ def test_arredondamento_meia_unidade_para_cima():
 
 def test_rotulo_unico_e_estrutura(texto):
     assert texto.count(r"\label{tab:balanceamento-xgb}") == 1
-    assert texto.count(r"\begin{table}") == texto.count(r"\end{table}") == 1
-    assert texto.count(r"\begin{tabular}") == texto.count(r"\end{tabular}") == 1
+    # longtable (quebra entre páginas), nunca dentro de float: sem table/tabular
+    assert texto.count(r"\begin{longtable}") == texto.count(r"\end{longtable}") == 1
+    assert r"\begin{table}" not in texto and r"\begin{tabular}" not in texto and r"\begin{minipage}" not in texto
     assert r"\textit{Random Forest}" in texto and r"\textit{XGBoost}" in texto
+
+
+def test_longtable_com_cabecalhos_rodapes_e_nota_fora_da_tabela(texto):
+    """Cabeçalho da primeira página, cabeçalho repetido, rodapés e nota depois do ambiente, no mesmo grupo."""
+    n = gen.COLUNAS
+    ordem = [r"\endfirsthead", r"\endhead", r"\endfoot", r"\bottomrule" + "\n" + r"\endlastfoot",
+             r"\end{longtable}", r"\noindent Fonte:", r"\endgroup"]
+    posicoes = [texto.index(trecho) for trecho in ordem]
+    assert posicoes == sorted(posicoes)
+    assert texto.index(r"\begin{longtable}") < texto.index(r"\caption{") < posicoes[0]
+    assert r"}\label{tab:balanceamento-xgb}\\" in texto
+    assert r"\multicolumn{" + str(n) + r"}{l}{\textit{(continuação)}} \\" in texto
+    assert r"\multicolumn{" + str(n) + r"}{r}{\textit{(continua)}} \\" in texto
+    assert texto.index(r"\begingroup") < texto.index(r"\begin{longtable}")
+    assert texto.rstrip().endswith(r"\endgroup")
+    # a nota fica depois de \end{longtable} e dentro do grupo; o corpo dos dados fica antes
+    assert texto.index(r"\path{data/balanceamento_xgb.csv}") > texto.index(r"\end{longtable}")
+    assert texto.index(r"\textit{XGBoost}") < texto.index(r"\end{longtable}")
+
+
+def test_layout_legivel_sem_resizebox_e_com_ic_em_segunda_linha(texto):
+    """Sem \\resizebox; fonte footnotesize; estratégia quebra linha; IC na segunda linha da célula."""
+    assert r"\resizebox" not in texto and r"\scriptsize" not in texto
+    assert r"\footnotesize" in texto and r"\setlength{\tabcolsep}{3pt}" in texto
+    assert r"\centering" not in texto and "[htbp]" not in texto
+    assert r">{\raggedright\arraybackslash}p{0.21\linewidth}" in texto
+    assert texto.count(r">{\raggedleft\arraybackslash}p{0.175\linewidth}") == 4
+    # painel B: 8 estratégias x 4 métricas, por estimador
+    assert r"\shortstack" not in texto
+    # painel B: 8 estratégias por estimador, cada uma em duas linhas (valores com \\*, depois os IC)
+    linhas = texto.splitlines()
+    primeiras = [i for i, l in enumerate(linhas) if l.endswith(r" \\*")]
+    assert len(primeiras) == 2 * 8
+    for i in primeiras:
+        assert linhas[i].count(" & ") == 4 and not linhas[i].startswith(" & ")
+        assert linhas[i + 1].startswith(" & {[}") and linhas[i + 1].endswith(r" \\")
+        assert linhas[i + 1].count("{[}") == linhas[i + 1].count("{]}") == 4
+    assert texto.count("{[}") == 2 * 8 * 4 and r"\\[" not in texto
+    assert r"\setlength{\LTcapwidth}{\linewidth}" in texto
+    assert texto.index(r"\setlength{\LTcapwidth}{\linewidth}") < texto.index(r"\begin{longtable}")
 
 
 def test_sem_path_desprotegido_na_legenda_e_com_path_na_nota(texto):
     assert proteger_caminhos_legenda(texto) == texto
-    legenda = re.search(r"\\caption\{(.*?)\}\n\\label", texto, re.S).group(1)
+    legenda = re.search(r"\\caption\{(.*?)\}\\label", texto, re.S).group(1)
     assert "\\path" not in legenda and "\\url" not in legenda
     assert r"\path{data/balanceamento_xgb.csv}" in texto
 

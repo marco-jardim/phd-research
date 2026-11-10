@@ -131,7 +131,7 @@ tabelas:
     motivo: "Sem teste que regenere ou compare o arquivo; os testes da ablação do dossiê cobrem os agregados em data/, não a tabela. Tabela sem gerador testado."
   - arquivo: editorial/tab_cap8_reruns.tex
     protecao: sha256
-    sha256: ddfc75887afb7c18195eb679d37ab992ecaefec619cbad40974659a0fdcd4bf2
+    sha256: f38546f15bcc1a89b3e7b6429726c887e666e258c4d0f0273073d3c4c29e5169
     motivo: "tests/test_w14_rotulos.py::test_reruns_caption_expands_experiment_label confere transform(tables/tab_cap8_reruns.tex) == editorial; a tabela histórica de entrada (scripts/avaliar_reruns_exp2.py) não tem teste de regeneração, então os números não ficam protegidos pelo teste."
   - arquivo: editorial/tab_cap8_cascata_v31.tex
     protecao: regeneracao
@@ -175,6 +175,12 @@ tabelas:
     protecao: regeneracao
     teste: test_w12a.py::test_generated_model_table_matches_file_bytes
     gerador: tabela_tamanho_modelo_editorial
+
+  # Conclusão
+  - arquivo: editorial/tab_concl_sintese.tex
+    protecao: regeneracao
+    teste: test_tabela_sintese_conclusao.py::test_tabela_versionada_igual_a_regenerada
+    gerador: tabela_sintese_conclusao
 
   # Estudo 5
   - arquivo: editorial/tab_den30_equidade_arranjo.tex

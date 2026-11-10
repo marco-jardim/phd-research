@@ -59,11 +59,19 @@ def table(frame):
               "registros_comprec": "Registros COMPREC", "obitos_refrec": "Óbitos REFREC"}
     def number(v):
         return f"{v:.1f}".replace(".", "{,}") if pd.notna(v) else "n.d."
-    lines = [r"\begin{table}[htbp]", r"\centering\scriptsize",
+    # Só apresentação, sem \resizebox: conjunto em coluna que quebra linha, colunas numéricas à direita e
+    # cabeçalhos em duas linhas. O preâmbulo não carrega tabularx; as frações de \linewidth somam 0,878 e o
+    # preenchimento de 14 \tabcolsep de 3 pt (cerca de 0,092) completa a largura útil.
+    right = r">{\raggedleft\arraybackslash}"
+    columns = (r">{\raggedright\arraybackslash}p{0.17\linewidth}" + right + r"p{0.066\linewidth}"
+               + right + r"p{0.066\linewidth}" + right + r"p{0.158\linewidth}" + right + r"p{0.158\linewidth}"
+               + right + r"p{0.13\linewidth}" + right + r"p{0.13\linewidth}")
+    lines = [r"\begin{table}[htbp]", r"\centering\footnotesize", r"\setlength{\tabcolsep}{3pt}",
              r"\caption{Perfil agregado do extrato por unidade de contagem.}",
-             r"\label{tab:perfil-obitos-agregado}", r"\resizebox{\textwidth}{!}{%",
-             r"\begin{tabular}{lrrrrrr}", r"\toprule",
-             r"Conjunto & $n$ & Idade: $n$ & Média (DP); mediana & Nota: média (DP); mediana & M: $n$ (\%) & F: $n$ (\%) \\", r"\midrule"]
+             r"\label{tab:perfil-obitos-agregado}",
+             r"\begin{tabular}{" + columns + "}", r"\toprule",
+             r"Conjunto & $n$ & \shortstack[r]{Idade:\\$n$} & \shortstack[r]{Idade: média\\(DP); mediana}"
+             r" & \shortstack[r]{Nota: média\\(DP); mediana} & M: $n$ (\%) & F: $n$ (\%) \\", r"\midrule"]
     for row in frame.itertuples(index=False):
         if row.conjunto not in labels:
             continue
@@ -72,7 +80,7 @@ def table(frame):
                      + f" & {number(row.nota_media)} ({number(row.nota_dp)}); {number(row.nota_mediana)}"
                      + f" & {row.sexo_masculino_n:,}".replace(",", ".") + f" ({number(row.sexo_masculino_pct)})"
                      + f" & {row.sexo_feminino_n:,}".replace(",", ".") + f" ({number(row.sexo_feminino_pct)}) " + r"\\")
-    lines += [r"\bottomrule", r"\end{tabular}}",
+    lines += [r"\bottomrule", r"\end{tabular}",
               r"\par\footnotesize Fonte: \path{data/perfil_obitos_agregado.csv}, gerado por "
               r"\path{scripts/perfil_obitos_agregado.py}. Idade derivada das datas do SIM, em anos, "
               r"restrita a 0 a 120; DP amostral. M e F usam o total do conjunto como denominador. "
