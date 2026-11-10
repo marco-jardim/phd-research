@@ -1,0 +1,64 @@
+% Gerada por scripts/tabela_balanceamento_xgb.py; não editar manualmente.
+\begin{table}[htbp]
+\centering\scriptsize
+\setlength{\tabcolsep}{4pt}
+\caption{Tratamento do desbalanceamento no Random Forest e no XGBoost: média das métricas em 25 partições (validação cruzada $5 \times 5$, limiar de 0,5) e diferença, com IC de 95\%, em relação ao treino sem balanceamento.}
+\label{tab:balanceamento-xgb}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\multicolumn{5}{l}{\textit{Random Forest}} \\
+\multicolumn{5}{l}{Painel A: média nas 25 partições} \\
+Estratégia & VPP & Sensibilidade & F$_1$ & AUC-PR \\
+\cmidrule(lr){1-5}
+Sem balanceamento & 0,960 & 0,847 & 0,899 & 0,963 \\
+Pesos de classe balanceados & 0,900 & 0,866 & 0,881 & 0,945 \\
+SMOTE 0,3 & 0,923 & 0,893 & 0,906 & 0,961 \\
+SMOTE 0,5 & 0,917 & 0,895 & 0,904 & 0,959 \\
+SMOTE 1,0 & 0,903 & 0,893 & 0,896 & 0,956 \\
+BorderlineSMOTE 0,3 & 0,939 & 0,875 & 0,904 & 0,960 \\
+ADASYN 0,3 & 0,903 & 0,895 & 0,898 & 0,958 \\
+SMOTETomek 0,3 & 0,925 & 0,893 & 0,908 & 0,961 \\
+Pesos de classe + SMOTE 0,3 & 0,900 & 0,895 & 0,896 & 0,955 \\
+\multicolumn{5}{l}{Painel B: diferença em relação ao treino sem balanceamento [IC 95\%]} \\
+Estratégia & $\Delta$VPP & $\Delta$Sensibilidade & $\Delta$F$_1$ & $\Delta$AUC-PR \\
+\cmidrule(lr){1-5}
+Pesos de classe balanceados & $-$0,061 [$-$0,095; $-$0,026] & 0,019 [$-$0,018; 0,055] & $-$0,018 [$-$0,041; 0,005] & $-$0,018 [$-$0,033; $-$0,004] \\
+SMOTE 0,3 & $-$0,037 [$-$0,069; $-$0,006] & 0,046 [0,010; 0,082] & 0,007 [$-$0,022; 0,037] & $-$0,002 [$-$0,009; 0,005] \\
+SMOTE 0,5 & $-$0,044 [$-$0,083; $-$0,004] & 0,048 [0,013; 0,083] & 0,005 [$-$0,025; 0,036] & $-$0,004 [$-$0,014; 0,005] \\
+SMOTE 1,0 & $-$0,058 [$-$0,096; $-$0,020] & 0,046 [0,015; 0,077] & $-$0,003 [$-$0,032; 0,027] & $-$0,007 [$-$0,017; 0,003] \\
+BorderlineSMOTE 0,3 & $-$0,022 [$-$0,059; 0,016] & 0,028 [$-$0,003; 0,060] & 0,005 [$-$0,018; 0,028] & $-$0,003 [$-$0,009; 0,004] \\
+ADASYN 0,3 & $-$0,058 [$-$0,099; $-$0,017] & 0,049 [0,015; 0,082] & $-$0,002 [$-$0,032; 0,029] & $-$0,005 [$-$0,016; 0,005] \\
+SMOTETomek 0,3 & $-$0,035 [$-$0,068; $-$0,002] & 0,046 [0,012; 0,080] & 0,009 [$-$0,020; 0,038] & $-$0,002 [$-$0,010; 0,005] \\
+Pesos de classe + SMOTE 0,3 & $-$0,061 [$-$0,103; $-$0,019] & 0,048 [0,012; 0,083] & $-$0,003 [$-$0,036; 0,029] & $-$0,008 [$-$0,018; 0,002] \\
+\midrule
+\multicolumn{5}{l}{\textit{XGBoost}} \\
+\multicolumn{5}{l}{Painel A: média nas 25 partições} \\
+Estratégia & VPP & Sensibilidade & F$_1$ & AUC-PR \\
+\cmidrule(lr){1-5}
+Sem balanceamento & 0,966 & 0,897 & 0,929 & 0,965 \\
+Pesos de classe balanceados & 0,879 & 0,917 & 0,897 & 0,962 \\
+SMOTE 0,3 & 0,946 & 0,912 & 0,928 & 0,965 \\
+SMOTE 0,5 & 0,939 & 0,914 & 0,926 & 0,966 \\
+SMOTE 1,0 & 0,934 & 0,914 & 0,923 & 0,965 \\
+BorderlineSMOTE 0,3 & 0,952 & 0,906 & 0,928 & 0,966 \\
+ADASYN 0,3 & 0,951 & 0,922 & 0,936 & 0,968 \\
+SMOTETomek 0,3 & 0,948 & 0,913 & 0,929 & 0,965 \\
+Pesos de classe + SMOTE 0,3 & 0,930 & 0,917 & 0,923 & 0,963 \\
+\multicolumn{5}{l}{Painel B: diferença em relação ao treino sem balanceamento [IC 95\%]} \\
+Estratégia & $\Delta$VPP & $\Delta$Sensibilidade & $\Delta$F$_1$ & $\Delta$AUC-PR \\
+\cmidrule(lr){1-5}
+Pesos de classe balanceados & $-$0,087 [$-$0,123; $-$0,051] & 0,020 [$-$0,009; 0,049] & $-$0,032 [$-$0,057; $-$0,008] & $-$0,003 [$-$0,009; 0,003] \\
+SMOTE 0,3 & $-$0,020 [$-$0,045; 0,005] & 0,015 [$-$0,013; 0,042] & $-$0,002 [$-$0,019; 0,016] & 0,000 [$-$0,009; 0,009] \\
+SMOTE 0,5 & $-$0,026 [$-$0,047; $-$0,006] & 0,017 [$-$0,015; 0,049] & $-$0,003 [$-$0,023; 0,017] & 0,001 [$-$0,010; 0,011] \\
+SMOTE 1,0 & $-$0,032 [$-$0,065; 0,002] & 0,017 [$-$0,015; 0,049] & $-$0,006 [$-$0,031; 0,019] & 0,001 [$-$0,010; 0,011] \\
+BorderlineSMOTE 0,3 & $-$0,014 [$-$0,036; 0,009] & 0,009 [$-$0,025; 0,043] & $-$0,001 [$-$0,023; 0,020] & 0,001 [$-$0,009; 0,011] \\
+ADASYN 0,3 & $-$0,015 [$-$0,040; 0,011] & 0,025 [$-$0,011; 0,061] & 0,007 [$-$0,015; 0,028] & 0,003 [$-$0,008; 0,015] \\
+SMOTETomek 0,3 & $-$0,018 [$-$0,041; 0,006] & 0,015 [$-$0,014; 0,045] & 0,000 [$-$0,017; 0,017] & 0,000 [$-$0,009; 0,010] \\
+Pesos de classe + SMOTE 0,3 & $-$0,036 [$-$0,063; $-$0,008] & 0,019 [$-$0,010; 0,049] & $-$0,007 [$-$0,028; 0,015] & $-$0,001 [$-$0,010; 0,007] \\
+\bottomrule
+\end{tabular}}
+\par\footnotesize Fonte: \path{data/balanceamento_xgb.csv}, produzida por \path{scripts/balanceamento_xgb.py}; metadados em \path{data/balanceamento_xgb_metadata.json}. Cada valor do painel A é a média nas 25 partições (5 repetições de 5 partições estratificadas por linha, sem agrupar por REFREC, iguais para os dois estimadores) dos 61.696 potenciais pares, com 247 pares verdadeiros. Reamostragem só no treinamento; AUC-PR calculada sobre a probabilidade, sem limiar. Painel B, $\Delta$: média das diferenças pareadas, partição a partição, entre a estratégia e o treino sem balanceamento do mesmo estimador; entre colchetes, IC de 95\% pelo teste $t$ corrigido para validação cruzada repetida \cite{Nadeau2003inference}. Os IC não têm correção para comparações múltiplas e são descritivos.
+
+O XGBoost usa a configuração do estimador de O3 (\path{gzcmd/ml_oof.py}) sobre os mesmos 58 atributos do Estudo 2, não sobre os 30 atributos de O3. Os 58 atributos incluem os indicadores de encerramento por óbito, ausentes de O3 (\texttt{obito\_tb} e \texttt{obito\_\allowbreak sinan}). O \texttt{scale\_pos\_weight} vale 1 sem pesos de classe; com pesos de classe, é a razão entre negativos e positivos do treino da partição (após a reamostragem, na combinação com SMOTE). A primeira repetição reproduz, no Random Forest, as médias e os desvios de VPP, sensibilidade e F$_1$ da Tabela~\ref{tab:imbalance-sensitivity}, dentro de 0,0001.
+\end{table}

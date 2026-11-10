@@ -27,6 +27,10 @@ tabelas:
     protecao: sha256
     sha256: 2e73cf17fe2cade04070d11f3a7156ee01dec4de8d38d880d1c15d5060052940
     motivo: "Versão editorial da tabela de scripts/qw1_sensibilidade_gpu.py; tests/test_qw1_sensibilidade_gpu.py compara só a tabela histórica (tables/tab_sensibilidade_qw1.tex), não a editorial."
+  - arquivo: editorial/tab_balanceamento_xgb.tex
+    protecao: regeneracao
+    teste: test_tabela_balanceamento_xgb.py::test_tab_balanceamento_xgb_versionada_igual_a_regenerada
+    gerador: tabela_balanceamento_xgb
 
   # Capítulo de dados
   - arquivo: editorial/tab_blocagem_rendimento.tex

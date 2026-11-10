@@ -57,7 +57,7 @@ EXPECTED_NEGATIONS = {
     "A calibração por âncoras preservou a capacidade": [1, 0, 1, 1, 1, 1, 2],
     "A paridade simultânea de sensibilidade e VPP adotada": [1, 1, 1, 0, 0, 1, 0],
     "A construção da referência operacional limita a inferência": [0, 1, 2, 1, 0, 0, 0],
-    "A ordenação dos classificadores depende da métrica": [1, 1, 2, 1, 0, 0, 2],  # redação nova (2026-11-09): sete frases; AUC-PR com IC da diferença e "não se distinguiu ... nem", e "não permite ordenar" (frases 3 e 4)
+    "A ordenação dos classificadores depende da métrica": [1, 1, 2, 1, 1, 0, 0, 2],  # redação nova (2026-11-09): oito frases; "não se distinguiu ... nem" (3), "não permite ordenar" (4) e, da análise 3, "nenhuma elevou o F1 nem a AUC-PR" (5)
     "As duas implementações não são equivalentes": [1, 2, 1],  # C15 revista (2026-11-08): frase dos erros do Java, equivalência não demonstrada e efeito não medido
 }
 
@@ -153,7 +153,7 @@ def test_ressalvas_de_fidelidade_permanecem_explicitas():
     conclusion = paragraph("conclusao.tex", "A ordenação dos classificadores depende da métrica")
     assert r"não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados" in conclusion
     assert r"Esses estudos não fundamentam a adoção dos \textit{pipelines} (sequências operacionais) avaliados, e o GZ-CMD e o arranjo ASR, que preserva o corte, não usam os indicadores." in conclusion
-    assert "impede transferir o resultado ao XGBoost" in conclusion
+    assert "nenhuma elevou o $F_1$ nem a AUC-PR com IC acima de zero" in conclusion  # revisão 2, análise 3
     comparator = paragraph("estudo1_comparador.tex", "As duas implementações não são equivalentes")
     assert "As duas implementações não são equivalentes: os subescores e a nota final analisados nesta tese são os da implementação Python." in comparator
     assert r"As divergências não alteram os estudos seguintes, que tomam essa nota como dada, mas limitam a afirmação de que a reimplementação reproduz o protótipo Java (Subseção~\ref{sec:e1-limitacoes})." in (LATEX / "estudo1_comparador.tex").read_text(encoding="utf-8")  # revisão 2: a frase saiu do parágrafo de abertura ao criar as Limitações

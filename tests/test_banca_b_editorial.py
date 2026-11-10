@@ -93,7 +93,10 @@ def test_nb01_auc_and_rf_only_balance_without_specificity():
     discussion = rest.split(r"\section{Discussão}")[1]
     for part in (method, discussion):
         assert "A especificidade não foi reportada" in part
-        assert "não no XGBoost" in part
+    # revisão 2 (análise 3 aprovada pela autora): o balanceamento passou a ser avaliado também no XGBoost;
+    # a ressalva protegida agora é a diferença em relação ao estimador final e o alcance da AUC-PR
+    assert "o XGBoost avaliado difere do XGBoost do QW1 e do estimador final do GZ-CMD" in method
+    assert "não mede a ordenação abaixo do corte do OpenRecLink" in discussion
     assert "sem estimativa de variabilidade por validação cruzada para esse comparativo" in method
 
 
