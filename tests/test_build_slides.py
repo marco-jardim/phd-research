@@ -97,6 +97,7 @@ def test_build_propagates_compilation_failure(monkeypatch):
     assert run.call_count == 1
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_structure_and_editorial_contract():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     main, backup = source.split(r"\appendix")
@@ -141,6 +142,7 @@ def test_slide_structure_and_editorial_contract():
         assert "CONFERIR" not in text
 
 
+@pytest.mark.deck_qualificacao
 def test_script_has_eighty_nine_short_answers():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
@@ -486,11 +488,13 @@ def final_scientific_requirements(csv_loader=read_csv):
     return required
 
 
+@pytest.mark.deck_qualificacao
 @pytest.mark.parametrize("frame_number", [3, 4, 5, 6, 7, 13, 18, 19, 20, 21, 22, 23, 24, 26, 28, 29, 30, 43, 44, 45, 46, 47, 48, 49])
 def test_slide_scientific_contract_from_csv(frame_number):
     assert_fragments(slide_frames()[frame_number - 1], scientific_requirements()[frame_number])
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_contract_rejects_changed_csv_dominance():
     def changed_csv(name):
         rows = read_csv(name)
@@ -503,6 +507,7 @@ def test_slide_contract_rejects_changed_csv_dominance():
         assert_fragments(slide_frames()[45], scientific_requirements(changed_csv)[46])
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_final_message_rejects_missing_false_positives():
     # Os resultados permanecem no quadro 19, não repetidos nos agradecimentos.
     frame = slide_frames()[18]
@@ -511,6 +516,7 @@ def test_slide_final_message_rejects_missing_false_positives():
         assert_fragments(frame, scientific_requirements()[19])
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_and_script_s7_terminology_and_attribution():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
@@ -533,6 +539,7 @@ def test_slide_and_script_s7_terminology_and_attribution():
     assert "guarda/custo/LLM" in answer
 
 
+@pytest.mark.deck_qualificacao
 def test_effort_figure_is_regenerated_from_csv(tmp_path):
     plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
     output = plot["generate"](
@@ -571,6 +578,7 @@ def assert_figure_series_styles(content, plot, arm):
         assert label in content
 
 
+@pytest.mark.deck_qualificacao
 @pytest.mark.parametrize("order_index", range(4))
 def test_effort_styles_reject_missing_series_style_even_with_p_markers(order_index):
     plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
@@ -583,6 +591,7 @@ def test_effort_styles_reject_missing_series_style_even_with_p_markers(order_ind
         assert_figure_series_styles(content, plot, plot["ARM_SLIDES"])
 
 
+@pytest.mark.deck_qualificacao
 def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
     plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
     plot["main"].__globals__["ROOT"] = tmp_path
@@ -597,6 +606,7 @@ def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
     assert b"ASR vig." in thesis.read_bytes() and b"ASR vig." not in slides.read_bytes()
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_backup_cascade_rows_from_csv():
     metrics = read_csv("arranjo_corte_metricas.csv")
     frames = slide_frames()
@@ -637,6 +647,7 @@ def test_effort_figure_rejects_invalid_curve_and_tracks_csv_changes():
         ], "O1_SCORE")
 
 
+@pytest.mark.deck_qualificacao
 def test_script_s8_comparator_effort_and_false_positive_regions_from_csv():
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     for row in read_csv("comparador_mesma_carga.csv"):
@@ -662,6 +673,7 @@ def test_script_s8_comparator_effort_and_false_positive_regions_from_csv():
     assert "CIDACS" in script.split("### 3.")[-1].split("### 4.")[0]
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_s8_word_list_structure_and_robustness_block_names():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
@@ -684,6 +696,7 @@ def test_slide_s8_word_list_structure_and_robustness_block_names():
     assert not re.search(r"IC 95\\% (?:82,3 a 90,7|84,1 a 92,0)", source)
 
 
+@pytest.mark.deck_qualificacao
 def test_script_s81_new_artifacts_provenance_and_hours():
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     for row in read_csv("comparador_p_match_humano.csv"):
@@ -760,10 +773,12 @@ def assert_budget_script(script, csv_loader=read_csv):
         assert f"O1 requer {pt_number(o1['k_min_36'], 0)} e O3, {pt_number(v3['k_min_36'], 0)}" in text
 
 
+@pytest.mark.deck_qualificacao
 def test_s9_budget_script_preserves_all_materialized_fields():
     assert_budget_script((SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8"))
 
 
+@pytest.mark.deck_qualificacao
 @pytest.mark.parametrize("artifact,field", [
     ("comparador_mesma_carga.csv", "k_min_equivalente_P"),
     ("comparador_mesma_carga.csv", "P_par2_recuperados"),
@@ -786,6 +801,7 @@ def test_s9_budget_contract_rejects_csv_mutations_in_slide_and_script(artifact, 
         assert_budget_script((SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8"), changed)
 
 
+@pytest.mark.deck_qualificacao
 def test_s9_recommendation_filter_and_paired_difference_are_qualified():
     frames = slide_frames()
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
@@ -821,6 +837,7 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
         assert len(frames[number - 1].split("\\fonte")[0].split()) <= 210
 
 
+@pytest.mark.deck_qualificacao
 def test_slide_s81_contract_rejects_changed_human_comparison():
     def changed(name):
         rows = read_csv(name)
@@ -832,6 +849,7 @@ def test_slide_s81_contract_rejects_changed_human_comparison():
         assert_fragments(slide_frames()[21], scientific_requirements(changed)[22])
 
 
+@pytest.mark.deck_qualificacao
 def test_human_scenarios_are_coverage_not_measured_error():
     rows = read_csv("cenarios_sensibilidade_humana.csv")
     assert {float(r["s"]) for r in rows} == {0.95, 0.99, 1.0}
@@ -855,6 +873,7 @@ def test_human_scenarios_are_coverage_not_measured_error():
     assert "As perdas são de cobertura" in text
 
 
+@pytest.mark.deck_qualificacao
 def test_slides_no_control_characters_and_definitions_before_results():
     for path in SLIDES.glob("*.tex"):
         text = path.read_text(encoding="utf-8")
@@ -869,6 +888,7 @@ def test_slides_no_control_characters_and_definitions_before_results():
             assert float(row["median"]) > float(row["reference"])
 
 
+@pytest.mark.deck_qualificacao
 def test_script_s6_questions_and_provenance():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = source.split("## Perguntas prováveis")[1].split(
@@ -918,6 +938,7 @@ def thesis_title():
     return " ".join(raw.split())
 
 
+@pytest.mark.deck_qualificacao
 def test_banca_e_title_terminology_and_new_answers():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     title = re.search(r"\\title\{(.*)\}$", source, re.M)[1]
@@ -958,6 +979,7 @@ def test_banca_e_title_terminology_and_new_answers():
         assert text in frame22, arm
 
 
+@pytest.mark.deck_qualificacao
 def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabilidade():
     source = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     section26 = source.split("### 26.", 1)[1].split("### 27.", 1)[0]
@@ -972,11 +994,13 @@ def test_roteiro_repassada_final_preserva_reprodutibilidade_e_limite_da_estabili
         assert "escolher ordenação e ponto de parada pela curva de esforço conforme o orçamento humano" not in frames[index]
 
 
+@pytest.mark.deck_qualificacao
 def test_review3_slides_do_not_reuse_leaked_experiment1_result():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")
     assert not re.search(r"0(?:,|\{,\}|\.)954", source)
 
 
+@pytest.mark.deck_qualificacao
 def test_review3_experiment1_answer_tracks_sanitized_csv():
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     answer = script.split("## Perguntas prováveis")[1].split("### 34.")[1].split("### 35.")[0]
@@ -991,6 +1015,7 @@ def test_review3_experiment1_answer_tracks_sanitized_csv():
     assert "Platt ajustado no treino" not in answer
 
 
+@pytest.mark.deck_qualificacao
 @pytest.mark.parametrize("number,fragments", [
     (64, ("investigação desnecessária", "notificação pós-óbito duplicada", "19 dos 21")),
     (65, ("Não estimado nesta tese", "2019 a 2022", "não a um ciclo anual")),
@@ -1021,6 +1046,7 @@ def test_review3_questions_cover_unanswered_limits(number, fragments):
     assert "Fonte:" in section
 
 
+@pytest.mark.deck_qualificacao
 def test_review3_ethics_and_residual_terminology():
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
@@ -1035,6 +1061,7 @@ def test_review3_ethics_and_residual_terminology():
     assert len(slide_frames()[28].split("\\fonte")[0].split()) <= 210
 
 
+@pytest.mark.deck_qualificacao
 def test_k3_hypothesis_and_prospective_margin_in_both_targets():
     frames = slide_frames()
     script = (SLIDES / "roteiro_defesa.md").read_text(encoding="utf-8")

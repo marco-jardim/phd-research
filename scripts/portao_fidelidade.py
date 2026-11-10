@@ -60,6 +60,7 @@ import difflib
 import hashlib
 import importlib
 import json
+import os
 import re
 import subprocess
 import sys
@@ -80,6 +81,13 @@ MODOS = ("auto", "capitulo", "paragrafo", "ambos")
 MODO_PADRAO = "auto"
 REVISADOS_PADRAO = "tests/data/arquivos_revisados.yaml"
 ARQUIVO_EXTRA = "text/slides/defesa.tex"
+# Exceção temporária autorizada pela autora em 2026-11-10 ("eu ainda vou mudar o deck de
+# apresentação, então este deck não está válido mesmo; pode fazer uma exceção momentaneamente
+# para o deck"): enquanto o deck da qualificação é reescrito, text/slides/ sai da lista padrão
+# de arquivos do portão. Interruptor único com os testes marcados ``deck_qualificacao``
+# (tests/conftest.py): DECK_QUALIFICACAO=1 reinclui o deck. Para encerrar a exceção, remover
+# PREFIXO_DECK, _deck_em_excecao e a checagem correspondente em eh_arquivo_alvo.
+PREFIXO_DECK = "text/slides/"
 EXCLUIDOS = {"tese_rev_diff.tex"}
 MARCA_GERADA = "Gerada por scripts/"
 
@@ -1110,8 +1118,15 @@ def _lista_z(proc: subprocess.CompletedProcess) -> list[str]:
     return [p for p in proc.stdout.decode("utf-8", errors="replace").split("\0") if p]
 
 
+def _deck_em_excecao() -> bool:
+    """Exceção temporária de 2026-11-10 (ver PREFIXO_DECK): ativa salvo DECK_QUALIFICACAO=1."""
+    return os.environ.get("DECK_QUALIFICACAO") != "1"
+
+
 def eh_arquivo_alvo(arquivo: str) -> bool:
     if Path(arquivo).name in EXCLUIDOS:
+        return False
+    if arquivo.startswith(PREFIXO_DECK) and _deck_em_excecao():  # exceção temporária (2026-11-10)
         return False
     if arquivo == ARQUIVO_EXTRA:
         return True

@@ -3,6 +3,8 @@
 from pathlib import Path
 import re
 
+import pytest
+
 from latex_fontes import fontes_tex
 from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from test_s4a_texto import abstracts
@@ -95,6 +97,7 @@ def test_new_glossary_entries_and_abbreviations_are_present_and_refs_resolve():
     assert set(re.findall(r'\\ref\{([^}]+)\}', glossary)) <= labels
 
 
+@pytest.mark.deck_qualificacao
 def test_slides_and_script_do_not_call_aposteriori_a_comparator():
     for name, markup in (('defesa.tex', r'\textit{a posteriori}'),
                          ('roteiro_defesa.md', '*a posteriori*')):

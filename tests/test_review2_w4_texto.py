@@ -17,6 +17,7 @@ def text(name):
     return (LATEX / name).read_text(encoding="utf-8")
 
 
+@pytest.mark.deck_qualificacao
 def test_falsification_is_prospective_with_explicit_margin_not_point_differences():
     for source in (text("estudo4_gzcmd.tex"), text("conclusao.tex")):
         normalized = source.replace("{,}", ",")
@@ -214,6 +215,7 @@ def test_confirmation_editorial_human_scenarios_use_its_own_workloads():
         human_sensitivity(scenarios, curve.loc[curve.k.ne(17)])
 
 
+@pytest.mark.deck_qualificacao
 def test_script_answers_cover_the_new_review_without_delivery_metatext():
     source = (ROOT / "text/slides/roteiro_defesa.md").read_text(encoding="utf-8")
     for n, phrase in ((53, "14 dos 29"), (54, "abstenção generalizada"),

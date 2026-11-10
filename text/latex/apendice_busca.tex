@@ -37,17 +37,28 @@ Foram incluídos os estudos que aplicam um classificador supervisionado à class
 
 \section{Fluxo e resultado}
 
-\begin{table}[htbp]
-\centering
+\begingroup
 \small
 \setlength{\tabcolsep}{4pt}
-\caption{Fluxo da busca bibliográfica: consultas, registros recuperados e estudos selecionados na triagem.}
-\label{tab:busca-fluxo}
-\renewcommand{\arraystretch}{0.95}
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{6.8cm}>{\centering\arraybackslash}p{2.0cm}>{\centering\arraybackslash}p{2.2cm}}
+\setlength{\LTcapwidth}{\linewidth}
+\renewcommand{\arraystretch}{.95}
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{6.8cm}>{\centering\arraybackslash}p{2.0cm}>{\centering\arraybackslash}p{2.2cm}}
+\caption{Fluxo da busca bibliográfica: consultas, registros recuperados e estudos selecionados na triagem.}\label{tab:busca-fluxo}\\
 \toprule
 Base & Consulta e filtro & Recuperados & Selecionados \\
 \midrule
+\endfirsthead
+\textit{(continuação)} & & & \\
+\toprule
+Base & Consulta e filtro & Recuperados & Selecionados \\
+\midrule
+\endhead
+\midrule
+& & & \textit{(continua)} \\
+\endfoot
+\bottomrule
+\multicolumn{4}{p{13.2cm}}{\footnotesize n.a.: não se aplica; n.e.: não executada; n.t.: não triada individualmente. \textsuperscript{a} Um estudo relacionado (Pita et al., 2018), sem classificador supervisionado explícito no resumo. \textsuperscript{b} Cada documento pode constar em mais de uma versão de idioma: SC2 reúne 78 títulos únicos, dos quais 56 de 2010 em diante; SC3 e SC4 reúnem 1 e 3 títulos, respectivamente. \textsuperscript{c} Um registro no período de 2010 a 2026; os outros dois correspondem ao mesmo artigo de 2007, em duas bases. \textsuperscript{d} Os mesmos três estudos em todas as consultas; um registro adicional é a versão preliminar (\textit{preprint}) de um deles, contada uma vez. \textsuperscript{e} Quinze estudos listados pelo agente, dos quais um atende integralmente ao critério. \textsuperscript{f} O mesmo estudo de Pita et al. (2017), já incluído com ressalva. Scopus: 4 de novembro de 2026; contagens antes da deduplicação. As consultas à SciELO e à BVS não tiveram filtro de ano, exceto BV2. Fontes: registros T6 inicial e de execução Scopus, identificados no texto.} \\
+\endlastfoot
 PubMed & PM1, cadeia principal, sem rótulos de campo & 73 & 0 \\
 PubMed & PM2, cadeia principal em título e resumo & 0 & 0 \\
 PubMed & PM3, \textit{linkage} e aprendizado supervisionado, afiliação no Brasil & 0 & 0 \\
@@ -79,10 +90,8 @@ Scopus & Sc5, variante PM4, referência internacional & 222 & n.a. \\
 Scopus & Sc6, variante PM6, título e resumo & 2 & 1\textsuperscript{f} \\
 \midrule
 \multicolumn{2}{l}{Estudos incluídos, sem duplicatas} & & 4 \\
-\bottomrule
-\multicolumn{4}{p{13.2cm}}{\footnotesize n.a.: não se aplica; n.e.: não executada; n.t.: não triada individualmente. \textsuperscript{a} Um estudo relacionado (Pita et al., 2018), sem classificador supervisionado explícito no resumo. \textsuperscript{b} Cada documento pode constar em mais de uma versão de idioma: SC2 reúne 78 títulos únicos, dos quais 56 de 2010 em diante; SC3 e SC4 reúnem 1 e 3 títulos, respectivamente. \textsuperscript{c} Um registro no período de 2010 a 2026; os outros dois correspondem ao mesmo artigo de 2007, em duas bases. \textsuperscript{d} Os mesmos três estudos em todas as consultas; um registro adicional é a versão preliminar (\textit{preprint}) de um deles, contada uma vez. \textsuperscript{e} Quinze estudos listados pelo agente, dos quais um atende integralmente ao critério. \textsuperscript{f} O mesmo estudo de Pita et al. (2017), já incluído com ressalva. Scopus: 4 de novembro de 2026; contagens antes da deduplicação. As consultas à SciELO e à BVS não tiveram filtro de ano, exceto BV2. Fontes: registros T6 inicial e de execução Scopus, identificados no texto.}
-\end{tabular}
-\end{table}
+\end{longtable}
+\endgroup
 
 Na cadeia principal do PubMed, os 73 registros recuperados não incluíam nenhum estudo que atendesse ao critério. Doze tratavam de interoperabilidade ou de registros eletrônicos em saúde, seis eram revisões, editoriais ou estruturas conceituais, 25 descreviam métodos ou avaliações de \textit{linkage} determinístico, probabilístico, por similaridade ou por escore, 29 eram aplicações epidemiológicas que usam o \textit{linkage} como etapa, e um estudo segmentava nomes com modelo oculto de Markov, sem classificar pares. Entre os métodos, o mais próximo do critério foi o de \citeonline{Duarte2019scoring}, que avaliou um método de escore para identificar vínculos sem revisão manual, em bases do rastreamento do câncer de mama, mas sem classificador treinado em pares rotulados. As restrições a título e resumo e à afiliação brasileira retornaram zero registro, e nenhum dos 94 registros da cadeia internacional trazia o Brasil nas afiliações. A cadeia ampliada recuperou 191 registros, 118 a mais que a principal; desses, 115 não tinham termo de \textit{linkage} no título, e os três restantes eram o estudo de \citeonline{Pita2018accuracy}, que descreve uma ferramenta híbrida de \textit{linkage} probabilístico sem classificador supervisionado explícito no resumo, e duas aplicações epidemiológicas. A ampliação aumentou a recuperação sem acrescentar estudo que atendesse ao critério.
 

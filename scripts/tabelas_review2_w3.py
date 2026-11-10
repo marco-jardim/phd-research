@@ -143,6 +143,12 @@ def historical_tables(out):
         text = (ROOT / "text/latex/tables" / name).read_text(encoding="utf-8")
         if name == "tab_cv_5fold.tex":
             text = re.sub(r"\\textbf\{([^{}]*)\}", r"\1", text)
+            # Só layout: a tabela excedia a largura do texto em 3,5 pt; fonte \small, como as tabelas
+            # vizinhas do apêndice das estratégias. Células e notas inalteradas.
+            anchor = "\\label{tab:cv-5fold}\n\\begin{tabular}"
+            if text.count(anchor) != 1:
+                raise ValueError(f"Layout de tab_cv_5fold exige count == 1: {anchor!r}")
+            text = text.replace(anchor, "\\label{tab:cv-5fold}\n\\small\n\\begin{tabular}", 1)
         if name == "tab_score_bands.tex":
             text = text.replace(r"Total & Pares & \% Pares", r"Total & Pares verdadeiros & \% pares verdadeiros")
             text = score_band_percentages(text)
