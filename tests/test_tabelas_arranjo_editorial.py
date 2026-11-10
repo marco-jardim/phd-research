@@ -114,9 +114,13 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     assert len(old) == len(new)
     for original, current in zip(old, new):
         if original[0] == "Estratégia":
-            # Cabeçalho: a coluna conta pares verdadeiros (classe segundo a referência), não vínculos aceitos.
-            assert original[6] == "Vínculos perdidos" and current[6] == "Pares verdadeiros perdidos"
-            assert original[:6] == current[:6] and original[7:] == current[7:]
+            # Cabeçalho: a coluna conta pares verdadeiros (classe segundo a referência), não vínculos aceitos;
+            # a apresentação encurta e quebra os títulos em duas linhas (a nota define "Perdidos").
+            assert original[6] == "Vínculos perdidos" and current[6] == "Perdidos"
+            assert current[2:6] == [r"\shortstack[r]{Humano\\(pares)}", r"\shortstack[r]{LLM\\(pares)}",
+                                    r"\shortstack[r]{Sens. auto.\\(\%)}", r"\shortstack[r]{FP\\auto.}"]
+            assert current[7] == r"\shortstack[r]{Sens. com\\humano (\%)} \\"
+            assert original[:2] == current[:2]
         elif original[0] == "Corte + revisão manual do serviço":
             assert current[2] == "cenário $\\geq " + bound + "$"
             assert current[0] == "Corte + revisão manual de origem"  # revisão 2: sem "revisão clerical"
@@ -144,7 +148,10 @@ def test_reference_cells_only_add_csv_workload_bound_and_identify_ceiling():
     # As células permanecem intactas; a nota agora explicita os três cenários S9.
     global_bound = f"{int(total.loc['global', 'pares_acima_limiar']):,}".replace(",", ".")
     # S3 explicita também a etapa anterior à qual o registro interno se refere.
-    assert numbers(text) == numbers(original_text) + Counter([bound, bound, global_bound, "8", "8", "3", "3", "0,95", "0,95", "0,99", "1,00", "2", "5,9"]) - Counter(["5,0"])
+    # A especificação das colunas (larguras) e o \tabcolsep são layout, não resultado.
+    assert r"\resizebox" not in text and r"\raggedright\arraybackslash}p{" in text
+    layout = re.compile(r"(?m)^(?:\\begin\{tabular\}\{.*|\\setlength\{\\tabcolsep\}.*)$")
+    assert numbers(layout.sub("", text)) == numbers(layout.sub("", original_text)) + Counter([bound, bound, global_bound, "8", "8", "3", "3", "0,95", "0,95", "0,99", "1,00", "2", "5,9"]) - Counter(["5,0"])
     assert r"\path{data/cenarios_sensibilidade_humana.csv}" in text
     assert "sensibilidade humana 0,95, não medida" in text
     sources = [pd.read_csv(ROOT / "data" / name) for name in (

@@ -93,7 +93,42 @@ def render_reference(referencia, arranjo, cascata, carga):
         r"As células com humano, salvo a revisão do serviço incorporada ao \textit{label}, exibem o cenário de sensibilidade humana 0,95, não medida. Os três cenários, 0,95, 0,99 e 1,00, estão na Tabela~\ref{tab:cap8-sensibilidade-humana} e em \path{data/cenarios_sensibilidade_humana.csv}; a especificidade humana é perfeita por hipótese.")
     text = text.replace("revisão manual do serviço", "revisão clerical de origem")
     text = text.replace("revisão do serviço", "revisão clerical de origem")
-    return transform("tab_cap8_referencia", text)
+    return legible_reference_layout(transform("tab_cap8_referencia", text))
+
+
+def legible_reference_layout(text):
+    """Só apresentação: sem \\resizebox, coluna de estratégia que quebra linha e cabeçalhos curtos em duas linhas.
+
+    O preâmbulo não carrega tabularx; colunas p{} com frações de \\linewidth (soma de 0,86 mais o
+    preenchimento de 16 \\tabcolsep de 3 pt, cerca de 0,10 da largura útil). Células e ordem intactas.
+    """
+    right = r">{\raggedleft\arraybackslash}"
+    left = r">{\raggedright\arraybackslash}"
+    columns = (left + r"p{0.26\linewidth}" + left + r"p{0.10\linewidth}"
+               + right + r"p{0.08\linewidth}" + right + r"p{0.065\linewidth}"
+               + right + r"p{0.095\linewidth}" + right + r"p{0.065\linewidth}"
+               + right + r"p{0.08\linewidth}" + right + r"p{0.10\linewidth}")
+    text = replace_once(text, "\\resizebox{\\linewidth}{!}{%\n\\begin{tabular}{llrrrrrr}",
+                        "\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{" + columns + "}")
+    text = replace_once(text, "\\end{tabular}}\n", "\\end{tabular}\n")
+    text = replace_once(
+        text,
+        r"Estratégia & Modo & Pares ao humano & Pares ao LLM & Sens. automática (\%) & FP automáticos"
+        r" & Pares verdadeiros perdidos & Sens. com humano (\%) \\",
+        r"Estratégia & Modo & \shortstack[r]{Humano\\(pares)} & \shortstack[r]{LLM\\(pares)}"
+        r" & \shortstack[r]{Sens. auto.\\(\%)} & \shortstack[r]{FP\\auto.} & Perdidos"
+        r" & \shortstack[r]{Sens. com\\humano (\%)} \\")
+    text = replace_once(
+        text,
+        r"Pares verdadeiros perdidos são apenas os classificados como \texttt{NONMATCH}, excluindo encaminhamentos pendentes.",
+        r"Perdidos são apenas os pares verdadeiros classificados como \texttt{NONMATCH}, excluindo encaminhamentos pendentes.")
+    return replace_once(
+        text,
+        r"Faixa intermediária da nota final: nota final do CdR em $[5,9)$.",
+        r"Faixa intermediária da nota final: nota final do CdR em $[5,9)$. "
+        r"Humano e LLM: pares encaminhados ao revisor humano e ao LLM. "
+        r"Sens.: sensibilidade; auto.: automática, isto é, sem revisão humana; "
+        r"FP auto.: falsos positivos aceitos automaticamente.")
 
 
 def render_arrangement(historical):

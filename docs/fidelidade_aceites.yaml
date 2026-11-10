@@ -1296,6 +1296,12 @@ aceites:
       - numeros:+4
     justificativa: "Revisão 2 (correção de overfull aprovada pela autora em 2026-11-09): \\emergencystretch=4em no preâmbulo; o 4 é a medida de layout, sem conteúdo factual."
     autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_referencia.tex
+    hash_paragrafo_novo: "ca3e9c528fd95474"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (pedido da autora de 2026-11-10, legibilidade da Tabela 8.3): só layout pelo gerador (sem \\resizebox, coluna de estratégia com quebra de linha, cabeçalhos curtos em duas linhas e siglas novas explicadas na nota); células, ordem e números inalterados em relação a HEAD."
+    autora_aprovou: true
 aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
@@ -2233,3 +2239,5 @@ aceites_numeros:
   - {arquivo: text/latex/estudo2_classificadores.tex, numero: "2", autora_aprovou: true, motivo: "Revisão 2 (análise 4 de 2026-11-09, redação corrigida aprovada pela autora após revisão independente): conferido em data/vies_incorporacao_nb01.csv (virada do RF na variante aleatória com k_a=2 pares verdadeiros de nota final >= 9 e k_b=7)"}
   - {arquivo: text/latex/estudo2_classificadores.tex, numero: "4", autora_aprovou: true, motivo: "Revisão 2 (análise 4 de 2026-11-09, redação corrigida aprovada pela autora após revisão independente): conferido em data/vies_incorporacao_nb01.csv (virada da AUC-PR do RF+SMOTE para a regressão logística na variante nota_mais_alta com k_b=4)"}
   - {arquivo: text/latex/estudo2_classificadores.tex, numero: "7", autora_aprovou: true, motivo: "Revisão 2 (análise 4 de 2026-11-09, redação corrigida aprovada pela autora após revisão independente): conferido em data/vies_incorporacao_nb01.csv (virada do RF na variante aleatória com k_b=7 não pares e k_a=2)"}
+  - {arquivo: text/latex/apendice_gzcmd.tex, numero: "280", autora_aprovou: true, motivo: "Revisão 2 (Figura G.2 redesenhada e texto alinhado, aprovados pela autora em 2026-11-10): conferido em data/varredura_np_confirmacao.csv (humanos_necessarios no limite de 1% com erro humano de 2%)"}
+  - {arquivo: text/latex/apendice_gzcmd.tex, numero: "349", autora_aprovou: true, motivo: "Revisão 2 (Figura G.2 redesenhada e texto alinhado, aprovados pela autora em 2026-11-10): conferido em data/varredura_np_confirmacao.csv (humanos_necessarios no limite de 1% com erro humano de 0%)"}
