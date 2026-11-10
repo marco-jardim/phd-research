@@ -832,10 +832,17 @@ PADROES_VERSAO_MODELO = [
 ]
 
 
+# Parâmetros de leiaute do LaTeX não são prosa (ex.: \renewcommand{\arraystretch}{0.95}
+# antes de um longtable, fora do ambiente tabular).
+PADROES_PARAMETRO_LATEX = [
+    re.compile(r"\\(?:renewcommand|def)\s*\{?\\arraystretch\}?\s*\{\d*\.?\d+\}"),
+]
+
+
 def regra_r06(arq: Arquivo) -> list[Achado]:
     t = arq.texto
     permitidos: list[tuple[int, int]] = []
-    for rx in PADROES_VERSAO_MODELO:
+    for rx in PADROES_VERSAO_MODELO + PADROES_PARAMETRO_LATEX:
         permitidos.extend(m.span() for m in rx.finditer(t))
     saida: list[Achado] = []
     for m in _RE_DECIMAL.finditer(t):
