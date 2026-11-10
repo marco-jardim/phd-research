@@ -58,7 +58,7 @@ Derivaram-se atributos (\textit{features}) dos escores do comparador \cite{Jardi
 \end{itemize}
 \end{sloppypar}
 
-No teste canônico, com 18.509 potenciais pares e 74 pares verdadeiros, quatro pares de atributos são numericamente idênticos (primeiro fragmento do nome e \texttt{nome\_prim\_ok}; igualdade de data e \texttt{dtnasc\_squared}; igualdade municipal e \texttt{local\_ok}; \texttt{dtnasc\_ok} e \texttt{max\_score\_dtnasc}). Os 58 atributos nominais correspondem, portanto, a 54 colunas distintas nessa amostra (\path{data/atributos_duplicados.json}), não a uma estimativa de posto matricial ou independência, e essas redundâncias limitam a leitura da importância individual.
+No teste canônico, com 18.509 potenciais pares e 74 pares verdadeiros, quatro pares de atributos são numericamente idênticos (primeiro fragmento do nome e \texttt{nome\_\allowbreak prim\_\allowbreak ok}; igualdade de data e \texttt{dtnasc\_\allowbreak squared}; igualdade municipal e \texttt{local\_\allowbreak ok}; \texttt{dtnasc\_\allowbreak ok} e \texttt{max\_\allowbreak score\_\allowbreak dtnasc}). Os 58 atributos nominais correspondem, portanto, a 54 colunas distintas nessa amostra (\path{data/atributos_duplicados.json}), não a uma estimativa de posto matricial ou independência, e essas redundâncias limitam a leitura da importância individual.
 
 Antes da derivação, subescores ausentes são preenchidos com zero, o que confunde campo ausente com discordância e, nos fragmentos comuns, com ausência de penalidade; sem o nome da mãe, \texttt{ratio\_nome\_mae} passa a ser a soma do nome dividida por 0,1. Os derivados herdam essa ambiguidade, e sua importância pode refletir tanto a composição dos nomes quanto a ausência dos campos.
 

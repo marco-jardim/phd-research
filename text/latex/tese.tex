@@ -211,6 +211,10 @@
 
 \geometry{left=3cm, top=3cm, right=2cm, bottom=2cm} % ABNT NBR 14724
 
+% Terceira passada de quebra de linha só nos parágrafos sem solução viável (caminhos \path e termos
+% em \texttt perto da margem): evita caixas "Overfull \hbox" sem alterar o texto.
+\emergencystretch=4em
+
 \hypersetup{colorlinks=true, breaklinks=true, linkcolor=black, citecolor=black, urlcolor=black}
 
 \begin{document}

@@ -168,6 +168,29 @@ def tabela_impacto() -> None:
     (OUT / "tab_impacto_epidemiologico.tex").write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
+def faixas_bloco(csv: Path, n_recuperados: int, n_encontrados: int) -> list[str]:
+    """Linhas `\\quad Faixa ...` da tabela de recuperados, lidas de data/perfil_recuperados_faixas.csv.
+
+    Faixas abaixo de 8 aparecem uma a uma (a de nota < 5 só se tiver pares); o grupo >= 8 soma as faixas
+    8-9, 9-11 e >= 11. Falha se as linhas exibidas não somarem o N de cada coluna.
+    """
+    frame = pd.read_csv(csv, dtype={"faixa": str})
+    if frame.faixa.duplicated().any():
+        raise ValueError("Faixas duplicadas em perfil_recuperados_faixas.csv")
+    abaixo = frame[frame.nota_max_exclusivo.le(8)]
+    acima = frame[frame.nota_min.ge(8)]
+    if len(abaixo) + len(acima) != len(frame):
+        raise ValueError("Faixas devem ficar inteiramente abaixo ou a partir de 8")
+    linhas = [(f"Faixa {row.faixa}", int(row.recuperados), int(row.ja_encontrados))
+              for row in abaixo.itertuples() if row.recuperados or row.ja_encontrados or row.faixa != "<5"]
+    linhas.append((r"Faixa $\geq$ 8", int(acima.recuperados.sum()), int(acima.ja_encontrados.sum())))
+    if (sum(r for _, r, _ in linhas), sum(j for _, _, j in linhas)) != (n_recuperados, n_encontrados):
+        raise ValueError("As faixas do CSV não somam os totais da tabela")
+    return [rf"\quad {rotulo} & {r} ({fracao(100 * r, n_recuperados, 1)}" + r"\%) & "
+            + f"{j} ({fracao(100 * j, n_encontrados, 1)}" + r"\%) \\"
+            for rotulo, r, j in linhas]
+
+
 def tabela_perfil_recuperados() -> None:
     historical = ROOT / "text/latex/tables/tab_perfil_recuperados.tex"
     text = historical.read_text(encoding="utf-8").replace(
@@ -184,14 +207,24 @@ def tabela_perfil_recuperados() -> None:
         "Nota final (média)": "Nota final (média) & " + " & ".join(
             d(row.nota_media, 2) for row in (recovered, found)) + r" \\",
     }
-    text = "\n".join(next((value for prefix, value in replacements.items() if line.startswith(prefix)), line)
-                     for line in text.splitlines()) + "\n"
+    # As linhas de faixa da nota final vêm de data/perfil_recuperados_faixas.csv, não do texto histórico.
+    faixas = faixas_bloco(ROOT / "data/perfil_recuperados_faixas.csv", int(recovered.n), int(found.n))
+    saida = []
+    for line in text.splitlines():
+        if line.startswith(r"\quad Faixa"):
+            continue
+        saida.append(next((value for prefix, value in replacements.items() if line.startswith(prefix)), line))
+        if line.startswith("Nota final (média)"):
+            saida.extend(faixas)
+    text = "\n".join(saida) + "\n"
     text = text.replace(r"\end{table}", r"\par\footnotesize Fonte: \path{data/epidemiological_impact.csv} "
                         r"e \path{data/banca_b_recuperados_por_par.json}, produzidos por "
                         r"\path{scripts/epidemiological_impact.py} e \path{scripts/banca_b_recuperados_por_par.py}. "
-                        r"Teste com 18.509 potenciais pares e 74 vínculos. As colunas descrevem 27 vínculos "
+                        r"Teste com 18.509 potenciais pares e 74 pares verdadeiros. As colunas descrevem 27 vínculos "
                         r"exclusivos do RF+SMOTE e 40 comuns à nota e ao modelo; os três exclusivos da nota "
                         r"não integram o perfil. As faixas da nota decorrem dessa definição, não explicam a recuperação. "
+                        r"Contagens por faixa da nota final: \path{data/perfil_recuperados_faixas.csv}, gerado por "
+                        r"\path{scripts/perfil_recuperados_faixas.py}. "
                         r"Médias de idade e nota e distribuição por sexo: \path{data/perfil_obitos_agregado.csv}, "
                         r"linhas do teste importadas do agregado histórico versionado "
                         r"\path{data/epidemiological_profile.json}, produzido por "
