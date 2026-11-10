@@ -450,9 +450,15 @@ def test_ancoras_novas_aparecem_nos_arquivos_previstos():
     def arquivos(cid):
         return {(Path(oc["arquivo"]).name, oc.get("secao")) for oc in REG.por_id[cid]["ocorrencias"]}
 
-    for cid in ("C10", "C01r", "C11", "C12", "C13", "C14", "C08r", "C03r", "C05r", "C09r"):
+    # Decisão da autora de 2026-11-10: C13, C05r e C09r saíram do Resumo e do Abstract (Resumo reescrito no
+    # estilo do grupo; o conteúdo permanece no Estudo 4 e na conclusão).
+    for cid in ("C10", "C01r", "C11", "C12", "C14", "C08r", "C03r"):
         assert ("tese.tex", "resumo") in arquivos(cid), cid
         assert ("tese.tex", "abstract") in arquivos(cid), cid
+    for cid in ("C13", "C05r", "C09r"):
+        assert ("tese.tex", "resumo") not in arquivos(cid), cid
+        assert ("tese.tex", "abstract") not in arquivos(cid), cid
+    for cid in ("C10", "C01r", "C11", "C12", "C13", "C14", "C08r", "C03r", "C05r", "C09r"):
         assert ("conclusao.tex", None) in arquivos(cid), cid
     for cid in ("C10", "C01r", "C03r"):
         assert {("capitulo1.tex", None), ("capitulo3.tex", None)} <= arquivos(cid), cid

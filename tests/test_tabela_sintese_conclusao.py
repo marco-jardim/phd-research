@@ -30,6 +30,14 @@ TERMOS_ABERTURA = (
 )
 
 
+# Parágrafo do fluxo (logo após a abertura, antes do quadro): termos que ele tem de conter.
+TERMOS_FLUXO = (
+    "OpenRecLink", "CdR", "XGBoost", "probabilidade calibrada fora da amostra", "orçamento humano disponível",
+    "não deve aceitar vínculos sozinho", "O fluxo recomendado, a validar em coorte nova", "com a nota final",
+    "no ponto de corte ou acima dele", "IC abaixo de zero", "pontualmente", "nenhuma fusão superou O3",
+)
+
+
 def _abertura(texto: str) -> str:
     """Parágrafo que vem logo após o rótulo da seção de recomendações."""
     depois = texto.split(r"\label{sec:concl-recomendacoes}", 1)[1]
@@ -162,9 +170,15 @@ def test_conclusao_responde_qual_o_melhor_arranjo_antes_do_quadro():
     quadro = texto.index(INPUT_QUADRO)
     recomenda = texto.index("Recomenda-se, a validar em coorte nova com referência cega")
     assert secao < frase < remissao < quadro < recomenda
-    assert texto[frase:quadro].strip() == abertura, "o quadro vem logo após o parágrafo de abertura"
+    # Decisão da autora de 2026-11-10: abertura, depois o parágrafo do fluxo, depois o quadro (e nada mais entre eles).
+    assert texto[frase:quadro].startswith(abertura), "a abertura vem primeiro"
+    entre = texto[frase + len(abertura):quadro].strip()
+    assert entre.startswith("O fluxo recomendado"), "o fluxo vem logo após a abertura"
+    assert "\n\n" not in entre, "entre a abertura e o quadro há só o parágrafo do fluxo"
     faltam = [t for t in TERMOS_ABERTURA if t not in abertura]
     assert not faltam, f"termos ausentes da abertura: {faltam}"
+    faltam_fluxo = [t for t in TERMOS_FLUXO if t not in entre]
+    assert not faltam_fluxo, f"termos ausentes do fluxo: {faltam_fluxo}"
     secao_recomendacoes = texto.split(r"\label{sec:concl-recomendacoes}", 1)[1].split(r"\section{Validação", 1)[0]
     assert secao_recomendacoes.lower().count("nenhuma ordenação dominou em todas as cargas") == 1
 

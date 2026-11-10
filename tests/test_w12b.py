@@ -17,13 +17,17 @@ def test_abstracts_recommend_fusion_without_changing_hypothesis_or_limits():
     # Redação nova do Resumo e do Abstract (revisão 2): a fusão por posição recíproca (F3) e a referência cega
     # constam da conclusão e do Estudo 4; o resumo fixa a ordenação como origem da redução, a vantagem das fusões
     # sobre O3 não demonstrada, a validação em coorte nova e a ausência de dominância.
-    for fragment in ("e não da automação nem do LLM", "As fusões da probabilidade calibrada com o escore",
+    # Resumo reescrito no estilo do grupo (decisão da autora de 2026-11-10): a frase da origem da redução foi
+    # unificada, "As fusões com o escore" encurtou e o MATCH ao humano ("nove com 29 revisões") saiu do Resumo.
+    for fragment in ("não veio da automação nem do LLM, mas da ordem em que os pares são revisados",
+                     "As fusões da probabilidade calibrada com o escore (F3 e F4)",
                      "a validar em coorte nova", "mas nenhum IC frente a O3 ficou abaixo de zero",
                      "pois nenhuma dominou em todas as cargas"):
         assert fragment in pt
-    for fragment in ("and not from automation or the LLM", "Fusions of calibrated probability with the score",
-                     "to be validated in a new cohort", "but no CI against O3 fell below zero",
-                     "since no ordering was dominant in every workload", "both would recover nine with 29 reviews"):
+    for fragment in ("came from the order in which pairs are reviewed, rather than from automating the decisions or from the LLM",
+                     "Fusions of the calibrated probability with the score (F3 and F4)",
+                     "to be validated in a new cohort", "but no CI relative to O3 fell below zero",
+                     "since no ordering was dominant in every workload"):
         assert fragment in en
     assert "por probabilidade ou escore" not in pt
     assert "by probability or score" not in en

@@ -104,8 +104,8 @@ def test_glossary_records_historical_alias_shared_agents_and_internal_holdout():
 
 def test_summary_period_and_numeric_ceiling_are_preserved():
     source = text("tese.tex")
-    for start, period in ((r"O \textit{linkage} integra", "óbitos de 2019 a 2022"),
-                          ("Linkage integrates systems", "deaths from 2019 to 2022")):
+    for start, period in (("A tuberculose segue como causa importante", "óbitos de 2019 a 2022"),
+                          ("Tuberculosis remains an important cause", "deaths from 2019 to 2022")):
         begin = source.index(start)
         abstract = source[begin:source.index(r"\vspace{15pt}", begin)]
         assert period in abstract

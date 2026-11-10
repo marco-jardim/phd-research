@@ -13,7 +13,8 @@ LATEX = ROOT / "text/latex"
 
 def abstracts():
     text = (LATEX / "tese.tex").read_text(encoding="utf-8")
-    for start in ("O \\textit{linkage} integra sistemas sem", "Linkage integrates systems without"):
+    # Resumo reescrito no estilo do grupo (decisão da autora de 2026-11-10): novas chaves de localização.
+    for start in ("A tuberculose segue como causa importante", "Tuberculosis remains an important cause"):
         begin = text.index(start)
         yield text[begin:text.index(r"\vspace{15pt}", begin)].strip()
 
@@ -35,19 +36,21 @@ def test_abstracts_space_limit_and_conservative_operational_comparison():
     assert "têm PAR~=~2 na referência operacional" in resumo
     assert "have PAR~=~2 in the operational reference" in abstract
     assert "PAR é o campo da referência operacional" in (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
-    assert "after its internal registration, which had no success criterion" in abstract
+    # Decisão da autora de 2026-11-10: o registro interno, o revisor perfeito simulado do MATCH ao humano e o
+    # filtro de NONMATCH saíram do Resumo e do Abstract (permanecem no Estudo 4 e na conclusão).
     assert "preregistered" not in abstract
-    assert "Sob revisor perfeito simulado" in resumo
-    assert "nove com 29 revisões" in resumo
-    assert "Under a simulated perfect reviewer" in abstract
-    assert "nine with 29 reviews" in abstract
+    # O revisor perfeito simulado volta ao Resumo e ao Abstract (revisão de fidelidade de 2026-11-10).
+    assert "sob revisor perfeito simulado" in resumo
+    assert "simulated perfect reviewer" in abstract
+    assert "a fila ordenada pela probabilidade calibrada fora da amostra do XGBoost (O3) atingiu a recuperação de ASR" in resumo
+    assert "the queue ordered by the out-of-sample calibrated probability of XGBoost (O3) reached ASR's recovery" in abstract
     assert "Sem suposições sobre a verificação e a incorporação das evidências do comparador" in resumo
     assert "Without assumptions about the verification and the incorporation of comparator evidence" in abstract
     assert "intervalos sobrepostos" not in resumo and "intervals overlapping" not in abstract
     assert "16,0" in resumo and "16.0" in abstract
     assert "curva de esforço" in resumo and "effort curve" in abstract
-    # O orçamento humano como critério do ponto de parada ficou na conclusão; o resumo traz o ponto de parada.
-    assert "ponto de parada" in resumo and "stopping point" in abstract
+    # O ponto de parada ficou na conclusão; o resumo traz o orçamento humano que o define (2026-11-10).
+    assert "orçamento humano disponível" in resumo and "available human budget" in abstract
     assert "orçamento humano" in (LATEX / "conclusao.tex").read_text(encoding="utf-8")
     assert "a validar em coorte nova" in resumo
     assert "to be validated in a new cohort" in abstract
