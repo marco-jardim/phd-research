@@ -30,13 +30,13 @@ def test_persona_blockers_in_bilingual_summaries_and_ceiling():
     # P-Platt consta do Estudo 4 (legenda da dominância) e a ancoragem da seção do revisor de referência.
     # Resumo reescrito (2026-11-10): "sem alterar os vínculos que o corte já aceita" e "todas as aceitações abaixo
     # do corte vieram do LLM" substituem as formas antigas, com o mesmo conteúdo.
-    for fragment in ('sem alterar os vínculos que o corte já aceita',
+    for fragment in ('sem alterar os vínculos aceitos pelo corte',
                      'recuperados abaixo do corte pela revisão manual de origem',
                      'todas as aceitações abaixo do corte vieram do LLM',
                      'sensibilidade automática de ASR na vigilância'):
         # migrado: terminologia 3.6
         assert contem(pt, fragment, arquivo='text/latex/tese.tex') if 'vínculo' in fragment else fragment in pt
-    for fragment in ('without altering the links the cut-off already accepts',
+    for fragment in ('without altering the links accepted by the cut-off',
                      'recovered below the cut-off by the original manual review',
                      'all acceptances below the cut-off came from the LLM',
                      "the automatic sensitivity of ASR in surveillance"):
