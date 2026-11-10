@@ -115,7 +115,7 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
             ):
                 assert term in text, (name, term)
     thesis = (L / 'tese.tex').read_text(encoding='utf-8')
-    for prefix in (r'O \textit{linkage} integra', r'Linkage integrates'):
+    for prefix in ('A tuberculose segue como causa importante', 'Tuberculosis remains an important cause'):
         i = thesis.index(prefix)
         text = thesis[i:thesis.index(r'\vspace{15pt}', i)]
         assert len(text.split()) <= 500
@@ -126,8 +126,9 @@ def test_new_framing_contributions_and_adoption_caveats_in_each_summary():
         assert re.search(r'36 (?:pares verdadeiros|true pairs)[^.]*PAR~=~2', text)
         assert 'confirmação' in text or 'confirmation' in text
         assert '42,5' in text or '42.5' in text
-        # P-Platt saiu do resumo (consta do Estudo 4).
-        assert 'MATCH' in text
+        # P-Platt saiu do resumo (consta do Estudo 4); o MATCH ao humano e o filtro de NONMATCH saíram em
+        # 2026-11-10 (constam do Estudo 4).
+        assert 'NONMATCH' not in text
         assert 'ASR-Platt' in (L / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
         assert 'preregistered' not in text and 'intervals overlapping' not in text
 

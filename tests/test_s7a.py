@@ -17,7 +17,7 @@ DATA = ROOT / 'data'
 
 def abstracts():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    for start in (r'O \textit{linkage} integra', r'Linkage integrates'):
+    for start in ('A tuberculose segue como causa importante', 'Tuberculosis remains an important cause'):
         i = thesis.index(start)
         yield thesis[i:thesis.index(r'\vspace{15pt}', i)]
 
@@ -26,14 +26,11 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    # Redação nova (revisão 2): "no máximo um par verdadeiro adicional" e "344 pares avaliados pelo LLM"
-    # (o LLM é expandido na primeira frase do resumo).
-    assert contem(pt, 'no máximo um par verdadeiro adicional', arquivo='text/latex/tese.tex')  # migrado: terminologia 3.6
-    assert '344 pares avaliados pelo LLM' in pt
-    assert 'at most one additional true pair' in en
-    assert '344 pairs evaluated by the LLM' in en
+    # Decisão da autora de 2026-11-10: "no máximo um par verdadeiro adicional", "344 pares avaliados pelo LLM" e
+    # "22 revisões humanas" saíram do Resumo e do Abstract (permanecem no Estudo 4 e na conclusão).
+    assert contem(pt, 'todas as aceitações abaixo do corte vieram do LLM', arquivo='text/latex/tese.tex')
+    assert 'all acceptances below the cut-off came from the LLM' in en
     assert 'VPP' in pt and 'PPV' in en
-    assert '22 revisões humanas' in pt and '22 human reviews' in en
     losses = pd.read_csv(DATA / 'arranjo_corte_perdas_mecanismo.csv')
     totals = pd.read_csv(DATA / 'arranjo_corte_metricas.csv')
     llm = pd.read_csv(DATA / 'arranjo_corte_vpp_llm.csv')

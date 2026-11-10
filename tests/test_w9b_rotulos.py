@@ -67,8 +67,8 @@ def assert_unit_first_mentions(text, arquivo=None):
 
 def summary_bodies():
     text = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    starts = ('O \\textit{linkage} integra sistemas sem identificador comum.',
-              'Linkage integrates systems without a common identifier.')
+    starts = ('A tuberculose segue como causa importante de morte no Brasil,',
+              'Tuberculosis remains an important cause of death in Brazil,')
     return [start + text.split(start, 1)[1].split(r'\vspace{15pt}', 1)[0] for start in starts]
 
 
@@ -92,8 +92,11 @@ def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
     assert len(text.split()) <= 500
     # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
     assert len(numeros_de_resultado(text)) <= TETO_NUMEROS_RESULTADO
-    assert 'NONMATCH' in text
-    assert ('blocking step' if body else 'passo de blocagem') in text
+    # Decisão da autora de 2026-11-10: o filtro de NONMATCH saiu do Resumo e do Abstract (consta do Estudo 4);
+    # o passo 11 aparece como "passo 11 da blocagem" no Resumo.
+    assert 'NONMATCH' not in text
+    assert ('blocking step 11 (candidate-generation stage)' if body
+            else 'passo 11 da blocagem (geração de candidatos por chaves comuns)') in text
 
 
 @pytest.mark.parametrize('name', OWNED)

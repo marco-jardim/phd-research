@@ -160,8 +160,8 @@ def test_new_recommendation_is_not_presented_as_an_evaluated_result():
 
 def test_abstract_definitions_and_nonrejection_follow_source():
     thesis = (LATEX / 'tese.tex').read_text(encoding='utf-8')
-    start_pt = thesis.index(r'O \textit{linkage} integra')
-    start_en = thesis.index(r'Linkage integrates')
+    start_pt = thesis.index('A tuberculose segue como causa importante')
+    start_en = thesis.index('Tuberculosis remains an important cause')
     pt = thesis[start_pt:thesis.index(r'\vspace{15pt}', start_pt)]
     en = thesis[start_en:thesis.index(r'\vspace{15pt}', start_en)]
     assert len(pt.split()) <= 500 and len(en.split()) <= 500
@@ -171,12 +171,13 @@ def test_abstract_definitions_and_nonrejection_follow_source():
     assert 'que preserva o corte e decide os demais potenciais pares pela política v3.1, com recalibração isotônica abaixo do corte' in study4
     assert r'ASR-Platt (análise de sensibilidade de ASR com \textit{Platt scaling}' in study4
     # QA final: o Resumo relata o arranjo P pelos pares verdadeiros aceitos (215 dos 247: 211 pelo corte e 4 abaixo).
-    assert 'o arranjo ASR, que preserva o corte, aceitou 215 dos 247 pares verdadeiros' in pt
-    assert 'arrangement ASR, with the cut-off preserved, accepted 215 of 247 true pairs' in en
+    assert 'Na vigilância, o arranjo que preserva o corte (ASR) aceitou 215 dos 247 pares verdadeiros' in pt
+    assert 'In surveillance, the arrangement with the cut-off preserved (ASR) accepted 215 of 247 true pairs' in en
     assert 'pelo menos 95,0' in (LATEX / 'estudo5_equidade.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
-    assert 'a sensibilidade automática de ASR na vigilância foi de 42,5\\%: disparidade herdada do corte, em estrato do processo, não demográfico' in pt
-    assert 'the automatic sensitivity of ASR in surveillance was 42.5\\%: a disparity inherited from the cut-off, tied to a process stratum rather than a demographic one' in en
+    # Resumo reescrito (2026-11-10): o estrato do processo, não demográfico, permanece no Estudo 5 e na conclusão.
+    assert 'a sensibilidade automática de ASR na vigilância foi de 42,5\\%, disparidade herdada do corte' in pt
+    assert 'the automatic sensitivity of ASR in surveillance was 42.5\\%, a disparity inherited from the cut-off' in en
     assert 'pois nenhuma dominou em todas as cargas' in pt
     assert 'since no ordering was dominant in every workload' in en
     tests = pd.read_csv(DATA / 'equidade_arranjo_pairwise_tests.csv')
@@ -184,5 +185,5 @@ def test_abstract_definitions_and_nonrejection_follow_source():
                        & tests.metric.eq('ppv')].iloc[0]
     assert not result.reject_fdr
     # A ausência de rejeição demográfica foi substituída pelo resultado operacional.
-    assert 'BH-adjusted' not in en and 'não demográfico' in pt
+    assert 'BH-adjusted' not in en and 'disparidade herdada do corte' in pt
     assert r'\textit{Linkage}' not in en and r'\textit{Platt scaling}' not in en

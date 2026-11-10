@@ -111,8 +111,8 @@ def test_policy_projected_count_reads_strategy_scenario_not_a_literal(mode, stra
 
 def test_english_convention_expansions_denominators_and_surveillance():
     text = (L / 'tese.tex').read_text(encoding='utf-8')
-    pt = text.split(r'O \textit{linkage} integra', 1)[1].split(r'\vspace{15pt}')[0]
-    en = text.split('Linkage integrates', 1)[1].split(r'\vspace{15pt}')[0]
+    pt = text.split('A tuberculose segue como causa importante', 1)[1].split(r'\vspace{15pt}')[0]
+    en = text.split('Tuberculosis remains an important cause', 1)[1].split(r'\vspace{15pt}')[0]
     assert 'modelo de linguagem de grande porte (LLM)' in pt
     # Redação nova (revisão 2): "falsos positivos" por extenso, sem a sigla FP no resumo.
     assert 'falsos positivos' in pt and not re.search(r'\bFP\b', pt)

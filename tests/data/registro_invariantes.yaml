@@ -81,6 +81,13 @@
 #
 # Inconsistências documentadas via xfail: I3 (limiar global arredondado), I5 (H=22 de
 # uma réplica sem qualificador), I6 (29 revisões da confirmação sem separar os 12 MATCH).
+# Os xfail I5 e I6 valiam só para o Resumo e o Abstract e saíram com a retirada dessas ocorrências
+# (decisão da autora de 2026-11-10); só o I3 (slides, informativo) segue no registro.
+#
+# Decisão da autora de 2026-11-10: Resumo e Abstract reescritos no estilo do grupo. Saíram do Resumo e do
+# Abstract as ocorrências de N13, N14, N18, N19, N27, C13, C05r e C09r e o exige_algum de C14 (raça,
+# demográfico, estrato); o conteúdo permanece no Estudo 4 e na conclusão. Cada entrada alterada leva a linha
+# `# aprovado_por_autora: 2026-11-10`.
 
 # ---------------------------------------------------------------- números
 
@@ -290,9 +297,8 @@
     - {nome: humano_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: pares_humano}, texto_pt: "17"}
     - {nome: vinc_humano_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: vinc_humano}, texto_pt: "19"}
     - {nome: vinc_humano_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: vinc_humano}, texto_pt: "1"}
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [humano_P_vig]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [humano_P_vig]}
     - {arquivo: text/latex/conclusao.tex, exige: [humano_P_vig, humano_P_conf]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [humano_P_vig, vinc_humano_P_vig]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [humano_P_conf, [vinc_humano_P_conf, "um vínculo"]]}
@@ -308,9 +314,8 @@
   valores:
     - {nome: llm_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: pares_llm}, texto_pt: "344"}
     - {nome: llm_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: pares_llm}, texto_pt: "41"}
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [llm_P_vig]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [llm_P_vig]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [llm_P_vig, llm_P_conf]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [llm_P_vig, "LLM"]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [llm_P_conf, "LLM"]}
@@ -386,9 +391,8 @@
     - {nome: par2_O3_mesma_carga_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: O3_par2_mesma_carga}, texto_pt: "22"}
     - {nome: k_O3_iguala_P_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: O3_k_min_igualar_P}, texto_pt: "125"}
     - {nome: dif_P_O3_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: diferenca_P_O3_PAR2_mesma_carga}, texto_pt: "1"}
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [llm_P_vig, "no máximo um"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [llm_P_vig, "at most one"]}
     - {arquivo: text/latex/capitulo1.tex, exige: ["no máximo um", "O4"]}
     # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
     - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [rev_P_total_vig, par2_P_match_vig], mesma_frase: ["MATCH"]}
@@ -409,11 +413,8 @@
     - {nome: rev_P_total_conf, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: confirmacao}, coluna: P_revisoes_humanas_total}, texto_pt: "29"}
     - {nome: par2_P_conf, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: confirmacao}, coluna: P_par2_recuperados}, texto_pt: "9"}
     - {nome: k_O2_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O2_CdR, modo: confirmacao, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "11"}
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão); inclui os dois xfail I6, que só valiam para o Resumo e o Abstract)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [rev_P_total_conf, [par2_P_conf, "nove"]]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [rev_P_total_conf, [par2_P_conf, "nine"]]}
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [rev_P_total_conf, humano_P_conf], xfail: "I6: as 29 revisões da confirmação incluem 12 MATCH enviados ao humano; P usa 17 revisões humanas, e o Resumo não separa as duas parcelas"}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [rev_P_total_conf, humano_P_conf], xfail: "I6: as 29 revisões incluem 12 MATCH enviados ao humano; P usa 17 revisões humanas, e o Abstract não separa as duas parcelas"}
     - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [rev_P_total_conf, k_O2_conf]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [k_O2_conf, [par2_P_conf, "nove"], "PAR=2"]}
     # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
@@ -570,17 +571,14 @@
     - {nome: par2_descartados_filtro, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: par2_descartados}, texto_pt: "9"}
     - {nome: par2_topk_filtro, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: par2_topk}, texto_pt: "22"}
     - {nome: o3_par2_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: o3_par2_mesma_carga}, texto_pt: "6"}
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão); inclui os dois xfail I5, que só valiam para o Resumo e o Abstract)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [H_k96, [par2_descartados_filtro, "nove"]]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [H_k96, [par2_descartados_filtro, "nine"]]}
     - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "k=96", [par2_descartados_filtro, "nove"]]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [nonmatch_k96, H_k96, par2_rec_filtro, [o3_par2_k96, "seis"], par2_descartados_filtro, par2_topk_filtro]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, o3_par2_k96]}
     - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [H_k96, par2_rec_filtro, o3_par2_k96, vpn_k96, par2_descartados_filtro]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, o3_par2_k96, par2_descartados_filtro]}
     - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, [o3_par2_k96, "seis"], "k=96"]}
-    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [H_k96, "réplica"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Resumo traz '22 revisões humanas' sem qualificador"}
-    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [H_k96, "replicate"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Abstract traz '22 human reviews' sem qualificador"}
     - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "réplica"]}
   ressalvas: "H=22 é de uma réplica; na confirmação H=18 (filtro_llm.csv, confirmacao k=96)."
 
@@ -1039,9 +1037,8 @@
   descricao: "Resultado: na vigilância P aceitou automaticamente 4 dos 36 pares verdadeiros abaixo do corte, todos pelo LLM, com 21 falsos positivos (VPP 16,0%) e encaminhou 96 potenciais pares ao revisor humano; encaminhando também os MATCH do LLM, P recuperaria 23 com 121 revisões e O3, 23 com 125; na confirmação O2 recuperou os mesmos 9 com 11 revisões contra 17. Nas condições avaliadas o LLM não deve aceitar vínculos sozinho; usos subordinados ao revisor humano são hipóteses exploratórias. Ressalvas acopladas: registro interno de P anterior à avaliação, sem critério de sucesso, leitura como resultado negativo posterior; revisor perfeito simulado. Números em N13, N15, N16, N18 e N19"
   tipo: afirmacao
   aprovado_por_autora: "2026-11-08"
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "negativ"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["LLM", ["alone", "autonomous", "on its own"], "exploratory", "internal", "negative"], exige_algum: ["should not accept", "must not accept", "not accept", "never accept", "without accepting"]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "critério", "negativ", "ordena"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "critério", "negativ", "ordena"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
 
@@ -1049,9 +1046,10 @@
   descricao: "Resultado: a dificuldade da grey area e a disparidade concentram-se no passo 11, que reúne 25 dos 36 pares verdadeiros abaixo do corte: sensibilidade automática de P na vigilância 42,5% contra 95,0% e 96,1% nos passos 6 e 9, disparidade herdada do corte; com revisor perfeito nos encaminhamentos o limite seria 77,5%. Ressalva: passo é estrato de processo, não atributo demográfico; raça/cor ausente do extrato. Números em N07, N30 e N43"
   tipo: afirmacao
   aprovado_por_autora: "2026-11-08"
+  # aprovado_por_autora: 2026-11-10 (retirada do termo "estrato" do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão); o exige_algum de raça/demográfico/estrato permanece nas demais ocorrências)
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar"], exige_algum: ["raça", "demográf", "estrato"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["step 11", "dispar"], exige_algum: ["race", "demographic", "stratum"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["step 11", "dispar"]}
     - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar", "raça"], exige_algum: ["demográf", "estrato", "atributo"]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar", "raça"], exige_algum: ["demográf", "estrato", "atributo"]}
 
@@ -1092,9 +1090,8 @@
   descricao: "Cautela acoplada aos Estudos 2 e 3: os resultados dos estudos de classificadores e de estratégias são otimistas por três razões (indicadores de encerramento por óbito, que são vazamento de alvo; partição por linha; limiares escolhidos no teste). No controle 2x2 do Random Forest com SMOTE a partição por óbito reduziu o F1 de 0,931 para 0,846 e a retirada dos indicadores pouco o alterou; esses estudos não fundamentam a adoção dos pipelines, e o GZ-CMD e o arranjo P não usam os indicadores. Números em N39"
   tipo: afirmacao
   aprovado_por_autora: "2026-11-08"
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["leakage", "closure", "death", ["partition", "split"]], exige_algum: ["optimistic", "inflated", "do not support", "not support", "not justify"]}
     - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar", "GZ-CMD"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
     - {arquivo: text/latex/estudo2_classificadores.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
     - {arquivo: text/latex/estudo3_estrategias.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
@@ -1104,9 +1101,8 @@
   descricao: "Cautela acoplada a C08r: os potenciais pares abaixo do ponto de parada não são examinados e devem ser registrados como não examinados; na vigilância do óbito, a ausência de vínculo por esgotamento do orçamento não equivale a óbito não notificado; diferentemente das estimativas que contam o óbito não vinculado como não notificado (Oliveira2012uso; Pinheiro2012subnotificacao), essa distinção separa subnotificação de perda de vínculo (Doidge2019linkageerror)"
   tipo: afirmacao
   aprovado_por_autora: "2026-11-08"
+  # aprovado_por_autora: 2026-11-10 (retirada do Resumo e do Abstract por decisão da autora de 2026-11-10 (Resumo reescrito no estilo do grupo; conteúdo mantido no Estudo 4 e na conclusão))
   ocorrencias:
-    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"]], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
-    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: [["unexamined", "not examined", "were not examined"], "death", "notified", ["underreport", "loss of link", "linkage loss"]], exige_algum: ["not equivalent", "not equal", "not mean", "not imply", "not necessarily"]}
     - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"], "Oliveira", "Pinheiro"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
     - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"]], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
 
