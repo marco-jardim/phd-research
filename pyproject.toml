@@ -69,6 +69,10 @@ select = ["E", "F", "I", "B", "UP"]
 addopts = ""
 pythonpath = ["."]
 testpaths = ["tests"]
+markers = [
+  # Exceção temporária autorizada pela autora em 2026-11-10 (ver tests/conftest.py).
+  "deck_qualificacao: confere o conteúdo do deck da qualificação (text/slides/); pulado salvo com DECK_QUALIFICACAO=1",
+]
 
 [tool.pyright]
 pythonVersion = "3.11"

@@ -35,7 +35,8 @@ jobs:
   build:
     needs: bib
     runs-on: ubuntu-latest
-    container: texlive/texlive:latest # TODO: fixar tag da imagem
+    # Digest da imagem usada no build de 2026-11-10 (run 42891943397); atualizá-lo é mudança deliberada.
+    container: texlive/texlive:latest@sha256:07e8062637249c4f780ca59f42cc2ed592bc2dc1db4320769406aee3f98aa70e
     timeout-minutes: 20
     env: { max_print_line: "10000", error_line: "254", half_error_line: "238" }
     outputs:

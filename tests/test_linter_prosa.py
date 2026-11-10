@@ -399,6 +399,8 @@ def test_r06_positivos(tmp_path, texto):
         "DOI 10.1590/abc no texto.",
         r"Ver \url{http://x.org/0.95} no texto.",
         r"Ver \path{data/v0.95.csv} no texto.",
+        "\\begingroup\n\\renewcommand{\\arraystretch}{0.95}\n\\begin{longtable}{ll}\na & b \\\\\n\\end{longtable}\n\\endgroup",
+        r"\def\arraystretch{1.15}",
     ],
 )
 def test_r06_negativos(tmp_path, texto):

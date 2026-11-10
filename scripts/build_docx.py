@@ -27,6 +27,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 SRC_DIR = REPO_ROOT / "text" / "latex"
 OUT_DIR = REPO_ROOT / "text" / "docx"
 MAIN = "tese"
+BUILD_SUBDIR = "build/final"  # mesmo diretorio de saida de build_pdf.py (relativo a SRC_DIR)
 
 # Pandoc flags for LaTeX → DOCX
 PANDOC_FLAGS: list[str] = [
@@ -55,6 +56,15 @@ def find_pandoc() -> str | None:
     if p and Path(p).exists():
         return p
     return None
+
+
+def find_bbl() -> Path:
+    """Return the .bbl from build_pdf.py's output dir, falling back to text/latex/."""
+    legacy = SRC_DIR / f"{MAIN}.bbl"
+    built = SRC_DIR / BUILD_SUBDIR / f"{MAIN}.bbl"
+    if built.exists():
+        return built
+    return legacy  # inexistente tambem: o aviso de build() cita o caminho antigo
 
 
 def run(cmd: list[str], *, verbose: bool = False, label: str = "") -> int:
@@ -96,7 +106,7 @@ def build(
         return 1
 
     tex_file = SRC_DIR / f"{MAIN}.tex"
-    bbl_file = SRC_DIR / f"{MAIN}.bbl"
+    bbl_file = find_bbl()
 
     if not tex_file.exists():
         print(f"[ERRO] Arquivo fonte nao encontrado: {tex_file}", file=sys.stderr)
