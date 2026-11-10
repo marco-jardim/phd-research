@@ -1734,6 +1734,94 @@ aceites:
       - numeros:+3
     justificativa: "Revisão 2 (Resumo, Abstract e fluxo da conclusão com os ajustes menores da segunda revisão independente, aprovados pela autora em 2026-11-10); números já presentes no corpo; nenhum número novo."
     autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "ecdd8eae76e47e01"
+    itens:
+      - negadores:+sem
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "b9e49b9950eb5e9d"
+    itens:
+      - negadores:+sem
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61696
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "e8268b0c98a7f1cd"
+    itens:
+      - negadores:+nem
+      - negadores:+nenhum
+      - negadores:+não
+      - negadores:+sem
+      - numeros:+1
+      - numeros:+11
+      - numeros:+1203
+      - numeros:+125
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+215
+      - numeros:+247
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+42.5%
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "b8319d27b2ef3e09"
+    itens:
+      - negadores:+nenhuma
+      - numeros:+3
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "523d8439f2f05401"
+    itens:
+      - numeros:+2
+      - numeros:+2019
+      - numeros:+2022
+      - numeros:+36
+      - numeros:+61.696
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "60196c431bcb7493"
+    itens:
+      - numeros:+1
+      - numeros:+1.203
+      - numeros:+11
+      - numeros:+125
+      - numeros:+16.0%
+      - numeros:+21
+      - numeros:+215
+      - numeros:+247
+      - numeros:+3
+      - numeros:+36
+      - numeros:+38
+      - numeros:+4
+      - numeros:+42.5%
+      - numeros:+43.1%
+      - numeros:+501
+      - numeros:+75.0%
+      - numeros:+9
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "9e4ede689da4752c"
+    itens:
+      - numeros:+3
+    justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
 aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}

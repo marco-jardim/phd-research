@@ -19,8 +19,8 @@ def test_abstracts_recommend_fusion_without_changing_hypothesis_or_limits():
     # sobre O3 não demonstrada, a validação em coorte nova e a ausência de dominância.
     # Resumo reescrito no estilo do grupo (decisão da autora de 2026-11-10): a frase da origem da redução foi
     # unificada, "As fusões com o escore" encurtou e o MATCH ao humano ("nove com 29 revisões") saiu do Resumo.
-    for fragment in ("não veio da automação nem do LLM, mas da ordem em que os pares são revisados",
-                     "As fusões da probabilidade calibrada com o escore (F3 e F4)",
+    for fragment in ("não veio da automação nem do LLM, mas da ordem de revisão dos pares",
+                     "As fusões com o escore (F3 e F4)",
                      "a validar em coorte nova", "mas nenhum IC frente a O3 ficou abaixo de zero",
                      "pois nenhuma dominou em todas as cargas"):
         assert fragment in pt
