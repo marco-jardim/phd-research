@@ -3,7 +3,7 @@
 from pathlib import Path
 import re
 
-from scripts.tabelas_persona_editorial import transform
+from scripts.tabelas_persona_editorial import legible_reruns_layout, transform
 from scripts.tabelas_review2_w3 import ablation_tables
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,3 +41,8 @@ def test_reruns_caption_expands_experiment_label():
     editorial = (LATEX / "tables/editorial" / name).read_text(encoding="utf-8")
     assert "no Experimento 2 (revisão assistida por LLM)" in editorial
     assert transform(name, original) == editorial
+    # Layout legível: sem \resizebox, nomes em coluna que quebra linha, cabeçalho de UNSURE em duas linhas.
+    assert r"\resizebox" not in editorial
+    assert r">{\raggedright\arraybackslash}p{" in editorial and r">{\raggedleft\arraybackslash}p{" in editorial
+    assert r"\shortstack[r]{UNSURE\\(\%)}" in editorial
+    assert legible_reruns_layout(editorial) == editorial

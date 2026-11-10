@@ -29,6 +29,10 @@ NOMES_METRICAS = {"VPP": "VPP", "Sensibilidade": "Sensibilidade", "F1": "F$_1$",
 CABECALHO_A = ("Estratégia",) + tuple(NOMES_METRICAS[m] for m in METRICAS)
 CABECALHO_B = ("Estratégia",) + tuple(r"$\Delta$" + NOMES_METRICAS[m] for m in METRICAS)
 COLUNAS = len(CABECALHO_A)
+# Só apresentação, sem \resizebox: estratégia em coluna que quebra linha e quatro colunas numéricas à direita.
+# O preâmbulo não carrega tabularx; 0,21 + 4 x 0,175 = 0,91 de \linewidth mais 10 \tabcolsep de 3 pt (cerca de 0,07).
+ESPECIFICACAO_COLUNAS = (r">{\raggedright\arraybackslash}p{0.21\linewidth}"
+                         + (r">{\raggedleft\arraybackslash}p{0.175\linewidth}") * (COLUNAS - 1))
 # Rótulos iguais aos da tabela histórica (editorial/tab_imbalance_sensitivity.tex); não vêm de ``label_pt``.
 ROTULOS = {
     "No balancing": "Sem balanceamento",
@@ -97,9 +101,12 @@ def indexar(df):
     return desempenho, diferencas
 
 
-def celula_diferenca(linha):
-    return (f"{numero(linha.diferenca_media)} "
-            f"[{numero(linha.ic95_inf)}; {numero(linha.ic95_sup)}]")
+def ic_diferenca(linha):
+    """IC 95% entre colchetes, para a segunda linha de tabela da estratégia.
+
+    Os colchetes vão entre chaves: ``{[}`` não é lido como argumento opcional de ``\\\\`` ou de ``\\\\*``.
+    """
+    return r"{[}" + f"{numero(linha.ic95_inf)}; {numero(linha.ic95_sup)}" + r"{]}"
 
 
 def linhas_medias(codigo, estrategias, desempenho):
@@ -109,10 +116,19 @@ def linhas_medias(codigo, estrategias, desempenho):
 
 
 def linhas_diferencas(codigo, estrategias, diferencas):
-    """Painel B: diferença e IC 95% das quatro métricas; sem a linha de referência."""
-    return [" & ".join([ROTULOS[chave]] + [celula_diferenca(diferencas[(codigo, chave, m)]) for m in METRICAS])
-            + r" \\"
-            for chave in estrategias if chave != BASE]
+    """Painel B: duas linhas de tabela por estratégia, sem a linha de referência.
+
+    A primeira traz o nome e as quatro diferenças e termina em ``\\\\*`` (não quebra a página depois dela); a
+    segunda traz a célula de nome vazia e os quatro IC 95%. O valor fica na linha de base do nome.
+    """
+    linhas = []
+    for chave in estrategias:
+        if chave == BASE:
+            continue
+        dif = [diferencas[(codigo, chave, m)] for m in METRICAS]
+        linhas.append(" & ".join([ROTULOS[chave]] + [numero(d.diferenca_media) for d in dif]) + r" \\*")
+        linhas.append(" & ".join([""] + [ic_diferenca(d) for d in dif]) + r" \\")
+    return linhas
 
 
 def legenda(n, meta):
@@ -126,7 +142,7 @@ def nota(n, meta):
     universo = meta["universe"]
     tolerancia = f"{meta['historical_reproduction']['tolerancia']:.4f}".replace(".", ",")
     return (
-        r"\par\footnotesize Fonte: \path{data/balanceamento_xgb.csv}, produzida por "
+        r"\par\smallskip\noindent Fonte: \path{data/balanceamento_xgb.csv}, produzida por "
         r"\path{scripts/balanceamento_xgb.py}; metadados em \path{data/balanceamento_xgb_metadata.json}. "
         f"Cada valor do painel A é a média nas {n} partições ({r} repetições de {k} partições estratificadas por linha, "
         f"sem agrupar por REFREC, iguais para os dois estimadores) dos {milhar(universo['rows'])} "
@@ -137,6 +153,7 @@ def nota(n, meta):
         r"validação cruzada repetida \cite{Nadeau2003inference}. Os IC não têm correção para comparações "
         "múltiplas e são descritivos."
         "\n\n"
+        r"\noindent "
         f"O XGBoost usa a configuração do estimador de O3 (\\path{{gzcmd/ml_oof.py}}) sobre os mesmos "
         f"{meta['features']['n']} atributos do Estudo 2, não sobre os 30 atributos de O3. "
         f"Os {meta['features']['n']} atributos incluem os indicadores de encerramento por óbito, ausentes de O3 "
@@ -156,16 +173,28 @@ def render(df, meta):
         raise ValueError("a primeira estratégia dos metadados tem de ser o treino sem balanceamento")
     cabecalho_a = " & ".join(CABECALHO_A) + r" \\"
     cabecalho_b = " & ".join(CABECALHO_B) + r" \\"
+    # longtable: a tabela quebra entre páginas; nas páginas seguintes, linha de continuação e cabeçalho genérico
+    # das colunas (as métricas são as mesmas nos painéis A e B, que trazem o próprio cabeçalho no corpo).
     tex = [
         "% Gerada por scripts/tabela_balanceamento_xgb.py; não editar manualmente.",
-        r"\begin{table}[htbp]",
-        r"\centering\scriptsize",
-        r"\setlength{\tabcolsep}{4pt}",
-        r"\caption{" + legenda(n, meta) + "}",
-        r"\label{" + LABEL + "}",
-        r"\resizebox{\linewidth}{!}{%",
-        r"\begin{tabular}{l" + "c" * (COLUNAS - 1) + "}",
+        r"\begingroup",
+        r"\footnotesize",
+        r"\setlength{\tabcolsep}{3pt}",
+        r"\setlength{\LTcapwidth}{\linewidth}",
+        r"\begin{longtable}{" + ESPECIFICACAO_COLUNAS + "}",
+        r"\caption{" + legenda(n, meta) + r"}\label{" + LABEL + r"}\\",
         r"\toprule",
+        r"\endfirsthead",
+        r"\multicolumn{" + str(COLUNAS) + r"}{l}{\textit{(continuação)}} \\",
+        r"\toprule",
+        cabecalho_a,
+        r"\midrule",
+        r"\endhead",
+        r"\midrule",
+        r"\multicolumn{" + str(COLUNAS) + r"}{r}{\textit{(continua)}} \\",
+        r"\endfoot",
+        r"\bottomrule",
+        r"\endlastfoot",
     ]
     for i, (codigo, titulo) in enumerate(ESTIMADORES):
         if i:
@@ -178,7 +207,7 @@ def render(df, meta):
                 r"balanceamento [IC 95\%]} \\",
                 cabecalho_b, r"\cmidrule(lr){1-" + str(COLUNAS) + "}"]
         tex += linhas_diferencas(codigo, estrategias, diferencas)
-    tex += [r"\bottomrule", r"\end{tabular}}", nota(n, meta), r"\end{table}", ""]
+    tex += [r"\end{longtable}", nota(n, meta), r"\par", r"\endgroup", ""]
     return "\n".join(tex)
 
 

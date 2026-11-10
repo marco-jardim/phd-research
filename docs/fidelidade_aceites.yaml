@@ -1302,6 +1302,113 @@ aceites:
       - tabela_gerada:alterada
     justificativa: "Revisão 2 (pedido da autora de 2026-11-10, legibilidade da Tabela 8.3): só layout pelo gerador (sem \\resizebox, coluna de estratégia com quebra de linha, cabeçalhos curtos em duas linhas e siglas novas explicadas na nota); células, ordem e números inalterados em relação a HEAD."
     autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex
+    hash_paragrafo_novo: "c679a05e3be08de8"
+    itens:
+      - comparativos:+abaixo
+      - metricas:+confirmação
+      - metricas:+vigilância
+      - numeros:+0.065
+      - numeros:+0.07
+      - numeros:+0.075
+      - numeros:+0.085
+      - numeros:+0.095
+      - numeros:+0.12
+      - numeros:+1.42
+      - numeros:+1.52
+      - numeros:-1
+      - numeros:-2
+      - siglas:+ASR
+      - siglas:+FP
+      - siglas:-LLM
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex
+    hash_paragrafo_novo: "c935a9e559db6afa"
+    itens:
+      - numeros:+0.045
+      - numeros:+0.055
+      - numeros:+0.075
+      - numeros:+0.085
+      - numeros:+0.115
+      - numeros:+0.12
+      - numeros:+0.13
+      - numeros:+0.14
+      - numeros:+3
+      - siglas:+ASR
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex
+    hash_paragrafo_novo: "e0fda44dba5263af"
+    itens:
+      - metricas:+sensibilidade
+      - negadores:+sem
+      - numeros:+0.11
+      - numeros:+0.15
+      - numeros:+0.16
+      - numeros:+0.19
+      - numeros:+3
+      - numeros:+96
+      - numeros:-2
+      - siglas:-PAR
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex
+    hash_paragrafo_novo: "e32d7f7c2daf3f05"
+    itens:
+      - negadores:-nem
+      - negadores:-não
+      - numeros:+0.055
+      - numeros:+0.065
+      - numeros:+0.07
+      - numeros:+0.08
+      - numeros:+0.10
+      - numeros:+0.11
+      - numeros:+0.12
+      - numeros:+0.30
+      - numeros:+0.32
+      - numeros:+3
+      - numeros:-6.0
+      - numeros:-7452
+      - siglas:+ASR
+      - siglas:+NONMATCH
+      - siglas:-OpenRecLink
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex
+    hash_paragrafo_novo: "9e6e1d28b68fc57c"
+    itens:
+      - numeros:+0.066
+      - numeros:+0.13
+      - numeros:+0.158
+      - numeros:+0.17
+      - numeros:+3
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_balanceamento_xgb.tex
+    hash_paragrafo_novo: "630b6f5eaa89f9f8"
+    itens:
+      - tabela_gerada:nova
+    justificativa: "Revisão 2 (legibilidade, pedido da autora de 2026-11-10): Tabela E.3 em longtable, IC em linha própria por estratégia, legenda na largura da tabela; células conferidas contra data/balanceamento_xgb.csv por tests/test_tabela_balanceamento_xgb.py."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_referencia.tex
+    hash_paragrafo_novo: "9da5335b2b534523"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_reruns.tex
+    hash_paragrafo_novo: "c277204f44d46d58"
+    itens:
+      - tabela_gerada:alterada
+    justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
+    autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_concl_sintese.tex
+    hash_paragrafo_novo: "746d96f7b09566ee"
+    itens:
+      - tabela_gerada:nova
+    justificativa: "Revisão 2 (síntese da conclusão aprovada pela autora em 2026-11-10, com o pacote de correções da revisão independente): tabela nova gerada por scripts/tabela_sintese_conclusao.py, que confere cada número contra os artefatos de data/ (tests/test_tabela_sintese_conclusao.py); nenhum número novo em relação ao texto da tese."
+    autora_aprovou: true
 aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,25", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
@@ -2241,3 +2348,38 @@ aceites_numeros:
   - {arquivo: text/latex/estudo2_classificadores.tex, numero: "7", autora_aprovou: true, motivo: "Revisão 2 (análise 4 de 2026-11-09, redação corrigida aprovada pela autora após revisão independente): conferido em data/vies_incorporacao_nb01.csv (virada do RF na variante aleatória com k_b=7 não pares e k_a=2)"}
   - {arquivo: text/latex/apendice_gzcmd.tex, numero: "280", autora_aprovou: true, motivo: "Revisão 2 (Figura G.2 redesenhada e texto alinhado, aprovados pela autora em 2026-11-10): conferido em data/varredura_np_confirmacao.csv (humanos_necessarios no limite de 1% com erro humano de 2%)"}
   - {arquivo: text/latex/apendice_gzcmd.tex, numero: "349", autora_aprovou: true, motivo: "Revisão 2 (Figura G.2 redesenhada e texto alinhado, aprovados pela autora em 2026-11-10): conferido em data/varredura_np_confirmacao.csv (humanos_necessarios no limite de 1% com erro humano de 0%)"}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,065", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,07", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,075", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,085", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,095", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_esforco.tex, numero: "0,12", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,045", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,055", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,075", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,085", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,115", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,12", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,13", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "0,14", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex, numero: "3", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "0,11", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "0,15", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "0,16", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "0,19", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex, numero: "3", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,055", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,065", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,07", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,08", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,10", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,11", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,12", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,30", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "0,32", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex, numero: "3", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "0,066", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "0,13", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "0,158", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "0,17", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
+  - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "3", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}

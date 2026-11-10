@@ -4,10 +4,11 @@
 \footnotesize
 \caption{Avaliação dos revisores no Experimento 2 (revisão assistida por LLM), segundo o dossiê (completo ou sem as saídas do motor, MO) e as instruções (v3, que solicitam essas saídas, ou v4, que não as solicitam), eixos independentes: há combinações como \textit{Sem MO/v3}.}
 \label{tab:cap8-reruns}
-\resizebox{\linewidth}{!}{%
-\begin{tabular}{llrrrrrrr}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.14\linewidth}>{\raggedright\arraybackslash}p{0.115\linewidth}>{\raggedleft\arraybackslash}p{0.038\linewidth}>{\raggedleft\arraybackslash}p{0.038\linewidth}>{\raggedleft\arraybackslash}p{0.038\linewidth}>{\raggedleft\arraybackslash}p{0.08\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}>{\raggedleft\arraybackslash}p{0.16\linewidth}>{\raggedleft\arraybackslash}p{0.08\linewidth}}
 \toprule
-Modelo & Dossiê/prompt & VP & FP & FN & UNSURE & Sens. (\%) & Espec. (\%) & UNSURE (\%) \\
+Modelo & Dossiê/prompt & VP & FP & FN & UNSURE & Sens. (\%) & Espec. (\%) & \shortstack[r]{UNSURE\\(\%)} \\
 \midrule
 \multicolumn{9}{l}{\textbf{Vigilância}} \\
 Kimi K2.5 & Completo/v3 & 79 & 6 & 19 & 41 & 80,6 (71,7; 87,2) & 99,5 (99,0; 99,8) & 2,9 \\
@@ -37,10 +38,9 @@ DeepSeek V4.1 Flash & Sem MO/v4 & 87 & 97 & 0 & 251 & 100,0 (95,8; 100,0) & 0,0 
 Claude Haiku 5.5 & Sem MO/v4 (lote por linha) & 2 & 0 & 1 & 1 & 66,7 (20,8; 93,9) & 100,0 (43,9; 100,0) & 14,3 \\
 Claude Haiku 5.5 & Sem MO/v4 (lote REFREC) & 11 & 0 & 1 & 0 & 91,7 (64,6; 98,5) & 100,0 (56,6; 100,0) & 0,0 \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \par\smallskip
-\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos. MO: bloco de saídas decisórias do motor. Sensibilidade e especificidade excluem \texttt{UNSURE}; a fração de \texttt{UNSURE} usa todas as respostas. NA indica denominador zero. O encaminhamento ao revisor humano não constitui acerto observado. Sensibilidade e especificidade apresentam IC de 95\% de Wilson entre parênteses; análises pareadas constam nos CSVs agregados. A confirmação de Kimi K2.5 utiliza a fonte alternativa QW2, sem pressupor equivalência de protocolo. As diferenças entre execuções não identificam isoladamente efeito causal do prompt. Claude Sonnet 5.5 (US\$ 2 e US\$ 10 por milhão de tokens de entrada e de saída, vinte vezes a tarifa do Claude Haiku 5.5) foi avaliado apenas com dossiê sem as saídas do motor e instruções v4, nas mesmas coortes do Haiku, e não alimenta as proporções da política (fonte: \texttt{data/exp2\_sonnet\_v4\_resumo.csv}). Lotes complementares são apresentados separadamente, com seleção distinta da coorte histórica; não constituem braços pareados adicionais. Fonte: artefatos do Exp2 \cite{Jardim2026phdrepo}.}
+\parbox{\linewidth}{\footnotesize VP: verdadeiros positivos; FP: falsos positivos; FN: falsos negativos; Sens.: sensibilidade; Espec.: especificidade. MO: bloco de saídas decisórias do motor. Sensibilidade e especificidade excluem \texttt{UNSURE}; a fração de \texttt{UNSURE} usa todas as respostas. NA indica denominador zero. O encaminhamento ao revisor humano não constitui acerto observado. Sensibilidade e especificidade apresentam IC de 95\% de Wilson entre parênteses; análises pareadas constam nos CSVs agregados. A confirmação de Kimi K2.5 utiliza a fonte alternativa QW2, sem pressupor equivalência de protocolo. As diferenças entre execuções não identificam isoladamente efeito causal do prompt. Claude Sonnet 5.5 (US\$ 2 e US\$ 10 por milhão de tokens de entrada e de saída, vinte vezes a tarifa do Claude Haiku 5.5) foi avaliado apenas com dossiê sem as saídas do motor e instruções v4, nas mesmas coortes do Haiku, e não alimenta as proporções da política (fonte: \texttt{data/exp2\_sonnet\_v4\_resumo.csv}). Lotes complementares são apresentados separadamente, com seleção distinta da coorte histórica; não constituem braços pareados adicionais. Fonte: artefatos do Exp2 \cite{Jardim2026phdrepo}.}
 \par\smallskip
 \parbox{\linewidth}{\footnotesize\textsuperscript{*} Execuções parciais, respostas disponíveis/coorte esperada: Kimi K3 (confirmacao, completo/v3): 343/435. Pares sem resposta não são classificados como \texttt{UNSURE}.}
 \par\footnotesize REFREC identifica o registro do SIM. QW2: registro das execuções de revisão por modelo de linguagem.

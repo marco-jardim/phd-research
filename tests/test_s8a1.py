@@ -75,6 +75,7 @@ def test_subsampling_table_follows_aggregates_and_changes_with_source():
     changed.loc[changed.metric.eq('par2_top_96'), 'median'] += 1
     assert subsampling(changed) != text
     assert 'não IC' in text and 'prevalência original' in text
+    assert r'\resizebox' not in text and r'\raggedright\arraybackslash}p{' in text
 
 
 def test_filter_distinguishes_llm_queue_from_human_work_and_coverage():
@@ -124,13 +125,15 @@ def test_acceptances_split_true_and_false_and_match_to_human_comparator():
     assert 'ASR, \\texttt{MATCH} ao humano' in text
     assert '344 (755)' in text
     assert 'revisor perfeito dos dois lados' in text
+    assert r'\resizebox' not in text and r'\raggedright\arraybackslash}p{' in text
 
 
 def test_effort_uses_saved_hours_per_lost_link_and_keeps_llm_separate():
     data = pd.read_csv(ROOT / 'data/esforco_arranjo.csv')
     text = effort(data)
-    assert 'Horas poupadas' in text and contem(text, 'por vínculo perdido', arquivo='text/latex/tables/editorial/tab_cap8_esforco.tex')  # migrado: terminologia 3.6
-    assert 'Pares LLM' in text and 'sem equivalência temporal' in text
+    assert r'Horas\\poupadas' in text and contem(text, 'por par verdadeiro perdido', arquivo='text/latex/tables/editorial/tab_cap8_esforco.tex')  # migrado: terminologia 3.6; cabeçalho em duas linhas, sem \resizebox
+    assert r'\resizebox' not in text and r'\raggedleft\arraybackslash}p{' in text
+    assert r'\shortstack[r]{Pares\\LLM}' in text and 'sem equivalência temporal' in text  # cabeçalho em duas linhas (legibilidade, 2026-11-10)
     changed = data.copy()
     changed['horas_poupadas_por_vinculo_perdido'] += 100
     assert effort(changed) != text

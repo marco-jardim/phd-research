@@ -99,15 +99,15 @@ def render_reference(referencia, arranjo, cascata, carga):
 def legible_reference_layout(text):
     """Só apresentação: sem \\resizebox, coluna de estratégia que quebra linha e cabeçalhos curtos em duas linhas.
 
-    O preâmbulo não carrega tabularx; colunas p{} com frações de \\linewidth (soma de 0,86 mais o
-    preenchimento de 16 \\tabcolsep de 3 pt, cerca de 0,10 da largura útil). Células e ordem intactas.
+    O preâmbulo não carrega tabularx; colunas p{} com frações de \\linewidth (soma de 0,88 mais o
+    preenchimento de 16 \\tabcolsep de 3 pt, cerca de 0,11 da largura útil). Células e ordem intactas.
     """
     right = r">{\raggedleft\arraybackslash}"
     left = r">{\raggedright\arraybackslash}"
-    columns = (left + r"p{0.26\linewidth}" + left + r"p{0.10\linewidth}"
+    columns = (left + r"p{0.25\linewidth}" + left + r"p{0.115\linewidth}"
                + right + r"p{0.08\linewidth}" + right + r"p{0.065\linewidth}"
-               + right + r"p{0.095\linewidth}" + right + r"p{0.065\linewidth}"
-               + right + r"p{0.08\linewidth}" + right + r"p{0.10\linewidth}")
+               + right + r"p{0.11\linewidth}" + right + r"p{0.065\linewidth}"
+               + right + r"p{0.08\linewidth}" + right + r"p{0.115\linewidth}")
     text = replace_once(text, "\\resizebox{\\linewidth}{!}{%\n\\begin{tabular}{llrrrrrr}",
                         "\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{" + columns + "}")
     text = replace_once(text, "\\end{tabular}}\n", "\\end{tabular}\n")

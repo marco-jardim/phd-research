@@ -211,6 +211,39 @@ def proteger_caminhos_legenda(text):
     return "".join(out + [text[pos:]])
 
 
+def _trocar_uma_vez(text, old, new):
+    if text.count(old) != 1:
+        raise ValueError(f"Layout de tab_cap8_reruns exige count == 1: {old!r}, count={text.count(old)}")
+    return text.replace(old, new, 1)
+
+
+def legible_reruns_layout(text):
+    r"""Só apresentação de tab_cap8_reruns: sem \resizebox, nomes que quebram linha e fonte legível.
+
+    Colunas p{} em frações de \linewidth (o preâmbulo não carrega tabularx): soma de 0,85 mais o
+    preenchimento de 9 * 2 * 3 pt de \tabcolsep, cerca de 0,12 da largura útil. As células de
+    sensibilidade e especificidade trazem o IC de Wilson na mesma linha (cerca de 70 pt em 8 pt), de modo
+    que a tabela usa \scriptsize (a fonte anterior, com \resizebox, ficava em 7,6 pt); a legenda e as
+    notas mantêm \footnotesize. Células, ordem e números intactos. Idempotente.
+    """
+    if r"\resizebox" not in text:
+        return text
+    right = r">{\raggedleft\arraybackslash}"
+    left = r">{\raggedright\arraybackslash}"
+    columns = (left + r"p{0.14\linewidth}" + left + r"p{0.115\linewidth}"
+               + (right + r"p{0.038\linewidth}") * 3 + right + r"p{0.08\linewidth}"
+               + (right + r"p{0.16\linewidth}") * 2 + right + r"p{0.08\linewidth}")
+    text = _trocar_uma_vez(
+        text, "\\label{tab:cap8-reruns}\n\\resizebox{\\linewidth}{!}{%\n\\begin{tabular}{llrrrrrrr}",
+        "\\label{tab:cap8-reruns}\n\\scriptsize\n\\setlength{\\tabcolsep}{3pt}\n\\begin{tabular}{" + columns + "}")
+    text = _trocar_uma_vez(text, "\\end{tabular}%\n}\n", "\\end{tabular}\n")
+    text = _trocar_uma_vez(text, r"& Espec. (\%) & UNSURE (\%) \\",
+                           r"& Espec. (\%) & \shortstack[r]{UNSURE\\(\%)} \\")
+    return _trocar_uma_vez(
+        text, "FN: falsos negativos. MO:",
+        "FN: falsos negativos; Sens.: sensibilidade; Espec.: especificidade. MO:")
+
+
 def transform(name, text):
     name = Path(name).stem
     # Aplica a terminologia antes das notas, para que add_note reconheça notas já presentes
@@ -283,6 +316,7 @@ def transform(name, text):
             "Avaliação dos revisores no Experimento 2 (revisão assistida por LLM), segundo o dossiê (completo ou sem as saídas do motor, MO) e as instruções (v3, que solicitam essas saídas, ou v4, que não as solicitam), eixos independentes: há combinações como \\textit{Sem MO/v3}.")
         text = text.replace("MO: bloco \\texttt{model\\_outputs}.", "MO: bloco de saídas decisórias do motor.")
         text = add_note(text, REFREC + "QW2: registro das execuções de revisão por modelo de linguagem.")
+        text = legible_reruns_layout(text)
     if name == "tab_sensibilidade_qw1":
         text = text.replace("Classificadores do QW1 nos quatro cenários de sensibilidade, limiar 0,5.",
             "Classificadores do QW1 (comparação de classificadores tabulares) nos cenários A a D (partição por linha ou por REFREC, com ou sem indicadores de óbito), limiar 0,5.")
