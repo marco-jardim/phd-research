@@ -1,0 +1,88 @@
+{
+  "analysis": "exploratory_post_hoc",
+  "cpu_only": true,
+  "llm_calls": 0,
+  "comparison": "O3-O1",
+  "negative_favors": "O3",
+  "date_utc": "2026-11-08T14:34:02.961364+00:00",
+  "seed": 20261107,
+  "seed_rule": "mesma semente de scripts/fusao_robustez.py; uma chamada rng.integers por réplica, logo as mesmas amostras de F4-O1 e F4-O3 (réplicas pareadas)",
+  "rng": "numpy.default_rng PCG64",
+  "replicas": 2000,
+  "replicas_sem_PAR2": 0,
+  "grupos_REFREC": 1457,
+  "below_cutoff": 61485,
+  "PAR2": 36,
+  "PAR2_por_replica": {
+    "minimo": 11.0,
+    "mediana": 36.0,
+    "maximo": 66.0
+  },
+  "replicas_menos_36": 971,
+  "pares_por_replica": {
+    "minimo": 51388.0,
+    "mediana": 61418.0,
+    "maximo": 73363.0
+  },
+  "targets": [
+    9,
+    23,
+    36
+  ],
+  "fractions_if_less_36": [
+    0.25,
+    0.64,
+    1.0
+  ],
+  "targets_rule": "fixed 9/23/36 if total>=36; otherwise ceil(25%/64%/100% of total); zero-positive replicates excluded",
+  "targets_note": "metas contam PAR=2 recuperados; 9 e 23 já fazem parte do conjunto, sem meta adicional",
+  "bootstrap": "REFREC sampled with replacement among below-cutoff groups; multiplicities expanded, both arms reranked; no model refit",
+  "confidence_interval": "percentile 2.5/97.5, linear quantiles; conditional on fixed OOF scores and labels",
+  "empty_column": "proporcao_F4_menor_ambas vazia: definida só para F4",
+  "baseline_reproduction": {
+    "passed": true,
+    "queues": [
+      "O1",
+      "O3",
+      "F4",
+      "F3"
+    ],
+    "all_metrics": true
+  },
+  "fit_estimate": {
+    "pilot_seconds": [
+      0.7354984999983571,
+      0.5696297000104096
+    ],
+    "model_fits": 60,
+    "pilot_fits": 2,
+    "safety_factor": 3,
+    "estimated_minutes": 2.2064954999950714
+  },
+  "versions": {
+    "python": "3.13.11",
+    "numpy": "2.4.2",
+    "pandas": "3.0.1",
+    "sklearn": "1.8.0",
+    "xgboost": "3.2.0"
+  },
+  "input_sha256": {
+    "data/COMPARADORSEMIDENT.csv": "48f064244c46857bd567ee78995ede83d1d434d148236b20d90f67d4438b2b65",
+    "data/pcal_ml_oof.csv": "fee001893e652539490b2db022240f9b025db9fdb31ebe68b6a53b7fc104ff4b",
+    "data/pcal_ml_oof.json": "1a0163b49a4ecd5a794aebce7fa597e190e5081f8e4a35e3ca0ef82e55748aad",
+    "data/fusao_filas.csv": "c9d3603680251c2741ccc253ca1cf6df2876805da2df9bfc74e044f46627d069",
+    "data/fusao_filas_metadata.json": "8076652ea44e81f1d2b0e4f7eac2fa1620ffc47273c021894c9c5bded6d8f33d",
+    "data/fusao_robustez_metadata.json": "baa96acf6aa973eda13f59e88458b6b15121991291bfdc040a686f65bc0a6f1c"
+  },
+  "code_sha256": {
+    "scripts/ordenacao_bootstrap_o3_o1.py": "ceabc1a0b975d5c5cc1028d76f228884d57c0520cb2b52f1da219e29d62c0ca4",
+    "tests/test_ordenacao_bootstrap_o3_o1.py": "f7770decd317448ca14006596523e1a978aa6fa2594177832b8adbaabebca4e8",
+    "scripts/fusao_robustez.py": "02265843b06c56f3a20c74cae0f1f34e8663cd91e3e94f7f4b619380ed5735d2",
+    "scripts/fusao_filas.py": "8f41b556e8eee6f84ae294ee05dd9ee20cc8b26df24bb416457c35130c314ecd"
+  },
+  "output_sha256": {
+    "ordenacao_bootstrap_o3_o1.csv": "05fc9fd30f864aa7c7989a6a96d315b4459531a9ba50837194b52787b3a67534"
+  },
+  "elapsed_seconds": 37.89492170000449,
+  "command": "C:\\Users\\Marquinho\\miniconda3\\python.exe scripts/ordenacao_bootstrap_o3_o1.py --data-root D:/git/phd-research"
+}

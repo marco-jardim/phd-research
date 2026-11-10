@@ -21,7 +21,7 @@ def subsampling(data):
     metrics = ['par2_top_96', 'brier', 'ece', 'sens96_passo_11', 'sens96_sexo_M']
     rows = []
     first = selected.loc[selected.ratio.eq('1:1')].set_index('metric')
-    rows.append(['Original', number(first.loc[metrics[0], 'reference']),
+    rows.append(['Sem subamostragem', number(first.loc[metrics[0], 'reference']),
                  *[number(first.loc[m, 'reference'], 6) for m in metrics[1:3]],
                  *[number(first.loc[m, 'reference'] * 100, 1) for m in metrics[3:]]])
     for ratio in ('1:1', '1:5', '1:20', '1:50'):
@@ -31,8 +31,8 @@ def subsampling(data):
             *[number(part.loc[m, 'median'], 6) for m in metrics[1:3]],
             *[number(part.loc[m, 'median'] * 100, 1) for m in metrics[3:]]])
     return table('Subamostragem no treinamento: análise exploratória, posterior à avaliação principal. Ordenação isotônica abaixo do corte.',
-        'tab:cap8-subamostragem', 'lrrrrr', r'Pos.:neg. & PAR=2 no topo 96 & Brier & ECE & \shortstack{Fração dos PAR=2 do passo 11\\no topo 96 (\%)} & Sens. sexo M (\%)', rows,
-        r'Medianas entre sementes; colchetes indicam mínimo e máximo, não IC. A referência foi executada uma vez. A avaliação mantém a prevalência original. Métricas das outras variantes e grupos: \path{data/subamostragem_treino_resumo.csv}.')
+        'tab:cap8-subamostragem', 'lrrrrr', r'Pos.:neg. & PAR=2 no topo 96 & Brier & ECE & \shortstack{Sensibilidade no topo 96\\passo 11 (\%)} & \shortstack{Sensibilidade no topo 96\\sexo M (\%)}', rows,
+        r'Medianas entre sementes; colchetes indicam mínimo e máximo, não IC. A linha Sem subamostragem é o treino sem subamostragem, executado uma vez. A avaliação mantém a prevalência original. Métricas das outras variantes e grupos: \path{data/subamostragem_treino_resumo.csv}.')
 
 
 def llm_filter(data):
@@ -70,7 +70,7 @@ def human_sensitivity(data, curve=None):
         (data.estrategia.eq('O3') & ((data.modo.eq('vigilancia') & data.k.isin([96, 125, 440])) |
                                      (data.modo.eq('confirmacao') & data.k.isin([17, 29, 58])))) |
         (data.estrategia.eq('filtro_LLM') & data.k.isin([96, 125]))]
-    labels = {'humano_integral': 'Integral', 'P': 'P', 'P_MATCH_ao_humano': r'P, MATCH ao humano',
+    labels = {'humano_integral': 'Integral', 'P': 'ASR', 'P_MATCH_ao_humano': r'ASR, MATCH ao humano',
               'O3': 'O3', 'filtro_LLM': 'Filtro'}
     rows = []
     for (mode, strategy, k), group in selected.groupby(['modo', 'estrategia', 'k'], sort=False):

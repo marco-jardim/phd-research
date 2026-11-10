@@ -15,6 +15,7 @@ from scripts.banca_c_agregados import (
     render_qw2,
     write_csv,
 )
+from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -107,9 +108,17 @@ def test_editorial_order_and_limitations_remain_explicit():
     text = (LATEX / "estudo4_gzcmd.tex").read_text(encoding="utf-8")
     assert text.index(r"\label{sec:e4-exploratorias-metodo}") < text.index(r"\section{Resultados}")
     assert text.index(r"\label{sec:e4-arranjo}") < text.index(r"\label{sec:e4-robustez}") < text.index(r"\label{sec:e4-mesma-carga}")
-    discussion = text.split(r"\section{Discussão}", 1)[1].split("\n\n", 2)[1]
-    assert discussion.startswith("O braço P, resultado principal com registro interno")
-    assert "25 aceitações" in discussion and "21 FP" in discussion
+    appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
+    section = text.split(r"\section{Discussão}", 1)[1]
+    discussion = section.split("\n\n", 2)[1]
+    # Revisão 2 (D2/C01r): a Discussão abre pela ordenação; P é o braço do registro interno,
+    # nunca o "resultado principal".
+    assert discussion.startswith("Nesta coorte, abaixo do corte do OpenRecLink, a redução da revisão manual veio da ordenação")
+    assert "braço ASR" in discussion
+    assert "resultado principal" not in section.split(r"\subsection{Limitações}")[0]
+    assert "ASR é o braço do registro interno e não o resultado principal do capítulo" in text
+    acceptor = next(p for p in section.split("\n\n") if p.startswith("Abaixo do corte, o ganho automático de ASR veio do LLM"))
+    assert "25 e 12 potenciais pares" in acceptor and "dos quais 21 e 4" in acceptor
     assert "fig_custo_computacional.pdf" not in text
     assert "fig:cap8-cascata-reducao" not in text
     cascade = (LATEX / "tables/editorial/tab_cap8_cascata_v31.tex").read_text(encoding="utf-8")
@@ -121,10 +130,11 @@ def test_editorial_order_and_limitations_remain_explicit():
                  "reavaliação periódica dos LLM", "307{,}72", "122{,}72",
                  "A análise de estabilidade descreve a estabilidade interna"):
         assert term in text
-    assert "área cinza convencional" not in text
+    assert not contem(text, "área cinza convencional", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "taxas" not in text.replace("taxas_crossfit", "").replace("taxas_erro", "")
     assert "Ele ajuda" not in text
-    assert r"\input{tables/editorial/tab_qw2_confusion.tex}" in text
+    # A matriz do QW2 foi para o Apêndice (revisão 2).
+    assert r"\input{tables/editorial/tab_qw2_confusion.tex}" in appendix
 
 
 def test_arrangement_headings_identify_scope_without_changing_numeric_cells():

@@ -15,6 +15,12 @@ APPROVED = (
     "Recomenda-se a fusão como ordenação da fila de revisão no lugar da ordenação "
     "pelo escore do OpenRecLink, a validar em coorte nova com referência cega; "
     "sua vantagem sobre a probabilidade calibrada não foi demonstrada."
+)  # texto da Conclusão (test_w10b); o Estudo 4 segue a âncora C08r abaixo
+RECOMMENDATION_C08R = (
+    "Recomenda-se, a validar em coorte nova com referência cega, preservar o corte do OpenRecLink e, "
+    "abaixo dele, ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, "
+    "isolada (O3) ou fundida ao escore do OpenRecLink por posição recíproca (F4; F3 quando houver as MACD), "
+    "escolhendo entre elas, e entre estimadores, pela curva de esforço conforme o orçamento humano."
 )
 MODELS = (
     ("claude-haiku-5-5", "Claude Haiku 5.5", "historico"),
@@ -55,8 +61,11 @@ def math_int(value, signed=False):
 
 def test_approved_recommendation_and_analysis_boundaries():
     body = text()
-    assert APPROVED in body
-    assert "entre as estratégias O1 a O4 e P, nenhuma ordenação domina" in body
+    # Âncora C08r: O3 isolada ou fundida (F4; F3), pela curva de esforço; nunca "só F4".
+    assert RECOMMENDATION_C08R in body
+    assert APPROVED not in body
+    assert "Nenhuma ordenação dominou em todas as cargas" in body
+    assert "entre as estratégias O1 a O4 e ASR, nenhuma ordenação domina" in body
     assert "posição de precaução diante do VPP observado e da incerteza da referência" in body
     assert "A referência operacional como fonte de erro" in body
     assert "Tamanho do modelo como revisor" in body
@@ -104,8 +113,10 @@ def test_threshold_precision_and_ties_match_metadata():
     body = text()
     assert body.count(r"\geq-5{,}6485") == 2
     assert r"$\geq-5{,}648$" not in body
-    assert r"$-5{,}64846$" in body
-    assert "2.495 candidatos e 31 PAR~=~2" in body
+    # Revisão 2: o bloco limítrofe e o filtro literal vivem no apêndice do linkage de origem.
+    origin = text("apendice_linkage_origem.tex")
+    assert r"$-5{,}64846$" in origin
+    assert "2.495 candidatos e 31 PAR~=~2" in origin
     topo = json.loads((ROOT / "data/fusao_robustez_topo.json").read_text(encoding="utf-8"))
     assert (topo["n"], topo["par2"]) == (17, 16)
     sensitivity = topo["desempate_aleatorio"]

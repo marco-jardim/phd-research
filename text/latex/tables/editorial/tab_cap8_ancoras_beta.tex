@@ -2,7 +2,7 @@
 \begin{table}[!ht]
 \centering
 \footnotesize
-\caption{Calibração na área cinza definida pela nota do comparador ($5\leq v<9$; 21.620 potenciais pares, 151 vínculos). As duas últimas colunas referem-se a $p\geq0{,}9$.}
+\caption{Calibração na faixa intermediária definida pela nota final do comparador ($5\leq v<9$; 21.620 potenciais pares, 151 pares verdadeiros). As duas últimas colunas referem-se a $p\geq0{,}9$.}
 \label{tab:cap8-ancoras-beta}
 \begin{tabular}{lrrrr}
 \toprule
@@ -11,10 +11,10 @@ Calibração & Brier & ECE & Prevista & Observada \\
 \textit{Platt scaling} (nota, supervisionado) & 0,006150 & 0,000742 & n.a. & n.a. \\
 Sigmoide por momentos nas âncoras (ML) & 0,002654 & 0,002537 & 0,994557 & 0,846774 \\
 Beta por âncoras & 0,002869 & 0,002884 & 0,996232 & 0,828125 \\
-Beta + restrição cinza & 0,002936 & 0,002920 & 0,997720 & 0,840000 \\
+Beta + restrição na faixa intermediária & 0,002936 & 0,002920 & 0,997720 & 0,840000 \\
 Isotônica supervisionada & 0,002206 & 0,001125 & 0,988457 & 0,973333 \\
 \bottomrule
 \end{tabular}
 \par\smallskip
-\parbox{\linewidth}{\footnotesize Beta+ usa posteriores de Fellegi e Sunter, com prevalência estimada sem \textit{labels}. Platt da nota é histórico; margens OOF e isotônica supervisionada usam partição aninhada agrupada por REFREC. Os ajustes globais por momentos não constituem calibração inteiramente aninhada. n.a.: ausência de previsões no intervalo superior.}
+\parbox{\linewidth}{\footnotesize Beta+ (Beta + restrição na faixa intermediária) usa posteriores de Fellegi e Sunter, com prevalência estimada sem \textit{labels}. Platt da nota é histórico; margens OOF e isotônica supervisionada usam partição aninhada agrupada por REFREC. Os ajustes globais por momentos não constituem calibração inteiramente aninhada. n.a.: ausência de previsões no intervalo superior.}
 \end{table}

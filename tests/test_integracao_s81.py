@@ -34,7 +34,7 @@ def test_materialized_count_and_total_sensitivity_are_independent_columns():
     assert sensitivity_changed[5] == "12{,}34"
     p_mask = scenarios.modo.eq("vigilancia") & scenarios.estrategia.eq("P") & scenarios.s.eq(.95)
     scenarios.loc[p_mask, "sensibilidade_total"] = .2345
-    p_row = table_cells(same_load(data, projections, scenarios=scenarios), "Vigilância & P & ")
+    p_row = table_cells(same_load(data, projections, scenarios=scenarios), "Vigilância & ASR & ")
     assert p_row[5] == "23{,}45"
 
 

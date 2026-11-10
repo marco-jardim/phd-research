@@ -55,7 +55,7 @@ def summarize(raw):
 
 
 def table(frame):
-    labels = {"pares_candidatos": "Potenciais pares", "vinculos_par1": "Vínculos PAR=1",
+    labels = {"pares_candidatos": "Potenciais pares", "vinculos_par1": "Pares verdadeiros PAR=1",
               "registros_comprec": "Registros COMPREC", "obitos_refrec": "Óbitos REFREC"}
     def number(v):
         return f"{v:.1f}".replace(".", "{,}") if pd.notna(v) else "n.d."

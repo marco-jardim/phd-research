@@ -1,0 +1,458 @@
+# Conceitos e variantes para o levantamento de termos consagrados
+# (scripts/termos_consagrados.py).
+#
+# Estrutura de cada item:
+#   conceito:  rótulo curto do conceito (único)
+#   variantes: lista de {forma, lingua}; lingua é "pt" ou "en"
+#   guia:      (opcional) forma que o guia de estilo adota hoje, para comparação
+#   notas:     (opcional) observação para o resumo
+#
+# Regras de casamento (ver o script): sem diferença de maiúsculas/minúsculas,
+# sem diferença de acentos, hífen equivale a espaço, plural tolerado, limite de
+# palavra, frase mais longa primeiro. Formas escritas só em maiúsculas (VPP, F1,
+# PPV) são comparadas com distinção de maiúsculas.
+#
+# Origem: docs/support_text/STYLE_PROMPT_escrita_academica.md (seções 3.1 a 3.5),
+# text/latex/glossario.tex e text/latex/siglas.tex.
+
+- conceito: linkage
+  guia: linkage
+  notas: "Guia 3.4 adota linkage em itálico; a banca pode preferir relacionamento ou vinculação."
+  variantes:
+    - {forma: linkage, lingua: en}
+    - {forma: record linkage, lingua: en}
+    - {forma: data linkage, lingua: en}
+    - {forma: linkage de registros, lingua: pt}
+    - {forma: relacionamento de registros, lingua: pt}
+    - {forma: relacionamento de bases de dados, lingua: pt}
+    - {forma: vinculação de registros, lingua: pt}
+    - {forma: vinculação de bases de dados, lingua: pt}
+    - {forma: vinculação, lingua: pt}
+    - {forma: pareamento, lingua: pt}
+
+- conceito: linkage probabilístico
+  guia: linkage probabilístico
+  variantes:
+    - {forma: probabilistic linkage, lingua: en}
+    - {forma: probabilistic record linkage, lingua: en}
+    - {forma: linkage probabilístico, lingua: pt}
+    - {forma: relacionamento probabilístico, lingua: pt}
+    - {forma: relacionamento probabilístico de registros, lingua: pt}
+    - {forma: vinculação probabilística, lingua: pt}
+    - {forma: pareamento probabilístico, lingua: pt}
+
+- conceito: linkage determinístico
+  guia: linkage determinístico
+  variantes:
+    - {forma: deterministic linkage, lingua: en}
+    - {forma: deterministic record linkage, lingua: en}
+    - {forma: linkage determinístico, lingua: pt}
+    - {forma: relacionamento determinístico, lingua: pt}
+    - {forma: vinculação determinística, lingua: pt}
+    - {forma: pareamento determinístico, lingua: pt}
+
+- conceito: blocagem
+  guia: blocagem
+  variantes:
+    - {forma: blocking, lingua: en}
+    - {forma: blocagem, lingua: pt}
+    - {forma: bloqueio, lingua: pt}
+
+- conceito: par verdadeiro
+  guia: vínculo
+  variantes:
+    - {forma: match, lingua: en}
+    - {forma: true match, lingua: en}
+    - {forma: par verdadeiro, lingua: pt}
+    - {forma: vínculo, lingua: pt}
+
+- conceito: não par
+  guia: não par
+  variantes:
+    - {forma: non-match, lingua: en}
+    - {forma: nonmatch, lingua: en}
+    - {forma: não par, lingua: pt}
+    - {forma: não-par, lingua: pt}
+    - {forma: não vínculo, lingua: pt}
+    - {forma: par falso, lingua: pt}
+
+- conceito: potencial par
+  guia: potencial par
+  notas: "Guia 3.4: potenciais pares; evitar pares incertos e pares duvidosos."
+  variantes:
+    - {forma: potential match, lingua: en}
+    - {forma: possible match, lingua: en}
+    - {forma: candidate pair, lingua: en}
+    - {forma: potencial par, lingua: pt}
+    - {forma: par candidato, lingua: pt}
+    - {forma: par incerto, lingua: pt}
+    - {forma: par duvidoso, lingua: pt}
+
+- conceito: área cinza
+  guia: área cinza
+  notas: "Terminologia fixa da tese: área cinza, nunca zona cinzenta."
+  variantes:
+    - {forma: grey zone, lingua: en}
+    - {forma: gray zone, lingua: en}
+    - {forma: gray area, lingua: en}
+    - {forma: área cinza, lingua: pt}
+    - {forma: zona cinzenta, lingua: pt}
+    - {forma: zona cinza, lingua: pt}
+
+- conceito: revisão manual
+  guia: revisão manual
+  variantes:
+    - {forma: clerical review, lingua: en}
+    - {forma: manual review, lingua: en}
+    - {forma: revisão clerical, lingua: pt}
+    - {forma: revisão manual, lingua: pt}
+
+- conceito: revisor humano
+  guia: revisor humano
+  variantes:
+    - {forma: human reviewer, lingua: en}
+    - {forma: revisor humano, lingua: pt}
+    - {forma: revisor manual, lingua: pt}
+
+- conceito: padrão-ouro
+  guia: padrão-ouro
+  notas: "Guia 3.4: padrão-ouro em português, sem itálico."
+  variantes:
+    - {forma: gold standard, lingua: en}
+    - {forma: padrão-ouro, lingua: pt}
+    - {forma: padrão de referência, lingua: pt}
+    - {forma: padrão de ouro, lingua: pt}
+
+- conceito: sensibilidade
+  guia: sensibilidade
+  variantes:
+    - {forma: sensitivity, lingua: en}
+    - {forma: sensibilidade, lingua: pt}
+
+- conceito: valor preditivo positivo
+  guia: valor preditivo positivo
+  variantes:
+    - {forma: positive predictive value, lingua: en}
+    - {forma: PPV, lingua: en}
+    - {forma: valor preditivo positivo, lingua: pt}
+    - {forma: VPP, lingua: pt}
+
+- conceito: valor preditivo negativo
+  variantes:
+    - {forma: negative predictive value, lingua: en}
+    - {forma: NPV, lingua: en}
+    - {forma: valor preditivo negativo, lingua: pt}
+    - {forma: VPN, lingua: pt}
+
+- conceito: precisão
+  guia: precisão
+  notas: "Precision (ML) coincide com o VPP; em português, precisão também é usada para accuracy."
+  variantes:
+    - {forma: precision, lingua: en}
+    - {forma: precisão, lingua: pt}
+
+- conceito: recall e revocação
+  guia: sensibilidade
+  notas: "Guia 3.5.5: revocação e recall são banidos em favor de sensibilidade."
+  variantes:
+    - {forma: recall, lingua: en}
+    - {forma: revocação, lingua: pt}
+
+- conceito: especificidade
+  variantes:
+    - {forma: specificity, lingua: en}
+    - {forma: especificidade, lingua: pt}
+
+- conceito: acurácia
+  guia: acurácia
+  variantes:
+    - {forma: accuracy, lingua: en}
+    - {forma: acurácia, lingua: pt}
+
+- conceito: medida F
+  variantes:
+    - {forma: F-measure, lingua: en}
+    - {forma: F-score, lingua: en}
+    - {forma: F1-score, lingua: en}
+    - {forma: F1, lingua: en}
+    - {forma: medida F, lingua: pt}
+    - {forma: medida-F, lingua: pt}
+    - {forma: escore F1, lingua: pt}
+
+- conceito: limiar
+  guia: limiar
+  variantes:
+    - {forma: threshold, lingua: en}
+    - {forma: limiar, lingua: pt}
+
+- conceito: ponto de corte
+  guia: limiar
+  variantes:
+    - {forma: cutoff, lingua: en}
+    - {forma: cut-off, lingua: en}
+    - {forma: cut off, lingua: en}
+    - {forma: ponto de corte, lingua: pt}
+    - {forma: corte, lingua: pt}
+
+- conceito: escore
+  guia: escore
+  notas: "Guia 3.5.1: escore em vez de score."
+  variantes:
+    - {forma: score, lingua: en}
+    - {forma: escore, lingua: pt}
+    - {forma: pontuação, lingua: pt}
+    - {forma: peso, lingua: pt}
+
+- conceito: aprendizado de máquina
+  guia: aprendizado de máquina
+  variantes:
+    - {forma: machine learning, lingua: en}
+    - {forma: aprendizado de máquina, lingua: pt}
+    - {forma: aprendizagem de máquina, lingua: pt}
+
+- conceito: aprendizado profundo
+  guia: aprendizado profundo
+  variantes:
+    - {forma: deep learning, lingua: en}
+    - {forma: aprendizado profundo, lingua: pt}
+    - {forma: aprendizagem profunda, lingua: pt}
+
+- conceito: deduplicação
+  variantes:
+    - {forma: deduplication, lingua: en}
+    - {forma: de-duplication, lingua: en}
+    - {forma: deduplicação, lingua: pt}
+
+- conceito: falso positivo
+  guia: falso positivo
+  variantes:
+    - {forma: false positive, lingua: en}
+    - {forma: falso positivo, lingua: pt}
+    - {forma: falso vínculo, lingua: pt}
+
+- conceito: falso negativo
+  guia: falso negativo
+  variantes:
+    - {forma: false negative, lingua: en}
+    - {forma: falso negativo, lingua: pt}
+
+- conceito: comparador de strings
+  variantes:
+    - {forma: string comparator, lingua: en}
+    - {forma: string comparison, lingua: en}
+    - {forma: string matching, lingua: en}
+    - {forma: comparador de strings, lingua: pt}
+    - {forma: comparador de cadeias, lingua: pt}
+    - {forma: comparação de cadeias de caracteres, lingua: pt}
+
+- conceito: código fonético
+  variantes:
+    - {forma: phonetic code, lingua: en}
+    - {forma: phonetic encoding, lingua: en}
+    - {forma: soundex, lingua: en}
+    - {forma: código fonético, lingua: pt}
+    - {forma: codificação fonética, lingua: pt}
+
+- conceito: probabilidade m e u
+  variantes:
+    - {forma: m-probability, lingua: en}
+    - {forma: u-probability, lingua: en}
+    - {forma: probabilidade m, lingua: pt}
+    - {forma: probabilidade u, lingua: pt}
+
+- conceito: base de dados
+  guia: base de dados
+  notas: "Guia 3.4: bases de dados, nunca bancos de dados."
+  variantes:
+    - {forma: dataset, lingua: en}
+    - {forma: database, lingua: en}
+    - {forma: base de dados, lingua: pt}
+    - {forma: banco de dados, lingua: pt}
+    - {forma: conjunto de dados, lingua: pt}
+
+- conceito: atributo
+  variantes:
+    - {forma: feature, lingua: en}
+    - {forma: predictor, lingua: en}
+    - {forma: atributo, lingua: pt}
+    - {forma: variável preditora, lingua: pt}
+    - {forma: variável explicativa, lingua: pt}
+    - {forma: covariável, lingua: pt}
+
+- conceito: variável de identificação
+  guia: variável de identificação
+  variantes:
+    - {forma: identifying variable, lingua: en}
+    - {forma: linkage variable, lingua: en}
+    - {forma: matching variable, lingua: en}
+    - {forma: variável de identificação, lingua: pt}
+    - {forma: variável de vinculação, lingua: pt}
+    - {forma: campo identificador, lingua: pt}
+
+- conceito: floresta aleatória
+  guia: Random Forest
+  notas: "Guia 3.5.3: nomes de algoritmos em inglês, sem itálico."
+  variantes:
+    - {forma: random forest, lingua: en}
+    - {forma: floresta aleatória, lingua: pt}
+    - {forma: florestas aleatórias, lingua: pt}
+
+- conceito: validação cruzada
+  guia: validação cruzada
+  variantes:
+    - {forma: cross-validation, lingua: en}
+    - {forma: validação cruzada, lingua: pt}
+
+- conceito: sobreajuste
+  guia: sobreajuste
+  variantes:
+    - {forma: overfitting, lingua: en}
+    - {forma: sobreajuste, lingua: pt}
+    - {forma: superajuste, lingua: pt}
+
+- conceito: desempenho
+  guia: desempenho
+  variantes:
+    - {forma: performance, lingua: en}
+    - {forma: desempenho, lingua: pt}
+
+- conceito: calibração
+  guia: calibração
+  variantes:
+    - {forma: calibration, lingua: en}
+    - {forma: calibração, lingua: pt}
+
+- conceito: curva ROC
+  variantes:
+    - {forma: ROC curve, lingua: en}
+    - {forma: curva ROC, lingua: pt}
+
+- conceito: conjunto de avaliação independente
+  guia: conjunto de avaliação independente
+  variantes:
+    - {forma: holdout, lingua: en}
+    - {forma: hold-out, lingua: en}
+    - {forma: test set, lingua: en}
+    - {forma: conjunto de avaliação independente, lingua: pt}
+    - {forma: conjunto de teste, lingua: pt}
+
+- conceito: conjunto de treinamento
+  guia: conjunto de treinamento
+  variantes:
+    - {forma: training set, lingua: en}
+    - {forma: training data, lingua: en}
+    - {forma: conjunto de treinamento, lingua: pt}
+    - {forma: conjunto de treino, lingua: pt}
+    - {forma: dados de treinamento, lingua: pt}
+
+- conceito: árvore de decisão
+  guia: árvore de decisão
+  variantes:
+    - {forma: decision tree, lingua: en}
+    - {forma: árvore de decisão, lingua: pt}
+
+- conceito: pipeline
+  guia: pipeline
+  notas: "Guia 3.2 e 3.5.2: pipeline e framework mantidos em inglês e em itálico."
+  variantes:
+    - {forma: pipeline, lingua: en}
+    - {forma: fluxo de trabalho, lingua: pt}
+    - {forma: fluxo, lingua: pt}
+    - {forma: sequência operacional, lingua: pt}
+
+- conceito: framework
+  guia: framework
+  variantes:
+    - {forma: framework, lingua: en}
+    - {forma: arcabouço, lingua: pt}
+    - {forma: estrutura metodológica, lingua: pt}
+
+- conceito: label
+  guia: label
+  variantes:
+    - {forma: label, lingua: en}
+    - {forma: rótulo, lingua: pt}
+
+- conceito: perda esperada
+  guia: expected loss
+  variantes:
+    - {forma: expected loss, lingua: en}
+    - {forma: perda esperada, lingua: pt}
+
+- conceito: Platt scaling
+  guia: Platt scaling
+  variantes:
+    - {forma: Platt scaling, lingua: en}
+    - {forma: calibração de Platt, lingua: pt}
+    - {forma: calibração sigmoidal, lingua: pt}
+
+- conceito: busca em grade
+  guia: grid search
+  variantes:
+    - {forma: grid search, lingua: en}
+    - {forma: busca em grade, lingua: pt}
+
+- conceito: fora da amostra
+  variantes:
+    - {forma: out-of-fold, lingua: en}
+    - {forma: out-of-sample, lingua: en}
+    - {forma: fora da amostra, lingua: pt}
+    - {forma: fora da partição, lingua: pt}
+
+- conceito: ensemble
+  variantes:
+    - {forma: ensemble, lingua: en}
+    - {forma: comitê de modelos, lingua: pt}
+    - {forma: conjunto de modelos, lingua: pt}
+
+- conceito: mineração de dados
+  guia: mineração de dados
+  variantes:
+    - {forma: data mining, lingua: en}
+    - {forma: mineração de dados, lingua: pt}
+
+- conceito: condição marcadora
+  guia: condição marcadora
+  variantes:
+    - {forma: tracer condition, lingua: en}
+    - {forma: marker condition, lingua: en}
+    - {forma: condição marcadora, lingua: pt}
+    - {forma: condição traçadora, lingua: pt}
+
+- conceito: identificador unívoco
+  guia: identificador unívoco
+  variantes:
+    - {forma: unique identifier, lingua: en}
+    - {forma: identificador unívoco, lingua: pt}
+    - {forma: identificador único, lingua: pt}
+
+- conceito: dados vinculados
+  guia: dados vinculados
+  variantes:
+    - {forma: linked data, lingua: en}
+    - {forma: dados vinculados, lingua: pt}
+    - {forma: dados relacionados, lingua: pt}
+    - {forma: dados cruzados, lingua: pt}
+
+- conceito: oportunidade
+  guia: oportunidade
+  variantes:
+    - {forma: timeliness, lingua: en}
+    - {forma: oportunidade, lingua: pt}
+    - {forma: tempestividade, lingua: pt}
+
+- conceito: subnotificação
+  guia: subnotificação
+  variantes:
+    - {forma: underreporting, lingua: en}
+    - {forma: under-reporting, lingua: en}
+    - {forma: subnotificação, lingua: pt}
+    - {forma: sub-registro, lingua: pt}
+    - {forma: subregistro, lingua: pt}
+
+- conceito: desbalanceamento de classes
+  variantes:
+    - {forma: class imbalance, lingua: en}
+    - {forma: imbalanced data, lingua: en}
+    - {forma: desbalanceamento de classes, lingua: pt}
+    - {forma: desbalanceamento, lingua: pt}

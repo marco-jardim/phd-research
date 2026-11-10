@@ -1,0 +1,1130 @@
+# Registro de invariantes da tese (números centrais N01-N44 e afirmações C01-C09, C10, C01r,
+# C11-C16, C08r, C02r, C03r, C05r, C09r).
+#
+# Verificado por scripts/registro_invariantes.py e tests/test_registro_invariantes.py.
+# Duas verificações independentes:
+#   1. artefato: cada item de `valores` é recalculado a partir do CSV/JSON de origem,
+#      formatado em pt-BR (vírgula decimal, ponto de milhar) e comparado com `texto_pt`
+#      (e `texto_en`, no formato inglês, usado no Abstract);
+#   2. texto: cada item de `ocorrencias` exige que exista ao menos um parágrafo (blocos
+#      separados por linha em branco; comentários LaTeX removidos) do arquivo, ou da seção
+#      indicada, contendo TODOS os tokens exigidos. Nenhuma frase é fixada: só âncoras
+#      (números e termos técnicos estáveis).
+#
+# Esquema:
+#   - id: N10                       # N## = número; C## = afirmação
+#     descricao: "..."
+#     tipo: numero                  # numero | afirmacao
+#     valores:                      # uma ou mais grandezas conferidas em conjunto
+#       - nome: aceitos_P_vig       # único em todo o registro (pode ser usado em qualquer entrada)
+#         fonte:                    # uma das formas abaixo
+#           arquivo: data/x.csv     #   CSV: filtro (colunas = valores; deve casar 1 linha),
+#           filtro: {modo: vigilancia}   #   coluna, agregar (unico|soma|contagem)
+#           coluna: aceitos
+#           # arquivo: x.json, chave: "faixa.operational_n"   JSON por chave pontilhada
+#           # derivado: "n_par0 / n_vinculos", formato: "1:{:.0f}"   aritmética sobre outros
+#           #   valores nomeados (sem eval; também wilson_inf(k, n), wilson_sup(k, n), abs/min/max)
+#         transformacao: null       # int | decN (N casas) | pctN (x100, N casas); prefixo abs_
+#         texto_pt: "215"           # como deve aparecer no texto em português
+#         texto_en: "215"           # opcional: formato inglês (padrão: separadores trocados)
+#         auxiliar: false           # opcional: sem texto_pt, não usável como token
+#     ocorrencias:                  # âncoras de conceito, não frases
+#       - {arquivo: text/latex/tese.tex, secao: resumo, exige: [aceitos_P_vig, "247"]}
+#         # secao: resumo | abstract (apenas tese.tex); abstract usa texto_en dos valores.
+#         # `exige`: lista de tokens, todos no mesmo parágrafo. Nome de valor expande para
+#         #   texto_pt/texto_en; texto literal vale como está; sublista = qualquer uma (OU).
+#         # `exige_todos` / `exige_algum`: para afirmações (sem diferenciar caixa nem acento).
+#         # `xfail: "..."`: inconsistência real do texto documentada; o caso é esperado
+#         #   falhar (estrito: se passar, remova o marcador).
+#         # `mesma_frase: [termo, [alternativas]]`: cada valor exigido tem de aparecer numa
+#         #   frase que traga também todos os termos (a ';' encerra a frase).
+#         # `ignorar_caixa: true`: compara sem distinguir caixa nem acento (afirmações já o fazem).
+#         # `vigencia`: quando a ocorrência vale, em relação a tests/data/arquivos_revisados.yaml
+#         #   (revisão capítulo a capítulo; Resumo e Abstract pelas chaves tese.tex#resumo e
+#         #   tese.tex#abstract):
+#         #     sempre (padrão)  verificada sempre;
+#         #     pre_revisao      só enquanto o arquivo NÃO está na lista de revisados;
+#         #     pos_revisao      só quando o arquivo (ou a seção) está na lista;
+#         #     informativa      nunca falha: é executada e listada (slides e roteiro).
+#         #   Ocorrência fora de vigor não é executada (o teste aparece como ignorado).
+#     ressalvas: "..."              # opcional
+#     pendente: "..."               # opcional: o que falta de fonte
+#
+# Convenções: tokens não incluem terminologia sujeita a revisão ("revisão clerical",
+# "vínculo" etc.); ancoram-se em números e termos técnicos (P, O3, PAR, k=96, LLM, NONMATCH).
+# Afirmações (C01-C09): as ocorrências ancoram-se na polaridade e em símbolos/termos
+# técnicos, com variantes de lema em sublistas (alternativas, qualquer uma) de
+# `exige_todos` ou em `exige_algum`; nenhuma frase inteira é fixada. Uma reescrita
+# legítima continua passando; a inversão de polaridade (ex.: "aceita" no lugar de "não
+# deve aceitar") falha.
+#
+# ATENÇÃO: alterar qualquer `exige`, `exige_todos`, `exige_algum` ou `texto_*` deste
+# arquivo exige aprovação da autora. Cada entrada alterada leva, antes de `ocorrencias`,
+# a linha de comentário `# aprovado_por_autora: <data>` (AAAA-MM-DD, data da aprovação).
+# Sem a linha, a alteração não foi aprovada.
+#
+# Decisões da autora de 2026-11-08 (docs/plans/ANCORAS_PROPOSTA_2026-11-08.md, opção (a)):
+#   - C01-C09 antigas: todas as ocorrências em texto de tese são `pre_revisao` (valem até o
+#     arquivo ser revisado; as âncoras novas as substituem); ficam as entradas, sem apagar;
+#   - slides e roteiro (text/slides/**): todas as ocorrências, de N e de C, são `informativa`:
+#     serão refeitos depois do texto e não restringem a revisão;
+#   - âncoras novas (C10, C01r, C11-C16, C08r, C02r, C03r, C05r, C09r): `aprovado_por_autora:
+#     "2026-11-08"` como campo da entrada e ocorrências `pos_revisao` (o texto atual ainda não
+#     as contém; passam a valer quando cada arquivo entra na lista de revisados);
+#   - N40-N44: números das âncoras novas ausentes do registro, com `mesma_frase`; os números já
+#     registrados (N04, N07, N09, N13, N15, N16, N18-N23, N26, N30, N39) ganham ocorrências
+#     `pos_revisao` com `mesma_frase`, sob o comentário "pos_revisao: âncora ...".
+#
+# Abreviações dos arquivos nos comentários: T=tese.tex, C1/C3=capitulo1/3, CC=conclusao,
+# ED=capitulo_dados, E4/E5=estudo4_gzcmd/estudo5_equidade, SL=slides/defesa.tex,
+# RO=slides/roteiro_defesa.md. Linhas citadas são da tag pre-revisao-2.
+#
+# Inconsistências documentadas via xfail: I3 (limiar global arredondado), I5 (H=22 de
+# uma réplica sem qualificador), I6 (29 revisões da confirmação sem separar os 12 MATCH).
+
+# ---------------------------------------------------------------- números
+
+- id: N01
+  descricao: "Total de potenciais pares do extrato"
+  tipo: numero
+  valores:
+    - {nome: n_pares_total, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_pares_candidatos}, coluna: valor}, texto_pt: "61.696"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [n_pares_total]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [n_pares_total]}
+    - {arquivo: text/latex/conclusao.tex, exige: [n_pares_total]}
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_pares_total, n_vinculos]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [n_pares_total, n_vinculos, n_par0]}
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [n_pares_total, n_vinculos]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_pares_total, n_vinculos]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [n_pares_total, n_vinculos, razao_desbalanceamento]}
+
+- id: N02
+  descricao: "247 vínculos = 211 PAR=1 + 36 PAR=2; 61.449 não pares"
+  tipo: numero
+  valores:
+    - {nome: n_par1, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_par1}, coluna: valor}, texto_pt: "211"}
+    - {nome: n_par2, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_par2}, coluna: valor}, texto_pt: "36"}
+    - {nome: n_vinculos, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_vinculos_pares_distintos}, coluna: valor}, texto_pt: "247"}
+    - {nome: n_par0, fonte: {arquivo: data/extrato_resumo.csv, filtro: {metrica: n_par0}, coluna: valor}, texto_pt: "61.449"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [n_par2, "PAR=2"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [n_par2, "PAR=2"]}
+    - {arquivo: text/latex/capitulo3.tex, exige: [n_par1, n_vinculos, n_par2]}
+    - {arquivo: text/latex/conclusao.tex, exige: [n_par1, n_vinculos, n_par2]}
+    # W5: o parágrafo do depósito (61.449 não pares, 211 e 36) saiu do capítulo; os valores seguem
+    # nos parágrafos de desbalanceamento (61.449 com 247) e da referência operacional (247 = 211 + 36).
+    # migração 1:1 sob o regime de proteção e a decisão W5 aprovados pela autora em 2026-11-08
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_par0, n_vinculos]}
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_vinculos, n_par1, n_par2]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige: [n_par2], mesma_frase: ["metas"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [n_par1, n_vinculos, n_par2]}
+
+- id: N03
+  descricao: "Razão de desbalanceamento 1:249 (não pares por vínculo)"
+  tipo: numero
+  valores:
+    - {nome: razao_desbalanceamento, fonte: {derivado: "n_par0 / n_vinculos", formato: "1:{:.0f}"}, texto_pt: "1:249"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [razao_desbalanceamento]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [razao_desbalanceamento]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [razao_desbalanceamento]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [razao_desbalanceamento]}
+  ressalvas: "Derivado (61449/247 = 248,8); sem coluna própria no artefato."
+
+- id: N04
+  descricao: "Corte aceita 211/247 = 85,4%; 14,6% dependem da revisão"
+  tipo: numero
+  valores:
+    - {nome: sens_corte_sozinho, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: corte_sozinho, faixa: TODAS}, coluna: sens_auto}, transformacao: pct1, texto_pt: "85,4"}
+    - {nome: frac_dependem_revisao, fonte: {derivado: "1 - sens_corte_sozinho"}, transformacao: pct1, texto_pt: "14,6"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo3.tex, exige: [sens_corte_sozinho, frac_dependem_revisao]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [sens_corte_sozinho]}
+    # pos_revisao: âncora C10 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [n_par2, frac_dependem_revisao, n_vinculos], mesma_frase: ["revisão manual"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [n_par2, frac_dependem_revisao, n_vinculos], mesma_frase: ["revisão manual"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_corte_sozinho, n_par1, n_vinculos]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [sens_corte_sozinho, n_par1, n_vinculos]}
+
+- id: N05
+  descricao: "Faixas da nota do CdR: nota<5 (39.981 pares, 3 vínculos); [5,9) (21.620, 151); nota>=9 (95, 93, com 2 FP)"
+  tipo: numero
+  valores:
+    - {nome: n_nota_lt5, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: n_nota_lt5}, texto_pt: "39.981"}
+    - {nome: vinc_nota_lt5, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: vinculos_nota_lt5}, texto_pt: "3"}
+    - {nome: n_area_cinza, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: n_area_cinza}, texto_pt: "21.620"}
+    - {nome: vinc_area_cinza, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: vinculos_area_cinza}, texto_pt: "151"}
+    - {nome: n_nota_ge9, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: n_nota_ge9}, texto_pt: "95"}
+    - {nome: vinc_nota_ge9, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: orl_corte_servico}, coluna: vinculos_nota_ge9}, texto_pt: "93"}
+    - {nome: fp_nota_ge9, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: pos_orl_corte_nota_9}, coluna: fp_automaticos}, texto_pt: "2"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo3.tex, exige: [n_area_cinza, vinc_area_cinza]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_nota_lt5, vinc_nota_lt5, n_area_cinza, vinc_area_cinza, n_nota_ge9, vinc_nota_ge9]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [n_area_cinza, vinc_nota_ge9, fp_nota_ge9, "FP"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [n_nota_lt5, vinc_nota_lt5, n_area_cinza, vinc_area_cinza, n_nota_ge9, vinc_nota_ge9]}
+  ressalvas: "O rascunho citava capitulo1.tex:16, que não contém 21.620 nem 39.981 (conferido por busca no arquivo); ocorrência omitida."
+
+- id: N06
+  descricao: "Corte da nota em 9 recupera 37,7% (perde 62,3%); com revisão humana de 95% projeta 95,7%"
+  tipo: numero
+  valores:
+    - {nome: sens_nota9, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: pos_orl_corte_nota_9}, coluna: sens_automatica}, transformacao: pct1, texto_pt: "37,7"}
+    - {nome: perda_nota9, fonte: {derivado: "1 - sens_nota9"}, transformacao: pct1, texto_pt: "62,3"}
+    - {nome: sens_humano95, fonte: {arquivo: data/referencia_comparador_pos_orl.csv, filtro: {estrategia: pos_orl_revisao_humana_area_cinza}, coluna: sens_com_humano}, transformacao: pct1, texto_pt: "95,7"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo3.tex, exige: [sens_nota9, perda_nota9]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_humano95, n_area_cinza]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [sens_humano95, n_area_cinza]}
+
+- id: N07
+  descricao: "PAR=2 por passo de blocagem 6, 9 e 11 (vigilância): 4, 7 e 25"
+  tipo: numero
+  valores:
+    - {nome: par2_passo6, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 6, par: 2}, coluna: n, agregar: soma}, texto_pt: "4"}
+    - {nome: par2_passo9, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 9, par: 2}, coluna: n, agregar: soma}, texto_pt: "7"}
+    - {nome: par2_passo11, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 11, par: 2}, coluna: n, agregar: soma}, texto_pt: "25"}
+  ocorrencias:
+    # pos_revisao: âncoras C10 e C14 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_passo11], mesma_frase: ["passo 11"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_passo11], mesma_frase: ["passo 11"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [par2_passo6, par2_passo9, par2_passo11, n_nota_lt5]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [par2_passo6, par2_passo9, par2_passo11, n_nota_lt5]}
+
+- id: N08
+  descricao: "Cenário de carga abaixo do corte: 2.156 pares (limiar por passo) ou 2.522 (global); 718 h 40 min e 840 h 40 min a 20 min por par"
+  tipo: numero
+  valores:
+    - {nome: carga_passo, fonte: {arquivo: data/carga_abaixo_corte.csv, filtro: {limiar: por_passo, passo: TOTAL}, coluna: pares_acima_limiar}, texto_pt: "2.156"}
+    - {nome: carga_global, fonte: {arquivo: data/carga_abaixo_corte.csv, filtro: {limiar: global, passo: TOTAL}, coluna: pares_acima_limiar}, texto_pt: "2.522"}
+    - {nome: horas_carga_passo, fonte: {arquivo: data/carga_abaixo_corte_horas.csv, filtro: {limiar: por_passo}, coluna: horas_inteiras}, texto_pt: "718"}
+    - {nome: horas_carga_global, fonte: {arquivo: data/carga_abaixo_corte_horas.csv, filtro: {limiar: global}, coluna: horas_inteiras}, texto_pt: "840"}
+    - {nome: minutos_restantes_carga, fonte: {arquivo: data/carga_abaixo_corte_horas.csv, filtro: {limiar: global}, coluna: minutos_restantes}, texto_pt: "40"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo1.tex, exige: [carga_passo, carga_global, horas_carga_passo, horas_carga_global, minutos_restantes_carga]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [carga_passo]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [carga_passo, carga_global, horas_carga_passo, horas_carga_global]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [carga_passo, carga_global, horas_carga_passo, horas_carga_global]}
+  ressalvas: "Cenário exploratório (ordem histórica não documentada), não carga medida; 20 min por par é hipótese de planejamento."
+
+- id: N09
+  descricao: "Abaixo do corte: 61.485 pares; 2.522 candidatos com escore >= -5,6485 contêm os 36 PAR=2 (limiar literal -5,648: 2.495 e 31)"
+  tipo: numero
+  valores:
+    - {nome: abaixo_corte, fonte: {arquivo: data/fusao_robustez_metadata.json, chave: below_cutoff}, texto_pt: "61.485"}
+    - {nome: faixa_n_operacional, fonte: {arquivo: data/fusao_robustez_metadata.json, chave: faixa.operational_n}, texto_pt: "2.522"}
+    - {nome: faixa_par2_operacional, fonte: {arquivo: data/fusao_robustez_metadata.json, chave: faixa.operational_PAR2}, texto_pt: "36"}
+    - {nome: faixa_n_literal, fonte: {arquivo: data/fusao_robustez_metadata.json, chave: faixa.literal_n}, texto_pt: "2.495"}
+    - {nome: faixa_par2_literal, fonte: {arquivo: data/fusao_robustez_metadata.json, chave: faixa.literal_PAR2}, texto_pt: "31"}
+    - {nome: limiar_global_escore, fonte: {arquivo: data/carga_abaixo_corte.csv, filtro: {limiar: global, passo: TOTAL}, coluna: score_minimo}, transformacao: dec4, texto_pt: "-5,6485"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [abaixo_corte, n_pares_total]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [faixa_n_operacional, limiar_global_escore, faixa_n_literal, faixa_par2_literal, faixa_par2_operacional]}
+    # W5: o bloco limítrofe e o filtro literal foram movidos do capítulo de dados para o apêndice de origem.
+    - {arquivo: text/latex/apendice_linkage_origem.tex, exige: [limiar_global_escore, faixa_n_literal, faixa_par2_literal]}
+    # pos_revisao: âncoras C10 e C03r (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [abaixo_corte, n_pares_total], mesma_frase: ["grey area"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [abaixo_corte, n_pares_total], mesma_frase: ["grey area"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [faixa_n_operacional, faixa_par2_operacional], mesma_frase: [["maior escore", "maiores escores"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [faixa_n_operacional, faixa_par2_operacional], mesma_frase: [["maior escore", "maiores escores"]]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [limiar_global_escore, faixa_n_literal, faixa_par2_literal, faixa_par2_operacional]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [limiar_global_escore, k36_O1]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [abaixo_corte]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: ["limiar global", "acima ou iguais", limiar_global_escore], xfail: "I3: o slide usa o limiar global arredondado -5,648 (análise original), que gera 2.495/31, não 2.522/36; o limiar operacional é -5,6485"}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: ["17 dos 21 FP", limiar_global_escore], xfail: "I3: a resposta do roteiro usa o limiar arredondado -5,648; o limiar operacional é -5,6485"}
+  ressalvas: "O limiar literal -5,648 gera 2.495/31; o operacional -5,6485 (bloco de empate incluído) gera 2.522/36."
+
+- id: N10
+  descricao: "P na vigilância aceita automaticamente 215 dos 247 vínculos (211+4); sensibilidade automática 87,0%; VPP 91,1%"
+  tipo: numero
+  valores:
+    - {nome: aceitos_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: aceitos}, texto_pt: "215"}
+    - {nome: sens_auto_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: sens_auto}, transformacao: pct1, texto_pt: "87,0"}
+    - {nome: vpp_P_vig, fonte: {derivado: "aceitos_P_vig / (aceitos_P_vig + fp_P_vig)"}, transformacao: pct1, texto_pt: "91,1"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [aceitos_P_vig, n_vinculos, fp_P_vig]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [aceitos_P_vig, n_vinculos, fp_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [aceitos_P_vig, n_vinculos, humano_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [sens_auto_P_vig, vpp_P_vig]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [aceitos_P_vig, n_vinculos, sens_auto_P_vig]}
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [aceitos_P_vig, fp_P_vig, sens_auto_P_vig, vpp_P_vig]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_auto_P_vig, fp_P_vig, perdidos_P_vig, humano_P_vig, llm_P_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [aceitos_P_vig, sens_auto_P_vig, fp_P_vig]}
+  ressalvas: "VPP = aceitos/(aceitos+FP) com FP do arranjo_corte_metricas.csv; confere com o texto de estudo5_equidade (236 aceitos)."
+
+- id: N11
+  descricao: "P na confirmação aceita 219 (211+8); sensibilidade automática 88,7%; VPP 98,2%"
+  tipo: numero
+  valores:
+    - {nome: aceitos_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: aceitos}, texto_pt: "219"}
+    - {nome: sens_auto_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: sens_auto}, transformacao: pct1, texto_pt: "88,7"}
+    - {nome: vpp_P_conf, fonte: {derivado: "aceitos_P_conf / (aceitos_P_conf + fp_P_conf)"}, transformacao: pct1, texto_pt: "98,2"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [sens_auto_P_conf, vpp_P_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [aceitos_P_conf, sens_auto_P_conf]}
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [aceitos_P_conf, sens_auto_P_conf, vpp_P_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_auto_P_conf, fp_P_conf, perdidos_P_conf, humano_P_conf, llm_P_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [aceitos_P_conf, sens_auto_P_conf, fp_P_conf]}
+
+- id: N12
+  descricao: "FP de P: 21 (vigilância) e 4 (confirmação)"
+  tipo: numero
+  valores:
+    - {nome: fp_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: fp}, texto_pt: "21"}
+    - {nome: fp_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: fp}, texto_pt: "4"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [fp_P_vig, "falsos positivos"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [fp_P_vig, "false positives"]}
+    - {arquivo: text/latex/conclusao.tex, exige: [fp_P_vig, fp_P_conf, perdidos_P_vig, perdidos_P_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [fp_P_vig, "observados", e_fp_previstos_vig]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [fp_P_vig, fp_P_conf, "FP"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [fp_P_vig, e_fp_previstos_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [fp_P_vig, fp_P_conf, "FP"]}
+
+- id: N13
+  descricao: "Encaminhamentos humanos de P: 96 (vigilância, 19 vínculos) e 17 (confirmação, 1 vínculo)"
+  tipo: numero
+  valores:
+    - {nome: humano_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: pares_humano}, texto_pt: "96"}
+    - {nome: humano_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: pares_humano}, texto_pt: "17"}
+    - {nome: vinc_humano_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: vinc_humano}, texto_pt: "19"}
+    - {nome: vinc_humano_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: vinc_humano}, texto_pt: "1"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [humano_P_vig]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [humano_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, exige: [humano_P_vig, humano_P_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [humano_P_vig, vinc_humano_P_vig]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [humano_P_conf, [vinc_humano_P_conf, "um vínculo"]]}
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [humano_P_vig, humano_P_conf, vinc_humano_P_vig]}
+    # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [humano_P_vig], mesma_frase: [["revisor humano", "revisão humana", "revisores humanos"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [humano_P_vig], mesma_frase: [["revisor humano", "revisão humana", "revisores humanos"]]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [humano_P_vig, humano_P_conf]}
+
+- id: N14
+  descricao: "Pares avaliados pelo LLM em P: 344 (vigilância) e 41 (confirmação)"
+  tipo: numero
+  valores:
+    - {nome: llm_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: pares_llm}, texto_pt: "344"}
+    - {nome: llm_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: pares_llm}, texto_pt: "41"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [llm_P_vig]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [llm_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [llm_P_vig, llm_P_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [llm_P_vig, "LLM"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [llm_P_conf, "LLM"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [llm_P_vig, llm_P_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [llm_P_vig, llm_P_conf]}
+
+- id: N15
+  descricao: "P não reproduz 13 e 27 dos 36 PAR=2 (36,1% e 75,0%); aceita 25 e 12 pares abaixo do corte, com 4 e 8 PAR=2"
+  tipo: numero
+  valores:
+    - {nome: perdidos_P_vig, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: vigilancia, braco: P, faixa: TODAS}, coluna: perdidos}, texto_pt: "13"}
+    - {nome: perdidos_P_conf, fonte: {arquivo: data/arranjo_corte_metricas.csv, filtro: {modo: confirmacao, braco: P, faixa: TODAS}, coluna: perdidos}, texto_pt: "27"}
+    - {nome: pct_perdidos_vig, fonte: {derivado: "perdidos_P_vig / n_par2"}, transformacao: pct1, texto_pt: "36,1"}
+    - {nome: pct_perdidos_conf, fonte: {derivado: "perdidos_P_conf / n_par2"}, transformacao: pct1, texto_pt: "75,0"}
+    - {nome: aceitacoes_llm_abaixo_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: aceitacoes_llm_abaixo}, texto_pt: "25"}
+    - {nome: aceitacoes_llm_abaixo_conf, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: confirmacao, braco: P}, coluna: aceitacoes_llm_abaixo}, texto_pt: "12"}
+    - {nome: vp_llm_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: VP}, texto_pt: "4"}
+    - {nome: vp_llm_conf, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: confirmacao, braco: P}, coluna: VP}, texto_pt: "8"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [perdidos_P_vig, perdidos_P_conf, aceitacoes_llm_abaixo_vig, aceitacoes_llm_abaixo_conf, vp_llm_vig, vp_llm_conf, n_par2]}
+    # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [vp_llm_vig, fp_P_vig], mesma_frase: ["LLM"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [vp_llm_vig, fp_P_vig], mesma_frase: ["LLM"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vp_llm_vig, fp_P_vig], mesma_frase: ["LLM"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vp_llm_vig, fp_P_vig], mesma_frase: ["LLM"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perdidos_P_vig, perdidos_P_conf, aceitacoes_llm_abaixo_vig, aceitacoes_llm_abaixo_conf, vp_llm_vig, vp_llm_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perdidos_P_vig, perdidos_P_conf, fp_P_vig, fp_P_conf, k36_O1]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perdidos_P_vig, perdidos_P_conf, aceitacoes_llm_abaixo_vig, aceitacoes_llm_abaixo_conf, vp_llm_vig, vp_llm_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perdidos_P_conf, pct_perdidos_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [pct_perdidos_vig, pct_perdidos_conf]}
+
+- id: N16
+  descricao: "VPP do LLM aceitador: vigilância 4/25 = 16,0% (IC 95% 6,4 a 34,7); confirmação 8/12 = 66,7%"
+  tipo: numero
+  valores:
+    - {nome: vpp_llm_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: VPP}, transformacao: pct1, texto_pt: "16,0"}
+    - {nome: vpp_llm_ic_inf_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: ic95_inf}, transformacao: pct1, texto_pt: "6,4"}
+    - {nome: vpp_llm_ic_sup_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: ic95_sup}, transformacao: pct1, texto_pt: "34,7"}
+    - {nome: vpp_llm_conf, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: confirmacao, braco: P}, coluna: VPP}, transformacao: pct1, texto_pt: "66,7"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [vpp_llm_vig]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [vpp_llm_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [vpp_llm_vig, e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, exige: [vpp_llm_vig, vpp_llm_ic_inf_vig, vpp_llm_ic_sup_vig, aceitacoes_llm_abaixo_vig]}
+    # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08); a ';' encerra a frase, daí o IC com termo próprio
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_vig], mesma_frase: ["VPP", "LLM"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_vig], mesma_frase: [["PPV", "VPP"], "LLM"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_vig], mesma_frase: ["VPP", "LLM"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_vig], mesma_frase: ["VPP", "LLM"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_ic_inf_vig, vpp_llm_ic_sup_vig], mesma_frase: [["IC 95", "IC de 95", "intervalo de confiança"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [vpp_llm_ic_inf_vig, vpp_llm_ic_sup_vig], mesma_frase: [["IC 95", "IC de 95", "intervalo de confiança"]]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [vpp_llm_vig, vpp_llm_ic_inf_vig, vpp_llm_ic_sup_vig, vpp_llm_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [vpp_llm_vig, vpn_k96, vpn_k58]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [vpp_llm_vig, vpp_llm_ic_inf_vig, vpp_llm_ic_sup_vig, vpp_llm_conf]}
+
+- id: N17
+  descricao: "FP previstos 9,06 contra 21 observados (vigilância)"
+  tipo: numero
+  valores:
+    - {nome: e_fp_previstos_vig, fonte: {arquivo: data/arranjo_corte_vpp_llm.csv, filtro: {modo: vigilancia, braco: P}, coluna: e_FP_previstas}, transformacao: dec2, texto_pt: "9,06"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [e_fp_previstos_vig, fp_P_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [e_fp_previstos_vig, fp_P_vig]}
+
+- id: N18
+  descricao: "MATCH ao humano: P usa 121 revisões para 23 PAR=2; O3 recupera 22 na mesma carga e iguala P com 125; no máximo um vínculo a mais"
+  tipo: numero
+  valores:
+    - {nome: rev_P_total_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: P_revisoes_humanas_total}, texto_pt: "121"}
+    - {nome: par2_P_match_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: P_par2_recuperados}, texto_pt: "23"}
+    - {nome: par2_O3_mesma_carga_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: O3_par2_mesma_carga}, texto_pt: "22"}
+    - {nome: k_O3_iguala_P_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: O3_k_min_igualar_P}, texto_pt: "125"}
+    - {nome: dif_P_O3_vig, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: vigilancia}, coluna: diferenca_P_O3_PAR2_mesma_carga}, texto_pt: "1"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [llm_P_vig, "no máximo um"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [llm_P_vig, "at most one"]}
+    - {arquivo: text/latex/capitulo1.tex, exige: ["no máximo um", "O4"]}
+    # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [rev_P_total_vig, par2_P_match_vig], mesma_frase: ["MATCH"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [rev_P_total_vig, par2_P_match_vig], mesma_frase: ["MATCH"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_iguala_P_vig], mesma_frase: ["O3"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_iguala_P_vig], mesma_frase: ["O3"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [rev_P_total_vig, par2_P_match_vig, par2_O3_mesma_carga_vig, k_O3_iguala_P_vig, "no máximo um", llm_P_vig]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [rev_P_total_vig, par2_P_match_vig, par2_O3_mesma_carga_vig, k_O3_iguala_P_vig]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [llm_P_vig, "no máximo 1"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [rev_P_total_vig, par2_P_match_vig, par2_O3_mesma_carga_vig, k_O3_iguala_P_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [llm_P_vig, "no máximo 1"]}
+  ressalvas: "Hipótese de revisor perfeito dos dois lados; exploratório post hoc."
+
+- id: N19
+  descricao: "Confirmação: P e O3 recuperam 9 PAR=2 com 29 revisões (MATCH ao humano); O2 recupera os mesmos 9 com 11, sem LLM nem FP"
+  tipo: numero
+  valores:
+    - {nome: rev_P_total_conf, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: confirmacao}, coluna: P_revisoes_humanas_total}, texto_pt: "29"}
+    - {nome: par2_P_conf, fonte: {arquivo: data/comparador_p_match_humano.csv, filtro: {modo: confirmacao}, coluna: P_par2_recuperados}, texto_pt: "9"}
+    - {nome: k_O2_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O2_CdR, modo: confirmacao, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "11"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [rev_P_total_conf, [par2_P_conf, "nove"]]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [rev_P_total_conf, [par2_P_conf, "nine"]]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [rev_P_total_conf, humano_P_conf], xfail: "I6: as 29 revisões da confirmação incluem 12 MATCH enviados ao humano; P usa 17 revisões humanas, e o Resumo não separa as duas parcelas"}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [rev_P_total_conf, humano_P_conf], xfail: "I6: as 29 revisões incluem 12 MATCH enviados ao humano; P usa 17 revisões humanas, e o Abstract não separa as duas parcelas"}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [rev_P_total_conf, k_O2_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [k_O2_conf, [par2_P_conf, "nove"], "PAR=2"]}
+    # pos_revisao: âncora C13 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O2_conf, par2_P_conf, humano_P_conf], mesma_frase: ["O2"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O2_conf, par2_P_conf, humano_P_conf], mesma_frase: ["O2"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [k_O2_conf, par2_P_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [llm_P_vig, llm_P_conf, k_O2_conf, par2_P_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k_O2_conf, [par2_P_conf, "nove"]]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [par2_P_conf, k_O2_conf, rev_P_total_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [rev_P_total_conf, [par2_P_conf, "nove"], k_O2_conf]}
+  ressalvas: "I6: 29 = 17 revisões humanas originais + 12 MATCH enviados ao humano (comparador_p_match_humano.csv, linha confirmacao)."
+
+- id: N20
+  descricao: "Revisões para igualar a recuperação de P (vigilância/confirmação): O1 501/51, O3 125/29, O4 106/27, O2 4.163/11"
+  tipo: numero
+  valores:
+    - {nome: k_O1_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O1_SCORE, modo: vigilancia, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "501"}
+    - {nome: k_O1_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O1_SCORE, modo: confirmacao, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "51"}
+    - {nome: k_O3_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O3_p_cal_ml, modo: vigilancia, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "125"}
+    - {nome: k_O3_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O3_p_cal_ml, modo: confirmacao, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "29"}
+    - {nome: k_O4_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O4_P_recalibrada, modo: vigilancia, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "106"}
+    - {nome: k_O4_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O4_P_recalibrada, modo: confirmacao, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "27"}
+    - {nome: k_O2_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O2_CdR, modo: vigilancia, carga: k_min_equivalente_P}, coluna: k_min_equivalente_P}, texto_pt: "4.163"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [k_O1_vig, k_O1_conf, k_O3_vig, k_O3_conf, k_O4_vig, k_O4_conf, k_O2_vig, k_O2_conf]}
+    # pos_revisao: âncora C11 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_vig], mesma_frase: ["O3", "vigilância"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O1_vig], mesma_frase: ["O1"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_vig], mesma_frase: ["O3", ["surveillance", "vigilância"]]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O1_vig], mesma_frase: ["O1"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_vig], mesma_frase: ["O3", "vigilância"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_conf], mesma_frase: ["O3", "confirmação"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O1_vig, k_O1_conf], mesma_frase: ["O1"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O4_vig, k_O4_conf], mesma_frase: ["O4"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_vig], mesma_frase: ["O3", "vigilância"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O3_conf], mesma_frase: ["O3", "confirmação"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O1_vig, k_O1_conf], mesma_frase: ["O1"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k_O4_vig, k_O4_conf], mesma_frase: ["O4"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [k_O3_vig, k_O4_vig, k_O3_conf, k_O4_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [k_O2_vig, k_O2_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [k_O1_vig, k_O3_vig, carga_passo]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k_O4_vig, k_O4_conf, k_O3_vig, k_O3_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k_O1_vig, k_O3_vig, k_O2_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k_O1_vig, k_O3_vig, carga_passo]}
+
+- id: N21
+  descricao: "Na carga humana de P (96/17), PAR=2 recuperados: O1 19 e 3, O3 22 e 6, O2 12 e 9 (P: 23 e 9)"
+  tipo: numero
+  valores:
+    - {nome: par2_O1_K1_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O1_SCORE, modo: vigilancia, carga: K1_humana}, coluna: par2_topk}, texto_pt: "19"}
+    - {nome: par2_O1_K1_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O1_SCORE, modo: confirmacao, carga: K1_humana}, coluna: par2_topk}, texto_pt: "3"}
+    - {nome: par2_O3_K1_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O3_p_cal_ml, modo: vigilancia, carga: K1_humana}, coluna: par2_topk}, texto_pt: "22"}
+    - {nome: par2_O3_K1_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O3_p_cal_ml, modo: confirmacao, carga: K1_humana}, coluna: par2_topk}, texto_pt: "6"}
+    - {nome: par2_O2_K1_vig, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O2_CdR, modo: vigilancia, carga: K1_humana}, coluna: par2_topk}, texto_pt: "12"}
+    - {nome: par2_O2_K1_conf, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O2_CdR, modo: confirmacao, carga: K1_humana}, coluna: par2_topk}, texto_pt: "9"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [par2_O1_K1_vig, par2_O3_K1_vig, humano_P_vig]}
+    # pos_revisao: âncora C12 (com 96 revisões: F4 recupera 18, O1 19, O3 22; F4 em N42) (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_O1_K1_vig], mesma_frase: ["O1", "96"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_O3_K1_vig], mesma_frase: ["O3", "96"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_O1_K1_vig], mesma_frase: ["O1", "96"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_O3_K1_vig], mesma_frase: ["O3", "96"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [par2_O3_K1_vig, par2_O3_K1_conf, par2_P_match_vig, par2_P_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [par2_O3_K1_vig, par2_O3_K1_conf, par2_P_match_vig, par2_P_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [par2_O3_K1_vig, par2_O3_K1_conf, k_O3_vig, k_O3_conf]}
+
+- id: N22
+  descricao: "Revisões para recuperar os 36 PAR=2: O1 2.521, F4 1.387, O3 23.443"
+  tipo: numero
+  valores:
+    - {nome: k36_O1, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O1_SCORE, modo: vigilancia, carga: K1_humana}, coluna: k_min_36}, texto_pt: "2.521"}
+    - {nome: k36_O3, fonte: {arquivo: data/comparador_mesma_carga.csv, filtro: {ordenacao: O3_p_cal_ml, modo: vigilancia, carga: K1_humana}, coluna: k_min_36}, texto_pt: "23.443"}
+    - {nome: k36_F4, fonte: {arquivo: data/fusao_filas.csv, filtro: {fila: F4, metrica: revisoes_36}, coluna: media}, texto_pt: "1.387"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [k36_O1, k36_O3, n_par2]}
+    - {arquivo: text/latex/conclusao.tex, exige: [k36_F4, k36_O1]}
+    # pos_revisao: âncoras C11 (recuperação integral: O3 contra O1) e C12 (F4 contra O1) (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k36_O3, k36_O1], mesma_frase: ["O3", "O1"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k36_O3, k36_O1], mesma_frase: ["O3", "O1"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k36_F4], mesma_frase: ["F4", "O1"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [k36_F4], mesma_frase: ["F4", "O1"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [k36_O1, k36_O3, n_par2]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k36_O1, k36_O3]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [k36_F4, k36_O1]}
+
+- id: N23
+  descricao: "Reduções de O3 frente a O1: 75,0% (vigilância) e 43,1% (confirmação)"
+  tipo: numero
+  valores:
+    - {nome: reducao_O3_O1_vig, fonte: {derivado: "1 - k_O3_vig / k_O1_vig"}, transformacao: pct1, texto_pt: "75,0"}
+    - {nome: reducao_O3_O1_conf, fonte: {derivado: "1 - k_O3_conf / k_O1_conf"}, transformacao: pct1, texto_pt: "43,1"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf, k_O3_vig, k_O1_vig]}
+    # pos_revisao: âncora C11 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf], mesma_frase: [["reduç", "reduct"]]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf], mesma_frase: [["reduç", "reduct"]]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf], mesma_frase: [["reduç", "reduct"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf], mesma_frase: [["reduç", "reduct"]]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [reducao_O3_O1_vig, reducao_O3_O1_conf]}
+  ressalvas: "Derivados de 1-125/501 e 1-29/51; sem coluna própria no artefato."
+
+- id: N24
+  descricao: "Perdas totais (revisões humanas equivalentes): vigilância P 957,72, O3 775, P-MATCH 772,72, O2 1.296; confirmação 957,2, 569, 569,2, 551"
+  tipo: numero
+  valores:
+    - {nome: perda_P_vig, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: P}, coluna: perda_total}, transformacao: dec2, texto_pt: "957,72"}
+    - {nome: perda_O3_vig, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: O3_recuperacao_equivalente}, coluna: perda_total}, texto_pt: "775"}
+    - {nome: perda_PMATCH_vig, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: P_MATCH_ao_humano}, coluna: perda_total}, transformacao: dec2, texto_pt: "772,72"}
+    - {nome: perda_O2_vig, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: O2_mesma_carga_humana_P}, coluna: perda_total}, texto_pt: "1.296"}
+    - {nome: perda_P_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: P}, coluna: perda_total}, transformacao: dec1, texto_pt: "957,2"}
+    - {nome: perda_O3_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: O3_recuperacao_equivalente}, coluna: perda_total}, texto_pt: "569"}
+    - {nome: perda_PMATCH_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: P_MATCH_ao_humano}, coluna: perda_total}, transformacao: dec1, texto_pt: "569,2"}
+    - {nome: perda_O2_conf, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: confirmacao, braco: O2_recuperacao_equivalente}, coluna: perda_total}, texto_pt: "551"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perda_P_vig, perda_O3_vig, perda_PMATCH_vig, perda_O2_vig, perda_P_conf, perda_O3_conf, perda_PMATCH_conf, perda_O2_conf]}
+  ressalvas: "Exploratório post hoc, revisor perfeito, C_LLM = 0,005; limiar C_LLM 0,0116 e custo 0,0146 (17,5 s) não registrados como valores (sem coluna de origem)."
+
+- id: N25
+  descricao: "F4: 16 PAR=2 entre os 17 primeiros"
+  tipo: numero
+  valores:
+    - {nome: topo_par2, fonte: {arquivo: data/fusao_robustez_topo.json, chave: par2}, texto_pt: "16"}
+    - {nome: topo_n, fonte: {arquivo: data/fusao_robustez_topo.json, chave: n}, texto_pt: "17"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, exige: [topo_par2, "PAR=2", topo_n]}
+
+- id: N26
+  descricao: "Bootstrap F4 frente a O1: medianas de 38 e 1.203 revisões a menos nas metas 9 e 36"
+  tipo: numero
+  valores:
+    - {nome: boot_mediana_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F4-O1, meta_nominal: 9}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "38"}
+    - {nome: boot_mediana_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F4-O1, meta_nominal: 36}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "1.203"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [boot_mediana_meta9, boot_mediana_meta36]}
+    # pos_revisao: âncora C12 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [boot_mediana_meta9, boot_mediana_meta36], mesma_frase: ["F4"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [boot_mediana_meta9, boot_mediana_meta36], mesma_frase: ["F4"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [boot_mediana_meta9, boot_mediana_meta36], mesma_frase: ["F4"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [boot_mediana_meta9, boot_mediana_meta36], mesma_frase: ["F4"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [boot_mediana_meta9, boot_mediana_meta36]}
+
+- id: N27
+  descricao: "Filtro NONMATCH na vigilância, k=96: 74 descartados, 22 revisões humanas (H), 13 PAR=2 recuperados (O3: 6), 9 dos 22 PAR=2 do topo descartados"
+  tipo: numero
+  valores:
+    - {nome: nonmatch_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: nonmatch}, texto_pt: "74"}
+    - {nome: H_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: H}, texto_pt: "22"}
+    - {nome: par2_rec_filtro, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: par2_recuperados}, texto_pt: "13"}
+    - {nome: par2_descartados_filtro, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: par2_descartados}, texto_pt: "9"}
+    - {nome: par2_topk_filtro, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: par2_topk}, texto_pt: "22"}
+    - {nome: o3_par2_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: o3_par2_mesma_carga}, texto_pt: "6"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [H_k96, [par2_descartados_filtro, "nove"]]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [H_k96, [par2_descartados_filtro, "nine"]]}
+    - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "k=96", [par2_descartados_filtro, "nove"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [nonmatch_k96, H_k96, par2_rec_filtro, [o3_par2_k96, "seis"], par2_descartados_filtro, par2_topk_filtro]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, o3_par2_k96]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [H_k96, par2_rec_filtro, o3_par2_k96, vpn_k96, par2_descartados_filtro]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, o3_par2_k96, par2_descartados_filtro]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [nonmatch_k96, H_k96, par2_rec_filtro, [o3_par2_k96, "seis"], "k=96"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [H_k96, "réplica"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Resumo traz '22 revisões humanas' sem qualificador"}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [H_k96, "replicate"], xfail: "I5: H=22 vale para uma réplica (na confirmação H=18); o Abstract traz '22 human reviews' sem qualificador"}
+    - {arquivo: text/latex/capitulo1.tex, exige: [H_k96, "réplica"]}
+  ressalvas: "H=22 é de uma réplica; na confirmação H=18 (filtro_llm.csv, confirmacao k=96)."
+
+- id: N28
+  descricao: "VPN do filtro 87,8% (IC 95% 78,5 a 93,5) em k=96 e 78,0% em k=58; sensibilidade 59,1% (13/22; IC 38,7 a 76,7); 12,2% dos descartados eram vínculos"
+  tipo: numero
+  valores:
+    - {nome: vpn_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: vpn_nonmatch}, transformacao: pct1, texto_pt: "87,8"}
+    - {nome: vpn_ic_inf_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: vpn_ic95_inf}, transformacao: pct1, texto_pt: "78,5"}
+    - {nome: vpn_ic_sup_k96, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 96}, coluna: vpn_ic95_sup}, transformacao: pct1, texto_pt: "93,5"}
+    - {nome: vpn_k58, fonte: {arquivo: data/filtro_llm.csv, filtro: {modo: vigilancia, k: 58}, coluna: vpn_nonmatch}, transformacao: pct1, texto_pt: "78,0"}
+    - {nome: sens_filtro, fonte: {derivado: "par2_rec_filtro / par2_topk_filtro"}, transformacao: pct1, texto_pt: "59,1"}
+    - {nome: sens_filtro_ic_inf, fonte: {derivado: "wilson_inf(par2_rec_filtro, par2_topk_filtro)"}, transformacao: pct1, texto_pt: "38,7"}
+    - {nome: sens_filtro_ic_sup, fonte: {derivado: "wilson_sup(par2_rec_filtro, par2_topk_filtro)"}, transformacao: pct1, texto_pt: "76,7"}
+    - {nome: prop_descartados_vinculos, fonte: {derivado: "par2_descartados_filtro / nonmatch_k96"}, transformacao: pct1, texto_pt: "12,2"}
+  ocorrencias:
+    - {arquivo: text/latex/capitulo1.tex, exige: [vpn_k96]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [sens_filtro, vpn_k96, vpn_ic_inf_k96, vpn_ic_sup_k96, prop_descartados_vinculos]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [vpn_k96, vpn_ic_inf_k96, vpn_ic_sup_k96, sens_filtro, sens_filtro_ic_inf, sens_filtro_ic_sup, vpn_k58]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [vpn_k96, vpn_k58, vpp_llm_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [vpn_k96, vpn_ic_inf_k96, vpn_ic_sup_k96, vpn_k58, sens_filtro, sens_filtro_ic_inf, sens_filtro_ic_sup]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [sens_filtro, vpn_k96, [par2_descartados_filtro, "nove"]]}
+  ressalvas: "IC da sensibilidade: Wilson sobre 13/22 (sem coluna no artefato); 12,2% = 9/74."
+
+- id: N29
+  descricao: "Perda do filtro (1.172,5) frente à de O3 com 96 revisões (796), na unidade de custo da tese"
+  tipo: numero
+  valores:
+    - {nome: perda_O3_96rev, fonte: {arquivo: data/custos_equivalentes_exploratorios.csv, filtro: {modo: vigilancia, braco: O3_mesma_carga_humana_P}, coluna: perda_total}, texto_pt: "796"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [perda_O3_96rev, "1.172,5"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [perda_O3_96rev, "1.172,5"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [perda_O3_96rev, "1.172,5"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [perda_O3_96rev, "1.172,5"]}
+  pendente: "1.172,5 (perda do filtro) não tem artefato de origem localizado (não consta de custos_equivalentes_exploratorios.csv nem de filtro_llm.csv); permanece como literal nas ocorrências até haver script/CSV que o gere."
+
+- id: N30
+  descricao: "Sensibilidade automática de P no passo 11: 42,5% (vigilância) e 47,5% (confirmação); limite com revisor perfeito 77,5%"
+  tipo: numero
+  valores:
+    - {nome: sens_P_passo11_vig, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_11}, coluna: sens_automatica}, transformacao: pct1, texto_pt: "42,5"}
+    - {nome: sens_P_passo11_conf, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_confirmacao, passo: passo_11}, coluna: sens_automatica}, transformacao: pct1, texto_pt: "47,5"}
+    - {nome: sens_perfeito_passo11_vig, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_11}, coluna: sens_revisor_perfeito}, transformacao: pct1, texto_pt: "77,5"}
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, exige: [sens_P_passo11_vig]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, exige: [sens_P_passo11_vig]}
+    - {arquivo: text/latex/conclusao.tex, exige: [sens_P_passo11_vig, sens_perfeito_passo11_vig]}
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [sens_P_passo11_vig, sens_P_passo11_conf, corte_passo11_pct]}
+    # pos_revisao: âncora C14 (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo11_vig], mesma_frase: ["passo 11", "vigilância"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo11_vig], mesma_frase: [["passo 11", "step 11"], ["surveillance", "vigilância"]]}
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo11_vig], mesma_frase: ["passo 11", "vigilância"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo11_vig], mesma_frase: ["passo 11", "vigilância"]}
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_perfeito_passo11_vig], mesma_frase: ["revisor perfeito"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_perfeito_passo11_vig], mesma_frase: ["revisor perfeito"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_P_passo11_vig, sens_P_passo11_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [sens_P_passo11_vig, sens_perfeito_passo11_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [sens_P_passo11_vig, sens_P_passo11_conf]}
+
+- id: N31
+  descricao: "Corte isolado por passo: passo 11 15/40 = 37,5%; passo 6 76/80 = 95,0%; passo 9 120/127 = 94,5%"
+  tipo: numero
+  valores:
+    - {nome: par1_passo11, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 11, par: 1}, coluna: n, agregar: soma}, texto_pt: "15"}
+    - {nome: ntrue_passo11, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_11}, coluna: n_true}, texto_pt: "40"}
+    - {nome: par1_passo6, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 6, par: 1}, coluna: n, agregar: soma}, texto_pt: "76"}
+    - {nome: ntrue_passo6, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_6}, coluna: n_true}, texto_pt: "80"}
+    - {nome: par1_passo9, fonte: {arquivo: data/par_por_passo.csv, filtro: {modo: vigilancia, passo: 9, par: 1}, coluna: n, agregar: soma}, texto_pt: "120"}
+    - {nome: ntrue_passo9, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_9}, coluna: n_true}, texto_pt: "127"}
+    - {nome: corte_passo11_pct, fonte: {derivado: "par1_passo11 / ntrue_passo11"}, transformacao: pct1, texto_pt: "37,5"}
+    - {nome: corte_passo6_pct, fonte: {derivado: "par1_passo6 / ntrue_passo6"}, transformacao: pct1, texto_pt: "95,0"}
+    - {nome: corte_passo9_pct, fonte: {derivado: "par1_passo9 / ntrue_passo9"}, transformacao: pct1, texto_pt: "94,5"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo5_equidade.tex, exige: [corte_passo11_pct, corte_passo6_pct, corte_passo9_pct]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [corte_passo11_pct, corte_passo6_pct, corte_passo9_pct, par1_passo11, ntrue_passo11]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [corte_passo11_pct, corte_passo6_pct, corte_passo9_pct, par1_passo11, ntrue_passo11, par1_passo6, ntrue_passo6, par1_passo9, ntrue_passo9]}
+
+- id: N32
+  descricao: "VPP de P no passo 11 (vigilância) 68,0% (17/25) contra 97,4% no passo 6; denominador 25 menor que 30"
+  tipo: numero
+  valores:
+    - {nome: ppv_P_passo11, fonte: {arquivo: data/equidade_arranjo_den30_excluidos.csv, filtro: {decisao: arranjo_P_vigilancia, dimension: passo, metric: ppv, group_a: passo_11, group_b: passo_6}, coluna: rate_a}, transformacao: pct1, texto_pt: "68,0"}
+    - {nome: ppv_P_passo6, fonte: {arquivo: data/equidade_arranjo_den30_excluidos.csv, filtro: {decisao: arranjo_P_vigilancia, dimension: passo, metric: ppv, group_a: passo_11, group_b: passo_6}, coluna: rate_b}, transformacao: pct1, texto_pt: "97,4"}
+    - {nome: den_ppv_passo11, fonte: {arquivo: data/equidade_arranjo_den30_excluidos.csv, filtro: {decisao: arranjo_P_vigilancia, dimension: passo, metric: ppv, group_a: passo_11, group_b: passo_6}, coluna: n1}, texto_pt: "25"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: sempre, exige: [ppv_P_passo11, ppv_P_passo6, den_ppv_passo11]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [ppv_P_passo11, ppv_P_passo6, den_ppv_passo11]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [ppv_P_passo11, den_ppv_passo11]}
+  ressalvas: "O slide cita linhas erradas de equidade_arranjo_den30_excluidos.csv (65-67); as corretas são 30-31 (vigilância) e 92-93 (confirmação) (I2)."
+
+- id: N33
+  descricao: "Rejeições de Benjamini-Hochberg com denominadores >= 30: P vigilância 3/26, P confirmação 2/26, cascata vigilância 6/28, cascata confirmação 1/21"
+  tipo: numero
+  valores:
+    - {nome: rej_P_vig, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: arranjo_P_vigilancia}, coluna: rejeicoes_depois}, texto_pt: "3"}
+    - {nome: testes_P_vig, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: arranjo_P_vigilancia}, coluna: testes_depois}, texto_pt: "26"}
+    - {nome: rej_P_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: arranjo_P_confirmacao}, coluna: rejeicoes_depois}, texto_pt: "2"}
+    - {nome: testes_P_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: arranjo_P_confirmacao}, coluna: testes_depois}, texto_pt: "26"}
+    - {nome: rej_casc_vig, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_vigilancia}, coluna: rejeicoes_depois}, texto_pt: "6"}
+    - {nome: testes_casc_vig, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_vigilancia}, coluna: testes_depois}, texto_pt: "28"}
+    - {nome: rej_casc_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_confirmacao}, coluna: rejeicoes_depois}, texto_pt: "1"}
+    - {nome: testes_casc_conf, fonte: {arquivo: data/equidade_arranjo_den30_rejeicoes.csv, filtro: {decisao: cascata_v31_confirmacao}, coluna: testes_depois}, texto_pt: "21"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: sempre, exige: [[rej_P_vig, "três"], testes_P_vig, [rej_P_conf, "duas"], [rej_casc_vig, "seis"], testes_casc_vig, [rej_casc_conf, "uma"], testes_casc_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [[rej_P_vig, "três"], testes_P_vig, [rej_P_conf, "duas"], [rej_casc_vig, "seis"], testes_casc_vig, [rej_casc_conf, "uma"], testes_casc_conf]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: ["3/26", "2/26", "6/28", "1/21"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: ["3/26", "2/26", "6/28", "1/21"]}
+
+- id: N34
+  descricao: "RF+SMOTE detecta 67 vínculos contra 43 da nota >= 8; 27 só do modelo (25 PAR=1 e 2 PAR=2) em 24 óbitos; 247 vínculos correspondem a 204 óbitos"
+  tipo: numero
+  valores:
+    - {nome: rf_tp, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: controle.tp}, texto_pt: "67"}
+    - {nome: nota8_tp, fonte: {arquivo: data/epidemiological_impact.csv, filtro: {method: "Naive threshold >=8"}, coluna: TP}, texto_pt: "43"}
+    - {nome: rec_n, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: recuperados.n}, texto_pt: "27"}
+    - {nome: rec_par1, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: recuperados.por_par.1}, texto_pt: "25"}
+    - {nome: rec_par2, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: recuperados.por_par.2}, texto_pt: "2"}
+    - {nome: rec_obitos, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: recuperados.obitos_distintos}, texto_pt: "24"}
+    - {nome: obitos_vinculos, fonte: {arquivo: data/banca_b_recuperados_por_par.json, chave: obitos_distintos_247}, texto_pt: "204"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [rf_tp, nota8_tp, rec_n, rec_par1, [rec_par2, "dois"], rec_obitos, obitos_vinculos]}
+    - {arquivo: text/latex/capitulo_dados.tex, exige: [n_vinculos, obitos_vinculos]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [rf_tp, nota8_tp]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [rec_n, rec_par1, rec_par2, rec_obitos, obitos_vinculos]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [rf_tp, nota8_tp, rec_n, rec_par1, rec_obitos, obitos_vinculos]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [rec_par1, rec_obitos, obitos_vinculos]}
+
+- id: N35
+  descricao: "Subamostragem dos negativos: mediana de PAR=2 entre os 96 primeiros 13 (1:1) e 18,5 (1:5), contra 22 do treino sem subamostragem"
+  tipo: numero
+  valores:
+    - {nome: subamostragem_mediana_1_1, fonte: {arquivo: data/subamostragem_treino_resumo.csv, filtro: {ratio: "1:1", variant: isotonic, population: below, metric: par2_top_96}, coluna: median}, texto_pt: "13"}
+    - {nome: subamostragem_mediana_1_5, fonte: {arquivo: data/subamostragem_treino_resumo.csv, filtro: {ratio: "1:5", variant: isotonic, population: below, metric: par2_top_96}, coluna: median}, transformacao: dec1, texto_pt: "18,5"}
+    - {nome: subamostragem_referencia, fonte: {arquivo: data/subamostragem_treino_resumo.csv, filtro: {ratio: "1:1", variant: isotonic, population: below, metric: par2_top_96}, coluna: reference}, texto_pt: "22"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [subamostragem_mediana_1_1, subamostragem_mediana_1_5, subamostragem_referencia]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [subamostragem_mediana_1_1, subamostragem_mediana_1_5, subamostragem_referencia]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [subamostragem_mediana_1_1, subamostragem_mediana_1_5, subamostragem_referencia]}
+  ressalvas: "O Resumo e o Abstract citam a subamostragem sem números (ocorrências do rascunho omitidas)."
+
+- id: N36
+  descricao: "Cenários de sensibilidade humana: amplitude máxima de 0,73 ponto percentual (revisão integral) e 0,53 (cargas reduzidas)"
+  tipo: numero
+  valores:
+    - {nome: amplitude_integral, fonte: {arquivo: data/cenarios_sensibilidade_humana_amplitude.csv, filtro: {modo: vigilancia, estrategia: humano_integral}, coluna: amplitude_pp}, transformacao: dec2, texto_pt: "0,73"}
+    - {nome: amplitude_reduzida, fonte: {arquivo: data/cenarios_sensibilidade_humana_amplitude.csv, filtro: {modo: vigilancia, estrategia: O3, k: 440}, coluna: amplitude_pp}, transformacao: dec2, texto_pt: "0,53"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [amplitude_integral, amplitude_reduzida]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [amplitude_integral, amplitude_reduzida]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [amplitude_integral, amplitude_reduzida]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [amplitude_integral, amplitude_reduzida]}
+  ressalvas: "Limites por construção (5% de erro sobre 36 de 247), não achado empírico."
+
+- id: N37
+  descricao: "96 revisões de P a 20 minutos por par = 32 horas; 687 horas poupadas contra o cenário de 2.156 revisões (meta diferente)"
+  tipo: numero
+  valores:
+    - {nome: horas_P_vig, fonte: {arquivo: data/esforco_arranjo.csv, filtro: {modo: vigilancia, braco: P, carga: K1_humana}, coluna: horas}, texto_pt: "32"}
+    - {nome: horas_poupadas_P_vig, fonte: {arquivo: data/esforco_arranjo.csv, filtro: {modo: vigilancia, braco: P, carga: K1_humana}, coluna: horas_poupadas}, transformacao: int, texto_pt: "687"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [carga_passo]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [horas_P_vig, carga_passo]}  # 32 e 687 seguem protegidos pela tabela tab_cap8_esforco (regeneração em test_s8a; manifesto tests/data/tabelas_tese.yaml)
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [horas_P_vig, horas_poupadas_P_vig]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [horas_poupadas_P_vig, carga_passo]}
+  ressalvas: "Horas são ordem de grandeza (20 min por par é hipótese de planejamento); as 687 horas comparam metas diferentes."
+
+- id: N38
+  descricao: "Experimento 1 sem vazamento: F1 esperado 0,941 (vigilância) e 0,916 (confirmação); reduções de revisão 55,0% e 34,7%; versão histórica 0,954, 14,5% e 17,6%"
+  tipo: numero
+  valores:
+    - {nome: f1_exp1_vig, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: vigilancia, arm: macd, metric: exp_f1}, coluna: allowlist_mean}, transformacao: dec3, texto_pt: "0,941"}
+    - {nome: f1_exp1_conf, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: confirmacao, arm: macd, metric: exp_f1}, coluna: allowlist_mean}, transformacao: dec3, texto_pt: "0,916"}
+    - {nome: reducao_exp1_vig, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: vigilancia, arm: on_vs_off, metric: review_reduction_percent}, coluna: allowlist_mean}, transformacao: dec1, texto_pt: "55,0"}
+    - {nome: reducao_exp1_conf, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: confirmacao, arm: on_vs_off, metric: review_reduction_percent}, coluna: allowlist_mean}, transformacao: dec1, texto_pt: "34,7"}
+    - {nome: f1_historico_vig, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: vigilancia, arm: macd, metric: exp_f1}, coluna: historical_mean}, transformacao: dec3, texto_pt: "0,954"}
+    - {nome: reducao_historica_vig, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: vigilancia, arm: on_vs_off, metric: review_reduction_percent}, coluna: historical_mean}, transformacao: dec1, texto_pt: "14,5"}
+    - {nome: reducao_historica_conf, fonte: {arquivo: data/exp1_vazamento_comparacao.csv, filtro: {mode: confirmacao, arm: on_vs_off, metric: review_reduction_percent}, coluna: historical_mean}, transformacao: dec1, texto_pt: "17,6"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: sempre, exige: [f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf, f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [f1_exp1_vig, f1_exp1_conf, reducao_exp1_vig, reducao_exp1_conf, f1_historico_vig, reducao_historica_vig, reducao_historica_conf]}
+  ressalvas: "F1 esperado, não observado; sem chamada a LLM."
+
+- id: N39
+  descricao: "Controle 2x2: célula D (sem óbito, partição por REFREC) com F1 0,846 e 14 FP; A 0,931; B 0,938 (RF+SMOTE)"
+  tipo: numero
+  valores:
+    - {nome: f1_celula_D, fonte: {arquivo: data/sensibilidade_sem_obito_refrec.csv, filtro: {cenario: D}, coluna: rf_smote_f1}, transformacao: dec3, texto_pt: "0,846"}
+    - {nome: fp_celula_D, fonte: {arquivo: data/sensibilidade_sem_obito_refrec.csv, filtro: {cenario: D}, coluna: rf_smote_fp}, texto_pt: "14"}
+    - {nome: f1_celula_A, fonte: {arquivo: data/sensibilidade_sem_obito_refrec.csv, filtro: {cenario: A}, coluna: rf_smote_f1}, transformacao: dec3, texto_pt: "0,931"}
+    - {nome: f1_celula_B, fonte: {arquivo: data/sensibilidade_sem_obito_refrec.csv, filtro: {cenario: B}, coluna: rf_smote_f1}, transformacao: dec3, texto_pt: "0,938"}
+  ocorrencias:
+    - {arquivo: text/latex/conclusao.tex, exige: [f1_celula_D, fp_celula_D, "FP"]}
+    # pos_revisao: âncora C05r (a partição por óbito, não a retirada dos indicadores, reduz o F1) (aprovado_por_autora: 2026-11-08)
+    - {arquivo: text/latex/estudo2_classificadores.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f1_celula_A, f1_celula_D], mesma_frase: [["F1", "F_1"]]}
+    - {arquivo: text/latex/estudo3_estrategias.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f1_celula_A, f1_celula_D], mesma_frase: [["F1", "F_1"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f1_celula_A, f1_celula_D], mesma_frase: [["F1", "F_1"]]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige: [f1_celula_D, fp_celula_D, "FP"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige: [f1_celula_A, f1_celula_B, f1_celula_D]}
+
+- id: N40
+  descricao: "Abaixo do corte: precisão média 0,283 em O3 contra 0,130 em O1; AUC 0,985 (O3) e 0,990 (O1) (âncora C11)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08"
+  valores:
+    - {nome: ap_abaixo_O3, fonte: {arquivo: data/contexto_obito.csv, filtro: {variante: O3, metrica: ap_abaixo}, coluna: valor}, transformacao: dec3, texto_pt: "0,283"}
+    - {nome: ap_abaixo_O1, fonte: {arquivo: data/contexto_obito.csv, filtro: {variante: O1, metrica: ap_abaixo}, coluna: valor}, transformacao: dec3, texto_pt: "0,130"}
+    - {nome: auc_abaixo_O3, fonte: {arquivo: data/contexto_obito.csv, filtro: {variante: O3, metrica: auc_abaixo}, coluna: valor}, transformacao: dec3, texto_pt: "0,985"}
+    - {nome: auc_abaixo_O1, fonte: {arquivo: data/contexto_obito.csv, filtro: {variante: O1, metrica: auc_abaixo}, coluna: valor}, transformacao: dec3, texto_pt: "0,990"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [ap_abaixo_O3, auc_abaixo_O3], mesma_frase: ["O3"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [ap_abaixo_O1, auc_abaixo_O1], mesma_frase: ["O1"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [ap_abaixo_O3, auc_abaixo_O3], mesma_frase: ["O3"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [ap_abaixo_O1, auc_abaixo_O1], mesma_frase: ["O1"]}
+  ressalvas: "Medidas pontuais abaixo do corte (contexto_obito.csv, linhas ap_abaixo e auc_abaixo de O1 e O3); a AUC de O1 é maior que a de O3, e o ganho de O3 está na precisão média, no topo da fila."
+
+- id: N41
+  descricao: "Bootstrap agrupado por óbito de O3 menos O1 (2.000 réplicas pareadas): metas 9, 23 e 36; nenhum IC 95% fica inteiramente abaixo de zero (âncora C11)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08"
+  valores:
+    - {nome: o3o1_mediana_meta9, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "21"}
+    - {nome: o3o1_ic_inf_meta9, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "52"}
+    - {nome: o3o1_ic_sup_meta9, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "13"}
+    - {nome: o3o1_prop_meta9, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 9}, coluna: proporcao_fusao_menor}, transformacao: pct1, texto_pt: "90,0"}
+    - {nome: o3o1_mediana_meta23, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 23}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "175"}
+    - {nome: o3o1_ic_inf_meta23, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 23}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "1.006"}
+    - {nome: o3o1_ic_sup_meta23, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 23}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "327"}
+    - {nome: o3o1_prop_meta23, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 23}, coluna: proporcao_fusao_menor}, transformacao: pct1, texto_pt: "80,2"}
+    - {nome: o3o1_mediana_meta36, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_mediana}, transformacao: abs_dec1, texto_pt: "579,5"}
+    - {nome: o3o1_ic_inf_meta36, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "1.962"}
+    - {nome: o3o1_ic_sup_meta36, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "23.566"}
+    - {nome: o3o1_prop_meta36, fonte: {arquivo: data/ordenacao_bootstrap_o3_o1.csv, filtro: {comparacao: O3-O1, meta_nominal: 36}, coluna: proporcao_fusao_menor}, transformacao: pct1, texto_pt: "42,7"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [o3o1_mediana_meta9, o3o1_ic_inf_meta9, o3o1_ic_sup_meta9, o3o1_prop_meta9, o3o1_mediana_meta23, o3o1_ic_inf_meta23, o3o1_ic_sup_meta23, o3o1_prop_meta23, o3o1_mediana_meta36, o3o1_ic_inf_meta36, o3o1_ic_sup_meta36, o3o1_prop_meta36], mesma_frase: [["O3", "O1", "meta"]]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [o3o1_mediana_meta9, o3o1_ic_inf_meta9, o3o1_ic_sup_meta9, o3o1_prop_meta9, o3o1_mediana_meta23, o3o1_ic_inf_meta23, o3o1_ic_sup_meta23, o3o1_prop_meta23, o3o1_mediana_meta36, o3o1_ic_inf_meta36, o3o1_ic_sup_meta36, o3o1_prop_meta36], mesma_frase: [["O3", "O1", "meta"]]}
+  ressalvas: "Valores absolutos: nas metas 9 e 23 a mediana é de revisões a menos (21 e 175) e na meta 36 é de revisões a mais (579,5); o limite inferior é sempre de revisões a menos e o superior de revisões a mais (52/13, 1.006/327, 1.962/23.566). A proporção é a de réplicas em que O3 exige menos revisões que O1 (coluna proporcao_fusao_menor, linhas O3-O1). Metas 9, 23 e 36 = fracao_se_menos_36 0,25, 0,64 e 1,0."
+
+- id: N42
+  descricao: "Com 96 revisões (vigilância), F4 recupera 18 pares verdadeiros (O1 19, O3 22, em N21) (âncora C12)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08"
+  valores:
+    - {nome: par2_F4_96, fonte: {arquivo: data/fusao_filas.csv, filtro: {fila: F4, metrica: par2_top_96}, coluna: media}, texto_pt: "18"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F4_96], mesma_frase: ["F4", "96"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F4_96], mesma_frase: ["F4", "96"]}
+  ressalvas: "fusao_filas.csv é determinístico (p10 = p90 = média) nas filas F4, O1 e O3."
+
+- id: N43
+  descricao: "Sensibilidade automática de P na vigilância nos passos 6 e 9: 95,0% e 96,1% (contra 42,5% no passo 11, em N30) (âncora C14)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08"
+  valores:
+    - {nome: sens_P_passo6_vig, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_6}, coluna: sens_automatica}, transformacao: pct1, texto_pt: "95,0"}
+    - {nome: sens_P_passo9_vig, fonte: {arquivo: data/equidade_passo_revisor.csv, filtro: {decisao: arranjo_P_vigilancia, passo: passo_9}, coluna: sens_automatica}, transformacao: pct1, texto_pt: "96,1"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo6_vig, sens_P_passo9_vig], mesma_frase: ["passo", "sensibilidade"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [sens_P_passo6_vig, sens_P_passo9_vig], mesma_frase: ["passo", "sensibilidade"]}
+  ressalvas: "Sensibilidade automática de P (com o corte), distinta da sensibilidade do corte isolado por passo (N31: 95,0% no passo 6 e 94,5% no 9)."
+
+- id: N44
+  descricao: "Bootstrap agrupado por óbito de F3 frente a O1: medianas de 35 e 894 revisões a menos nas metas 9 e 36, com IC 95% inteiramente abaixo de zero (59 a 14 e 2.243 a 164); com 96 revisões (vigilância), F3 recupera 25 pares verdadeiros (âncoras C01r e C12)"
+  tipo: numero
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
+  valores:
+    - {nome: f3o1_mediana_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "35"}
+    - {nome: f3o1_ic_inf_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "59"}
+    - {nome: f3o1_ic_sup_meta9, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 9}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "14"}
+    - {nome: f3o1_mediana_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_mediana}, transformacao: abs_int, texto_pt: "894"}
+    - {nome: f3o1_ic_inf_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_inf}, transformacao: abs_int, texto_pt: "2.243"}
+    - {nome: f3o1_ic_sup_meta36, fonte: {arquivo: data/fusao_robustez_bootstrap.csv, filtro: {comparacao: F3-O1, meta_nominal: 36}, coluna: diferenca_revisoes_ic95_sup}, transformacao: abs_int, texto_pt: "164"}
+    - {nome: par2_F3_96, fonte: {arquivo: data/fusao_filas.csv, filtro: {fila: F3, metrica: par2_top_96}, coluna: media}, texto_pt: "25"}
+  ocorrencias:
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f3o1_mediana_meta9, f3o1_ic_inf_meta9, f3o1_ic_sup_meta9, f3o1_mediana_meta36, f3o1_ic_inf_meta36, f3o1_ic_sup_meta36], mesma_frase: ["F3"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [f3o1_mediana_meta9, f3o1_ic_inf_meta9, f3o1_ic_sup_meta9, f3o1_mediana_meta36, f3o1_ic_inf_meta36, f3o1_ic_sup_meta36], mesma_frase: ["F3"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F3_96], mesma_frase: ["F3", "96"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, ignorar_caixa: true, exige: [par2_F3_96], mesma_frase: ["F3", "96"]}
+  ressalvas: "Valores absolutos: os limites do IC são de revisões a menos (limite inferior 59 e 2.243, superior 14 e 164), logo inteiramente abaixo de zero na diferença F3 menos O1. Nas metas 9 e 36, frente a O3 (F3-O3), nenhum IC 95% fica inteiramente abaixo de zero. Análise posterior ao registro, entre variantes de fusão. fusao_filas.csv é determinístico (p10 = p90 = média)."
+
+# ------------------------------------------------------------- afirmações
+
+- id: C01
+  descricao: "Hipótese post hoc, a validar em dados novos; o ganho decorreria da ordenação, não da política de quatro ações"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["post hoc", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["post hoc", "hypothesis"], exige_algum: ["validation", "validate"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["post hoc", "quatro ações", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pre_revisao, exige_todos: ["post hoc", "exploratóri"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pre_revisao, exige_todos: ["hipótese", "gerad", "valida"], exige_algum: ["requer", "exige", "a validar", "depende"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["post hoc", "quatro ações", "hipótese"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["hipótese", "quatro ações"], exige_algum: ["validar", "validação"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["hipótese", "gerad", "quatro ações", "valida"], exige_algum: ["exige", "requer", "a validar", "depende"]}
+
+- id: C02
+  descricao: "Critério de falsificação: refuta-se se O3 não atingir a recuperação de P com pelo menos 25% menos revisões que O1 (limite inferior do IC 95%) em cada meta"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["25", "O1", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"]], exige_algum: ["critério", "falsific", "refut"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["25", "O1", "O3", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"], ["refut", "falsific"]], exige_algum: ["limite inferior", "limite inf"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pre_revisao, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["25", "O1", ["menos revis", "fewer review"]], exige_algum: ["limite inferior", "limite inf", "refut", "falsific"]}
+  ressalvas: "Ausente do Resumo e do Abstract."
+
+- id: C03
+  descricao: "Referência operacional: revisora única; ordem e parada da revisão não documentadas; precedência do CdR é hipótese de trabalho"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["verificação", "incorporação"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["verification", "incorporation"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["parada", "revisão"], exige_algum: ["não informa", "não documenta", "não consta", "sem registro"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["revisor", "únic"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["hipótese", "trabalho"], exige_algum: ["não foi documentad", "não está documentad", "não estão documentad", "não documentad", "não informad"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pre_revisao, exige_todos: ["referência operacional", "rotina"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["revisor", "únic", "hipótese", "trabalho"], exige_algum: ["não estão documentad", "não está documentad", "não foi documentad", "não documentad", "não informad"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["revisor", "únic", "hipótese", "trabalho"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["revisor", "únic", "O1"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["revisor", "únic", "hipótese", "trabalho"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["hipótese", "trabalho", "ordem"]}
+
+- id: C04
+  descricao: "Viés de verificação e de incorporação: direção dominante e magnitude não identificáveis"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["direção", "magnitude"], exige_algum: ["não são identific", "não é identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["viés", "verificação", "magnitude"], exige_algum: ["não é identific", "não são identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["viés", "verificação", "incorporação"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["viés", "verificação", "magnitude"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["direção", "magnitude"], exige_algum: ["não há direção", "não estimad", "estimad", "não identific"]}
+
+- id: C05
+  descricao: "Indicadores de encerramento por óbito introduziram vazamento de alvo nos estudos de classificadores e de estratégias"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["vazamento", "indicador", "encerramento", "óbito"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["leakage", "death", "closure"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pre_revisao, exige_todos: ["vazamento", "encerramento", "óbito"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["vazamento", "alvo", "indicador", "encerramento", "óbito"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["vazamento", "alvo"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["vazamento", "alvo", "encerramento", "óbito"]}
+
+- id: C06
+  descricao: "Registro interno de P sem critério de sucesso; a leitura como resultado negativo é posterior"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["registro", "intern", "critério", "sucesso"]}
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["registro", "intern", "negativ"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["registered", "internal", "success", "criterion"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["registered", "internal", "negative"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["registro", "intern", "negativ"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["registro", "intern", "critério", "sucesso", "negativ"], exige_algum: ["sem hipótese", "nem critério", "sem critério", "ausência de critério"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["registro", "intern", "S3"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["critério", "sucesso", "negativ"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["critério", "sucesso", "carimbo", "independente"]}
+  ressalvas: "Horários 01:22:17 e 02:11:52 UTC só no texto e no histórico git (16d5876); o texto cita 8c16a41 e a metadata JSON traz d526c3fb e 7b40cfb (I7)."
+
+- id: C07
+  descricao: "O LLM não deve aceitar vínculos sozinho; só como filtro de NONMATCH exploratório"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["LLM", "exploratóri"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["LLM", "exploratory"], exige_algum: ["should not accept", "must not accept", "does not accept", "never accept", "without accepting"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["LLM", "NONMATCH"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["NONMATCH", ["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["LLM", "NONMATCH", ["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["NONMATCH"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: [["sozinh", "autônom"]], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+
+- id: C08
+  descricao: "Recomendação: preservar o corte e, abaixo dele, ordenar pela fusão RRF (F4); vantagem sobre a probabilidade calibrada não demonstrada"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: ["preserv", "corte", "fusão"], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: ["preserve", "cut-off", "reciprocal rank fusion"], exige_algum: ["not demonstrated", "not been demonstrated", "not shown", "not established", "unproven"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pre_revisao, exige_todos: ["preserv", "corte", "curva de esforço"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["fusão", "preserv", "corte"], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pre_revisao, exige_todos: ["fusão", ["recomend", "indica-se", "sugere-se", "propõe-se"]], exige_algum: ["não foi demonstrad", "não demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: ["preserv", "corte", "fusão", "RRF"], exige_algum: ["não demonstrad", "não foi demonstrad", "não se demonstr", "sem demonstr", "não é demonstrad"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["preserv", "corte", "fusão", "RRF"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: ["F4", ["recomend", "indica-se", "sugere-se", "propõe-se"]], exige_algum: ["validar", "validação"]}
+
+- id: C09
+  descricao: "Pares fora do orçamento são não examinados, não óbitos não notificados"
+  tipo: afirmacao
+  # aprovado_por_autora: PENDENTE (âncoras reescritas em 2026-11-08, QA F10; a autora deve aprovar a data)
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pre_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pre_revisao, exige_todos: [["unexamined", "not examined", "were not examined"], "death", "notified"], exige_algum: ["not equivalent", "not equal", "not mean", "not imply", "not necessarily"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pre_revisao, exige_todos: ["não examinad", "óbito", "notificad"], exige_algum: ["não equivale", "não equivalem", "não significa", "não corresponde", "não representa", "não óbito"]}
+    - {arquivo: text/slides/defesa.tex, vigencia: informativa, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notifica"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/slides/roteiro_defesa.md, vigencia: informativa, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notifica"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+
+# ------------------------------------------------- afirmações aprovadas em 2026-11-08
+# Âncoras de docs/plans/ANCORAS_PROPOSTA_2026-11-08.md, opção (a). Todas as ocorrências são
+# `pos_revisao`: o texto atual ainda não as contém; passam a valer quando o arquivo (ou
+# tese.tex#resumo / tese.tex#abstract) entra em tests/data/arquivos_revisados.yaml.
+# Cada ocorrência exige a afirmação e a ressalva acoplada no mesmo parágrafo, com termos de
+# polaridade em `exige_algum` (ou sublistas de alternativas) onde a afirmação é negativa.
+# Slides e roteiro ficam fora (decisão da autora).
+
+- id: C10
+  descricao: "Contribuição: abaixo do corte do OpenRecLink, a grey area reúne 61.485 dos 61.696 potenciais pares e os 36 pares verdadeiros que só a revisão manual de origem recuperou (25 no passo 11); a tese desenvolveu e avaliou nessa região um pós-processamento em componentes separados (preservação do corte, probabilidade calibrada fora da amostra, ordenação da fila, parada pela curva de esforço, decisão por perda esperada com revisão assistida por LLM) para atribuir a cada um a redução de revisão. Ressalva: verdadeiro remete à referência operacional (C03r). Números em N04, N07 e N09."
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["grey area", "pós-processamento", "calibrad", ["perda esperada", "expected loss"]], exige_algum: ["atribu", "componente"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["grey area", "post-processing", "calibrated", ["expected loss", "expected-loss"]], exige_algum: ["attribut", "component"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["grey area", "pós-processamento", "calibrad", ["perda esperada", "expected loss"], "referência operacional"], exige_algum: ["atribu", "componente"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["grey area", "pós-processamento", "calibrad", ["perda esperada", "expected loss"], "referência operacional"], exige_algum: ["atribu", "componente"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["grey area", "pós-processamento", "calibrad", ["perda esperada", "expected loss"], "referência operacional"], exige_algum: ["atribu", "componente"]}
+
+- id: C01r
+  descricao: "Argumento central (opção a): a redução observada veio da ordenação, e não da automação pela política nem do LLM; com IC, as fusões da probabilidade calibrada com o escore do OpenRecLink (F3 e F4) reduziram as revisões frente a O1 nas metas de 9 e 36, e nenhuma o fez frente a O3; a probabilidade calibrada isolada (O3) reduziu pontualmente, sem IC que exclua zero. Ressalva acoplada: achado post hoc, sob revisor perfeito simulado, hipótese a validar pelo critério C02r"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["order", ["automat", "policy"], "LLM", ["F3 and F4", "fusion"], "post hoc", ["no CI", "without a CI", "without CI", "exclude zero", "excludes zero", "include zero", "includes zero", "cross zero", "crosses zero", "contain zero"]], exige_algum: ["and not", "rather than", "not from", "not due", "instead of", "not by"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "post hoc"], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "post hoc"], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["ordena", ["automa", "política"], "LLM", ["F3 e F4", "fusões"], "post hoc", ["sem IC", "sem intervalo", "exclua zero", "exclui zero", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui"]], exige_algum: ["e não", "não veio", "não decorr", "nem do", "nem da", "não da", "não pela"]}
+
+- id: C11
+  descricao: "Resultado: sob revisor perfeito simulado, O3 atingiu a recuperação de P com 125 revisões na vigilância e 29 na confirmação, contra 501 e 51 de O1 (reduções pontuais de 75,0% e 43,1%; O4 exigiu 106 e 27). Ressalva acoplada: sem IC que exclua zero (data/ordenacao_bootstrap_o3_o1.csv); na recuperação integral dos 36, O3 exige 23.443 revisões contra 2.521 de O1; estimativa pontual, post hoc. Números em N18, N20, N22, N23, N40 e N41"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["O3", "O1", "recuper", "pontua"], exige_algum: ["sem IC", "sem intervalo", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui", "nenhum IC"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["O3", "O1", "recover", "point"], exige_algum: ["no CI", "without a CI", "without CI", "no confidence interval", "includes zero", "include zero", "crosses zero", "contains zero", "does not exclude", "not exclude"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["O3", "O1", "recuper", "pontua", "post hoc", ["simulad", "revisor perfeito"]], exige_algum: ["sem IC", "sem intervalo", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui", "nenhum IC"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["O3", "O1", "recuper", "pontua", "post hoc", ["simulad", "revisor perfeito"]], exige_algum: ["sem IC", "sem intervalo", "inclui zero", "inclui o zero", "cruza zero", "contém zero", "não exclui", "nenhum IC"]}
+
+- id: C12
+  descricao: "Resultado: na análise exploratória posterior ao registro, as fusões F3 e F4 reduziram as revisões frente a O1 nas metas de 9 e 36 pares verdadeiros, com IC 95% por bootstrap agrupado por óbito inteiramente abaixo de zero (F4: medianas de 38 e 1.203 revisões a menos; F3: 35 e 894), mas não na meta de 23; F4 recuperou os 36 com 1.387 revisões contra 2.521 de O1. Ressalvas acopladas: frente a O3 nenhum IC fica abaixo de zero; com 96 revisões F3 recupera 25, F4 18, O1 19 e O3 22; as fusões vêm de análise posterior ao registro, entre variantes. Números em N22, N26, N42 e N44"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta"], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: [["F3 and F4", "fusion"], "O1", "O3", ["below zero", "entirely below"]], exige_algum: ["no CI", "none", "not exclude", "did not", "include zero", "includes zero"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["F3 e F4", "fusões"], "O1", "O3", ["abaixo de zero", "abaixo do zero"], "meta", "variantes", ["exploratóri", "post hoc", "posterior"]], exige_algum: ["nenhum IC", "sem IC", "não exclui", "não exclua", "não superou", "não supera", "inclui zero", "inclui o zero"]}
+
+- id: C13
+  descricao: "Resultado: na vigilância P aceitou automaticamente 4 dos 36 pares verdadeiros abaixo do corte, todos pelo LLM, com 21 falsos positivos (VPP 16,0%) e encaminhou 96 potenciais pares ao revisor humano; encaminhando também os MATCH do LLM, P recuperaria 23 com 121 revisões e O3, 23 com 125; na confirmação O2 recuperou os mesmos 9 com 11 revisões contra 17. Nas condições avaliadas o LLM não deve aceitar vínculos sozinho; usos subordinados ao revisor humano são hipóteses exploratórias. Ressalvas acopladas: registro interno de P anterior à avaliação, sem critério de sucesso, leitura como resultado negativo posterior; revisor perfeito simulado. Números em N13, N15, N16, N18 e N19"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "negativ"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["LLM", ["alone", "autonomous", "on its own"], "exploratory", "internal", "negative"], exige_algum: ["should not accept", "must not accept", "not accept", "never accept", "without accepting"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "critério", "negativ", "ordena"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["LLM", ["sozinh", "autônom"], "exploratóri", "registro", "critério", "negativ", "ordena"], exige_algum: ["não deve aceitar", "não aceita", "não aceitar", "sem aceitar", "nunca aceita"]}
+
+- id: C14
+  descricao: "Resultado: a dificuldade da grey area e a disparidade concentram-se no passo 11, que reúne 25 dos 36 pares verdadeiros abaixo do corte: sensibilidade automática de P na vigilância 42,5% contra 95,0% e 96,1% nos passos 6 e 9, disparidade herdada do corte; com revisor perfeito nos encaminhamentos o limite seria 77,5%. Ressalva: passo é estrato de processo, não atributo demográfico; raça/cor ausente do extrato. Números em N07, N30 e N43"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar"], exige_algum: ["raça", "demográf", "estrato"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["step 11", "dispar"], exige_algum: ["race", "demographic", "stratum"]}
+    - {arquivo: text/latex/estudo5_equidade.tex, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar", "raça"], exige_algum: ["demográf", "estrato", "atributo"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["passo 11", "dispar", "raça"], exige_algum: ["demográf", "estrato", "atributo"]}
+
+- id: C08r
+  descricao: "Recomendação: a validar em coorte nova com referência cega, preservar o corte do OpenRecLink e, abaixo dele, ordenar a fila de revisão manual pela probabilidade calibrada fora da amostra, isolada (O3) ou fundida ao escore (F4; F3 quando houver as MACD), com a escolha entre elas, e entre estimadores, pela curva de esforço conforme o orçamento humano. Ressalva acoplada: nenhuma ordenação dominou em todas as cargas (C12)"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08; revisada em 2026-11-08 (F3)"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["preserve", "cut-off", "O3", ["F3 and F4", "F4; F3", "F4 (F3", "fusion"], "effort curve", ["dominat", "dominan", "uniform"]], exige_algum: ["validate", "validation", "validated"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["preserv", "corte", "O3", ["F3 e F4", "F4; F3", "F4 (F3", "fusões"], "curva de esforço", ["dominou", "domina", "dominante", "melhor em todas", "superior em todas"]], exige_algum: ["validar", "validação", "validado"]}
+
+- id: C02r
+  descricao: "Critério de refutação, acoplado a C01r e C11: em outra coorte, com ordenação e orçamento fixados antes dos desfechos e referência cega independente, a hipótese é refutada se O3 não atingir a recuperação de P com pelo menos 25% menos revisões que O1, pelo limite inferior do IC 95%, em cada uma das duas metas. Ressalva: a margem foi escolhida com os dados de desenvolvimento à vista (reduções pontuais de 75,0% e 43,1%) e não foi testada"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["25", "O1", "O3", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"], ["refut", "falsific"], ["limite inferior", "limite inf"]], exige_algum: ["à vista", "não foi testad", "não testad", "sem teste"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: ["25", "O1", "O3", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"], ["refut", "falsific"], ["limite inferior", "limite inf"]], exige_algum: ["à vista", "não foi testad", "não testad", "sem teste"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["25", "O1", "O3", ["menos revis", "fewer review"], ["pelo menos", "ao menos", "no mínimo"], ["refut", "falsific"], ["limite inferior", "limite inf"]], exige_algum: ["à vista", "não foi testad", "não testad", "sem teste"]}
+
+- id: C03r
+  descricao: "Cautela transversal: a referência operacional resulta do corte do OpenRecLink e da revisão manual de origem, feita por revisora única, com ordem, fontes e parada não documentadas; a disponibilidade das evidências do CdR à revisora é hipótese de trabalho. Os 36 pares verdadeiros abaixo do corte estão entre os 2.522 potenciais pares de maior escore (favoreceria O1); a incorporação das evidências do CdR favoreceria O2 a O4. Sem suposições sobre o mecanismo de verificação, a direção dominante e a magnitude do viés não são identificáveis. Números em N09"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["verificação", "incorporação", "direção", "magnitude"], exige_algum: ["não são identific", "não é identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["verification", "incorporation", "direction", "magnitude"], exige_algum: ["not identifiable", "cannot be identified", "not identified", "unidentifiable", "not estimable", "not be identified"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["revisor", "únic", "hipótese", "trabalho"], exige_algum: ["não documentad", "não estão documentad", "não está documentad", "não foi documentad", "não informad"]}
+    - {arquivo: text/latex/capitulo1.tex, vigencia: pos_revisao, exige_todos: ["verificação", "incorporação", "direção", "magnitude", "O1"], exige_algum: ["não são identific", "não é identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["referência operacional", "revisor", "únic", "hipótese", "trabalho"], exige_algum: ["não documentad", "não estão documentad", "não está documentad", "não foi documentad", "não informad"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["revisor", "únic", "hipótese", "trabalho"], exige_algum: ["não documentad", "não estão documentad", "não está documentad", "não foi documentad", "não informad"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["verificação", "incorporação", "direção", "magnitude", "O1"], exige_algum: ["não são identific", "não é identific", "não se identific", "não identific", "não é estimáv", "não são estimáv"]}
+
+- id: C05r
+  descricao: "Cautela acoplada aos Estudos 2 e 3: os resultados dos estudos de classificadores e de estratégias são otimistas por três razões (indicadores de encerramento por óbito, que são vazamento de alvo; partição por linha; limiares escolhidos no teste). No controle 2x2 do Random Forest com SMOTE a partição por óbito reduziu o F1 de 0,931 para 0,846 e a retirada dos indicadores pouco o alterou; esses estudos não fundamentam a adoção dos pipelines, e o GZ-CMD e o arranjo P não usam os indicadores. Números em N39"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: ["leakage", "closure", "death", ["partition", "split"]], exige_algum: ["optimistic", "inflated", "do not support", "not support", "not justify"]}
+    - {arquivo: text/latex/capitulo3.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar", "GZ-CMD"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
+    - {arquivo: text/latex/estudo2_classificadores.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
+    - {arquivo: text/latex/estudo3_estrategias.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["vazamento", "encerramento", "óbito", "partição", "limiar", "GZ-CMD"], exige_algum: ["otimist", "infla", "não fundamentam", "não sustentam", "não sustenta"]}
+
+- id: C09r
+  descricao: "Cautela acoplada a C08r: os potenciais pares abaixo do ponto de parada não são examinados e devem ser registrados como não examinados; na vigilância do óbito, a ausência de vínculo por esgotamento do orçamento não equivale a óbito não notificado; diferentemente das estimativas que contam o óbito não vinculado como não notificado (Oliveira2012uso; Pinheiro2012subnotificacao), essa distinção separa subnotificação de perda de vínculo (Doidge2019linkageerror)"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/tese.tex, secao: resumo, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"]], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/latex/tese.tex, secao: abstract, vigencia: pos_revisao, exige_todos: [["unexamined", "not examined", "were not examined"], "death", "notified", ["underreport", "loss of link", "linkage loss"]], exige_algum: ["not equivalent", "not equal", "not mean", "not imply", "not necessarily"]}
+    - {arquivo: text/latex/estudo4_gzcmd.tex, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"], "Oliveira", "Pinheiro"], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["não examinad", "sem exame", "não foram examinad"], "óbito", "notificad", ["subnotifica", "perda de vínculo"]], exige_algum: ["não óbito", "não equivale", "não equivalem", "não significa", "não corresponde", "não representa"]}
+
+- id: C15
+  descricao: "Estudo 1: o Python corrige erros de implementação do protótipo Java e diverge de Lucena em pontos documentados; a equivalência não foi demonstrada e o efeito em dados reais não foi medido; os subescores analisados são os da implementação Python. Classificação por tipo (erros do Java, divergências de critério em relação a Lucena, melhorias do Python), em lugar de 'sem eleger uma implementação como correta'"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08, revisada (Java x Python por tipo)"
+  ocorrencias:
+    - {arquivo: text/latex/estudo1_comparador.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "subescores", "erros de implementação", "Lucena", "não foi medido"], exige_algum: ["não são equivalentes", "não foi demonstrada", "não foi demonstrado"]}
+    - {arquivo: text/latex/capitulo2.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "erros de implementação", "Lucena", "não foi medido"], exige_algum: ["não foi demonstrada", "não foi demonstrado"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["Java", "Python", "subescores"], exige_algum: ["não são equivalentes", "não equivalentes", "não é equivalente", "não equivalem", "não foi demonstrad", "não demonstrad"]}
+
+- id: C16
+  descricao: "Estudo 2: a ordenação dos classificadores depende da métrica (F1 no limiar 0,5 versus AUC-PR) e o balanceamento não trouxe ganho uniforme"
+  tipo: afirmacao
+  aprovado_por_autora: "2026-11-08"
+  ocorrencias:
+    - {arquivo: text/latex/estudo2_classificadores.tex, vigencia: pos_revisao, exige_todos: [["F1", "F_1"], "AUC-PR", "ordena"], exige_algum: ["depend", "invert", "mud", "difer"]}
+    - {arquivo: text/latex/estudo2_classificadores.tex, vigencia: pos_revisao, exige_todos: ["balanceamento", "uniforme", ["benefício", "ganho"]], exige_algum: ["não demonstr", "não trouxe", "não houve", "não há", "não se observ"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: [["F1", "F_1"], "AUC-PR", "ordena"], exige_algum: ["depend", "invert", "mud", "difer"]}
+    - {arquivo: text/latex/conclusao.tex, vigencia: pos_revisao, exige_todos: ["balanceamento", "uniforme", ["benefício", "ganho"]], exige_algum: ["não demonstr", "não trouxe", "não houve", "não há", "não se observ"]}

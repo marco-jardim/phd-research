@@ -93,12 +93,25 @@ def test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade(tm
     assert historical.read_text(encoding="utf-8") == original
     expected = replace_once(original, "Cascata final observada por política e modo,",
                             "Cascata sobre a base inteira (comparação), por política e modo,")
-    expected = expected.replace("vínculos verdadeiros", "vínculos")
+    # Revisão 2 (guia 3.6): a legenda e as linhas de contagem trocam "vínculos" por "pares verdadeiros" (a classe
+    # segundo a referência) e "falso vínculo" por "falso positivo". Nenhuma célula numérica muda; a igualdade
+    # exata abaixo a garante, já que só estas substituições textuais e o glossário separam a tabela da histórica.
+    for old, new in [("(vínculos verdadeiros)", "(pares verdadeiros)"),
+                     ("Vínculos perdidos (NONMATCH)", "Pares verdadeiros perdidos (NONMATCH)"),
+                     ("Vínculos encaminhados ao humano", "Pares verdadeiros encaminhados ao humano"),
+                     ("mantém vínculos ao humano no denominador",
+                      "mantém no denominador os pares verdadeiros encaminhados ao humano"),
+                     ("ausência de falso vínculo automático", "ausência de falso positivo automático")]:
+        expected = replace_once(expected, old, new)
     glossary = (r"\par\footnotesize Cascata: a mesma política aplicada a todos os potenciais pares. "
                 "OOF: predições fora da amostra de treinamento; REFREC: registro do SIM. "
-                "ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não vínculo; UNSURE: inconclusivo. "
+                "ALWAYS: guarda; AUTO: decisão por custo; MATCH: vínculo; NONMATCH: não aceito como vínculo; UNSURE: inconclusivo. "
                 "v3.1 distingue revisão humana da revisão por modelo de linguagem; v4 são as instruções sem as saídas decisórias do motor.")
     expected = expected.replace(r"\end{longtable}", r"\end{longtable}" + "\n" + glossary + "\n")
+    # Guia 3.6: MATCH e NONMATCH entre \texttt{} (só marcação; nenhuma célula numérica muda).
+    from scripts.tabelas_persona_editorial import texttt_codigos
+    expected = texttt_codigos(expected)
+    expected = expected.replace("\\footnotesize\n\\setlength{\\tabcolsep}{3pt}", "\\scriptsize\n\\setlength{\\tabcolsep}{3pt}", 1)
     assert (tmp_path / names[-1]).read_text(encoding="utf-8") == expected
     for file in ("estudo4_gzcmd.tex", "estudo5_equidade.tex"):
         chapter = (ROOT / "text/latex" / file).read_text(encoding="utf-8")

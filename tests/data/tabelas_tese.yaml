@@ -1,0 +1,220 @@
+# Manifesto das tabelas incluídas pela árvore de text/latex/tese.tex.
+# Verificado por tests/test_tabelas_tese.py. Tabelas ficam fora da reescrita por LLM
+# (scripts/reescrita_marcadores.py recusa mascarar arquivos de text/latex/tables/) e só
+# mudam quando o gerador muda.
+#
+# Campos:
+#   arquivo   caminho relativo a text/latex/tables/.
+#   protecao  regeneracao | sha256.
+#   regeneracao: o teste regenera a tabela inteira e compara com o arquivo versionado.
+#     teste     arquivo de teste, com nó opcional: "test_x.py::test_nome" (relativo a tests/).
+#     gerador   (opcional) módulo de scripts/ que o teste importa; obrigatório quando o teste
+#               não cita o nome da tabela (regeneração em laço sobre os arquivos gerados).
+#   sha256: sem teste que compare a tabela inteira. Hash do conteúdo com quebras de linha
+#     normalizadas para LF.
+#     sha256    hash atual.
+#     motivo    por que não há regeneração (à mão, ou gerador sem teste).
+#   Quando o hash diverge, a tabela mudou sem gerador: a autora precisa aprovar a mudança e
+#   atualizar o hash aqui.
+
+tabelas:
+  # Apêndice de sensibilidade
+  - arquivo: editorial/tab_sensibilidade_2x2.tex
+    protecao: sha256
+    sha256: 4e04225367e6394bd11865438383fc5f2fd7439b4aad0f4557207fed3b832ee1
+    motivo: "Versão editorial (tabelas_persona_editorial.transform) da tabela de scripts/gerar_tabela_sensibilidade.py; nenhum teste compara o arquivo editorial."
+  - arquivo: editorial/tab_sensibilidade_qw1.tex
+    protecao: sha256
+    sha256: 2e73cf17fe2cade04070d11f3a7156ee01dec4de8d38d880d1c15d5060052940
+    motivo: "Versão editorial da tabela de scripts/qw1_sensibilidade_gpu.py; tests/test_qw1_sensibilidade_gpu.py compara só a tabela histórica (tables/tab_sensibilidade_qw1.tex), não a editorial."
+  - arquivo: editorial/tab_balanceamento_xgb.tex
+    protecao: regeneracao
+    teste: test_tabela_balanceamento_xgb.py::test_tab_balanceamento_xgb_versionada_igual_a_regenerada
+    gerador: tabela_balanceamento_xgb
+
+  # Capítulo de dados
+  - arquivo: editorial/tab_blocagem_rendimento.tex
+    protecao: sha256
+    sha256: 5d4418431cd701ca7460c07e93ea7c197fcb265729c45b4f10de157bb1080dd3
+    motivo: "Versão editorial da tabela histórica tables/tab_blocagem_rendimento.tex (auditoria scripts/m8_auditoria_blocagem.py); sem teste de regeneração do arquivo editorial."
+
+  # Estudo 1
+  - arquivo: tab_equivalencia_java.tex
+    protecao: sha256
+    sha256: ec217d8fcee53cdeac5e6693889722e08fdc50f4df3988e58d8cad8604e675c2
+    motivo: "Gerada por scripts/importar_equivalencia_java.py; tests/test_importar_equivalencia_java.py confere só trechos (contagem de linhas, rótulo, nota, citação) sobre dados sintéticos, não o arquivo versionado."
+  - arquivo: editorial/tab_shap_importance.tex
+    protecao: regeneracao
+    teste: test_review2_w3.py::test_editorial_w3_regenerates_without_changing_historical
+    gerador: tabelas_review2_w3
+
+  # Estudo 2
+  - arquivo: editorial/tab_score_bands.tex
+    protecao: regeneracao
+    teste: test_review2_w6.py::test_score_band_precision_follows_count_only_source
+  - arquivo: editorial/tab_imbalance_sensitivity.tex
+    protecao: regeneracao
+    teste: test_review2_w3.py::test_editorial_w3_regenerates_without_changing_historical
+    gerador: tabelas_review2_w3
+  - arquivo: editorial/tab_qw1_deep_learning.tex
+    protecao: regeneracao
+    teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
+  - arquivo: tab_desempenho_faixas.tex
+    protecao: sha256
+    sha256: c82583bc45bca42984c8916d03d1854aa267437005d2394bfed6d6df990001ca
+    motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py; tests/test_desempenho_faixas.py::test_gerador_tex_nd_virgula_ic_e_hifen gera em diretório temporário e confere só a forma (cabeçalho, n.d., vírgula decimal), sem comparar com o arquivo versionado."
+
+  # Estudo 3
+  - arquivo: editorial/tab_nb02_recall.tex
+    protecao: regeneracao
+    teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
+    gerador: tabelas_banca_b_editorial
+  - arquivo: editorial/tab_nb03_precision.tex
+    protecao: regeneracao
+    teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
+    gerador: tabelas_banca_b_editorial
+  - arquivo: editorial/tab_ablation_best_category.tex
+    protecao: regeneracao
+    teste: test_w14_rotulos.py::test_ablation_editorial_labels_regenerate_and_are_idempotent
+  - arquivo: editorial/tab_ablation_top10.tex
+    protecao: regeneracao
+    teste: test_w14_rotulos.py::test_ablation_editorial_labels_regenerate_and_are_idempotent
+  - arquivo: editorial/tab_pareto_frontier.tex
+    protecao: regeneracao
+    teste: test_banca_b_editorial.py::test_editorial_tables_regenerate_from_canonical_artifacts
+  - arquivo: editorial/tab_cv_5fold.tex
+    protecao: regeneracao
+    teste: test_review2_w3.py::test_editorial_w3_regenerates_without_changing_historical
+    gerador: tabelas_review2_w3
+  - arquivo: editorial/tab_impacto_epidemiologico.tex
+    protecao: regeneracao
+    teste: test_fech1_editorial.py::test_impacto_editorial_usa_vinculos_e_custo_inverso_vpp
+  - arquivo: editorial/tab_perfil_recuperados.tex
+    protecao: regeneracao
+    teste: test_fech1_editorial.py::test_perfil_editorial_preserva_celulas_e_fonte_historica
+  - arquivo: editorial/tab_perfil_obitos_agregado.tex
+    protecao: regeneracao
+    teste: test_w5a_agregados.py::test_profile_aggregate_denominators_and_editorial
+
+  # Estudo 4
+  - arquivo: editorial/tab_e4_desempenho_faixas_oof.tex
+    protecao: sha256
+    sha256: 2cf9d4790eba5c442e6e9bc53cf07c13fa2d7735d938ea98237ed2d9c6dbe76e
+    motivo: "Gerada por scripts/gerar_tabelas_nb03_faixas.py e ajustada por tabelas_persona_editorial; tests/test_desempenho_faixas.py confere só a forma da saída em diretório temporário, não o arquivo editorial versionado."
+  - arquivo: editorial/tab_cap8_ancoras.tex
+    protecao: regeneracao
+    teste: test_tabelas_arranjo_editorial.py::test_editorial_versions_reproduce_without_overwriting_historical
+    gerador: tabelas_arranjo_editorial
+  - arquivo: editorial/tab_cap8_ancoras_decisao.tex
+    protecao: regeneracao
+    teste: test_s8a.py::test_editorial_tables_regenerate_and_historical_numeric_cells_stay
+  - arquivo: editorial/tab_cap8_ancoras_beta.tex
+    protecao: regeneracao
+    teste: test_s8a.py::test_editorial_tables_regenerate_and_historical_numeric_cells_stay
+  - arquivo: editorial/tab_dossie_campos.tex
+    protecao: regeneracao
+    teste: test_review2_agregados.py::test_published_dossier_field_boundary_and_generated_table
+  - arquivo: editorial/tab_qw2_confusion.tex
+    protecao: regeneracao
+    teste: test_banca_c_agregados.py::test_qw2_aggregate_has_only_whitelisted_fields_and_reconciled_counts
+  - arquivo: editorial/tab_qw2_llm_comparison.tex
+    protecao: regeneracao
+    teste: test_banca_c_agregados.py::test_qw2_aggregate_has_only_whitelisted_fields_and_reconciled_counts
+    gerador: banca_c_agregados
+  - arquivo: editorial/tab_cap8_revisores.tex
+    protecao: sha256
+    sha256: 916b5dc8bea4714a5465ebca998fee0d7462ea1f1644384bbdb4cc7d7555d5f9
+    motivo: "Sem teste que regenere ou compare o arquivo; tests/test_w13a_persona.py confere só trechos de texto. Tabela sem gerador testado."
+  - arquivo: editorial/tab_cap8_ablacao_dossie.tex
+    protecao: sha256
+    sha256: 947bff94d8240c6b217d2f0143e9ce404051a712b34ce409201847eb902f489d
+    motivo: "Sem teste que regenere ou compare o arquivo; os testes da ablação do dossiê cobrem os agregados em data/, não a tabela. Tabela sem gerador testado."
+  - arquivo: editorial/tab_cap8_reruns.tex
+    protecao: sha256
+    sha256: ddfc75887afb7c18195eb679d37ab992ecaefec619cbad40974659a0fdcd4bf2
+    motivo: "tests/test_w14_rotulos.py::test_reruns_caption_expands_experiment_label confere transform(tables/tab_cap8_reruns.tex) == editorial; a tabela histórica de entrada (scripts/avaliar_reruns_exp2.py) não tem teste de regeneração, então os números não ficam protegidos pelo teste."
+  - arquivo: editorial/tab_cap8_cascata_v31.tex
+    protecao: regeneracao
+    teste: test_s8c.py::test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade
+  - arquivo: editorial/tab_cap8_referencia.tex
+    protecao: regeneracao
+    teste: test_tabelas_arranjo_editorial.py::test_editorial_versions_reproduce_without_overwriting_historical
+  - arquivo: editorial/tab_cap8_arranjo_corte.tex
+    protecao: regeneracao
+    teste: test_tabelas_arranjo_editorial.py::test_editorial_versions_reproduce_without_overwriting_historical
+  - arquivo: editorial/tab_cap8_robustez_arranjo.tex
+    protecao: regeneracao
+    teste: test_s8a.py::test_editorial_tables_regenerate_and_historical_numeric_cells_stay
+  - arquivo: editorial/tab_cap8_mesma_carga.tex
+    protecao: regeneracao
+    teste: test_s8a.py::test_editorial_tables_regenerate_and_historical_numeric_cells_stay
+  - arquivo: editorial/tab_cap8_fusao_robustez.tex
+    protecao: sha256
+    sha256: 9675b6c30171d0f63488c1cdc3b4c5a074b874e4495ff1946e0129b3c0ba2511
+    motivo: "tests/test_w10a.py confere células selecionadas contra data/fusao_robustez_*.csv e a contagem de colunas, não o arquivo inteiro; o gabarito do teste não regenera a tabela."
+  - arquivo: editorial/tab_cap8_esforco.tex
+    protecao: regeneracao
+    teste: test_s8a.py::test_editorial_tables_regenerate_and_historical_numeric_cells_stay
+  - arquivo: editorial/tab_cap8_subamostragem.tex
+    protecao: regeneracao
+    teste: test_s8a1.py::test_new_tables_regenerate_only_into_editorial
+    gerador: tabelas_s8a1_editorial
+  - arquivo: editorial/tab_cap8_filtro_llm.tex
+    protecao: regeneracao
+    teste: test_s8a1.py::test_new_tables_regenerate_only_into_editorial
+    gerador: tabelas_s8a1_editorial
+  - arquivo: editorial/tab_cap8_sensibilidade_humana.tex
+    protecao: regeneracao
+    teste: test_s8a1.py::test_new_tables_regenerate_only_into_editorial
+    gerador: tabelas_s8a1_editorial
+  - arquivo: editorial/tab_cap8_vies_referencia.tex
+    protecao: sha256
+    sha256: 66e5f95cbff0483f476bcfea5172276bff8b4014af7b4af193a67f2b63eeddfc
+    motivo: "tests/test_w10a.py confere células selecionadas contra data/vies_referencia*.csv e a contagem de colunas, não o arquivo inteiro."
+  - arquivo: editorial/tab_cap8_tamanho_modelo.tex
+    protecao: regeneracao
+    teste: test_w12a.py::test_generated_model_table_matches_file_bytes
+    gerador: tabela_tamanho_modelo_editorial
+
+  # Estudo 5
+  - arquivo: editorial/tab_den30_equidade_arranjo.tex
+    protecao: regeneracao
+    teste: test_recomputacoes_revisao_final.py::test_equity_filters_before_bh_and_reproduces_aggregates
+  - arquivo: editorial/tab_equidade_arranjo_grupos_vigilancia.tex
+    protecao: regeneracao
+    teste: test_review2_w3.py::test_editorial_w3_regenerates_without_changing_historical
+    gerador: tabelas_review2_w3
+  - arquivo: editorial/tab_equidade_arranjo_grupos_confirmacao.tex
+    protecao: regeneracao
+    teste: test_review2_w3.py::test_editorial_w3_regenerates_without_changing_historical
+    gerador: tabelas_review2_w3
+  - arquivo: editorial/tab_den30_equidade_arranjo_rejeicoes_arranjo_P_vigilancia.tex
+    protecao: regeneracao
+    teste: test_recomputacoes_revisao_final.py::test_equity_filters_before_bh_and_reproduces_aggregates
+    gerador: equidade_denominador_minimo
+  - arquivo: editorial/tab_den30_equidade_arranjo_rejeicoes_arranjo_P_confirmacao.tex
+    protecao: regeneracao
+    teste: test_recomputacoes_revisao_final.py::test_equity_filters_before_bh_and_reproduces_aggregates
+    gerador: equidade_denominador_minimo
+  - arquivo: editorial/tab_den30_equidade_arranjo_rejeicoes_cascata_v31_vigilancia.tex
+    protecao: regeneracao
+    teste: test_recomputacoes_revisao_final.py::test_equity_filters_before_bh_and_reproduces_aggregates
+    gerador: equidade_denominador_minimo
+  - arquivo: editorial/tab_den30_equidade_arranjo_rejeicoes_cascata_v31_confirmacao.tex
+    protecao: regeneracao
+    teste: test_recomputacoes_revisao_final.py::test_equity_filters_before_bh_and_reproduces_aggregates
+    gerador: equidade_denominador_minimo
+  - arquivo: editorial/tab_equidade_v31.tex
+    protecao: regeneracao
+    teste: test_s8c.py::test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade
+  - arquivo: editorial/tab_qw3_group_metrics.tex
+    protecao: regeneracao
+    teste: test_s8c.py::test_editorial_tables_regenerate_and_only_the_caption_changes_for_cascade
+  - arquivo: editorial/tab_qw3_fairness_rejections.tex
+    protecao: sha256
+    sha256: e1f0069d139d8c23cdf21401071fc7672d880418809979e2d59981e474043f16
+    motivo: "Versão editorial de tables/tab_qw3_fairness_rejections.tex (scripts/equidade_v31.py, histórico congelado); sem teste que compare o arquivo editorial."
+  - arquivo: editorial/tab_qw3_fairness_rejections_corte6.tex
+    protecao: sha256
+    sha256: d7ce10730b574a55defc285c86519c82faceb3bf8b7c3f9c066569b9a1e6eb57
+    motivo: "Versão editorial da tabela do corte 6; sem gerador testado nem teste que compare o arquivo."

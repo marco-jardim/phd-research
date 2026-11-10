@@ -7,6 +7,9 @@ import re
 
 import pandas as pd
 
+from latex_fontes import fontes_tex
+from terminologia import GREY_AREA, contem, normalizar_terminologia
+
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / 'text/latex'
 DATA = ROOT / 'data'
@@ -23,10 +26,12 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
     pt, en = abstracts()
     for text in (pt, en):
         assert len(text.split()) <= 500
-    assert 'no máximo um vínculo adicional' in pt
-    assert '344 pares avaliados pelo modelo de linguagem de grande porte (LLM)' in pt
-    assert 'at most one additional link' in en
-    assert '344 LLM-reviewed pairs' in en
+    # Redação nova (revisão 2): "no máximo um par verdadeiro adicional" e "344 pares avaliados pelo LLM"
+    # (o LLM é expandido na primeira frase do resumo).
+    assert contem(pt, 'no máximo um par verdadeiro adicional', arquivo='text/latex/tese.tex')  # migrado: terminologia 3.6
+    assert '344 pares avaliados pelo LLM' in pt
+    assert 'at most one additional true pair' in en
+    assert '344 pairs evaluated by the LLM' in en
     assert 'VPP' in pt and 'PPV' in en
     assert '22 revisões humanas' in pt and '22 human reviews' in en
     losses = pd.read_csv(DATA / 'arranjo_corte_perdas_mecanismo.csv')
@@ -42,7 +47,10 @@ def test_reviewer_acceptances_and_arrangement_outcomes_have_separate_subjects():
         reviewer = llm.loc[llm.braco.eq('P') & llm.modo.eq(mode)].iloc[0]
         assert rows.loc['MATCH_LLM', 'nao_vinculos'] == reviewer.FP == observed.fp
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    assert 'a cadeia aceitou 196 vínculos' in study
+    # Revisão 2: a cascata com Sonnet foi para o Apêndice (A.4), com "vínculo" só para a decisão da cadeia.
+    appendix = (LATEX / 'apendice_gzcmd.tex').read_text(encoding='utf-8')
+    assert contem(appendix, 'a cadeia aceitou 196 pares verdadeiros', arquivo='text/latex/apendice_gzcmd.tex')
+    assert contem(study, 'a cadeia aceitou de dois a quatro pares verdadeiros a mais que a cadeia com o Haiku (196 na vigilância e 136 na confirmação)', arquivo='text/latex/estudo4_gzcmd.tex')
     assert 'o Sonnet como revisor aceitou' not in study
 
 
@@ -56,11 +64,11 @@ def test_cutoffs_remain_three_points_not_a_confidence_interval():
 
 def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
     pt, en = abstracts()
-    assert r'análise de sensibilidade com \textit{Platt scaling}' in pt
-    assert r'the sensitivity analysis using Platt scaling' in en
+    # Redação nova (revisão 2): a análise de sensibilidade com Platt scaling saiu do resumo; consta do Estudo 4.
+    assert r'análise de sensibilidade de ASR com \textit{Platt scaling}' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
     assert '42,5' in pt and '42.5' in en
     assert '0,427' in (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    for path in LATEX.glob('*.tex'):
+    for path in fontes_tex(LATEX):
         text = path.read_text(encoding='utf-8')
         assert not re.search(r'calibração sigmoidal|sigmoid calibration', text, re.I), path
         for line in text.splitlines():
@@ -75,17 +83,22 @@ def test_platt_name_adjusted_p_and_keywords_follow_the_style_guide():
 
 def test_conclusion_separates_registration_from_negative_finding_and_has_comparators():
     text = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    assert 'não lhe confere força confirmatória' in text
+    # Conclusão reescrita: o registro interno de P é separado do resultado negativo (leitura posterior ao registro).
+    assert 'ASR teve registro interno anterior à avaliação, sem critério de sucesso, de modo que a leitura como resultado negativo é posterior' in text
+    assert 'a fixação anterior ao cálculo não constitui pré-registro' in text
     assert 'registrado antes da avaliação:' not in text
     assert text.count('pior em todo desfecho medido contra') == 0
+    # Os comparadores do corte hipotético da nota em 9 e da revisão da faixa intermediária ficam no capítulo 3 e na tabela de referência.
     reference = pd.read_csv(DATA / 'referencia_comparador_pos_orl.csv').set_index('estrategia')
     cut = reference.loc['pos_orl_corte_nota_9']
     review = reference.loc['pos_orl_revisao_humana_area_cinza']
     fmt = lambda value: f'{value:.1f}'.replace('.', ',')
-    assert fmt(cut.sens_automatica * 100) + r'\%' in text
-    assert fmt(review.sens_com_humano * 100) + r'\%' in text
-    assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in text
-    assert 'área cinza da nota projetaria' in text
+    objectives = (LATEX / 'capitulo3.tex').read_text(encoding='utf-8')
+    table = (LATEX / 'tables/editorial/tab_cap8_referencia.tex').read_text(encoding='utf-8')
+    assert fmt(cut.sens_automatica * 100) + r'\%' in objectives
+    assert fmt(review.sens_com_humano * 100) in table
+    assert f'{int(review.pares_ao_humano):,}'.replace(',', '.') in objectives
+    assert 'Ela é distinta da faixa intermediária da nota final' in objectives
 
 
 def test_editorial_area_review_is_a_ceiling_without_numeric_change():
@@ -111,11 +124,17 @@ def test_fraction_denominators_are_explicitly_minima_not_observed_counts():
 
 def test_study_grey_zone_model_version_chronology_and_range_are_unambiguous():
     study = (LATEX / 'estudo4_gzcmd.tex').read_text(encoding='utf-8')
-    for prefix in ('Nos 21.620', r'A Tabela~\ref{tab:e4-desempenho-faixas-oof}',
-                   'O escore de Brier', r'A Tabela~\ref{tab:cap8-ancoras-decisao}'):
-        paragraph = next(p for p in study.split('\n\n') if p.startswith(prefix))
-        assert not re.search(r'área cinza(?! da nota)', paragraph)
-    assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in study
+    appendix = (LATEX / 'apendice_gzcmd.tex').read_text(encoding='utf-8')
+    # Revisão 2: o parágrafo do escore de Brier e o da decisão por âncoras foram para o apêndice do Estudo 4.
+    for source, name, prefix in (
+            (study, 'estudo4_gzcmd.tex', 'Nos 21.620'),
+            (study, 'estudo4_gzcmd.tex', r'A Tabela~\ref{tab:e4-desempenho-faixas-oof}'),
+            (appendix, 'apendice_gzcmd.tex', 'O escore de Brier'),
+            (appendix, 'apendice_gzcmd.tex', r'A Tabela~\ref{tab:cap8-ancoras-decisao}')):
+        paragraph = next(p for p in source.split('\n\n') if p.startswith(prefix))
+        # migrado: terminologia 3.6 (a glosa "(área cinza)" vira o mesmo marcador de \textit{grey area})
+        assert not re.search(f'{GREY_AREA}(?! da nota)', normalizar_terminologia(paragraph, arquivo=f'text/latex/{name}'))
+    assert 'Claude Haiku 5.5 com instruções v4 e sem as saídas do motor' in appendix
     assert r'S3 às 02:11:52 UTC, conforme \path{data/arranjo_corte_metadata.json} na versão \texttt{16d5876}' in study
     assert 'não no JSON atual' in study
     assert 'e as perdas de nove a 21' not in study

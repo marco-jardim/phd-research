@@ -9,6 +9,8 @@ from unittest.mock import Mock
 
 import pytest
 
+from terminologia import PAR, contem, normalizar_terminologia
+
 
 ROOT = Path(__file__).resolve().parents[1]
 SLIDES = ROOT / "text" / "slides"
@@ -45,10 +47,17 @@ def slide_frames():
     return re.findall(r"\\begin\{frame\}(.*?)\\end\{frame\}", source, re.S)
 
 
+class Termo(str):
+    """Fragmento comparado com `contem` (equivalência terminológica do guia, seção 3.6)."""
+
+
 def assert_fragments(frame, required):
     normalized = frame.replace("{,}", ",")
     for fragment in required:
-        assert fragment in normalized, fragment
+        if isinstance(fragment, Termo):
+            assert contem(normalized, fragment, arquivo="text/slides/defesa.tex"), fragment  # migrado: terminologia 3.6
+        else:
+            assert fragment in normalized, fragment
 
 
 def load_builder():
@@ -176,7 +185,7 @@ def scientific_requirements(csv_loader=read_csv):
         13: ["OOF", "REFREC", "A política v3.1 compara custos, não usa esse corte único"],
         19: [r"S3 (avaliação com os \textit{labels})"],
         18: [r"p\geq C_H/C_{FN}", "Restantes: não examinados", "não ausência de notificação",
-             "restrito às ações revisor humano e não vínculo"],
+             Termo("restrito às ações revisor humano e não vínculo")],  # migrado: terminologia 3.6
         20: ["figures/curva_esforco.pgf", "não registrada", "Revisor perfeito é hipótese dos dois lados",
              "Se a revisão histórica seguiu o escore", "favoreceria O1", "mesmos", "verificados"],
         21: ["impede interpretação prospectiva", "Hipótese de uso, não política validada",
@@ -528,8 +537,9 @@ def test_effort_figure_is_regenerated_from_csv(tmp_path):
     plot = runpy.run_path(str(ROOT / "scripts/figura_curva_esforco.py"))
     output = plot["generate"](
         ROOT / "data/comparador_mesma_carga_curva.csv",
-        ROOT / "data/comparador_mesma_carga.csv", tmp_path / "curve.pgf",
+        ROOT / "data/comparador_mesma_carga.csv", tmp_path / "curve.pgf", plot["ARM_SLIDES"],
     )
+    assert plot["ARM_SLIDES"] == "P"
     assert output.read_bytes() == (SLIDES / "figures/curva_esforco.pgf").read_bytes()
     content = output.read_text(encoding="utf-8")
     for mode, label in (("vigilancia", "P vig."), ("confirmacao", "P conf.")):
@@ -542,12 +552,13 @@ def test_effort_figure_is_regenerated_from_csv(tmp_path):
         expected = sorted((int(r["k"]), int(r["par2_topk"])) for r in curves if r["ordenacao"] == order)
         assert plot["curve_series"](curves, order) == expected
     assert len(set(plot["LINE_STYLES"].values())) == len(plot["ORDERS"])
-    assert_figure_series_styles(content, plot)
+    assert_figure_series_styles(content, plot, plot["ARM_SLIDES"])
     assert "Eixo x limitado a 2.522 revisões" in content
 
 
-def assert_figure_series_styles(content, plot):
+def assert_figure_series_styles(content, plot, arm):
     for i, (order, label, color) in enumerate(plot["ORDERS"]):
+        label = label.format(arm=arm)
         style = plot["LINE_STYLES"][order]
         # Vincular cor, estilo e caminho da série: os pontos de P também usam sólido.
         curve = "\n".join((rf"\color{{{color}}}", style, r"\pgfsetlinewidth{0.9pt}", r"\pgfpathmoveto"))
@@ -569,7 +580,7 @@ def test_effort_styles_reject_missing_series_style_even_with_p_markers(order_ind
     content = content.replace(original, rf"\color{{{color}}}", 1)
     assert r"\color{red}" + "\n" + r"\pgfsetdash{}{0pt}" in content
     with pytest.raises(AssertionError, match=order):
-        assert_figure_series_styles(content, plot)
+        assert_figure_series_styles(content, plot, plot["ARM_SLIDES"])
 
 
 def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
@@ -581,8 +592,9 @@ def test_effort_figure_cli_has_two_default_destinations(monkeypatch, tmp_path):
     plot["main"]()
     thesis = tmp_path / "text/latex/figures/curva_esforco.pgf"
     slides = tmp_path / "text/slides/figures/curva_esforco.pgf"
-    assert thesis.read_bytes() == slides.read_bytes()
+    assert thesis.read_bytes() == (ROOT / "text/latex/figures/curva_esforco.pgf").read_bytes()
     assert slides.read_bytes() == (SLIDES / "figures/curva_esforco.pgf").read_bytes()
+    assert b"ASR vig." in thesis.read_bytes() and b"ASR vig." not in slides.read_bytes()
 
 
 def test_slide_backup_cascade_rows_from_csv():
@@ -594,9 +606,10 @@ def test_slide_backup_cascade_rows_from_csv():
                                ("pares_humano", "Potenciais pares ao humano"),
                                ("pares_llm", "Potenciais pares ao LLM"),
                                ("fp", "Falsos positivos")):
+            # migrado: terminologia 3.6 (cabeçalho e quadro comparados após normalizar)
             assert re.search(
-                rf"{heading} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
-                frames[reserve - 1],
+                rf"{re.escape(normalizar_terminologia(heading, arquivo='text/slides/defesa.tex'))} & \d+(?:\.\d+)* & {re.escape(pt_number(row[field], 0))}",
+                normalizar_terminologia(frames[reserve - 1], arquivo="text/slides/defesa.tex"),
             ), (reserve, field)
 
 
@@ -785,12 +798,14 @@ def test_s9_recommendation_filter_and_paired_difference_are_qualified():
             assert "na vigilância, entre o1 a o4 e p, nenhuma ordenação domina" in text.lower()
             assert "na confirmação, o2 domina fracamente p" in text.lower()
             assert "fila por p_cal_ml" not in text and r"\texttt{p\_cal\_ml}" not in text
-    for text in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
-        assert "não-vínculo" not in text
+    for arquivo, text in (("text/slides/roteiro_defesa.md", script),
+                          ("text/slides/defesa.tex", (SLIDES / "defesa.tex").read_text(encoding="utf-8"))):
+        # migrado: terminologia 3.6 (a forma hifenizada segue proibida; "não par" é a forma canônica)
+        assert not re.search(r"não-(?:vínculos?|par(?:es)?)", text, re.I)
         assert "N/P" not in text and "no P |" not in text
         assert "cerca de 90" not in text and "cerca de 88 a 90" not in text
         assert "cabe na variação" not in text and "dentro da variação de perdas" not in text
-        assert "Uma diferença de um vínculo em 36 não sustenta superioridade" in text
+        assert contem(text, "Uma diferença de um vínculo em 36 não sustenta superioridade", arquivo=arquivo)  # migrado: terminologia 3.6
     filters = read_csv("filtro_llm.csv")
     for number in (21, 48):
         section = speech.split(f"### {number}.")[1].split("### ")[0]
@@ -873,7 +888,8 @@ def test_script_s6_questions_and_provenance():
         "estabilidade confirma",
         "varredura de custos",
     ]:
-        assert topic in questions
+        # migrado: terminologia 3.6
+        assert contem(questions, topic, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in topic else topic in questions
     assert "recalibração, braços e avaliação" in questions
     metrics = read_csv("arranjo_corte_metricas.csv")
     cutoff = one_row(metrics, modo="vigilancia", braco="corte_sozinho", faixa="TODAS")
@@ -930,7 +946,9 @@ def test_banca_e_title_terminology_and_new_answers():
         42: ("LinkDataPop", "acesso restrito", "agregados", "MIT vale somente para o código"),
     }.items():
         for fragment in fragments:
-            assert fragment in answers[number], (number, fragment)
+            # migrado: terminologia 3.6
+            presente = contem(answers[number], fragment, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in fragment else fragment in answers[number]
+            assert presente, (number, fragment)
     costs = {row["braco"]: row for row in read_csv("custos_equivalentes_exploratorios.csv")
              if row["modo"] == "vigilancia"}
     frame22 = slide_frames()[21].replace("{,}", ",")
@@ -998,7 +1016,8 @@ def test_review3_questions_cover_unanswered_limits(number, fragments):
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]
     section = questions.split(f"### {number}.")[1].split("### ")[0]
     for fragment in fragments:
-        assert fragment in section
+        # migrado: terminologia 3.6
+        assert contem(section, fragment, arquivo="text/slides/roteiro_defesa.md") if "vínculo" in fragment else fragment in section
     assert "Fonte:" in section
 
 
@@ -1008,8 +1027,11 @@ def test_review3_ethics_and_residual_terminology():
     for number in (8, 48):
         section = questions.split(f"### {number}.")[1].split("### ")[0]
         assert "não foi objeto de análise específica nos pareceres" in section
-    for source in (script, (SLIDES / "defesa.tex").read_text(encoding="utf-8")):
-        assert not re.search(r"\bbandas?\b|auditável|impacto epidemiológico|vínculos verdadeiros", source, re.I)
+    for arquivo, source in (("text/slides/roteiro_defesa.md", script),
+                            ("text/slides/defesa.tex", (SLIDES / "defesa.tex").read_text(encoding="utf-8"))):
+        # migrado: terminologia 3.6 ("vínculos verdadeiros" segue proibido; "pares verdadeiros" é a forma canônica)
+        assert not re.search(rf"\bbandas?\b|auditável|impacto epidemiológico|{PAR} verdadeiros",
+                             normalizar_terminologia(source, arquivo=arquivo))
     assert len(slide_frames()[28].split("\\fonte")[0].split()) <= 210
 
 

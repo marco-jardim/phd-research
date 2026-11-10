@@ -236,8 +236,11 @@ def fig_imbalance() -> None:
     )
     ax.set_yticks(y)
     ax.set_yticklabels([_tex(s) for s in df["strategy"]], fontsize=9)
-    ax.set_xlabel("F1-score (média ± desvio, 5-fold CV)")
-    ax.set_title("Sensibilidade ao método de balanceamento (RF, 200 árvores)")
+    # RF de robustness_analysis.py: n_estimators=150, max_depth=12. O eixo começa em 0,75.
+    ax.set_xlabel(
+        r"$F_1$ (média ± desvio, validação cruzada de 5 partições; eixo iniciado em 0,75)"
+    )
+    ax.set_title("Sensibilidade ao método de balanceamento (RF, 150 árvores)")
     ax.set_xlim(0.75, 0.95)
 
     for i, (val, std) in enumerate(zip(df["f1_mean"], df["f1_std"])):

@@ -160,7 +160,7 @@ ax.bar(
     color="#d62728",
     edgecolor="black",
     linewidth=0.3,
-    label="Vínculos",
+    label="Pares verdadeiros",
 )
 ax.set_xticks(xb)
 ax.set_xticklabels(bands, fontsize=9)
@@ -210,7 +210,7 @@ ax.axvspan(1.5, 4.5, alpha=0.08, color="gray")
 ax.text(
     3,
     max(pct_pairs) * 0.85,
-    r"\textit{Área cinza}",
+    "Faixa intermediária",
     ha="center",
     fontsize=8,
     color="gray",

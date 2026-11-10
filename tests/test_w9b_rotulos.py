@@ -13,6 +13,9 @@ import re
 
 import pytest
 
+from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
+from terminologia import normalizar_terminologia
+
 ROOT = Path(__file__).resolve().parents[1]
 LATEX = ROOT / 'text/latex'
 OWNED = (
@@ -24,15 +27,17 @@ OWNED = (
 )
 GLOSS_WORDS = {
     'O1': (('escore', 'score'), ('openreclink',)),
-    'O2': (('nota',), ('comparador', 'cdr')),
-    'O3': (('probabilidade',), ('calibrada', 'isotônica', 'classificador')),
-    'O4': (('probabilidade',), ('recalibrada', 'recalibração')),
-    'P': (('corte', 'cut-off'), ('preserva', 'preservação', 'preservado', 'preserved',
+    # Alternativas em inglês para o Abstract (revisão 2): o texto em inglês define as filas com
+    # "out-of-sample calibrated probability of the classifier", "OpenRecLink score" etc.
+    'O2': (('nota', 'final score'), ('comparador', 'cdr', 'comparator')),
+    'O3': (('probabilidade', 'probability'), ('calibrada', 'isotônica', 'classificador', 'calibrated', 'classifier')),
+    'O4': (('probabilidade', 'probability'), ('recalibrada', 'recalibração', 'recalibrated', 'recalibration')),
+    'ASR': (('corte', 'cut-off'), ('preserva', 'preservação', 'preservado', 'preserved',
                                 'recalibração isotônica', 'isotonic recalibration')),
-    'K1': (('humana', 'humano', 'data de nascimento exata'),),
-    'K2': (('mista', 'misto', 'llm'), ('carga', 'orçamento', 'avaliações')),
-    'K3': (('custo', 'ponderad'),),
-    'NONMATCH': (('não vínculo', 'não-vínculo', 'non-link'),),
+    'K1': (('humana', 'humano', 'data de nascimento exata', 'human', 'exact birth date'),),
+    'K2': (('mista', 'misto', 'llm', 'mixed'), ('carga', 'orçamento', 'avaliações', 'load', 'budget', 'evaluations')),
+    'K3': (('custo', 'ponderad', 'cost', 'weighted'),),
+    'NONMATCH': (('não vínculo', 'não-vínculo', 'não par', 'não-par', 'non-link'),),  # migrado: terminologia 3.6
     'passo de blocagem': (('geração', 'chaves'),),
     'blocking step': (('candidate-generation', 'keys'),),
 }
@@ -49,13 +54,13 @@ def occurrences(paragraph, token):
             if paragraph[max(0, m.start()-5):m.start()] != 'Kimi ']
 
 
-def assert_unit_first_mentions(text):
+def assert_unit_first_mentions(text, arquivo=None):
     seen = set()
     for paragraph in re.split(r'\n\s*\n', prose(text)):
         for token, groups in GLOSS_WORDS.items():
             if token not in seen and occurrences(paragraph, token):
-                normalized = paragraph.lower().replace('~', ' ')
-                assert all(any(word in normalized for word in alternatives)
+                normalized = normalizar_terminologia(paragraph, arquivo=arquivo)  # migrado: terminologia 3.6
+                assert all(any(normalizar_terminologia(word, arquivo=arquivo) in normalized for word in alternatives)
                            for alternatives in groups), (token, paragraph)
                 seen.add(token)
 
@@ -83,9 +88,10 @@ def captions(text):
 @pytest.mark.parametrize('body', [0, 1], ids=['resumo', 'abstract'])
 def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
     text = summary_bodies()[body]
-    assert_unit_first_mentions(text)
+    assert_unit_first_mentions(text, arquivo='text/latex/tese.tex')
     assert len(text.split()) <= 500
-    assert len(re.findall(r'\d+(?:[.,]\d+)*', text)) <= 18
+    # Decisão da autora de 2026-11-08: teto de 24 números de RESULTADO (regra em resumo_numeros.py).
+    assert len(numeros_de_resultado(text)) <= TETO_NUMEROS_RESULTADO
     assert 'NONMATCH' in text
     assert ('blocking step' if body else 'passo de blocagem') in text
 
@@ -94,10 +100,10 @@ def test_summary_first_mentions_are_glossed_and_limits_preserved(body):
 def test_captions_and_chapter_openings_have_local_glosses(name):
     text = (LATEX / name).read_text(encoding='utf-8')
     for caption in captions(text):
-        assert_unit_first_mentions(caption)
+        assert_unit_first_mentions(caption, arquivo=f'text/latex/{name}')
     opening = re.split(r'\\(?:sub)?section\*?\{', text, maxsplit=1)[0]
     opening = re.sub(r'\\(?:chapter\*?|begin\{chapter\})\{[^\n]*\}', '', opening)
-    assert_unit_first_mentions(opening)
+    assert_unit_first_mentions(opening, arquivo=f'text/latex/{name}')
 
 
 @pytest.mark.parametrize('name', [n for n in OWNED if n not in ('glossario.tex', 'siglas.tex')])
@@ -105,7 +111,7 @@ def test_section_and_subsection_first_mentions_have_local_glosses(name):
     text = (LATEX / name).read_text(encoding='utf-8')
     # O cabeçalho e o primeiro parágrafo formam a unidade de apresentação do termo.
     for section in re.split(r'(?=\\(?:sub)?section\*?\{)', text):
-        assert_unit_first_mentions(section)
+        assert_unit_first_mentions(section, arquivo=f'text/latex/{name}')
 
 
 @pytest.mark.parametrize('token', GLOSS_WORDS)
@@ -135,10 +141,10 @@ def test_future_comparisons_and_script_values_track_aggregate_sources():
     with (ROOT / 'data/fusao_filas.csv').open(encoding='utf-8') as handle:
         rows = {(r['fila'], r['metrica']): r for r in csv.DictReader(handle)}
     conclusion = (LATEX / 'conclusao.tex').read_text(encoding='utf-8')
-    for key in ('Fisch2024stratppi', 'Callaghan2020stopping', 'Lewis2021certifying', 'Lam2026clerical'):
+    # Conclusão reescrita: Fisch2024stratppi, "sem encerramento automático" e "não foi avaliada" saíram (concisão).
+    for key in ('Callaghan2020stopping', 'Lewis2021certifying', 'Lam2026clerical'):
         assert key in conclusion
-    for phrase in ('1.387 revisões', '2.521 pela ordenação', 'cerca de 96',
-                   'sem encerramento automático', 'não foi avaliada'):
+    for phrase in ('F4, 1.387 e O3, 23.443', 'O1 exige 2.521 revisões', 'exigiu em média 96 revisões'):
         assert phrase in conclusion
     script = (ROOT / 'text/slides/roteiro_defesa.md').read_text(encoding='utf-8')
     questions = script.split('## Perguntas prováveis')[1].split('## Figuras e critérios')[0]

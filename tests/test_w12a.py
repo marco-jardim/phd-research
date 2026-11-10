@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from latex_fontes import fontes_tex
 from scripts.tabela_tamanho_modelo_editorial import OUTPUT, generate, render
 
 
@@ -73,12 +74,12 @@ def test_bayesian_evidence_compares_original_and_posterior_counts():
     for variant in ("O3", "O3-post"):
         vp, n = rows[variant, "VP"], rows[variant, "aceitacoes"]
         vpp = f"{rows[variant, 'VPP'] * 100:.1f}".replace(".", ",")
-        assert f"{vpp}\\% ({vp:.0f} vínculos em {n:.0f} aceitações)" in body
+        assert f"{vpp}\\% ({vp:.0f} pares verdadeiros em {n:.0f} aceitações)" in body
         assert rows[variant, "VPP"] == pytest.approx(vp / n)
     assert "16,0\\% quando o LLM aceita sozinho" in body
 
 
-@pytest.mark.parametrize("name", ["estudo1_comparador.tex", "estudo2_classificadores.tex", "apendice_sensibilidade.tex"])
+@pytest.mark.parametrize("name", ["estudo1_comparador.tex", "apendice_sensibilidade.tex"])  # estudo2 revisado (revisão 2): Experimento 1 fica no estudo1 e no apêndice
 def test_experiment_one_has_study_scope_and_separating_comma(name):
     body = text(name)
     expansion = ("Medidas Contínuas de Diferença de Datas de nascimento, MACD, "
@@ -127,7 +128,7 @@ def test_bibliography_keys_and_protocol_are_consistent(name):
     bib = text(name)
     for removed in ("Doidge2018demystifying", "Paixao2017linkageevaluation", "DuVall2010extending", "Gienapp2025relevance"):
         assert removed not in bib
-        assert all(removed not in path.read_text(encoding="utf-8") for path in LATEX.rglob("*.tex"))
+        assert all(removed not in path.read_text(encoding="utf-8") for path in fontes_tex(LATEX, recursivo=True))
     assert bib.count("@inproceedings{Gienapp2026relevance,") == 1
     protocol = re.search(r"(?m)^@book\{MS2017ProtocoloObitoTB,\n[\s\S]*?^\}", bib)
     source = re.search(r"(?m)^@book\{MS2017ProtocoloObitoTB,\n[\s\S]*?^\}", text("referencias.bib"))

@@ -77,13 +77,15 @@ def tabela_nb03() -> None:
         return f"{rotulo} & {limiar} & {p} & {d3(rec)} & {d3(f1)} & {n_pos} \\\\"
 
     ind = ["XGBoost", "LightGBM", "RF Calibrado", "Stacking"]
+    # Rótulo exibido; a chave do artefato (nb03_results.json) continua em inglês.
+    exibido = {"Stacking": "Empilhamento"}
     ind_rows = sorted(
         ((m, r[f"{m} (th=0.9)"]) for m in ind), key=lambda t: -t[1]["Precision"]
     )
     linhas = [
         r"\begin{table}[htbp]",
         r"\centering",
-        r"\caption{Desempenho dos modelos na estratégia de máxima precisão (NB03). "
+        r"\caption{Desempenho dos modelos na estratégia de confirmação (NB03). "
         f"Conjunto de teste com {d['pos_test']} pares verdadeiros dentre {milhar(d['n_test'])} pares candidatos "
         f"(treino com {milhar(d['n_train'])} pares e {d['pos_train']} verdadeiros; {d['n_features']} atributos). "
         r"Resultados ordenados por precisão decrescente em cada bloco.}",
@@ -95,14 +97,15 @@ def tabela_nb03() -> None:
         r"\textbf{Modelo} & \textbf{Limiar} & \textbf{Precisão} & \textbf{Sensibilidade} & \boldmath$F_1$ & \textbf{N} \\",
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Abordagens compostas}} \\[2pt]",
-        linha("Regras de negócio", r"escore $\geq 8$", "Regras (score≥8)", True),
+        linha("Regras", r"escore $\geq 8$", "Regras (score≥8)", True),
         linha("Consenso (unanimidade)", r"unanimidade\textsuperscript{a}", "Consensus (unanimidade)"),
-        linha("Híbrido ML + Regras (AND)", r"ML${\geq}$0,6; R${\geq}$6", "Hybrid AND (ML≥0.6, Rules≥6)"),
+        # No script, o "ML" do híbrido é a probabilidade do empilhamento (proba_stacking).
+        linha("Híbrido empilhamento + Regras (AND)", r"ML${\geq}$0,6; R${\geq}$6\textsuperscript{b}", "Hybrid AND (ML≥0.6, Rules≥6)"),
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Modelos individuais com limiar 0,9}} \\[2pt]",
     ]
     for m, _ in ind_rows:
-        linhas.append(linha(m, "0,9", f"{m} (th=0.9)"))
+        linhas.append(linha(exibido.get(m, m), "0,9", f"{m} (th=0.9)"))
     linhas += [
         r"\midrule",
         r"\multicolumn{6}{@{}l}{\textit{Efeito da variação de limiar (LightGBM)}} \\[2pt]",
@@ -113,7 +116,7 @@ def tabela_nb03() -> None:
         "XGBoost": "XGBoost (th=0.9)",
         "LightGBM": "LightGBM (th=0.9)",
         "Consenso": "Consensus (unanimidade)",
-        "Stacking": "Stacking (th=0.9)",
+        "Empilhamento": "Stacking (th=0.9)",
         "RF Calibrado": "RF Calibrado (th=0.9)",
         "Regras": "Regras (score≥8)",
     }
@@ -126,6 +129,7 @@ def tabela_nb03() -> None:
         r"\footnotesize",
         r"\textsuperscript{a}~Consenso por unanimidade entre os modelos base do caderno 03; o artefato "
         r"\texttt{data/nb03\_results.json} registra o desempenho do consenso, mas não o limiar de cada modelo base.",
+        r"\textsuperscript{b}~ML: probabilidade estimada pelo empilhamento (\texttt{scripts/run\_nb03\_uniform.py}); R: escore de regras.",
         r"N~=~número de pares classificados como positivos no conjunto de teste. "
         r"Os limiares foram avaliados no próprio conjunto de teste, sem conjunto de validação, e a semente aleatória é 42 "
         r"(\texttt{scripts/run\_nb03\_uniform.py}).",
@@ -148,9 +152,9 @@ def tabela_faixas() -> None:
         r"\begin{table}[htbp]",
         r"\centering",
         r"\caption{Desempenho do RF+SMOTE e do \textit{Gradient Boosting} por faixa da nota final do comparador, no conjunto de teste "
-        f"({n_teste} potenciais pares; {n_vinc} vínculos), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, "
+        f"({n_teste} potenciais pares; {n_vinc} pares verdadeiros), com a configuração da ablação: 58 atributos, SMOTE com razão 0,3 apenas no treino, "
         r"limiar de decisão 0,5, selecionado entre 0,3, 0,5 e 0,7 no conjunto de teste da ablação "
-        r"(Seção~\ref{sec:cap5-ablacao-pareto}), e semente 42.}",
+        r"(Apêndice~\ref{sec:cap5-ablacao-pareto}), e semente 42.}",
         r"\label{tab:desempenho-faixas}",
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
@@ -158,7 +162,7 @@ def tabela_faixas() -> None:
         r"\toprule",
         r"& & & \multicolumn{3}{c}{RF+SMOTE} & \multicolumn{3}{c}{\textit{Gradient Boosting}} \\",
         r"\cmidrule(lr){4-6} \cmidrule(l){7-9}",
-        r"Faixa & Pares & Vínculos & VP/FP/FN & Sensib. & Prec. & VP/FP/FN & Sensib. & Prec. \\",
+        r"Faixa & \shortstack{Potenciais\\pares} & \shortstack{Pares\\verdadeiros} & VP/FP/FN & Sensib. & VPP & VP/FP/FN & Sensib. & VPP \\",
         r"\midrule",
     ]
     for faixa in ordem:
@@ -179,9 +183,9 @@ def tabela_faixas() -> None:
         r"\vspace{2pt}",
         r"\par\footnotesize Nota: VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos. "
         r"Faixas fechadas à esquerda e abertas à direita; a última inclui notas a partir de 10. "
-        r"Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. "
-        r"n.d.: razão não definida (sem vínculos ou sem predições positivas na faixa). "
-        r"A área cinza corresponde às faixas de 5 a 9. Fonte: \texttt{data/desempenho\_faixas\_ablacao.csv}.",
+        r"Entre parênteses, IC de Wilson de 95\% para sensibilidade e VPP, descritivos e sem ajuste para dependência entre pares. "
+        r"n.d.: razão não definida (sem pares verdadeiros ou sem predições positivas na faixa). "
+        r"A faixa intermediária da nota final corresponde às faixas de 5 a 9. Fonte: \texttt{data/desempenho\_faixas\_ablacao.csv}.",
         r"\end{table}",
         "",
     ]
@@ -198,7 +202,7 @@ def tabela_e4_oof() -> None:
         "7-8": "7-8",
         "8-9": "8-9",
         ">=9": r"$\geq9$",
-        "area_cinza": "Área cinza",
+        "area_cinza": "Faixa intermediária",
         "total": "Total",
     }
     tot = f.loc["total"]
@@ -209,14 +213,14 @@ def tabela_e4_oof() -> None:
         r"\scriptsize",
         r"\setlength{\tabcolsep}{3pt}",
         r"\caption{Desempenho do estimador \texttt{p\_cal\_ml} (XGBoost com calibração isotônica) por faixa da nota final $s$ do comparador, "
-        f"nos {milhar(tot.n)} potenciais pares e {int(tot.vinculos)} vínculos do extrato. "
+        f"nos {milhar(tot.n)} potenciais pares e {int(tot.vinculos)} pares verdadeiros do extrato. "
         r"As probabilidades são estimativas fora da amostra agrupadas por REFREC; contagens e razões usam o limiar 0,5, fixado antes da análise e não otimizado. "
         r"AUC e AP: área sob a curva ROC e precisão média; Brier: escore de Brier. "
         r"n.d.: AUC e AP não exibidas quando a classe minoritária tem menos de cinco casos, ou razão não definida por denominador zero.}",
         r"\label{tab:e4-desempenho-faixas-oof}",
         r"\begin{tabular}{@{}lrrcccccccc@{}}",
         r"\toprule",
-        r"Faixa & Pares & Vínculos & AUC & AP & Brier & VP & FP & FN & Sensib. & Prec. \\",
+        r"Faixa & Pares & \shortstack{Pares\\verdadeiros} & AUC & AP & Brier & VP & FP & FN & Sensib. & VPP \\",
         r"\midrule",
     ]
     for chave, nome in rot.items():
@@ -233,7 +237,7 @@ def tabela_e4_oof() -> None:
         "",
         r"\vspace{2pt}",
         r"\par\footnotesize Nota: faixas fechadas à esquerda e abertas à direita. VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos "
-        r"com \texttt{p\_cal\_ml} $\geq 0{,}5$. Área cinza: $5\leq s<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, "
+        r"com \texttt{p\_cal\_ml} $\geq 0{,}5$. Faixa intermediária: $5\leq s<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e VPP, "
         r"descritivos e sem ajuste para dependência entre pares. Fonte: \texttt{data/desempenho\_faixas\_oof\_refrec.csv}.",
         r"\end{table}",
         "",

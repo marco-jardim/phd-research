@@ -41,8 +41,8 @@ def expected_ablation_appendix():
                        f"MACD {state} (Medidas Contínuas de Diferença de Datas de nascimento), modo {mode} "
                        f"(maior custo para falso {error}): métricas esperadas, sem chamadas a modelo de linguagem.")
             assert expected.count(caption) == 1
-    gloss = ("MACD designa as Medidas Contínuas de Diferença de Datas, atributos derivados do nascimento; "
-             "v3 identifica a política histórica de três ações (vínculo, não vínculo e revisão por modelo de linguagem).\n\n")
+    gloss = ("MACD designa as Medidas Contínuas de Diferença de Datas de nascimento, atributos derivados dessas datas; "
+             "v3 identifica a política histórica de três ações (aceitar como vínculo, rejeitar e revisão por modelo de linguagem).\n\n")
     assert expected.startswith(gloss)
     return expected
 
@@ -62,7 +62,7 @@ def test_sensibilidade_text_matches_csv_by_variant_and_metric():
     assert f"(AP) abaixo do corte caiu de {ap[0]} para {ap[1]}" in paragraph
     assert f"(AUC) aumentou de {auc[0]} para {auc[1]}" in paragraph
     assert "encurtou a cauda, mas piorou o topo" in paragraph
-    assert "não modifica o calibrador de P nem a hipótese fixada" in paragraph
+    assert "não modifica o calibrador de ASR nem a hipótese fixada" in paragraph
 
 
 @pytest.mark.parametrize("queue", ["F1", "F2", "F3", "F4", "A1", "A2"])
@@ -93,9 +93,11 @@ def test_nine_keys_are_unique_have_exact_dois_and_are_cited(name):
         assert bib.lower().count(doi.lower()) == 1, (key, "DOI duplicado")
         assert re.search(r"doi\s*=\s*\{" + re.escape(doi) + r"\}", entries[0])
         # W11a separou o registro da v4 das propostas de continuidade da conclusão.
-        cited_text = ((LATEX / "conclusao.tex").read_text(encoding="utf-8")
-                      if key == "Fisch2024stratppi" else study())
-        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", cited_text)
+        # Conclusão reescrita: Fisch2024stratppi deixou de ser citada em qualquer capítulo; a entrada
+        # (DOI exato, única) segue verificada no .bib, e a citação só é exigida das demais chaves.
+        if key == "Fisch2024stratppi":
+            continue
+        assert re.search(r"\\cite(?:online)?\{[^}]*\b" + key + r"\b", study())
     fisch = next(entry for key, entry in blocks if key == "Fisch2024stratppi")
     assert "preprint" in fisch and "arXiv" in fisch
     gienapp = next(entry for key, entry in blocks if key == "Gienapp2026relevance")
@@ -122,12 +124,11 @@ def test_primary_criterion_is_preserved_and_secondary_is_registered_candidate():
     for key in ("Callaghan2020stopping", "Lewis2021certifying",
                 "DiNunzio2026stopping", "Lam2026clerical"):
         assert key in paragraph
+    # Conclusão reescrita: o parágrafo de continuidade com Fisch2024stratppi foi removido por concisão; a
+    # conclusão mantém a referência cega por amostragem estratificada e a recomendação sem fixar o registro da v4.
     conclusion = (LATEX / "conclusao.tex").read_text(encoding="utf-8")
-    continuity = next(p for p in conclusion.split("\n\n") if "Fisch2024stratppi" in p)
-    for phrase in (r"correção dos \textit{labels} de LLM por amostra humana estratificada",
-                   r"\cite{Fisch2024stratppi}", "permanecem propostas de continuidade",
-                   "distintas das comparações fixadas no registro da v4 candidata"):
-        assert phrase in continuity
+    assert "Fisch2024stratppi" not in conclusion
+    assert r"A referência da coorte nova pode ser obtida por amostragem estratificada \cite{Lam2026clerical}" in conclusion
 
 
 def test_ablation_keeps_generated_values_with_exact_editorial_glosses():
@@ -137,26 +138,31 @@ def test_ablation_keeps_generated_values_with_exact_editorial_glosses():
 def test_fusion_interpretation_keeps_f1_exception_and_all_six_variants():
     paragraph = next(p for p in study().split("\n\n")
                      if p.startswith(r"Outra sensibilidade exploratória \textit{post hoc}"))
-    for phrase in ("F1 não superou O3", "seis variantes, sem selecionar a melhor",
+    # Âncora C12: F4 foi escolhida entre seis variantes, sem correção para multiplicidade.
+    for phrase in ("F1 não superou O3",
+                   "F4 foi escolhida entre seis variantes avaliadas nos mesmos 36 PAR~=~2, sem correção para multiplicidade",
                    "sem conhecimento prévio dos desfechos", "não constitui pré-registro",
                    "viés de verificação favorável a O1 na cauda", "200 repetições"):
         assert phrase in paragraph
+    assert "sem selecionar a melhor" not in paragraph
 
 
 def test_census_first_mentions_and_captions_are_self_contained():
     text = study()
-    union = next(p for p in text.split("\n\n") if r"na união $P\cup B1$" in p)
+    union = next(p for p in text.split("\n\n") if r"na união $\mathrm{ASR}\cup B1$" in p)
     assert "B1, ponte que mantém a probabilidade original" in union
     first_k2 = next(p for p in text.split("\n\n") if re.search(r"\bK2\b(?!\.\d)", p))
     assert "K2, soma das avaliações humanas e LLM" in first_k2
-    for label, phrases in {
-        "tab:cap8-revisao-desempenho": ("Experimento 2 (Exp2, revisão assistida)",
-                                       "incluindo as saídas decisórias do motor", "versão histórica que solicita"),
-        "tab:cap8-robustez-arranjo": ("P-Platt (análise de sensibilidade de P com", "P (arranjo principal", "reexecuções com outra"),
-        "fig:cap8-curva-esforco": ("O1 ordena", "O2, pela nota", "O3, pela probabilidade", "O4, pela probabilidade",
-                                  "P é o arranjo principal", "sem falso positivo humano"),
-    }.items():
-        before = text.split(r"\label{" + label + "}", 1)[0]
+    # Revisão 2: a tabela do Experimento 2 foi para o Apêndice do Estudo 4 (A.4).
+    appendix = (LATEX / "apendice_gzcmd.tex").read_text(encoding="utf-8")
+    for label, source, phrases in (
+        ("tab:cap8-revisao-desempenho", appendix, ("Experimento 2 (Exp2, revisão assistida)",
+                                                   "incluindo as saídas decisórias do motor", "versão histórica que solicita")),
+        ("tab:cap8-robustez-arranjo", text, ("ASR-Platt (análise de sensibilidade de ASR com", "ASR (arranjo sequencial", "reexecuções com outra")),
+        ("fig:cap8-curva-esforco", text, ("O1 ordena", "O2, pela nota", "O3, pela probabilidade", "O4, pela probabilidade",
+                                         "ASR é o arranjo sequencial", "sem falso positivo humano")),
+    ):
+        before = source.split(r"\label{" + label + "}", 1)[0]
         caption = before.rsplit(r"\caption{", 1)[1]
         for phrase in phrases:
             assert phrase in caption

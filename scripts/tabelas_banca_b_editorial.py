@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 import sys
 
@@ -18,7 +19,38 @@ OUT = ROOT / "text/latex/tables/editorial"
 
 
 def d(value: float, digits: int = 3) -> str:
-    return f"{value:.{digits}f}".replace(".", ",")
+    # Arredondamento comercial (meia unidade para cima) sobre a representação decimal do artefato:
+    # o formato binário de 0.8765 arredondaria para 0,876, embora 71/81 = 0,87654 arredonde para 0,877.
+    q = Decimal(str(value)).quantize(Decimal(1).scaleb(-digits), rounding=ROUND_HALF_UP)
+    return f"{q:.{digits}f}".replace(".", ",")
+
+
+def fracao(numerador: int, denominador: int, digits: int = 3) -> str:
+    """Fração exata com `digits` casas, meia unidade para cima, vírgula decimal (aritmética inteira)."""
+    escala = 10 ** digits
+    arredondado = (2 * numerador * escala + denominador) // (2 * denominador)
+    return f"{arredondado // escala},{arredondado % escala:0{digits}d}"
+
+
+def metricas_exatas(row: dict, pos_test: int) -> tuple[str, str, str]:
+    """VPP, sensibilidade e F1 a partir das contagens reconstruídas dos valores de 4 casas do artefato.
+
+    O artefato guarda 0,9595 (= 71/74 = 0,95946); arredondar esse valor de novo daria 0,960, e o
+    correto é 0,959. VP = sensibilidade x positivos do teste; positivos preditos = VP / VPP. Se as
+    contagens não reproduzirem os valores do artefato (4 casas), usa-se o valor do artefato
+    (caso do AdaBoost, cujo VPP e F1 registrados não admitem o mesmo número de positivos preditos).
+    """
+    vp = round(row["Recall"] * pos_test)
+    n_pred = round(vp / row["Precision"]) if vp and row["Precision"] else 0
+    consistente = (
+        n_pred > 0
+        and round(vp / pos_test, 4) == round(row["Recall"], 4)
+        and round(vp / n_pred, 4) == round(row["Precision"], 4)
+        and round(2 * vp / (n_pred + pos_test), 4) == round(row["F1-Score"], 4)
+    )
+    if not consistente:
+        return d(row["Precision"]), d(row["Recall"]), d(row["F1-Score"])
+    return fracao(vp, n_pred), fracao(vp, pos_test), fracao(2 * vp, n_pred + pos_test)
 
 
 def dominated(frame: pd.DataFrame, row: pd.Series) -> bool:
@@ -71,7 +103,7 @@ def tabela_pareto(destino: Path | None = None) -> None:
               r"com zero indicando ausência desse filtro. XGBoost 0,50 e 0,90 são dominados por 0,70. "
               r"A contagem é por modelo, não da união entre protocolos distintos. "
               r"A grade é assimétrica: cinco pontos XGBoost sem regras contra a exploração mais extensa de RF+SMOTE. "
-              r"O limiar de regras 1,0 do XGBoost não restringe suas aceitações. "
+              r"O limiar de regras do XGBoost é 0 nessa grade, isto é, sem filtro de regras. "
               r"No conjunto ampliado da ablação, a união XGBoost com regras $\geq8$ domina também os pontos "
               r"XGBoost 0,30 e 0,70; não dominado nesta tabela não significa não dominado nesse conjunto. "
               r"Teste: 18.509 potenciais pares, 74 vínculos. Fonte: \path{data/pareto_grid.csv} e "
@@ -84,15 +116,15 @@ def tabela_nb02() -> None:
     labels = ["RF com pesos extremos", "RF + SMOTE", "RF + BorderlineSMOTE",
               "Gradient Boosting + SMOTE", "AdaBoost + SMOTE", "MLP + SMOTE", "Votação suave"]
     lines = [r"\begin{table}[htbp]", r"\centering",
-             r"\caption{Estratégia de sensibilidade (NB02): resultados canônicos do script uniforme, "
+             r"\caption{Estratégia de vigilância (NB02): resultados canônicos do script uniforme, "
              r"em teste com 18.509 potenciais pares e 74 vínculos, com 58 atributos.}",
              r"\label{tab:nb02-recall}", r"\small", r"\begin{tabular}{lcccc}", r"\toprule",
              r"Modelo & Limiar & Precisão & Sensibilidade & $F_1$ \\", r"\midrule"]
     for label, row in zip(labels, data["all_results"], strict=True):
         threshold = row["Modelo"].split("th=")[1].rstrip(")")
-        precision = d(row['Precision'], 4 if label == "RF + BorderlineSMOTE" else 3)
+        precision, recall, f1 = metricas_exatas(row, data["pos_test"])
         lines.append(f"{label} & {threshold.replace('.', ',')} & {precision} & "
-                     f"{d(row['Recall'])} & {d(row['F1-Score'])} " + r"\\")
+                     f"{recall} & {f1} " + r"\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\footnotesize Fonte: "
               r"\path{data/nb02_results.json}, gerado por \path{scripts/run_nb02_uniform.py}. "
               r"A diferença em relação ao caderno histórico não tem causa documentada; "
@@ -106,7 +138,7 @@ def tabela_impacto() -> None:
              r"\caption{Comparação de métodos: vínculos detectados, perdidos, revisões e sensibilidade.}",
              r"\label{tab:impacto-epidemiologico}", r"\footnotesize",
              r"\begin{tabular}{@{}lrrrrr@{}}", r"\toprule",
-             r"Método & Det. & Perd. & Rev. & Prec. & Sensib. \\", r"\midrule"]
+             r"Método & Det. & Perd. & Rev. & VPP & Sensib. \\", r"\midrule"]
     for _, row in data.iterrows():
         method = str(row.method)
         for old, new in [("Naive threshold", "Decisão de limiar"), ("Hybrid-OR", "Híbrido OR"),
@@ -127,7 +159,7 @@ def tabela_impacto() -> None:
                  f"{d(selected.recall, 2)} " + r"\\")
     lines += [r"\bottomrule", r"\end{tabular}", r"\par\footnotesize Fonte: "
               r"\path{data/epidemiological_impact.csv}. Det.: detectados; Perd.: perdidos; Rev.: revisões; "
-              r"Prec.: precisão; Sensib.: sensibilidade. Teste com 18.509 potenciais pares e 74 vínculos. "
+              r"VPP: valor preditivo positivo; Sensib.: sensibilidade. Teste com 18.509 potenciais pares e 74 pares verdadeiros. "
               r"O custo por vínculo (inverso do VPP), representado na figura, não é coluna desta tabela. "
               r"As linhas XGBoost provêm do fluxo Modal, não da ablação original. A união com regras "
               r"usa o ponto de probabilidade 0,7 e escore de regras 8 da ablação, com 68 VP e zero FP "
@@ -188,6 +220,38 @@ def main() -> None:
     tabela_qw1()
 
 
+QW1_LINHAS = [("XGBoost", "XGBoost"), ("RandomForest", "Random Forest"),
+              ("MLP (64,32)", "MLP (64, 32)"), ("MLP (128,64)", "MLP (128, 64)"),
+              ("TabNet (fallback=FT-Transformer)", "TabNet")]
+
+
+def qw1_linhas() -> str:
+    """Linhas numéricas de tab_qw1_deep_learning lidas de data/review2_qw1_resumo.csv.
+
+    O corpo da tabela histórica foi digitado à mão e divergia do artefato em quatro células;
+    aqui cada valor vem do CSV (média e DP da validação cruzada 5x5; métricas do teste interno).
+    O maior valor de cada coluna, pelo valor exibido, aparece em negrito (empates incluídos).
+    """
+    frame = pd.read_csv(ROOT / "data/review2_qw1_resumo.csv").set_index("model")
+    colunas_media = ["f1_mean", "precision_mean", "recall_mean"]
+    colunas_teste = ["f1", "precision", "recall"]
+    maior = {c: max(d(frame.loc[m, c]) for m, _ in QW1_LINHAS) for c in colunas_media + colunas_teste}
+
+    def negrito(coluna: str, valor: float) -> str:
+        texto = d(valor)
+        return rf"\textbf{{{texto}}}" if texto == maior[coluna] else texto
+
+    linhas = []
+    for chave, rotulo in QW1_LINHAS:
+        linha = frame.loc[chave]
+        cv = " & ".join(
+            f"{negrito(c, linha[c])} $\\pm$ {d(linha[c.replace('_mean', '_std')])}" for c in colunas_media
+        )
+        teste = " & ".join(negrito(c, linha[c]) for c in colunas_teste)
+        linhas.append(f"{rotulo:<17} & {cv}\n{'':<18}&& {teste} " + r"\\")
+    return "\n".join(linhas) + "\n"
+
+
 def tabela_qw1() -> None:
     qw1 = ROOT / "text/latex/tables/tab_qw1_deep_learning.tex"
     note = (r"\par\footnotesize Fonte: \path{data/review2_qw1_resumo.csv}. "
@@ -196,7 +260,10 @@ def tabela_qw1() -> None:
             r"$F_1=0{,}855$ para $0{,}891$, e o TabNet, de $0{,}610$ para $0{,}712$, "
             r"fora da tolerância absoluta de 0,01; a validação cruzada histórica não foi recalculada "
             r"(Apêndice~\ref{sec:sensibilidade-qw1}).")
-    text = qw1.read_text(encoding="utf-8").replace(
+    historical = qw1.read_text(encoding="utf-8")
+    head, rest = historical.split(r"\midrule" + "\n", 1)
+    _, tail = rest.split(r"\bottomrule", 1)
+    text = (head + r"\midrule" + "\n" + qw1_linhas() + r"\bottomrule" + tail).replace(
         "O melhor resultado de cada coluna aparece em negrito.",
         "O maior valor de cada coluna aparece em negrito, sem indicar diferença demonstrada."
     ).replace(

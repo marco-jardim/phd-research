@@ -10,6 +10,7 @@ import yaml
 
 from scripts.probe_dossie_v5_agregado import FIELDS, generate, utility
 from scripts.v4_candidata_registro import FILES, build_registry
+from terminologia import contem
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -152,7 +153,9 @@ def test_context_bootstrap_and_band_limits_match_sources():
     counts = [one(band, fila=q, meta=36)["revisoes"] for q in ("CM", "F4", "O3", "O1")]
     assert [int(c) for c in counts] == [416, 840, 1330, 2521]
     assert all(pt(n) in text() for n in counts)
-    assert "a recomendação permanece F4" in text()
+    # Âncora C08r: a recomendação não é "só F4"; CM não tem vantagem demonstrada sobre F4.
+    assert "a recomendação permanece F4" not in text()
+    assert "CM é candidata promissora para a cauda, sem vantagem demonstrada sobre F4" in text()
 
 
 def test_propagation_and_bayesian_evidence_limits():
@@ -164,7 +167,7 @@ def test_propagation_and_bayesian_evidence_limits():
     assert (post("VP"), post("aceitacoes")) == (11, 26)
     assert post("VPP") == pytest.approx(11 / 26)
     assert float(one(data, modo="vigilancia", variante="P-LLM", tipo="aceitacao", metrica="VPP")["valor"]) == .16
-    assert "42,3\\% (11 vínculos em 26 aceitações)" in text()
+    assert contem(text(), "42,3\\% (11 pares verdadeiros em 26 aceitações)", arquivo="text/latex/estudo4_gzcmd.tex")  # migrado: terminologia 3.6
     assert "58,3\\% dos PAR~=~2" in text()
     assert "não constitui validação aninhada integral" in text()
 

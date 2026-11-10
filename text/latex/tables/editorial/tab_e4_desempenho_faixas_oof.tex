@@ -3,11 +3,11 @@
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3pt}
-\caption{Desempenho do estimador \texttt{p\_cal\_ml} (XGBoost com calibração isotônica) por faixa da nota final $v$ do Comparador de Registros (CdR), nos 61.696 potenciais pares e 247 vínculos do extrato. As probabilidades são estimativas fora da amostra agrupadas por REFREC; contagens e razões usam o limiar 0,5, fixado antes da análise e não otimizado. AUC e AP: área sob a curva ROC e precisão média; Brier: escore de Brier. n.d.: AUC e AP não exibidas quando a classe minoritária tem menos de cinco casos, ou razão não definida por denominador zero.}
+\caption{Desempenho do estimador \texttt{p\_cal\_ml} (XGBoost com calibração isotônica) por faixa da nota final $v$ do Comparador de Registros (CdR), nos 61.696 potenciais pares e 247 pares verdadeiros do extrato. As probabilidades são estimativas fora da amostra agrupadas por REFREC; contagens e razões usam o limiar 0,5, fixado antes da análise e não otimizado. AUC e AP: área sob a curva ROC e precisão média; Brier: escore de Brier. n.d.: AUC e AP não exibidas quando a classe minoritária tem menos de cinco casos, ou razão não definida por denominador zero.}
 \label{tab:e4-desempenho-faixas-oof}
 \begin{tabular}{@{}lrrcccccccc@{}}
 \toprule
-Faixa & Pares & Vínculos & AUC & AP & Brier & VP & FP & FN & Sensib. & Prec. \\
+Faixa & Pares & \shortstack{Pares\\verdadeiros} & AUC & AP & Brier & VP & FP & FN & Sensib. & VPP \\
 \midrule
 $<5$ & 39.981 & 3 & n.d. & n.d. & 0,0001 & 0 & 2 & 3 & \shortstack{0,000\\(0,000; 0,561)} & \shortstack{0,000\\(0,000; 0,658)} \\
 5-6 & 14.263 & 17 & 1,000 & 0,721 & 0,0007 & 12 & 7 & 5 & \shortstack{0,706\\(0,469; 0,867)} & \shortstack{0,632\\(0,410; 0,809)} \\
@@ -16,12 +16,12 @@ $<5$ & 39.981 & 3 & n.d. & n.d. & 0,0001 & 0 & 2 & 3 & \shortstack{0,000\\(0,000
 8-9 & 102 & 34 & 0,913 & 0,873 & 0,1360 & 29 & 16 & 5 & \shortstack{0,853\\(0,699; 0,936)} & \shortstack{0,644\\(0,498; 0,768)} \\
 $\geq9$ & 95 & 93 & n.d. & n.d. & 0,0373 & 89 & 2 & 4 & \shortstack{0,957\\(0,895; 0,983)} & \shortstack{0,978\\(0,923; 0,994)} \\
 \midrule
-Área cinza & 21.620 & 151 & 0,995 & 0,862 & 0,0022 & 119 & 28 & 32 & \shortstack{0,788\\(0,716; 0,846)} & \shortstack{0,810\\(0,738; 0,865)} \\
+Faixa intermediária & 21.620 & 151 & 0,995 & 0,862 & 0,0022 & 119 & 28 & 32 & \shortstack{0,788\\(0,716; 0,846)} & \shortstack{0,810\\(0,738; 0,865)} \\
 Total & 61.696 & 247 & 0,996 & 0,911 & 0,0009 & 208 & 32 & 39 & \shortstack{0,842\\(0,791; 0,882)} & \shortstack{0,867\\(0,818; 0,904)} \\
 \bottomrule
 \end{tabular}
 
 \vspace{2pt}
-\par\footnotesize Nota: faixas fechadas à esquerda e abertas à direita. VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos com \texttt{p\_cal\_ml} $\geq 0{,}5$. Área cinza: $5\leq v<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e precisão, descritivos e sem ajuste para dependência entre pares. Fonte: \texttt{data/desempenho\_faixas\_oof\_refrec.csv}.
+\par\footnotesize Nota: faixas fechadas à esquerda e abertas à direita. VP, FP e FN são verdadeiros positivos, falsos positivos e falsos negativos com \texttt{p\_cal\_ml} $\geq 0{,}5$. Faixa intermediária: $5\leq v<9$. Entre parênteses, IC de Wilson de 95\% para sensibilidade e VPP, descritivos e sem ajuste para dependência entre pares. Fonte: \texttt{data/desempenho\_faixas\_oof\_refrec.csv}.
 \par\footnotesize REFREC identifica o registro do SIM. OOF: probabilidades produzidas fora da amostra de treinamento. CdR: Comparador de Registros; $v$: sua nota final.
 \end{table}

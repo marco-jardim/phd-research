@@ -1,0 +1,44 @@
+# Arquivos da tese cujo texto já foi revisado para a terminologia do guia (seção 3.6).
+#
+# Fluxo de trabalho: um capítulo entra nesta lista quando a sua revisão é encerrada,
+# isto é, quando o texto já usa só as formas canônicas. A partir daí:
+#   1. tests/terminologia.py aplica o modo ESTRITO aos pinos que passam o caminho do
+#      arquivo (`contem(texto, literal, arquivo=...)`): as formas antigas deixam de ser
+#      normalizadas, e "vínculo" (vínculo aceito) e "par verdadeiro" (classe segundo a
+#      referência) passam a ter marcadores distintos;
+#   2. tests/test_arquivos_revisados.py exige zero erros R02, R03, R04 e R08 do
+#      scripts/linter_prosa.py em cada arquivo listado.
+# Arquivos fora da lista seguem no modo transicional (formas antigas e novas equivalentes).
+#
+# Formato: lista de caminhos relativos à raiz do repositório, com barras normais.
+# Exemplo (descomentar ao fechar a revisão do capítulo):
+#   - text/latex/estudo1_exemplo.tex
+#
+# Resumo e Abstract vivem em tese.tex e se revisam à parte: use as chaves
+#   - text/latex/tese.tex#resumo
+#   - text/latex/tese.tex#abstract
+# Elas ativam só as ocorrências `vigencia: pos_revisao` (e desativam as `pre_revisao`) do
+# registro de invariantes (scripts/registro_invariantes.py) naquela seção; não são arquivos,
+# não ativam o modo estrito de tests/terminologia.py nem entram em test_arquivos_revisados.py.
+# O arquivo inteiro na lista (text/latex/tese.tex) vale para as duas seções.
+- text/latex/capitulo3.tex
+- text/latex/capitulo1.tex
+- text/latex/capitulo2.tex
+- text/latex/capitulo_dados.tex
+- text/latex/estudo1_comparador.tex
+- text/latex/apendice_estrategias.tex
+- text/latex/estudo2_classificadores.tex
+- text/latex/estudo3_estrategias.tex
+- text/latex/estudo4_gzcmd.tex
+- text/latex/apendice_gzcmd.tex
+- text/latex/estudo5_equidade.tex
+- text/latex/conclusao.tex
+- text/latex/tese.tex#resumo
+- text/latex/tese.tex#abstract
+- text/latex/glossario.tex
+- text/latex/apendice_linkage_origem.tex
+- text/latex/apendice_algoritmo.tex
+- text/latex/apendice_formalizacao.tex
+- text/latex/apendice_busca.tex
+- text/latex/apendice_pacote.tex
+- text/latex/apendice_sensibilidade.tex

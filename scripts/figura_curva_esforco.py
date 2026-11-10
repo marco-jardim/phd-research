@@ -11,8 +11,11 @@ ORDERS = (
     ("O1_SCORE", "O1: escore OpenRecLink", "gray"),
     ("O2_CdR", "O2: nota do CdR", "orange"),
     ("O3_p_cal_ml", "O3: probabilidade calibrada (OOF)", "blue"),
-    ("O4_P_recalibrada", "O4: probabilidade recalibrada de P", "teal"),
+    ("O4_P_recalibrada", "O4: probabilidade recalibrada de {arm}", "teal"),
 )
+# Sigla do arranjo por destino: a tese usa ASR; os slides seguem com P até serem refeitos.
+ARM_THESIS = "ASR"
+ARM_SLIDES = "P"
 LINE_STYLES = {
     "O1_SCORE": r"\pgfsetdash{}{0pt}",
     "O2_CdR": r"\pgfsetdash{{4pt}{2pt}}{0pt}",
@@ -40,8 +43,8 @@ def curve_series(rows, order):
     return series
 
 
-def render(curve_rows, comparator_rows):
-    series = [(name, label, color, curve_series(curve_rows, name))
+def render(curve_rows, comparator_rows, arm=ARM_THESIS):
+    series = [(name, label.format(arm=arm), color, curve_series(curve_rows, name))
               for name, label, color in ORDERS]
     xmax = max(points[-1][0] for _, _, _, points in series)
     if len({points[-1][0] for _, _, _, points in series}) != 1:
@@ -74,12 +77,12 @@ def render(curve_rows, comparator_rows):
                 lines.extend([rf"\pgfpathlineto{{{point(k, last_y)}}}", rf"\pgfpathlineto{{{point(k, y)}}}"])
                 last_y = y
         lines.extend([rf"\pgfpathlineto{{{point(*points[-1])}}}", r"\pgfusepath{stroke}"])
-    for mode, label, label_x, label_y in (("vigilancia", "P vig.", 0.35, height - 0.40),
-                                         ("confirmacao", "P conf.", 6.30, 0.30)):
+    for mode, label, label_x, label_y in (("vigilancia", f"{arm} vig.", 0.35, height - 0.40),
+                                         ("confirmacao", f"{arm} conf.", 6.30, 0.30)):
         matches = [r for r in comparator_rows if r["ordenacao"] == "O3_p_cal_ml"
                    and r["modo"] == mode and r["carga"] == "K1_humana"]
         if len(matches) != 1:
-            raise ValueError(f"P sem ponto único: {mode}")
+            raise ValueError(f"{arm} sem ponto único: {mode}")
         row = matches[0]
         k, y = int(row["P_pares_humano"]), int(row["P_par2_recuperados"])
         lines.extend([r"\color{red}", r"\pgfsetdash{}{0pt}", rf"\pgfpathcircle{{{point(k,y)}}}{{2pt}}\pgfusepath{{fill}}",
@@ -100,8 +103,8 @@ def render(curve_rows, comparator_rows):
     return "\n".join(lines) + "\n"
 
 
-def generate(curve, comparator, output):
-    content = render(read_rows(curve), read_rows(comparator))
+def generate(curve, comparator, output, arm=ARM_THESIS):
+    content = render(read_rows(curve), read_rows(comparator), arm)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(content.encode("utf-8"))
@@ -113,13 +116,15 @@ def main():
     parser.add_argument("--curve", type=Path, default=ROOT / "data/comparador_mesma_carga_curva.csv")
     parser.add_argument("--comparator", type=Path, default=ROOT / "data/comparador_mesma_carga.csv")
     parser.add_argument("--output", type=Path, help="Destino único opcional; por padrão grava tese e slides")
+    parser.add_argument("--arm", default=ARM_THESIS,
+                        help="Sigla do arranjo no destino único (padrão: ASR)")
     args = parser.parse_args()
-    outputs = [args.output] if args.output else [
-        ROOT / "text/latex/figures/curva_esforco.pgf",
-        ROOT / "text/slides/figures/curva_esforco.pgf",
+    outputs = [(args.output, args.arm)] if args.output else [
+        (ROOT / "text/latex/figures/curva_esforco.pgf", ARM_THESIS),
+        (ROOT / "text/slides/figures/curva_esforco.pgf", ARM_SLIDES),
     ]
-    for output in outputs:
-        print(generate(args.curve, args.comparator, output))
+    for output, arm in outputs:
+        print(generate(args.curve, args.comparator, output, arm))
 
 
 if __name__ == "__main__":

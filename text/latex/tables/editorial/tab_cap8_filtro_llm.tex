@@ -1,6 +1,6 @@
 \begin{table}[!htbp]
 \centering\scriptsize
-\caption{Filtro LLM de NONMATCH antes do revisor humano: análise exploratória. $k$ é a fila submetida ao LLM, não a carga humana $H$.}
+\caption{Filtro LLM de \texttt{NONMATCH} antes do revisor humano: análise exploratória. $k$ é a fila submetida ao LLM, não a carga humana $H$.}
 \label{tab:cap8-filtro-llm}
 \resizebox{\linewidth}{!}{\begin{tabular}{lrrrrrl}
 \toprule
@@ -20,6 +20,6 @@ Conf. & 121 & 22 & 13 & 9 & 6 & 90{,}9 [83{,}6; 95{,}1] \\
 Conf. & 125 & 22 & 13 & 10 & 6 & 90{,}3 [83{,}0; 94{,}6] \\
 \bottomrule
 \end{tabular}}
-\par\smallskip\parbox{\linewidth}{\footnotesize Recuperação pressupõe revisor perfeito após o filtro. MATCH e UNSURE vão ao humano. Somente orçamentos com cobertura completa; topo 440 incompleto, não interpolado. Fontes: \path{data/filtro_llm.csv} e \path{data/filtro_llm_cobertura.csv}.}
-\par\footnotesize PAR~=~2: vínculos recuperados na revisão clerical abaixo do corte. NONMATCH: decisão de não vínculo; MATCH: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pela probabilidade calibrada com o mesmo número de revisões humanas após o filtro. O topo de 440 pares não teve todas as respostas.
+\par\smallskip\parbox{\linewidth}{\footnotesize Recuperação pressupõe revisor perfeito após o filtro. \texttt{MATCH} e UNSURE vão ao humano. Somente orçamentos com cobertura completa; topo 440 incompleto, não interpolado. Fontes: \path{data/filtro_llm.csv} e \path{data/filtro_llm_cobertura.csv}.}
+\par\footnotesize PAR~=~2: pares verdadeiros recuperados na revisão manual de origem abaixo do corte. \texttt{NONMATCH}: decisão de não aceitar como vínculo; \texttt{MATCH}: vínculo; UNSURE: inconclusivo. O3, mesmo $H$: ordenação pela probabilidade calibrada com o mesmo número de revisões humanas após o filtro. O topo de 440 pares não teve todas as respostas.
 \end{table}

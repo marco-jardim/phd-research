@@ -8,7 +8,7 @@
 \toprule
  & & & & \multicolumn{2}{c}{XGBoost} & \multicolumn{2}{c}{Base inteira (comparação)} \\
 \cmidrule(lr){5-6}\cmidrule(lr){7-8}
-Dimens\~ao & Grupo & $n$ & Vínculos & Sens. & VPP & Sens. & VPP \\
+Dimens\~ao & Grupo & $n$ & \shortstack{Pares\\verdadeiros} & Sens. & VPP & Sens. & VPP \\
 \midrule
 \multicolumn{8}{l}{\textit{Subgrupos demogr\'aficos}} \\
 Sexo & F & 12.834 & 71 & 94{,}4 & 93{,}1 & 81{,}7 & 87{,}9 \\
@@ -45,6 +45,6 @@ Completude & Completo & 59.823 & 226 & 91{,}2 & 75{,}2 & 77{,}9 & 84{,}6 \\
 Completude & Incompleto & 1.873 & 21 & 95{,}2 & 87{,}0 & 85{,}7 & 90{,}0 \\
 \bottomrule
 \end{tabular}}
-\par\footnotesize Fonte: \path{data/equidade_v31_global.csv}, \path{data/equidade_v31_group_metrics.csv}, \path{data/equidade_v31_pairwise_tests.csv} e \path{data/equidade_v31_maxdiff.csv}. Universo: 61.696 potenciais pares, 247 vínculos; a cobertura por dimensão pode ser menor. A contagem de rejeições usa a família histórica sem filtro por denominador; as diferenças máximas exigem denominadores de pelo menos 30. São critérios distintos, não uma única família filtrada. OR é razão de chances. Os grupos históricos do nome contêm empates, não quatro grupos de mesmo tamanho.
-\par\footnotesize P: arranjo principal, que preserva o corte do OpenRecLink e aplica a política com recalibração isotônica abaixo dele. CdR: Comparador de Registros. REFREC identifica o registro do SIM. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
+\par\footnotesize Fonte: \path{data/equidade_v31_group_metrics.csv}. Universo: 61.696 potenciais pares, 247 pares verdadeiros; a cobertura por dimensão pode ser menor. Grupos sem denominador na métrica aparecem como n.a. Os grupos históricos do nome contêm empates, não quatro grupos de mesmo tamanho.
+\par\footnotesize CdR: Comparador de Registros. Cascata v3.1: política de quatro ações aplicada à base inteira, incluindo revisão humana.
 \end{table}

@@ -83,8 +83,12 @@ def discover(root=ROOT):
                 token = token.replace('\\', '/')
                 if token.endswith('/') or token in {'text/latex', 'text/slides', 'data/sprint3b'}:
                     continue
+                # Regex literals from imported modules (e.g. r"[A-Za-z_][A-Za-z0-9_]*")
+                # are not path globs; fnmatch would read them as character classes
+                # matching almost every filename. Only path-like globs qualify.
                 if token == name or token == Path(name).name or token == Path(name).stem or (
-                    '*' in token and token not in {'*.json', '*.csv', '*.tex', '*.py', '*.md'}
+                    '*' in token and re.fullmatch(r'[\w./*?-]+', token)
+                    and token not in {'*.json', '*.csv', '*.tex', '*.py', '*.md'}
                     and (fnmatch.fnmatchcase(name, token) or fnmatch.fnmatchcase(Path(name).name, token))):
                     add(name, 'byte/hash test:' + test)
     return {name: sorted(why) for name, why in sorted(reasons.items())}
