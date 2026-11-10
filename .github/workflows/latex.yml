@@ -1,13 +1,10 @@
 name: Compilar tese (LaTeX)
 
 on:
+  # Na main, compila em todo push (sem filtro de paths) e publica o PDF como release.
   push:
-    branches: [main, pos-qualificacao, pq/revisao-2-redacao]
-    paths:
-      - 'text/latex/**'
-      - '.github/workflows/latex.yml'
-      - 'scripts/check_bib_usage.py'
-      - 'scripts/citacoes_contexto.py'
+    branches: [main]
+  # Nos PRs, só quando o texto ou a verificação mudam.
   pull_request:
     branches: [main, pos-qualificacao, pq/revisao-2-redacao]
     paths:
@@ -17,14 +14,18 @@ on:
       - 'scripts/citacoes_contexto.py'
   workflow_dispatch:
 
+# Somente leitura por padrão; o job release pede contents: write.
+permissions:
+  contents: read
+
 jobs:
   bib:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -37,9 +38,11 @@ jobs:
     container: texlive/texlive:latest # TODO: fixar tag da imagem
     timeout-minutes: 20
     env: { max_print_line: "10000", error_line: "254", half_error_line: "238" }
+    outputs:
+      pages: ${{ steps.paginas.outputs.pages }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Compilar
         working-directory: text/latex
@@ -72,13 +75,94 @@ jobs:
           boxes=$(grep -Ec 'Overfull|Underfull' tese.log || true)
           echo "[INFO] Overfull/Underfull: $boxes"
 
-      - uses: actions/upload-artifact@v4
+      - name: Extrair número de páginas
+        id: paginas
+        working-directory: text/latex
+        shell: bash
+        run: |
+          set -euo pipefail
+          pages=$(sed -nE 's/^Output written on tese\.pdf \(([0-9]+) pages?.*/\1/p' tese.log | tail -n 1)
+          if [ -z "$pages" ]; then echo "[ERRO] Número de páginas não encontrado no log."; exit 1; fi
+          echo "[INFO] Páginas: $pages"
+          echo "pages=$pages" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@v6
         with:
           name: tese-pdf
           path: text/latex/tese.pdf
+          if-no-files-found: error
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         if: always()
         with:
           name: tese-log
           path: text/latex/tese.log
+
+  release:
+    # Publica o PDF compilado neste run (artefato tese-pdf), nunca o PDF versionado.
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    concurrency:
+      group: release-tese
+      cancel-in-progress: false
+
+    steps:
+      - uses: actions/download-artifact@v7
+        with:
+          name: tese-pdf
+          path: dist
+
+      - name: Publicar release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+          PAGES: ${{ needs.build.outputs.pages }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        run: |
+          set -euo pipefail
+          test -s dist/tese.pdf
+
+          sha7="${SHA:0:7}"
+          committed=$(gh api "repos/$GH_REPO/commits/$SHA" --jq '.commit.committer.date')
+          day=$(date -u -d "$committed" +%Y-%m-%d)
+          subject=$(gh api "repos/$GH_REPO/commits/$SHA" --jq '.commit.message | split("\n")[0]')
+          tag="tese-${day}-${sha7}"
+          title="Tese, versão de ${day} (${sha7})"
+          dated="dist/tese_${day}_${sha7}.pdf"
+          cp dist/tese.pdf "$dated"
+
+          {
+            echo "PDF da tese compilado pelo CI a partir do commit ${sha7}."
+            echo
+            echo "- Commit: [${SHA}](${COMMIT_URL})"
+            echo "- Mensagem: ${subject}"
+            echo "- Data do commit (UTC): ${day}"
+            echo "- Páginas: ${PAGES}"
+            echo "- Workflow: ${RUN_URL}"
+          } > notes.md
+
+          # Só marca como latest se este commit ainda for a ponta da main
+          # (um run atrasado de commit antigo não rebaixa a versão mais nova).
+          head=$(gh api "repos/$GH_REPO/commits/main" --jq '.sha')
+          latest=true
+          if [ "$head" != "$SHA" ]; then
+            latest=false
+            echo "[INFO] $sha7 não é mais a ponta da main ($head); release sem latest."
+          fi
+
+          if gh release view "$tag" > /dev/null 2>&1; then
+            echo "[INFO] Release $tag já existe; atualizando anexos."
+            gh release upload "$tag" "$dated" dist/tese.pdf --clobber
+            gh release edit "$tag" --title "$title" --notes-file notes.md --latest="$latest"
+          else
+            gh release create "$tag" "$dated" dist/tese.pdf \
+              --target "$SHA" --title "$title" --notes-file notes.md --latest="$latest"
+          fi
+          echo "[OK] Release $tag publicada."

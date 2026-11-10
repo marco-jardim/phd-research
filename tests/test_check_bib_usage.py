@@ -120,8 +120,10 @@ def test_workflow_bib_reage_a_mudanca_nos_scripts():
     texto = (SCRIPT.parents[1] / ".github" / "workflows" / "latex.yml").read_text(encoding="utf-8")
     for evento in ("push", "pull_request"):
         bloco = re.split(r"\n  (?=\S)", texto.split(f"\n  {evento}:", 1)[1], maxsplit=1)[0]
+        # Sem filtro de paths, o workflow já reage a qualquer mudança, inclusive nos scripts.
+        sem_filtro = "paths:" not in bloco
         for caminho in ("scripts/check_bib_usage.py", "scripts/citacoes_contexto.py"):
-            assert caminho in bloco, (evento, caminho)
+            assert sem_filtro or caminho in bloco, (evento, caminho)
 
 
 def test_citacao_comentada_nao_conta(tmp_path):
