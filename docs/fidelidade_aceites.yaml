@@ -1338,6 +1338,21 @@ aceites:
       - siglas:+ASR
     justificativa: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."
     autora_aprovou: true
+  - arquivo: text/latex/tables/editorial/tab_cap8_mesma_carga.tex
+    hash_paragrafo_novo: "b15fe849dc5c664b"
+    itens:
+      - numeros:+0.045
+      - numeros:+0.055
+      - numeros:+0.075
+      - numeros:+0.085
+      - numeros:+0.115
+      - numeros:+0.12
+      - numeros:+0.13
+      - numeros:+0.14
+      - numeros:+3
+      - siglas:+ASR
+    justificativa: "Revisão 2 (decisão D19 da autora, 2026-11-11): terminologia: 'nota do CdR' passa a 'nota final do CdR' na nota da tabela (guia de estilo, seção 3.6), aplicada pelo gerador (tabelas_persona_editorial); nenhum número alterado; os itens são os mesmos do aceite anterior desta tabela (layout e rótulo ASR), cujo hash muda com a troca de uma palavra."
+    autora_aprovou: true
   - arquivo: text/latex/tables/editorial/tab_cap8_subamostragem.tex
     hash_paragrafo_novo: "e0fda44dba5263af"
     itens:
