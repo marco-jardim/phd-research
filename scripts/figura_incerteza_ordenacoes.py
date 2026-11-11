@@ -18,10 +18,21 @@ AXIS_LABEL = "Diferença de revisões frente a O1 (mediana e IC 95\\%)"
 # Regra de truncamento: um limite do IC é truncado quando seu módulo excede
 # OUTLIER_FACTOR vezes o maior módulo entre os outros oito valores do painel.
 OUTLIER_FACTOR = 3.0
-PANEL_WIDTH, PANEL_HEIGHT, PANEL_GAP, LEFT_MARGIN = 3.5, 3.2, 0.9, 0.55
+PANEL_WIDTH, PANEL_HEIGHT, PANEL_GAP, LEFT_MARGIN = 4.3, 2.4, 0.9, 0.55
 MAX_TICKS = 5
 PAD_FRACTION = 0.06
 MINUS = "$-$"
+# Posições verticais (cm) dos textos, relativas à base do painel (y = 0) ou ao seu topo.
+TITLE_OFFSET = 0.30          # centro do título acima do topo do painel
+TICK_LABEL_Y = -0.25         # centro dos números do eixo
+AXIS_LABEL_Y = -0.70         # centro do rótulo único do eixo, de uma linha, sob os três painéis
+# Dimensões de texto em \scriptsize.
+AXIS_LABEL_HALF_HEIGHT = 0.17  # meia altura de uma linha com parênteses (profundidade incluída)
+ANNOTATION_INSET = 0.12      # afastamento da anotação de truncamento em relação à borda do painel
+TITLE_HALF_HEIGHT = 0.15
+ROW_LABEL_GAP, ROW_LABEL_WIDTH = 0.12, 0.40
+TICK_LABEL_HALF_WIDTH = 0.30  # metade da largura de um número de até 8 caracteres
+BBOX_PAD = 0.10              # folga em torno de tudo o que a figura desenha
 
 
 def read_rows(path):
@@ -101,6 +112,20 @@ def signed(value, plus=False):
     return ("+" if plus and rounded > 0 else "") + thousands(rounded)
 
 
+def bounding_box(total_width):
+    """Caixa (xmin, ymin, xmax, ymax), em cm, que contém todo o desenho da figura.
+
+    Horizontal: do rótulo das linhas, à esquerda do primeiro painel, ao último painel
+    mais a metade de um número de eixo. Vertical: da base do rótulo único do eixo
+    ao topo do título dos painéis. As anotações de truncamento ficam dentro do painel.
+    """
+    xmin = LEFT_MARGIN - ROW_LABEL_GAP - ROW_LABEL_WIDTH - BBOX_PAD
+    xmax = total_width + TICK_LABEL_HALF_WIDTH + BBOX_PAD
+    ymin = AXIS_LABEL_Y - AXIS_LABEL_HALF_HEIGHT - BBOX_PAD
+    ymax = PANEL_HEIGHT + TITLE_OFFSET + TITLE_HALF_HEIGHT + BBOX_PAD
+    return xmin, ymin, xmax, ymax
+
+
 def render(ordenacao_rows, fusao_rows):
     panels = load_panels(ordenacao_rows, fusao_rows)
     total_width = LEFT_MARGIN + len(panels) * PANEL_WIDTH + (len(panels) - 1) * PANEL_GAP
@@ -113,6 +138,9 @@ def render(ordenacao_rows, fusao_rows):
 
     lines = [r"% Gerado por scripts/figura_incerteza_ordenacoes.py; não editar.",
              r"\begin{pgfpicture}"]
+    xmin, ymin, xmax, ymax = bounding_box(total_width)
+    lines.append(rf"\pgfpathrectanglecorners{{\pgfpoint{{{xmin:.5f}cm}}{{{ymin:.5f}cm}}}}"
+                 rf"{{\pgfpoint{{{xmax:.5f}cm}}{{{ymax:.5f}cm}}}}\pgfusepath{{use as bounding box}}")
     for index, (goal, rows) in enumerate(panels):
         x0 = LEFT_MARGIN + index * (PANEL_WIDTH + PANEL_GAP)
         values = [data for _, _, data in rows]
@@ -127,17 +155,15 @@ def render(ordenacao_rows, fusao_rows):
         lines.extend([r"\color{black}", r"\pgfsetdash{}{0pt}", r"\pgfsetlinewidth{0.35pt}",
                       rf"\pgfpathrectangle{{\pgfpoint{{{x0:.5f}cm}}{{0cm}}}}"
                       rf"{{\pgfpoint{{{PANEL_WIDTH:.5f}cm}}{{{PANEL_HEIGHT:.5f}cm}}}}\pgfusepath{{stroke}}",
-                      text(x0 + PANEL_WIDTH / 2, PANEL_HEIGHT + 0.30,
+                      text(x0 + PANEL_WIDTH / 2, PANEL_HEIGHT + TITLE_OFFSET,
                            f"Meta de {goal} pares verdadeiros")])
         tick = math.ceil(low / step)
         while tick * step <= high:
             tx = px(tick * step)
             lines.extend([rf"\pgfpathmoveto{{\pgfpoint{{{tx:.5f}cm}}{{0cm}}}}",
                           rf"\pgfpathlineto{{\pgfpoint{{{tx:.5f}cm}}{{-0.08cm}}}}\pgfusepath{{stroke}}",
-                          text(tx, -0.25, signed(tick * step))])
+                          text(tx, TICK_LABEL_Y, signed(tick * step))])
             tick += 1
-        lines.append(rf"\pgftext[top,at={{\pgfpoint{{{x0 + PANEL_WIDTH / 2:.5f}cm}}{{-0.42cm}}}}]"
-                     rf"{{\parbox{{{PANEL_WIDTH:.2f}cm}}{{\centering\scriptsize {AXIS_LABEL}}}}}")
         zero = px(0)
         lines.extend([r"\color{gray}", rf"\pgfpathmoveto{{\pgfpoint{{{zero:.5f}cm}}{{0cm}}}}",
                       rf"\pgfpathlineto{{\pgfpoint{{{zero:.5f}cm}}{{{PANEL_HEIGHT:.5f}cm}}}}\pgfusepath{{stroke}}"])
@@ -156,8 +182,9 @@ def render(ordenacao_rows, fusao_rows):
                                   rf"\pgfpathlineto{{\pgfpoint{{{ex - sign * 0.14:.5f}cm}}{{{y - 0.07:.5f}cm}}}}",
                                   r"\pgfpathclose\pgfusepath{fill}"])
                     anchor = "right" if j == 2 else "left"
+                    inset = -ANNOTATION_INSET if j == 2 else ANNOTATION_INSET
                     lines.extend([r"\color{black}",
-                                  text(ex, y + 0.27, "até " + signed(edge, plus=True), anchor),
+                                  text(ex + inset, y + 0.27, "até " + signed(edge, plus=True), anchor),
                                   rf"\color{{{color}}}"])
                 else:
                     lines.extend([rf"\pgfpathmoveto{{\pgfpoint{{{ex:.5f}cm}}{{{y - 0.07:.5f}cm}}}}",
@@ -167,8 +194,10 @@ def render(ordenacao_rows, fusao_rows):
                 lines.extend([rf"\pgfsetfillcolor{{{color}}}", circle + r"\pgfusepath{fill}"])
             else:
                 lines.extend([r"\pgfsetfillcolor{white}", circle + r"\pgfusepath{fill,stroke}"])
-            lines.extend([r"\color{black}", text(x0 - 0.12, y, label, "right")])
-    lines.extend([r"\color{black}", r"\end{pgfpicture}"])
+            lines.extend([r"\color{black}", text(x0 - ROW_LABEL_GAP, y, label, "right")])
+    lines.extend([r"\color{black}",
+                  text((LEFT_MARGIN + total_width) / 2, AXIS_LABEL_Y, AXIS_LABEL),
+                  r"\end{pgfpicture}"])
     return "\n".join(lines) + "\n"
 
 

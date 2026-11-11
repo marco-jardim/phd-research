@@ -1,4 +1,5 @@
 import csv
+import re
 from pathlib import Path
 
 import pytest
@@ -164,3 +165,56 @@ def test_real_values_match_csv_and_expected():
     assert round(panels[9]["O3"][0]) == -21 and round(panels[36]["O3"][2]) == 23566
     assert [round(v) for v in panels[36]["F4"]] == [-1203, -2049, -63]
     assert panels[36]["O3"][2] > 3 * 2243
+
+def declared_box(content):
+    match = re.search(r"\\pgfpathrectanglecorners\{\\pgfpoint\{(-?[\d.]+)cm\}\{(-?[\d.]+)cm\}\}"
+                      r"\{\\pgfpoint\{(-?[\d.]+)cm\}\{(-?[\d.]+)cm\}\}\\pgfusepath\{use as bounding box\}", content)
+    assert match, "a figura não declara caixa delimitadora"
+    return tuple(float(value) for value in match.groups())
+
+
+def test_bounding_box_is_declared_and_covers_axis_label_and_titles():
+    for content in (fig.render(*synthetic()), FIGURE.read_text(encoding="utf-8")):
+        xmin, ymin, xmax, ymax = declared_box(content)
+        # a caixa é declarada antes de qualquer desenho
+        assert content.splitlines()[2].endswith(r"\pgfusepath{use as bounding box}")
+        total_width = fig.LEFT_MARGIN + 3 * fig.PANEL_WIDTH + 2 * fig.PANEL_GAP
+        # rótulo único do eixo, de uma linha, centrado em AXIS_LABEL_Y
+        axis = re.findall(r"\\pgftext\[at=\{\\pgfpoint\{([\d.]+)cm\}\{(-?[\d.]+)cm\}\}\]\{\\scriptsize Diferença", content)
+        assert len(axis) == 1
+        assert float(axis[0][1]) == fig.AXIS_LABEL_Y
+        assert ymin <= fig.AXIS_LABEL_Y - fig.AXIS_LABEL_HALF_HEIGHT
+        # título dos painéis: centro em PANEL_HEIGHT + TITLE_OFFSET, com meia altura de texto
+        title_y = max(float(y) for y in re.findall(
+            r"\\pgftext\[at=\{\\pgfpoint\{[\d.]+cm\}\{([\d.]+)cm\}\}\]\{\\scriptsize Meta de", content))
+        assert title_y == pytest.approx(fig.PANEL_HEIGHT + fig.TITLE_OFFSET, abs=1e-5)
+        assert ymax >= title_y + fig.TITLE_HALF_HEIGHT
+        # rótulos das linhas à esquerda e último painel à direita
+        assert xmin <= fig.LEFT_MARGIN - fig.ROW_LABEL_GAP - fig.ROW_LABEL_WIDTH
+        assert xmax >= total_width + fig.TICK_LABEL_HALF_WIDTH
+        # nenhum desenho de painel fica abaixo da caixa: marcas e números do eixo
+        assert ymin < fig.TICK_LABEL_Y < fig.PANEL_HEIGHT
+
+
+def test_single_axis_label_is_centered_under_the_three_panels():
+    content = fig.render(*synthetic())
+    assert content.count(fig.AXIS_LABEL) == 1
+    assert "parbox" not in content
+    total_width = fig.LEFT_MARGIN + 3 * fig.PANEL_WIDTH + 2 * fig.PANEL_GAP
+    x = float(re.search(r"\\pgftext\[at=\{\\pgfpoint\{([\d.]+)cm\}\{[-\d.]+cm\}\}\]\{\\scriptsize Diferença", content).group(1))
+    assert x == pytest.approx((fig.LEFT_MARGIN + total_width) / 2, abs=1e-5)
+    assert fig.PANEL_WIDTH > fig.PANEL_HEIGHT
+
+
+def test_truncation_annotation_stays_off_the_panel_border_and_marker():
+    outlier = synthetic(o3={9: (-2, -5, -1), 23: (-20, -50, -10), 36: (580, -1962, 23566.3)},
+                        f3={9: (-3, -6, -1), 23: (-25, -60, -12), 36: (-894, -2243, -164)},
+                        f4={9: (-4, -7, -2), 23: (-30, -70, -14), 36: (-1203, -2049, -63)})
+    content = fig.render(*outlier)
+    match = re.search(r"\\pgftext\[right,at=\{\\pgfpoint\{([\d.]+)cm\}\{([\d.]+)cm\}\}\]\{\\scriptsize até \+23\.566", content)
+    assert match
+    right_border = fig.LEFT_MARGIN + 3 * fig.PANEL_WIDTH + 2 * fig.PANEL_GAP
+    assert float(match.group(1)) == pytest.approx(right_border - fig.ANNOTATION_INSET, abs=1e-5)
+    # o texto fica acima da linha do IC (marcador, raio de 2 pt) e abaixo do topo do painel
+    row_y = fig.PANEL_HEIGHT * 3 / 4
+    assert row_y + 0.2 < float(match.group(2)) < fig.PANEL_HEIGHT - 0.1
