@@ -112,7 +112,8 @@ def test_review3_decision_counts_bias_and_pair_loss_limits_are_explicit():
     study = text("estudo4_gzcmd.tex")
     assert "1.774" in study and "459 decisões agrupadas" in study
     assert "não potenciais pares independentes" in study
-    assert "data/taxas_erro_revisor_por_banda.csv" in study
+    # As 1.774 e 459 decisões do Claude Haiku 5.5 v4 estão no YAML; o CSV agrega outra coorte.
+    assert "gzcmd/error_rates_by_band_v4.yaml" in study
     assert "por_faixa.csv" not in study and r"por\_faixa.csv" not in study
     assert "A direção dominante não é identificável" in study
     assert "2.522 candidatos" in study and r"-5{,}648" in study
