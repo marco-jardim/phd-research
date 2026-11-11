@@ -100,14 +100,14 @@ Desenvolver e avaliar um pós-processamento do \textit{linkage} probabilístico 
 \item com intervalo de confiança (IC), só as fusões da probabilidade com o escore reduziram as revisões frente ao escore, nas metas de 9 e 36 pares verdadeiros; nenhuma superou a probabilidade isolada
 \item na vigilância, o modelo de linguagem de grande porte (LLM) aceitou 4 pares verdadeiros e 21 falsos positivos abaixo do corte: o LLM só apoia a revisão}
 {\footnotesize Probabilidade calibrada: estimada por modelo que não viu os potenciais pares do mesmo óbito.\par}
-\ressalva{\textit{post hoc}, coorte única, revisor perfeito simulado, a validar; probabilidade isolada: estimativa pontual, sem IC que exclua zero.}
+\ressalva{\textit{post hoc}, coorte única, revisor perfeito simulado, a validar; probabilidade isolada sem IC que exclua zero; fusões escolhidas entre seis variantes, sem correção.}
 \fonte{tese.tex, Resumo; conclusao.tex, abertura e seção ``Resposta aos objetivos''}
 \end{frame}
 
 % S07: dados e referência operacional; âncora C03r; tempo 100 s
 \begin{frame}[label=S07]{Dados: três passos de blocagem e uma referência operacional de revisora única}
 \small
-\itens{\item 61.696 potenciais pares (1:249), em três passos: 6, 9 e 11
+\itens{\item extrato do município do Rio de Janeiro: 61.696 potenciais pares (1:249), em três passos: 6, 9 e 11
 \item o passo 11 reúne 25 dos 36 pares verdadeiros abaixo do corte
 \item referência operacional: corte mais revisão manual de origem, por revisora única
 \item sem dupla revisão e sem registro de ordem, fontes e parada}
@@ -146,7 +146,7 @@ Aprovação nos dois comitês de ética; dados pseudonimizados (reserva R02).
 \fonte{capitulo3.tex, seção ``Alcance e delineamento''; estudo4\_gzcmd.tex, seção ``Método''; conclusao.tex, abertura}
 \end{frame}
 
-% S09: a medida; tempo 120 s
+% S09: a medida; tempo 60 s
 \begin{frame}[label=S09]{A medida: revisões necessárias para recuperar 9, 23 ou 36 pares verdadeiros}
 \small
 \itens{\item curva de esforço: revisões necessárias para recuperar $k$ pares verdadeiros
@@ -154,31 +154,38 @@ Aprovação nos dois comitês de ética; dados pseudonimizados (reserva R02).
 \item arranjo sequencial (ASR): preserva o corte e, abaixo dele, decide pela política de quatro ações com o LLM
 \item metas: 23 na vigilância e 9 na confirmação, as de ASR; 36, todos os pares verdadeiros abaixo do corte}
 Vigilância prioriza a sensibilidade; confirmação, o valor preditivo positivo (VPP).
-\vspace{0pt}
-\renewcommand{\arraystretch}{0.75}
+\fonte{estudo4\_gzcmd.tex, seções ``Delineamento, referência e designações'' e ``Ordenação na mesma carga e curva de esforço''; conclusao.tex, seção ``Resposta aos objetivos''}
+\end{frame}
+
+% S10: as quatro filas; tempo 60 s
+\begin{frame}[label=S10]{Quatro filas ordenam os mesmos potenciais pares abaixo do corte}
+\small
+\renewcommand{\arraystretch}{1.5}
 \begin{tabular}{@{}lL{.86\textwidth}@{}}
 O1 & fila pelo escore do OpenRecLink \\
 O3 & probabilidade calibrada fora da amostra, estimada por XGBoost (árvores de decisão em sequência) \\
 F3 & fusão por posição recíproca de O3, O1 e O3 com Medidas Contínuas de Diferença de Datas (MACD) \\
 F4 & fusão por posição recíproca de O3 e O1 \\
 \end{tabular}
-\fonte{estudo4\_gzcmd.tex, seções ``Delineamento, referência e designações'' e ``Ordenações da fila abaixo do corte''; glossario.tex}
+
+Na curva de esforço aparecem ainda O2, pela nota final do CdR, e O4, pela probabilidade recalibrada de ASR, como comparações.
+\fonte{estudo4\_gzcmd.tex, seções ``Delineamento, referência e designações'' e ``Ordenações da fila abaixo do corte e análises posteriores ao registro''; glossario.tex}
 \end{frame}
 
-% S10: objetivo 1, CdR em Python e Java; âncora C15; tempo 80 s
-\begin{frame}[label=S10]{O CdR em Python é aberto e não equivale ao protótipo em Java}
+% S11: objetivo 1, CdR em Python e Java; âncora C15; tempo 80 s
+\begin{frame}[label=S11]{O CdR em Python é aberto e não equivale ao protótipo em Java}
 \mapa{1}
 \small
 Em lote sintético de 500 casos de fronteira, a nota final foi idêntica em 11,2\% dos pares; o valor soma diferenças de critério e de arredondamento e não estima a concordância no extrato. Três tipos de diferença:
 \itens{\item erros do protótipo em Java, corrigidos no Python
 \item divergências de critério em relação a Lucena (2013)
-\item melhorias do Python, como subescores de endereço e município}
+\item melhorias do Python, como subescores de município e de endereço, estes derivados de critérios já acrescentados à versão em Java}
 \ressalva{equivalência não demonstrada; efeito em dados reais não medido (reserva R13).}
 \fonte{estudo1\_comparador.tex, seções de método e de resultados; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S11: objetivo 2, classificadores; âncoras C16, C05r; tempo 100 s
-\begin{frame}[label=S11]{A ordem dos classificadores depende da métrica, e as primeiras estimativas eram otimistas}
+% S12: objetivo 2, classificadores; âncoras C16, C05r; tempo 100 s
+\begin{frame}[label=S12]{A ordem dos classificadores depende da métrica, e as primeiras estimativas eram otimistas}
 \mapa{2}
 \small
 \itens{\item no limiar de 0,5, o maior $F_1$ (média harmônica entre VPP e sensibilidade) foi do Random Forest (floresta aleatória), 0,910; pela AUC-PR, a regressão logística o supera só pontualmente, com IC da diferença que inclui zero
@@ -189,8 +196,8 @@ Em lote sintético de 500 casos de fronteira, a nota final foi idêntica em 11,2
 \fonte{estudo2\_classificadores.tex, seção de resultados e controle fatorial; estudo3\_estrategias.tex, seção ``Resultados''; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S12: objetivo 2, probabilidade calibrada fora da amostra; tempo 90 s
-\begin{frame}[label=S12]{A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final}
+% S13: objetivo 2, probabilidade calibrada fora da amostra; tempo 90 s
+\begin{frame}[label=S13]{A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final}
 \mapa{2}
 \small
 Na faixa intermediária da nota final do CdR, distinta da \textit{grey area}, a probabilidade calibrada teve área sob a curva ROC (AUC) de 0,995 e precisão média de 0,862, contra 0,216 da nota final.
@@ -198,8 +205,8 @@ Na faixa intermediária da nota final do CdR, distinta da \textit{grey area}, a 
 \fonte{estudo4\_gzcmd.tex, seção ``Representação e probabilidade calibrada fora da amostra''; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S13: objetivo 3, curva de esforço; âncora C11; tempo 140 s
-\begin{frame}[label=S13]{A ordem da fila muda o número de revisões: 125 contra 501 para 23 pares verdadeiros, estimativa pontual}
+% S14: objetivo 3, curva de esforço; âncora C11; tempo 140 s
+\begin{frame}[label=S14]{A ordem da fila muda o número de revisões: 125 contra 501 para 23 pares verdadeiros, estimativa pontual}
 \mapa{3}
 {\centering
 \resizebox{!}{.55\textheight}{\input{../latex/figures/curva_esforco.pgf}}\par}
@@ -207,8 +214,8 @@ Na faixa intermediária da nota final do CdR, distinta da \textit{grey area}, a 
 \fonte{estudo4\_gzcmd.tex, seção ``Ordenação na mesma carga e curva de esforço''; data/comparador\_mesma\_carga.csv; data/ordenacao\_bootstrap\_o3\_o1.csv}
 \end{frame}
 
-% S14: objetivo 3, incerteza; âncoras C11, C12; tempo 120 s
-\begin{frame}[label=S14]{Com IC, só as fusões com o escore reduzem as revisões frente a O1, e nenhuma supera O3}
+% S15: objetivo 3, incerteza; âncoras C11, C12; tempo 120 s
+\begin{frame}[label=S15]{Com IC, só as fusões com o escore reduzem as revisões frente a O1, e nenhuma supera O3}
 \mapa{3}
 {\centering
 \resizebox{\textwidth}{!}{\input{figures/incerteza_ordenacoes.pgf}}\par}
@@ -218,8 +225,8 @@ Marcador cheio: IC inteiro abaixo de zero; F3 e F4 o têm nas metas de 9 e 36.
 \fonte{estudo4\_gzcmd.tex, seção ``Ordenação na mesma carga e curva de esforço''; data/ordenacao\_bootstrap\_o3\_o1.csv; data/fusao\_robustez\_bootstrap.csv}
 \end{frame}
 
-% S15: objetivo 3, tabela das filas; âncoras C08r, C12; tempo 100 s
-\begin{frame}[label=S15]{Nenhuma ordenação domina em todas as cargas}
+% S16: objetivo 3, tabela das filas; âncoras C08r, C12; tempo 100 s
+\begin{frame}[label=S16]{Nenhuma ordenação domina em todas as cargas}
 \mapa{3}
 \small
 \begin{center}
@@ -241,8 +248,8 @@ Em negrito, o melhor valor pontual de cada coluna: F3 e F4 se alternam.
 \fonte{estudo4\_gzcmd.tex, Tabelas de fusão de filas e de contexto, e seção ``Ordenação na mesma carga e curva de esforço''; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S16: objetivo 4, LLM como aceitador; âncora C13; tempo 120 s
-\begin{frame}[label=S16]{Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos}
+% S17: objetivo 4, LLM como aceitador; âncora C13; tempo 120 s
+\begin{frame}[label=S17]{Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos}
 \mapa{4}
 \small
 \itens{\item ASR: corte preservado; abaixo dele, revisão assistida por LLM
@@ -253,8 +260,8 @@ Em negrito, o melhor valor pontual de cada coluna: F3 e F4 se alternam.
 \fonte{estudo4\_gzcmd.tex, seções ``Arranjo sequencial ASR'' e ``Discussão''; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S17: objetivo 4, mesma carga; âncoras C01r, C13; tempo 110 s
-\begin{frame}[label=S17]{Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada}
+% S18: objetivo 4, mesma carga; âncoras C01r, C13; tempo 110 s
+\begin{frame}[label=S18]{Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada}
 \mapa{4}
 \small
 \itens{\item com 96 revisões humanas, ASR recupera 23 pares verdadeiros; O3, 22
@@ -265,8 +272,8 @@ Confirmação, modelos maiores e filtro de \texttt{NONMATCH}: reservas R05, R10 
 \fonte{estudo4\_gzcmd.tex, seções ``Ordenação na mesma carga e curva de esforço'', ``LLM como filtro antes da revisão humana'' e ``Tamanho do modelo como revisor''; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S18: objetivo 5, equidade; âncora C14; tempo 100 s
-\begin{frame}[label=S18]{A perda de sensibilidade concentra-se no passo 11 e é herdada do corte}
+% S19: objetivo 5, equidade; âncora C14; tempo 100 s
+\begin{frame}[label=S19]{A perda de sensibilidade concentra-se no passo 11 e é herdada do corte}
 \mapa{5}
 \small
 \itens{\item na vigilância, sensibilidade automática de ASR no passo 11 de 42,5\%, contra 95,0\% e 96,1\% nos passos 6 e 9
@@ -277,8 +284,8 @@ Confirmação, modelos maiores e filtro de \texttt{NONMATCH}: reservas R05, R10 
 \fonte{estudo5\_equidade.tex, seção de resultados por passo e limitações; conclusao.tex, seção ``Resposta aos objetivos''}
 \end{frame}
 
-% S19: o que a tese sustenta e não sustenta; âncoras C01r, C11, C12, C13, C14, C15, C05r; tempo 130 s
-\begin{frame}[label=S19]{O que a tese sustenta e o que não sustenta}
+% S20: o que a tese sustenta e não sustenta; âncoras C01r, C11, C12, C13, C14, C15, C05r; tempo 130 s
+\begin{frame}[label=S20]{O que a tese sustenta e o que não sustenta}
 \small
 \begin{columns}[T]
 \begin{column}{.48\textwidth}
@@ -298,8 +305,8 @@ Confirmação, modelos maiores e filtro de \texttt{NONMATCH}: reservas R05, R10 
 \fonte{conclusao.tex, seção ``O que a tese sustenta e o que não sustenta''}
 \end{frame}
 
-% S20: três limitações; âncora C03r; tempo 100 s
-\begin{frame}[label=S20]{Três limitações condicionam a leitura}
+% S21: três limitações; âncora C03r; tempo 100 s
+\begin{frame}[label=S21]{Três limitações condicionam a leitura}
 \small
 \itens{\item \textbf{referência operacional}: revisora única; direção e magnitude do viés não identificáveis
 \item \textbf{coorte única}: 247 pares verdadeiros, 36 abaixo do corte; IC largos
@@ -308,8 +315,8 @@ Detalhe nas reservas R01 e R08.
 \fonte{conclusao.tex, seção ``Limitações''}
 \end{frame}
 
-% S21: fluxo recomendado, sem números de resultado; âncoras C08r, C09r, C13; tempo 140 s
-\begin{frame}[label=S21]{Fluxo recomendado, a validar em coorte nova}
+% S22: fluxo recomendado, sem números de resultado; âncoras C08r, C09r, C13; tempo 140 s
+\begin{frame}[label=S22]{Fluxo recomendado, a validar em coorte nova}
 \begin{center}
 \begin{tikzpicture}[
   caixa/.style={draw=institucional, rounded corners=3pt, align=center, inner sep=6pt, minimum height=19mm, fill=white, font=\normalsize, text width=3.8cm, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
@@ -331,8 +338,8 @@ Detalhe nas reservas R01 e R08.
 \fonte{conclusao.tex, seção ``Implicações para o serviço''; estudo4\_gzcmd.tex, seção ``Recomendação, critério de refutação e pares não examinados''}
 \end{frame}
 
-% S22: critério de refutação; âncora C02r; tempo 90 s
-\begin{frame}[label=S22]{A hipótese pode ser refutada: o critério está declarado}
+% S23: critério de refutação; âncora C02r; tempo 90 s
+\begin{frame}[label=S23]{A hipótese pode ser refutada: o critério está declarado}
 \small
 \itens{\item outra coorte, referência cega, ordenação e orçamento fixados antes}
 Refutação: O3 não atingir a recuperação de ASR com pelo menos 25\% menos revisões que O1, pelo limite inferior do intervalo de 95\% entre partições predefinidas, em cada meta (23 e 9).
@@ -340,8 +347,8 @@ Refutação: O3 não atingir a recuperação de ASR com pelo menos 25\% menos re
 \fonte{conclusao.tex, seção ``Validação e próximos passos''; estudo4\_gzcmd.tex, seção ``Recomendação, critério de refutação e pares não examinados''}
 \end{frame}
 
-% S23: contribuições; âncora C10; tempo 70 s
-\begin{frame}[label=S23]{Contribuições: a medida, a decomposição entre ordenação e automação, e o código aberto}
+% S24: contribuições; âncora C10; tempo 70 s
+\begin{frame}[label=S24]{Contribuições: a medida, a decomposição entre ordenação e automação, e o código aberto}
 \small
 \itens{\item \textbf{a medida}: 211 pares aceitos pelo corte, 36 abaixo dele, e a curva de esforço
 \item \textbf{a decomposição}, na mesma carga humana, entre ordenar a fila e automatizar a decisão
@@ -350,8 +357,8 @@ Comparação posterior ao registro; ordenar por escore e revisar manualmente já
 \fonte{conclusao.tex, seção ``Contribuições''}
 \end{frame}
 
-% S24: agradecimentos e discussão; tempo 20 s
-\begin{frame}[label=S24]{Agradecimentos}
+% S25: agradecimentos e discussão; tempo 20 s
+\begin{frame}[label=S25]{Agradecimentos}
 \begin{center}
 \small
 À orientadora, Rejane Sobrino Pinheiro; ao LinkDataPop (IESC-UFRJ), pelo extrato e pela revisão manual de origem; aos criadores do OpenRecLink; à banca; à CAPES.
@@ -646,19 +653,20 @@ VPP no encerramento (demais; por óbito) & 86,5; 97,9 & 96,9; 100,0 \\
 % R13: CdR em Python e protótipo em Java
 \begin{frame}[label=R13]{Reserva: as diferenças entre o CdR em Python e o protótipo em Java são de três tipos}
 \scriptsize
-\renewcommand{\arraystretch}{0.8}
+\renewcommand{\arraystretch}{0.7}
 \begin{tabular}{L{.22\textwidth}L{.72\textwidth}}
 \toprule
 Erros do protótipo, corrigidos no Python & o carregador descarta a primeira linha e inverte a ordem das tabelas de frequência; um contador desloca os escores do nome da mãe quando o nome do paciente está ausente \\
-\addlinespace[1pt]
+\addlinespace[0pt]
 Divergências de critério em relação a Lucena (2013) & peso de concordância 0,8 das inversões de data (o Java segue, o Python atribui 1,0); dígitos dos nomes (o Java os retira); limiar de nomes comuns (ambos exigem mais de 1.000 ocorrências; Lucena, a partir de 1.000); casas decimais (duas no Python, de duas a quatro no Java) \\
-\addlinespace[1pt]
-Melhorias do Python & subescores de endereço e de município; código aberto sob licença GPL-3.0; posições fixas dos subescores \\
+\addlinespace[0pt]
+Melhorias do Python & subescores de município e de endereço, estes derivados de critérios já acrescentados à versão em Java; código aberto sob licença GPL-3.0; posições fixas dos subescores \\
 \bottomrule
 \end{tabular}
 \itens{\item lote sintético de 500 pares de fronteira (dois sublotes de 250, com e sem acentos), 19 subescores de nome e de data e a nota final
 \item concordância de 99,2\% nas abreviações e de 91,6\% a 93,2\% nos fragmentos inicial e final dos nomes; nota final idêntica em 11,2\%, com diferença de até 4 pontos
-\item os erros do primeiro tipo podem alterar a nota final; o efeito em dados reais não foi medido}
+\item os erros do primeiro tipo podem alterar a nota final; o efeito em dados reais não foi medido
+\item o Estudo 1 cita Paiva (2025) entre os trabalhos que usaram a versão em Java; nenhum efeito específico é atribuído a ele}
 \ressalva{a observação é sobre o protótipo e suas diferenças documentadas; a equivalência não foi demonstrada.}
 \fonte{estudo1\_comparador.tex, seções de método e de resultados e conclusão do capítulo}
 \end{frame}
