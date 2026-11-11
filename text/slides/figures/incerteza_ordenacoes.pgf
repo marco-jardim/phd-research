@@ -1,0 +1,183 @@
+% Gerado por scripts/figura_incerteza_ordenacoes.py; não editar.
+\begin{pgfpicture}
+\color{black}
+\pgfsetdash{}{0pt}
+\pgfsetlinewidth{0.35pt}
+\pgfpathrectangle{\pgfpoint{0.55000cm}{0cm}}{\pgfpoint{3.50000cm}{3.20000cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{2.30000cm}{3.50000cm}}]{\scriptsize Meta de 9 pares verdadeiros}
+\pgfpathmoveto{\pgfpoint{0.78077cm}{0cm}}
+\pgfpathlineto{\pgfpoint{0.78077cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{0.78077cm}{-0.25000cm}}]{\scriptsize $-$60}
+\pgfpathmoveto{\pgfpoint{1.62508cm}{0cm}}
+\pgfpathlineto{\pgfpoint{1.62508cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{1.62508cm}{-0.25000cm}}]{\scriptsize $-$40}
+\pgfpathmoveto{\pgfpoint{2.46939cm}{0cm}}
+\pgfpathlineto{\pgfpoint{2.46939cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{2.46939cm}{-0.25000cm}}]{\scriptsize $-$20}
+\pgfpathmoveto{\pgfpoint{3.31370cm}{0cm}}
+\pgfpathlineto{\pgfpoint{3.31370cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{3.31370cm}{-0.25000cm}}]{\scriptsize 0}
+\pgftext[top,at={\pgfpoint{2.30000cm}{-0.42cm}}]{\parbox{3.50cm}{\centering\scriptsize Diferença de revisões frente a O1 (mediana e IC 95\%)}}
+\color{gray}
+\pgfpathmoveto{\pgfpoint{3.31370cm}{0cm}}
+\pgfpathlineto{\pgfpoint{3.31370cm}{3.20000cm}}\pgfusepath{stroke}
+\color{blue}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{1.11849cm}{2.40000cm}}
+\pgfpathlineto{\pgfpoint{3.86250cm}{2.40000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{1.11849cm}{2.33000cm}}
+\pgfpathlineto{\pgfpoint{1.11849cm}{2.47000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{3.86250cm}{2.33000cm}}
+\pgfpathlineto{\pgfpoint{3.86250cm}{2.47000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{white}
+\pgfpathcircle{\pgfpoint{2.42717cm}{2.40000cm}}{2pt}\pgfusepath{fill,stroke}
+\color{black}
+\pgftext[right,at={\pgfpoint{0.43000cm}{2.40000cm}}]{\scriptsize O3}
+\color{orange}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{0.82299cm}{1.60000cm}}
+\pgfpathlineto{\pgfpoint{2.72268cm}{1.60000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{0.82299cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{0.82299cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{2.72268cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{2.72268cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{orange}
+\pgfpathcircle{\pgfpoint{1.83616cm}{1.60000cm}}{2pt}\pgfusepath{fill}
+\color{black}
+\pgftext[right,at={\pgfpoint{0.43000cm}{1.60000cm}}]{\scriptsize F3}
+\color{teal}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{0.73750cm}{0.80000cm}}
+\pgfpathlineto{\pgfpoint{2.55382cm}{0.80000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{0.73750cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{0.73750cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{2.55382cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{2.55382cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{teal}
+\pgfpathcircle{\pgfpoint{1.70951cm}{0.80000cm}}{2pt}\pgfusepath{fill}
+\color{black}
+\pgftext[right,at={\pgfpoint{0.43000cm}{0.80000cm}}]{\scriptsize F4}
+\color{black}
+\pgfsetdash{}{0pt}
+\pgfsetlinewidth{0.35pt}
+\pgfpathrectangle{\pgfpoint{4.95000cm}{0cm}}{\pgfpoint{3.50000cm}{3.20000cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{6.70000cm}{3.50000cm}}]{\scriptsize Meta de 23 pares verdadeiros}
+\pgfpathmoveto{\pgfpoint{5.23116cm}{0cm}}
+\pgfpathlineto{\pgfpoint{5.23116cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{5.23116cm}{-0.25000cm}}]{\scriptsize $-$1.000}
+\pgfpathmoveto{\pgfpoint{6.37331cm}{0cm}}
+\pgfpathlineto{\pgfpoint{6.37331cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{6.37331cm}{-0.25000cm}}]{\scriptsize $-$500}
+\pgfpathmoveto{\pgfpoint{7.51547cm}{0cm}}
+\pgfpathlineto{\pgfpoint{7.51547cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{7.51547cm}{-0.25000cm}}]{\scriptsize 0}
+\pgftext[top,at={\pgfpoint{6.70000cm}{-0.42cm}}]{\parbox{3.50cm}{\centering\scriptsize Diferença de revisões frente a O1 (mediana e IC 95\%)}}
+\color{gray}
+\pgfpathmoveto{\pgfpoint{7.51547cm}{0cm}}
+\pgfpathlineto{\pgfpoint{7.51547cm}{3.20000cm}}\pgfusepath{stroke}
+\color{blue}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{5.21745cm}{2.40000cm}}
+\pgfpathlineto{\pgfpoint{8.26250cm}{2.40000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{5.21745cm}{2.33000cm}}
+\pgfpathlineto{\pgfpoint{5.21745cm}{2.47000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{8.26250cm}{2.33000cm}}
+\pgfpathlineto{\pgfpoint{8.26250cm}{2.47000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{white}
+\pgfpathcircle{\pgfpoint{7.11572cm}{2.40000cm}}{2pt}\pgfusepath{fill,stroke}
+\color{black}
+\pgftext[right,at={\pgfpoint{4.83000cm}{2.40000cm}}]{\scriptsize O3}
+\color{orange}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{5.13750cm}{1.60000cm}}
+\pgfpathlineto{\pgfpoint{7.52923cm}{1.60000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{5.13750cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{5.13750cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{7.52923cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{7.52923cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{white}
+\pgfpathcircle{\pgfpoint{6.76736cm}{1.60000cm}}{2pt}\pgfusepath{fill,stroke}
+\color{black}
+\pgftext[right,at={\pgfpoint{4.83000cm}{1.60000cm}}]{\scriptsize F3}
+\color{teal}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{5.24252cm}{0.80000cm}}
+\pgfpathlineto{\pgfpoint{7.60690cm}{0.80000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{5.24252cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{5.24252cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{7.60690cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{7.60690cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{white}
+\pgfpathcircle{\pgfpoint{6.88957cm}{0.80000cm}}{2pt}\pgfusepath{fill,stroke}
+\color{black}
+\pgftext[right,at={\pgfpoint{4.83000cm}{0.80000cm}}]{\scriptsize F4}
+\color{black}
+\pgfsetdash{}{0pt}
+\pgfsetlinewidth{0.35pt}
+\pgfpathrectangle{\pgfpoint{9.35000cm}{0cm}}{\pgfpoint{3.50000cm}{3.20000cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{11.10000cm}{3.50000cm}}]{\scriptsize Meta de 36 pares verdadeiros}
+\pgfpathmoveto{\pgfpoint{9.80657cm}{0cm}}
+\pgfpathlineto{\pgfpoint{9.80657cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{9.80657cm}{-0.25000cm}}]{\scriptsize $-$2.000}
+\pgfpathmoveto{\pgfpoint{10.91373cm}{0cm}}
+\pgfpathlineto{\pgfpoint{10.91373cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{10.91373cm}{-0.25000cm}}]{\scriptsize $-$1.000}
+\pgfpathmoveto{\pgfpoint{12.02090cm}{0cm}}
+\pgfpathlineto{\pgfpoint{12.02090cm}{-0.08cm}}\pgfusepath{stroke}
+\pgftext[at={\pgfpoint{12.02090cm}{-0.25000cm}}]{\scriptsize 0}
+\pgftext[top,at={\pgfpoint{11.10000cm}{-0.42cm}}]{\parbox{3.50cm}{\centering\scriptsize Diferença de revisões frente a O1 (mediana e IC 95\%)}}
+\color{gray}
+\pgfpathmoveto{\pgfpoint{12.02090cm}{0cm}}
+\pgfpathlineto{\pgfpoint{12.02090cm}{3.20000cm}}\pgfusepath{stroke}
+\color{blue}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{9.84845cm}{2.40000cm}}
+\pgfpathlineto{\pgfpoint{12.85000cm}{2.40000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{9.84845cm}{2.33000cm}}
+\pgfpathlineto{\pgfpoint{9.84845cm}{2.47000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{12.85000cm}{2.40000cm}}
+\pgfpathlineto{\pgfpoint{12.71000cm}{2.47000cm}}
+\pgfpathlineto{\pgfpoint{12.71000cm}{2.33000cm}}
+\pgfpathclose\pgfusepath{fill}
+\color{black}
+\pgftext[right,at={\pgfpoint{12.85000cm}{2.67000cm}}]{\scriptsize até +23.566}
+\color{blue}
+\pgfsetfillcolor{white}
+\pgfpathcircle{\pgfpoint{12.66250cm}{2.40000cm}}{2pt}\pgfusepath{fill,stroke}
+\color{black}
+\pgftext[right,at={\pgfpoint{9.23000cm}{2.40000cm}}]{\scriptsize O3}
+\color{orange}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{9.53750cm}{1.60000cm}}
+\pgfpathlineto{\pgfpoint{11.83946cm}{1.60000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{9.53750cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{9.53750cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{11.83946cm}{1.53000cm}}
+\pgfpathlineto{\pgfpoint{11.83946cm}{1.67000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{orange}
+\pgfpathcircle{\pgfpoint{11.03109cm}{1.60000cm}}{2pt}\pgfusepath{fill}
+\color{black}
+\pgftext[right,at={\pgfpoint{9.23000cm}{1.60000cm}}]{\scriptsize F3}
+\color{teal}
+\pgfsetlinewidth{1.2pt}
+\pgfpathmoveto{\pgfpoint{9.75223cm}{0.80000cm}}
+\pgfpathlineto{\pgfpoint{11.95117cm}{0.80000cm}}\pgfusepath{stroke}
+\pgfsetlinewidth{0.6pt}
+\pgfpathmoveto{\pgfpoint{9.75223cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{9.75223cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfpathmoveto{\pgfpoint{11.95117cm}{0.73000cm}}
+\pgfpathlineto{\pgfpoint{11.95117cm}{0.87000cm}}\pgfusepath{stroke}
+\pgfsetfillcolor{teal}
+\pgfpathcircle{\pgfpoint{10.68898cm}{0.80000cm}}{2pt}\pgfusepath{fill}
+\color{black}
+\pgftext[right,at={\pgfpoint{9.23000cm}{0.80000cm}}]{\scriptsize F4}
+\color{black}
+\end{pgfpicture}
