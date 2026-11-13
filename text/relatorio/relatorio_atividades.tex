@@ -1,0 +1,133 @@
+% Relatório resumido de atividades acadêmicas e científicas do doutorado.
+% Documento autônomo. Compilar a partir de text/relatorio/ com:
+%   pdflatex relatorio_atividades; bibtex relatorio_atividades; pdflatex x2
+% As fontes de cada número estão nos comentários "% fonte:" ao fim da linha.
+% Referências: ../latex/referencias.bib e relatorio.bib (entradas exclusivas do relatório).
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{newtxtext}\usepackage{newtxmath}
+\usepackage[left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{setspace}
+\usepackage{booktabs}
+\makeatletter
+\renewcommand\section{\@startsection{section}{1}{\z@}{-1.5ex plus -.5ex}{.8ex}{\normalfont\large\bfseries}}
+\makeatother
+\hyphenation{linkage}
+\usepackage[plainpages=false, pdfpagelabels, pdftex]{hyperref}
+% Citações ABNT (devem vir depois do hyperref); mesmas opções de text/latex/tese.tex
+\usepackage[alf,abnt-emphasize=bf,abnt-nbr10520=1988,abnt-and-type=e]{abntex2cite}
+
+% Espaçamento de 1,15 (em vez de \onehalfspacing) para caber em quatro páginas A4.
+\setstretch{1.15}
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+\emergencystretch=2em
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{6pt plus 2pt minus 2pt}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries Relatório de atividades do doutorado}\\[2pt]
+{\normalsize\bfseries Aprendizado de Máquina Aplicado ao Pós-Processamento do \textit{Linkage} Probabilístico de Bases de Dados de Saúde}\\[3pt]
+\begin{singlespacing}\small
+Doutorando: Marco Elisio Oliveira Jardim. Orientadora: Rejane Sobrino Pinheiro.\\
+Programa de Pós-Graduação em Saúde Coletiva, Instituto de Estudos em Saúde Coletiva (IESC),\\
+Universidade Federal do Rio de Janeiro (UFRJ).\\
+Financiamento: CAPES-Epidemias, processo 88887.514702/2020-00. \\ % fonte: text/latex/tese.tex:490
+Novembro de 2026
+\end{singlespacing}
+\end{center}
+
+\section{Problema e objetivos}\label{sec:problema}
+
+O \textit{linkage} (relacionamento de registros) probabilístico entre o Sistema de Informações sobre Mortalidade (SIM) e o Sistema de Informação de Agravos de Notificação (Sinan) para a tuberculose (Sinan-TB) identifica óbitos de pessoas notificadas com tuberculose, condição marcadora do desempenho dos serviços de saúde. Abaixo do ponto de corte do OpenRecLink fica a \textit{grey area} (área cinza), em que a regra automática não decide e a revisão manual busca poucos pares verdadeiros entre milhares de não pares.
+O extrato do município do Rio de Janeiro, do LinkDataPop/IESC-UFRJ, reúne óbitos de residentes do SIM de 2019 a 2022 com tuberculose como causa básica (Classificação Internacional de Doenças, CID-10, A15 a A19) e notificações do Sinan-TB de 2013 a 2022, sob os CAAE 43856720.1.0000.5286 (IESC-UFRJ) e 43856720.1.3001.5279 (Secretaria Municipal de Saúde, SMS-Rio). O autor não participou do \textit{linkage} de origem. % fonte: text/latex/capitulo_dados.tex:12, :27 e :31
+Os 61.696 potenciais pares (pares candidatos gerados pela blocagem), de três passos (6, 9 e 11), incluem 247 pares verdadeiros, razão de aproximadamente 1:249; o corte aceita 211, e os 36 restantes, recuperados pela revisão manual de origem, estão entre os 61.485 da \textit{grey area}. % fonte: data/banca_b_recuperados_por_par.json (vinculos=247); text/latex/capitulo_dados.tex:81; text/latex/conclusao.tex:73 (passos 6, 9 e 11); data/arranjo_corte_metricas.csv (corte_sozinho: aceitos=211, perdidos=36; humano_integral: pares_humano=61485)
+``Verdadeiro'' remete à referência operacional (corte somado à revisão manual de origem), não a uma verdade absoluta, e ela vem de revisora única, com ordem, fontes e parada não documentadas.
+Os 36 estão entre os 2.522 potenciais pares de maior escore, o que favoreceria a ordenação pelo escore do OpenRecLink (O1); a incorporação das evidências do Comparador de Registros (CdR), hipótese de trabalho, favoreceria as ordenações pela nota final do CdR (O2) e pelas probabilidades calibrada (O3) e recalibrada (O4); direção e magnitude do viés não são identificáveis. % fonte: tests/data/registro_invariantes.yaml (C03r); text/latex/conclusao.tex:71 (2.522 potenciais pares)
+
+\textbf{Objetivo geral.} Desenvolver e avaliar um pós-processamento do \textit{linkage} probabilístico entre o SIM e o Sinan-TB que reduza a revisão manual necessária para recuperar os pares verdadeiros situados na \textit{grey area}, região abaixo do ponto de corte do OpenRecLink, preservando os vínculos aceitos pelo corte, e identificar qual de seus componentes responde por essa redução. % fonte: text/latex/capitulo3.tex:17 (literal)
+
+\textbf{Objetivos específicos.} Reimplementar em Python o CdR de \citeonline{Lucena2013algoritmos} e classificar suas diferenças em relação ao protótipo em Java; estimar a probabilidade de par verdadeiro sob desbalanceamento e calibrá-la fora da amostra; comparar ordenações da fila de revisão por \textit{bootstrap} agrupado por óbito; verificar se a automação, por política de \textit{expected loss} e por modelo de linguagem de grande porte (LLM) como aceitador ou filtro, reduz a revisão além da ordenação e a que custo em falsos positivos; e avaliar a equidade por estrato, em especial no passo 11. % fonte: text/latex/capitulo3.tex:23-35
+
+\section{Percurso e atividades}
+
+A tag \texttt{pre-revisao-2} do repositório \cite{Jardim2026phdrepo}, de 7 de novembro de 2026, preserva a versão pós-qualificação, que já trazia as fusões de filas com \textit{bootstrap} agrupado (commit \texttt{f566368}). % fonte: git (tag pre-revisao-2, 7 nov. 2026; commit f566368, 7 nov. 2026, criou data/fusao_robustez_bootstrap.csv)
+A partir de 8 de novembro, a segunda revisão reescreveu os objetivos (commit \texttt{60ac78b}), acrescentou o \textit{bootstrap} de O3 menos O1 (commit \texttt{4658c8e}) e segue com a revisão de redação. % fonte: git (commits 60ac78b e 4658c8e, 8 nov. 2026)
+O protocolo de revisão por LLM, desenvolvido com o Kimi K2.5 (Fireworks) em fevereiro de 2026, passou a usar, entre outros, Anthropic e OpenCode Go, e o Claude Haiku 5.5 foi escolhido \textit{post hoc} entre dez modelos, com o envio dos dossiês a interfaces externas sem análise da Lei Geral de Proteção de Dados (LGPD) nos pareceres. % fonte: text/latex/estudo4_gzcmd.tex:93 e :95; text/latex/capitulo_dados.tex:51 (provedores) e :35 (LGPD)
+
+\section{Resultados dos estudos}
+
+\textbf{Estudo 1 (instrumento).} Em 500 pares sintéticos de fronteira, a concordância com o protótipo em Java nos 19 subescores de nome e de data variou de 39,2\% a 100,0\%, e a nota final coincidiu em 11,2\% dos pares, com diferença de até 4 pontos. % fonte: text/latex/tables/tab_equivalencia_java.tex (menor: Paciente, fragmentos comuns, 39,2; maior: Data, igualdade e um dígito, 100,0; Nota final 11,2 e 4,0), de tests/equivalencia/resultado_agregado.csv do repositório do CdR
+O lote não estima a concordância em dados reais, o efeito das diferenças sobre eles não foi medido e a equivalência não foi demonstrada. A família do nome responde por 38,5\% da soma das médias absolutas dos valores de Shapley (SHAP). % fonte: text/latex/estudo1_comparador.tex:71, :95 e :128 (C15); data/shap_por_familia.csv (fracao_total da família nome = 0,3853)
+
+\textbf{Estudo 2 (probabilidade sob desbalanceamento).} A ordem dos classificadores depende da métrica: nos números do NB01 (comparação inicial, em partição única), o Random Forest (floresta aleatória) sem reamostragem teve o maior $F_1$ no limiar de 0,5 (0,910), sem diferença por intervalo de confiança (IC) frente ao Random Forest com SMOTE (\textit{Synthetic Minority Over-sampling Technique}), ao Gradient Boosting e ao perceptron multicamada, e a área sob a curva precisão-sensibilidade (\textit{precision-recall}, AUC-PR) foi maior para o Random Forest com SMOTE (0,973). % fonte: data/nb01_results.json (best_f1=0.9103; RF + SMOTE AUC-PR=0.9726); data/nb01_bootstrap_ic.csv (F1: RF menos RF+SMOTE, IC -0,033 a 0,039; RF menos Gradient Boosting, -0,025 a 0,105; RF menos MLP, -0,004 a 0,156); text/latex/estudo2_classificadores.tex:11 e :62
+Os estudos 2 e 3 são otimistas por três fontes (vazamento por indicadores de encerramento por óbito, partição por linha e limiar escolhido no teste): no controle fatorial, a partição agrupada por óbito reduziu o $F_1$ do Random Forest com SMOTE de 0,931 para 0,846. Esses estudos não fundamentam a adoção dos classificadores avaliados, e o pós-processamento do Estudo 4 não usa os indicadores. % fonte: data/sensibilidade_sem_obito_refrec.csv (rf_smote_f1: cenário A 0,9306; cenário C 0,8456); text/latex/estudo2_classificadores.tex:122
+
+\textbf{Estudo 3 (estratégias operacionais).} As estratégias de vigilância e de confirmação priorizam, respectivamente, a sensibilidade e o valor preditivo positivo (VPP), por limiares e regras sobre o classificador. No teste, o Random Forest com SMOTE (limiar de 0,5) aceitou 27 pares verdadeiros que a regra hipotética de nota final $\geq 8$ não aceitava; 25 já eram aceitos pelo corte e só 2 estavam abaixo dele. % fonte: text/latex/estudo3_estrategias.tex:13 e :25; data/banca_b_recuperados_por_par.json (recuperados.n=27; por_par 1=25, 2=2)
+
+\textbf{Estudo 4 (pós-processamento).} O GZ-CMD (\textit{Grey-Zone: Calibrated Mixture-of-experts + Conformal Deferral + Constrained Matching}, nome histórico) v3.1 reúne guardas (regras fixas), política de \textit{expected loss} com quatro ações e o Claude Haiku 5.5 como revisor, sobre uma probabilidade de par verdadeiro obtida por XGBoost com calibração isotônica fora da amostra, em validação cruzada aninhada de cinco por cinco partições agrupadas por óbito. % fonte: text/latex/estudo4_gzcmd.tex:7 e :36
+O arranjo sequencial (ASR), que preserva o corte e aplica a política abaixo dele, aceitou 215 dos 247 pares verdadeiros na vigilância. % fonte: data/arranjo_corte_metricas.csv (vigilancia,P,TODAS: aceitos=215)
+Abaixo do corte aceitou 25 vínculos, todos pelo LLM, 4 verdadeiros e 21 falsos positivos (VPP de 16,0\%, IC 95\% de 6,4\% a 34,7\%); o registro interno não fixou critério de sucesso, a leitura negativa é posterior, e o LLM não deve aceitar vínculos sozinho. % fonte: data/arranjo_corte_vpp_llm.csv (vigilancia,P: aceitacoes_llm_abaixo=25, VP=4, FP=21, VPP=0,16, IC 0,0640 a 0,3465); text/latex/estudo4_gzcmd.tex:311
+Com revisor humano perfeito simulado, comparou-se a fila ordenada por O1 com a ordenada por O3 e com duas fusões por posição recíproca: F3, de O3, O1 e O3 com Medidas Contínuas de Diferença de Datas de nascimento (MACD), e F4, de O3 e O1 (Tabela~\ref{tab:revisoes}). % fonte: text/latex/estudo4_gzcmd.tex:202 e :217 (F3 = RRF de O3/O1/MACD; F4 = RRF de O3/O1)
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{singlespacing}
+\caption{Revisões manuais abaixo do corte necessárias para recuperar 9, 23 e 36 dos 36 pares verdadeiros, por ordenação da fila, com revisor humano perfeito simulado}
+\label{tab:revisoes}
+\begin{tabular}{lrrr}
+\toprule
+Ordenação & Meta de 9 & Meta de 23 & Meta de 36 \\
+\midrule
+O1, escore do OpenRecLink & 51 & 501 & 2.521 \\ % fonte: data/fusao_filas.csv (O1: revisoes_9, revisoes_23, revisoes_36)
+O3, probabilidade calibrada & 29 & 125 & 23.443 \\ % fonte: data/fusao_filas.csv (O3)
+F3, fusão de O3, O1 e O3 com MACD & 12 & 64 & 1.777 \\ % fonte: data/fusao_filas.csv (F3)
+F4, fusão de O3 e O1 & 10 & 112 & 1.387 \\ % fonte: data/fusao_filas.csv (F4)
+\bottomrule
+\end{tabular}
+\par\smallskip
+\begin{minipage}{0.95\textwidth}
+\footnotesize Fonte: \texttt{data/fusao\_filas.csv}. F3 e F4 fundem as filas por posição recíproca. Análise exploratória e \textit{post hoc}, sob revisor perfeito.
+\end{minipage}
+\end{singlespacing}
+\end{table}
+
+A vantagem pontual de O3 frente a O1 (75,0\% e 43,1\% menos revisões nas metas de 23 e de 9) tem IC 95\% que inclui zero em todas as metas (2.000 réplicas de \textit{bootstrap} agrupado por óbito). % fonte: data/fusao_filas.csv (125/501 e 29/51); data/ordenacao_bootstrap_o3_o1.csv (replicas_validas=2000; IC de -52,0 a 13,0; de -1006,0 a 327,0; de -1962,2 a 23566,3)
+Na análise exploratória posterior ao registro, F4 reduziu as revisões frente a O1 em 38 (IC de 61 a 18 a menos) na meta de 9 e em 1.203 (2.049 a 63 a menos) na de 36, e F3 também reduziu nessas metas; não houve redução na meta de 23. % fonte: data/fusao_robustez_bootstrap.csv (F4-O1 meta 9: -38, IC -61,025 a -18; meta 36: -1203, IC -2049,075 a -62,975; F3-O1 metas 9 e 36: ic95_sup < 0; meta 23: ic95_sup > 0); text/latex/tables/editorial/tab_cap8_fusao_robustez.tex (arredondamento a inteiros)
+F4 foi escolhida entre seis variantes, sem correção para multiplicidade, e parte do ganho na meta de 36 vem de priorizar os 2.522 potenciais pares de maior escore (seção~\ref{sec:problema}). Frente a O3, nenhum IC ficou inteiramente abaixo de zero (na meta de 9, o limite superior foi zero), e, na recuperação integral dos 36, O3 exige 23.443 revisões, contra 2.521 de O1. % fonte: text/latex/estudo4_gzcmd.tex:202 (seis variantes); tests/data/registro_invariantes.yaml (C03r, 2.522); data/fusao_robustez_bootstrap.csv (F4-O3 e F3-O3: ic95_sup >= 0 nas três metas; meta 9: ic95_sup = 0,0); data/fusao_filas.csv (O3 e O1, revisoes_36)
+
+A redução veio da ordenação, e não da automação nem do LLM; a análise é \textit{post hoc} e supõe revisor perfeito. Nenhuma ordenação dominou em todas as cargas, e a recomendação é hipótese de trabalho: preservar o corte e ordenar a fila abaixo dele pela probabilidade calibrada, isolada (O3) ou fundida ao escore (F4; F3 quando houver as MACD), escolhendo pela curva de esforço conforme o orçamento. Os potenciais pares abaixo do ponto de parada ficam ``não examinados'', e não ``não pares''. A hipótese seria refutada, em coorte nova com referência cega, se O3 não exigisse pelo menos 25\% menos revisões que O1, pelo limite inferior do IC 95\%, em cada uma das metas de 23 e de 9; a margem foi escolhida com os dados à vista e não foi testada. % fonte: text/latex/estudo4_gzcmd.tex:307, :327, :329 e :331; tests/data/registro_invariantes.yaml (C08r, C09r, C02r)
+Calibração por âncoras, subamostragem do treinamento, evidência bayesiana do LLM, propagação por pessoa (2 dos 36 pares) e modelos maiores (VPP de 19,0\% com o Claude Sonnet 5.5 e o Claude Opus 5.5, o Sonnet com cobertura incompleta) não alteraram essa leitura. % fonte: data/propagacao_pessoa.csv (R1_C_IDPESSOA TOTAL: par2=2 de 36); data/probe_frontier_agregado.csv (S1, vigilância: Sonnet e Opus 4/21, VPP 0,1905); text/latex/estudo4_gzcmd.tex:46, :289, :291, :297 e :315
+
+\textbf{Estudo 5 (equidade).} A disparidade concentra-se no passo 11 de blocagem: o arranjo aceitou 17 dos 40 pares verdadeiros desse passo (sensibilidade de 42,5\%), contra 95,0\% e 96,1\% nos passos 6 e 9, e o corte isolado aceita 15 dos 40. % fonte: data/equidade_passo_revisor.csv (arranjo_P_vigilancia: passo_11 n_true=40, tp=17, 0,425; passo_6 0,95; passo_9 0,9606); data/par_por_passo.csv (vigilancia, passo 11, par 1, MATCH=15)
+Após a correção de Benjamini-Hochberg, nenhuma rejeição recaiu sobre dimensão demográfica, o que não significa ausência de diferenças, e a raça/cor não consta do extrato. % fonte: text/latex/estudo5_equidade.tex:42 e :99
+
+\section{Produtos de software}\label{sec:produtos}
+
+\textbf{Comparador de Registros em Python.} O repositório Comparador-de-Registros \cite{Jardim2025comparador}, de licença GPL-3.0, foi desenvolvido de junho a setembro de 2025, com a versão da tese na tag \texttt{v0.1.0-tese}, de setembro de 2025. Migrou para Python o protótipo em Java do IESC-UFRJ \cite{Pecanha2015comparador}, de 2015, baseado em \citeonline{Lucena2013algoritmos}. % fonte: D:/git/Comparador-de-Registros (git log: Initial commit de 18 jun. 2025; tag v0.1.0-tese no commit 3b43598, 29 set. 2025); README.md §10 e §11
+A nota final soma subescores de nome (do paciente e da mãe), de data e, acrescentados, de endereço e de município, com tabelas de frequência em cache e processamento paralelo. Há interface gráfica em Tkinter e testes unitários, funcionais e de integração. % fonte: text/latex/estudo1_comparador.tex:23-26 e :29; D:/git/Comparador-de-Registros/README.md §3, §4 e §6
+Em novembro de 2026, o \textit{pull request} \#25 acrescentou um programa de teste (\textit{harness}) de equivalência com o Java, com 500 pares sintéticos e semente 20150901, que documentou diferenças, como o descarte da primeira linha das tabelas de frequência pelo Java e o peso de concordância das inversões de data, 0,8 no Java e 1,0 no Python. % fonte: data/equivalencia_java_python_meta.json (pr=25; n=500; seed=20150901; data_utc 2026-11-04); text/latex/estudo1_comparador.tex:78 e :83
+Os 29 subescores e a nota final são os atributos do classificador e do GZ-CMD, sem reaprendizado dos pesos de concordância internos do CdR. % fonte: text/latex/estudo1_comparador.tex:33 e :45
+
+\textbf{Biblioteca.} A política de decisão da tese foi portada para o pacote \texttt{gzcmd-record-\allowbreak linkage}, de licença MIT \cite{Jardim2026gzcmd042}, cuja última versão publicada é a 0.4.2, de 7 de novembro de 2026. A 0.5.0, no repositório e não publicada, traz o perfil v3.1 e as funções de curva de esforço, e depois dela vieram, também sem publicação, as fusões F1 a F4, o \textit{bootstrap} agrupado por óbito e a isotônica aninhada fora da amostra. O arranjo sequencial não foi portado, o perfil histórico v3 permanece reproduzível, e o pacote é testado em integração contínua com Python 3.11 e 3.12. % fonte: D:/git/gzcmd-record-linkage/README.md:34-35 e https://pypi.org/pypi/gzcmd-record-linkage/json (0.4.2 última publicada, conferido em 13 nov. 2026); CHANGELOG.md (0.4.2 de 2026-11-07; 0.5.0; seção "Não publicado": fusion.py, robustness.py, oof.py); docs/PARIDADE_v31.md:56, :59 e :90; .github/workflows/ci.yml (python-version 3.11 e 3.12)
+
+\textbf{Site de demonstração.} O \texttt{gzcmd-sandbox-web}, de licença GPL-3.0, está no ar em \url{https://gzcmd-sandbox.pages.dev/} \cite{Jardim2026gzcmdweb13}. Recebe um CSV sem dados pessoais e executa a política histórica v3 do pacote, com revisão por LLM via Fireworks, sem a ordenação recomendada; é demonstração, fora da avaliação. % fonte: D:/git/gzcmd-sandbox-web/README.md e LICENSE (GPL-3.0); services/ml-worker/src/ml_worker/main.py:473, :505 e :547 (run_v3, gzcmd_v3_config.yaml, Fireworks); site conferido em 13 nov. 2026
+
+\textbf{Notebooks.} O notebook \texttt{gzcmd\_\allowbreak passo\_\allowbreak a\_\allowbreak passo}, no repositório do pacote, é didático, em dados sintéticos, abre no Google Colab e é testado na integração contínua. No repositório da tese, os notebooks 01 a 03 são exploratórios e anteriores ao GZ-CMD, e os números do NB01 continuam no Estudo 2. A execução deles por \texttt{papermill} na integração contínua depende do extrato, que não é versionado. % fonte: D:/git/gzcmd-record-linkage/notebooks/README.md e .github/workflows/ci.yml (job notebook); .github/workflows/run-notebooks.yml (papermill); .gitignore:82 (data/COMPARADORSEMIDENT.csv); text/latex/estudo2_classificadores.tex:62
+
+\textbf{Depósitos.} No Zenodo, as curvas agregadas de recuperação abaixo do corte estão em acesso aberto \cite{Jardim2026curvasZenodo}, e os artefatos do GZ-CMD v3.1, em arquivos restritos mediante solicitação e acordo de uso \cite{Jardim2026zenodoGzcmd}. % fonte: DOIs 10.5281/zenodo.24119997 (v2, 10 nov. 2026, CC-BY-4.0), 10.5281/zenodo.23928226 (3.0.0) e 10.5281/zenodo.23948459 (3.0.1), conferidos em 13 nov. 2026; text/latex/capitulo_dados.tex:31 e :125
+
+\section{Situação atual e próximos passos}
+
+Persistem duas limitações: coorte única, com 36 pares verdadeiros abaixo do corte, e revisor humano não observado. A validação em coorte nova, com referência cega e ordenação e orçamento definidos antes de examinar os desfechos, é o passo que permitirá verificar se a ordenação pela probabilidade calibrada reduz a revisão manual fora da coorte de desenvolvimento. Resta atualizar o apêndice do pacote, que documenta a versão 0.4.1, e preparar a defesa. % fonte: text/latex/conclusao.tex:75 e :77; text/latex/estudo4_gzcmd.tex:331; text/latex/apendice_pacote.tex:3 (documenta a versão 0.4.1)
+
+\bibliographystyle{abntex2-alf}
+\footnotesize
+\bibliography{../latex/referencias,relatorio}
+
+\end{document}
