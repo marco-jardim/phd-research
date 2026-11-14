@@ -88,6 +88,7 @@ def test_boundary_precision_is_explained_and_matches_metadata(name):
         assert fragment in body
 
 
+@pytest.mark.deck_qualificacao
 def test_model_numbers_and_costs_are_backed_by_aggregate_tables():
     script = text("text/slides/roteiro_defesa.md")
     aggregate = [r for r in rows("probe_frontier_agregado.csv")
@@ -113,6 +114,7 @@ def test_model_numbers_and_costs_are_backed_by_aggregate_tables():
         assert pt(row["n"], 0) in script
 
 
+@pytest.mark.deck_qualificacao
 def test_reference_turning_points_and_remaining_losses_match_csv():
     script = text("text/slides/roteiro_defesa.md")
     baseline = next(r for r in rows("probe_frontier_agregado.csv")
@@ -140,6 +142,7 @@ def test_reference_turning_points_and_remaining_losses_match_csv():
         assert fragment in study
 
 
+@pytest.mark.deck_qualificacao
 def test_new_answers_remain_contiguous_short_and_slide_stays_under_budget():
     script = text("text/slides/roteiro_defesa.md")
     questions = script.split("## Perguntas prováveis")[1].split("## Figuras e critérios")[0]

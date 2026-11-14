@@ -140,6 +140,7 @@ def test_search_labels_are_editorial_and_historical_keys_are_preserved():
     assert 'Scopus permanece distinto de SC' in text
 
 
+@pytest.mark.deck_qualificacao
 def test_future_comparisons_and_script_values_track_aggregate_sources():
     with (ROOT / 'data/fusao_filas.csv').open(encoding='utf-8') as handle:
         rows = {(r['fila'], r['metrica']): r for r in csv.DictReader(handle)}

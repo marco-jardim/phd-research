@@ -162,6 +162,7 @@ def test_frozen_code_sha256s_are_not_relaxed():
             assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, path
 
 
+@pytest.mark.deck_qualificacao
 def test_effort_figure_uses_the_same_generator_as_slides(tmp_path):
     from scripts.figura_curva_esforco import ARM_SLIDES, ARM_THESIS, generate
     target = tmp_path / 'curva.pgf'

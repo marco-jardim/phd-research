@@ -651,6 +651,7 @@ def test_tabela_gerada_aceita_com_item_e_aprovacao(repo):
     assert outro.n_pendentes == 1
 
 
+@pytest.mark.deck_qualificacao
 def test_arquivos_padrao_incluem_novos_e_slides(repo):
     base_commit(repo, {"text/latex/cap.tex": TEX_BASE, "README.md": "x\n"})
     escrever(repo, "text/latex/cap.tex", TEX_NOVO)
