@@ -14,7 +14,7 @@ Para cenários de vigilância em que não se dispõe de \textit{labels} em tempo
 
 \begin{enumerate}
 \item \textbf{Âncoras Positivas ($A^+$):} Pares onde $s \ge \tau_{high}$ (por exemplo, nota $\ge 9{,}0$), assumindo-se uma probabilidade média alvo $r^+$ próxima de 1. Na base desta tese, $A^+$ contém 95 pares com pureza observada de 97,9\%, de onde $r^+ = 0{,}979$ (Tabela~\ref{tab:cap8-ancoras}).
-\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s < \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^-$ próxima de 0. Na base desta tese, $A^-$ contém 39.981 pares com três pares verdadeiros, prevalência que \path{scripts/validar_ancoras.py} arredonda a cinco casas decimais, de onde $r^- = 0{,}00008$. Na configuração do pacote (\path{gzcmd/gzcmd_v3_config.yaml}), os alvos a priori das âncoras são $0{,}98$ e $0{,}001$.
+\item \textbf{Âncoras Negativas ($A^-$):} Pares onde $s < \tau_{low}$ (por exemplo, nota $< 5{,}0$), assumindo-se uma probabilidade média alvo $r^-$ próxima de 0. Na base desta tese, $A^-$ contém 39.981 pares com três pares verdadeiros, prevalência que \path{scripts/validar_ancoras.py} arredonda a cinco casas decimais, de onde $r^- = 0{,}00008$. Na configuração histórica do repositório da tese (\path{gzcmd/gzcmd_v3_config.yaml}), os alvos a priori das âncoras são $0{,}98$ e $0{,}001$; o perfil v3.1 publicado no pacote (versão 0.6.1) usa $0{,}979$ e $0{,}0001$ \cite{Jardim2026gzcmd}.
 \end{enumerate}
 
 Os alvos devem satisfazer $0<r^-<r^+<1$, pois uma sigmoide com parâmetros finitos não atinge os valores 0 e 1. Busca-se ajustar os parâmetros $\alpha$ e $\beta$ pelo sistema que iguala a média predita nos conjuntos âncora às proporções-alvo assumidas:
