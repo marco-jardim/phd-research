@@ -113,6 +113,21 @@ mkdir -p notebooks/_executed
 papermill notebooks/01_analise_comparativa_tecnicas.ipynb notebooks/_executed/01_analise_comparativa_tecnicas.executed.ipynb
 ```
 
+### Testes (pytest)
+
+```bash
+python -m pytest tests -q -rs        # ou, com pytest-xdist: python -m pytest -n 4
+```
+
+Por padrao a suite de testes usa metade das CPUs logicas, em prioridade baixa
+(afinidade de CPU, prioridade do processo e threads de BLAS/OpenMP; ver
+`tests/_limite_cpu.py`), para nao saturar a maquina. Isso nao altera nenhum
+parametro nem resultado da tese.
+
+- `PYTEST_MAX_CPUS=<n>` ajusta o numero de CPUs logicas usadas.
+- `PYTEST_CPU_LIMIT=0` desativa o limite.
+- Em CI (variavel `CI` definida) so as variaveis de threads sao aplicadas.
+
 ## Resultados e saidas
 
 Durante a execucao, alguns notebooks podem gerar CSVs (ex: `comparacao_modelos.csv`, `candidatos_*.csv`).

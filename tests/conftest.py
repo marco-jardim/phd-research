@@ -3,6 +3,11 @@ from __future__ import annotations
 import os
 
 import pytest
+from _limite_cpu import aplicar_limite_de_cpu
+
+# Limite de CPU da suite (ver tests/_limite_cpu.py e README): aplicado já na importação
+# deste conftest, que cada worker do xdist também carrega, antes dos módulos de teste.
+aplicar_limite_de_cpu()
 
 # Exceção temporária autorizada pela autora em 2026-11-10 ("eu ainda vou mudar o deck de
 # apresentação, então este deck não está válido mesmo; pode fazer uma exceção momentaneamente
