@@ -1,4 +1,4 @@
-"""Compare synthetic triage under v3 and v3.1 in gzcmd-record-linkage 0.4.0."""
+"""Compare synthetic triage under v3 and v3.1 in gzcmd-record-linkage 0.6.1."""
 
 import pandas as pd
 from gzcmd_record_linkage.policy_engine import (
