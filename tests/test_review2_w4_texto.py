@@ -17,6 +17,7 @@ def text(name):
     return (LATEX / name).read_text(encoding="utf-8")
 
 
+@pytest.mark.deck_qualificacao
 def test_falsification_is_prospective_with_explicit_margin_not_point_differences():
     for source in (text("estudo4_gzcmd.tex"), text("conclusao.tex")):
         normalized = source.replace("{,}", ",")
@@ -111,7 +112,8 @@ def test_review3_decision_counts_bias_and_pair_loss_limits_are_explicit():
     study = text("estudo4_gzcmd.tex")
     assert "1.774" in study and "459 decisões agrupadas" in study
     assert "não potenciais pares independentes" in study
-    assert "data/taxas_erro_revisor_por_banda.csv" in study
+    # As 1.774 e 459 decisões do Claude Haiku 5.5 v4 estão no YAML; o CSV agrega outra coorte.
+    assert "gzcmd/error_rates_by_band_v4.yaml" in study
     assert "por_faixa.csv" not in study and r"por\_faixa.csv" not in study
     assert "A direção dominante não é identificável" in study
     assert "2.522 candidatos" in study and r"-5{,}648" in study
@@ -214,6 +216,7 @@ def test_confirmation_editorial_human_scenarios_use_its_own_workloads():
         human_sensitivity(scenarios, curve.loc[curve.k.ne(17)])
 
 
+@pytest.mark.deck_qualificacao
 def test_script_answers_cover_the_new_review_without_delivery_metatext():
     source = (ROOT / "text/slides/roteiro_defesa.md").read_text(encoding="utf-8")
     for n, phrase in ((53, "14 dos 29"), (54, "abstenção generalizada"),

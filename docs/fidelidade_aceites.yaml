@@ -853,11 +853,11 @@ aceites:
     justificativa: "Revisão 2 (terminologia do guia 3.6 nas tabelas geradas, aplicada só pelos geradores; números conferidos como inalterados contra HEAD, exceto o intervalo [5,9) acrescentado à nota de tab_cap8_arranjo_corte): 'Precisão' passa a 'VPP', 'vínculos' da classe a 'pares verdadeiros', 'não vínculo' a NONMATCH"
     autora_aprovou: true
   - arquivo: text/latex/tables/editorial/tab_cv_5fold.tex
-    hash_paragrafo_novo: "88fec44d63ca5917"
+    hash_paragrafo_novo: "c446ecd945226ad3"
     itens:
       - metricas:+VPP
       - siglas:+VPP
-    justificativa: "Revisão 2 (terminologia do guia 3.6 nas tabelas geradas, aplicada só pelos geradores; números conferidos como inalterados contra HEAD, exceto o intervalo [5,9) acrescentado à nota de tab_cap8_arranjo_corte): 'Precisão' passa a 'VPP', 'vínculos' da classe a 'pares verdadeiros', 'não vínculo' a NONMATCH"
+    justificativa: "Revisão 2 (terminologia do guia 3.6 nas tabelas geradas, aplicada só pelos geradores; números conferidos como inalterados contra HEAD, exceto o intervalo [5,9) acrescentado à nota de tab_cap8_arranjo_corte): 'Precisão' passa a 'VPP', 'vínculos' da classe a 'pares verdadeiros', 'não vínculo' a NONMATCH. Hash atualizado em 2026-11-10 (antes 88fec44d63ca5917): o gerador passou a inserir \\small para eliminar um overfull de 3,5 pt; nenhum número nem palavra mudou"
     autora_aprovou: true
   - arquivo: text/latex/tables/editorial/tab_den30_equidade_arranjo.tex
     hash_paragrafo_novo: "5f7f88e4b881dbe3"
@@ -1821,6 +1821,13 @@ aceites:
     itens:
       - numeros:+3
     justificativa: "Revisão 2 (Resumo e Abstract, pedido da autora de 2026-11-10: frase curta de contribuições, retirada de 29 contra 51 da confirmação, LLM só como apoio na frase do fluxo e refraseamentos sem perda de informação para caber em 500 palavras); nenhum número novo."
+    autora_aprovou: true
+  - arquivo: text/latex/tese.tex
+    hash_paragrafo_novo: "d277aea58ef4ec23"
+    itens:
+      - numeros:+265
+      - numeros:-276
+    justificativa: "Build final aprovado pela autora em 2026-11-10: ficha catalográfica com o número de folhas do PDF final (265)."
     autora_aprovou: true
 aceites_numeros:
   - {arquivo: text/latex/apendice_estrategias.tex, numero: "0,2", autora_aprovou: true, motivo: "Revisão 2 (auditoria texto x tabela x figura de 2026-11-09, pedido da autora): correção conferida no artefato de origem (arredondamento a partir das contagens exatas ou do valor completo, casas decimais uniformes, nomes e notas que descrevem a tabela, fontes corretas); números alterados conferidos contra data/ e contra HEAD"}
@@ -2797,3 +2804,4 @@ aceites_numeros:
   - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "0,17", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
   - {arquivo: text/latex/tables/editorial/tab_perfil_obitos_agregado.tex, numero: "3", autora_aprovou: true, motivo: "Revisão 2 (legibilidade das tabelas, pedido da autora de 2026-11-10): só layout pelo gerador (sem \\resizebox, colunas p{...} com quebra de linha, \\tabcolsep, cabeçalhos curtos em duas linhas e frase da nota explicando as abreviações); os números novos são larguras de coluna e o espaçamento de 3 pt; células da tabela conferidas idênticas às de HEAD."}
   - {arquivo: text/latex/tese.tex, numero: "9", autora_aprovou: true, motivo: "Revisão 2 (Resumo e Abstract reescritos no estilo do grupo, aprovados pela autora em 2026-11-10, opção A): abertura pelo problema de saúde pública, fluxo recomendado e ressalvas concentradas; números já presentes no Resumo anterior e no corpo; ocorrências de N13, N14, N18, N19, N27, C13, C05r e C09r retiradas do Resumo e do Abstract por decisão da autora (conteúdo mantido no Estudo 4 e na conclusão). O 9 é a meta de 9 pares verdadeiros (C12), em PT e EN."}
+  - {arquivo: text/latex/tese.tex, numero: "265", autora_aprovou: true, motivo: "Build final aprovado pela autora em 2026-11-10: ficha catalográfica com o número de folhas do PDF final (265)."}

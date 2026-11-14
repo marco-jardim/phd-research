@@ -2,6 +2,8 @@
 
 import re
 
+import pytest
+
 from resumo_numeros import TETO_NUMEROS_RESULTADO, numeros_de_resultado
 from test_s4a_texto import abstracts
 from test_w11b import answer, rows, text
@@ -33,6 +35,7 @@ def test_abstracts_recommend_fusion_without_changing_hypothesis_or_limits():
     assert "by probability or score" not in en
 
 
+@pytest.mark.deck_qualificacao
 def test_dominance_scope_and_recommendation_are_consistent_in_slides_and_script():
     for name in ("text/slides/defesa.tex", "text/slides/roteiro_defesa.md"):
         source = text(name)
@@ -44,6 +47,7 @@ def test_dominance_scope_and_recommendation_are_consistent_in_slides_and_script(
     assert "Experimento 1 do Estudo 4" in answer(34)
 
 
+@pytest.mark.deck_qualificacao
 def test_model_comparison_uses_acceptance_stratum_not_total_sample():
     aggregate = rows("probe_frontier_agregado.csv")
     names = ("claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5", "claude-fable-5-1")
@@ -61,6 +65,7 @@ def test_model_comparison_uses_acceptance_stratum_not_total_sample():
         assert fragment in script
 
 
+@pytest.mark.deck_qualificacao
 def test_conclusion_preserves_denominators_and_glossary_defines_new_models():
     conclusion = text("text/latex/conclusao.tex")
     # Conclusão reescrita: esses denominadores e glosas permanecem nos capítulos e apêndices de origem.

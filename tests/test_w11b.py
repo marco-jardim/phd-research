@@ -12,6 +12,10 @@ from terminologia import contem
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Todos os testes deste módulo leem o roteiro ou o deck da qualificação (exceção temporária
+# de 2026-11-10; ver tests/conftest.py).
+pytestmark = pytest.mark.deck_qualificacao
+
 
 def text(name):
     return (ROOT / name).read_text(encoding="utf-8")

@@ -40,12 +40,12 @@ ci = [
   "scipy==1.17.1",
   "statsmodels==0.15.0",
   "pyyaml==6.0.3",
-  "pytest==9.0.2",
+  "pytest==9.0.3",
   "matplotlib==3.10.8",
   "anthropic==0.105.2",
   "requests==2.34.2",
   "gzcmd-record-linkage==0.4.0",
-  "python-dotenv==1.1.0",
+  "python-dotenv==1.2.2",
   "httpx==0.28.1",
   "joblib==1.5.3",
   "psutil==7.2.2",
@@ -69,6 +69,10 @@ select = ["E", "F", "I", "B", "UP"]
 addopts = ""
 pythonpath = ["."]
 testpaths = ["tests"]
+markers = [
+  # Exceção temporária autorizada pela autora em 2026-11-10 (ver tests/conftest.py).
+  "deck_qualificacao: confere o conteúdo do deck da qualificação (text/slides/); pulado salvo com DECK_QUALIFICACAO=1",
+]
 
 [tool.pyright]
 pythonVersion = "3.11"

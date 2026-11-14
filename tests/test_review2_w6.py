@@ -46,6 +46,7 @@ def test_objectives_and_contribution_do_not_claim_audited_policy_or_wrong_incomp
     assert "e não da automação das decisões pela política de quatro ações" in opening
 
 
+@pytest.mark.deck_qualificacao
 def test_falsification_contrasts_and_partition_ranges_match_unmodified_csvs():
     comparison = pd.read_csv(ROOT / "data/comparador_mesma_carga.csv")
     for mode, k, difference in (("vigilancia", 96, 1), ("confirmacao", 17, 3)):
@@ -143,6 +144,7 @@ def test_score_band_precision_follows_count_only_source(tmp_path):
     assert "sem indicar diferença demonstrada" in text("tables/editorial/tab_qw1_deep_learning.tex")
 
 
+@pytest.mark.deck_qualificacao
 def test_remaining_editorial_caveats_and_reductions():
     study = text("estudo4_gzcmd.tex")
     assert "Essa proporção de referência é descritiva" in study

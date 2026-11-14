@@ -79,6 +79,7 @@ def test_editorial_5_percent_column_is_driven_by_materialized_CSV():
         same_load(data, pd.concat([projected, projected.loc[selected]]))
 
 
+@pytest.mark.deck_qualificacao
 def test_line_endings_are_explicit_for_byte_compared_outputs():
     attributes = (ROOT / ".gitattributes").read_text()
     for name in ("data/esforco_arranjo.csv", "data/fp_arranjo_por_regiao.csv",
