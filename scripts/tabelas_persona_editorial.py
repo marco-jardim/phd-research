@@ -270,6 +270,7 @@ def transform(name, text):
     text = text.replace("Numérico ($k/20$)", "Numérico")
     text = text.replace("Partição ($k/20$)", "Partição")
     text = text.replace("O3: \\texttt{p\\_cal\\_ml}", "O3: probabilidade calibrada do classificador na base inteira")
+    text = text.replace("O2: nota do CdR;", "O2: nota final do CdR;")
     text = text.replace("As chaves S1 a S4 nos artefatos são históricas, não as etapas do protocolo. ", "")
     text = text.replace("P97,5", "percentil 97,5").replace("P10 a P90", "percentis 10 a 90")
     text = text.replace("meta nominal de 64\\%", "meta de 23 dos 36 PAR~=~2 (64\\%)")
