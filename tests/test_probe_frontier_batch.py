@@ -36,7 +36,8 @@ def test_truncation_never_becomes_unsure():
         batch.parse(SimpleNamespace(stop_reason="max_tokens"), "a" * 16)
 
 
-def test_exact_message_builders():
+def test_exact_message_builders(monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "chave-ficticia-de-teste")
     batch.sem.configure_prompt("v4")
     class View:
         def to_json(self, **kwargs):
