@@ -373,3 +373,10 @@ data/ablacao_dossie_resultado.csv
 # D16: private ablation checkpoints; only *_agregado.json is public.
 data/sprint3b/ablacao/*_controle.json
 data/sprint3b/ablacao/*_sem_pcal.json
+
+# Artefatos locais: rótulos por par, journals de revisão LLM, exportações antigas e metadados de ferramenta (não versionar).
+data/diag_pcal_ml_*.csv
+data/sprint3b/*/*_journal/
+.opencode/
+text/docx/tese_*_*.docx
+text/epub/tese_*_*.epub
