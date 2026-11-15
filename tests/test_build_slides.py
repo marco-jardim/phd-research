@@ -97,6 +97,73 @@ def test_build_propagates_compilation_failure(monkeypatch):
     assert run.call_count == 1
 
 
+def test_build_without_jobname_keeps_exact_command(monkeypatch, tmp_path):
+    build = load_builder()
+    build.__globals__["__file__"] = str(tmp_path / "build_slides.py")
+    (tmp_path / "defesa.pdf").write_bytes(b"%PDF-1.4\n")
+    monkeypatch.setattr("shutil.which", lambda _: "pdflatex")
+    run = Mock()
+    monkeypatch.setattr(subprocess, "run", run)
+    assert build() == tmp_path / "defesa.pdf"
+    assert run.call_count == 2
+    for call in run.call_args_list:
+        assert call.args[0] == [
+            "pdflatex", "-interaction=nonstopmode", "-halt-on-error", "defesa.tex"
+        ]
+
+
+def test_build_with_jobname_passes_it_to_both_passes(monkeypatch, tmp_path):
+    build = load_builder()
+    build.__globals__["__file__"] = str(tmp_path / "build_slides.py")
+    (tmp_path / "defesa_teste_abc123.pdf").write_bytes(b"%PDF-1.4\n")
+    monkeypatch.setattr("shutil.which", lambda _: "pdflatex")
+    run = Mock()
+    monkeypatch.setattr(subprocess, "run", run)
+    assert build("defesa_teste_abc123") == tmp_path / "defesa_teste_abc123.pdf"
+    assert run.call_count == 2
+    for call in run.call_args_list:
+        assert call.args[0] == [
+            "pdflatex", "-interaction=nonstopmode", "-halt-on-error",
+            "-jobname=defesa_teste_abc123", "defesa.tex",
+        ]
+        assert call.kwargs["cwd"] == tmp_path
+        assert call.kwargs["check"] is True
+        assert call.kwargs["timeout"] == 600
+        assert isinstance(call.kwargs["env"], dict)
+
+
+def test_build_with_explicit_default_jobname_is_allowed(monkeypatch, tmp_path):
+    build = load_builder()
+    build.__globals__["__file__"] = str(tmp_path / "build_slides.py")
+    (tmp_path / "defesa.pdf").write_bytes(b"%PDF-1.4\n")
+    monkeypatch.setattr("shutil.which", lambda _: "pdflatex")
+    monkeypatch.setattr(subprocess, "run", Mock())
+    assert build("defesa") == tmp_path / "defesa.pdf"
+
+
+@pytest.mark.parametrize("jobname", ["", "a b", "../defesa", "defesa/x", "defesa;rm", "defesa\n", "açaí"])
+def test_build_rejects_invalid_jobname_before_pdflatex(monkeypatch, jobname):
+    which = Mock(return_value="pdflatex")
+    monkeypatch.setattr("shutil.which", which)
+    run = Mock()
+    monkeypatch.setattr(subprocess, "run", run)
+    with pytest.raises(ValueError, match="jobname inválido"):
+        load_builder()(jobname)
+    run.assert_not_called()
+    which.assert_not_called()
+
+
+def test_build_cli_forwards_jobname(monkeypatch):
+    main = runpy.run_path(str(SLIDES / "build_slides.py"))["main"]
+    build = Mock(return_value=Path("saida.pdf"))
+    main.__globals__["build"] = build
+    assert main(["--jobname", "defesa_teste_abc123"]) == Path("saida.pdf")
+    build.assert_called_once_with("defesa_teste_abc123")
+    build.reset_mock()
+    main([])
+    build.assert_called_once_with(None)
+
+
 @pytest.mark.deck_qualificacao
 def test_slide_structure_and_editorial_contract():
     source = (SLIDES / "defesa.tex").read_text(encoding="utf-8")

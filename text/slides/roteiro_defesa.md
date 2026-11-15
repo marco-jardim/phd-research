@@ -1,1012 +1,718 @@
 # Roteiro da defesa
 
-A apresentação tem 30 quadros principais e 20 de reserva, estes fora dos 40 minutos. Os tempos orientam a distribuição da fala, não representam duração medida.
+A apresentação tem 25 quadros principais e 14 de reserva, estes fora dos 40 minutos. Os tempos e as metas de palavras orientam o ensaio e a distribuição da fala; não são duração medida.
 
 ## Cronometragem
 
-| Bloco | Slides | Minutos | Acumulado |
-| :-- | :-- | :-- | :-- |
-| Capa | 1 | 0,5 | 0,5 |
-| Problema e tese central | 2 a 4 | 4,0 | 4,5 |
-| Dados e referência operacional | 5 a 7 | 4,0 | 8,5 |
-| Referencial e decisão de limiar | 8 | 1,5 | 10,0 |
-| Estudo 1: comparador | 9 e 10 | 2,0 | 12,0 |
-| Estudo 2: estimador | 11 a 13 | 4,0 | 16,0 |
-| Estudo 3: estratégias e detecção | 14 a 16 | 4,0 | 20,0 |
-| Estudo 4: GZ-CMD | 17 a 22 | 10,0 | 30,0 |
-| Estudo 5: equidade | 23 e 24 | 3,0 | 33,0 |
-| Posicionamento | 25 | 1,5 | 34,5 |
-| Limitações | 26 e 27 | 2,5 | 37,0 |
-| Conclusões e contribuições | 28 e 29 | 2,5 | 39,5 |
-| Agradecimentos | 30 | 0,5 | 40,0 |
-| Total principal | 1 a 30 | 40,0 | 40,0 |
+A meta de palavras usa 130 palavras por minuto. A soma dos quadros principais é de 2.280 segundos, ou 38,0 minutos, com 2 minutos de folga.
 
-## Fala-guia por slide
+| Bloco | Quadros | Segundos | Minutos |
+| :- | :- | -: | -: |
+| Abertura | S01 a S06 | 440 | 7,3 |
+| Material e medida | S07 a S10 | 330 | 5,5 |
+| Resultados | S11 a S19 | 960 | 16,0 |
+| Fechamento | S20 a S25 | 550 | 9,2 |
+| Total | S01 a S25 | 2.280 | 38,0 |
 
-### 1. Capa
-A pesquisa foi desenvolvida no IESC-UFRJ, sob orientação de Rejane Sobrino Pinheiro, com foco no pós-processamento dos potenciais pares de bases de saúde. A apresentação acompanha cinco estudos. O resultado principal do GZ-CMD é o arranjo sequencial depois do corte do OpenRecLink; a cascata sobre a base inteira é comparação.
+| Quadro | Tema | Segundos | Meta de palavras |
+| :- | :- | -: | -: |
+| S01 | Capa | 20 | 43 |
+| S02 | Problema de saúde pública | 80 | 173 |
+| S03 | Corte e *grey area* | 120 | 260 |
+| S04 | Objetivo geral | 60 | 130 |
+| S05 | Cinco objetivos específicos | 60 | 130 |
+| S06 | Resposta antecipada | 100 | 217 |
+| S07 | Dados e referência operacional | 100 | 217 |
+| S08 | Esquema do pós-processamento | 110 | 238 |
+| S09 | A medida | 60 | 130 |
+| S10 | As quatro filas | 60 | 130 |
+| S11 | Objetivo 1: CdR | 80 | 173 |
+| S12 | Objetivo 2: classificadores | 100 | 217 |
+| S13 | Objetivo 2: probabilidade calibrada | 90 | 195 |
+| S14 | Objetivo 3: curva de esforço | 140 | 303 |
+| S15 | Objetivo 3: incerteza | 120 | 260 |
+| S16 | Objetivo 3: tabela das filas | 100 | 217 |
+| S17 | Objetivo 4: LLM como aceitador | 120 | 260 |
+| S18 | Objetivo 4: mesma carga | 110 | 238 |
+| S19 | Objetivo 5: equidade | 100 | 217 |
+| S20 | O que a tese sustenta | 130 | 282 |
+| S21 | Limitações | 100 | 217 |
+| S22 | Fluxo recomendado | 140 | 303 |
+| S23 | Critério de refutação | 90 | 195 |
+| S24 | Contribuições | 70 | 152 |
+| S25 | Agradecimentos | 20 | 43 |
+| Total | | 2.280 | 4.940 |
 
-### 2. Informação sobre o cuidado
-A tuberculose é uma condição marcadora, e a vinculação entre notificações e óbitos permite examinar desfechos do cuidado. O problema estudado não é apenas computacional: uma decisão incorreta de vínculo pode modificar a informação usada pela vigilância.
+## Fala-guia por quadro
 
-### 3. Da decisão ao orçamento
-A pergunta operacional é como concentrar a revisão nos potenciais pares com maior probabilidade de vínculo, sem tratar menor esforço como melhora de acurácia. Primeiro se define o corte do OpenRecLink; depois, comparam-se ordenações sob o mesmo orçamento humano. A curva de esforço permite ao serviço explicitar a recuperação e os erros associados a cada orçamento.
+### S01. Capa
 
-### 4. Hipótese gerada nesta avaliação
-A hipótese gerada nesta avaliação é que, abaixo do corte, ordenar pela probabilidade calibrada fora da amostra do classificador (O3) pode atingir a recuperação de P com menos revisões que a ordenação pelo escore do OpenRecLink (O1), pela revisão de menos pares na ordem escolhida, não pela política de quatro ações. A comparação com a probabilidade recalibrada de P (O4) é secundária, com o mesmo XGBoost. A meta é a recuperação de P no orçamento fixado antes dos desfechos, nos dois modos. A ordenação pela nota final do CdR (O2) não integra a hipótese: na confirmação, recupera nove vínculos com 11 revisões, sem FP nem LLM. LLM designa modelo de linguagem de grande porte; CdR, Comparador de Registros; OOF, fora da amostra; FP, falso positivo; VPP, valor preditivo positivo. P usa isotônica. Exige validação registrada em dados novos.
+A tese, orientada por Rejane Sobrino Pinheiro, trata do pós-processamento do *linkage* (relacionamento de registros) probabilístico de bases de saúde. O objeto é a revisão manual dos potenciais pares abaixo do corte do OpenRecLink.
 
-### 5. Fontes e blocagem
-Foram analisados 61.696 potenciais pares e 247 vínculos, com razão aproximada de 1:249, gerados em três passos exportados do OpenRecLink. O passo ampliado concentra o volume, mas não a maioria dos vínculos; a avaliação está condicionada ao extrato, e não estima a sensibilidade de toda a blocagem nas bases de origem.
+Transição: convém começar pela vigilância do óbito por tuberculose.
 
-### 6. Referência operacional
-O corte do OpenRecLink aceitou 211 dos 247 vínculos, ou 85,4%, e a revisão manual acrescentou 36. PAR é o *label*: 1 indica aceitação pelo corte; 2, recuperação pela revisão. O volume e a ordem históricos não foram observados. As duas fronteiras da nota do CdR aceitam 93 vínculos e 2 FP acima de 9, encaminham 21.620 ao revisor humano e projetam 95,7% no cenário de sensibilidade humana de 95%, não medida. Os cenários consideram 95%, 99% e 100% de sensibilidade humana, com especificidade perfeita assumida. Se a revisão tivesse seguido escore do OpenRecLink decrescente, o cenário seria de pelo menos 2.156 pares por passo ou 2.522 no limiar global, equivalentes a 718 h 40 min e 840 h 40 min sob a hipótese de 20 min por par, não tempo observado. Isso não reconstrói o trabalho histórico.
+Se perguntarem: não se aplica.
 
-### 7. Faixas e referência operacional
-A nota do CdR não é o escore probabilístico do OpenRecLink. Nas faixas da nota: abaixo de 5 há 39.981 pares e 3 vínculos; em [5,9), 21.620 e 151; a partir de 9, 95 e 93. Houve revisora única, sem classificação independente. Oliveira (2026, p. 34 e 36 a 38, Quadros 5 e 6) documenta CdR apenas no passo aberto, com 5 pares, não nos passos 6, 9 e 11. Os 36 PAR=2 se distribuem em 4, 7 e 25 nesses passos. A precedência do CdR à revisão e a disponibilidade de nota e subescores são hipóteses de trabalho, não fatos documentados para esses passos. Sob essa hipótese, haveria viés de verificação e incorporação em direção a O2 a O4; a magnitude não foi estimada.
+Fonte: `tese.tex:275` (título), `tese.tex:541` (orientadora).
 
-### 8. Mapa conceitual
-O modelo de Fellegi e Sunter é o referencial do escore probabilístico; a classificação por corte é decisão de limiar. O processo de origem utilizou OpenRecLink original, em C, CdR e revisão clerical por revisora única, sem atribuição pessoal das etapas. O autor não participou desse processo e recebeu somente o extrato pós-CdR. A ordem entre CdR e revisão não está documentada. A tese reorganiza a decisão posterior, sem reestimar os parâmetros de comparação nem substituir a blocagem.
+### S02. A vigilância do óbito por tuberculose depende do *linkage* entre óbitos e notificações
 
-### 9. Comparador em Python
-O comparador torna explícita a evidência campo a campo, com subescores e uma nota ponderada por pesos fixos. A equivalência parcial com o protótipo Java de Peçanha (2015) foi executada em pares sintéticos. A captura apresenta a interface do Comparador de Registros, versão 0.1, *commit* 3b43598, com dados sintéticos, não uma interface do GZ-CMD.
+A tuberculose é condição marcadora do desempenho dos serviços de saúde. O Ministério da Saúde trata o óbito por tuberculose como evento sentinela, por ser desfecho evitável. No estado do Rio de Janeiro, o coeficiente de mortalidade foi de 4,8 por 100 mil habitantes em 2024, o terceiro maior entre as unidades da federação, em dados preliminares. Contar corretamente esses óbitos depende do *linkage* entre o Sistema de Informações sobre Mortalidade, o SIM, e o Sistema de Informação de Agravos de Notificação, o Sinan. Como os dois sistemas não têm identificador unívoco comum, usa-se o *linkage* probabilístico: comparam-se nome, nome da mãe, data de nascimento e outros campos, e calcula-se um escore de similaridade. Os erros têm consequência. Um falso positivo, isto é, um vínculo aceito indevidamente, pode levar ao encerramento como óbito do caso de uma pessoa viva. Um falso negativo faz o óbito de uma pessoa notificada parecer não notificado, com risco de investigação desnecessária. A tese não mediu o custo dessas consequências.
 
-### 10. Equivalência Java e Python
-A comparação em 500 pares sintéticos encontrou concordância de 100,0% nas datas por igualdade e por um dígito, de 99,2% nas abreviações e nota final idêntica em 11,2%. Nas inversões de data, Lucena e o Java atribuem peso 0,8, enquanto o Python usa 1,0. Essa diferença foi mantida e declarada como limitação. O lote de fronteira não estima concordância nos dados reais.
+Transição: o problema posto, a tese o encara onde o OpenRecLink deixa de decidir.
 
-### 11. Comparação de protocolos
-RF+SMOTE atingiu F1 de 0,931 na ablação original. No fluxo Modal, XGBoost isolado atingiu 0,943 e híbrido OR 0,958, com 68 VP, 0 FP e 6 FN, contra 0,610 da nota 8. O XGBoost do QW1 atingiu 0,920 no teste; os protocolos não são intercambiáveis, e a escolha dos limiares nos testes torna os resultados selecionados exploratórios.
+Se perguntarem: R04 (subnotificação e perda de vínculo).
 
-### 12. Balanceamento
-As nove estratégias de balanceamento foram avaliadas no Random Forest, com F1 médio entre 0,880 e 0,918. Essa variação descreve o experimento realizado, não demonstra que uma estratégia de reamostragem seja necessária ou superior em qualquer modelo.
+Fonte: `capitulo3.tex:5` (4,8 por 100 mil, 2024, terceiro maior, evento sentinela), `capitulo3.tex:7` (consequências do falso positivo e do falso negativo; custo não medido), `tese.tex:548` (identificador unívoco), `capitulo_dados.tex:59-66` (campos comparados).
 
-### 13. Estimador do GZ-CMD
-O GZ-CMD usa outro XGBoost, com 30 atributos e calibração isotônica aninhada, agrupando por REFREC nos níveis externo e interno. Na área cinza da nota, a AUC é 0,995 e a AP é 0,862; o corte ilustrativo de 0,5 produz 119 verdadeiros positivos e 28 falsos positivos. Esses números descrevem o estimador original, não o arranjo. Nele, o classificador é ajustado na parcela de treinamento, e a isotônica é reajustada apenas com as probabilidades OOF internas do treino abaixo do corte, sem os *labels* da partição externa.
+### S03. O ponto de corte aceita 211 dos 247 pares verdadeiros; os outros 36 só a revisão manual de origem recuperou
 
-### 14. Finalidades operacionais
-A vigilância atribui maior consequência à perda do vínculo, enquanto a confirmação atribui maior consequência ao falso vínculo. A fronteira permite explicitar esse compromisso, sem transformar os pontos explorados no teste em limiares validados para uso externo.
+O ponto de partida é o processo de *linkage* tal como foi feito. O OpenRecLink forma, por blocagem, os potenciais pares, isto é, as combinações de um registro do SIM com um do Sinan que compartilham chaves comuns. Cada potencial par recebe um escore de similaridade, comparado a um ponto de corte definido por passo de blocagem. Acima dele, o par é aceito como vínculo; abaixo, fica para a revisão manual. O corte é único por passo e não há limiar inferior de rejeição. Nesta tese, o corte é parte do processo e é preservado: os vínculos que ele aceita não são alterados. Dos 247 pares verdadeiros do extrato, o corte aceitou 211, ou 85,4%. Os outros 36, 14,6%, só foram recuperados pela revisão manual de origem. Fala-se em par verdadeiro segundo a referência operacional, formada pelo corte e por essa revisão, e não em verdade absoluta. A região abaixo do corte recebe o nome de *grey area* (área cinza) e reúne 61.485 dos 61.696 potenciais pares. É nela que a revisão manual atua, e é nela que a tese procura reduzir o esforço para recuperar os 36 pares verdadeiros. A literatura descreve a revisão manual como custosa (Christen, 2012); nesta tese, o custo dessa carga não foi medido, e a medida usada é o número de revisões. O corte decide sozinho a maior parte dos pares verdadeiros; a pergunta da tese diz respeito ao restante. Esse é o desenho original do processo, descrito aqui sem alteração.
 
-### 15. Detecção de vínculos
-No teste da ablação, o RF+SMOTE detectou 67 vínculos e a nota 8, comparador hipotético, detectou 43: são 24 a mais frente à nota 8, comparador hipotético. Dos 27 recuperados exclusivamente pelo modelo, 25 são PAR=1, já aceitos pelo corte do OpenRecLink de origem, e dois são PAR=2. Os 27 correspondem a 24 registros distintos do SIM; os 247 vínculos do extrato, a 204. Não se estima redução da subnotificação. Fonte: `data/banca_b_recuperados_por_par.json`.
+Transição: com a região delimitada, resta formular a pergunta que a tese procura responder.
 
-### 16. Limites da comparação
-Os indicadores derivados do encerramento por óbito constituem vazamento de alvo. A sensibilidade 2×2 foi executada: o F1 do RF+SMOTE passou de 0,931 para 0,938 sem óbito, mas caiu para 0,846 com REFREC. No QW1 local na GPU, o XGBoost passou de 0,937 para 0,878 com REFREC, sem substituir o resultado histórico de 0,920. O otimismo aparece sobretudo na partição por linha, embora mudem os vínculos e denominadores. O GZ-CMD já utiliza agrupamento por REFREC, sem indicadores de óbito; permanece possível dependência por COMPREC.
+Se perguntarem: R03 (um corte por passo e os dois limiares de Fellegi e Sunter).
 
-### 17. Arquitetura depois do corte
-O arranjo preserva a aceitação acima do corte e aplica o GZ-CMD abaixo dele. As guardas usam nota e probabilidade recalibrada; as faixas estratificam o erro do revisor. A isotônica é reajustada apenas no treino abaixo do corte, sem *labels* da partição externa. As proporções de erro do revisor foram congeladas antes das chamadas novas, sem realimentação por essas respostas, mas P reutiliza sobretudo lotes históricos também usados para estimar as proporções do revisor. Não é avaliação prospectiva. *Grey-Zone* no nome remete ao conceito de Fellegi e Sunter, a região que a regra automática não decide; nos resultados, área cinza da nota designa somente [5,9).
+Fonte: `capitulo3.tex:9` (211, 247, 36, 85,4%, 14,6%, revisão manual custosa segundo Christen, 2012, custo não medido, corte preservado), `capitulo3.tex:11` (61.485 e 61.696), `capitulo_dados.tex:23` (corte único por passo, sem limiar inferior), `capitulo_dados.tex:73` (referência operacional).
 
-### 18. Duas ações e orçamento
-Com duas ações, revisor humano e não vínculo, revisor perfeito e perdas aditivas, a perda da revisão é C_H e a do não vínculo é p × C_FN. Com p verdadeiro e calibrado, compensa revisar quando p ≥ C_H/C_FN; sob orçamento, revisam-se os maiores p até a parada. O1 e O2 não são probabilidades; com p estimado, não se valida esse limiar. Atribuir a falha às entradas, diante de 9,06 FP previstos e 21 observados, é hipótese de trabalho, sem isolamento causal nem dispensa da avaliação empírica do critério. O fluxo continua hipótese a validar.
+### S04. Objetivo geral
 
-### 19. Arranjo sequencial com registro interno
-P conserva os 211 vínculos do corte e acrescenta 4 na vigilância e 8 na confirmação. Não reproduz 13 e 27 dos 36 vínculos recuperados pela revisão clerical de origem. Aceita 25 e 12 potenciais pares abaixo do corte: 4 e 8 são PAR=2; dos demais, 21 e 4 são FP contra o *label*, rejeitados ou não examinados nessa revisão. Portanto, não se atribui essa condição aos 25 e 12 como um todo. As revisões humanas são 96 na vigilância e 17 na confirmação; os pares avaliados pelo LLM são 344 e 41. A comparação de carga, o VPP e os mecanismos são análises exploratórias *post hoc*, não registradas. S3 designa a avaliação com os *labels*; os fechamentos e a cronologia estão na reserva.
+O objetivo geral tem duas partes. A primeira é desenvolver e avaliar um pós-processamento: um conjunto de etapas aplicadas depois da decisão do OpenRecLink, que reduza a revisão manual necessária na *grey area*, sem alterar os vínculos que o corte aceitou. A segunda é atribuir essa redução a um componente. O pós-processamento foi separado em cinco: a preservação do corte; a probabilidade de par verdadeiro, calibrada fora da amostra; a ordem da fila de revisão; a escolha do ponto de parada pela curva de esforço; e a decisão por *expected loss*, que é o custo esperado de cada ação possível, com revisão assistida por um modelo de linguagem. Separar os componentes permite perguntar qual deles, e não o conjunto, responde pela redução.
 
-### 20. Curva de esforço e ponto de parada
-A curva de esforço relaciona revisões humanas e vínculos recuperados. O3 é a probabilidade calibrada OOF, e O4 a probabilidade recalibrada de P. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P: recupera 9 PAR=2 com 11 revisões, sem FP nem LLM; O3 precisa de 29. Para todos os 36, O1 requer 2.521 e O3, 23.443, fora do limite gráfico de 2.522. Os pontos de P incluem 344 pares adicionais avaliados pelo LLM na vigilância e 41 na confirmação. Revisor perfeito é hipótese dos dois lados. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 foram treinados nos mesmos *labels* verificados. O4 iguala P com 106 revisões na vigilância e 27 na confirmação, contra 125 e 29 de O3. No orçamento humano original de P (96 e 17), P recupera 23 e 9; O3 recupera 22 e 6, deixando 14 e 30 dos 36 fora. Fontes: `comparador_mesma_carga.csv:19,22,27,32,37`.
+Transição: a pergunta se desdobra em cinco objetivos específicos.
 
-### 21. Aceitador e filtro: papéis distintos
-Como aceitador, o LLM teve VPP de 16,0% na vigilância, com 21 FP contra 9,06 previstos, análise *post hoc*. Como filtro de NONMATCH, em k=96 na vigilância são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra 6 sem filtro na mesma carga. O VPN é 87,8% em k=96 (IC 95%: 78,5 a 93,5); 78,0% em k=58. A sensibilidade do filtro é 59,1% (IC 95%: 38,7 a 76,7): descarta 9 dos 22 vínculos do topo. A vantagem é condicionada a H=22; na unidade de custo da tese, perde para O3 com 96 revisões. Na confirmação k=125, descarta 10 dos 23 vínculos. MATCH e inconclusivos vão ao humano, nunca à aceitação autônoma. É hipótese exploratória a validar, com protocolo fixado antes dos desfechos e respostas de datas diferentes. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex`, filtro.
+Se perguntarem: não se aplica.
 
-### 22. O LLM como aceitador não se paga abaixo do corte
-P permanece principal porque o registro fixou a isotônica como calibração padrão, com Platt previsto apenas para partições com menos de 10 PAR=2; P-Platt, também registrado como braço, passou a sensibilidade na emenda 3. Com MATCH ao humano, P usa 121 revisões para 23 vínculos na vigilância; O3 iguala em 125. Na confirmação, ambos recuperam nove em 29, mas O2 requer 11. Revisor perfeito é hipótese dos dois lados. Uma diferença de um vínculo em 36 não sustenta superioridade. Perdas totais, incluindo FN: vigilância, P 957,72, O3 775, P-MATCH 772,72, O2 1.296 (12 recuperados); confirmação, 957,2, 569, 569,2 e 551. Custos C_FP/C_FN: 10/50 e 100/20; C_H=1 e C_LLM=0,005. FP humano zero é hipótese assimétrica à política, não medida. P-Platt tem perda menor nos quatro cenários de estabilidade, sem justificar escolha retroativa. Fontes: `custos_equivalentes_exploratorios.csv:2-5,8-10,12`; `robustez_perda_ponderada.csv:2-9`.
+Fonte: `capitulo3.tex:17` (objetivo), `capitulo3.tex:39` (cinco componentes), `conclusao.tex:3` (componentes), `glossario.tex:52` (*expected loss*).
 
-### 23. Equidade por sexo
-No arranjo P de vigilância, o VPP é de 86,3% no sexo feminino e 93,3% no masculino, sem rejeição após Benjamini-Hochberg na família den30, p ajustado de 0,360 (`equidade_arranjo_den30_pairwise_tests.csv:3`). Na cascata sobre a base inteira (comparação), é de 87,9% e 84,0%. A aceitação do arranjo combina corte e respostas de vínculo do LLM; o encaminhamento humano conta como não aceito. Os 211 vínculos acima do corte são aceitos por construção. As diferenças de sensibilidade entre subgrupos dependem da proporção de vínculos PAR=2 em cada subgrupo, definida pelo corte, e da recuperação desses 36 vínculos. As diferenças de VPP dependem dos 21 e quatro falsos positivos abaixo do corte. Ausência de rejeição não comprova equidade. Raça/cor não está disponível.
+### S05. Cinco objetivos específicos, cinco passos da resposta
 
-### 24. Desigualdade operacional
-A disparidade por passo é herdada do corte e do *label*, não um efeito isolado do GZ-CMD. O corte aceita 15 dos 40 vínculos do passo 11 (37,5%), contra 76 de 80 no passo 6 (95,0%) e 120 de 127 no passo 9 (94,5%). O arranjo aceita dois dos 25 PAR=2 do passo 11 na vigilância e quatro na confirmação: 42,5% e 47,5%. Na vigilância, fica abaixo dos 45,0% da cascata sobre a base inteira. Com mínimo de 30 nos dois denominadores antes de Benjamini-Hochberg, P tem 3/26 e 2/26 rejeições; a cascata, 6/28 e 1/21, todas operacionais. Cada decisão muda a família elegível; as contagens não ordenam equidade. Fonte: `data/equidade_arranjo_den30_recomputacao.json`; `data/par_por_passo.csv`.
+Os cinco objetivos encadeiam-se do instrumento à equidade. O primeiro reimplementa em Python, em código aberto, o Comparador de Registros, o CdR, que calcula a similaridade campo a campo e produz os subescores; compara-se o resultado ao protótipo em Java. O segundo estima a probabilidade de que um potencial par seja verdadeiro e a calibra fora da amostra; ele se divide entre os Estudos 2 e 3, sobre classificadores, e o Estudo 4. O terceiro compara ordenações da fila pelo número de revisões necessário, com a incerteza estimada por *bootstrap*, que reamostra os óbitos. O quarto verifica se a automação reduz a revisão além da ordenação. O quinto avalia a equidade por estrato de processo e por subgrupo demográfico.
 
-### 25. Posicionamento
-Os estudos anteriores já apresentam classificação supervisionada, balanceamento e redução de revisão, de modo que a contribuição não é a inexistência desses componentes. Na linha desta tese, a tabela de posicionamento registra SIM e Sinan-TB e a política com regras de guarda, *expected loss* e revisão assistida por modelo de linguagem; a tese propõe essa composição operacional, com calibração agrupada, custos, encaminhamento e equidade, sem comparação empírica com Lages e sem ordenar métricas de bases distintas como se fossem do mesmo experimento.
+Transição: antes dos detalhes, convém antecipar a resposta.
 
-### 26. Limitações de método
-A revisora foi única, sem classificação independente. O corte integra o *label*. Se a revisão histórica seguiu o escore do OpenRecLink, favoreceria O1; O3 e O4 também usaram os mesmos *labels* verificados. A ordem histórica é desconhecida, e 2.156 revisões constituem cenário. REFREC não separa COMPREC. Respostas históricas reutilizadas, proporções com denominadores mínimos e transferência de coortes mais fáceis impedem interpretação prospectiva. A sensibilidade humana não foi medida, e a especificidade humana é tratada como perfeita: os cenários não modelam FP humanos. O braço braço *a posteriori* era conhecido antes do registro interno; o código registrado está ausente do git, e há desvios de protocolo. O registro cobre recalibração, braços e avaliação; a análise de estabilidade mede estabilidade nos mesmos dados, não generalização.
+Se perguntarem: não se aplica.
 
-### 27. Limitações de transferência e governança
-O estudo é municipal, sem validação externa, e o extrato é pseudonimizado, não anônimo. A transferência internacional à Modal e a APIs externas não foi objeto de análise específica nos pareceres, limitação declarada em `capitulo_dados.tex:31`. O Zenodo é público com arquivos restritos. O repositório contém agregados e escores/decisões por pseudônimo, sem *label*; MIT vale apenas para o código. A exportação por HMAC foi implementada, mas a matriz não foi depositada nem saneou retroativamente as execuções. A equivalência Java é parcial; a comparação com Lages não foi realizada.
+Fonte: `capitulo3.tex:25-33` (objetivos), `estudo3_estrategias.tex:3` (Estudo 3 responde parte do objetivo 2), `estudo4_gzcmd.tex:3` (Estudo 4), `estudo4_gzcmd.tex:123` (*bootstrap* agrupado por óbito).
 
-### 28. Perdas de cobertura e cenários humanos
-As perdas são de cobertura, não de erro humano. Os cenários de sensibilidade humana de 95%, 99% e 100% assumem especificidade perfeita. As amplitudes de até 0,53 p.p. nas cargas reduzidas e 0,73 p.p. na revisão integral são limites por construção, não achados empíricos. Sob revisor perfeito, P recupera 23 e 9 dos 36, não reproduzindo 13 e 27, mas aceita 21 e 4 FP. Em 96 e 17 revisões, O3 recupera 22 e 6, deixando 14 e 30 fora. Para igualar P, O3 requer 125 e 29; O4, 106 e 27. Para os 36, O1 requer 2.521 e O3, 23.443. As filas são comuns aos modos; os orçamentos, distintos. O2 recupera nove com 11 revisões na confirmação, sem FP nem LLM. Fonte: `comparador_mesma_carga.csv:2,19,22,27,32,37`; `cenarios_sensibilidade_humana.csv:3,21`.
+### S06. A redução veio da ordem da fila de revisão, não da automação
 
-### 29. Contribuições e recomendação final
-As contribuições são a decomposição por PAR, a curva de esforço, a política com registro de decisões, o CdR em Python, o código público e o *benchmark* restrito. Não houve auditoria independente nem identificação causal de ancoragem. Preservar o corte e ordenar pela fusão RRF do escore com a probabilidade calibrada, no lugar do escore isolado, é proposta a validar. A curva de esforço exige amostra independente verificada para escolher fila e parada conforme o orçamento humano. Na vigilância, entre O1 a O4 e P, nenhuma ordenação domina; na confirmação, O2 domina fracamente P. Restantes são não examinados, não óbitos sem notificação: permanecem na investigação; duplicações não estimadas. O filtro exige orçamento humano fixo (H=22 em uma réplica). Nas condições avaliadas, não deve aceitar sozinho. Só foi avaliado por API externa; modelo em ambiente controlado não avaliado. Adoção exige validação registrada em dados novos.
+A resposta vem antes dos métodos. Nesta coorte, a redução do esforço de revisão veio da ordem em que os potenciais pares são revisados, e não da decisão automática nem do modelo de linguagem. Ordenar a fila pela probabilidade calibrada, isto é, estimada por um modelo que não viu os potenciais pares do mesmo óbito, exigiu menos revisões que ordenar pelo escore do OpenRecLink. A redução foi de 75,0% na meta de 23 pares verdadeiros e de 43,1% na de 9, e é estimativa pontual: o intervalo de confiança não exclui o zero. Quando se funde a probabilidade com o escore, nas fusões F3 e F4, o intervalo de confiança de 95% fica inteiramente abaixo de zero frente ao escore nas metas de 9 e 36 pares verdadeiros. Essas fusões foram escolhidas entre seis variantes, sem correção para multiplicidade. Nenhuma fusão superou a probabilidade isolada. Já a decisão automática, com o modelo de linguagem como aceitador, trouxe, abaixo do corte, 4 pares verdadeiros e 21 falsos positivos na vigilância: o modelo só apoia a revisão. Tudo isso é *post hoc*, de coorte única e sob revisor perfeito simulado, e depende de validação em coorte nova. Revisor perfeito simulado: toda revisão recupera o par verdadeiro; não é acerto observado.
 
-A recomendação exploratória é a fusão RRF do escore com a probabilidade calibrada no lugar do escore isolado, a validar com referência cega; vantagem sobre a probabilidade não demonstrada. Revisão cega independente não foi possível antes da defesa e integra o protocolo da coorte nova.
+Transição: os dados e a referência vêm primeiro.
 
-### 30. Agradecimentos
-Agradece-se à orientação, à banca e à equipe responsável pelo processamento e pela revisão. Abre-se a discussão com a banca.
+Se perguntarem: R08 (tabela do *bootstrap*) e R07 (multiplicidade).
 
-### 31. Backup: base inteira (comparação), cascata gráfica
-A figura sintetiza a cascata sobre a base inteira por política e modo, não o arranjo. Os subtotais humanos incluem encaminhamento direto e inconclusivos do LLM, não constituindo novos ramos a somar novamente.
+Fonte: `conclusao.tex:5`, `conclusao.tex:17` (75,0% e 43,1%, metas de 23 e de 9), `conclusao.tex:27` (4 e 21), `conclusao.tex:40` (fusões F3 e F4 escolhidas entre seis variantes, sem correção para multiplicidade), `estudo4_gzcmd.tex:119` (revisor perfeito), `estudo4_gzcmd.tex:307-309`.
 
-### 32. Backup: base inteira (comparação), contagens
-As contagens da cascata sobre a base inteira separam aceitação automática, perda explícita e vínculo pendente ao revisor humano. A sensibilidade automática inclui o LLM, mas não a decisão humana ainda não realizada.
+### S07. Dados: três passos de blocagem e uma referência operacional de revisora única
 
-### 33. Backup: faixas OOF
-A tabela detalha a discriminação do estimador por faixa da nota, com corte 0,5 fixado antes da análise. O desempenho do estimador isolado não deve ser atribuído à política v3.1, que pode rejeitar pela guarda ou escolher revisão por custo.
+O extrato reúne óbitos de residentes no município do Rio de Janeiro com tuberculose como causa básica, de 2019 a 2022, e notificações do Sinan para a tuberculose, o Sinan-TB, de 2013 a 2022. Os potenciais pares vêm de três passos de blocagem exportados do OpenRecLink: 6, 9 e 11. São 61.696 potenciais pares, dos quais 247 são pares verdadeiros, uma razão de 1 para 249. O passo 11 gerou 93,4% dos potenciais pares e apenas 40 pares verdadeiros, 25 deles abaixo do corte. Cada par tem uma classificação de referência, o campo PAR: 0 para não par, 1 para par verdadeiro aceito pelo corte, 2 para par verdadeiro recuperado pela revisão manual de origem. Essa referência operacional resulta do corte e dessa revisão, feita por revisora única. Não houve dupla revisão, e a ordem de exame, as fontes consultadas e o critério de parada não estão documentados. A tese adota como hipótese de trabalho que o CdR precedeu a revisão. Sem suposições sobre esse mecanismo, a direção e a magnitude do viés de verificação não são identificáveis. Essa limitação é de documentação e de delineamento, e não do trabalho de revisão de origem. Os comitês de ética aprovaram o projeto, e o extrato é pseudonimizado, mas não anônimo.
 
-### 34. Backup: QW1
-As redes neurais foram comparadas no QW1, com validação interna e teste da mesma base. Os resultados não demonstram uma hierarquia universal entre famílias, e o F1 de 0,943 não pertence a essa tabela.
+Transição: o esquema do pós-processamento vem a seguir.
 
-### 35. Backup: ablação
-As origens experimentais diferem, mas a função de regras é a mesma após a correção e recomputação local, sem novo treinamento. No fluxo Modal, híbrido OR tem F1 de 0,958 (68/0/6), XGBoost isolado 0,943; a cascata ML seguida de regras tem 0,825 (52/0/22), e AND, regras seguidas de ML e consenso com regras têm 0,896. Os limiares foram escolhidos no teste. Fonte: `tables/tab_ablation_best_category.tex:14-20`.
+Se perguntarem: R01 (viés de verificação) e R02 (ética, LGPD e APIs externas).
 
-### 36. Backup: balanceamento
-A figura permite consultar todas as estratégias avaliadas no Random Forest. A dispersão é interna ao protocolo e não mede transferência para outra população ou período.
+Fonte: `capitulo_dados.tex:12` (óbitos de residentes no município do Rio de Janeiro, tuberculose como causa básica), `capitulo_dados.tex:19` (2019 a 2022, 2013 a 2022, três passos), `capitulo_dados.tex:27` e `:29` (comitês, pseudonimização), `capitulo_dados.tex:57` (93,4%, 61.696), `capitulo_dados.tex:73` (campo PAR), `capitulo_dados.tex:77` (revisora única, hipótese de trabalho), `capitulo_dados.tex:81` (247 pares verdadeiros, razão de 1:249), `tables/editorial/tab_blocagem_rendimento.tex:13` (passo 11, 40 pares verdadeiros), `estudo5_equidade.tex:52` (25 dos 36 no passo 11).
 
-### 37. Backup: detecção
-A figura reaproveita a comparação de métodos no teste da ablação, com 74 vínculos. A contagem é de vínculos detectados de pessoas notificadas por TB, não uma nova contagem de mortes cuja causa básica seja TB.
+### S08. O corte é preservado; o pós-processamento atua abaixo dele
 
-### 38. Backup: ablação do dossiê
-Os 18 vínculos foram selecionados por erro compartilhado, e a retirada conjunta das saídas modificou as decisões dos revisores. Passar a inconclusivo não equivale a reconhecer corretamente o vínculo, e não há estimativa de falsos positivos da coorte inteira nesse subconjunto.
+O esquema mostra onde cada componente atua. À esquerda, o OpenRecLink gera os potenciais pares e calcula o escore. O ponto de corte, preservado, separa os vínculos aceitos, que o pós-processamento não altera, da *grey area*. Abaixo do corte, o primeiro componente é o CdR, que compara os campos de identificação e devolve subescores de similaridade, mais uma nota final agregada; é o objetivo 1. O segundo é o XGBoost, um algoritmo de aprendizado de máquina que combina muitas árvores de decisão construídas em sequência. Ele converte os subescores e a nota final em uma probabilidade de par verdadeiro, calibrada fora da amostra; é o objetivo 2. Com essa probabilidade ordena-se a fila de revisão, e a revisão manual segue a fila até o orçamento, isto é, o número de revisões que o serviço pode fazer; é o objetivo 3. À parte, avaliou-se a decisão automática, com o modelo de linguagem, como alternativa à ordenação; é o objetivo 4. A equidade, objetivo 5, examina o desempenho por estrato de processo e por subgrupo demográfico. O corte permanece em todos os cenários: o que se compara é o que se faz com os potenciais pares abaixo dele. Nenhum componente corrige o OpenRecLink; o que se mede é o número de revisões que a revisão manual exige abaixo do corte. Os botões do rodapé retomam esses objetivos.
 
-### 39. Backup: instruções
-A distinção entre arquivo escrito e mensagem efetivamente enviada é necessária, pois o carregador da v3 interrompia o sistema no primeiro separador. Na v4, a política de evidência antecede o separador e permite a abstenção diante de informação insuficiente.
+Transição: a medida comum de esforço é o tema do quadro seguinte.
 
-### 40. Backup: formalização
-As perdas incorporam probabilidade, consequências do erro e custo da revisão. A ação LLM inclui a possibilidade de inconclusivo e seu encaminhamento ao humano, sob capacidade disponível e após aplicação das guardas.
+Se perguntarem: R09 (as quatro ações) e R06 (por que XGBoost).
 
-### 41. Backup: base inteira (comparação), sensibilidade
-Os exercícios de exclusão e de expectativas por faixa pertencem à cascata sobre a base inteira. Avaliam dependências das escolhas e não são intervalos de confiança. A sobreposição residual e a seleção adaptativa permanecem.
+Fonte: `capitulo3.tex:39`, `conclusao.tex:83` (fluxo), `estudo4_gzcmd.tex:36` (XGBoost sobre os 29 subescores e a nota final), `glossario.tex:34` (CdR).
 
-### 42. Backup: privacidade
-O estudo integra projeto aprovado no CEP do IESC-UFRJ (CAAE 43856720.1.0000.5286) e no CEP da SMS-Rio (CAAE 43856720.1.3001.5279). A ausência de nomes no dossiê não transforma o extrato em dado anônimo nem elimina risco de reidentificação. O hash determinístico das execuções históricas pode ser recalculado por quem detém os identificadores de origem. A exportação restrita com `pair_id` por HMAC foi implementada, sem depósito da matriz nem saneamento retroativo dos artefatos históricos.
+### S09. A medida: revisões necessárias para recuperar 9, 23 ou 36 pares verdadeiros
 
-### 43. Backup: base inteira (comparação), vigilância REFREC
-A reserva mantém a comparação histórica da cascata sobre a base inteira: 194 aceitos, 15 perdidos e 38 vínculos pendentes ao revisor humano, totalizando 247. O fechamento de P é (211+4)+13+19=247, com custo LLM estimado de US$ 0,94. A proporção aninhada de P no *label* não recebe IC. Os cenários de sensibilidade humana são 95%, 99% e 100%, não medidas do serviço.
+A medida é a curva de esforço: para cada fila, quantas revisões são necessárias para recuperar k pares verdadeiros. Supõe-se um revisor perfeito simulado, que recupera todo par verdadeiro revisado e não produz falso positivo; não é acerto observado. As metas vêm do arranjo sequencial, o ASR: ele preserva o corte e, abaixo dele, decide pela política de quatro ações, com o modelo de linguagem como revisor assistente. A vigilância prioriza a sensibilidade, a proporção de pares verdadeiros recuperados, e recupera 23. A confirmação prioriza o valor preditivo positivo (VPP), a proporção de vínculos aceitos que são pares verdadeiros, e recupera 9. A terceira meta, 36, é o total de pares verdadeiros abaixo do corte. As três metas valem para todos os quadros seguintes.
 
-### 44. Backup: base inteira (comparação), confirmação REFREC
-Na base inteira, a cascata aceita 132, perde 28 e encaminha 87 vínculos, totalizando 247. O fechamento de P é (211+8)+27+1=247, com custo LLM estimado de US$ 0,11. Encaminhar não é perder o vínculo. A sensibilidade humana real não foi medida; os cenários de 95%, 99% e 100% tratam a especificidade como perfeita, sem modelar FP humanos.
+Transição: as quatro filas vêm a seguir.
 
-### 45. Backup: análises de sensibilidade do arranjo e comparadores
-A tabela preserva os braços e os mecanismos: perdas de P por guarda/custo/LLM de 1/6/6 na vigilância e 1/22/4 na confirmação. O registro antecede a S3 em 49 minutos, com comparador conhecido e código registrado fora do git. P-Platt constava como braço no registro, foi reclassificado como sensibilidade na emenda 3, e o critério 18/20 foi registrado depois da S3. A posição dos FP frente aos limiares permanece rastreável. Fonte: `estudo4_gzcmd.tex:316,322,328`.
+Se perguntarem: R05 (horas como cenário).
 
-### 46. Backup: análise de estabilidade com registro interno, não confirmatória
-O bloco numérico (N) varia *threads* e semente; o bloco de partição (R), as partições. A dominância de Pareto ocorreu em 7/20 e 4/20 na vigilância e 7/20 e 5/20 na confirmação, sem inversa. Aplicando custos às medianas marginais, P-Platt tem perda menor nos quatro cenários: diferenças de 144,1/94,4 e 101,6/143,0. Isso não é mediana da perda. No bloco numérico, a variação máxima mediana de p é 0,46 em P e 0,17 em P-Platt. Respostas do LLM fixas: não se mede sua variabilidade. Não há superioridade de P nem validação externa. Fonte: `data/robustez_perda_ponderada.csv:2-9`.
+Fonte: `estudo4_gzcmd.tex:23` (ASR), `estudo4_gzcmd.tex:117` (metas), `estudo4_gzcmd.tex:119` (revisor perfeito), `glossario.tex:126` (VPP), `conclusao.tex:17` (vigilância prioriza a sensibilidade, confirmação o VPP), `conclusao.tex:27` (23 recuperados pelo ASR).
 
-### 47. Backup: subamostragem
-A subamostragem é exploratória. Na isotônica, a mediana do topo 96 cai de 22 para 13 com 1:1 e 18,5 com 1:5; 1:20 e 1:50 são indistinguíveis da referência. Não se sustenta preferência pela prevalência original frente a essas duas razões: a referência tem uma execução e cada razão, dez sementes. O Brier mediano piora em todas as proporções; isso não basta para escolher a ordenação. Não se infere melhora de equidade. A queda de 25 p.p. no passo 6 tem denominador de 4 PAR=2. Fonte: `subamostragem_treino_resumo.csv:24,25,786`.
+### S10. Quatro filas ordenam os mesmos potenciais pares abaixo do corte
 
-### 48. Backup: filtro de NONMATCH
-Na vigilância, em k=96 são 74 pares avaliados pelo LLM como NONMATCH e 22 revisões humanas: 13 PAR=2 contra seis sem filtro, apenas sob H=22. VPN: 87,8% em k=96; 78,0% em k=58. Sensibilidade 59,1% (IC 38,7 a 76,7), com nove dos 22 vínculos descartados. Na unidade de custo, filtro 1.172,5 contra O3 796 com 96 revisões. Na confirmação, k=125 descarta 10 dos 23 vínculos. As decisões dos PAR=2 coincidem entre modos nesse topo; há seis diferenças nos não vínculos. Protocolo fixado antes dos desfechos, respostas de datas diferentes; exploração, não validação. Fontes: `filtro_llm.csv:4,5,13`; `estudo4_gzcmd.tex:578`.
+Quatro filas ordenam os mesmos potenciais pares abaixo do corte. O1 ordena pelo escore do OpenRecLink. O3 ordena pela probabilidade calibrada, estimada por um XGBoost validado em partições que mantêm no mesmo grupo todos os potenciais pares de um mesmo óbito. F3 e F4 são fusões por posição recíproca: somam-se, para cada potencial par, os inversos de uma constante mais sua posição em cada fila. A F4 funde O3 e O1; a F3 reúne ainda uma fila com medidas contínuas de diferença entre datas de nascimento, as MACD. A figura do quadro da curva de esforço acrescenta duas comparações: O2, pela nota final do CdR, e O4, pela probabilidade recalibrada do ASR. As fusões voltam no quadro de incerteza.
 
-### 49. Backup: mecanismos, cenários humanos e registro interno
-Os mecanismos da política original são distintos do erro do revisor humano: guarda, decisão por custo e resposta do LLM. Os cenários humanos não medem seu erro nem modelam FP humanos. O registro interno antecede a S3 em 49 minutos. Fontes: `data/arranjo_corte_perdas_mecanismo.csv`; `data/cenarios_sensibilidade_humana.csv`; `estudo4_gzcmd.tex`, cronologia.
+Transição: os resultados seguem a ordem dos objetivos, a começar pelo instrumento.
 
-### 50. Backup: Protocolo da coorte nova (2/2)
-O critério prospectivo, não testado, exige outra coorte, referência cega e ordenação e orçamento prévios. A ordenação primária, pela probabilidade calibrada do classificador (O3), deve atingir a recuperação de P com pelo menos 25% menos revisões que a ordenação pelo escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. A margem foi fixada com os dados à vista: reduções de 75,0% e 43,1%. A nota final do CdR (O2) fica fora da hipótese. Ganho das quatro ações sobre duas ações (O3) exige diferença acima da amplitude entre réplicas (de 9 a 21 e de 21 a 29 perdas). A v4 candidata preserva a comparação primária; F4 e fila com contexto e MACD são secundárias pré-registradas para a coorte nova. Fontes: `data/comparador_mesma_carga.csv`; `data/robustez_arranjo_resumo.csv`; `gzcmd/M_v4_candidata.md`.
+Se perguntarem: R07 (as variantes de fusão).
+
+Fonte: `estudo4_gzcmd.tex:117` e `:181` (O1 a O4), `estudo4_gzcmd.tex:202` (fusões F1 a F4, constante da fusão por posição recíproca), `glossario.tex:60` (fusão por posição recíproca), `glossario.tex:74` (MACD), `glossario.tex:86` (O1 a O4).
+
+### S11. O CdR em Python é aberto e não equivale ao protótipo em Java
+
+Primeiro objetivo: o CdR, proposto por Lucena, foi reimplementado em Python, em código aberto. Para descrever as diferenças em relação ao protótipo em Java, usou-se um lote sintético de 500 pares construídos para exercitar casos de fronteira, sem registros reais. A nota final foi idêntica em 11,2% dos pares, com diferença de até 4 pontos. Esse valor reúne diferenças de critério e de arredondamento e não estima a concordância no extrato. As diferenças são de três tipos. Há erros de implementação do protótipo, corrigidos no Python, como o carregador que descarta a primeira linha das tabelas de frequência. Há divergências de critério em relação à dissertação de Lucena, como o peso de concordância das inversões de data. E há melhorias do Python, entre elas os subescores de município e os de endereço, estes derivados de critérios já acrescentados à versão em Java. A conclusão é que as implementações não são equivalentes e que o efeito sobre dados reais não foi medido.
+
+Transição: passa-se ao classificador que estima a probabilidade.
+
+Se perguntarem: R13 (diferenças entre as implementações).
+
+Fonte: `estudo1_comparador.tex:3`, `:29` (subescores de endereço derivados de critérios acrescentados por Paiva à versão em Java; subescores de município do autor), `:31` (500 pares construídos), `:71` (11,2%, até 4 pontos, arredondamento), `:78-93` (três tipos), `:128` (conclusão do capítulo).
+
+### S12. A ordem dos classificadores depende da métrica, e as primeiras estimativas eram otimistas
+
+Este quadro responde ao segundo objetivo, na parte dos classificadores. Compararam-se sete classificadores sobre os potenciais pares. Com limiar de 0,5, o maior F1, média harmônica entre o VPP e a sensibilidade, foi do Random Forest (floresta aleatória), 0,910. Pela área sob a curva precisão-sensibilidade, a ordem se inverte pontualmente: a regressão logística supera o Random Forest, com intervalo de confiança da diferença que inclui zero. A regressão logística usou pesos de classe balanceados, o que deixa o limiar de 0,5 mal posicionado para ela. O balanceamento não trouxe ganho uniforme: o F1 médio de nove estratégias variou de 0,880 a 0,918. As estimativas eram otimistas por três razões: indicadores de encerramento por óbito, que constituem vazamento de alvo; partição por linha, e não por óbito; e limiares escolhidos no próprio teste. No controle com partição por óbito, o F1 do Random Forest com SMOTE, sobreamostragem sintética da classe minoritária, caiu de 0,931 para 0,846. O Estudo 3 derivou estratégias de vigilância e confirmação. Nele, o Random Forest com SMOTE aceitou como vínculos 67 pares verdadeiros, contra 43 da decisão por nota final de 8 ou mais. Mas 25 dos 27 recuperados a mais já eram aceitos pelo corte. Os dois estudos não fundamentam a adoção desses *pipelines*.
+
+Transição: a pergunta seguinte é como obter uma probabilidade confiável.
+
+Se perguntarem: R14 (Estudo 3 e protocolo).
+
+Fonte: `estudo2_classificadores.tex:11` (sete classificadores), `:62` (F1, AUC-PR, pesos de classe), `:122` (três fontes de otimismo, vazamento), `conclusao.tex:13` (0,880 a 0,918 entre nove estratégias, 0,931 e 0,846), `estudo3_estrategias.tex:23` (67 e 43), `:25` (67 verdadeiros positivos; 25 dos 27 recuperados já aceitos pelo corte).
+
+### S13. A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final
+
+Ainda no segundo objetivo, a probabilidade de par verdadeiro foi estimada por um XGBoost com 300 árvores, sobre 30 atributos: os 29 subescores do CdR e a nota final. A expressão fora da amostra significa que cada probabilidade vem de um modelo treinado sem os potenciais pares do mesmo óbito. A calibração ajusta os valores do modelo à frequência observada de pares verdadeiros. Usou-se regressão isotônica, uma curva monotônica não paramétrica, ajustada em partições internas, sem acesso aos *labels* do teste. A avaliação deste quadro cobre a faixa intermediária da nota final do CdR, entre 5 e 9, que tem 21.620 potenciais pares e 151 pares verdadeiros. Essa faixa não é a *grey area*, que é definida pelo corte do OpenRecLink. Nela, a área sob a curva ROC, a AUC, que mede a capacidade de separar pares verdadeiros de não pares, foi de 0,995, contra 0,873 da nota final. A precisão média, que resume a qualidade da ordem no topo da lista, foi de 0,862, contra 0,216. A avaliação é fora da amostra, mas na mesma coorte; não equivale a validação externa.
+
+Transição: com a probabilidade em mãos, o terceiro objetivo compara as filas.
+
+Se perguntarem: R06 (por que XGBoost).
+
+Fonte: `estudo4_gzcmd.tex:36` (300 árvores, 30 atributos), `:38` (calibração em partições internas), `:40` (21.620, 151, 0,995, 0,873, 0,862, 0,216), `capitulo3.tex:11` (faixa de 5 a menos de 9).
+
+### S14. A ordem da fila muda o número de revisões: 125 contra 501 para 23 pares verdadeiros, estimativa pontual
+
+Este quadro e os dois seguintes respondem ao terceiro objetivo. A figura mostra, para cada fila abaixo do corte, quantos pares verdadeiros se recuperam conforme aumenta o número de revisões. Cada curva sobe a cada par verdadeiro recuperado; quanto mais à esquerda atinge uma meta, menos revisões a fila exige. O eixo horizontal está em escala logarítmica e vai até 2.522 revisões, de modo que os 23.443 de O3 e os 4.163 de O2 ficam fora da figura. Para recuperar os 23 pares verdadeiros da meta da vigilância, a fila pela probabilidade calibrada, O3, exigiu 125 revisões, contra 501 da fila pelo escore do OpenRecLink, O1, uma redução pontual de 75,0%. Na meta de 9, foram 29 contra 51, redução de 43,1%. A fila pela probabilidade recalibrada do ASR, O4, exigiu 106 e 27 nas mesmas metas de 23 e 9. A fila pela nota final do CdR, O2, recuperou 9 pares verdadeiros com 11 revisões, mas precisou de 4.163 para os 23. Os pontos do ASR, em 96 e 17 revisões, trazem anotados os falsos positivos e os pares avaliados pelo modelo de linguagem. A vantagem de O3 está no topo da fila: abaixo do corte, a precisão média foi de 0,283 em O3 e de 0,130 em O1. A AUC foi ligeiramente maior em O1, 0,990 contra 0,985. Há uma inversão na cauda: para recuperar todos os 36, O3 exigiu 23.443 revisões e O1, 2.521. A vantagem de O3 sobre O1 vai até cerca de 2.500 revisões. Essas reduções são estimativas pontuais, em análise *post hoc* e sob revisor perfeito simulado; o quadro seguinte mostra que, com intervalo de confiança, a diferença de O3 frente a O1 inclui o zero nas três metas.
+
+Transição: a incerteza das diferenças vem a seguir.
+
+Se perguntarem: R08 (tabela completa) e R06 (Random Forest no lugar do XGBoost).
+
+Fonte: `estudo4_gzcmd.tex:194` (29, 51, 75,0%, 43,1%, 106, 27, 0,283, 0,130, 0,990, 0,985, 23.443, 2.521, intervalos que incluem zero), `:196` (O2: 11 revisões; 4.163 para os 23), `:198` (cerca de 2.500 revisões), `text/latex/figures/curva_esforco.pgf:285` e `:293` (anotações dos pontos do ASR: falsos positivos e pares no modelo de linguagem), `:319` (eixo limitado a 2.522 revisões).
+
+### S15. Com IC, só as fusões com o escore reduzem as revisões frente a O1, e nenhuma supera O3
+
+A figura mostra a incerteza estimada por *bootstrap* agrupado por óbito: sorteiam-se, com reposição, os óbitos, e as filas são reordenadas em cada uma das 2.000 réplicas, sem reajustar o modelo. Cada painel corresponde a uma meta: 9, 23 e 36 pares verdadeiros. Em cada um, mostram-se a mediana e o intervalo de confiança de 95% da diferença de revisões entre uma fila e O1, para O3, F3 e F4. Valores negativos significam menos revisões que O1. Para O3, as medianas foram de 21 revisões a menos na meta de 9 e de 175 a menos na de 23, com intervalos que incluem o zero. A tabela completa está na reserva R08. O marcador cheio indica intervalo inteiramente abaixo de zero. As fusões F3 e F4 têm marcador cheio nas metas de 9 e de 36. F4 exigiu, em mediana, 38 revisões a menos na meta de 9 e 1.203 a menos na de 36. F3 exigiu 35 e 894 a menos. Na meta de 23 nenhum intervalo ficou abaixo de zero, e O3 isolada não tem marcador cheio em nenhuma meta. Frente a O3, nenhuma fusão teve intervalo inteiramente abaixo de zero. F4 foi escolhida entre seis variantes avaliadas nos mesmos 36 pares verdadeiros, sem correção para multiplicidade. Na meta de 36, parte do ganho de F4 vem de priorizar a faixa de 2.522 potenciais pares de maior escore, que contém os 36 pares verdadeiros. Esse achado é *post hoc*, sob revisor perfeito simulado.
+
+Transição: os valores pontuais de cada fila, lado a lado, mostram por que nenhuma ordenação domina.
+
+Se perguntarem: R07 (multiplicidade) e R08 (tabela completa).
+
+Fonte: `estudo4_gzcmd.tex:123` (reamostragem por óbito, sem reajuste do modelo, regra das metas), `:194` (2.000 réplicas; medianas de 21 e 175 de O3 menos O1), `:225` (38, 1.203, 35, 894, frente a O3, seis variantes), `:229` (faixa de 2.522), `conclusao.tex:19`, `conclusao.tex:21-23`.
+
+### S16. Nenhuma ordenação domina em todas as cargas
+
+Lido por colunas, o quadro mostra que nenhuma fila é a melhor em todas as cargas. Com as 96 revisões que o ASR encaminha ao revisor humano na vigilância, F3 recupera 25 pares verdadeiros e O3, 22. O1 recupera 19 e F4, 18. Nas metas de revisões necessárias, F4 é a menor em 9 e em 36, com 10 e 1.387. F3 é a menor em 23, com 64. O3 é a terceira em 23, com 125, e a pior na recuperação integral, com 23.443 revisões. O1 é a mais lenta nas metas menores, mas supera O3 na integral, com 2.521. Na confirmação, com o orçamento de 17 revisões, F4 recupera 16 pares verdadeiros. A nota final do CdR recupera 9 e O3, 6. As diferenças entre as fusões e O3 não foram demonstradas: nenhum intervalo frente a O3 ficou abaixo de zero. Os valores são pontuais, *post hoc* e sob revisor perfeito simulado, e as fusões foram escolhidas entre variantes. Daí a recomendação de escolher a fila pela curva de esforço, conforme o orçamento disponível, em vez de fixar uma só. A F3, que depende das MACD, só entra na recomendação quando essas medidas estiverem disponíveis.
+
+Transição: até aqui a automação ficou de fora; o quarto objetivo a examina.
+
+Se perguntarem: R08 e R05 (confirmação com 17 revisões).
+
+Fonte: `estudo4_gzcmd.tex:147` (96 revisões do ASR), `:214-217` e `:241-243` (valores da tabela), `:225` (25, 22, 19, 18), `conclusao.tex:23`, `conclusao.tex:87` (17 revisões: F4 16, O2 9, O3 6).
+
+### S17. Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos
+
+O quarto objetivo verifica se a automação reduz a revisão além da ordenação, e a que custo em falsos positivos. O ASR preserva o corte e, abaixo dele, aplica a política de quatro ações: aceitar como vínculo, rejeitar, enviar à revisão por um modelo de linguagem ou enviar ao revisor humano. Escolhe a ação de menor *expected loss*. O modelo de linguagem é o Claude Haiku 5.5, que revisa o dossiê de cada potencial par, um resumo estruturado e pseudonimizado dos subescores. Na vigilância, o ASR enviou 344 potenciais pares ao modelo e 96 ao revisor humano. Todas as 25 aceitações abaixo do corte vieram do modelo: 4 eram pares verdadeiros e 21, falsos positivos. O VPP dessas aceitações foi de 16,0%, com intervalo de confiança de 95% de 6,4 a 34,7. Dez dos 21 estão em região sem revisão documentada; se algum for par verdadeiro, o VPP está subestimado. Dos 36 pares verdadeiros abaixo do corte, 13 não foram recuperados na vigilância. Um se perdeu pela guarda de nota final, seis pela comparação de custos e seis por decisão de não par do modelo, sem chegar ao revisor. Na confirmação, foram 27 pares verdadeiros perdidos e 4 falsos positivos. Por isso, nas condições avaliadas, o modelo não deve aceitar vínculos sozinho. O ASR teve registro interno anterior à avaliação, sem critério de sucesso; a leitura como resultado negativo é posterior. Os números supõem revisor perfeito simulado nos encaminhamentos.
+
+Transição: a comparação com a ordenação, na mesma carga de revisão humana, vem a seguir.
+
+Se perguntarem: R10 (modelos, dossiê e ancoragem) e R09 (as quatro ações).
+
+Fonte: `estudo4_gzcmd.tex:89` (dossiê), `:147` (344, 96, 25, 4, 21), `:149` (confirmação: 27 perdidos, 4 falsos positivos), `:311` (6,4 a 34,7, registro interno), `:313` (dez dos 21), `conclusao.tex:27` (13 perdidos: 1, 6 e 6).
+
+### S18. Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada
+
+Na mesma carga, com as 96 revisões que o ASR encaminha ao revisor humano, o arranjo recupera 23 pares verdadeiros, quatro deles aceitos pelo modelo de linguagem, e O3 recupera 22. A diferença máxima é de um par verdadeiro em 36. O ASR acrescenta 21 falsos positivos. Se os vínculos propostos pelo modelo também forem encaminhados ao humano, o ASR usa 121 revisões para os 23, e O3, 125. Essa diferença não sustenta superioridade, e a ordem dos custos depende do custo atribuído ao modelo. Na confirmação, a ordenação pela nota final do CdR recupera os mesmos 9 pares verdadeiros do ASR com 11 revisões, contra 17. O modelo de linguagem também foi testado como filtro de NONMATCH, que descarta antes do humano os pares que classifica como não pares. Com a carga humana fixada em 22 revisões, recuperou 13 pares verdadeiros contra 6 de O3, mas descartou 9 dos 22 do topo da fila. A vantagem sobre O3 existe só com essa carga fixa, que pertence a uma réplica. Na outra foram 18 revisões, e na unidade de custo da tese o filtro perde para O3. Quatro modelos foram comparados como revisores: Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1. O VPP nas aceitações da vigilância ficou entre 16,0% e 19,0%, sem ganho demonstrável pelo tamanho. Esses usos permanecem hipóteses exploratórias, sob revisor perfeito simulado.
+
+Transição: resta o quinto objetivo, a equidade.
+
+Se perguntarem: R05 (confirmação), R10 (modelos) e R11 (filtro).
+
+Fonte: `estudo4_gzcmd.tex:196` (96, 23, 22, 121, 125, 11 e 17 na confirmação), `:283` (no máximo um par verdadeiro, 344 avaliados pelo modelo), `:271-273` (13 contra 6, 9 dos 22, cargas de 22 e de 18, filtro perde para O3 na unidade de custo), `:285` (ordem dos custos), `:297` (VPP de 16,0% a 19,0%), `conclusao.tex:29`.
+
+### S19. A perda de sensibilidade concentra-se no passo 11 e é herdada do corte
+
+O quinto objetivo avalia se o desempenho se distribui igualmente entre estratos. A diferença mais clara está no passo 11 da blocagem. Na vigilância, a sensibilidade automática do ASR foi de 42,5% nesse passo, contra 95,0% no passo 6 e 96,1% no passo 9. A disparidade acompanha o corte por passo, que também define a referência: isolado, ele aceita 15 dos 40 pares verdadeiros do passo 11, de chave de blocagem menos específica. O ASR, que preserva o corte, pouco a altera: acrescenta dois dos 25 pares verdadeiros abaixo do corte nesse passo. Com revisor perfeito nos 14 pares verdadeiros que a vigilância encaminha nesse passo, o limite seria de 77,5%, valor que não é acerto observado. Na confirmação, a sensibilidade automática no passo 11 foi de 47,5%. O passo é um estrato do processo, não um atributo demográfico. A correção de Benjamini-Hochberg controla a proporção esperada de falsas descobertas entre as comparações. Entre sexo e faixa etária, nenhuma rejeição após essa correção foi encontrada, o que não demonstra paridade. Há 71 pares verdadeiros no sexo feminino e 176 no masculino: os denominadores limitam a detecção, e o poder não foi calculado. A raça/cor não consta do extrato. A equidade da fila recomendada não foi examinada.
+
+Transição: fechados os resultados, cabe separar o que a tese sustenta do que não sustenta.
+
+Se perguntarem: R12 (equidade completa).
+
+Fonte: `estudo5_equidade.tex:52` (15 de 40, dois dos 25, 47,5%), `capitulo_dados.tex:57` (passo 11, de chave de blocagem menos específica), `estudo5_equidade.tex:54` (14 pares verdadeiros encaminhados na vigilância, 77,5%), `:42` (71 e 176), `conclusao.tex:31-33`.
+
+### S20. O que a tese sustenta e o que não sustenta
+
+O quadro separa o que a tese sustenta do que ela não sustenta. A tese sustenta que as fusões F3 e F4, escolhidas entre seis variantes e sem correção para multiplicidade, reduziram as revisões frente ao escore do OpenRecLink. Foi nas metas de 9 e de 36 pares verdadeiros, com intervalo de confiança inteiramente abaixo de zero, em análise *post hoc* e sob revisor simulado sem erros. Sustenta que a ordem dos potenciais pares na fila altera o número de revisões. Sustenta que a automação recuperou, na vigilância, no máximo um par verdadeiro a mais que a ordenação pela probabilidade calibrada e produziu 21 falsos positivos. Sustenta que a disparidade de sensibilidade se concentra no passo 11 e acompanha o corte. E sustenta que o CdR em Python não é equivalente ao protótipo em Java. A tese não sustenta que a probabilidade calibrada isolada reduza as revisões, porque os intervalos incluem o zero nas três metas. Não sustenta que as fusões superem a probabilidade isolada, nem que alguma ordenação domine em todas as cargas. Não sustenta que o modelo de linguagem aceite vínculos sozinho, nem que seus usos subordinados ao revisor humano reduzam a carga. Não sustenta que as estratégias dos Estudos 2 e 3 devam ser adotadas, porque suas estimativas são otimistas, pelo vazamento de alvo, pela partição por linha e pelos limiares escolhidos no teste. Não sustenta que a redução valha para outra coorte ou para revisores reais, nem que diminua a subnotificação. E não sustenta que haja paridade entre subgrupos demográficos. Todo o conjunto vale para esta coorte e depende da validação descrita adiante.
+
+Transição: as limitações explicam por que esses limites existem.
+
+Se perguntarem: R07 (multiplicidade) e R14 (Estudos 2 e 3).
+
+Fonte: `conclusao.tex:37-57` (listas), `conclusao.tex:40` (seis variantes, sem correção), `conclusao.tex:53` (usos subordinados ao revisor humano), `conclusao.tex:13` (três fontes de otimismo).
+
+### S21. Três limitações condicionam a leitura
+
+A primeira limitação é a referência operacional. Ela resulta do corte e da revisão manual de origem, feita por revisora única, sem classificação independente e sem registro da ordem de exame, das fontes e da parada. Os 36 pares verdadeiros abaixo do corte estão entre os 2.522 potenciais pares de maior escore, padrão compatível com revisão restrita a essa faixa, o que favoreceria O1. Se a revisão de origem incorporou as evidências do CdR, o favorecimento seria de O2, O3 e O4. Sem suposições sobre esse mecanismo, a direção e a magnitude do viés não são identificáveis. A primeira inclui ainda a blocagem: pares da mesma pessoa que os passos 6, 9 e 11 não geraram ficam fora do extrato. As sensibilidades são condicionais aos potenciais pares gerados. A segunda é a coorte única, com 247 pares verdadeiros e 36 abaixo do corte. O ganho pontual de O3 na vigilância não se manteve quando o Random Forest substituiu o XGBoost. A terceira é que o revisor humano não foi observado: todas as contagens supõem revisor perfeito simulado, e a análise é *post hoc*. Essas limitações são do delineamento e da documentação disponível, e não do trabalho de revisão de origem.
+
+Transição: a recomendação para o serviço vem a seguir.
+
+Se perguntarem: R01 (viés de verificação) e R08 (intervalos).
+
+Fonte: `conclusao.tex:71` (2.522, O1, O2 a O4), `conclusao.tex:73` (blocagem), `conclusao.tex:75` (247 e 36, Random Forest no lugar do XGBoost), `conclusao.tex:77` (revisor não observado).
+
+### S22. Fluxo recomendado, a validar em coorte nova
+
+A recomendação, a validar em coorte nova com referência cega, é preservar o corte do OpenRecLink. Ele gera os potenciais pares e aceita os de escore no ponto de corte ou acima. Abaixo dele, o CdR calcula os subescores, e o XGBoost os converte, com a nota final, em probabilidade calibrada fora da amostra. A fila de revisão manual segue essa probabilidade, isolada, em O3, ou fundida ao escore do OpenRecLink, em F4, ou em F3 quando houver as MACD. Nenhuma ordenação dominou em todas as cargas; por isso a escolha entre elas se faz pela curva de esforço. O serviço traçaria a curva de cada fila sobre uma amostra revisada e adotaria a que recuperasse mais pares verdadeiros no orçamento disponível, pois a diferença entre O3 e as fusões não foi demonstrada. O ponto de parada é fixado pelo orçamento humano, lido nessa curva, e a curva desta coorte não o fixa em outra. Os potenciais pares abaixo da parada não foram examinados e devem ser registrados como não examinados, não como não pares. A ausência de vínculo por esgotamento do orçamento não equivale a óbito não notificado. O modelo de linguagem pode apoiar a revisão, mas não deve aceitar vínculos sozinho; a decisão de vínculo que ele propõe segue ao revisor humano. O envio de dossiês a provedores externos, como nesta avaliação, não deve se estender a dados do serviço, que exigiriam modelo executado em ambiente controlado. Se a probabilidade for aprendida com subamostragem dos negativos, convém evitar as razões 1:1 e 1:5. A recomendação é hipótese de trabalho: nenhuma dessas etapas foi validada em outra coorte. A tese não mediu o ganho de horas em um serviço real.
+
+Transição: falta dizer como essa recomendação poderia ser refutada.
+
+Se perguntarem: R04 (não examinados), R05 (horas), R06 (estimador) e R11 (filtro).
+
+Fonte: `conclusao.tex:81-93`, `conclusao.tex:81` (hipótese de trabalho a validar), `conclusao.tex:89` (curva desta coorte não fixa a parada em outra; diferença entre O3 e as fusões não demonstrada; razões 1:1 e 1:5), `estudo4_gzcmd.tex:265` (subamostragem), `estudo4_gzcmd.tex:327-329` (recomendação e pares não examinados).
+
+### S23. A hipótese pode ser refutada: o critério está declarado
+
+A hipótese central exige outra coorte ou período, não usados para fixar o corte nem as regras. Ordenação e orçamento são definidos antes dos desfechos, e a referência é cega e independente. A hipótese seria refutada se a ordenação O3 não atingisse a recuperação do ASR com pelo menos 25% menos revisões que O1. O critério usa o limite inferior do intervalo de 95% entre partições predefinidas, em cada meta: 23 na vigilância e 9 na confirmação. A margem foi escolhida com os dados de desenvolvimento à vista, nos quais as reduções pontuais foram de 75,0% e 43,1%, e não foi testada. Uma segunda interpretação é que as quatro ações não acrescentam ganho material. Ela seria refutada se o ASR recuperasse, na mesma carga humana, mais pares verdadeiros que O3, por diferença superior à amplitude entre réplicas. Como o intervalo da diferença entre O3 e O1 incluiu zero nas três metas, o tamanho da coorte nova deve vir de um cálculo de poder. O registro deve incluir F4 e CM, que é O3 com atributos de contexto por óbito e as MACD, como comparações secundárias. Nenhuma dessas avaliações foi realizada; a refutação é um critério proposto.
+
+Transição: fecham-se as contribuições.
+
+Se perguntarem: R09 (quatro ações) e R07 (comparações secundárias).
+
+Fonte: `conclusao.tex:97` e `:99`, `estudo4_gzcmd.tex:331`, `capitulo1.tex:43`, `glossario.tex:20` (CM).
+
+### S24. Contribuições: a medida, a decomposição entre ordenação e automação, e o código aberto
+
+A primeira contribuição é a medida: a tese separa os 211 pares verdadeiros aceitos pelo corte dos 36 recuperados na revisão manual abaixo dele. Usa a curva de esforço para escolher a fila e o ponto de parada. A segunda é a decomposição, na mesma carga humana, entre ordenar a fila e automatizar a decisão. Sariyar e Borg, em 2010, já haviam descrito a ordenação por escore com revisão manual. Em 2012, avaliaram o aprendizado ativo, em que o modelo indica quais pares rotular. Na revisão assistida por tecnologia, o modelo ordena os itens e uma regra de parada encerra a revisão. A tese não reivindica essas técnicas; acrescenta a comparação posterior ao registro entre ordenar e automatizar. A terceira é o código aberto do CdR em Python e do pacote GZ-CMD, que implementa a política de decisão e registra cada decisão, sem auditoria independente.
+
+Transição: encerra-se com os agradecimentos.
+
+Se perguntarem: não se aplica.
+
+Fonte: `conclusao.tex:61-65` (medida, decomposição, Sariyar e Borg em `:63`, código aberto).
+
+### S25. Agradecimentos
+
+Registram-se os agradecimentos à orientadora, Rejane Sobrino Pinheiro; ao LinkDataPop, pelo extrato e pela revisão manual de origem; aos criadores do OpenRecLink; à banca; e à CAPES, pelo Programa CAPES-Epidemias. A palavra está com a banca para a discussão.
+
+Transição: abre-se a arguição.
+
+Se perguntarem: ver a seção de perguntas prováveis.
+
+Fonte: `tese.tex:480-490`.
+
+## Reserva
+
+Falas curtas para apresentar cada quadro de reserva quando for chamado. Cada uma tem até 80 palavras.
+
+### R01. Viés de verificação da referência
+
+A referência é o produto do corte e da revisão manual de origem, feita por revisora única, sem dupla revisão. Ordem de exame, fontes e parada não estão documentadas, e o acesso da revisora à nota final do CdR é hipótese de trabalho. Os 36 pares verdadeiros estão entre os 2.522 de maior escore, o que favoreceria O1; o uso das evidências do CdR favoreceria O2, O3 e O4. A direção do viés, portanto, não é identificável sem suposições.
+
+Fonte: `capitulo_dados.tex:77`, `conclusao.tex:71`, `estudo4_gzcmd.tex:335`.
+
+### R02. Ética, LGPD e APIs externas
+
+Os comitês de ética do IESC-UFRJ e da Secretaria Municipal de Saúde emitiram parecer. O extrato é pseudonimizado, não anônimo: sem nomes, nome da mãe ou endereço nominal, mas com quase-identificadores, foi processado, com datas completas e identificadores internos, na plataforma Modal. Os dossiês, enviados às APIs, não traziam datas completas nem identificadores internos, mas incluíam o `pair_id`, que não garante anonimização. A aplicabilidade da Lei Geral de Proteção de Dados (LGPD) a essa transferência não foi analisada nos pareceres.
+
+Fonte: `capitulo_dados.tex:27`, `:29`, `:35` (extrato na plataforma Modal; dossiês sem datas completas nem identificadores internos; LGPD não analisada nos pareceres), `:39`, `:51` (dossiês com o `pair_id`).
+
+### R03. Corte único por passo e os limiares de Fellegi e Sunter
+
+O modelo de Fellegi e Sunter prevê dois limiares: acima do superior, aceita; abaixo do inferior, descarta; entre eles, há região sem decisão automática. O OpenRecLink aplicou um único corte por passo, sem limiar inferior, de modo que a *grey area* reúne todos os potenciais pares abaixo do corte, e não só os de escore intermediário. O corte é preservado porque integra o processo que produziu a referência, sem presumir superioridade sobre uma estratégia determinística.
+
+Fonte: `capitulo2.tex:16`, `capitulo_dados.tex:23`, `capitulo3.tex:9`.
+
+### R04. Subnotificação e perda de vínculo
+
+Subnotificação é a ausência, no Sinan, do caso de uma pessoa cujo óbito consta no SIM; perda de vínculo é erro do próprio *linkage*, que faz caso notificado parecer subnotificado. Os potenciais pares abaixo do ponto de parada ficam registrados como não examinados: a ausência de vínculo por esgotamento do orçamento não equivale a óbito não notificado. Os 247 pares verdadeiros correspondem a 204 óbitos, e o extrato não estima subnotificação.
+
+Fonte: `capitulo1.tex:20`, `conclusao.tex:91`, `capitulo_dados.tex:57`.
+
+### R05. Revisões em horas: a unidade é a revisão
+
+A unidade de esforço é a revisão, porque os 20 minutos por par são hipótese de planejamento, e não tempo medido. Nesse cenário, as 96 revisões da vigilância equivalem a 32 horas, e as 17 da confirmação, a 6. Não há equivalência medida entre revisão por modelo de linguagem e humana. Na confirmação, com 17 revisões, a nota final do CdR recupera 9 pares verdadeiros, F4, 16 e O3, 6.
+
+Fonte: `estudo4_gzcmd.tex:119`, `:257`, `tables/editorial/tab_cap8_esforco.tex:10`, `:14`, `conclusao.tex:87`.
+
+### R06. Por que XGBoost
+
+O XGBoost foi escolhido entre as configurações do comparativo QW1, na mesma base, em que teve o maior F1 médio na validação cruzada, 0,924, contra 0,913 do Random Forest; isso não estabelece superioridade da família. Com Random Forest no lugar do XGBoost, o ganho pontual de O3 na vigilância não se manteve, com 498 revisões contra 501 de O1, mas o da confirmação sim, com 32 contra 51.
+
+Fonte: `estudo2_classificadores.tex:88`, `:92`, `estudo4_gzcmd.tex:36`, `:194`.
+
+### R07. Multiplicidade na escolha de F4
+
+A F4 foi escolhida entre seis variantes: F1 a F4 e duas filas adaptativas por amostragem de Thompson, todas avaliadas nos mesmos 36 pares verdadeiros, sem correção para multiplicidade. Fixar as variantes antes do cálculo não constitui pré-registro, e a verificação da referência pode favorecer O1 na cauda. Na validação, F4 e CM, que é O3 com contexto por óbito e MACD, entram como comparações secundárias; a primária é O3 contra O1.
+
+Fonte: `estudo4_gzcmd.tex:202`, `:331`, `conclusao.tex:99`.
+
+### R08. Tabela completa do *bootstrap*
+
+A tabela traz a mediana e o intervalo de 95% da diferença de revisões, em 2.000 réplicas agrupadas por óbito. O3 menos O1 inclui zero nas três metas; F3 e F4 menos O1 ficam abaixo de zero nas metas de 9 e de 36; nenhuma fusão fica inteiramente abaixo de zero frente a O3. Em 971 réplicas restaram menos de 36 pares verdadeiros, e as metas passam a 25%, 64% e 100% do total, o que altera o estimando.
+
+Fonte: `estudo4_gzcmd.tex:194`, `:225`, `tables/editorial/tab_cap8_fusao_robustez.tex:10-15`, `conclusao.tex:75`.
+
+### R09. As quatro ações da política
+
+A política compara, para cada potencial par, a *expected loss*, o custo esperado, de quatro ações: aceitar como vínculo, rejeitar, revisão humana e revisão por modelo de linguagem, e escolhe a de menor valor. Guardas fixas rejeitam nota final abaixo de 5 e aceitam nota final de 9 ou mais com probabilidade de pelo menos 0,9. Com revisor perfeito, a ordenação com parada por orçamento coincide com a regra de duas ações.
+
+Fonte: `estudo4_gzcmd.tex:53`, `:55-60`, `:317`.
+
+### R10. Modelos de linguagem, dossiê e ancoragem
+
+Quatro modelos foram comparados como revisores: Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1. O VPP nas aceitações da vigilância foi de 16,0%, 19,0%, 19,0% e 18,2%, sem ganho demonstrável pelo tamanho. O dossiê traz 14 dos 29 subescores. Sem as saídas do motor no dossiê, 18 pares verdadeiros rejeitados antes não foram rejeitados de novo, achado compatível com ancoragem ou abstenção generalizada, sem identificar o mecanismo.
+
+Fonte: `estudo4_gzcmd.tex:89`, `:137`, `:297`, `tables/editorial/tab_cap8_tamanho_modelo.tex:11-14`.
+
+### R11. Filtro de NONMATCH
+
+No filtro, o modelo de linguagem descarta o que classifica como não par, e o revisor humano vê o restante. Com 96 potenciais pares enviados ao modelo, a carga humana foi de 22 revisões, e o filtro recuperou 13 pares verdadeiros contra 6 de O3 na mesma carga. Descartou, porém, 9 dos 22 pares verdadeiros do topo, e a carga de 22 pertence a uma réplica. Na unidade de custo da tese, o filtro custa 1.172,5 e O3, 796.
+
+Fonte: `estudo4_gzcmd.tex:271-273`, `tables/editorial/tab_cap8_filtro_llm.tex:12`.
+
+### R12. Equidade completa
+
+O ASR teve sensibilidade de 87,0% na vigilância e de 88,7% na confirmação, com VPP de 91,1% e de 98,2%. Por passo, a sensibilidade no passo 11 foi de 42,5% e 47,5%; o corte isolado aceita 37,5% dos pares verdadeiros desse passo. Por sexo, não houve rejeição após correção, o que não demonstra paridade, e o poder não foi calculado. Raça/cor não consta do extrato, e a equidade da fila recomendada não foi examinada.
+
+Fonte: `estudo5_equidade.tex:34`, `:42`, `:52`, `:99`, `:101`.
+
+### R13. Diferenças entre o CdR em Python e o protótipo em Java
+
+O carregador do protótipo em Java descarta a primeira linha das tabelas de frequência, erro corrigido no Python. Em relação a Lucena, o Java segue o peso de concordância 0,8 das inversões de data, e o Python atribui 1,0. As melhorias incluem os subescores de município e de endereço, estes derivados de critérios já acrescentados à versão em Java. O Estudo 1 cita Paiva (2025) entre os trabalhos que usaram a versão em Java; o efeito não foi medido.
+
+Fonte: `estudo1_comparador.tex:29`, `:78-93`, `:95`.
+
+### R14. Estudo 3 e protocolo
+
+O Estudo 3 mostrou que o Random Forest com SMOTE aceitou como vínculos 67 pares verdadeiros no teste, contra 43 da decisão por nota final de 8 ou mais, mas 25 dos 27 recuperados já eram aceitos pelo corte. As estimativas são otimistas por vazamento de alvo, partição por linha e limiares escolhidos no teste, e por isso não sustentam adoção. No Estudo 4, a partição é por óbito, com cinco partições externas, cinco internas e semente 42.
+
+Fonte: `estudo3_estrategias.tex:23`, `:25`, `estudo2_classificadores.tex:122`, `estudo4_gzcmd.tex:36-38`.
 
 ## Perguntas prováveis
 
-São 89 respostas, com no máximo 70 palavras cada, sem contar pergunta e fonte.
+Cada resposta tem até 70 palavras. "Apoio" indica o quadro ou a reserva que sustenta a resposta na tela.
 
-### 1. O probabilístico é inútil? Onde está o módulo Python do OpenRecLink?
+### Referência e viés de verificação
 
-O corte do OpenRecLink aceitou 211/247 vínculos, ou 85,4%. A entrega Python é o CdR, não a blocagem. A equivalência com o Java de Peçanha (2015) foi avaliada: 100,0% nas datas por igualdade/um dígito, 99,2% nas abreviações e nota idêntica em 11,2% dos pares sintéticos. Inversões pesam 0,8 em Lucena/Java e 1,0 no Python, limitação declarada. Não há equivalência integral.
+**P1. O que autoriza chamar um par de "verdadeiro"?**
 
-Fonte: `capitulo_dados.tex`, seção Referência operacional (`sec:padrao-ouro`); `estudo1_comparador.tex`, Resultados (`sec:e1-resultados`). Slides 6, 9 e 10.
+"Verdadeiro" remete à referência operacional, que combina o corte do OpenRecLink, campo PAR igual a 1, e a revisão manual de origem abaixo dele, PAR igual a 2. Não é verdade absoluta. Sem classificação independente, não se estima a concordância entre avaliadores, e a avaliação pode ser otimista, em magnitude que só uma revisão independente e cega quantificaria.
 
-### 2. Aprendizado de máquina é só exploração de possibilidades?
+Apoio: S03, S07, R01. Fonte: `capitulo_dados.tex:73`, `:77`.
 
-Há exploração, com limiares escolhidos no teste: F1 de 0,931 na ablação; no fluxo Modal, 0,943 para XGBoost isolado e 0,958 para híbrido OR. O GZ-CMD usa outro estimador, com 30 atributos, calibração aninhada e agrupamento por REFREC: AUC de 0,995 e AP de 0,862 na área cinza da nota. Isso sustenta discriminação interna, não validação externa da política.
+**P2. Em que direção o viés da referência opera?**
 
-Fonte: `estudo3_estrategias.tex`, Limitações (`sec:e3-limitacoes`); `estudo4_gzcmd.tex`, Classificador supervisionado e calibração fora da amostra (`sec:e4-classificador-oof`). Slides 11 e 13.
+Sem suposições, a direção não é identificável: se a revisão seguiu o escore do OpenRecLink, favorece O1; se usou a nota final e os subescores do CdR, favorece O2, O3 e O4. Nos cenários de erro da referência, a margem de 25% de O3 na meta de 23 persiste pela mediana, mas um cenário cruza zero no percentil 97,5, e a redução de O3 não tem intervalo que exclua zero.
 
-### 3. Isso já foi feito por Lages ou pelo CIDACS?
+Apoio: R01. Fonte: `capitulo_dados.tex:77`, `estudo4_gzcmd.tex:339`, `conclusao.tex:71`.
 
-Há precedentes de classificação supervisionada e redução da revisão. O CIDACS constitui referência brasileira de infraestrutura e métodos de *linkage*. Aqui, avaliam-se ordenação, esforço e política com registro de decisões, sem exercício independente de auditoria das justificativas, numa base de razão 1:249. Lages trabalha com razão 1:5 e outro delineamento. Não foi realizada comparação empírica entre as implementações; a tabela de posicionamento não é uma prova de superioridade.
+**P3. Os 21 falsos positivos são mesmo falsos?**
 
-Fonte: `capitulo2.tex`, Classificação supervisionada, experiência brasileira e `tab:posicionamento`; `estudo1_comparador.tex`, Discussão (`sec:e1-discussao`). Slide 25.
+Dez dos 21 estão abaixo da faixa de escore, tomada por passo, em que a revisão de origem encontrou pares verdadeiros, sem revisão documentada. Se algum for par verdadeiro não verificado, o VPP de 16,0% está subestimado. O teste de identificadores fortes foi inconclusivo: nenhum grupo amostrado apresentou concordância máxima simultânea nos sete subescores examinados. A restrição à aceitação autônoma é cautela diante do VPP e da incerteza da referência.
 
-### 4. Por que F1 próximo de 0,93 aqui e 0,996 em Lages?
+Apoio: S17, R10. Fonte: `estudo4_gzcmd.tex:313`, `:339`, `:341`.
 
-O valor 0,943 pertence ao XGBoost isolado do fluxo Modal; híbrido OR tem 0,958, com limiares escolhidos no teste. QW1 tem 0,920. Lages reporta 0,996 em outro conjunto e protocolo, com razão de classes distinta. A comparação não identifica a causa da diferença nem ordena estimadores. O resultado por faixa OOF é separado, sem atribuir o desempenho global apenas aos casos difíceis.
+**P4. O CdR foi usado na revisão dos passos exportados?**
 
-Fonte: `capitulo2.tex`, `tab:posicionamento`; `tab:qw1-deep-learning`; `tab:ablation-best-category`; `tab:e4-desempenho-faixas-oof`. Slides 11, 25 e 33.
+A documentação de origem registra o uso do CdR na revisão do passo aberto. Para os passos 6, 9 e 11, a ordem entre o CdR e a revisão, a data e o que a revisora consultou não estão documentados. Por isso a tese adota como hipótese de trabalho que o CdR precedeu a revisão, com nota final e subescores disponíveis, e declara o efeito possível sobre O2 a O4.
 
-### 5. Como foi construída a referência operacional?
+Apoio: S07, R01. Fonte: `capitulo_dados.tex:77`, `estudo4_gzcmd.tex:361`.
 
-O processo de origem utilizou OpenRecLink original, em C, CdR e revisão clerical por revisora única, sem classificação independente. Dos 247 vínculos, 211 vieram do corte e 36 da revisão. A ordem CdR/revisão e a disponibilidade da nota não estão documentadas nos passos exportados. A monografia não sustenta atribuir pessoalmente essas etapas; o autor não participou delas e recebeu o extrato pós-CdR.
+### Posição frente ao OpenRecLink e por que preservar o corte
 
-Fonte: `capitulo_dados.tex`, Referência operacional (`sec:padrao-ouro`); `apendice_linkage_origem.tex` (`ap:linkage-origem`). Slides 6 e 7.
+**P5. Por que preservar o corte?**
 
-### 6. O arranjo é determinístico?
+O corte é preservado por integrar o processo que produziu a referência, sem presumir sua superioridade sobre uma estratégia determinística. Preservá-lo mantém os 211 pares verdadeiros que ele aceita. O pós-processamento atua só abaixo do corte, na *grey area*, e a medida é o número de revisões necessário ali.
 
-O corte e as guardas são determinísticos, mas a cadeia inclui probabilidade estimada, custos e Claude Haiku 5.5, cuja geração é estocástica. Na vigilância, são 211 vínculos pelo corte e quatro pela política, com 13 perdidos e 19 vínculos entre 96 encaminhamentos ao revisor humano. Abaixo do corte, as aceitações vieram do LLM, com 21 falsos positivos. Não há garantia de repetibilidade integral.
+Apoio: S03, S08, R03. Fonte: `capitulo3.tex:9`, `:17`, `conclusao.tex:81`.
 
-Fonte: `data/arranjo_corte_metricas.csv:2,12`; `data/arranjo_corte_s1_resumo.csv:2-15`; `sec:e4-politica-v31`. Slides 17, 19 a 21.
+**P6. Como a *grey area* se relaciona com o modelo de Fellegi e Sunter?**
 
-### 7. Como o arranjo se compara à revisão integral?
+No modelo, dois limiares dividem o espaço de escores: acima do superior aceita-se, abaixo do inferior descarta-se, e entre eles há região sem decisão automática. O OpenRecLink aplicou um único corte por passo, sem limiar inferior. A *grey area* é, portanto, tudo que está abaixo do corte do OpenRecLink. O corte da nota final em 9, que recuperaria 37,7%, é cenário hipotético do CdR, e não o do processo.
 
-A revisão integral tem amplitude de 0,73 p.p. entre sensibilidade humana de 95% e 100%; nas estratégias de carga reduzida, o máximo é 0,53 p.p. Há cenário de 99%. As perdas são de cobertura: vínculos não chegam ao revisor humano. A especificidade humana é assumida perfeita. Os cenários não medem erro real nem FP humanos; a curva explicita o orçamento.
+Apoio: R03. Fonte: `capitulo2.tex:16`, `capitulo_dados.tex:23`, `capitulo3.tex:11`.
 
-Fonte: `data/cenarios_sensibilidade_humana.csv`; `data/arranjo_corte_metricas.csv:8,12,26,30`. Slides 6 e 28.
+**P7. A tese corrige o OpenRecLink?**
 
-### 8. Dados identificados foram enviados à nuvem?
+Não. O trabalho mede o número de revisões necessário na revisão manual dos potenciais pares abaixo do corte, etapa que o processo já prevê, e procura reduzi-lo; o custo dessa carga não foi medido. Os vínculos aceitos pelo corte permanecem, e nenhum resultado avalia o OpenRecLink como ferramenta. A ordem de revisão e o ponto de parada propostos dependem de validação em coorte nova.
 
-O extrato é pseudonimizado, não anônimo. Foi enviado à Modal com datas completas, sexo e bairro; os dossiês enviados a APIs externas continham atributos derivados e pseudônimo, sem nomes nem datas completas. A transferência internacional não foi objeto de análise específica nos pareceres. O autor não recebeu registros nominais. A fundamentação na LGPD não equivale à demonstração de autorização para todos os envios.
+Apoio: S04, S08, S22. Fonte: `capitulo3.tex:9`, `:17`, `:39`, `conclusao.tex:81`.
 
-Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`), ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`). Slides 27 e 42.
+### Subnotificação e perda de vínculo
 
-### 9. Como discutir equidade sem raça/cor?
+**P8. A redução de revisões diminui a subnotificação?**
 
-A falta de raça/cor impede examinar disparidades raciais. Avaliaram-se sensibilidade e VPP, não toda a igualdade de oportunidades de erro. No passo 11, P tem 42,5% e 47,5% nos dois modos; na vigilância, fica abaixo dos 45,0% da base inteira (comparação). A diferença reflete sobretudo o corte e o *label*. Ausência de rejeição demográfica não demonstra equidade.
+Não. A tese não estimou efeito sobre a subnotificação. A redução de revisões não é redução de óbitos não notificados. Os potenciais pares abaixo do ponto de parada devem ser registrados como não examinados, não como não pares: a ausência de vínculo por esgotamento do orçamento não equivale a óbito não notificado, o que separa a subnotificação da perda de vínculo.
 
-Fonte: `data/equidade_arranjo_group_metrics.csv`, passo; `data/equidade_arranjo_pairwise_tests.csv`, rejeições de P. Slides 23 e 24.
+Apoio: S22, R04. Fonte: `conclusao.tex:54`, `:91`, `capitulo1.tex:20`.
 
-### 10. Por que o arranjo, e não a cascata publicada?
+**P9. Por que 247 pares verdadeiros e 1.515 declarações de óbito?**
 
-O arranjo preserva 211 vínculos por construção. Nos 36 PAR=2, aceita 4 e 8 contra 10 e 8 da cascata, nos dois modos; perde 13 e 27. A vantagem total vem do corte, não de maior recuperação abaixo dele. O braço braço *a posteriori* era conhecido antes do registro de recalibração, braços e avaliação. O registro não protegeu o enquadramento nem demonstrou superioridade.
+Os 247 pares verdadeiros correspondem a 204 óbitos distintos do SIM, porque uma mesma pessoa pode ter sido notificada mais de uma vez no Sinan. O extrato tem 1.515 declarações de óbito com ao menos um potencial par nos três passos. A razão entre 204 e 1.515 não estima subnotificação, pois o extrato reúne três passos probabilísticos, após a retirada dos vínculos determinísticos.
 
-Fonte: `data/arranjo_corte_metricas.csv:2,4,12,22,30`; `data/arranjo_corte_par2.csv:3,7,12,16`; `gzcmd/prereg_arranjo_corte.yaml`. Slides 17, 19, 20, 26 e 28.
+Apoio: R04. Fonte: `capitulo_dados.tex:57`.
 
-### 11. Por que não adotar P-Platt?
+### Custo da revisão e horas
 
-P usa isotônica por decisão de registro, com 32 positivos no primeiro ajuste. P-Platt era braço e virou sensibilidade na emenda 3; o critério 18/20 veio depois da S3. Dominância de Pareto: vigilância 7/20 e 4/20; confirmação 7/20 e 5/20. Pela perda aplicada às medianas marginais, P-Platt é menor nos quatro cenários. Isso não sustenta superioridade de P nem validação externa.
+**P10. Quantas horas a ordenação economiza?**
 
-Fonte: `data/arranjo_corte_metricas.csv:12,14`; `data/robustez_arranjo_resumo.csv:2-5`; `data/robustez_perda_ponderada.csv:2-9`; `estudo4_gzcmd.tex:322,328,539`. Slides 22 e 46.
+A tese não mede horas economizadas. Como cenário de planejamento, adotou-se 20 minutos por par: 96 revisões equivalem a 32 horas na vigilância, e 17 revisões, a 6 horas na confirmação. Os cenários são hipóteses, sem equivalência medida entre revisão por modelo de linguagem e humana, e não foram comparados ao volume de trabalho da vigilância do óbito no município.
 
-### 12. Qual é a carga comparável à da revisão clerical de origem?
+Apoio: R05. Fonte: `estudo4_gzcmd.tex:119`, `:257`, `tables/editorial/tab_cap8_esforco.tex:10`, `:14`.
 
-A ordem histórica não foi documentada. Se tivesse sido decrescente por escore do OpenRecLink, o cenário seria de 2.156 pares por passo ou 2.522 no limiar global, equivalentes a 718 h 40 min e 840 h 40 min sob 20 min por par. Não são horas observadas. A curva de esforço evita depender desse cenário; o serviço define a aceitabilidade das perdas.
+**P11. E se o revisor humano real errar?**
 
-Fonte: `data/carga_abaixo_corte.csv:5,9`; `data/carga_abaixo_corte_horas.csv:3,2`. Slides 6 e 20.
+A sensibilidade humana real não foi medida; todas as contagens supõem revisor perfeito simulado. Como sensibilidade, repetiu-se o cálculo com omissão humana de 5% e com sensibilidades de 0,95, 0,99 e 1,00, sem inversão de ordem entre estratégias com a mesma carga humana. A revisão humana observada, com dupla revisão e concordância medida, é próximo passo.
 
-### 13. O que significa VPP de 16% do LLM?
+Apoio: S09, S21. Fonte: `estudo4_gzcmd.tex:119`, `:279`, `conclusao.tex:77`, `:101`.
 
-Na vigilância de P, quatro das 25 respostas de vínculo abaixo do corte eram vínculos, VPP de 16,0%, com IC de 6,4 a 34,7%. As demais 21 eram falsos positivos. Na confirmação, foram oito de 12, ou 66,7%. Esses resultados pertencem à região selecionada pela política, não estimam uma capacidade geral de Claude Haiku 5.5.
+**P12. Como obter a curva de esforço no serviço, sem referência?**
 
-Fonte: `data/arranjo_corte_vpp_llm.csv:2,8`. Slide 21.
+A curva depende de amostra revisada de forma independente. O serviço traçaria a curva de cada fila sobre uma amostra revisada e adotaria a que recuperasse mais pares verdadeiros no orçamento disponível. A referência da coorte nova pode vir de amostragem estratificada, em revisão cega, com dois revisores e arbitragem.
 
-### 14. De onde vêm os vínculos perdidos?
+Apoio: S22, R01. Fonte: `conclusao.tex:89`, `:101`, `estudo4_gzcmd.tex:341`, `glossario.tex:42`.
 
-Em P, as perdas distribuem-se por guarda/custo/LLM, na vigilância: 1/6/6, totalizando 13; na confirmação: 1/22/4, totalizando 27. Os encaminhamentos são desfechos do arranjo; não se atribuem exclusivamente ao LLM. As aceitações e os falsos positivos abaixo do corte vieram do LLM. Essa decomposição identifica os ramos da decisão, sem isolar causalmente o efeito da calibração.
+### Ética, LGPD e APIs externas
 
-Fonte: `data/arranjo_corte_perdas_mecanismo.csv:2-4,50-52`. Slide 20.
+**P13. Dados de saúde foram enviados a APIs externas?**
 
-### 15. Como justificar perder 75% dos vínculos da revisão na confirmação?
+Parte do processamento ocorreu fora da instituição. O extrato pseudonimizado, com datas completas, sexo, bairro, códigos de município e identificadores internos, mas sem nomes, nome da mãe ou endereço nominal, foi à plataforma Modal nos experimentos QW1; os dossiês, sem datas completas nem identificadores internos, mas com o `pair_id`, foram a APIs externas. A tese registra isso como limitação e recomenda execução local para dados do serviço.
 
-São 27 dos 36 PAR=2, ou 75,0%, não uma manutenção da recuperação da referência de origem. A confirmação encaminha somente 17 potenciais pares ao revisor humano, mas a redução de encaminhamentos vem com essas perdas. O estudo documenta a troca, não demonstra sua aceitabilidade clínica ou epidemiológica. A adoção depende de decisão do serviço e validação em dados novos.
+Apoio: R02. Fonte: `capitulo_dados.tex:35` (extrato na plataforma Modal; dossiês sem datas completas nem identificadores internos), `:51` (dossiês com o `pair_id`), `conclusao.tex:93`.
 
-Fonte: `data/arranjo_corte_par2.csv:16`; `data/arranjo_corte_metricas.csv:30`. Slides 20 e 28.
+**P14. Os dossiês não tinham identificadores internos, mas incluíam o `pair_id`?**
 
-### 16. Por que as proporções congeladas não anteciparam os falsos positivos?
+Os dossiês não continham datas completas nem os identificadores internos REFREC e COMPREC, mas continham o `pair_id`. Ele é um hash SHA-256, sem sal, da composição de COMPREC, REFREC e PASSO, truncado em 16 caracteres, recalculável por quem detém os identificadores e por enumeração: o produto das cardinalidades é de 88.118.460 combinações. A tese declara que ele não garante anonimização.
 
-As proporções de erro foram estimadas em coortes com potenciais pares mais fáceis e denominadores mínimos. A seleção abaixo do corte muda a composição. Em P na vigilância, previam cerca de 9,06 falsos positivos, contra 21 observados. A validação cruzada não garante transferência dessas proporções. É necessário estimar e validar o erro na região de uso, sem realimentação oportunista pelos desfechos.
+Apoio: R02. Fonte: `capitulo_dados.tex:35`, `:39`, `:51`, `:123`.
 
-Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `data/arranjo_corte_taxas_crossfit.csv`. Slides 21 e 26.
+**P15. Qual a base legal do tratamento?**
 
-### 17. A AUC de 0,995 elimina o viés de incorporação?
+O tratamento no laboratório se fundamenta nos arts. 7º, IV, e 11, II, c, da Lei n. 13.709/2018, que admitem o tratamento em estudos por órgão de pesquisa, e no art. 13, que o restringe ao órgão de pesquisa, em ambiente controlado, com pseudonimização sempre que possível. A aplicabilidade à transferência a operadores externos não foi objeto de análise específica nos pareceres e é limitação declarada.
 
-Não. A AUC descreve discriminação interna na referência operacional; não mede independência do *label* nem calibração absoluta. O corte define PAR=1. A disponibilidade da nota à revisora é hipótese de trabalho nos passos exportados. REFREC reduz uma dependência, mas não separa simultaneamente COMPREC nem cria referência externa. O GZ-CMD não usa os atributos de óbito dos experimentos exploratórios.
+Apoio: R02. Fonte: `capitulo_dados.tex:33`, `:35`.
 
-Fonte: `tab:e4-desempenho-faixas-oof`; `data/arranjo_corte_metadata.json`, `verification_bias` e `incorporation_bias`. Slides 13, 16 e 26.
+### Escolha do estimador, calibração e partição
 
-### 18. O arranjo pode ser reproduzido somente com o Zenodo?
+**P16. Por que XGBoost?**
 
-Não. O Zenodo é público com arquivos restritos e cobre a cascata v3.1 sobre a base inteira, não o arranjo. Seus agregados estão no repositório; as saídas por par ficam locais. A reprodução depende de acesso autorizado, campos ausentes do depósito e versões registradas. O código inicialmente registrado está fora do histórico. Nem o depósito nem a instalação do pacote demonstram validação externa.
+O XGBoost veio do comparativo QW1, na mesma base: teve o maior F1 médio na validação cruzada, 0,924, contra 0,913 do Random Forest. Isso informou a escolha entre as configurações avaliadas, sem estabelecer superioridade da família, e as métricas fora da amostra não incorporam essa seleção. Com Random Forest, o ganho pontual de O3 na vigilância não se manteve, com 498 revisões contra 501 de O1; na confirmação, 32 contra 51.
 
-Fonte: repositório, `gzcmd/prereg_arranjo_corte.yaml` e `gzcmd/prereg_robustez_arranjo.yaml`; disponibilidade dos dados na tese. Slides 29 e 42.
+Apoio: S13, R06. Fonte: `estudo2_classificadores.tex:88`, `:92`, `estudo4_gzcmd.tex:36`, `:194`.
 
-### 19. O registro interno elimina os desvios de protocolo?
+**P17. Por que não uma rede neural?**
 
-Não. O código inicialmente registrado não está no git, e o suplemento fez chamadas de sensibilidade apesar da vedação original. O braço braço *a posteriori* já era conhecido antes do registro; o enquadramento veio depois. Esses fatos limitam a proteção do registro e precisam ser declarados. P continua principal; não se reescreve o protocolo para tornar outra política vencedora.
+Na validação cruzada do QW1, o TabNet ficou em último, com F1 médio de 0,821, contra 0,881 e 0,872 das duas MLP; no teste interno, teve 0,610, contra 0,859 e 0,844. O resultado do TabNet não caracteriza falha geral das redes neurais: a base tem 247 pares verdadeiros, e o experimento não isola esse efeito. O desempenho informou a escolha do XGBoost, sem estabelecer superioridade da família.
 
-Fonte: `gzcmd/prereg_arranjo_corte.yaml`, emendas e suplemento; `data/arranjo_corte_metadata.json`. Slide 26.
+Apoio: sem quadro de apoio. Fonte: `tables/editorial/tab_qw1_deep_learning.tex:16-25`, `estudo2_classificadores.tex:88`, `:92`.
 
-### 20. Como escolher a ordenação e o ponto de parada?
+**P18. Por que isotônica, e não Platt scaling ou âncoras?**
 
-Primária: probabilidade calibrada do classificador (O3); secundária: probabilidade recalibrada de P (O4); referência: escore do OpenRecLink (O1). Meta: recuperação de P, orçamento fixado antes dos desfechos. Para 23 e 9 vínculos, O4 requer 106 e 27 revisões; O3, 125 e 29. Em 96 e 17 revisões, O3 deixa 14 e 30 dos 36 fora. Para os 36, O1 requer 2.521 e O3, 23.443.
+O *Platt scaling* da nota final só muda a escala. A calibração por âncoras não deu probabilidades absolutas comparáveis às da isotônica supervisionada, usada pela política. A isotônica é a regra registrada do ASR, com Platt previsto só para partições com menos de dez pares verdadeiros. A variante com Platt dominou o ASR na avaliação original, dominância que não se sustentou; a isotônica não foi escolhida por superioridade empírica.
 
-Fonte: `capitulo3.tex`, `sec:objetivos-especificos`; `data/comparador_mesma_carga.csv`. Slides 20 e 28.
+Apoio: S13, R06. Fonte: `estudo4_gzcmd.tex:36`, `:46`, `:157`, `:163`, `:313`.
 
-### 21. A análise de estabilidade confirma generalização e repetibilidade?
+**P19. Qual o papel da partição por óbito?**
 
-Não. É análise interna não confirmatória, com respostas do LLM fixas. Em P na vigilância, no bloco de partição, Jaccard mediano de 0,43 em relação à partição original, FP de nove a 31 e perdas de nove a 21. P-Platt tem menor perda aplicada às medianas nos quatro cenários. A estabilidade descreve apenas aspectos internos; não valida generalização nem mede estocasticidade do revisor.
+Na validação aninhada, as partições são agrupadas por REFREC, de modo que um mesmo óbito não contribui para o treino e o teste da mesma partição. COMPREC não é agrupado simultaneamente, o que foi examinado como sensibilidade. Foram cinco partições externas e cinco internas, com semente 42. A avaliação não equivale a validação externa, e o agrupamento reduziu a precisão média em relação à partição por potencial par.
 
-Fonte: `data/robustez_arranjo_resumo.csv:270,278,654`; `data/robustez_arranjo_metadata.json`. Slide 46.
+Apoio: S13, R14. Fonte: `estudo4_gzcmd.tex:36-38`, `:40`.
 
-### 22. Qual é a vantagem demonstrada frente ao processo de *linkage* de origem?
+**P20. Qual o custo computacional do *bootstrap* e da calibração aninhada?**
 
-P acrescenta quatro aceitações automáticas e 21 FP na vigilância; 96 encaminhamentos contêm 19 vínculos. Não reproduz 13 e 27 vínculos nos dois modos. Não há melhora de acurácia. Frente a O3, MATCH ao humano acrescenta no máximo um vínculo na mesma carga; na confirmação, O2 recupera nove com 11 revisões, sem FP nem LLM. A carga histórica da revisão clerical de origem não foi observada.
+A tese informa o ambiente, não os tempos de execução do *bootstrap* nem da calibração aninhada. Os modelos arbóreos, a regressão logística, a SVM e a MLP foram treinados em estação local com 32 GB de memória; o TabNet, em nuvem, com GPU de 24 GB. O ambiente foi fixado em Python 3.12, e a fragilidade numérica entre *threads*, sementes e partições é risco de implantação.
 
-Fonte: `data/arranjo_corte_metricas.csv:12,30`; `data/arranjo_corte_vpp_llm.csv:2,8`. Slides 19 e 28.
+Apoio: sem quadro de apoio. Fonte: `capitulo_dados.tex:115`, `:117`, `estudo4_gzcmd.tex:355`.
 
-### 23. Houve varredura de custos no arranjo?
+**P21. Como se reproduz a avaliação?**
 
-Não houve varredura no arranjo. Os custos C_FP/C_FN são 10/50 na vigilância e 100/20 na confirmação; C_H=1 e C_LLM=0,005. Incluindo FN, O2 custa 1.296 na vigilância para 12 vínculos e 551 na confirmação para nove. FP humano zero é hipótese, não medida. A varredura da base inteira não valida esses custos nem sua aceitabilidade para o serviço.
+A reprodução integral da avaliação do ASR exige o checkout original, com os bytes do pré-registro, e insumos privados. O depósito do Zenodo de acesso restrito reúne os resultados históricos sobre a base inteira, não o arranjo atual. Os agregados e os arquivos por `pair_id` estão no repositório público da tese, sem *label*; os *labels* estão no depósito restrito.
 
-Fonte: `data/custos_equivalentes_exploratorios.csv:2,5,8,12`; `estudo4_gzcmd.tex:509,624`, custos e varredura na base inteira. Slides 18 e 22.
+Apoio: R14. Fonte: `estudo4_gzcmd.tex:359`, `conclusao.tex:67`.
 
-### 24. O que muda na mesma carga com MATCH do LLM ao revisor humano?
+**P22. Subamostrar os negativos ajuda?**
 
-Na vigilância, P usa 121 revisões para 23 PAR=2; O3 recupera 22 nessa carga e iguala P em 125. Na confirmação, ambos recuperam 9 em 29. Revisor perfeito é hipótese dos dois lados. Há 344 pares adicionais avaliados pelo LLM na vigilância. Uma diferença de um vínculo em 36 não sustenta superioridade.
+No treinamento, a subamostragem reduz só os negativos e mantém a prevalência na avaliação. As razões 1:1 e 1:5 degradaram o topo da fila: a mediana de pares verdadeiros entre os 96 primeiros caiu de 22 para 13 e 18,5. As razões 1:20 e 1:50 não se distinguem de modo demonstrável do treino sem subamostragem. A tese sustenta evitar 1:1 e 1:5.
 
-Fonte: `data/comparador_p_match_humano.csv:2,3`. Slide 22.
+Apoio: S22. Fonte: `estudo4_gzcmd.tex:265`.
 
-### 25. Há fonte para a ordem histórica de revisão?
+**P23. O que as MACD acrescentam?**
 
-Não. Oliveira (2026, p. 34) informa revisão manual sem ordem, limite ou parada. Ordem decrescente do escore do OpenRecLink é hipótese: 2.156 e 2.522 são cenários, não reconstrução histórica. O CdR está documentado no passo aberto, com cinco pares, não nos passos 6, 9 e 11; sua precedência à revisão nesses passos é hipótese de trabalho, sem declaração datada que a comprove.
+As MACD são atributos derivados das datas de nascimento. Na ablação da política de três ações, as revisões esperadas diminuíram 55,0% na vigilância e 34,7% na confirmação. Na fila, O3 com MACD exigiu 46, 118 e 3.040 revisões nas metas de 9, 23 e 36, contra 29, 125 e 23.443 de O3: encurtou a cauda, mas piorou o topo. A F3 só entra na recomendação com as MACD disponíveis.
 
-Fonte: `capitulo_dados.tex`, discussão de Oliveira, Quadros 5 e 6; `data/carga_abaixo_corte.csv:5,9`. Slides 6 e 7.
+Apoio: S10, S22. Fonte: `estudo4_gzcmd.tex:133`, `:200`, `conclusao.tex:83`.
 
-### 26. Onde estão os falsos positivos em relação ao escore do OpenRecLink?
+**P24. Os Estudos 2 e 3 valem como evidência?**
 
-Na vigilância, 17 dos 21 FP de P estão em escore do OpenRecLink ≥ −5,648 e 4 abaixo; na confirmação, os 4 estão acima desse limiar. Frente ao limiar por passo, são 11 acima e 10 abaixo na vigilância; 4 e 0 na confirmação. A contagem é exploratória *post hoc*; não prova que a revisão clerical de origem examinou ou rejeitou individualmente esses pares.
+São otimistas por três fontes: indicadores de encerramento por óbito, que constituem vazamento de alvo, partição por linha e limiares escolhidos no teste. Por isso não fundamentam a adoção dos *pipelines* avaliados, e o GZ-CMD não usa os indicadores. No controle, a partição por óbito reduziu o F1 do Random Forest com SMOTE de 0,931 para 0,846, e a retirada dos indicadores pouco o alterou.
 
-Fonte: `data/fp_arranjo_por_regiao.csv:8,9,16,17,24,25,32,33`. Slides 19 e 45.
+Apoio: S12, R14. Fonte: `capitulo3.tex:43`, `conclusao.tex:13`, `estudo2_classificadores.tex:122`.
 
-### 27. O que protege um registro feito 49 minutos antes?
+### Ordenações, fusões e multiplicidade
 
-Registra escolhas declaradas antes da S3, não sucesso confirmatório. Foram 49 minutos, de 01:22:17 a 02:11:52 UTC. O comparador era conhecido; faltam código original no git, critério de sucesso e carimbo independente. P-Platt virou sensibilidade na emenda 3; o critério 18/20 veio depois da avaliação. Emendas e desvios de protocolo limitam a proteção do registro, sem autorizar escolher retrospectivamente o vencedor.
+**P25. Por que recomendar O3 ou as fusões?**
 
-Fonte: `gzcmd/prereg_arranjo_corte.yaml`; `data/arranjo_corte_metadata.json`; `gzcmd/M_arranjo_corte_desvios.md`. Slides 45 e 49.
+Porque a recomendação é uma hipótese de trabalho condicionada à curva de esforço, e nenhuma ordenação dominou em todas as cargas. O3 reduziu só pontualmente e é a pior na recuperação integral; as fusões reduziram frente ao escore nas metas de 9 e 36, sem superar O3 com intervalo. Por isso se recomenda a probabilidade calibrada, isolada ou fundida, e a escolha pela curva do serviço.
 
-### 28. De onde vêm os 20 minutos e os cenários humanos?
+Apoio: S16, S22. Fonte: `conclusao.tex:81-89`, `estudo4_gzcmd.tex:327`.
 
-São parâmetros de cenário, não medidas do serviço. Vinte minutos por par convertem revisões em ordem de grandeza de horas. A configuração motivou sensibilidade humana de 95%; avaliam-se também 99% e 100%. A especificidade é assumida perfeita: não se modelam FP humanos. A diferença principal é cobertura, não erro de quem revisa. A adoção requer medir tempo, erro e concordância.
+**P26. As fusões são melhores que O3?**
 
-Fonte: `gzcmd/gzcmd_v3_config.yaml`; `data/cenarios_sensibilidade_humana.csv`; `data/esforco_arranjo.csv`. Slides 18 e 28.
+Não foi demonstrado: nenhum intervalo de F3 ou de F4 frente a O3 ficou inteiramente abaixo de zero. F4 menos O3 teve mediana de 17 revisões a menos na meta de 9, com intervalo de 44 a menos até zero, e de 25 a menos na de 23, com intervalo de 402 a menos a 59 a mais. A vantagem pontual existe, mas não foi demonstrada.
 
-### 29. Por que Grey-Zone não é a área cinza da nota?
+Apoio: S15, R08. Fonte: `tables/editorial/tab_cap8_fusao_robustez.tex:13-14`, `estudo4_gzcmd.tex:225`.
 
-Grey-Zone designa a região que requer exame, não apenas [5,9) da nota do CdR. O corte do OpenRecLink usa outro escore. A proposta é preservar o corte e escolher ordenação e parada pela curva de esforço, com referência independente. Na confirmação, O2 domina fracamente P; isso não é universal. Restantes: não examinados. Filtro LLM apenas com orçamento humano fixo, sem aceitação autônoma, a validar.
+**P27. Quanto do ganho de F4 vem da faixa de 2.522 potenciais pares?**
 
-Fonte: `capitulo3.tex`, `sec:objetivos-especificos`; `data/comparador_p_match_humano.csv`; `data/filtro_llm.csv`. Slides 4, 18 e 29.
+Dentro da faixa de 2.522 potenciais pares que contém os 36 pares verdadeiros, recalcular as filas reduz a cauda de O3 de 23.443 para 1.330 revisões e a de F4 de 1.387 para 840, enquanto O1 permanece em 2.521. Parte do ganho de F4 vem de priorizar a faixa em que a revisão de origem se concentrou, e por isso a vantagem não se atribui só à ordenação interna.
 
-### 30. O filtro LLM ajuda sem perder vínculos?
+Apoio: S15, R08. Fonte: `estudo4_gzcmd.tex:229`.
 
-O protocolo fixado antes dos desfechos registrou “ajuda” na mesma carga humana, não ausência de perdas. Na vigilância k=96, H=22: sensibilidade 59,1%, VPN 87,8%; nove dos 22 vínculos descartados. A perda ponderada posterior favorece O3 com 96 revisões, outro orçamento. Na confirmação k=125, descarta dez dos 23. Respostas de datas diferentes e réplicas estocásticas não constituem validação prospectiva.
+**P28. E a multiplicidade das seis variantes?**
 
-Fonte: `data/filtro_llm.csv:4,5,13`; `data/filtro_llm_metadata.json`. Slides 21 e 48.
+F4 foi escolhida entre seis variantes avaliadas nos mesmos 36 pares verdadeiros, sem correção para multiplicidade e depois do registro. Fixar as variantes antes do cálculo não constitui pré-registro, e o intervalo do *bootstrap* não incorpora a seleção. Na validação, F4 entra como comparação secundária; a primária é O3 contra O1, e a O4, probabilidade recalibrada do ASR, também é secundária.
 
-### 31. A subamostragem sustenta preferência pela prevalência original?
+Apoio: R07. Fonte: `estudo4_gzcmd.tex:123`, `:202`, `:331`, `conclusao.tex:77`, `:99`.
 
-Não frente a 1:20 e 1:50, indistinguíveis da referência. No topo 96, 1:1 e 1:5 degradam a recuperação: medianas de 13 e 18,5 contra 22 na prevalência original. A referência tem uma execução; cada razão, dez sementes. O Brier mediano piora em todas, mas não demonstra superioridade de ordenação da referência. A comparação é exploratória, sem evidência de melhora de equidade.
+**P29. O que é a fila adaptativa?**
 
-Fonte: `data/subamostragem_treino_resumo.csv:18,210,402,594,786`, variante isotonic. Slides 29 e 47.
+A fila adaptativa aprende com as próprias revisões por amostragem de Thompson, parente do aprendizado ativo, com precedente na construção de coleções de avaliação. Nesta coorte exigiu, em média, 96 revisões para recuperar 23 pares verdadeiros, contra 125 de O3, em exploração posterior ao registro e sem validação. É próximo passo, não recomendação.
 
-### 32. E se a sensibilidade humana for 99%?
+Apoio: R07. Fonte: `conclusao.tex:101`, `estudo4_gzcmd.tex:202`.
 
-99% é parâmetro de cenário, não medida. O limite de 0,73 p.p. é aritmético: 5% sobre 36 dos 247 vínculos; nas cargas reduzidas, até 0,53 p.p. A ordem não se inverte na mesma carga humana. Especificidade perfeita e FP humanos zero são hipóteses, embora a política adote erro humano de 0,05. Vínculos fora do orçamento não chegam ao revisor: perda de cobertura.
+**P30. O que é a v4 candidata?**
 
-Fonte: `data/cenarios_sensibilidade_humana.csv`, cenários 0,95, 0,99 e 1,00. Slide 28.
+É o registro prospectivo para uma coorte nova: a ordenação pela probabilidade calibrada frente ao escore do OpenRecLink como comparação primária; F4 e a fila com contexto e MACD como secundárias, com F3 quando houver as MACD. Não é política validada.
 
-### 33. Por que não trocar o revisor humano pelo LLM?
+Apoio: S23. Fonte: `glossario.tex:120`, `capitulo1.tex:41`, `:43`.
 
-Como aceitador, o LLM teve VPP de 16,0% na vigilância. Com MATCH encaminhado ao humano, a política recupera no máximo 1 vínculo a mais que O3 na mesma carga, com 344 pares adicionais avaliados pelo LLM. Uma diferença de um vínculo em 36 não sustenta superioridade. O uso possível é filtro experimental de NONMATCH, nunca aceitação autônoma.
+### Automação e modelo de linguagem
 
-Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `data/comparador_p_match_humano.csv:2,3`; `data/filtro_llm.csv`. Slides 21, 22 e 29.
+**P31. Por que o modelo de linguagem não deve aceitar vínculos sozinho?**
 
-### 34. O que aconteceu com os números da qualificação?
+Das 25 aceitações abaixo do corte, 21 eram falsos positivos, e o VPP foi de 16,0%, possivelmente subestimado. Os usos subordinados ao revisor humano, como filtro de NONMATCH ou fonte de evidência, são hipóteses exploratórias. O ASR não é o resultado principal: teve registro interno sem critério de sucesso, e a leitura como resultado negativo é posterior.
 
-O Experimento 1 do Estudo 4 usa Random Forest com sigmoide interna, partições por COMPREC e atributos permitidos: 39 com MACD, 30 sem. F1 esperado, não observado: 0,941 na vigilância e 0,916 na confirmação; reduções de revisões: 55,0% e 34,7%. A seleção histórica incluía SCORE e identificadores, vazamento reduzido pela seleção restrita: 0,954 e reduções de 14,5%/17,6% não sustentam a interpretação atual. Não houve chamada a LLM.
+Apoio: S17, R10. Fonte: `estudo4_gzcmd.tex:157`, `:311-313`.
 
-Fonte: `data/exp1_vazamento_comparacao.csv`; `data/ablation_comprec_allowlist_metadata.json`; `gzcmd/classifier.py`; `gzcmd/eval.py`.
+**P32. O filtro de NONMATCH ajuda?**
 
-### 35. O limiar do OpenRecLink é inútil hoje?
+O filtro encaminha ao humano os MATCH e UNSURE e descarta os NONMATCH. Com 96 pares ao modelo e 22 revisões, recuperou 13 pares verdadeiros contra 6 de O3, com valor preditivo negativo de 87,8%, mas descartou 9 dos 22 do topo. A vantagem existe só com a carga fixada em 22, de uma réplica, e na unidade de custo da tese o filtro perde para O3.
 
-Não. O corte isolado aceita 211 dos 247 vínculos (85,4%) sem revisão, e a tese o preserva por representar o processo de *linkage* de origem e definir PAR=1 na referência, não por superioridade demonstrada sobre regras determinísticas. O pós-processamento atua abaixo dele, onde estão os 36 vínculos recuperados pela revisão; a comparação com estratégias determinísticas é discutida no Estudo 3.
+Apoio: S18, R11. Fonte: `estudo4_gzcmd.tex:271-273`.
 
-Fonte: `data/arranjo_corte_metricas.csv:2`; `capitulo1.tex` e `capitulo3.tex`, justificativa do corte; `estudo3_estrategias.tex`, Discussão. Slides 6 e 19.
+**P33. Um modelo maior resolve?**
 
-### 36. Há penalização de nome comum? O aprendizado de máquina é só exploração?
+Nas 25 aceitações do Claude Haiku 5.5 na vigilância, os VPP foram de 16,0%, 19,0%, 19,0% e 18,2% para Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1, com cobertura incompleta do Sonnet. Nenhum modelo maior mostrou ganho demonstrável, e o dossiê ampliado não atingiu a utilidade pré-registrada. Os pares foram escolhidos depois dos resultados, e a variação entre réplicas tem amplitude comparável à das diferenças.
 
-Sim. No CdR, a proporção de fragmentos comuns do primeiro registro entra com sinal negativo, penalizando a composição do nome, sem medir concordância. Separadamente, a guarda de homonímia da v3, ausente da v3.1, encaminha à revisão, sem excluir, pares com nota ≥ 7, subescores de nascimento e endereço nulos e diferença de anos maior que 5. Resultados com limiares escolhidos no teste são exploratórios.
+Apoio: S18, R10. Fonte: `estudo4_gzcmd.tex:297`, `:301-303`.
 
-Fonte: `estudo1_comparador.tex:23,39,95`, penalidade por fragmentos comuns; `gzcmd/guardrails.py:108-116,134-170`; `gzcmd/gzcmd_v3_config.yaml:131-132`; `estudo4_gzcmd.tex`, regras de guarda (`sec:e4-regras-guarda`); `capitulo2.tex`, critérios de Lucena; `estudo3_estrategias.tex`, Limitações (`sec:e3-limitacoes`). Slides 9, 11 e 13.
+**P34. Por que a margem de 25%?**
 
-### 37. Existe manual de uso?
+A margem é escolha prospectiva de relevância, fixada com os dados de desenvolvimento à vista, nos quais as reduções pontuais foram de 75,0% e 43,1%. Não foi testada. Como o intervalo da diferença incluiu zero nas três metas, o tamanho da coorte nova deve vir de cálculo de poder, com a variabilidade observada como ponto de partida.
 
-Sim, para o pacote. O Apêndice do pacote descreve requisitos e instalação; o repositório gzcmd-record-linkage traz README e o caderno `gzcmd_passo_a_passo.ipynb`, que percorre o fluxo da v3 sobre dados 100% sintéticos, com guia em `notebooks/README.md`. Não há manual operacional do serviço; a adoção exige validação em dados novos.
+Apoio: S23. Fonte: `estudo4_gzcmd.tex:331`, `conclusao.tex:97`, `:99`.
 
-Fonte: `apendice_pacote.tex` (`ap:pacote`); repositório `gzcmd-record-linkage`, `README.md` e `notebooks/README.md`. Slide 29.
+### Equidade
 
-### 38. Quais provedores externos receberam dados?
+**P35. O que dizer do passo 11 e da raça/cor?**
 
-Os dossiês LLM foram enviados a APIs externas da Anthropic, OpenCode Go, Levanto, Fireworks AI e OpenAI; no piloto, Fireworks AI serviu Kimi K2.5, DeepSeek V3.2, Qwen3-VL-30B e GLM-5, e OpenAI, GPT-4o. O QW1 transferiu o extrato pseudonimizado à Modal para o TabNet. Nenhum envio continha nomes. Para dados identificados, recomenda-se ambiente local e controlado, sem APIs externas.
+A disparidade no passo 11 é herdada do corte: isolado, ele aceita 15 dos 40 pares verdadeiros do passo. O passo é estrato de processo, não atributo demográfico. A raça/cor não consta do extrato, e não há geolocalização mais fina que o bairro, usado só na completude, o que impede avaliar eixos de desigualdade em saúde. A análise descreve disparidades técnicas, sem avaliar se são evitáveis e injustas.
 
-Fonte: `capitulo_dados.tex`, ética dos modelos (`sec:dados-etica`) e Ambiente computacional (`sec:ambiente-computacional`); `scripts/pilot_c2_517.py:63-84`; `scripts/qw1_modal_runner.py`. Slides 27 e 42.
+Apoio: S19, R12. Fonte: `estudo5_equidade.tex:52`, `:99`, `:103`, `conclusao.tex:31`.
 
-### 39. O que aconteceu com o cuidado terapêutico?
+**P36. A equidade da fila recomendada foi examinada?**
 
-Foi retirado. A tese não avalia episódios de cuidado, pensamento sistêmico nem painéis de *business intelligence*; mantém a tuberculose como condição marcadora, usada para qualificar os dados vinculados entre SIM e Sinan-TB. Os resultados descrevem decisões de vínculo, não desfechos terapêuticos.
+Não. O Estudo 5 analisou as aceitações do ASR, da cascata, do XGBoost e do corte da nota final. Como o corte é preservado, a disparidade por passo que ele traz permanece o ponto de partida. O Estudo 4 descreve só a recuperação por passo e por sexo entre os 96 primeiros da fila, sem testes nem intervalos por subgrupo.
 
-Fonte: `estudo4_gzcmd.tex`, introdução (`cap:estudo4`); `capitulo2.tex`, A tuberculose como condição marcadora. Slide 2.
+Apoio: S19, R12. Fonte: `estudo5_equidade.tex:101`, `conclusao.tex:33`.
 
-### 40. Há interface para o serviço?
+**P37. Há paridade entre sexos?**
 
-O Estudo 1 mostra a captura da interface do Comparador de Registros, versão 0.1, com dados sintéticos. O CdR não é o objeto central da tese. O GZ-CMD é biblioteca Python sem interface gráfica: lê o extrato pós-CdR e produz decisões, encaminhamentos e registro de decisões, sem exercício independente de auditoria das justificativas. Não se produziu interface para o serviço.
+Não foi demonstrada. Não houve rejeição após Benjamini-Hochberg em sexo ou faixa etária, mas são 71 pares verdadeiros no sexo feminino e 176 no masculino, e o poder não foi calculado. A paridade simultânea de sensibilidade e VPP é factível; a incompatibilidade sob prevalências distintas refere-se ao VPP e ao *equalized odds*.
 
-Fonte: `estudo1_comparador.tex`, captura da interface; `apendice_pacote.tex` (`ap:pacote`); `capitulo_dados.tex`, ética dos modelos (`sec:dados-etica`). Slide 9.
+Apoio: S19, R12. Fonte: `conclusao.tex:33`, `estudo5_equidade.tex:42`.
 
-### 41. Existe módulo Python do OpenRecLink? A tese usou a saída do OpenRecLink?
+### Reimplementação do CdR
 
-Não foi localizada fonte citável desse módulo; por isso, a tese não o menciona. A tese não consumiu a saída do OpenRecLink diretamente. O processo de origem utilizou OpenRecLink original, em C, CdR e revisão clerical por revisora única, sem atribuição pessoal das etapas. O autor não participou delas e recebeu apenas o extrato pós-CdR, que o GZ-CMD lê.
+**P38. O CdR em Python equivale ao protótipo em Java?**
 
-Fonte: `apendice_linkage_origem.tex` (`ap:linkage-origem`); `data/proveniencia_oliveira_meta.json`. Slides 8 e 9.
+Não. Os subescores e a nota final usados nos estudos são os do Python. A versão corrige erros do protótipo, diverge de Lucena em pontos documentados e acrescenta subescores. A equivalência não foi demonstrada, e o efeito em dados reais não foi medido. As divergências não alteram os estudos seguintes, que tomam a nota final como dada.
 
-### 42. Os dados são públicos? Qual é a posição do autor?
+Apoio: S11, R13. Fonte: `estudo1_comparador.tex:128`.
 
-O autor integra o LinkDataPop no projeto dos CAAE 43856720.1.0000.5286 e 43856720.1.3001.5279. O Zenodo é público com arquivos de acesso restrito, mediante solicitação e acordo de uso. O repositório contém agregados e escores/decisões por pseudônimo, sem *label* nem valores de campo; o pseudônimo não garante anonimização. A licença MIT vale somente para o código. A transferência internacional tem limitação ética declarada.
+**P39. Bastam 500 pares sintéticos?**
 
-Fonte: `capitulo_dados.tex`, Acesso e aspectos éticos (`sec:dados-acesso-etica`); `apendice_pacote.tex`. Slides 27 e 42.
+O lote não pretende representar os dados: foi construído para exercitar casos de fronteira, em dois sublotes de 250 pares, um ASCII e outro com acentos, com semente fixa e sem registros reais. Por isso o valor de 11,2% não estima a concordância no extrato. A comparação com registros reais não foi feita, e essa é a limitação declarada.
 
-### 43. O que falsificaria a hipótese central?
+Apoio: S11, R13. Fonte: `estudo1_comparador.tex:31`, `:71`, `:134`.
 
-Prospectivo, não testado: outra coorte, referência cega, ordenação e orçamento prévios. Probabilidade calibrada (O3) deve atingir recuperação de P com pelo menos 25% menos revisões que escore do OpenRecLink (O1), pelo limite inferior do IC 95% entre partições predefinidas, nas duas metas. Não atingir refuta a hipótese. Margem fixada com dados à vista. Quatro ações: ganho acima da amplitude entre réplicas, 9 a 21 e 21 a 29 perdas.
+**P40. As diferenças afetam estudos que usaram o protótipo em Java?**
 
-Fonte: `conclusao.tex`, abertura; `estudo4_gzcmd.tex`, Discussão (`sec:e4-discussao`); `data/comparador_mesma_carga.csv` como referência de desenvolvimento, não teste do critério.
+A tese cita o trabalho de Paiva (2025) entre os que usaram o protótipo em Java. Os erros do primeiro tipo podem alterar a nota final e a seleção dos potenciais pares, mas o efeito não foi medido em dados reais, e nenhum efeito específico é atribuído a esse trabalho. Os subescores de endereço do Python derivam de critérios que Paiva acrescentou à versão em Java.
 
-### 44. O que o registro interno prova sem critério de sucesso?
+Apoio: R13. Fonte: `estudo1_comparador.tex:29`, `:95`.
 
-Documenta escolhas declaradas em determinada versão, não comprova hipótese nem prioridade científica com carimbo independente. Não havia critério de sucesso; o comparador era conhecido, o código original falta no git e houve emendas registradas no arquivo de registro. A leitura como resultado negativo é posterior. Seriam necessários protocolo público anterior aos resultados, código recuperável e autorizações verificáveis.
+### Validação, poder e próximos passos
 
-Fonte: `estudo4_gzcmd.tex:316,322,326,328,672`; `gzcmd/prereg_arranjo_corte.yaml:256-259,277`; `gzcmd/M_arranjo_corte_desvios.md`.
+**P41. Como a hipótese seria validada em outra coorte?**
 
-### 45. Há validação fora desses dados?
+Em outra coorte ou período, com ordenação e orçamento fixados antes dos desfechos e referência cega independente. O registro declara, antes do acesso aos dados, a ordenação, o orçamento e o ponto de parada. A generalização para outras localidades, períodos e pares de bases depende de revalidação com referências locais.
 
-Não. OOF e partições agrupadas são avaliações internas da mesma coorte. P reutiliza respostas das coortes que estimaram o erro do revisor; o filtro combina respostas de datas diferentes, com erros anteriormente conhecidos. A estabilidade mantém as respostas do LLM fixas. Validação externa exigiria outra coorte, referência independente, protocolo registrado e revisão humana observada, sem seleção retrospectiva da fila ou das instruções.
+Apoio: S23. Fonte: `conclusao.tex:75`, `:97`, `:99`.
 
-Fonte: `estudo4_gzcmd.tex:320,328,334,668,670`; `conclusao.tex:59,76`.
+**P42. O tamanho da coorte nova está definido?**
 
-### 46. Em que direção atua o viés de verificação?
+Não. O intervalo da diferença entre O3 e O1 incluiu zero nas três metas, então o tamanho deve vir de cálculo de poder, que tome a variabilidade observada como ponto de partida e o número de pares verdadeiros abaixo do corte da nova coorte. O poder dos testes de equidade também não foi calculado.
 
-Se a revisão seguiu o escore do OpenRecLink, favoreceria O1: os 36 PAR=2 concentram-se acima de −5,6485; O1 alcança todos em 2.521 revisões. A ordem não foi documentada. Se nota e subescores do CdR orientaram a revisão, hipótese de trabalho, o favorecimento alcança O2 a O4. Não há direção única demonstrada nem magnitude estimada; faltam revisão cega e casos não verificados.
+Apoio: S23. Fonte: `conclusao.tex:99`, `estudo5_equidade.tex:42`.
 
-Fonte: `capitulo_dados.tex:75,77`; `conclusao.tex:43`; `data/comparador_mesma_carga.csv:5`.
+**P43. O que a tese acrescenta à literatura, e como se compara a Lages e ao CIDACS-RL?**
 
-### 47. Quanto do F1 próximo de 0,93 reproduz o corte do OpenRecLink?
+A tese não reivindica a ordenação por escore com revisão manual, de Sariyar e Borg, 2010, nem o aprendizado ativo ou a revisão assistida por tecnologia. Acrescenta a comparação, posterior ao registro, entre ordenar e automatizar. No levantamento, nenhum estudo consultado teve como foco a região abaixo de um corte único. Lages e colaboradores trataram a faixa intermediária, com outros dados; a tese não comparou resultados com o CIDACS-RL.
 
-Não foi estimada uma fração causal do F1. Há decomposição: dos 67 verdadeiros positivos do RF+SMOTE, 62 são PAR=1 e cinco PAR=2; dos 27 recuperados contra a nota hipotética 8, 25 já eram aceitos pelo corte e dois vieram da revisão. O ganho contra a nota reproduz sobretudo aceitações do corte, sob vazamento de alvo e seleção de limiar no teste.
+Apoio: S24. Fonte: `conclusao.tex:63`, `capitulo2.tex:47`, `:61`.
 
-Fonte: `data/banca_b_recuperados_por_par.json`; `estudo3_estrategias.tex:99-101`.
+## Rastreabilidade
 
-### 48. Os CAAE cobrem nuvem, APIs, depósito e dispensa de TCLE?
+Números ditos na fala que não aparecem escritos no quadro correspondente, com a fonte na tese.
 
-Os pareceres identificados no texto cobrem o projeto; o depósito restrito depende de solicitação e acordo de uso. A transferência internacional não foi objeto de análise específica nos pareceres. Não há cobertura documentada de cada envio à nuvem ou API, nem comprovação de dispensa de TCLE aplicável a essas operações.
+| Quadro | Número falado | Fonte |
+| :- | :- | :- |
+| S02 | 4,8 por 100 mil habitantes, em 2024, terceiro maior entre as unidades da federação | `capitulo3.tex:5` |
+| S03 | 85,4%; 14,6%; 61.696 potenciais pares | `capitulo3.tex:9`, `:11` |
+| S06 | 75,0% e 43,1%; intervalo de confiança de 95%; seis variantes | `conclusao.tex:17`, `:5`, `:40` |
+| S07 | 2019 a 2022; 2013 a 2022; 247 pares verdadeiros e razão de 1 para 249; 93,4%; 40 pares verdadeiros no passo 11; campo PAR com 0, 1 e 2 | `capitulo_dados.tex:19`, `:57`, `:73`, `:81`; `tables/editorial/tab_blocagem_rendimento.tex:13` |
+| S11 | diferença de até 4 pontos | `estudo1_comparador.tex:71` |
+| S12 | sete classificadores; F1 médio de 0,880 a 0,918 entre nove estratégias; 67 contra 43; 25 dos 27; limiar de nota final 8 | `estudo2_classificadores.tex:11`; `conclusao.tex:13`; `estudo3_estrategias.tex:23`, `:25` |
+| S13 | 300 árvores; 30 atributos; 29 subescores; nota final de 5 a 9; 21.620 potenciais pares; 151 pares verdadeiros; AUC de 0,873 da nota final | `estudo4_gzcmd.tex:36`, `:40`; `capitulo3.tex:11` |
+| S14 | 29 e 51; 75,0%; 43,1%; O4 com 106 e 27; O2 com 11 e 4.163; eixo até 2.522 revisões; pontos do ASR em 96 e 17 revisões; precisão média 0,283 e 0,130; AUC 0,990 e 0,985; 23.443 e 2.521; cerca de 2.500 | `estudo4_gzcmd.tex:194`, `:196`, `:198`; `text/latex/figures/curva_esforco.pgf:285`, `:293`, `:319` |
+| S15 | 2.000 réplicas; medianas de 21 e 175 revisões a menos de O3 frente a O1; intervalo de 95%; F4 com 38 e 1.203; F3 com 35 e 894; faixa de 2.522 potenciais pares | `estudo4_gzcmd.tex:123`, `:194`, `:225`, `:229` |
+| S16 | orçamento de 17 revisões: F4 com 16, nota final do CdR com 9, O3 com 6 | `conclusao.tex:87` |
+| S17 | 344 ao modelo e 96 ao revisor humano; 25 aceitações; intervalo de 6,4 a 34,7; dez dos 21; 13 não recuperados (1, 6 e 6); 27 perdidos e 4 falsos positivos na confirmação | `estudo4_gzcmd.tex:147`, `:149`, `:311`, `:313`; `conclusao.tex:27` |
+| S18 | 121 e 125 revisões; 11 e 17 na confirmação; diferença de um par verdadeiro em 36; 13 contra 6 e 9 dos 22 com carga de 22; carga de 18 na outra réplica; VPP de 16,0% a 19,0% | `estudo4_gzcmd.tex:196`, `:271-273`, `:283`, `:297` |
+| S19 | 15 de 40 pares verdadeiros; dois dos 25; 47,5%; 14 pares verdadeiros encaminhados e limite de 77,5%; 71 e 176 pares verdadeiros | `estudo5_equidade.tex:42`, `:52`, `:54` |
+| S20 | 21 falsos positivos | `conclusao.tex:42` |
+| S21 | 2.522 potenciais pares | `conclusao.tex:71` |
+| S22 | razões 1:1 e 1:5 | `conclusao.tex:89` |
+| S23 | reduções pontuais de 75,0% e 43,1% | `conclusao.tex:97` |
+| S24 | anos 2010 e 2012 das referências | `conclusao.tex:63` |
 
-Fonte: `capitulo_dados.tex:27-33`; `sec:dados-acesso-etica`; `sec:dados-etica`.
+## Siglas e termos
 
-### 49. O que os intervalos do LLM e a seleção de modelos permitem concluir?
-
-Na vigilância, VPP de 16,0% tem IC de 6,4 a 34,7%; sensibilidade do filtro de 59,1%, IC de 38,7 a 76,7%. São estimativas internas e imprecisas. Dez modelos nas mesmas coortes e instruções v4 desenhadas após v3 introduzem maldição do vencedor. Não há correção desse otimismo. US$ 1,13 das novas execuções exclui cerca de US$ 76 do Claude Sonnet 5.5.
-
-Fonte: `data/arranjo_corte_vpp_llm.csv:2`; `estudo4_gzcmd.tex:461,541,578,668`.
-
-### 50. As 687 horas poupadas comparam a mesma meta?
-
-Não. Comparam 96 revisões de P com cenário de 2.156 revisões, que busca todos os vínculos, não os 23 recuperáveis de P na vigilância. Para 23, O1 requer 501 revisões, O3 125; P usa 96 mais 344 pares LLM. A hipótese de 20 minutos por par não foi medida. A comparação pertinente é de mesma recuperação e orçamento, não economia histórica.
-
-Fonte: `data/esforco_arranjo.csv:2`; `data/comparador_mesma_carga.csv:4,24`; `conclusao.tex:21`.
-
-### 51. Quantos registros de óbito distintos há entre os vínculos?
-
-Os 247 vínculos correspondem a 204 registros distintos do SIM; os 67 verdadeiros positivos do teste, a 60, e os 27 recuperados contra a nota 8, a 24. Vínculo é relação entre registros, não novo óbito. Os 13 e 27 PAR=2 perdidos são contagens por par. Quantos óbitos distintos representam e quantos mantêm outro vínculo aceito: não estimado nesta tese. Não se estima redução da subnotificação.
-
-Fonte: `data/banca_b_recuperados_por_par.json:2-3,26,37`; `data/arranjo_corte_par2.csv`; `estudo3_estrategias.tex:24,99-101`.
-
-### 52. Haneef (2022) trata de classificação de potenciais pares?
-
-Não. Haneef et al. (2022) é citado como diretriz para uso de aprendizado de máquina com dados vinculados na estimação de indicadores (capitulo3:14), não como estudo de classificação de potenciais pares.
-
-Fonte: `capitulo3.tex:14`; chave bibliográfica `Haneef2022guidelines`.
-
-### 53. Quais campos o LLM recebe? Há inversão de data?
-
-Recebe 14 dos 29 subescores: três de nome, três de nome da mãe, um de nascimento, seis de endereço e um municipal, além de compostos, nota e indicadores disponíveis. Faltam penalidade por nome comum da mãe, inversões de data e UF. A instrução v4 solicita evidências ausentes e usa nomes que não são chaves literais do dossiê. Não se mediu o efeito dessa incompatibilidade.
-
-Fonte: `data/dossie_campos_enviados.csv`; `tab:dossie-campos`; `apendice_prompts.tex`.
-
-### 54. A ablação prova ancoragem sem controle negativo?
-
-Não. É compatível com ancoragem ou abstenção generalizada. DeepSeek V4.1 Flash produziu zero NONMATCH em 1.845 revisões completas com v4 sem saídas do motor. Nos 18 selecionados, sem_pcal é nome histórico: retira somente model_outputs, preservando demais campos e prompt original, com versão não identificada nos originais nem nos agregados. Sem controle negativo com não vínculos, as transições não identificam mecanismo nem efeito sobre falsos positivos.
-
-Fonte: `data/ablacao_dossie_taxa_base.csv`; `sec:e4-ablacao-dossie`.
-
-### 55. Com o custo dos 17,5 segundos, P-MATCH vence O3?
-
-Não na vigilância e com decisões mantidas. O custo relativo é 17,5/1.200, aproximadamente 0,0146. P-MATCH usa 121 revisões mais 344c; O3, 125. A ordem inverte quando c supera 4/344, aproximadamente 0,0116. Com 0,0146, P-MATCH chega a 126,0, acima de 125, com a mesma recuperação. É cálculo condicional, não reexecução da política.
-
-Fonte: `data/custos_equivalentes_exploratorios.csv`; `data/exp2_latencias_revisores.csv`; `sec:e4-discussao`.
-
-### 56. O orçamento restringiu alguma decisão de P?
-
-Não no cenário principal. O limite humano direto era ilimitado; os lotes LLM de 344 na vigilância e 41 na confirmação ficaram abaixo dos limites de 2.000 e 1.000. A alocação gulosa sob escassez não foi exercitada por P. A varredura na base inteira é outro exercício e não demonstra desempenho do arranjo com orçamento restritivo.
-
-Fonte: `data/arranjo_corte_metricas.csv`; `gzcmd/gzcmd_v31_p_config.yaml`; `sec:e4-politica-v31`.
-
-### 57. Sem referência conhecida, como escolher fila e parada no serviço?
-
-As curvas retrospectivas não resolvem essa escolha sem supervisão. Seriam necessários orçamento e custos acordados com o profissional do serviço, amostra independente revisada às cegas e avaliação de filas e pontos de parada fora dos dados usados para escolhê-los. Uma probabilidade validada permitiria examinar o limiar de custo. Esse procedimento é proposta prospectiva, não implantação realizada nem escolha validada pela tese.
-
-Fonte: `sec:e4-mesma-carga`; `sec:concl-recomendacoes`; Proposição de duas ações.
-
-### 58. Quantos FP repetem COMPREC ou REFREC já aceito?
-
-Dos 21 FP de P na vigilância, um compartilha REFREC com um PAR=1 aceito acima do corte, nenhum compartilha COMPREC e 20 não compartilham nenhum dos dois. Na confirmação, nenhum dos quatro FP compartilha esses identificadores com essa referência. Cardinalidade N:1 e margem de conflito não foram implementadas; a contagem não examina conflitos entre novas aceitações nem estima quantos erros essa regra evitaria.
-
-Fonte: `data/fp_cardinalidade.json`; `sec:e4-regras-guarda`.
-
-### 59. Se o LLM não conhece o modo, o que diferencia os lotes do filtro?
-
-São réplicas estocásticas: mesma fila e instruções, respostas de fontes e datas diferentes, sem modo informado. No topo 125, 119 decisões coincidem e seis diferem, todas entre não vínculos. Em k=96, H é 22 e 18, respectivamente. A diferença de carga não demonstra efeito de um perfil decisório; H=22 pertence a uma réplica, não é propriedade estável do filtro.
-
-Fonte: `data/filtro_llm_concordancia_modos.csv`; `data/filtro_llm.csv`; `gzcmd/M4_prompt_v4.md`.
-
-### 60. Probabilidade que varia com threads é implantável?
-
-Não se demonstrou prontidão para implantação. A mudança máxima de P foi 0,65 no bloco numérico e 0,80 entre partições; semente e threads foram variados conjuntamente no primeiro. Fixar ambiente, versões e paralelismo é necessário para reprodução, mas não resolve a instabilidade entre amostras. Seria preciso validar decisões e limiares em dados novos antes de qualquer implantação.
-
-Fonte: `data/robustez_arranjo_resumo.csv`; `sec:e4-robustez`; `gzcmd/M_arranjo_corte_desvios.md`.
-
-### 61. Em 2027, qual versão do modelo reproduziria o resultado?
-
-Não há garantia de reprodução por alias. Foram registrados nomes e parâmetros, não snapshots imutáveis dos provedores. Quotas e descontinuação restringem o acesso; Kimi K3 não completou a coorte por esgotamento de cota. Retentativas após truncamento ou JSON inválido também reamostram a geração. As latências históricas não medem Haiku v4 sem saídas do motor. Uma versão futura exigiria nova avaliação.
-
-Fonte: `sec:e4-selecao-llm`; `sec:e4-limitacoes`; `scripts/run_exp2_anthropic.py`.
-
-### 62. Quem fixou C_FN=50? E se fosse 25?
-
-O autor fixou custos como preferências de decisão, não valores econômicos medidos. Na vigilância, C_FP/C_FN é 10/50; na confirmação, 100/20. Não houve varredura dessa razão no arranjo. Reduzir C_FN para 25 alteraria a comparação de perdas e poderia mudar ações; não se dispõe dessa reexecução. A aceitabilidade dos custos precisa ser discutida com o profissional do serviço.
-
-Fonte: `gzcmd/gzcmd_v31_p_config.yaml`; `sec:e4-politica-v31`; `sec:e4-limitacoes`.
-
-### 63. grey_low cobre 3 a 5 ou 5 a 6?
-
-No motor, cobre [5,6). As demais faixas são low abaixo de 5, grey_mid [6,7), grey_high [7,8), near_high [8,9) e high a partir de 9. Os intervalos diferentes do arquivo v3 não foram enviados pelo carregador e não redefinem o motor. Área cinza da nota designa somente [5,9); região abaixo do corte usa o escore do OpenRecLink.
-
-Fonte: `sec:e4-politica-v31`; `gzcmd/gzcmd_v3_config.yaml`; `apendice_prompts.tex`.
-
-### 64. Quais as consequências de FN e FP no fluxo da vigilância do óbito?
-
-FN faz um óbito de pessoa notificada parecer não notificado: pode gerar investigação desnecessária, notificação pós-óbito duplicada e manutenção do encerramento anterior. FP pode encerrar como óbito a notificação de outra pessoa e fazer parecer notificado um óbito sem notificação. A investigação não depende do vínculo. Em P, 19 dos 21 FP da vigilância atingem notificações não encerradas por óbito.
-
-Fonte: `capitulo1.tex`, vigilância do óbito; `data/equidade_arranjo_group_metrics.csv`; Oliveira (2026), p. 48.
-
-### 65. Qual seria o custo anual em comparação à rotina da SMS-Rio?
-
-Não estimado nesta tese. Os cenários de carga referem-se aos óbitos de 2019 a 2022, não a um ciclo anual. Os 20 minutos por par são hipótese, não medida. As 718 h 40 min e 840 h 40 min não foram comparadas ao volume de investigação já realizado no município; não constituem economia anual observada nem custo orçamentário do serviço.
-
-Fonte: `data/carga_abaixo_corte_horas.csv`; `data/esforco_arranjo.csv`; `capitulo_dados.tex`, período do SIM.
-
-### 66. Os 13 e 27 PAR=2 perdidos representam quantos óbitos sem outro vínculo?
-
-Não estimado nesta tese. São potenciais pares perdidos, não contagens de óbitos distintos. Um óbito pode manter outro vínculo aceito. Não foi produzida a contagem de REFREC distintos desses perdidos nem sua interseção com os vínculos mantidos; não se pode converter essas perdas em óbitos sem notificação associada.
-
-Fonte: `data/arranjo_corte_par2.csv`; `data/banca_b_recuperados_por_par.json`, cardinalidade do extrato.
-
-### 67. Como conciliar 21,4% de subnotificação com 204 entre 1.515?
-
-Oliveira encontrou 205 dos 959 óbitos por TB pulmonar sem notificação, 21,4%, no Rio de Janeiro entre 2019 e 2022. Os 204 são óbitos vinculados entre os 1.515 com candidato nos três passos exportados, após retirada de vínculos determinísticos, de um processo com 29 passos probabilísticos. Essa razão não estima subnotificação: população, seleção e etapa do processo são diferentes.
-
-Fonte: Oliveira (2026), p. 44; `data/extrato_resumo.csv`; `data/proveniencia_oliveira_meta.json`; `data/banca_b_recuperados_por_par.json`.
-
-### 68. A avaliação abrange causa associada, TB-HIV e toda a base do SIM?
-
-Não. O extrato inclui TB como causa básica, não menções como causa associada, inclusive TB-HIV. O desempenho nesse grupo é desconhecido. Os 1.515 registros do SIM têm ao menos um potencial par nos passos exportados; não são toda a base do SIM. A vigilância do óbito com menção de TB tem escopo mais amplo que o avaliado.
-
-Fonte: `data/extrato_resumo.csv`; `data/proveniencia_oliveira_meta.json`; `capitulo_dados.tex`, fontes e escopo; Oliveira (2026), protocolo de vigilância.
-
-### 69. A exclusão progressiva mudaria os candidatos se P decidisse desde o passo 6?
-
-Pode mudar. Os registros do Sinan já pareados são retirados dos passos seguintes; os candidatos dos passos 9 e 11 dependem das decisões anteriores na origem. P foi avaliado nesse universo fixo. Não se reconstruíram os candidatos que surgiriam ou desapareceriam sob suas decisões anteriores. O efeito de substituir o processo sequencial completo não foi estimado nesta tese.
-
-Fonte: `apendice_linkage_origem.tex`, exclusão progressiva; `data/par_por_passo.csv`; `capitulo_dados.tex`, limites do extrato.
-
-### 70. Por que foram escolhidos os passos 6, 9 e 11? Há transferência demonstrada?
-
-O critério de escolha não foi informado. O extrato disponível contém esses passos e 247 vínculos, de 2.549 pares no processo de origem. Não se demonstrou representatividade dos passos nem transferência para os demais, para a etapa determinística ou para outros municípios. A avaliação é condicionada aos candidatos recebidos, não mede a sensibilidade de toda a blocagem.
-
-Fonte: `data/proveniencia_oliveira_meta.json`, `nao_informados` e `total_pares_processo`; `data/extrato_resumo.csv`.
-
-### 71. A análise por sexo detecta erros da blocagem por sobrenome e sexo?
-
-Não. Os três passos exigem Soundex do último fragmento do nome; 9 e 11 também exigem sexo concordante. Sobrenome alterado ou sexo discordante pode impedir a geração de candidato. A análise restrita a vínculos conhecidos não detecta essa perda diferencial. Não foi relatada comparação de óbitos vinculados e não vinculados; o efeito sobre mulheres não foi estimado nesta tese.
-
-Fonte: `apendice_linkage_origem.tex`, chaves de blocagem; `estudo5_equidade.tex`, limitações.
-
-### 72. A vantagem observada da ordenação vale para qualquer meta de recuperação?
-
-Não. Na vigilância, para os 23 PAR=2 recuperáveis de P, O3 requer 125 revisões, O4 106 e O1 501. Para todos os 36, O1 requer 2.521 e O3 23.443. O2 requer 4.163 para 23. Esses resultados internos não demonstram vantagem universal da probabilidade nem da nota do CdR; a hipótese é gerada nos dados, não confirmada externamente.
-
-Fonte: `data/comparador_mesma_carga.csv`, metas de recuperação na vigilância.
-
-### 73. Os 21 FP são erros de identidade ou podem ser pares não examinados?
-
-São discordâncias com a referência operacional, não erros de identidade confirmados independentemente. PAR=0 inclui rejeitados ou não examinados. Dez dos 21 estão abaixo do limiar por passo, onde a revisão não está documentada. Se algum for vínculo não verificado, o VPP de 16,0% estará subestimado. A direção e a magnitude desse efeito não foram estimadas nesta tese.
-
-Fonte: `data/fp_arranjo_por_regiao.csv`; `data/arranjo_corte_vpp_llm.csv`; `capitulo_dados.tex`, referência operacional.
-
-### 74. Quem responde por um óbito não investigado após decisão automatizada?
-
-A responsabilidade não é transferida ao modelo. O profissional do serviço e a gestão precisam definir supervisão e encaminhamento; a tese não estabeleceu protocolo de responsabilização. Não examinado por orçamento não significa óbito não notificado nem autoriza excluir a investigação. O número de óbitos que ficariam sem investigação e a responsabilidade jurídica por casos concretos não foram estimados nesta tese.
-
-Fonte: `capitulo3.tex`, uso no serviço; `conclusao.tex`, recomendações e limitações.
-
-### 75. Qual estimador e quais atributos produziram o Experimento 1 do Estudo 4 histórico e o saneado?
-
-Random Forest com 200 árvores, profundidade 10, pesos balanceados e calibração sigmoide em validação cruzada interna no treino, não Platt da nota. A seleção histórica usou 100 atributos com MACD, 91 sem, incluindo SCORE e identificadores. O saneamento restringiu a 39 e 30. Retiraram-se conjuntamente campos brutos, identificadores e aliases; não se isolou causalmente o efeito do SCORE nem se provou ausência universal de vazamento.
-
-Fonte: `gzcmd/classifier.py`; `gzcmd/eval.py`; `data/ablation_comprec_allowlist_metadata.json`; `data/exp1_vazamento_comparacao.csv`.
-
-### 76. Quanto das 27 perdas decorre da hipótese de 5% de FP humano?
-
-A fração não foi estimada no arranjo. Com C_FP=100 e e_FP,h=0,05, L_H=6−4p: revisão supera não vínculo para p>0,25, contra p>0,05 sem erro humano. Na base inteira, essa hipótese reduz encaminhamentos diretos de 229 para 121 e sensibilidade esperada de 92,3% para 87,7%, com C_LLM=0,005. A avaliação assume especificidade humana perfeita, assimetria não medida.
-
-Fonte: `data/varredura_custos_confirmacao.csv`; `gzcmd/gzcmd_v31_p_config.yaml`; `data/cenarios_sensibilidade_humana.csv`.
-
-### 77. O teste t pareado é adequado com partições sobrepostas?
-
-As cinco partições reutilizam a mesma amostra e seus testes se sobrepõem. Parear MACD com e sem na mesma partição não torna as rodadas independentes. Os valores de p podem ser otimistas e são exploratórios, sem correção por múltiplas comparações. O saneamento removeu atributos indevidos, mas não resolveu essa dependência. Inferência confirmatória exigiria desenho e referência independentes.
-
-Fonte: `data/exp1_testes_t_allowlist.csv`; `data/ablation_comprec_allowlist_metadata.json`; `scripts/exp1_testes_t.py`.
-
-### 78. As proposições demonstram a vantagem da política de quatro ações?
-
-Não. As proposições exigem probabilidade verdadeira e calibrada, perdas aditivas e hipóteses específicas sobre revisão. A regra sob orçamento trata de duas ações, revisor humano e não vínculo. Sua coincidência com ordenação por probabilidade não comprova a política de quatro ações, com guardas e proporções de erro por faixa. A avaliação empírica dessas quatro ações permanece necessária e não demonstrou superioridade.
-
-Fonte: `apendice_formalizacao.tex`, hipóteses e regra sob orçamento; `data/comparador_p_match_humano.csv`.
-
-### 79. Que conceito de equidade foi avaliado? Disparidade é iniquidade?
-
-Equidade em saúde envolve evitar diferenças injustas e evitáveis. A tese mediu disparidades de sensibilidade e VPP em estratos demográficos e operacionais da referência disponível; não demonstrou que cada diferença fosse evitável ou injusta. Raça/cor não estava disponível. Ausência de rejeição estatística não comprova equidade, e diferença por passo não equivale a iniquidade em saúde. Essa classificação normativa não foi estimada nesta tese.
-
-Fonte: `estudo5_equidade.tex`, objetivo e limitações; `data/equidade_arranjo_den30_recomputacao.json`.
-
-### 80. Por que v3.1 e P não usam MACD no calibrador se o Experimento 1 do Estudo 4 saneado reduz 55% das revisões?
-
-Na sensibilidade *post hoc*, MACD, medidas contínuas de diferença de datas, exigiram 46/118/3.040 revisões para nove/23/36 vínculos, contra 29/125/23.443 sem elas; a precisão média (AP) caiu de 0,283 para 0,261. Não há melhora uniforme nem substituição retrospectiva da fila. A redução de 55,0% do Experimento 1 do Estudo 4 não se transfere: não foi avaliado nesta tese no arranjo recalibrado. Validar essa extensão continua como trabalho futuro.
-
-Fonte: `data/exp1_vazamento_comparacao.csv`; `data/pcal_ml_oof.json`; `data/arranjo_corte_metadata.json`; `data/sensibilidade_o3_macd.csv`.
-
-### 81. Combinar as ordenações não seria melhor?
-
-Na análise *post hoc*, F3 recuperou 36 com 1.777 revisões e 23 com 64; F4, 36 com 1.387, contra 2.521 pelo escore. O *bootstrap* agrupado favorece F4 frente ao escore nas metas nove e 36, não 23. Frente à probabilidade calibrada, não demonstrou vantagem. Recomenda-se F4 no lugar do escore, a validar com referência cega; parte do ganho depende da faixa verificada.
-
-Fonte: `data/fusao_filas.csv`, F3/F4/O1; `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`.
-
-### 82. O algoritmo consegue escolher a ordenação sozinho?
-
-A fila adaptativa aprende com as próprias revisões, sem consultar respostas futuras. Para recuperar 23 vínculos, a média foi de 96,38 revisões, com percentis P10 a P90 de 85 a 114, contra 125 pela probabilidade calibrada. Esses percentis descrevem repetições, não intervalos de confiança. Explorar ordenações menos produtivas também consome revisões; a vantagem depende da meta e requer validação, pois a análise é *post hoc* e presume revisor perfeito.
-
-Fonte: `data/fusao_filas.csv`, A1/A2, `revisoes_23`; `data/fusao_filas_metadata.json`.
-
-### 83. Dá para dispensar o revisor humano?
-
-Não como conclusão desta tese. Uma operação sem revisor humano no *linkage* seria possível apenas sem encerramento automático: vínculos prováveis seguiriam à investigação do óbito pela vigilância, com validação humana pontual por amostra. A responsabilidade do serviço permanece, e essa operação não foi avaliada. A coorte nova deve avaliar a referência amostral, a correção dos *labels* de LLM e a regra de parada antes de qualquer adoção.
-
-Fonte: `text/latex/conclusao.tex`, seção Trabalhos futuros; proposta não avaliada.
-
-### 84. Um modelo maior resolveria?
-
-Não demonstrado. Claude Haiku 5.5, Claude Sonnet 5.5, Claude Opus 5.5 e Claude Fable 5.1 tiveram VPP de 16,0%, 19,0% (21 resultados), 19,0% e 18,2% entre as 25 aceitações do Haiku na vigilância (V1). Houve mudanças de abstenção, sem resolver a aceitação autônoma. Dossiê e referência limitam a interpretação; custos dos maiores foram superiores, sem comparação controlada.
-
-Fonte: `data/probe_frontier_agregado.csv`, estrato S1 (V1 no texto); `data/probe_frontier_custos.csv`; `data/probe_haiku_sonnet_coorte.csv`; tabela de apoio abaixo.
-
-### 85. E se a referência estiver errada?
-
-C1: VPP de 50,0% requer reclassificar 40,5% dos FP uniformemente, sem retirar PAR=2; na grade, 50,0%. C2: 13 e 27 perdas mudam com 5,0% de remoção; a 20,0%, restam 10,4 e 21,6. C3, O3 com margem de 25%, e C4, F4 frente a O1, mantêm medianas nos cenários; C3 cruza zero no P97,5 de um cenário. Revisão cega independente, impossível antes da defesa, integra o protocolo da nova coorte.
-
-Fonte: `data/vies_referencia.csv`; `data/vies_referencia_viradas.csv`; soluções algébricas e convenções em `text/latex/tables/editorial/tab_cap8_vies_referencia.tex`.
-
-### 86. A fusão é melhor que a probabilidade calibrada?
-
-Não demonstrado. Nenhum intervalo de 95,0% das diferenças F4 menos O3 ficou inteiramente abaixo de zero no *bootstrap* agrupado por óbito. Frente ao escore, as medianas foram 38 e 1.203 revisões a menos nas metas nove e 36, com intervalos negativos, mas não na meta 23. Parte do ganho na cauda depende da faixa verificada. São probabilidades e referência fixas, com metas híbridas; não validação independente.
-
-Fonte: `data/fusao_robustez_bootstrap.csv`; `data/fusao_robustez_faixa.csv`; `data/fusao_robustez_metadata.json`.
-
-### 87. O que mais tentou para melhorar a fila?
-
-Contexto por óbito com MACD: 1.298 revisões para recuperação integral, sem superioridade demonstrada sobre F4. Propagação por pessoa: dois vínculos. LLM como evidência: VPP de 42,3%, insuficiente para dispensar revisão. Dossiê ampliado: três dos 21 FP retirados (mínimo cinco), dois PAR=2 recuperados (mínimo três), VPP de 22,2% (mínimo 35,0%); critério não atingido. Explorações, não substituição da fila recomendada.
-
-Fonte: `data/contexto_obito.csv`, O3_contexto_MACD; `data/contexto_robustez_bootstrap.csv`; `data/propagacao_pessoa.csv`, R1_UNIAO/TOTAL; `data/llm_evidencia.csv`, vigilancia/O3-post/VPP; `data/probe_dossie_v5_agregado.csv`, vigilancia S1/S2 v5 vs v4_pareado; `data/probe_dossie_v5_metadata.json`, utility.
-
-### 88. Por que não adotou a fila com contexto, se ela foi melhor na cauda?
-
-A combinação de contexto por óbito e MACD teve suporte dos intervalos somente contra O1, escore do OpenRecLink, na meta de 36 vínculos. Não demonstrou vantagem sobre F4 nem sobre a probabilidade calibrada. Foram examinadas múltiplas variantes nos mesmos 36 vínculos, sob referência e probabilidades fixas. A fila vai para a coorte nova como comparação secundária pré-registrada, não como substituição retrospectiva da recomendação.
-
-Fonte: `data/contexto_robustez_bootstrap.csv`, CM-O1/CM-O3/CM-F4; `data/contexto_obito.csv`; `gzcmd/M_v4_candidata.md`.
-
-### 89. O que é a v4 candidata?
-
-É o registro que fixa, antes dos dados novos, a comparação primária da ordenação pela probabilidade calibrada com o escore do OpenRecLink e as secundárias com F4 e fila com contexto e MACD. Não é versão já validada nem alteração retrospectiva da hipótese ou da margem. A avaliação na coorte nova exige referência cega e protocolo prévio, preservando a distinção entre exploração e confirmação.
-
-Fonte: `gzcmd/M_v4_candidata.md`; `text/latex/conclusao.tex`, Trabalhos futuros.
-
-## Figuras e critérios
-
-### Apoio às respostas 84 a 86
-
-No exame de modelos, V1 reúne as 25 aceitações do Haiku na vigilância; V2, os 13 PAR=2 não aceitos; V3, os 24 PAR=0 não aceitos pelo Haiku e aceitos pelo Sonnet; V4, a amostra de 88 dos demais potenciais pares da vigilância. V1 a V4 correspondem aos estratos S1 a S4 no CSV, não às etapas S1 a S3 do arranjo. A tabela abaixo usa a amostra total, diferentemente da resposta 84, restrita a V1.
-
-Os custos são estimativas por uso e preço, não fatura nem comparação controlada: Haiku usa Batch no probe, Opus e Fable combinam Batch e chamadas diretas, e Sonnet reutiliza a coorte histórica direta. O denominador conta decisões válidas por passada, incluindo réplicas, não pares únicos. Não se atribui causalmente o desempenho ao tamanho do modelo.
-
-| Modelo | Vigilância do probe: VP/FP | VPP (%) | Custo por par revisado (US$) | Escopo do custo |
-| :-- | :-- | --: | --: | :-- |
-| Claude Haiku 5.5 | 4/21 | 16,0 | 0,0014 | probe |
-| Claude Sonnet 5.5 | 5/19 | 20,8 | 0,0360 | coorte histórica |
-| Claude Opus 5.5 | 4/17 | 19,0 | 0,0371 | probe |
-| Claude Fable 5.1 | 5/18 | 21,7 | 0,1082 | probe |
-
-Fonte: `data/probe_frontier_agregado.csv`, TOTAL_AMOSTRA; `data/probe_frontier_custos.csv`. Na coorte original comum Haiku/Sonnet, a concordância foi de 87,0% na vigilância (1.410 dossiês) e de 85,5% na confirmação (435), sem demonstração de superioridade do maior (`data/probe_haiku_sonnet_coorte.csv`, original/TOTAL).
-
-Figuras reaproveitadas, sem alterar os originais:
-
-| Slide | Arquivo | Uso e ressalva |
-| :-- | :-- | :-- |
-| 20 | `text/slides/figures/curva_esforco.pgf` | Curva exploratória por script, com pontos de P |
-| 9 | `figures/fig_cdr_gui_mapeamento.png` | Interface do Comparador de Registros, versão 0.1 (*commit* 3b43598), dados sintéticos |
-| 31 | `text/latex/figures/fig_cap8_cascata_v31.png` | Cascata por REFREC sobre a base inteira (comparação) |
-| 36 | `figures/imbalance_sensitivity.pgf` | Estratégias de balanceamento no Random Forest |
-| 37 | `text/latex/fig_doc/epi_deteccao.pgf` | Detecção no teste da ablação, não arranjo nem cascata |
-
-A captura do slide 9 está em `../../figures/fig_cdr_gui_mapeamento.png`, caminho relativo ao diretório de compilação `text/slides`, sem `graphicspath` adicional. A tabela do slide 25 reduz a tabela R2 e incorpora Paiva (2025) do texto adjacente, indicando que utilizou base distinta da desta tese, sem lhe atribuir a autoria do protótipo Java.
-
-Critérios editoriais: menção ao referencial clássico restrita ao slide 8; probabilidade recalibrada abaixo do corte; arranjo P principal e cascata REFREC sobre a base inteira como comparação; corte operacional 211/247 por construção do *label*; curva de esforço exploratória *post hoc*, não registrada; F1 0,943 do XGBoost isolado e 0,958 do híbrido OR no fluxo Modal; perdas de 13 e 27 vínculos junto do acréscimo automático; limitações antes das conclusões; equivalência Java parcial executada e comparação com Lages não realizada; sensibilidade 2×2 e QW1 local distinguidos dos resultados históricos; exportador com HMAC implementado, matriz não depositada; área cinza da nota apenas para [5,9). As tabelas foram reduzidas no arquivo de slides.
-
-Os quadros de reserva apoiam a discussão de métodos e limites. As remissões usam seções e agregados, não a paginação do PDF.
-
-### Rastreabilidade dos números do arranjo
-
-Linhas incluem o cabeçalho. A coluna `publicada` dos CSVs designa a cascata sobre a base inteira (comparação). Percentuais e custos foram arredondados apenas para apresentação.
-
-| Número ou conjunto de números | CSV:linha em `data/` |
-| :-- | :-- |
-| 61.696, 247, corte 211/247, 85,4% por construção, 36 abaixo | `arranjo_corte_metricas.csv:2` |
-| Até 61.485 potenciais pares na revisão integral, diretamente do campo `pares_humano` | `arranjo_corte_metricas.csv:8` |
-| Vigilância P: 211 pelo corte e 4 pela política, total 215; 87,0%, 21 FP, 13 perdidos, 19 vínculos em 96 encaminhamentos, 344 LLM, US$ 0,94, sensibilidade humana de 95%, 99% e 100%: 94,35%, 94,66% e 94,74% | `arranjo_corte_metricas.csv:2,12`; `arranjo_corte_par2.csv:7`; `cenarios_sensibilidade_humana.csv:5-7` |
-| Confirmação P: 211 pelo corte e 8 pela política, total 219; 88,7%, 4 FP, 27 perdidos, 1 vínculo em 17 encaminhamentos, 41 LLM, US$ 0,11, sensibilidade humana de 95%, 99% e 100%: 89,05%, 89,06% e 89,07% | `arranjo_corte_metricas.csv:20,30`; `arranjo_corte_par2.csv:16`; `cenarios_sensibilidade_humana.csv:44-46` |
-| Fechamentos (211+4)+13+19=247 e (211+8)+27+1=247 | `arranjo_corte_metricas.csv:2,12,20,30` |
-| PAR=2, aceitos/humano/perdidos: P 4/19/13 contra cascata 10/17/9; P 8/1/27 contra cascata 8/11/17 | `arranjo_corte_par2.csv:3,7,12,16` |
-| Revisão integral de até 61.485: 99,27%, 99,85% e 100,00%, nos cenários humanos de 95%, 99% e 100% | `cenarios_sensibilidade_humana.csv:2-4` |
-| Nenhum MATCH de P pelo motor abaixo do corte | `arranjo_corte_s1_resumo.csv:2-15,78-88` |
-| Aceitações do LLM: 25 (4+21) e 12 (8+4) | `arranjo_corte_s1_resumo.csv:2-15,78-88` e `arranjo_corte_metricas.csv:2,12,30` |
-| Área cinza da nota [5,9): 21.620, 151, corte 123; P 127 nos dois modos, 4 além do corte; base inteira 113/65 | `arranjo_corte_metricas.csv:3,5,13,23,31` |
-| Base inteira v3.1: 194/34/15/38/111/347, 78,5%, IC 73,0 a 83,2%, US$ 0,92 | `arranjo_corte_metricas.csv:4` |
-| Base inteira v3.1: 132/0/28/87/127/44, 53,4%, IC 47,2 a 59,6%, US$ 0,12 | `arranjo_corte_metricas.csv:22` |
-| P-Platt: 217/3/77/110, US$ 0,30 e 13 perdidos; 219/3/16/25 | `arranjo_corte_metricas.csv:14,32` |
-| A3: 219/19/100/367 e 219/5/22/32 | `arranjo_corte_metricas.csv:16,34` |
-| P-PAR2-grey: 211/21/116/265 e 217/0/22/18 | `arranjo_corte_metricas.csv:18,36` |
-| B1: 194/40/115/374 e 131/4/131/70 | `arranjo_corte_metricas.csv:6,24` |
-| A posteriori, sem registro interno: 221/34/90/330 e 219/0/51/25; 9 perdidos na vigilância contra 13 de P; 17 na confirmação | `arranjo_corte_aposteriori.csv:4,12`; `arranjo_corte_metricas.csv:10,12` |
-| VPP feminino/masculino em P: 86,3/93,3%; base inteira (comparação): 87,9/84,0% | `equidade_arranjo_group_metrics.csv:2,3,26,27` |
-| Sensibilidade no passo 11 em P: 42,5/47,5%; passos 6/9: 95,0/96,1% e 96,3/96,9% | `equidade_arranjo_group_metrics.csv:17-19,65-67` |
-| BH após mínimo de 30 nos dois denominadores: P vigilância 3/26 | `equidade_arranjo_den30_recomputacao.json:10-13` |
-| BH após o mesmo filtro: P confirmação 2/26 | `equidade_arranjo_den30_recomputacao.json:18-21` |
-| BH após o mesmo filtro, base inteira: vigilância 6/28 e confirmação 1/21 | `equidade_arranjo_den30_recomputacao.json:26-29,34-37` |
-| 211 aceitos por construção; diferenças de sensibilidade dependem da proporção de PAR=2 em cada subgrupo, definida pelo corte, e da recuperação desses 36; diferenças de VPP dependem dos 21 e 4 FP abaixo do corte | `arranjo_corte_metricas.csv:2,12,30`; `equidade_arranjo_group_metrics.csv`; `equidade_arranjo_global.csv:2,4` |
-| Na vigilância, não aceitos por passo 11/6/9: 23/4/5, todos PAR=2; no passo 11, 42,5% em P contra 45,0% na base inteira (comparação) | `equidade_arranjo_group_metrics.csv:17-19,41` |
-| Passo 11: 25 dos 36 vínculos com PAR=2; P aceita 2/25 na vigilância e 4/25 na confirmação | `par_por_passo.csv:8-10,17-19,26-28,53-55` |
-| Corte isolado nos passos 11/6/9: 15/40 (37,5%), 76/80 (95,0%) e 120/127 (94,5%) | `par_por_passo.csv:5-10,14-19,23-28` |
-| PAR=2 aceitos nos passos 6/9/11: 0/2/2 na vigilância e 1/3/4 na confirmação | `par_por_passo.csv:8,17,26,35,44,53` |
-| Pendentes de P∪B1 com chamada nova: 10 na vigilância e 14 na confirmação, não de P isolado; reutilização histórica e ausência de avaliação prospectiva | `arranjo_corte_s1_metadata.json:477-481`, campo `pending_P_union_B1_by_mode`; `arranjo_corte_metadata.json:355,357` |
-| Cenários de carga sob ordem hipotética: 2.156 por passo e 2.522 global; escore do OpenRecLink global ≥ −5,6485, sob hipótese não documentada de revisão decrescente de escore do OpenRecLink | `carga_abaixo_corte.csv:5,9`; precisão em `fusao_robustez_metadata.json` |
-| Hipótese de 20 min por par: por passo, pelo menos 718 h 40 min; global, pelo menos 840 h 40 min; não são tempos observados | `carga_abaixo_corte_horas.csv:3,2` |
-| P, vigilância: VPP do LLM 4/25 = 16,0%, IC 6,4 a 34,7%; 9,06 FP previstos contra 21 observados | `arranjo_corte_vpp_llm.csv:2` |
-| P, confirmação: VPP 8/12 = 66,7%, IC 39,1 a 86,2%; P-Platt vigilância: 4/7 = 57,1%, IC 25,0 a 84,2% | `arranjo_corte_vpp_llm.csv:8,3` |
-| Perdas de P por guarda/custo/LLM: 1/6/6 na vigilância e 1/22/4 na confirmação | `arranjo_corte_perdas_mecanismo.csv:2-4,50-52` |
-| Perda de 13/36 = 36,1% e 27/36 = 75,0% dos PAR=2 | `arranjo_corte_par2.csv:7,16` |
-| Dominância de P-Platt: vigilância nos blocos numérico (N)/partição (R), 7/20 e 4/20; confirmação 7/20 e 5/20; inversa 0/20 em todos os casos; FP menores em 20/20 nos dois blocos da vigilância | `robustez_arranjo_resumo.csv:2-5` |
-| Vigilância: P-Platt perde em mediana 1/2 vínculos a mais, blocos numérico (N)/partição (R) | `robustez_arranjo_resumo.csv:404,488`, diferenças P menos P-Platt −1/−2 |
-| P perde mais PAR=2 que o braço *a posteriori* em 20/20 e 19/20 na vigilância e 20/20 nos dois blocos da confirmação | `robustez_arranjo_resumo.csv:6,8,10,12`, proporções multiplicadas por 20 |
-| P na vigilância, bloco de partição (R): FP de 9 a 31, perdas de 9 a 21 e Jaccard mediano 0,43 em relação à partição original | `robustez_arranjo_resumo.csv:270,278,654` |
-| VPP por sexo de P na vigilância sem rejeição na família den30: p ajustado BH de 0,360 | `equidade_arranjo_den30_pairwise_tests.csv:3` |
-| Mudança máxima da probabilidade de P: 0,65 no bloco numérico (N) e 0,80 no bloco de partição (R) | `robustez_arranjo_resumo.csv:632,652` |
-| Estabilidade: 242 potenciais pares novos, US$ 0,6255, arredondados para US$ 0,63 | `robustez_arranjo_metadata.json:206,208` |
-| Revisões humanas equivalentes na vigilância, sob revisor perfeito: P 307,72; O3 125; P com MATCH ao humano 122,72 | `custos_equivalentes_exploratorios.csv:2-4` |
-| Perdas totais, com FN: vigilância P 957,72, O3 775, P-MATCH 772,72, O2 na mesma carga 1.296 (12 vínculos); confirmação P 957,2, O3 569, P-MATCH 569,2 e O2 551 (nove vínculos) | `custos_equivalentes_exploratorios.csv:2-5,8-10,12` |
-| C_FP/C_FN por modo: vigilância 10/50, confirmação 100/20; C_H=1 e C_LLM=0,005 | `custos_equivalentes_exploratorios.csv:2,8` |
-| Diferenças P menos P-Platt de perda aplicada às medianas marginais: 144,1/94,4 na vigilância e 101,6/143,0 na confirmação; variação máxima mediana de p no bloco numérico: 0,46/0,17 | `robustez_perda_ponderada.csv:2-9` |
-| Filtro em k=96, H=22: sensibilidade 13/22 = 59,1%, IC de Wilson 38,7 a 76,7%; 9 de 22 descartados; VPN 87,8%, IC 78,5 a 93,5%; perda 1.172,5 contra O3 796 | `filtro_llm.csv:5`; `estudo4_gzcmd.tex:578`, cálculo da tese; `custos_equivalentes_exploratorios.csv:7` |
-| Recuperados contra nota 8: 25 PAR=1 e dois PAR=2; 24 registros distintos; 247 vínculos correspondem a 204 registros distintos; VP do RF+SMOTE: 62 PAR=1, cinco PAR=2, 60 registros distintos | `banca_b_recuperados_por_par.json:2-3,18-37` |
-| Fluxo Modal: XGBoost isolado 0,943; OR 0,958 (68/0/6); AND, regras seguidas de ML e consenso com regras 0,896; ML seguido de regras 0,825 (52/0/22) | `ablation_results.csv:74,87,91,100,103`; `text/latex/tables/tab_ablation_best_category.tex:14-20` |
-| Execuções novas: US$ 1,13 (0,2448 do arranjo inicial + 0,6255 da análise de estabilidade + 0,2633 do filtro LLM = 1,1336), sem representar fatura e sem pessoal e infraestrutura | `arranjo_corte_metadata.json:285,293,330,338`, soma dos custos novos de S2 e suplemento; `robustez_arranjo_metadata.json:208`; `filtro_llm_metadata.json:171`, `new_execution.total_cost_estimate_usd`; `estudo4_gzcmd.tex:539` |
-
-Os resultados históricos de v3, dos estudos 1 a 3 e da restrição na base inteira têm escopos distintos dos resultados do arranjo, conforme as fontes indicadas nos respectivos quadros.
-
-### Comparação exploratória por orçamento
-
-Análises exploratórias *post hoc*, não registradas. A curva não valida uma política. O3 e O4 usam o mesmo XGBoost OOF; revisor perfeito é hipótese; os cenários humanos consideram 95%, 99% e 100% de sensibilidade, com especificidade perfeita assumida. Se a revisão histórica seguiu o escore, o viés de verificação favoreceria O1.
-
-| Modo | Ordenação | Revisões K1 | PAR=2 em K1 | k mínimo para igualar P | PAR=2 de P com revisor perfeito | FP de P | CSV:linha |
-| :-- | :-- | --: | --: | --: | --: | --: | :-- |
-| vigilancia | O1_SCORE | 96 | 19 | 501 | 23 | 21 | `comparador_mesma_carga.csv:2` |
-| confirmacao | O1_SCORE | 17 | 3 | 51 | 9 | 4 | `comparador_mesma_carga.csv:7` |
-| vigilancia | O2_CdR | 96 | 12 | 4163 | 23 | 21 | `comparador_mesma_carga.csv:12` |
-| confirmacao | O2_CdR | 17 | 9 | 11 | 9 | 4 | `comparador_mesma_carga.csv:17` |
-| vigilancia | O3_p_cal_ml | 96 | 22 | 125 | 23 | 21 | `comparador_mesma_carga.csv:22` |
-| confirmacao | O3_p_cal_ml | 17 | 6 | 29 | 9 | 4 | `comparador_mesma_carga.csv:27` |
-| vigilancia | O4_P_recalibrada | 96 | 22 | 106 | 23 | 21 | `comparador_mesma_carga.csv:32` |
-| confirmacao | O4_P_recalibrada | 17 | 5 | 27 | 9 | 4 | `comparador_mesma_carga.csv:37` |
-
-### Esforço, somente como cenário
-
-A referência de 2.156 revisões pressupõe ordem decrescente de escore do OpenRecLink, que não foi documentada, e meta diferente da recuperação de P. Para os mesmos 23 vínculos na vigilância, O1 requer 501 revisões e O3 125, contra 96 de P mais 344 pares LLM (`comparador_mesma_carga.csv:4,24`). Horas são ordem de grandeza a 20 min por par, não medida. As 687 horas poupadas abaixo descrevem somente aquele cenário, não economia histórica nem comparação de mesma recuperação. Para O3, FP é zero sob revisor perfeito; não se divide por zero. K2 equipara avaliações totais de P, não orçamento humano.
-
-| Modo | Braço | Carga | Revisões | Horas | Horas poupadas | Horas poupadas por vínculo não recuperado | Horas poupadas por FP | CSV:linha |
-| :-- | :-- | :-- | --: | --: | --: | --: | :-- | :-- |
-| vigilancia | P | K1_humana | 96 | 32 | 687 | 52,82 | 32,70 | `esforco_arranjo.csv:2` |
-| vigilancia | O3 | K1_humana | 96 | 32 | 687 | 49,05 | não se aplica | `esforco_arranjo.csv:3` |
-| vigilancia | P | K2_total | 96 | 32 | 687 | 52,82 | 32,70 | `esforco_arranjo.csv:4` |
-| vigilancia | O3 | K2_total | 440 | 147 | 572 | 57,20 | não se aplica | `esforco_arranjo.csv:5` |
-| confirmacao | P | K1_humana | 17 | 6 | 713 | 26,41 | 178,25 | `esforco_arranjo.csv:6` |
-| confirmacao | O3 | K1_humana | 17 | 6 | 713 | 23,77 | não se aplica | `esforco_arranjo.csv:7` |
-| confirmacao | P | K2_total | 17 | 6 | 713 | 26,41 | 178,25 | `esforco_arranjo.csv:8` |
-| confirmacao | O3 | K2_total | 58 | 19 | 699 | 43,71 | não se aplica | `esforco_arranjo.csv:9` |
-
-### FP por região do escore do OpenRecLink, análise exploratória
-
-Global: limiar operacional −5,6485 para os 36 PAR=2, incluindo o bloco com escore aproximadamente −5,64846; o literal −5,648 seleciona 2.495 candidatos e 31 PAR=2. As contagens de FP da tabela preservam o limiar literal da análise original. Por passo: limite compatível com PAR=2 naquele passo. Acima ou igual e abaixo são posições no escore, não prova de exame histórico pela revisão clerical de origem. Fonte da precisão: `data/fusao_robustez_metadata.json`.
-
-| Modo | Limiar | Região SCORE | FP | CSV:linha |
-| :-- | :-- | :-- | --: | :-- |
-| vigilancia | global | maior_ou_igual | 17 | `fp_arranjo_por_regiao.csv:8` |
-| vigilancia | global | menor | 4 | `fp_arranjo_por_regiao.csv:9` |
-| vigilancia | por_passo | maior_ou_igual | 11 | `fp_arranjo_por_regiao.csv:16` |
-| vigilancia | por_passo | menor | 10 | `fp_arranjo_por_regiao.csv:17` |
-| confirmacao | global | maior_ou_igual | 4 | `fp_arranjo_por_regiao.csv:24` |
-| confirmacao | global | menor | 0 | `fp_arranjo_por_regiao.csv:25` |
-| confirmacao | por_passo | maior_ou_igual | 4 | `fp_arranjo_por_regiao.csv:32` |
-| confirmacao | por_passo | menor | 0 | `fp_arranjo_por_regiao.csv:33` |
-
-### P com MATCH ao revisor humano: mesma carga humana
-
-Exploratória, hipótese de revisor perfeito dos dois lados. Os FP abaixo do corte tornam-se zero nesse cenário, não por acerto autônomo do LLM. São pares avaliados pelo LLM, não chamadas de API.
-
-| Modo | P: revisões originais | MATCH ao humano | P: revisões totais | PAR=2 de P | O3: revisões iguais | PAR=2 de O3 | O3: revisões para igualar P | Ganho P na mesma carga | CSV:linha |
-| :-- | --: | --: | --: | --: | --: | --: | --: | --: | :-- |
-| vigilancia | 96 | 25 | 121 | 23 | 121 | 22 | 125 | 1 | `comparador_p_match_humano.csv:2` |
-| confirmacao | 17 | 12 | 29 | 9 | 29 | 9 | 29 | 0 | `comparador_p_match_humano.csv:3` |
-
-### Sensibilidade humana: parâmetro de cenário
-
-Sensibilidade humana real não medida. Especificidade humana tratada como perfeita; FP humanos não modelados. As perdas de cobertura são vínculos que não chegam ao revisor humano. As amplitudes entre os cenários de 95% e 100% são lidas do artefato, não confundidas com a parcela não examinada.
-
-| Modo | Estratégia | k | Revisões humanas | Cobertura perdida | s | Sensibilidade total (%) | Amplitude (p.p.) | CSV:linha |
-| :-- | :-- | --: | --: | --: | --: | --: | --: | :-- |
-| vigilancia | humano_integral | 61485 | 61485 | 0 | 95 | 99,27 | 0,73 | `cenarios_sensibilidade_humana.csv:2` |
-| vigilancia | humano_integral | 61485 | 61485 | 0 | 99 | 99,85 | 0,73 | `cenarios_sensibilidade_humana.csv:3` |
-| vigilancia | humano_integral | 61485 | 61485 | 0 | 100 | 100,00 | 0,73 | `cenarios_sensibilidade_humana.csv:4` |
-| vigilancia | P | 96 | 96 | 13 | 95 | 94,35 | 0,38 | `cenarios_sensibilidade_humana.csv:5` |
-| vigilancia | P | 96 | 96 | 13 | 99 | 94,66 | 0,38 | `cenarios_sensibilidade_humana.csv:6` |
-| vigilancia | P | 96 | 96 | 13 | 100 | 94,74 | 0,38 | `cenarios_sensibilidade_humana.csv:7` |
-| vigilancia | P_MATCH_ao_humano | 121 | 121 | 13 | 95 | 94,27 | 0,47 | `cenarios_sensibilidade_humana.csv:8` |
-| vigilancia | P_MATCH_ao_humano | 121 | 121 | 13 | 99 | 94,64 | 0,47 | `cenarios_sensibilidade_humana.csv:9` |
-| vigilancia | P_MATCH_ao_humano | 121 | 121 | 13 | 100 | 94,74 | 0,47 | `cenarios_sensibilidade_humana.csv:10` |
-| vigilancia | O3 | 96 | 96 | 14 | 95 | 93,89 | 0,45 | `cenarios_sensibilidade_humana.csv:11` |
-| vigilancia | O3 | 96 | 96 | 14 | 99 | 94,24 | 0,45 | `cenarios_sensibilidade_humana.csv:12` |
-| vigilancia | O3 | 96 | 96 | 14 | 100 | 94,33 | 0,45 | `cenarios_sensibilidade_humana.csv:13` |
-| vigilancia | O3 | 121 | 121 | 14 | 95 | 93,89 | 0,45 | `cenarios_sensibilidade_humana.csv:14` |
-| vigilancia | O3 | 121 | 121 | 14 | 99 | 94,24 | 0,45 | `cenarios_sensibilidade_humana.csv:15` |
-| vigilancia | O3 | 121 | 121 | 14 | 100 | 94,33 | 0,45 | `cenarios_sensibilidade_humana.csv:16` |
-| vigilancia | O3 | 125 | 125 | 13 | 95 | 94,27 | 0,47 | `cenarios_sensibilidade_humana.csv:17` |
-| vigilancia | O3 | 125 | 125 | 13 | 99 | 94,64 | 0,47 | `cenarios_sensibilidade_humana.csv:18` |
-| vigilancia | O3 | 125 | 125 | 13 | 100 | 94,74 | 0,47 | `cenarios_sensibilidade_humana.csv:19` |
-| vigilancia | O3 | 440 | 440 | 10 | 95 | 95,43 | 0,53 | `cenarios_sensibilidade_humana.csv:20` |
-| vigilancia | O3 | 440 | 440 | 10 | 99 | 95,85 | 0,53 | `cenarios_sensibilidade_humana.csv:21` |
-| vigilancia | O3 | 440 | 440 | 10 | 100 | 95,95 | 0,53 | `cenarios_sensibilidade_humana.csv:22` |
-| vigilancia | filtro_LLM | 17 | 5 | 32 | 95 | 86,96 | 0,08 | `cenarios_sensibilidade_humana.csv:23` |
-| vigilancia | filtro_LLM | 17 | 5 | 32 | 99 | 87,03 | 0,08 | `cenarios_sensibilidade_humana.csv:24` |
-| vigilancia | filtro_LLM | 17 | 5 | 32 | 100 | 87,04 | 0,08 | `cenarios_sensibilidade_humana.csv:25` |
-| vigilancia | filtro_LLM | 29 | 7 | 30 | 95 | 87,73 | 0,12 | `cenarios_sensibilidade_humana.csv:26` |
-| vigilancia | filtro_LLM | 29 | 7 | 30 | 99 | 87,83 | 0,12 | `cenarios_sensibilidade_humana.csv:27` |
-| vigilancia | filtro_LLM | 29 | 7 | 30 | 100 | 87,85 | 0,12 | `cenarios_sensibilidade_humana.csv:28` |
-| vigilancia | filtro_LLM | 58 | 17 | 25 | 95 | 89,66 | 0,22 | `cenarios_sensibilidade_humana.csv:29` |
-| vigilancia | filtro_LLM | 58 | 17 | 25 | 99 | 89,83 | 0,22 | `cenarios_sensibilidade_humana.csv:30` |
-| vigilancia | filtro_LLM | 58 | 17 | 25 | 100 | 89,88 | 0,22 | `cenarios_sensibilidade_humana.csv:31` |
-| vigilancia | filtro_LLM | 96 | 22 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:32` |
-| vigilancia | filtro_LLM | 96 | 22 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:33` |
-| vigilancia | filtro_LLM | 96 | 22 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:34` |
-| vigilancia | filtro_LLM | 121 | 26 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:35` |
-| vigilancia | filtro_LLM | 121 | 26 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:36` |
-| vigilancia | filtro_LLM | 121 | 26 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:37` |
-| vigilancia | filtro_LLM | 125 | 26 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:38` |
-| vigilancia | filtro_LLM | 125 | 26 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:39` |
-| vigilancia | filtro_LLM | 125 | 26 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:40` |
-| confirmacao | humano_integral | 61485 | 61485 | 0 | 95 | 99,27 | 0,73 | `cenarios_sensibilidade_humana.csv:41` |
-| confirmacao | humano_integral | 61485 | 61485 | 0 | 99 | 99,85 | 0,73 | `cenarios_sensibilidade_humana.csv:42` |
-| confirmacao | humano_integral | 61485 | 61485 | 0 | 100 | 100,00 | 0,73 | `cenarios_sensibilidade_humana.csv:43` |
-| confirmacao | P | 17 | 17 | 27 | 95 | 89,05 | 0,02 | `cenarios_sensibilidade_humana.csv:44` |
-| confirmacao | P | 17 | 17 | 27 | 99 | 89,06 | 0,02 | `cenarios_sensibilidade_humana.csv:45` |
-| confirmacao | P | 17 | 17 | 27 | 100 | 89,07 | 0,02 | `cenarios_sensibilidade_humana.csv:46` |
-| confirmacao | P_MATCH_ao_humano | 29 | 29 | 27 | 95 | 88,89 | 0,18 | `cenarios_sensibilidade_humana.csv:47` |
-| confirmacao | P_MATCH_ao_humano | 29 | 29 | 27 | 99 | 89,03 | 0,18 | `cenarios_sensibilidade_humana.csv:48` |
-| confirmacao | P_MATCH_ao_humano | 29 | 29 | 27 | 100 | 89,07 | 0,18 | `cenarios_sensibilidade_humana.csv:49` |
-| confirmacao | O3 | 96 | 96 | 14 | 95 | 93,89 | 0,45 | `cenarios_sensibilidade_humana.csv:50` |
-| confirmacao | O3 | 96 | 96 | 14 | 99 | 94,24 | 0,45 | `cenarios_sensibilidade_humana.csv:51` |
-| confirmacao | O3 | 96 | 96 | 14 | 100 | 94,33 | 0,45 | `cenarios_sensibilidade_humana.csv:52` |
-| confirmacao | O3 | 121 | 121 | 14 | 95 | 93,89 | 0,45 | `cenarios_sensibilidade_humana.csv:53` |
-| confirmacao | O3 | 121 | 121 | 14 | 99 | 94,24 | 0,45 | `cenarios_sensibilidade_humana.csv:54` |
-| confirmacao | O3 | 121 | 121 | 14 | 100 | 94,33 | 0,45 | `cenarios_sensibilidade_humana.csv:55` |
-| confirmacao | O3 | 125 | 125 | 13 | 95 | 94,27 | 0,47 | `cenarios_sensibilidade_humana.csv:56` |
-| confirmacao | O3 | 125 | 125 | 13 | 99 | 94,64 | 0,47 | `cenarios_sensibilidade_humana.csv:57` |
-| confirmacao | O3 | 125 | 125 | 13 | 100 | 94,74 | 0,47 | `cenarios_sensibilidade_humana.csv:58` |
-| confirmacao | O3 | 440 | 440 | 10 | 95 | 95,43 | 0,53 | `cenarios_sensibilidade_humana.csv:59` |
-| confirmacao | O3 | 440 | 440 | 10 | 99 | 95,85 | 0,53 | `cenarios_sensibilidade_humana.csv:60` |
-| confirmacao | O3 | 440 | 440 | 10 | 100 | 95,95 | 0,53 | `cenarios_sensibilidade_humana.csv:61` |
-| confirmacao | filtro_LLM | 17 | 5 | 32 | 95 | 86,96 | 0,08 | `cenarios_sensibilidade_humana.csv:62` |
-| confirmacao | filtro_LLM | 17 | 5 | 32 | 99 | 87,03 | 0,08 | `cenarios_sensibilidade_humana.csv:63` |
-| confirmacao | filtro_LLM | 17 | 5 | 32 | 100 | 87,04 | 0,08 | `cenarios_sensibilidade_humana.csv:64` |
-| confirmacao | filtro_LLM | 29 | 7 | 30 | 95 | 87,73 | 0,12 | `cenarios_sensibilidade_humana.csv:65` |
-| confirmacao | filtro_LLM | 29 | 7 | 30 | 99 | 87,83 | 0,12 | `cenarios_sensibilidade_humana.csv:66` |
-| confirmacao | filtro_LLM | 29 | 7 | 30 | 100 | 87,85 | 0,12 | `cenarios_sensibilidade_humana.csv:67` |
-| confirmacao | filtro_LLM | 58 | 15 | 25 | 95 | 89,66 | 0,22 | `cenarios_sensibilidade_humana.csv:68` |
-| confirmacao | filtro_LLM | 58 | 15 | 25 | 99 | 89,83 | 0,22 | `cenarios_sensibilidade_humana.csv:69` |
-| confirmacao | filtro_LLM | 58 | 15 | 25 | 100 | 89,88 | 0,22 | `cenarios_sensibilidade_humana.csv:70` |
-| confirmacao | filtro_LLM | 96 | 18 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:71` |
-| confirmacao | filtro_LLM | 96 | 18 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:72` |
-| confirmacao | filtro_LLM | 96 | 18 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:73` |
-| confirmacao | filtro_LLM | 121 | 22 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:74` |
-| confirmacao | filtro_LLM | 121 | 22 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:75` |
-| confirmacao | filtro_LLM | 121 | 22 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:76` |
-| confirmacao | filtro_LLM | 125 | 22 | 23 | 95 | 90,43 | 0,26 | `cenarios_sensibilidade_humana.csv:77` |
-| confirmacao | filtro_LLM | 125 | 22 | 23 | 99 | 90,64 | 0,26 | `cenarios_sensibilidade_humana.csv:78` |
-| confirmacao | filtro_LLM | 125 | 22 | 23 | 100 | 90,69 | 0,26 | `cenarios_sensibilidade_humana.csv:79` |
-
-### Filtro de NONMATCH: cobertura e risco de descarte
-
-Exploração com protocolo fixado antes dos desfechos, respostas de datas diferentes. NONMATCH descarta; MATCH e inconclusivos vão ao revisor humano, sem aceitação autônoma. Para k=17 e k=29, as contagens iguais decorrem da coincidência das decisões sobre PAR=2; nos não vínculos há decisões diferentes entre modos. A coincidência sobre PAR=2 continua nos topos maiores apresentados. Fonte: `filtro_llm_concordancia_modos.csv:2-19`.
-
-| Modo | Topo k | Humano | PAR=2 recuperados | Sem filtro, mesma carga | VPN (%) | PAR=2 descartados | CSV:linha |
-| :-- | --: | --: | --: | --: | --: | --: | :-- |
-| vigilancia | 17 | 5 | 4 | 3 | 83,3 | 2 | `filtro_llm.csv:2` |
-| vigilancia | 29 | 7 | 6 | 4 | 86,4 | 3 | `filtro_llm.csv:3` |
-| vigilancia | 58 | 17 | 11 | 6 | 78,0 | 9 | `filtro_llm.csv:4` |
-| vigilancia | 96 | 22 | 13 | 6 | 87,8 | 9 | `filtro_llm.csv:5` |
-| vigilancia | 121 | 26 | 13 | 7 | 90,5 | 9 | `filtro_llm.csv:6` |
-| vigilancia | 125 | 26 | 13 | 7 | 89,9 | 10 | `filtro_llm.csv:7` |
-| confirmacao | 17 | 5 | 4 | 3 | 83,3 | 2 | `filtro_llm.csv:8` |
-| confirmacao | 29 | 7 | 6 | 4 | 86,4 | 3 | `filtro_llm.csv:9` |
-| confirmacao | 58 | 15 | 11 | 6 | 79,1 | 9 | `filtro_llm.csv:10` |
-| confirmacao | 96 | 18 | 13 | 6 | 88,5 | 9 | `filtro_llm.csv:11` |
-| confirmacao | 121 | 22 | 13 | 6 | 90,9 | 9 | `filtro_llm.csv:12` |
-| confirmacao | 125 | 22 | 13 | 6 | 90,3 | 10 | `filtro_llm.csv:13` |
-
-### Subamostragem: degradação em 1:1 e 1:5; 1:20 e 1:50 indistinguíveis
-
-Variante isotonic, população abaixo do corte. Medianas e intervalos entre sementes nas proporções subamostradas; a referência original tem uma única execução. Sem alegar que todos os subgrupos perdem a mesma quantidade. O Brier mediano é maior que a referência original em todas as proporções subamostradas.
-
-| Razão | Métrica | Mediana | Mínimo | Máximo | Referência | CSV:linha |
-| :-- | :-- | --: | --: | --: | --: | :-- |
-| 1:1 | brier | 0,000999 | 0,000750 | 0,001234 | 0,000629 | `subamostragem_treino_resumo.csv:4` |
-| 1:1 | par2_top_96 | 13,0 | 8,0 | 17,0 | 22,0 | `subamostragem_treino_resumo.csv:18` |
-| 1:1 | sens96_passo_6 | 0,25 | 0,00 | 0,25 | 0,50 | `subamostragem_treino_resumo.csv:24` |
-| 1:1 | sens96_sexo_M | 0,25 | 0,08 | 0,38 | 0,58 | `subamostragem_treino_resumo.csv:36` |
-| 1:20 | brier | 0,000698 | 0,000608 | 0,000845 | 0,000629 | `subamostragem_treino_resumo.csv:196` |
-| 1:20 | par2_top_96 | 21,0 | 18,0 | 22,0 | 22,0 | `subamostragem_treino_resumo.csv:210` |
-| 1:20 | sens96_passo_6 | 0,50 | 0,50 | 0,75 | 0,50 | `subamostragem_treino_resumo.csv:216` |
-| 1:20 | sens96_sexo_M | 0,54 | 0,50 | 0,58 | 0,58 | `subamostragem_treino_resumo.csv:228` |
-| 1:5 | brier | 0,000806 | 0,000623 | 0,001016 | 0,000629 | `subamostragem_treino_resumo.csv:388` |
-| 1:5 | par2_top_96 | 18,5 | 16,0 | 21,0 | 22,0 | `subamostragem_treino_resumo.csv:402` |
-| 1:5 | sens96_passo_6 | 0,25 | 0,25 | 0,50 | 0,50 | `subamostragem_treino_resumo.csv:408` |
-| 1:5 | sens96_sexo_M | 0,46 | 0,35 | 0,54 | 0,58 | `subamostragem_treino_resumo.csv:420` |
-| 1:50 | brier | 0,000648 | 0,000527 | 0,000806 | 0,000629 | `subamostragem_treino_resumo.csv:580` |
-| 1:50 | par2_top_96 | 22,5 | 20,0 | 24,0 | 22,0 | `subamostragem_treino_resumo.csv:594` |
-| 1:50 | sens96_passo_6 | 0,50 | 0,50 | 0,75 | 0,50 | `subamostragem_treino_resumo.csv:600` |
-| 1:50 | sens96_sexo_M | 0,60 | 0,50 | 0,65 | 0,58 | `subamostragem_treino_resumo.csv:612` |
-| original | brier | 0,000629 | 0,000629 | 0,000629 | 0,000629 | `subamostragem_treino_resumo.csv:772` |
-| original | par2_top_96 | 22,0 | 22,0 | 22,0 | 22,0 | `subamostragem_treino_resumo.csv:786` |
-| original | sens96_passo_6 | 0,50 | 0,50 | 0,50 | 0,50 | `subamostragem_treino_resumo.csv:792` |
-| original | sens96_sexo_M | 0,58 | 0,58 | 0,58 | 0,58 | `subamostragem_treino_resumo.csv:804` |
-
-### Cobertura e recuperação integral por ordenação
-
-| Modo | Ordenação | P: recuperados | Não recuperados no topo K1 | k para igualar P | k para os 36 | CSV:linha |
-| :-- | :-- | --: | --: | --: | --: | :-- |
-| vigilancia | O1_SCORE | 23 | 17 | 501 | 2521 | `comparador_mesma_carga.csv:2` |
-| confirmacao | O1_SCORE | 9 | 33 | 51 | 2521 | `comparador_mesma_carga.csv:7` |
-| vigilancia | O2_CdR | 23 | 24 | 4163 | 24248 | `comparador_mesma_carga.csv:12` |
-| confirmacao | O2_CdR | 9 | 27 | 11 | 24248 | `comparador_mesma_carga.csv:17` |
-| vigilancia | O3_p_cal_ml | 23 | 14 | 125 | 23443 | `comparador_mesma_carga.csv:22` |
-| confirmacao | O3_p_cal_ml | 9 | 30 | 29 | 23443 | `comparador_mesma_carga.csv:27` |
-| vigilancia | O4_P_recalibrada | 23 | 14 | 106 | 53591 | `comparador_mesma_carga.csv:32` |
-| confirmacao | O4_P_recalibrada | 9 | 31 | 27 | 53591 | `comparador_mesma_carga.csv:37` |
-
-### Pontos específicos da conferência final
-
-| Número | CSV:linha em `data/` |
-| :-- | :-- |
-| Com 17 revisões, O2 recupera 9 e O3 recupera 6 | `comparador_mesma_carga.csv:17,27` |
-| Vigilância k=96: 74 NONMATCH avaliados pelo LLM e 22 revisões humanas; VPN 87,8%; k=58: VPN 78,0% | `filtro_llm.csv:5,4` |
-| Confirmação k=125: 22 revisões, 13 vínculos recuperados e 10 dos 23 descartados, ponto distinto de k=96 na vigilância | `filtro_llm.csv:13` |
-| Original: 22 no topo 96, uma única execução; passo 6 com 4 PAR=2 | `subamostragem_treino_resumo.csv:786,25` |
+| Sigla ou termo | Forma usada na tese |
+| :- | :- |
+| SIM | Sistema de Informações sobre Mortalidade |
+| Sinan | Sistema de Informação de Agravos de Notificação |
+| Sinan-TB | Sinan para a tuberculose |
+| CdR | Comparador de Registros |
+| ASR | arranjo sequencial, que preserva o corte e decide abaixo dele pela política de quatro ações |
+| LLM | modelo de linguagem de grande porte |
+| IC | intervalo de confiança |
+| VPP | valor preditivo positivo |
+| VPN | valor preditivo negativo |
+| AUC | área sob a curva ROC |
+| AUC-PR | área sob a curva precisão-sensibilidade |
+| MACD | Medidas Contínuas de Diferença de Datas de nascimento |
+| O1 | fila pelo escore do OpenRecLink |
+| O2 | fila pela nota final do CdR |
+| O3 | fila pela probabilidade calibrada fora da amostra do XGBoost |
+| O4 | fila pela probabilidade recalibrada de ASR |
+| F3 | fusão por posição recíproca de O3, O1 e O3 com MACD |
+| F4 | fusão por posição recíproca de O3 e O1 |
+| CM | O3 acrescida de atributos de contexto por óbito e das MACD |
+| PAR | campo da referência operacional: 0, não par; 1, par verdadeiro pelo corte; 2, par verdadeiro pela revisão manual de origem |

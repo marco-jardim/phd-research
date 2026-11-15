@@ -16,6 +16,19 @@ ORDERS = (
 # Sigla do arranjo por destino: a tese usa ASR; os slides seguem com P até serem refeitos.
 ARM_THESIS = "ASR"
 ARM_SLIDES = "P"
+# Textos por destino: o deck antigo (arm = ARM_SLIDES) mantém os textos históricos, byte a byte;
+# a tese e o deck novo usam os textos abaixo, com os nomes por extenso.
+THESIS_LABELS = {
+    "O1_SCORE": "O1: escore do OpenRecLink",
+    "O2_CdR": "O2: nota final do CdR",
+    "O3_p_cal_ml": "O3: probabilidade calibrada fora da amostra",
+    "O4_P_recalibrada": "O4: probabilidade recalibrada de {arm}",
+}
+TITLE_LEGACY = "PAR=2 recuperados, revisor perfeito"
+TITLE_THESIS = "Pares verdadeiros recuperados abaixo do corte, revisor perfeito"
+LEGEND_X2_LEGACY, LEGEND_X2_THESIS = 5.9, 6.5  # início da segunda coluna da legenda (cm)
+WIDTH, HEIGHT = 11.4, 3.1  # área do gráfico (cm)
+CONF_DROP = 0.13  # a anotação da confirmação desce para ficar abaixo das curvas (cm)
 LINE_STYLES = {
     "O1_SCORE": r"\pgfsetdash{}{0pt}",
     "O2_CdR": r"\pgfsetdash{{4pt}{2pt}}{0pt}",
@@ -43,14 +56,38 @@ def curve_series(rows, order):
     return series
 
 
+def thesis_annotation(point, mode, arm, label_x, label_y, k, y, row):
+    """Anotação do ponto de ASR com "falsos positivos" por extenso.
+
+    A vigilância ancora o texto à esquerda; a confirmação, à direita da área do gráfico
+    (largura WIDTH), para que o texto por extenso caiba. O conector parte do texto.
+    """
+    short = "vig." if mode == "vigilancia" else "conf."
+    value = f"{arm} {short}: ({k}, {y}), {row['P_fp']} falsos positivos, +{row['P_pares_llm']} LLM"
+    head = [r"\color{red}", r"\pgfsetdash{}{0pt}", rf"\pgfpathcircle{{{point(k, y)}}}{{2pt}}\pgfusepath{{fill}}",
+            r"\pgfsetlinewidth{0.35pt}"]
+    start = rf"\pgfpathmoveto{{{point(k, y)}}}"
+    if mode == "vigilancia":
+        return head + [start, rf"\pgfpathlineto{{\pgfpoint{{{label_x:.5f}cm}}{{{label_y - 0.12:.5f}cm}}}}\pgfusepath{{stroke}}",
+                       rf"\pgftext[left,at={{\pgfpoint{{{label_x:.5f}cm}}{{{label_y:.5f}cm}}}}]{{\scriptsize {value}}}"]
+    name = f"anotacao{mode}"
+    return head + [r"\begin{pgfscope}", r"\pgfset{inner sep=0pt}",
+                   rf"\pgftransformshift{{\pgfpoint{{{WIDTH:.5f}cm}}{{{label_y - CONF_DROP:.5f}cm}}}}",
+                   rf"\pgfnode{{rectangle}}{{east}}{{\scriptsize {value}}}{{{name}}}{{\pgfusepath{{discard}}}}",
+                   r"\end{pgfscope}", start,
+                   rf"\pgfpathlineto{{\pgfpointanchor{{{name}}}{{west}}}}\pgfusepath{{stroke}}"]
+
+
 def render(curve_rows, comparator_rows, arm=ARM_THESIS):
-    series = [(name, label.format(arm=arm), color, curve_series(curve_rows, name))
+    legacy = arm == ARM_SLIDES
+    series = [(name, (label if legacy else THESIS_LABELS[name]).format(arm=arm), color,
+               curve_series(curve_rows, name))
               for name, label, color in ORDERS]
     xmax = max(points[-1][0] for _, _, _, points in series)
     if len({points[-1][0] for _, _, _, points in series}) != 1:
         raise ValueError("As ordenações precisam do mesmo limite de k")
     ymax = max(y for _, _, _, points in series for _, y in points)
-    width, height = 11.4, 3.1
+    width, height = WIDTH, HEIGHT
 
     def point(k, y):
         return rf"\pgfpoint{{{width * math.log10(k) / math.log10(xmax):.5f}cm}}{{{height * y / ymax:.5f}cm}}"
@@ -67,7 +104,7 @@ def render(curve_rows, comparator_rows, arm=ARM_THESIS):
     for k in (1, 10, 100, 1000, xmax):
         lines.append(text(width*math.log10(k)/math.log10(xmax), -0.23, f"{k:,}".replace(",", ".")))
     lines.append(text(width/2, -0.60, "Revisões humanas (escala logarítmica)"))
-    lines.append(text(0, height+0.27, "PAR=2 recuperados, revisor perfeito", "left"))
+    lines.append(text(0, height+0.27, TITLE_LEGACY if legacy else TITLE_THESIS, "left"))
     for name, label, color, points in series:
         lines.extend([rf"\color{{{color}}}", LINE_STYLES[name], r"\pgfsetlinewidth{0.9pt}",
                       rf"\pgfpathmoveto{{{point(*points[0])}}}"])
@@ -85,6 +122,9 @@ def render(curve_rows, comparator_rows, arm=ARM_THESIS):
             raise ValueError(f"{arm} sem ponto único: {mode}")
         row = matches[0]
         k, y = int(row["P_pares_humano"]), int(row["P_par2_recuperados"])
+        if not legacy:
+            lines.extend(thesis_annotation(point, mode, arm, label_x, label_y, k, y, row))
+            continue
         lines.extend([r"\color{red}", r"\pgfsetdash{}{0pt}", rf"\pgfpathcircle{{{point(k,y)}}}{{2pt}}\pgfusepath{{fill}}",
                       r"\pgfsetlinewidth{0.35pt}", rf"\pgfpathmoveto{{{point(k,y)}}}",
                       rf"\pgfpathlineto{{\pgfpoint{{{label_x:.5f}cm}}{{{label_y - 0.12:.5f}cm}}}}\pgfusepath{{stroke}}",
@@ -92,7 +132,7 @@ def render(curve_rows, comparator_rows, arm=ARM_THESIS):
                            f"{label}: ({k}, {y}), {row['P_fp']} FP, +{row['P_pares_llm']} LLM", "left")])
     for i, (name, label, color, _) in enumerate(series):
         label = label.replace("_", r"\_")
-        x, y = (i % 2)*5.9, -1.0-(i // 2)*0.38
+        x, y = (i % 2)*(LEGEND_X2_LEGACY if legacy else LEGEND_X2_THESIS), -1.0-(i // 2)*0.38
         lines.extend([rf"\color{{{color}}}", LINE_STYLES[name],
                       rf"\pgfpathmoveto{{\pgfpoint{{{x:.2f}cm}}{{{y:.2f}cm}}}}",
                       rf"\pgfpathlineto{{\pgfpoint{{{x+0.45:.2f}cm}}{{{y:.2f}cm}}}}\pgfusepath{{stroke}}",
