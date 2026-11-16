@@ -290,7 +290,7 @@ A comparação pareada usou o teste de McNemar exato bilateral, com a decisão \
 
 Sem as saídas do motor, nenhum dos 18 pares verdadeiros foi rejeitado por qualquer dos dois modelos. No DeepSeek V4.1 Flash, os 18 falsos negativos do controle se distribuíram igualmente entre \texttt{MATCH} e \texttt{UNSURE} após a ablação; no Claude Haiku 5.5, dos 9 falsos negativos do controle, 2 passaram a \texttt{MATCH} e 7 a \texttt{UNSURE}. As sete decisões \texttt{MATCH} do Claude Haiku 5.5 incluem ainda cinco pares inconclusivos no controle, razão pela qual o teste de McNemar para \texttt{MATCH} não se restringe às duas reversões. O controle reproduziu todas as decisões originais do DeepSeek V4.1 Flash, mas apenas 13 das 18 do Claude Haiku 5.5, o que documenta variabilidade entre execuções deste último, cuja API não recebeu parâmetro de temperatura.
 
-A avaliação compreende apenas 18 pares, selecionados por erro compartilhado, e não estima o desempenho da ablação no conjunto dos potenciais pares nem o efeito sobre falsos positivos. O controle reproduz esse viés de seleção e não é amostra independente. A comparação informa a mudança de decisão neste subconjunto condicionado ao erro, com variabilidade entre execuções no Claude Haiku 5.5, e não autoriza generalizar a ausência de rejeições aos demais pares verdadeiros.
+A avaliação compreende apenas 18 pares, selecionados por erro compartilhado, e não estima o desempenho da ablação no conjunto dos potenciais pares nem o efeito sobre falsos positivos. O controle reproduz esse viés de seleção e não é amostra independente. A comparação informa a mudança de decisão neste subconjunto condicionado ao erro, com variabilidade entre execuções no Claude Haiku 5.5, e não autoriza generalizar a ausência de rejeições aos demais pares verdadeiros. A nota final, preservada nessa ablação, foi ocultada em medição posterior, em amostra estratificada de 717 potenciais pares (Seção~\ref{sec:e4-ap-haiku-sem-nota}), que estende a ablação, sem substituí-la.
 
 \subsection{Reavaliação sem as saídas do motor: detalhe}\label{sec:e4-ap-reavaliacao}
 
@@ -447,3 +447,138 @@ Esta seção complementa a comparação de modelos de tamanhos distintos e o exa
 As diferenças entre modelos coexistem com variação entre réplicas: na vigilância, o Haiku passou de 21 para 19 aceitações em V1 nos 21 casos completos da réplica, enquanto Opus e Fable variaram de 21 para 20 e de 22 para 21 nos 25 pares, amplitude comparável às diferenças entre modelos, sem teste formal dessa equivalência. Em V2 (pares verdadeiros PAR~=~2 não aceitos pelo Haiku), Opus e Fable produziram, respectivamente, oito e nove descartes, contra seis do Haiku, observação descritiva de maior cautela nos PAR~=~2 difíceis, sem aumento uniforme dos inconclusivos (\path{data/probe_frontier_agregado.csv}). Os custos por par da Tabela~\ref{tab:cap8-tamanho-modelo} distinguem os transportes e as execuções históricas e não isolam o efeito do tamanho sobre a despesa.
 
 No exame com o dossiê ampliado, os três FP que deixaram de ser \texttt{MATCH} passaram todos a \texttt{UNSURE}, o VPP da confirmação permaneceu igual ao da v4 e a perda de resposta atingiu seis dos 13 pares verdadeiros de V2. O lote de vigilância foi cancelado por prazo do crédito, mas suas 299 respostas tardias bem-sucedidas foram utilizadas e não repetidas, e o custo por consumo, incluindo piloto e respostas truncadas, foi de US\$~0,32. Claude Opus 5.5 não foi executado, conforme a regra de acionamento. As comparações entre modelos usaram raciocínio adaptativo padrão da API, que não pôde ser desligado no Opus 5.5 nem no Fable 5.1 (\path{data/probe_dossie_v5_metadata.json}).
+
+\section{Explorações posteriores: filas com aprendizado e LLM abaixo do corte}\label{sec:e4-ap-filas-llm}
+
+Esta seção reúne explorações posteriores aos estudos originais e ao registro do arranjo, feitas sobre o mesmo extrato (61.696 potenciais pares; 247 pares verdadeiros, 211 aceitos pelo corte e 36 abaixo dele) com a versão experimental 0.7.0 do pacote GZ-CMD, não publicada no PyPI e distinta da avaliada nos capítulos. Os relatórios estão na \textit{tag} \texttt{v0.7.0-exp} (\textit{commit} 9c52c41) \cite{Jardim2026gzcmd}, e os agregados, em \path{data/filas_llm/} \cite{Jardim2026phdrepo}; as decisões do LLM por par permanecem locais. As chamadas enviaram à API da Anthropic dossiês pseudonimizados, sem nomes, só com escores numéricos e o \texttt{pair\_id} histórico, sob a mesma limitação da Seção~\ref{sec:dados-acesso-etica} e em desacordo com a recomendação de execução local ali registrada.
+
+As referências são O1 (escore do OpenRecLink) e O2 (nota final do CdR), ordenações sem \textit{labels}, e a Seção~\ref{sec:e4-ap-o1} refaz contra O1 as comparações feitas contra O2. O3 (probabilidade calibrada fora da amostra, treinada com PAR) e F4 (fusão de O1 com O3 por posição recíproca) dependem de \textit{labels} e ficam fora. Quatro limitações valem para toda a seção: há só 36 pares verdadeiros abaixo do corte, e diferenças de um a três pares são ruído; o veredito do LLM é, em geral, uma única realização; o revisor humano é simulado e perfeito; e há um só extrato. A força da evidência é moderada para proporção medida diretamente, com IC 95\%; fraca para diferença em simulação ou em execução única; e muito fraca para padrão identificado nos próprios pares verdadeiros ou não reproduzido.
+
+As hipóteses de engenharia de filas constam de documento datado de 15/11/2026 e versionado com os resultados (\textit{commit} 7fa1e1f do pacote), sem anterioridade verificável. Das 12, avaliadas em 39 células sintéticas, 4 foram confirmadas, 6 refutadas, 1 ficou inconclusiva e 1 não é testável, pela classificação do relatório (H10 inconclusiva por critério mal especificado; pela letra da regra, refutada); o que segue trata do extrato real.
+
+\subsection{Claude Haiku 5.5 sem a nota final}\label{sec:e4-ap-haiku-sem-nota}
+
+O Claude Haiku 5.5, com as instruções v4, revisou dossiês sem as saídas do motor e sem a nota final (Seção~\ref{sec:e4-revisao-assistida}) numa amostra estratificada em seis faixas da nota final, com os 247 pares verdadeiros e até 100 não pares por faixa (470), 717 potenciais pares. FP é \texttt{MATCH} entre não pares e FN, \texttt{NONMATCH} entre pares verdadeiros; \texttt{UNSURE} fica nos denominadores (Tabela~\ref{tab:ap-haiku-sem-nota}), ao contrário da Tabela~\ref{tab:cap8-reruns}.
+
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Claude Haiku 5.5 com a nota final oculta, em amostra estratificada de 717 potenciais pares: contagens, denominadores e proporções (IC 95\% de Wilson).}
+\label{tab:ap-haiku-sem-nota}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{3.7cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{3.5cm}}
+\toprule
+Lado do corte & FP, de não pares & FN, de pares verdadeiros & \texttt{UNSURE}, de todos os revisados \\
+\midrule
+Todos & 2/470 = 0,4\% (0,1 a 1,5) & 45/247 = 18,2\% (13,9 a 23,5) & 50/717 = 7,0\% (5,3 a 9,1) \\
+Acima & sem não pares & 29/211 = 13,7\% (9,7 a 19,0) & 24/211 = 11,4\% (7,8 a 16,4) \\
+Abaixo & 2/470 = 0,4\% (0,1 a 1,5) & 16/36 = 44,4\% (29,5 a 60,4) & 26/506 = 5,1\% (3,5 a 7,4) \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Os dois FP estão abaixo do corte. A amostra não representa a fila. Fonte: \path{data/filas_llm/llm_real_haiku_sem_nota.csv}.}
+\end{table}
+
+Abaixo do corte, o VPP projetado ao extrato foi de 2,9\% (IC 95\% de 0,8\% a 12,1\%), ou de 4,8\% (1,5\% a 20,9\%) sem a faixa \texttt{low}. É o VPP que se teria se o LLM revisasse todos os potenciais pares abaixo do corte, com prevalência de 0,06\%, e não o das aceitações da política, de 16,0\% (4 dos 25 aceitos dentre os 344 pares selecionados), medido com a nota final visível (Seção~\ref{sec:e4-discussao}). A comparação é só de ordem de grandeza (evidência fraca): a nota final oculta coincide com a mudança de população, sem comparação pareada, e as faixas \texttt{low} (um par verdadeiro abaixo do corte) e \texttt{high} (dois não pares) são tratadas como não medidas.
+
+O FP pequeno vale só para essa amostra: no topo da ordem pela nota final, o mesmo modelo deu \texttt{MATCH} a dezenas de não pares (Seção~\ref{sec:e4-ap-desempate}), e que os FP se concentrem nos não pares de maior nota final de cada faixa é hipótese não testada.
+
+\subsection{Filas que reaprendem com \textit{labels}}\label{sec:e4-ap-fila-autocal}\label{sec:e4-ap-fila-escala}\label{sec:e4-ap-replicacao-passo}
+
+A fila autocalibrável, não recomendada para produção, alterna revisões do LLM e do humano e reajusta a ordenação com os \textit{labels} acumulados. Na simulação, com as proporções de erro da vigilância (nota final visível), ela verificou 8,3, 9,5 e 13,0 dos 36 pares verdadeiros abaixo do corte com 50, 100 e 200 revisões humanas (uma só semente no último orçamento), contra 10,0, 12,0 e 13,0 de O2 e 10,9, 13,2 e 17,6 da triagem, em que o LLM revisa na ordem da nota final e o humano confirma cada \texttt{MATCH}. Na execução ponta a ponta com o Claude Haiku 5.5, verificou 4 desses pares com 127 revisões humanas, contra 9 de O2 e 10 da triagem, e 92 dos 96 pares verdadeiros que verificou já eram aceitos pelo corte.
+
+Duas causas foram medidas: a nota final já é forte (12 dos 36 pares nas primeiras 100 revisões), e a prevalência de 0,06\% deixa poucos pares verdadeiros para aprender; o FN de 44,4\% também degrada os \textit{labels} do LLM. A fila não superou O2 a orçamento igual (evidência fraca).
+
+A fila com aprendizado, sem LLM, inicia o modelo com a nota final numa escala de partida e aprende só com \textit{labels} verificados pelo humano. Com a nota dividida por 10 (escala plana), essa fila superou O2 em $+4$, $+3$, $+4$, $+6$ e $+16$ pares com 50, 100, 200, 400 e 800 revisões, ganho que some com as linhas dos compostos embaralhadas. Com a escala calibrada por âncoras no extrato inteiro, pelo ajuste sigmoide da Seção~\ref{sec:e4-validacao-ancoras}, aqui com $r^-=0{,}0001$, o ganho caiu para $+5$ com 400 revisões (18 contra 13) e $+3$ com 800 (20 contra 17): a maior parte dos $+16$ vinha da escala plana.
+
+Uma replicação interna por passo de blocagem, registrada depois de ver os resultados no extrato inteiro, foi inconclusiva nos quatro critérios, de modo que os ganhos sobre O2 têm evidência muito fraca, e não substitui o critério prospectivo da tese (Seção~\ref{sec:e4-recomendacao}). A subponderação do nome da mãe ausente pela ordenação, padrão lido nos próprios pares verdadeiros, tem evidência muito fraca (Seção~\ref{sec:e4-vies-referencia}).
+
+\subsection{Usos subordinados do LLM}\label{sec:e4-ap-desempate}
+
+No desempate, o LLM não decide nada: dá veredito aos $W$ primeiros pares abaixo do corte na ordem pela nota final e reordena essa janela (\texttt{MATCH}, \texttt{UNSURE} e \texttt{NONMATCH}, cada grupo na ordem da nota final); o humano decide todo par que revisa. As janelas de 500 a 3.000 pares custaram de 1.055 a 6.411 chamadas, e na de 3.000 o LLM deu \texttt{MATCH} a 58 dos 2.980 não pares (mesma fonte da Tabela~\ref{tab:ap-desempate}). Com 200 a 400 revisões, essa variante encontrou de 2 a 6 pares verdadeiros a mais que O2 (Tabela~\ref{tab:ap-desempate}); com 25 a 100, ela e outras duas variantes deram resultados mistos, de $-3$ a $+2$.
+
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Pares verdadeiros abaixo do corte encontrados (de 36) com a janela reordenada pelo LLM e, entre parênteses, a diferença para O2 (humano simulado perfeito; uma realização do LLM).}
+\label{tab:ap-desempate}
+\begin{tabular}{lccccc}
+\toprule
+Ordem & 50 & 100 & 200 & 400 & 800 \\
+\midrule
+O2 & 10 & 12 & 13 & 13 & 17 \\
+Janela de 500 & 12 ($+2$) & 14 ($+2$) & 15 ($+2$) & 15 ($+2$) & 17 (0) \\
+Janela de 1.000 & 10 (0) & 14 ($+2$) & 17 ($+4$) & 17 ($+4$) & 17 (0) \\
+Janela de 2.000 & 11 ($+1$) & 11 ($-1$) & 17 ($+4$) & 18 ($+5$) & 18 ($+1$) \\
+Janela de 3.000 & 11 ($+1$) & 11 ($-1$) & 16 ($+3$) & 19 ($+6$) & 19 ($+2$) \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Colunas: revisões humanas. Com orçamento igual ou maior que a janela, as duas ordens revisam o mesmo conjunto. Fonte: \path{data/filas_llm/llm_real_desempate_zona_cinza.csv}.}
+\end{table}
+
+O IC 95\% do \textit{bootstrap} pareado excluiu zero em 4 das 48 combinações de variante, janela e orçamento (50 a 400 revisões), todas com 400 revisões e janelas de 2.000 ou 3.000 ($+5$ e $+6$), sem correção para multiplicidade. Como atributo da fila com aprendizado e escala plana, supondo o LLM gratuito, o veredito levou a 29 pares verdadeiros com 400 revisões, contra 19 sem ele e 13 de O2. Como auditor de revisões humanas com erro simulado, o LLM recuperou de 26,1\% a 47,9\% dos FN humanos, abaixo dos 50\% do critério registrado, nas 16 células de erro e orçamento. Nos três usos, a evidência é fraca.
+
+\subsection{Seleção adaptativa sobre faixas de posição}\label{sec:e4-ap-bandit}
+
+O \textit{bandit} de Thompson escolhe, a cada passo, qual de quatro faixas contíguas de posição na ordem pela nota final revisar e difere de A1 e A2 (Seção~\ref{sec:e4-mesma-carga}), que são ordenações inteiras. Com recompensa dada pelo humano e 20 sementes, a diferença para O2 foi de $-2{,}00$ a 0,00 par no extrato, em que a proporção de pares verdadeiros cai da primeira à última faixa. O \textit{bandit} só superou O2 ($+0{,}05$ a $+0{,}80$ par) com os pares verdadeiros do topo permutados pelo analista para a faixa de 1 a 5\% (N1) ou de 5 a 20\% (N2), e contra uma O2 prejudicada: com N1 e 800 revisões, O2 caiu de 17,00 para 1,25 (N2: 0), e o \textit{bandit}, de 15,00 para 1,95 (evidência fraca).
+
+\subsection{Comparação com a ordenação O1}\label{sec:e4-ap-o1}
+
+Com 96 revisões, O1 e O2 reproduzem os 19 e 12 pares verdadeiros do Estudo 4. O escore de O1 tem grandes blocos de empate, e a ordem do arquivo traz os positivos mais cedo: com 50 revisões, ela dá 12 pares, e o desempate aleatório, principal na Tabela~\ref{tab:ap-o1}, 8,7 em média (5 a 12).
+
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Pares verdadeiros abaixo do corte encontrados (de 36) por O1, O2 e pelas estratégias das subseções anteriores, com o desempate aleatório de O1 (humano simulado perfeito).}
+\label{tab:ap-o1}
+\begin{tabular}{>{\raggedright\arraybackslash}p{6.4cm}rrrrr}
+\toprule
+Ordem ou estratégia & 50 & 96 & 200 & 400 & 800 \\
+\midrule
+O1, ordem do arquivo & 12 & 19 & 21 & 23 & 25 \\
+O1, desempate aleatório (média) & 8,7 & 19,0 & 19,8 & 21,4 & 25,0 \\
+O2 & 10 & 12 & 13 & 13 & 17 \\
+Fila com aprendizado, escala de O1 & 9,8 & 12,0 & 13,8 & 19,6 & 27,8 \\
+Fila com aprendizado, escala plana de O2 & 14,0 & 15,0 & 17,0 & 19,0 & 33,0 \\
+\textit{Bandit} sobre faixas de O1 & 3,0 & 9,0 & 20,0 & 20,6 & 21,4 \\
+Desempate pelo LLM sobre O1 (janela de 1.000) & 13,9 & 22,0 & 22,5 & 23,5 & 27,0 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\parbox{\linewidth}{\footnotesize Colunas: revisões humanas. O1 com desempate aleatório: média de 300 sorteios; estratégias: médias de 30 sementes de desempate de O1. A fila com aprendizado é a de exploração, sem reservar 5\% das revisões a uma amostra de estimação. Do desempate, só a janela de 1.000 é mostrada (diferença média para O1 de $+2{,}0$ a $+5{,}3$); nas de 500, 2.000 e 3.000, de $-3{,}5$ a $+5{,}7$. O LLM só tem decisões reais para 12,5\% da janela de 1.000. Fonte dos números desta subseção: \path{data/filas_llm/comparacao_o1.csv}. O resumo textual do relatório na \textit{tag} (\url{https://github.com/marco-jardim/gzcmd-record-linkage/blob/v0.7.0-exp/docs/comparacao_o1.md}) diz ``0 a +6'' para o desempate, corrigido para ``de $-3{,}5$ a $+5{,}7$'' no \textit{commit} 18266a6, incorporado ao ramo principal do pacote, e ``S5 $\leq$ O1'' para o \textit{bandit}, que tem $+0{,}4$ com 200 revisões.}
+\end{table}
+
+Contra O1, a fila com aprendizado perde entre 96 e 400 revisões (de $-7{,}1$ a $-1{,}6$ pares com a escala de O1; de $-4{,}1$ a $-2{,}2$ com a escala plana de O2). Com 50 e 800, fica acima: $+1{,}2$ e $+2{,}8$ pares com a escala de O1 (diferença pareada), dentro do ruído de um a três pares, e $+5{,}4$ e $+8{,}0$ com a escala plana, que dera $+16$ sobre O2. O modelo não foi ajustado à escala do escore de O1 (distribuições a priori fixadas para a nota final), o que limita a leitura da perda.
+
+O \textit{bandit} sobre faixas de O1 fica de $-10{,}1$ a $+0{,}4$ par. A fila autocalibrável perde a partir de 100 revisões (11,8 contra 19,1 com 100, em 6 de 10 sementes, nas proporções medidas sem a nota final), e a triagem, com 100 e 200 (13,2 e 17,6 contra 19,1 e 19,8). O desempate pelo LLM só pôde usar decisões reais independentes do \textit{label}, de 8\% a 18\% de cada janela de O1; a diferença média chegou a $+5{,}7$ pares, mas foi inconsistente: com 96 revisões, variou de $-3{,}5$ a $+2{,}9$ conforme a janela.
+
+Com 50 revisões, em que O1 é instável, e com 800, as estratégias da Tabela~\ref{tab:ap-o1}, salvo o \textit{bandit} e, com 800 revisões, O2, ficam acima da média de O1, e o desempate com a janela de 1.000, em todos os orçamentos. A evidência é fraca.
+
+\subsection{Síntese e pendências}\label{sec:e4-ap-filas-sintese}
+
+\begin{table}[!ht]
+\centering
+\footnotesize
+\caption{Força da evidência das explorações posteriores e relação com a tese.}
+\label{tab:ap-filas-evidencia}
+\begin{tabular}{>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{5.2cm}}
+\toprule
+Achado & Força & Relação com a tese \\
+\midrule
+FP e FN do Haiku sem a nota final & Moderada & Estende o exame do dossiê; FN de 44,4\% abaixo do corte \\
+VPP projetado sem a nota final & Fraca & Mesma direção; não altera os 16,0\% \\
+Fila autocalibrável & Fraca & Não superou O2 nem O1 a partir de 100 revisões \\
+Triagem pelo LLM & Fraca & Acima de O2 na simulação e na execução real; abaixo de O1 com 100 e 200 revisões \\
+Fila com aprendizado contra O1 & Fraca & Perde entre 96 e 400 revisões; com 50 e 800, acima, dentro do ruído com a escala de O1 \\
+Ganho da fila com aprendizado sobre O2 & Muito fraca & Não confirmado na replicação; depende da escala de partida \\
+Desempate pelo LLM & Fraca & Hipótese para a coorte nova; sobre O1, de $-3{,}5$ a $+5{,}7$ em média, com cobertura de 8\% a 18\% \\
+LLM como atributo & Fraca & Supõe o LLM gratuito \\
+LLM como auditor & Fraca & Sem apoio nesta prevalência \\
+\textit{Bandit} sobre faixas de posição & Fraca & Não superou O2 no extrato (só com a permutação do analista); sobre O1, de $-10{,}1$ a $+0{,}4$ \\
+Nome da mãe ausente subponderado & Muito fraca & Depende de pares novos \\
+LLM reduz o tempo por revisão & Pendente & Exige revisores reais \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Nada nesta seção altera os resultados dos estudos originais, em que a redução de revisões veio da ordenação; ao exame do LLM, acrescenta-se que, com a nota final oculta, o FP foi pequeno na amostra estratificada e o FN abaixo do corte, grande. Contra O1, a ordenação sem \textit{labels} mais forte, nenhuma estratégia testada a superou de forma consistente. Ficam pendentes: comparar estas estratégias com O3 e F4; replicar em outro extrato ou com mais pares verdadeiros abaixo do corte; estudar revisores humanos reais (tempo por revisão, erro e concordância); comparar a nota final visível e oculta nos mesmos pares; repetir as realizações do LLM; medir os FP por posição da nota final dentro da faixa, em amostra independente; e testar, em pares novos e revisão cega, a subponderação do nome da mãe ausente.
