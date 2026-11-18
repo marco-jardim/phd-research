@@ -16,7 +16,7 @@ KEYS = {
     "Gienapp2026relevance": "10.1145/3805712.3809713",
     "Callaghan2020stopping": "10.1186/s13643-020-01521-4",
     "Lewis2021certifying": "10.1145/3459637.3482415",
-    "Lam2026clerical": "10.23889/ijpds.v11i5.3595",
+    "Lam2026clerical": "10.48550/arxiv.2608.01401",
     "DiNunzio2026stopping": "10.1145/3774905.3795598",
 }
 
