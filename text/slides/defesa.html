@@ -307,7 +307,7 @@ dfn { font-style: inherit; }
 <section class="slide" id="S02" data-tipo="principal" aria-roledescription="slide" aria-label="A vigilância do óbito por tuberculose depende do linkage (relacionamento de registros) entre óbitos e notificações" data-termos="vigilância do óbito|linkage|SIM|Sinan|Sinan-TB|evento sentinela">
 <header><h2 class="titulo">A vigilância do óbito por tuberculose depende do <dfn data-termo="linkage"><em lang="en">linkage</em> (relacionamento de registros)</dfn> entre óbitos e notificações</h2></header>
 <div class="corpo">
-<p>O <em lang="en">linkage</em> vincula óbitos do <dfn data-termo="SIM">Sistema de Informações sobre Mortalidade (SIM)</dfn> a casos do <dfn data-termo="Sinan|Sinan-TB">Sistema de Informação de Agravos de Notificação (Sinan) para tuberculose (<span class="nq">Sinan-TB</span>)</dfn>. O Ministério da Saúde trata o óbito por tuberculose como evento sentinela (Brasil, 2026).</p>
+<p>O <em lang="en">linkage</em> vincula óbitos do <dfn data-termo="SIM">Sistema de Informações sobre Mortalidade (SIM)</dfn> a casos do <dfn data-termo="Sinan|Sinan-TB">Sistema de Informação de Agravos de Notificação (Sinan) para tuberculose (<span class="nq">Sinan-TB</span>)</dfn>. O Ministério da Saúde trata o óbito por tuberculose como evento sentinela (Brasil, 2026). No estado do Rio de Janeiro, o coeficiente de mortalidade foi de 4,8 por 100 mil habitantes em 2024, o terceiro maior entre as unidades da federação, em dados preliminares (Brasil, 2026).</p>
 <ul>
 <li>falso positivo: pode encerrar no Sinan, como óbito, o caso de pessoa viva</li>
 <li>falso negativo: faz o óbito de pessoa notificada parecer não notificado</li>
@@ -338,7 +338,7 @@ dfn { font-style: inherit; }
 <!-- LEMBRETE -->
 <aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>referência operacional</strong>: corte mais revisão manual de origem</span></aside>
 <!-- /LEMBRETE -->
-<p class="ressalva"><span class="rotulo">Ressalva:</span> “verdadeiro” remete à referência operacional, não a uma verdade absoluta.</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> “verdadeiro” remete à referência operacional, não a uma verdade absoluta; o custo da revisão manual não foi medido.</p>
 <p class="fonte">Fonte: tese, capitulo3.tex, seção “Justificativa”; capitulo_dados.tex, seção “Fontes de dados”; conclusao.tex, abertura.</p>
 </footer>
 </section>
@@ -416,7 +416,7 @@ dfn { font-style: inherit; }
 <!-- LEMBRETE -->
 <aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>passo</strong>: etapa de blocagem, com corte próprio</span> <span class="it"><strong>blocagem</strong>: agrupa registros por chaves comuns</span> <span class="it"><strong>referência operacional</strong>: corte mais revisão manual de origem</span> <span class="it"><strong>CdR</strong>: Comparador de Registros</span></aside>
 <!-- /LEMBRETE -->
-<p class="ressalva"><span class="rotulo">Ressalva:</span> o CdR ter precedido a revisão é hipótese de trabalho; direção e magnitude do viés não identificáveis (reserva <a href="#R01">R01</a>).</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> o CdR ter precedido a revisão é hipótese de trabalho; direção e magnitude do viés não identificáveis; limitação do delineamento e da documentação disponível, não do trabalho de revisão (reserva <a href="#R01">R01</a>).</p>
 <p class="fonte">Fonte: tese, capitulo_dados.tex, seções “Acesso aos dados e aspectos éticos”, “Base de potenciais pares” e “Referência operacional”; capitulo3.tex, seção “Alcance e delineamento”.</p>
 </footer>
 </section>
@@ -562,14 +562,15 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S13 -->
-<section class="slide" id="S13" data-tipo="principal" data-objetivo="2" aria-roledescription="slide" aria-label="A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final" data-termos="probabilidade calibrada|fora da amostra|faixa intermediária da nota final|nota final|CdR|grey area|ROC|AUC|precisão média">
+<section class="slide" id="S13" data-tipo="principal" data-objetivo="2" aria-roledescription="slide" aria-label="A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final" data-termos="probabilidade calibrada|fora da amostra|faixa intermediária da nota final|nota final|CdR|grey area|ROC|AUC|precisão média|XGBoost|subescores">
 <header><h2 class="titulo">A probabilidade calibrada fora da amostra separa os pares na faixa intermediária da nota final</h2></header>
 <div class="corpo">
 <p>Na faixa intermediária da nota final do CdR, distinta da <em lang="en">grey area</em>, a probabilidade calibrada teve <dfn data-termo="AUC|ROC">área sob a curva ROC (AUC)</dfn> de 0,995 e precisão média de 0,862, contra 0,216 da nota final.</p>
+<p class="aux">Probabilidade estimada por XGBoost com 300 árvores sobre 30 atributos do extrato: os 29 subescores e a nota final.</p>
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
-<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>probabilidade calibrada</strong>: estimativa ajustada à frequência observada</span> <span class="it"><strong>CdR</strong>: Comparador de Registros</span> <span class="it"><strong><em lang="en">grey area</em></strong>: região abaixo do ponto de corte</span> <span class="it"><strong>precisão média (AP)</strong>: <em lang="en">Average Precision</em>, resumo da curva precisão-sensibilidade</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
+<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>CdR</strong>: Comparador de Registros</span> <span class="it"><strong><em lang="en">grey area</em></strong>: região abaixo do ponto de corte</span> <span class="it"><strong>precisão média (AP)</strong>: <em lang="en">Average Precision</em>, resumo da curva precisão-sensibilidade</span> <span class="it"><strong>XGBoost</strong>: <em lang="en">Extreme Gradient Boosting</em>, classificador de árvores</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
 <!-- /LEMBRETE -->
 <p class="ressalva"><span class="rotulo">Ressalva:</span> mesma coorte; não equivale a validação externa (reservas <a href="#R06">R06</a> e <a href="#R22">R22</a>).</p>
 <p class="fonte">Fonte: tese, estudo4_gzcmd.tex, seção “Representação e probabilidade calibrada fora da amostra”; conclusao.tex, seção “Resposta aos objetivos”.</p>
@@ -717,7 +718,7 @@ dfn { font-style: inherit; }
 </svg>
 <!-- /FIGURA:incerteza_ordenacoes -->
 </figure>
-<p>Marcador cheio: IC inteiro abaixo de zero; F3 e F4 o têm nas metas de 9 e 36.</p>
+<p>Marcador cheio: IC inteiro abaixo de zero; F3 e F4 o têm nas metas de 9 e 36. Medianas frente a O1: F4, −38 e −1.203 revisões; F3, −35 e −894.</p>
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
@@ -729,7 +730,7 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S16 -->
-<section class="slide" id="S16" data-tipo="principal" data-objetivo="3" aria-roledescription="slide" aria-label="Nenhuma ordenação domina em todas as cargas" data-termos="O1|O3|F3|F4|post hoc|meta|IC">
+<section class="slide" id="S16" data-tipo="principal" data-objetivo="3" aria-roledescription="slide" aria-label="Nenhuma ordenação domina em todas as cargas" data-termos="O1|O3|F3|F4|curva de esforço|orçamento|post hoc|meta|IC">
 <header><h2 class="titulo">Nenhuma ordenação domina em todas as cargas</h2></header>
 <div class="corpo">
 <table>
@@ -745,25 +746,26 @@ dfn { font-style: inherit; }
 <tr><th scope="row">F4</th><td class="n">18</td><td class="n"><strong>10</strong></td><td class="n">112</td><td class="n"><strong>1.387</strong></td></tr>
 </tbody>
 </table>
-<p>Em negrito, o melhor valor pontual de cada coluna: F3 e F4 se alternam.</p>
+<p>Em negrito, o melhor valor pontual de cada coluna: F3 e F4 se alternam; por isso a fila se escolhe pela curva de esforço, conforme o orçamento humano.</p>
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
-<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>F3</strong>: F4 acrescida de O3 com MACD</span> <span class="it"><strong>F4</strong>: fusão de O3 e O1</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span></aside>
+<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>F3</strong>: F4 acrescida de O3 com MACD</span> <span class="it"><strong>F4</strong>: fusão de O3 e O1</span> <span class="it"><strong>curva de esforço</strong>: pares verdadeiros recuperados por revisões feitas</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span></aside>
 <!-- /LEMBRETE -->
 <p class="ressalva"><span class="rotulo">Ressalva:</span> valores pontuais, <em lang="en">post hoc</em>, fusões escolhidas entre variantes; na meta de 23 nenhuma fusão teve IC abaixo de zero frente a O1, e frente a O3 em nenhuma meta (reservas <a href="#R08">R08</a>, <a href="#R20">R20</a> e <a href="#R23">R23</a>).</p>
-<p class="fonte">Fonte: tese, estudo4_gzcmd.tex, Tabelas de fusão de filas e de contexto, e seção “Ordenação na mesma carga e curva de esforço”; conclusao.tex, seção “Resposta aos objetivos”.</p>
+<p class="fonte">Fonte: tese, estudo4_gzcmd.tex, Tabelas de fusão de filas e de contexto, e seções “Ordenação na mesma carga e curva de esforço” e “Recomendação, critério de refutação e pares não examinados”; conclusao.tex, seção “Resposta aos objetivos”.</p>
 </footer>
 </section>
 
 <!-- S17 -->
-<section class="slide" id="S17" data-tipo="principal" data-objetivo="4" aria-roledescription="slide" aria-label="Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos" data-termos="vigilância (modo)|ponto de corte|par verdadeiro e não par|ASR|LLM|VPP|vínculo|revisor perfeito">
+<section class="slide" id="S17" data-tipo="principal" data-objetivo="4" aria-roledescription="slide" aria-label="Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos" data-termos="vigilância (modo)|ponto de corte|par verdadeiro e não par|ASR|LLM|potenciais pares|VPP|IC|vínculo|revisor perfeito">
 <header><h2 class="titulo">Na vigilância, abaixo do corte, a automação aceitou 4 pares verdadeiros e 21 falsos positivos</h2></header>
 <div class="corpo">
 <ul>
 <li>ASR: corte preservado; abaixo dele, revisão assistida por LLM</li>
-<li>o LLM (Claude Haiku 5.5) fez todas as aceitações abaixo do corte</li>
-<li>VPP das aceitações: 16,0%; subestimado se algum dos dez falsos positivos em região sem revisão documentada for par verdadeiro</li>
+<li>o ASR enviou 344 potenciais pares ao LLM e 96 ao revisor humano</li>
+<li>o LLM (Claude Haiku 5.5) fez todas as 25 aceitações abaixo do corte</li>
+<li>VPP das aceitações: 16,0% (IC 95% de 6,4 a 34,7); subestimado se algum dos dez falsos positivos em região sem revisão documentada for par verdadeiro</li>
 <li>nas condições avaliadas, o LLM não deve aceitar vínculos sozinho</li>
 </ul>
 </div>
@@ -777,19 +779,20 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S18 -->
-<section class="slide" id="S18" data-tipo="principal" data-objetivo="4" aria-roledescription="slide" aria-label="Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada" data-termos="vigilância (modo)|par verdadeiro e não par|ASR|O3|confirmação (modo)|filtro|NONMATCH|revisor perfeito|post hoc">
+<section class="slide" id="S18" data-tipo="principal" data-objetivo="4" aria-roledescription="slide" aria-label="Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada" data-termos="vigilância (modo)|par verdadeiro e não par|ASR|O3|confirmação (modo)|nota final|CdR|O2|filtro|NONMATCH|revisor perfeito|post hoc">
 <header><h2 class="titulo">Na vigilância, a automação recupera no máximo um par verdadeiro a mais que a fila ordenada</h2></header>
 <div class="corpo">
 <ul>
 <li>com 96 revisões humanas, ASR recupera 23 pares verdadeiros; O3, 22</li>
 <li>ASR acrescenta 21 falsos positivos</li>
 <li>um par de diferença não sustenta superioridade</li>
+<li>na confirmação, a ordenação pela nota final do CdR (O2) recupera os mesmos 9 pares verdadeiros do ASR com 11 revisões, contra 17</li>
 </ul>
 <p>Confirmação, modelos maiores e filtro de <code>NONMATCH</code>: reservas <a href="#R05">R05</a>, <a href="#R10">R10</a> e <a href="#R11">R11</a>.</p>
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
-<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>vigilância (modo)</strong>: estratégia que prioriza a sensibilidade</span> <span class="it"><strong>ASR</strong>: arranjo sequencial que preserva o corte</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong><code>NONMATCH</code></strong>: decisão do LLM: não par</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
+<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>ASR</strong>: arranjo sequencial que preserva o corte</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>CdR</strong>: Comparador de Registros</span> <span class="it"><strong>O2</strong>: ordenação pela nota final do CdR</span> <span class="it"><strong><code>NONMATCH</code></strong>: decisão do LLM: não par</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
 <!-- /LEMBRETE -->
 <p class="ressalva"><span class="rotulo">Ressalva:</span> revisor perfeito simulado, <em lang="en">post hoc</em>; filtro e usos subordinados ao revisor humano são hipóteses exploratórias.</p>
 <p class="fonte">Fonte: tese, estudo4_gzcmd.tex, seções “Ordenação na mesma carga e curva de esforço”, “LLM como filtro antes da revisão humana” e “Tamanho do modelo como revisor”; conclusao.tex, seção “Resposta aos objetivos”.</p>
@@ -817,13 +820,13 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S20 -->
-<section class="slide" id="S20" data-tipo="principal" data-objetivo="5" aria-roledescription="slide" aria-label="A perda de sensibilidade concentra-se no passo 11 e é herdada do corte" data-termos="sensibilidade|passo|ponto de corte|vigilância (modo)|sensibilidade automática|ASR">
+<section class="slide" id="S20" data-tipo="principal" data-objetivo="5" aria-roledescription="slide" aria-label="A perda de sensibilidade concentra-se no passo 11 e é herdada do corte" data-termos="sensibilidade|passo|ponto de corte|vigilância (modo)|sensibilidade automática|ASR|par verdadeiro e não par">
 <header><h2 class="titulo">A perda de sensibilidade concentra-se no passo 11 e é herdada do corte</h2></header>
 <div class="corpo">
 <ul>
 <li>na vigilância, sensibilidade automática de ASR no passo 11 de 42,5%, contra 95,0% e 96,1% nos passos 6 e 9</li>
 <li>o passo é estrato do processo, não atributo demográfico</li>
-<li>a disparidade vem do corte</li>
+<li>a disparidade vem do corte, que isolado aceita 15 dos 40 pares verdadeiros do passo 11</li>
 <li>raça/cor ausente do extrato</li>
 </ul>
 </div>
@@ -837,24 +840,27 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S21 -->
-<section class="slide" id="S21" data-tipo="principal" aria-roledescription="slide" aria-label="O que a tese sustenta e o que não sustenta" data-termos="F3|F4|O1|meta|IC|sensibilidade|passo|O3|LLM|vínculo|post hoc|revisor perfeito">
+<section class="slide" id="S21" data-tipo="principal" aria-roledescription="slide" aria-label="O que a tese sustenta e o que não sustenta" data-termos="F3|F4|O1|meta|IC|sensibilidade|passo|vigilância (modo)|par verdadeiro e não par|O3|LLM|vínculo|subnotificação|post hoc|revisor perfeito">
 <header><h2 class="titulo">O que a tese sustenta e o que não sustenta</h2></header>
 <div class="corpo">
 <div class="dois">
 <div>
-<h3>A tese sustenta</h3>
+<h3>Sustenta</h3>
 <ul>
 <li>F3 e F4 reduziram revisões frente a O1 (metas 9 e 36), com IC</li>
-<li>a ordem da fila altera o número de revisões</li>
+<li>a ordem da fila muda as revisões</li>
 <li>a disparidade de sensibilidade concentra-se no passo 11</li>
+<li>na vigilância, a automação recuperou no máximo um par verdadeiro a mais que O3 (21 falsos positivos)</li>
 </ul>
 </div>
 <div>
-<h3>A tese não sustenta</h3>
+<h3>Não sustenta</h3>
 <ul>
-<li>que O3 isolada reduza as revisões: os IC incluem zero</li>
-<li>que F3 ou F4 superem O3, ou que alguma ordenação domine</li>
+<li>que O3 isolada reduza as revisões (IC com zero)</li>
+<li>que F3 ou F4 superem O3 ou alguma ordenação domine</li>
 <li>que o LLM aceite vínculos sozinho ou reduza a carga</li>
+<li>que a redução valha para outra coorte ou diminua a subnotificação</li>
+<li>que haja paridade entre subgrupos</li>
 </ul>
 </div>
 </div>
@@ -863,17 +869,17 @@ dfn { font-style: inherit; }
 <!-- LEMBRETE -->
 <aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>F3</strong>: F4 acrescida de O3 com MACD</span> <span class="it"><strong>F4</strong>: fusão de O3 e O1</span> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>LLM</strong>: modelo de linguagem de grande porte</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
 <!-- /LEMBRETE -->
-<p class="ressalva"><span class="rotulo">Ressalva:</span> <em lang="en">post hoc</em>, coorte única, revisor perfeito simulado; F4 entre seis variantes; Estudos 2 e 3 otimistas (reservas <a href="#R07">R07</a> e <a href="#R14">R14</a>).</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> <em lang="en">post hoc</em>, coorte única, revisor perfeito simulado; F3 e F4 escolhidas entre seis variantes, sem correção; Estudos 2 e 3 otimistas (reservas <a href="#R07">R07</a> e <a href="#R14">R14</a>).</p>
 <p class="fonte">Fonte: tese, conclusao.tex, seção “O que a tese sustenta e o que não sustenta”.</p>
 </footer>
 </section>
 
 <!-- S22 -->
-<section class="slide" id="S22" data-tipo="principal" aria-roledescription="slide" aria-label="Três limitações condicionam a leitura" data-termos="referência operacional|par verdadeiro e não par|ponto de corte|IC|revisor perfeito|post hoc">
+<section class="slide" id="S22" data-tipo="principal" aria-roledescription="slide" aria-label="Três limitações condicionam a leitura" data-termos="referência operacional|par verdadeiro e não par|ponto de corte|escore|O1|CdR|O2|O4|IC|revisor perfeito|post hoc">
 <header><h2 class="titulo">Três limitações condicionam a leitura</h2></header>
 <div class="corpo">
 <ul>
-<li><strong>referência operacional</strong>: revisora única; direção e magnitude do viés não identificáveis</li>
+<li><strong>referência operacional</strong>: revisora única; os 36 pares verdadeiros abaixo do corte estão entre os 2.522 de maior escore, padrão compatível com revisão restrita a essa faixa, o que favoreceria O1 e, se a revisão usou as evidências do CdR, O2 a O4; direção e magnitude do viés não identificáveis</li>
 <li><strong>coorte única</strong>: 247 pares verdadeiros, 36 abaixo do corte; IC largos</li>
 <li><strong>revisor humano não observado</strong>: contagens sob revisor perfeito simulado; análise <em lang="en">post hoc</em></li>
 </ul>
@@ -881,9 +887,10 @@ dfn { font-style: inherit; }
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
-<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>referência operacional</strong>: corte mais revisão manual de origem</span> <span class="it"><strong>revisor perfeito simulado</strong>: identifica todo par verdadeiro, sem falso positivo</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span></aside>
+<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span> <span class="it"><strong>CdR</strong>: Comparador de Registros</span> <span class="it"><strong>O2</strong>: ordenação pela nota final do CdR</span> <span class="it"><strong>O4</strong>: ordenação pela probabilidade recalibrada de ASR</span> <span class="it"><strong><em lang="en">post hoc</em></strong>: análise posterior, escolhida com dados à vista</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
 <!-- /LEMBRETE -->
-<p class="fonte">Fonte: tese, conclusao.tex, seção “Limitações”.</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> limitações do delineamento e da documentação disponível, não do trabalho de revisão.</p>
+<p class="fonte">Fonte: tese, conclusao.tex, seção “Limitações”; estudo4_gzcmd.tex, seção “Limitações”; capitulo_dados.tex, seção “Referência operacional”.</p>
 </footer>
 </section>
 
@@ -910,7 +917,7 @@ dfn { font-style: inherit; }
 <!-- LEMBRETE -->
 <aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>CdR</strong>: Comparador de Registros</span> <span class="it"><strong>XGBoost</strong>: <em lang="en">Extreme Gradient Boosting</em>, classificador de árvores</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>F4</strong>: fusão de O3 e O1</span> <span class="it"><strong>F3</strong>: F4 acrescida de O3 com MACD</span> <span class="it"><strong>MACD</strong>: atributos derivados das datas de nascimento</span> <span class="it"><strong>demais termos</strong>: tecla g</span></aside>
 <!-- /LEMBRETE -->
-<p class="ressalva"><span class="rotulo">Ressalva:</span> a validar em coorte nova; nenhuma ordenação dominou em todas as cargas.</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> a validar em coorte nova com referência cega; nenhuma ordenação dominou em todas as cargas.</p>
 <p class="fonte">Fonte: tese, conclusao.tex, seção “Implicações para o serviço”; estudo4_gzcmd.tex, seção “Recomendação, critério de refutação e pares não examinados”.</p>
 </footer>
 </section>
@@ -921,7 +928,7 @@ dfn { font-style: inherit; }
 <div class="corpo">
 <ul>
 <li>um só extrato, revisor perfeito simulado, versão experimental 0.7.0 do pacote GZ‑CMD, não publicada no PyPI (reserva <a href="#R19">R19</a>)</li>
-<li>referências O1 e O2, ordenações sem <dfn data-termo="labels"><em lang="en">labels</em> (classificação de referência de cada potencial par)</dfn>: a fila que reaprende com <em lang="en">labels</em> verificados não superou O1 de forma consistente</li>
+<li>referências O1, a mais forte, e O2, ordenações sem <dfn data-termo="labels"><em lang="en">labels</em> (classificação de referência de cada potencial par)</dfn>: a fila que reaprende com <em lang="en">labels</em> verificados não superou O1 de forma consistente</li>
 <li>o desempate pelo LLM sobre O1 variou sem padrão consistente e entra como hipótese para a coorte nova</li>
 <li>O3 e F4 dependem de <em lang="en">labels</em> e não são comparáveis a essas explorações</li>
 </ul>
@@ -937,20 +944,21 @@ dfn { font-style: inherit; }
 </section>
 
 <!-- S25 -->
-<section class="slide" id="S25" data-tipo="principal" aria-roledescription="slide" aria-label="A hipótese pode ser refutada: o critério e os próximos passos estão declarados" data-termos="orçamento|LLM|O3|ASR|O1">
+<section class="slide" id="S25" data-tipo="principal" aria-roledescription="slide" aria-label="A hipótese pode ser refutada: o critério e os próximos passos estão declarados" data-termos="orçamento|IC|O3|O1|LLM|ASR">
 <header><h2 class="titulo">A hipótese pode ser refutada: o critério e os próximos passos estão declarados</h2></header>
 <div class="corpo">
 <ul>
 <li>outra coorte, referência cega, ordenação e orçamento fixados antes</li>
+<li>cálculo de poder para o tamanho da coorte nova, pois o IC de O3 menos O1 incluiu zero nas três metas</li>
 <li>próximos passos: revisão humana observada, com dupla revisão, e medida do tempo por revisão com e sem o LLM, cujo efeito não foi estimado</li>
 </ul>
 <p>Refutação: O3 não atingir a recuperação de ASR com pelo menos 25% menos revisões que O1, pelo limite inferior do intervalo de 95% entre partições predefinidas, em cada meta (23 e 9).</p>
 </div>
 <footer class="pe">
 <!-- LEMBRETE -->
-<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>LLM</strong>: modelo de linguagem de grande porte</span> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>ASR</strong>: arranjo sequencial que preserva o corte</span> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span></aside>
+<aside class="lembrete" aria-label="Lembrete de siglas e termos"><strong class="rot">Lembrete:</strong> <span class="it"><strong>O3</strong>: ordenação pela probabilidade calibrada fora da amostra</span> <span class="it"><strong>O1</strong>: ordenação pelo escore do OpenRecLink</span> <span class="it"><strong>LLM</strong>: modelo de linguagem de grande porte</span> <span class="it"><strong>ASR</strong>: arranjo sequencial que preserva o corte</span></aside>
 <!-- /LEMBRETE -->
-<p class="ressalva"><span class="rotulo">Ressalva:</span> a margem foi escolhida com os dados à vista e não foi testada; critério para as quatro ações: reserva <a href="#R09">R09</a>.</p>
+<p class="ressalva"><span class="rotulo">Ressalva:</span> a margem foi escolhida com os dados à vista e não foi testada; nenhuma dessas avaliações foi realizada; critério para as quatro ações: reserva <a href="#R09">R09</a>.</p>
 <p class="fonte">Fonte: tese, conclusao.tex, seção “Validação e próximos passos”; estudo4_gzcmd.tex, seção “Recomendação, critério de refutação e pares não examinados”.</p>
 </footer>
 </section>
@@ -1977,7 +1985,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-cdr" data-chave="CdR" data-nivel="sigla" data-fonte="glossario.tex:34">CdR</dt>
 <dd class="def">Comparador de Registros</dd>
-<dd class="ocor">Quadros: <!-- OCOR:CdR --><a href="#S05">S05</a>, <a href="#S07">S07</a>, <a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S11">S11</a>, <a href="#S13">S13</a>, <a href="#S14">S14</a>, <a href="#S23">S23</a>, <a href="#S26">S26</a>, <a href="#S27">S27</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R13">R13</a><!-- /OCOR:CdR --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:CdR --><a href="#S05">S05</a>, <a href="#S07">S07</a>, <a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S11">S11</a>, <a href="#S13">S13</a>, <a href="#S14">S14</a>, <a href="#S18">S18</a>, <a href="#S22">S22</a>, <a href="#S23">S23</a>, <a href="#S26">S26</a>, <a href="#S27">S27</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R13">R13</a><!-- /OCOR:CdR --></dd>
 </div>
 <div class="gl">
 <dt id="g-cm-fila" data-chave="CM (fila)" data-nivel="sigla" data-fonte="glossario.tex:20">CM (fila)</dt>
@@ -2002,7 +2010,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-curva-de-esforco" data-chave="curva de esforço" data-nivel="termo" data-fonte="glossario.tex:42">curva de esforço</dt>
 <dd class="def">pares verdadeiros recuperados por revisões feitas</dd>
-<dd class="ocor">Quadros: <!-- OCOR:curva de esforço --><a href="#S09">S09</a>, <a href="#S10">S10</a>, <a href="#S23">S23</a>, <a href="#S26">S26</a>, <a href="#R20">R20</a><!-- /OCOR:curva de esforço --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:curva de esforço --><a href="#S09">S09</a>, <a href="#S10">S10</a>, <a href="#S16">S16</a>, <a href="#S23">S23</a>, <a href="#S26">S26</a>, <a href="#R20">R20</a><!-- /OCOR:curva de esforço --></dd>
 </div>
 <div class="gl">
 <dt id="g-desempate-aleatorio" data-chave="desempate aleatório" data-nivel="termo" data-fonte="apendice_gzcmd.tex:527">desempate aleatório</dt>
@@ -2022,7 +2030,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-escore" data-chave="escore" data-nivel="base" data-fonte="glossario.tex:48">escore</dt>
 <dd class="def">resumo da concordância entre os registros</dd>
-<dd class="ocor">Quadros: <!-- OCOR:escore --><a href="#S03">S03</a>, <a href="#S06">S06</a>, <a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S26">S26</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R13">R13</a>, <a href="#R17">R17</a>, <a href="#R20">R20</a>, <a href="#R26">R26</a><!-- /OCOR:escore --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:escore --><a href="#S03">S03</a>, <a href="#S06">S06</a>, <a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S22">S22</a>, <a href="#S26">S26</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R13">R13</a>, <a href="#R17">R17</a>, <a href="#R20">R20</a>, <a href="#R26">R26</a><!-- /OCOR:escore --></dd>
 </div>
 <div class="gl">
 <dt id="g-evento-sentinela" data-chave="evento sentinela" data-nivel="termo" data-fonte="capitulo3.tex:5">evento sentinela</dt>
@@ -2112,7 +2120,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-ic" data-chave="IC" data-nivel="base" data-fonte="siglas.tex:35">IC</dt>
 <dd class="def">intervalo de confiança</dd>
-<dd class="ocor">Quadros: <!-- OCOR:IC --><a href="#S06">S06</a>, <a href="#S12">S12</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S16">S16</a>, <a href="#S19">S19</a>, <a href="#S21">S21</a>, <a href="#S22">S22</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R20">R20</a>, <a href="#R22">R22</a>, <a href="#R23">R23</a>, <a href="#R25">R25</a><!-- /OCOR:IC --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:IC --><a href="#S06">S06</a>, <a href="#S12">S12</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S16">S16</a>, <a href="#S17">S17</a>, <a href="#S19">S19</a>, <a href="#S21">S21</a>, <a href="#S22">S22</a>, <a href="#S25">S25</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R20">R20</a>, <a href="#R22">R22</a>, <a href="#R23">R23</a>, <a href="#R25">R25</a><!-- /OCOR:IC --></dd>
 </div>
 <div class="gl">
 <dt id="g-labels" data-chave="labels" data-nivel="sigla" data-fonte="capitulo_dados.tex:73"><em lang="en">labels</em></dt>
@@ -2167,17 +2175,17 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-nota-final" data-chave="nota final" data-nivel="termo" data-fonte="glossario.tex:48">nota final</dt>
 <dd class="def">saída agregada do CdR</dd>
-<dd class="ocor">Quadros: <!-- OCOR:nota final --><a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S11">S11</a>, <a href="#S12">S12</a>, <a href="#S13">S13</a>, <a href="#S14">S14</a>, <a href="#S19">S19</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R05">R05</a>, <a href="#R06">R06</a>, <a href="#R09">R09</a>, <a href="#R13">R13</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a>, <a href="#R23">R23</a>, <a href="#R24">R24</a><!-- /OCOR:nota final --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:nota final --><a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S11">S11</a>, <a href="#S12">S12</a>, <a href="#S13">S13</a>, <a href="#S14">S14</a>, <a href="#S18">S18</a>, <a href="#S19">S19</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R05">R05</a>, <a href="#R06">R06</a>, <a href="#R09">R09</a>, <a href="#R13">R13</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a>, <a href="#R23">R23</a>, <a href="#R24">R24</a><!-- /OCOR:nota final --></dd>
 </div>
 <div class="gl">
 <dt id="g-o1" data-chave="O1" data-nivel="sigla" data-fonte="glossario.tex:86">O1</dt>
 <dd class="def">ordenação pelo escore do OpenRecLink</dd>
-<dd class="ocor">Quadros: <!-- OCOR:O1 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S16">S16</a>, <a href="#S21">S21</a>, <a href="#S24">S24</a>, <a href="#S25">S25</a>, <a href="#R01">R01</a>, <a href="#R06">R06</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a>, <a href="#R20">R20</a>, <a href="#R23">R23</a><!-- /OCOR:O1 --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:O1 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S16">S16</a>, <a href="#S21">S21</a>, <a href="#S22">S22</a>, <a href="#S24">S24</a>, <a href="#S25">S25</a>, <a href="#R01">R01</a>, <a href="#R06">R06</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a>, <a href="#R20">R20</a>, <a href="#R23">R23</a><!-- /OCOR:O1 --></dd>
 </div>
 <div class="gl">
 <dt id="g-o2" data-chave="O2" data-nivel="sigla" data-fonte="glossario.tex:86">O2</dt>
 <dd class="def">ordenação pela nota final do CdR</dd>
-<dd class="ocor">Quadros: <!-- OCOR:O2 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S24">S24</a>, <a href="#R01">R01</a>, <a href="#R05">R05</a>, <a href="#R16">R16</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a><!-- /OCOR:O2 --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:O2 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S18">S18</a>, <a href="#S22">S22</a>, <a href="#S24">S24</a>, <a href="#R01">R01</a>, <a href="#R05">R05</a>, <a href="#R16">R16</a>, <a href="#R17">R17</a>, <a href="#R18">R18</a><!-- /OCOR:O2 --></dd>
 </div>
 <div class="gl">
 <dt id="g-o3" data-chave="O3" data-nivel="sigla" data-fonte="glossario.tex:86">O3</dt>
@@ -2187,7 +2195,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-o4" data-chave="O4" data-nivel="sigla" data-fonte="glossario.tex:86">O4</dt>
 <dd class="def">ordenação pela probabilidade recalibrada de ASR</dd>
-<dd class="ocor">Quadros: <!-- OCOR:O4 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#R01">R01</a><!-- /OCOR:O4 --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:O4 --><a href="#S10">S10</a>, <a href="#S14">S14</a>, <a href="#S22">S22</a>, <a href="#R01">R01</a><!-- /OCOR:O4 --></dd>
 </div>
 <div class="gl">
 <dt id="g-openreclink" data-chave="OpenRecLink" data-nivel="base" data-fonte="glossario.tex:88">OpenRecLink</dt>
@@ -2197,7 +2205,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-orcamento" data-chave="orçamento" data-nivel="base" data-fonte="glossario.tex:90">orçamento</dt>
 <dd class="def">pares do topo da ordenação revisados</dd>
-<dd class="ocor">Quadros: <!-- OCOR:orçamento --><a href="#S08">S08</a>, <a href="#S23">S23</a>, <a href="#S25">S25</a>, <a href="#R04">R04</a>, <a href="#R05">R05</a>, <a href="#R07">R07</a>, <a href="#R09">R09</a>, <a href="#R16">R16</a><!-- /OCOR:orçamento --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:orçamento --><a href="#S08">S08</a>, <a href="#S16">S16</a>, <a href="#S23">S23</a>, <a href="#S25">S25</a>, <a href="#R04">R04</a>, <a href="#R05">R05</a>, <a href="#R07">R07</a>, <a href="#R09">R09</a>, <a href="#R16">R16</a><!-- /OCOR:orçamento --></dd>
 </div>
 <div class="gl">
 <dt id="g-pair-id" data-chave="pair_id" data-nivel="sigla" data-fonte="capitulo_dados.tex:39"><code>pair_id</code></dt>
@@ -2212,7 +2220,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-par-verdadeiro-e-nao-par" data-chave="par verdadeiro e não par" data-nivel="base" data-fonte="glossario.tex:92">par verdadeiro e não par</dt>
 <dd class="def">classes segundo a referência operacional</dd>
-<dd class="ocor">Quadros: <!-- OCOR:par verdadeiro e não par --><a href="#S03">S03</a>, <a href="#S04">S04</a>, <a href="#S05">S05</a>, <a href="#S06">S06</a>, <a href="#S07">S07</a>, <a href="#S09">S09</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S17">S17</a>, <a href="#S18">S18</a>, <a href="#S19">S19</a>, <a href="#S22">S22</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R04">R04</a>, <a href="#R05">R05</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R09">R09</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R20">R20</a>, <a href="#R21">R21</a>, <a href="#R22">R22</a>, <a href="#R26">R26</a><!-- /OCOR:par verdadeiro e não par --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:par verdadeiro e não par --><a href="#S03">S03</a>, <a href="#S04">S04</a>, <a href="#S05">S05</a>, <a href="#S06">S06</a>, <a href="#S07">S07</a>, <a href="#S09">S09</a>, <a href="#S14">S14</a>, <a href="#S15">S15</a>, <a href="#S17">S17</a>, <a href="#S18">S18</a>, <a href="#S19">S19</a>, <a href="#S20">S20</a>, <a href="#S21">S21</a>, <a href="#S22">S22</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R04">R04</a>, <a href="#R05">R05</a>, <a href="#R07">R07</a>, <a href="#R08">R08</a>, <a href="#R09">R09</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R16">R16</a>, <a href="#R20">R20</a>, <a href="#R21">R21</a>, <a href="#R22">R22</a>, <a href="#R26">R26</a><!-- /OCOR:par verdadeiro e não par --></dd>
 </div>
 <div class="gl">
 <dt id="g-particao-por-linha" data-chave="partição por linha" data-nivel="termo" data-fonte="estudo2_classificadores.tex:120">partição por linha</dt>
@@ -2252,7 +2260,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-potenciais-pares" data-chave="potenciais pares" data-nivel="base" data-fonte="glossario.tex:96">potenciais pares</dt>
 <dd class="def">pares escolhidos pela blocagem, ainda sem classificação</dd>
-<dd class="ocor">Quadros: <!-- OCOR:potenciais pares --><a href="#S03">S03</a>, <a href="#S06">S06</a>, <a href="#S07">S07</a>, <a href="#S10">S10</a>, <a href="#S19">S19</a>, <a href="#S24">S24</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R04">R04</a>, <a href="#R08">R08</a>, <a href="#R09">R09</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R19">R19</a>, <a href="#R21">R21</a>, <a href="#R23">R23</a>, <a href="#R24">R24</a>, <a href="#R26">R26</a><!-- /OCOR:potenciais pares --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:potenciais pares --><a href="#S03">S03</a>, <a href="#S06">S06</a>, <a href="#S07">S07</a>, <a href="#S10">S10</a>, <a href="#S17">S17</a>, <a href="#S19">S19</a>, <a href="#S24">S24</a>, <a href="#R01">R01</a>, <a href="#R03">R03</a>, <a href="#R04">R04</a>, <a href="#R08">R08</a>, <a href="#R09">R09</a>, <a href="#R14">R14</a>, <a href="#R15">R15</a>, <a href="#R19">R19</a>, <a href="#R21">R21</a>, <a href="#R23">R23</a>, <a href="#R24">R24</a>, <a href="#R26">R26</a><!-- /OCOR:potenciais pares --></dd>
 </div>
 <div class="gl">
 <dt id="g-precisao-media" data-chave="precisão média" data-nivel="sigla" data-fonte="siglas.tex:9 (sigla); explicação geral">precisão média (AP)</dt>
@@ -2352,12 +2360,12 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-subescores" data-chave="subescores" data-nivel="termo" data-fonte="glossario.tex:34">subescores</dt>
 <dd class="def">similaridades por campo, calculadas pelo CdR</dd>
-<dd class="ocor">Quadros: <!-- OCOR:subescores --><a href="#S11">S11</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R06">R06</a>, <a href="#R10">R10</a>, <a href="#R13">R13</a><!-- /OCOR:subescores --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:subescores --><a href="#S11">S11</a>, <a href="#S13">S13</a>, <a href="#S23">S23</a>, <a href="#R01">R01</a>, <a href="#R06">R06</a>, <a href="#R10">R10</a>, <a href="#R13">R13</a><!-- /OCOR:subescores --></dd>
 </div>
 <div class="gl">
 <dt id="g-subnotificacao" data-chave="subnotificação" data-nivel="termo" data-fonte="capitulo1.tex:20">subnotificação</dt>
 <dd class="def">óbito no SIM sem caso no Sinan</dd>
-<dd class="ocor">Quadros: <!-- OCOR:subnotificação --><a href="#R04">R04</a><!-- /OCOR:subnotificação --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:subnotificação --><a href="#S21">S21</a>, <a href="#R04">R04</a><!-- /OCOR:subnotificação --></dd>
 </div>
 <div class="gl">
 <dt id="g-svm" data-chave="SVM" data-nivel="sigla" data-fonte="siglas.tex:65">SVM</dt>
@@ -2402,7 +2410,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-vigilancia-modo" data-chave="vigilância (modo)" data-nivel="termo" data-fonte="glossario.tex:82">vigilância (modo)</dt>
 <dd class="def">estratégia que prioriza a sensibilidade</dd>
-<dd class="ocor">Quadros: <!-- OCOR:vigilância (modo) --><a href="#S06">S06</a>, <a href="#S09">S09</a>, <a href="#S17">S17</a>, <a href="#S18">S18</a>, <a href="#S20">S20</a>, <a href="#R01">R01</a>, <a href="#R05">R05</a>, <a href="#R06">R06</a>, <a href="#R09">R09</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R21">R21</a><!-- /OCOR:vigilância (modo) --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:vigilância (modo) --><a href="#S06">S06</a>, <a href="#S09">S09</a>, <a href="#S17">S17</a>, <a href="#S18">S18</a>, <a href="#S20">S20</a>, <a href="#S21">S21</a>, <a href="#R01">R01</a>, <a href="#R05">R05</a>, <a href="#R06">R06</a>, <a href="#R09">R09</a>, <a href="#R10">R10</a>, <a href="#R11">R11</a>, <a href="#R12">R12</a>, <a href="#R21">R21</a><!-- /OCOR:vigilância (modo) --></dd>
 </div>
 <div class="gl">
 <dt id="g-vigilancia-do-obito" data-chave="vigilância do óbito" data-nivel="termo" data-fonte="capitulo3.tex:5">vigilância do óbito</dt>
@@ -2427,7 +2435,7 @@ dfn { font-style: inherit; }
 <div class="gl">
 <dt id="g-xgboost" data-chave="XGBoost" data-nivel="sigla" data-fonte="siglas.tex:71; capitulo_dados.tex:117">XGBoost</dt>
 <dd class="def"><em lang="en">Extreme Gradient Boosting</em>, classificador de árvores</dd>
-<dd class="ocor">Quadros: <!-- OCOR:XGBoost --><a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S23">S23</a>, <a href="#R06">R06</a>, <a href="#R25">R25</a><!-- /OCOR:XGBoost --></dd>
+<dd class="ocor">Quadros: <!-- OCOR:XGBoost --><a href="#S08">S08</a>, <a href="#S10">S10</a>, <a href="#S13">S13</a>, <a href="#S23">S23</a>, <a href="#R06">R06</a>, <a href="#R25">R25</a><!-- /OCOR:XGBoost --></dd>
 </div>
 </dl>
 </div>

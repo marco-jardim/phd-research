@@ -870,6 +870,32 @@ def test_fidelidade_s27_e_s26_ao_apendice_do_pacote(quadros):
 # H9. Números
 # ======================================================================================
 
+CONTEUDO_ACRESCENTADO_AO_QUADRO = [  # decisão A de 2026-11-18: conteúdo da fala trazido ao quadro, com fonte na tese
+    ("S02", ["4,8 por 100 mil habitantes em 2024", "terceiro maior entre as unidades da federação"]),
+    ("S03", ["o custo da revisão manual não foi medido"]),
+    ("S07", ["do delineamento e da documentação disponível, não do trabalho de revisão"]),
+    ("S13", ["300 árvores", "30 atributos", "29 subescores"]),
+    ("S15", ["\u221238 e \u22121.203", "\u221235 e \u2212894"]),
+    ("S16", ["curva de esforço, conforme o orçamento humano"]),
+    ("S17", ["344 potenciais pares", "96 ao revisor humano", "25 aceitações", "6,4 a 34,7"]),
+    ("S18", ["do asr com 11 revisões, contra 17"]),
+    ("S20", ["15 dos 40 pares verdadeiros do passo 11"]),
+    ("S21", ["21 falsos positivos", "outra coorte ou diminua a subnotificação", "paridade entre subgrupos",
+             "f3 e f4 escolhidas entre seis variantes, sem correção"]),
+    ("S22", ["2.522 de maior escore", "revisão restrita a essa faixa", "o2 a o4",
+             "do delineamento e da documentação disponível, não do trabalho de revisão"]),
+    ("S23", ["referência cega"]),
+    ("S24", ["o1, a mais forte"]),
+    ("S25", ["cálculo de poder", "nas três metas", "nenhuma dessas avaliações foi realizada"]),
+]
+
+
+@pytest.mark.parametrize("rotulo,expressoes", CONTEUDO_ACRESCENTADO_AO_QUADRO, ids=[r for r, _ in CONTEUDO_ACRESCENTADO_AO_QUADRO])
+def test_quadro_traz_o_conteudo_que_a_fala_diz(quadros, rotulo, expressoes):
+    ausentes = expressoes_ausentes(quadros[rotulo].texto, expressoes)
+    assert not ausentes, f"{rotulo}: faltam {ausentes}\ntexto do quadro: {quadros[rotulo].texto}"
+
+
 def test_h9_a_tese_fornece_numeros(tese_numeros):
     assert len(tese_numeros) > 1000
     assert {"61485", "61696", "0.910", "1172.5", "23443"} <= tese_numeros

@@ -762,7 +762,8 @@ def test_r6_datas_e_versoes_do_roteiro_estao_na_tese(sec):
 
 def test_r6_numeros_fora_do_quadro_constam_da_rastreabilidade(roteiro, sec, quadros):
     linhas = rastreabilidade(roteiro)
-    assert len(linhas) >= 10, f"poucas linhas na tabela de rastreabilidade ({len(linhas)})"
+    # a fala não traz número fora do quadro (test_r10); a tabela guarda só os das perguntas prováveis do S17 (3 linhas)
+    assert len(linhas) >= 3, f"poucas linhas na tabela de rastreabilidade ({len(linhas)})"
     erros = []
     declarados: dict[str, set[str]] = {}
     for q, numeros, _ in linhas:
@@ -844,10 +845,26 @@ def test_r7_corte_sempre_preservado(sec):
             or "não" in texto_dito(sec[rotulo]).lower(), rotulo
 
 
-def test_r7_limitacoes_sao_de_delineamento_e_de_documentacao(sec):
+def test_r10_fala_nao_traz_numero_fora_do_quadro(sec, quadros):
+    """Decisão de 2026-11-18: a fala só diz o que o quadro mostra; número fora do quadro só nas perguntas
+    prováveis (material de preparação), declarado na tabela de rastreabilidade."""
+    erros = []
+    for rotulo in PRINCIPAIS:
+        dito = bz.plano_md("\n\n".join(fala_de(sec[rotulo]) + [t.removeprefix("Transição:") for t in paragrafo(sec[rotulo], "Transição:")]))
+        fora = numeros_fora_do_quadro(dito, texto_do_quadro(quadros[rotulo]))
+        if fora:
+            erros.append(f"{rotulo}: números na fala fora do quadro: {fora}")
+    assert not erros, "\n".join(erros)
+
+
+def test_r7_limitacoes_sao_de_delineamento_e_de_documentacao(sec, quadros):
+    """Frase de tom decidida pela autora (banca com os autores do OpenRecLink): a fala de S07 e S22 a diz, e o
+    quadro a traz na ressalva, com a redação da ressalva do R01."""
     for rotulo in ("S07", "S22"):
         t = texto_fala(sec[rotulo]).lower()
         assert "delineamento" in t and "documentação" in t and "não do trabalho de revisão" in t.replace("e não do", "não do"), rotulo
+        q = " ".join(quadros[rotulo].ressalva.lower().split())
+        assert "do delineamento e da documentação disponível, não do trabalho de revisão" in q, f"{rotulo}: ressalva do quadro: {q}"
     assert "limitação do delineamento" in texto_fala(sec["R01"]).lower() or "do delineamento e da documentação" in texto_fala(sec["R01"]).lower()
 
 
@@ -894,7 +911,8 @@ def test_r8_s08_nao_diz_que_o_corte_permanece_em_todos_os_cenarios(sec):
     t = texto_fala(sec["S08"])
     assert "em todos os cenários" not in t
     assert "arranjo sequencial e no fluxo recomendado" in t
-    assert "é avaliada sobre as decisões resultantes" in t
+    assert "é avaliada sobre as decisões resultantes" in t and "incluídas as do corte" in t
+    # sentido na tese: estudo5_equidade.tex:52 (o corte isolado entra na equidade do arranjo) e conclusao.tex:33
 
 
 def test_r8_s09_metas_sao_o_que_o_asr_recuperou(sec):
