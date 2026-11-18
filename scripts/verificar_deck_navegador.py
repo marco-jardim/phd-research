@@ -15,8 +15,9 @@ Sem rede: o deck é aberto por `file://`. Checagens (código de saída 1 se algu
 * impressão: PDF com um quadro por página (54) mais as páginas do glossário, sem página em branco, 16:9, e as
   mesmas medidas de sobreposição sob a mídia `print`.
 
-`--calibrar` mede, quadro a quadro, se o corpo e o rodapé cabem em cada degrau de letra do lembrete (normal,
-compacto, mini, micro), para calibrar `LIMITES_*` de scripts/lembretes_deck.py. Saída: capturas, `relatorio.json`
+`--calibrar` mede, quadro a quadro e em todos os viewports, o maior número de itens que cabe em cada degrau de letra
+do lembrete (normal, compacto, mini) e imprime a tabela `AJUSTES` de scripts/lembretes_deck.py pronta para colar; sem
+`--calibrar`, o script falha se a tabela deixar de ser a ótima (checagem de otimalidade). Saída: capturas, `relatorio.json`
 e, com o PDF, `deck.pdf`, em `--saida` (padrão `$TEMP/Claude/deck_cdp`).
 """
 
@@ -29,9 +30,9 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 DECK = ROOT / "text/slides/defesa.html"
 VIEWPORTS = ("1280x720", "1920x1080", "1024x768")
-DEGRAUS = ("", "compacto", "mini", "micro")
 TOL = 1.5
 
 JS_DEF = r"""
@@ -101,6 +102,7 @@ window.__medirAtual = function (q) {
     lemInfo = {
       px: Math.round(px * 100) / 100, linhas: Math.round(util / parseFloat(est.lineHeight)),
       classe: lem.className, px_fonte: fonteFonte,
+      mostrados: Array.from(lem.querySelectorAll('.it')).filter(s => !/^demais termos/.test(s.textContent)).length,
       caracteres: lem.textContent.replace(lem.querySelector('.rot').textContent, '').trim().length,
       cortado: /demais termos/.test(lem.textContent), largura_ok: lem.scrollWidth <= lem.clientWidth + 1
     };
@@ -118,18 +120,41 @@ window.__mostrar = async function (id) {
   return q;
 };
 window.__medir = async function (id) { return window.__medirAtual(await window.__mostrar(id)); };
-window.__calibrar = async function (id) {
+window.__calibrar = async function (id, itens, fixo) {
+  // Maior número de itens que cabe em cada degrau (a lista completa vem do glossário, por ordem de prioridade),
+  // com a densidade atual do quadro e com um degrau de densidade a menos (só reservas).
   const q = await window.__mostrar(id);
   const lem = q.querySelector('.lembrete');
   if (!lem) return { id: id, sem_lembrete: true };
-  const orig = lem.className, saida = {};
-  ['', 'compacto', 'mini', 'micro'].forEach(d => {
+  const origClasse = lem.className, origHtml = lem.innerHTML, origSec = q.className;
+  const rot = '<strong class="rot">Lembrete:</strong> ';
+  const k = itens.length;
+  const cabe = () => window.__medirAtual(q).falhas.length === 0;
+  const montar = (d, n) => {
     lem.className = 'lembrete' + (d ? ' ' + d : '');
-    const m = window.__medirAtual(q);
-    saida[d || 'normal'] = { ok: m.falhas.length === 0, linhas: m.lembrete.linhas, px: m.lembrete.px, falhas: m.falhas };
-  });
-  lem.className = orig;
-  return { id: id, caracteres: window.__medirAtual(q).lembrete.caracteres, graus: saida };
+    lem.innerHTML = rot + itens.slice(0, n).join(' ') + (n < k ? ' ' + fixo : '');
+  };
+  const nmax = () => {
+    const out = {};
+    [['normal', ''], ['compacto', 'compacto'], ['mini', 'mini']].forEach(par => {
+      let n = k, ok = false;
+      for (; n >= 1; n--) { montar(par[1], n); if (cabe()) { ok = true; break; } }
+      out[par[0]] = ok ? n : 0;
+    });
+    return out;
+  };
+  const res = { id: id, k: k, atual: nmax(), proxima: null, proxima_nmax: null };
+  const seq = ['', 'denso', 'denso1', 'denso2', 'denso3'];
+  const cur = seq.find(c => c && q.classList.contains(c)) || '';
+  if (q.getAttribute('data-tipo') === 'reserva' && seq.indexOf(cur) < seq.length - 1) {
+    const prox = seq[seq.indexOf(cur) + 1];
+    if (cur) q.classList.remove(cur);
+    q.classList.add(prox);
+    res.proxima = prox;
+    res.proxima_nmax = nmax();
+  }
+  q.className = origSec; lem.className = origClasse; lem.innerHTML = origHtml;
+  return res;
 };
 window.__estado = function () {
   const visiveis = Array.from(document.querySelectorAll('#palco > .slide')).filter(s => getComputedStyle(s).display !== 'none').map(s => s.id);
@@ -211,22 +236,78 @@ def medidas(browser, url, vw, vh, saida, capturar, rel, erros):
 
 # ------------------------------------------------------------------ calibração
 
-def calibrar(browser, url, vw, vh, erros):
-    ctx, page = abrir(browser, url, vw, vh, erros)
-    out = []
-    for qid in ids_dos_quadros(page):
-        out.append(page.evaluate("(id) => window.__calibrar(id)", qid))
-    ctx.close()
-    print(f"\nCalibração a {vw}x{vh}: caracteres da lista, linhas e se cabe, por degrau")
-    for r in out:
-        if r.get("sem_lembrete"):
-            continue
-        cel = []
-        for d in ("normal", "compacto", "mini", "micro"):
-            g = r["graus"][d]
-            cel.append(f"{d}:{g['linhas']}L {'ok' if g['ok'] else 'ESTOURA'}")
-        print(f"{r['id']} {r['caracteres']:4d} car | " + " | ".join(cel))
-    return out
+ORDEM = ("normal", "compacto", "mini")
+CLASSE = {"normal": "", "compacto": "compacto", "mini": "mini"}
+
+
+def recomendar(nmax, k):
+    """(degrau, itens mantidos): o MAIOR número de itens que cabe em algum degrau (None = lista inteira); em empate,
+    o degrau de maior letra. None se nem um item cabe em mini."""
+    melhor = max(min(nmax[d], k) for d in ORDEM)
+    if melhor < 1:
+        return None
+    degrau = next(d for d in ORDEM if min(nmax[d], k) == melhor)
+    return (CLASSE[degrau], None if melhor >= k else melhor)
+
+
+def itens_da_recomendacao(rec, k):
+    return 0 if rec is None else (k if rec[1] is None else rec[1])
+
+
+def calibrar(browser, url, viewports, html_texto, erros):
+    """qid -> {"k", "rec", "descer"}: medição em todos os viewports (vale o pior caso de cada degrau)."""
+    from scripts import lembretes_deck as lem
+    completos = lem.itens_completos(html_texto)
+    agreg = {}
+    for vp in viewports:
+        vw, vh = (int(x) for x in vp.split("x"))
+        ctx, page = abrir(browser, url, vw, vh, erros)
+        for qid, itens in completos.items():
+            r = page.evaluate("([id, itens, fixo]) => window.__calibrar(id, itens, fixo)", [qid, itens, lem.FIXO_HTML])
+            a = agreg.setdefault(qid, {"k": r["k"], "atual": {d: 10 ** 6 for d in ORDEM}, "proxima": r["proxima"], "prox": {d: 10 ** 6 for d in ORDEM}})
+            for d in ORDEM:
+                a["atual"][d] = min(a["atual"][d], r["atual"][d])
+                if r["proxima_nmax"]:
+                    a["prox"][d] = min(a["prox"][d], r["proxima_nmax"][d])
+        ctx.close()
+    saida = {}
+    for qid, a in agreg.items():
+        rec = recomendar(a["atual"], a["k"])
+        descer = None
+        if rec is not None and rec[1] is not None and a["proxima"] and qid not in lem.DESCIDAS:
+            alt = recomendar(a["prox"], a["k"])
+            if itens_da_recomendacao(alt, a["k"]) > itens_da_recomendacao(rec, a["k"]):
+                descer = {"para": a["proxima"], "rec": alt}
+        saida[qid] = {"k": a["k"], "rec": rec, "descer": descer, "atual": a["atual"]}
+    return saida
+
+
+def tabela_pronta(cal):
+    linhas = ["AJUSTES = {"]
+    for qid in sorted(cal):
+        rec = cal[qid]["rec"] if not cal[qid]["descer"] else cal[qid]["descer"]["rec"]
+        linhas.append(f'    "{qid}": {rec!r},' if rec is not None else f'    "{qid}": None,  # nem um item cabe em mini')
+    linhas.append("}")
+    return "\n".join(linhas)
+
+
+def checar_otimalidade(cal, rel):
+    """A tabela AJUSTES tem de ser a que a medição recomenda: nenhum quadro pode subir de degrau, ganhar item ou
+    descer a densidade sem estourar."""
+    from scripts import lembretes_deck as lem
+    ruins = []
+    for qid, c in sorted(cal.items()):
+        tab = lem.ajuste_do_quadro(qid)
+        if c["descer"]:
+            ruins.append(f"{qid}: lista inteira cabe com a densidade {c['descer']['para']} (tabela {tab})")
+        elif c["rec"] is None:
+            ruins.append(f"{qid}: nem um item cabe em mini")
+        elif tuple(c["rec"]) != tuple(tab):
+            ruins.append(f"{qid}: tabela {tab}, medição recomenda {tuple(c['rec'])} (lista de {c['k']})")
+    sobras = sorted(q for q in lem.AJUSTES if q not in cal)
+    if sobras:
+        ruins.append(f"tabela com quadros sem lembrete: {sobras}")
+    rel.reg(f"otimalidade: a tabela AJUSTES é a recomendada pela medição em todos os viewports ({len(cal)} quadros)", not ruins, "; ".join(ruins))
 
 
 # ------------------------------------------------------------------ navegação
@@ -497,12 +578,21 @@ def main(argv=None):
         try:
             print("Chrome", browser.version)
             if args.calibrar:
-                vw, vh = (int(x) for x in viewports[0].split("x"))
-                calibrar(browser, url, vw, vh, erros)
+                cal = calibrar(browser, url, viewports, Path(args.html).read_bytes().decode("utf-8"), erros)
+                tab = tabela_pronta(cal)
+                (saida / "ajustes.txt").write_text(tab + "\n", encoding="utf-8")
+                print("\nCalibração (pior caso entre %s): quadro, itens, maior n que cabe por degrau (normal/compacto/mini)" % ", ".join(viewports))
+                for qid, c in sorted(cal.items()):
+                    a = c["atual"]
+                    print(f"{qid} k={c['k']:2d} | n: {a['normal']}/{a['compacto']}/{a['mini']} | rec {c['rec']}" + (f" | DESCER DENSIDADE para {c['descer']['para']}: {c['descer']['rec']}" if c["descer"] else ""))
+                print("\n" + tab + f"\n(gravada em {saida / 'ajustes.txt'})")
                 return 0
             for i, vp in enumerate(viewports):
                 vw, vh = (int(x) for x in vp.split("x"))
                 medidas_por_viewport[vp] = medidas(browser, url, vw, vh, saida, i == 0, rel, erros)
+            cal = calibrar(browser, url, viewports, Path(args.html).read_bytes().decode("utf-8"), erros)
+            checar_otimalidade(cal, rel)
+            totais = {q: c["k"] for q, c in cal.items()}
             if not args.sem_interacao:
                 checar_navegacao(browser, url, rel, erros)
                 checar_glossario(browser, url, rel, erros)
@@ -516,8 +606,9 @@ def main(argv=None):
     primeiro = lembretes.get(viewports[0], {})
     cortados = sorted(q for q, l in primeiro.items() if l["cortado"])
     print(f"\nQuadros com lembrete cortado ({viewports[0]}): {len(cortados)} {cortados}")
-    print(f"Letra do lembrete por quadro a {viewports[0]} (px; linhas; classe; caracteres):")
-    print("  " + "; ".join(f"{q} {l['px']}px {l['linhas']}L {l['classe'].replace('lembrete', '').strip() or 'normal'} {l['caracteres']}c" for q, l in primeiro.items()))
+    print(f"Lembrete por quadro a {viewports[0]} (degrau; px; linhas; itens mostrados/total):")
+    for q, l in primeiro.items():
+        print(f"  {q} {l['classe'].replace('lembrete', '').strip() or 'normal'} {l['px']}px {l['linhas']}L {l['mostrados']}/{totais.get(q, '?')}")
     (saida / "relatorio.json").write_text(json.dumps(
         {"html": str(args.html), "viewports": viewports, "checagens": rel.checagens, "lembretes": lembretes,
          "quadros_com_lembrete_cortado": cortados, "erros_de_console": erros}, ensure_ascii=False, indent=1), encoding="utf-8")

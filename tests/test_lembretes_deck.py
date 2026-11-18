@@ -329,36 +329,27 @@ def entradas_do_orcamento():
             e("E", "sigla", "v" * 60)]
 
 
-def test_selecao_retira_termo_do_fim_para_o_comeco_e_so_depois_sigla():
-    g = entradas_do_orcamento()
-    todos = ["A", "B", "C", "D", "E"]                      # cada item tem 63 caracteres
-    assert lem.selecionar_itens(todos, g, 1000) == (todos, [])
-    mantidos, retirados = lem.selecionar_itens(todos, g, 220)     # cabem 3 itens e o fixo
-    assert retirados == ["D", "B"]                         # primeiro os termos, do fim para o começo
-    assert mantidos == ["A", "C", "E"]                     # a ordem de aparição dos que ficam é mantida
-    mantidos, retirados = lem.selecionar_itens(todos, g, 100)
-    assert retirados[:2] == ["D", "B"] and retirados[2:] == ["E", "C"]   # depois as siglas, do fim para o começo
-    assert mantidos == ["A"]
+def test_prioridade_siglas_antes_de_termos_e_selecao_por_prefixo():
+    g = entradas_do_orcamento()                              # A sigla, B termo, C sigla, D termo, E sigla
+    nivel = {e.chave: e.nivel for e in g}
+    todos = ["A", "B", "C", "D", "E"]
+    assert lem.por_prioridade(todos, nivel) == ["A", "C", "E", "B", "D"]     # siglas primeiro, ordem estável em cada nível
+    assert lem.por_prioridade(["B", "A", "D", "C"], nivel) == ["A", "C", "B", "D"]
+    prio = lem.por_prioridade(todos, nivel)
+    assert lem.selecionar_itens(prio, None) == (prio, [])
+    mantidos, retirados = lem.selecionar_itens(prio, 3)
+    assert mantidos == ["A", "C", "E"] and retirados == ["B", "D"]           # primeiro saem os termos, do fim para o começo
+    mantidos, retirados = lem.selecionar_itens(prio, 2)
+    assert mantidos == ["A", "C"] and retirados == ["E", "B", "D"]   # depois as siglas, do fim para o começo
     assert lem.caracteres(["abc", "de"]) == len("abc · de")
 
 
-def test_sem_corte_por_padrao_e_orcamento_so_nos_quadros_de_cortes(monkeypatch):
-    tipo = lambda i, c: f'<section class="slide {c}" id="{i}" data-tipo="x">'  # noqa: E731
-    assert lem.CORTES == {}                                  # valor final medido: nenhum quadro precisa de corte
-    for i, c in (("S05", ""), ("S23", "compacto"), ("R03", ""), ("R03", "amplo"), ("R10", "denso"), ("R17", "denso3")):
-        assert lem.orcamento_do_quadro(tipo(i, c)) is None, i
-    monkeypatch.setitem(lem.CORTES, "R10", 260)
-    assert lem.orcamento_do_quadro(tipo("R10", "denso")) == 260
-    assert lem.orcamento_do_quadro(tipo("R11", "denso")) is None
-
-
-def test_degrau_de_letra_pelos_limites_e_pelo_minimo_do_quadro():
-    (_, n0), (_, n1), (_, n2), _ = lem.LIMITES
-    assert [lem.degrau_do_lembrete(n) for n in (0, n0, n0 + 1, n1, n1 + 1, n2, n2 + 1, 5000)] == \
-        ["", "", "compacto", "compacto", "mini", "mini", "micro", "micro"]
-    assert lem.degrau_do_lembrete(10, "mini") == "mini"          # o mínimo do quadro sobe o degrau
-    assert lem.degrau_do_lembrete(5000, "compacto") == "micro"   # e nunca o desce
-    assert lem.DEGRAUS == tuple(c for c, _ in lem.LIMITES)
+def test_ajuste_padrao_e_tabela_por_quadro(monkeypatch):
+    assert lem.ajuste_do_quadro("ZZ99") == ("", None)                         # sem entrada: letra normal e lista inteira
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("mini", 3))
+    assert lem.ajuste_do_quadro("R10") == ("mini", 3)
+    assert lem.DEGRAUS == ("", "compacto", "mini")                            # não há degrau abaixo de mini
+    assert "micro" not in lem.DEGRAUS
 
 
 def html_com_orcamento(entradas, corpo, classe="", quadro="R10"):
@@ -373,49 +364,49 @@ def html_com_orcamento(entradas, corpo, classe="", quadro="R10"):
 PADROES_SINTETICOS = {"A": r"\bAA\b", "B": r"\bBB\b", "C": r"\bCC\b", "D": r"\bDD\b", "E": r"\bEE\b"}
 
 
-def test_lista_longa_mostra_todos_os_termos_e_reduz_a_letra_sem_item_fixo(monkeypatch):
+def test_sem_corte_mostra_todos_os_termos_na_letra_da_tabela(monkeypatch):
     for k, v in PADROES_SINTETICOS.items():
         monkeypatch.setitem(lem.PADROES, k, v)
-    ent = entradas_do_orcamento()
-    longo = "AA BB CC DD EE"                                      # 5 x 63 = 327 caracteres, mais os separadores
-    h = lem.aplicar(html_com_orcamento(ent, longo))
-    assert itens(h, "R10") == ["A", "B", "C", "D", "E"]           # todos os termos, na ordem de aparição
-    assert "demais termos" not in h[h.index('id="R10"'):h.index("</main>")]
-    assert lem.verificar_lembretes(h) == []
-    assert 'data-termos="A|B|C|D|E"' in h
-    assert '<aside class="lembrete compacto"' in h                 # 327 caracteres: passa de 290 e cabe em 340
-    curto = lem.aplicar(html_com_orcamento(ent, "AA BB"))
-    assert '<aside class="lembrete"' in curto and "lembrete compacto" not in curto
-    muito_longo = [lem.Entrada(e.chave, e.chave, e.nivel, e.exibir, e.defin * 2, "glossario.tex:1") for e in ent]
-    assert '<aside class="lembrete micro"' in lem.aplicar(html_com_orcamento(muito_longo, longo))
-    # o degrau incoerente com o tamanho da lista é acusado
-    errado = h.replace('<aside class="lembrete compacto"', '<aside class="lembrete"')
-    assert any("degrau de letra" in e and "incoerente" in e for e in lem.verificar_lembretes(errado))
-    # o piso por quadro sobe o degrau mesmo com lista curta
-    monkeypatch.setitem(lem.DEGRAU_MINIMO, "R10", "mini")
-    assert '<aside class="lembrete mini"' in lem.aplicar(html_com_orcamento(ent, "AA BB"))
-
-
-def test_aplicar_com_corte_insere_demais_termos_so_onde_retira(monkeypatch):
-    for k, v in PADROES_SINTETICOS.items():
-        monkeypatch.setitem(lem.PADROES, k, v)
-    monkeypatch.setitem(lem.CORTES, "R10", 260)
     ent = entradas_do_orcamento()
     longo = "AA BB CC DD EE"
-    h = lem.aplicar(html_com_orcamento(ent, longo))                  # 5 x 63 > 260: retira termos e depois siglas
-    assert itens(h, "R10")[-1] == "demais termos"
+    h = lem.aplicar(html_com_orcamento(ent, longo))
+    assert itens(h, "R10") == ["A", "C", "E", "B", "D"]            # siglas primeiro, depois os termos
+    assert "demais termos" not in h[h.index('id="R10"'):h.index("</main>")]
+    assert '<aside class="lembrete"' in h and lem.verificar_lembretes(h) == []
+    assert 'data-termos="A|B|C|D|E"' in h                          # o painel segue na ordem de aparição
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("compacto", None))
+    h = lem.aplicar(html_com_orcamento(ent, longo))
+    assert '<aside class="lembrete compacto"' in h and lem.verificar_lembretes(h) == []
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("mini", None))
+    h = lem.aplicar(html_com_orcamento(ent, longo))
+    assert '<aside class="lembrete mini"' in h and lem.verificar_lembretes(h) == []
+    # o degrau fora da tabela ou incoerente com ela é acusado
+    assert any("incoerente com a tabela" in e for e in lem.verificar_lembretes(h.replace("lembrete mini", "lembrete")))
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("micro", None))
+    assert any("degrau de letra 'micro' fora de" in e for e in lem.verificar_lembretes(h))
+
+
+def test_corte_da_tabela_mantem_prefixo_de_prioridade_e_poe_o_item_fixo(monkeypatch):
+    for k, v in PADROES_SINTETICOS.items():
+        monkeypatch.setitem(lem.PADROES, k, v)
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("compacto", 2))
+    ent = entradas_do_orcamento()
+    h = lem.aplicar(html_com_orcamento(ent, "AA BB CC DD EE"))
+    assert itens(h, "R10") == ["A", "C", "demais termos"]           # os 2 primeiros por prioridade, mais o item fixo
     assert lem.verificar_lembretes(h) == []
     assert 'data-termos="A|B|C|D|E"' in h                            # o painel continua completo
-    curto = lem.aplicar(html_com_orcamento(ent, "AA BB"))
-    assert "demais termos" not in " ".join(itens(curto, "R10"))
+    curto = lem.aplicar(html_com_orcamento(ent, "AA BB"))           # só A e B: o corte de 2 deixaria a lista inteira
+    assert any("corte de 2 itens fora de" in e for e in lem.verificar_lembretes(curto))
     # item fixo ausente quando deveria existir, e presente quando não deveria
     sem_fixo = h.replace('<span class="it"><strong>demais termos</strong>: tecla g</span>', "")
     assert any("'demais termos' ausente" in e for e in lem.verificar_lembretes(sem_fixo))
-    com_fixo_indevido = curto.replace("</aside>", '<span class="it"><strong>demais termos</strong>: tecla g</span></aside>')
+    monkeypatch.setitem(lem.AJUSTES, "R10", ("", None))
+    inteiro = lem.aplicar(html_com_orcamento(ent, "AA BB CC DD EE"))
+    com_fixo_indevido = inteiro.replace("</aside>", '<span class="it"><strong>demais termos</strong>: tecla g</span></aside>')
     assert any("'demais termos' indevido" in e for e in lem.verificar_lembretes(com_fixo_indevido))
-    # orçamento estourado: o mesmo HTML sem corte, conferido com o corte, é acusado
-    monkeypatch.setitem(lem.CORTES, "R10", 100)
-    assert lem.verificar_lembretes(h)
+    # item de nível termo antes de sigla no lembrete é acusado
+    assert any("fora da ordem" in e for e in lem.verificar_lembretes(
+        inteiro.replace("<strong>A</strong>", "<strong>@@</strong>").replace("<strong>B</strong>", "<strong>A</strong>").replace("<strong>@@</strong>", "<strong>B</strong>")))
 
 
 def test_data_define_pula_o_termo_no_lembrete_mas_ele_fica_em_data_termos():
@@ -436,3 +427,18 @@ def test_regra_dos_identificadores_internos_nas_definicoes():
     assert lem.identificadores_na_definicao(e("REFREC", "identificador do registro do SIM")) == []
     assert lem.identificadores_na_definicao(e("pair_id", "pseudônimo do par")) == []
     assert lem.identificadores_na_definicao(e("par", "partido; PARTE do par")) == []        # só palavra inteira
+
+
+# ---------------------------------------------------------------- regra da calibração (sem navegador)
+
+def test_recomendacao_mais_itens_e_em_empate_a_letra_maior():
+    from scripts import verificar_deck_navegador as nav
+    rec = nav.recomendar
+    assert rec({"normal": 5, "compacto": 5, "mini": 5}, 5) == ("", None)           # lista inteira em tudo: letra normal
+    assert rec({"normal": 2, "compacto": 6, "mini": 6}, 6) == ("compacto", None)   # inteira no maior degrau que couber
+    assert rec({"normal": 2, "compacto": 3, "mini": 4}, 5) == ("mini", 4)          # S15: mais itens, mesmo a letra menor
+    assert rec({"normal": 3, "compacto": 7, "mini": 8}, 10) == ("mini", 8)         # S21
+    assert rec({"normal": 6, "compacto": 7, "mini": 12}, 13) == ("mini", 12)       # S23
+    assert rec({"normal": 4, "compacto": 4, "mini": 4}, 9) == ("", 4)              # empate no número de itens: letra maior
+    assert rec({"normal": 3, "compacto": 5, "mini": 5}, 9) == ("compacto", 5)
+    assert rec({"normal": 0, "compacto": 0, "mini": 0}, 9) is None                 # nem um item cabe

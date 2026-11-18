@@ -16,12 +16,12 @@ lembrete) e:
   `<dfn data-termo="chave">...</dfn>` (várias chaves separadas por `|`), e o script o pula;
 * também pula os termos que a legenda de uma figura do quadro define: o contêiner da figura declara
   `data-define="chave|chave"` (o SVG não é editado);
-* mostra TODOS os termos: quando a lista é longa, reduz a letra do lembrete em degraus (classe `compacto`,
-  `mini` ou `micro` no `<aside>`, escolhida pelo tamanho da lista em caracteres; `LIMITES`, com piso
-  por quadro em `DEGRAU_MINIMO`), nunca abaixo da letra da linha "Fonte:". Só nos quadros listados em `CORTES` (onde
-  nem o menor degrau basta) há orçamento de caracteres: retira primeiro os itens de nível `termo`, do fim
-  para o começo, e só depois os de nível `sigla`, e acrescenta o item fixo "demais termos: tecla g" (o painel
-  "Neste quadro" segue completo);
+* mostra TODOS os termos sempre que couberem: a letra do lembrete (classe `compacto` ou `mini` no `<aside>`,
+  nunca abaixo de `mini`) e o eventual corte de cada quadro vêm da tabela `AJUSTES`, calibrada por medição no
+  Chrome (`scripts/verificar_deck_navegador.py --calibrar`). Os itens de nível `sigla` vêm antes dos de nível
+  `termo`, cada nível na ordem de aparição. Só onde a lista inteira não cabe nem em `mini` há corte: ficam os N
+  primeiros itens e o item fixo "demais termos: tecla g" avisa que o painel "Neste quadro" tem o resto (o painel
+  segue completo em todos os quadros);
 * reescreve os links de ocorrência de cada entrada, entre `<!-- OCOR:chave -->` e
   `<!-- /OCOR:chave -->`.
 
@@ -49,18 +49,80 @@ ROTULO = "Lembrete:"
 ARIA = "Lembrete de siglas e termos"
 NIVEIS = ("sigla", "termo", "base")
 NO_LEMBRETE = ("sigla", "termo")      # os níveis que entram no lembrete do quadro
-# Degraus da letra do lembrete, conforme o tamanho da lista (texto visível sem o rótulo, itens separados
-# por " · "): cada par é (classe do <aside>, máximo de caracteres do degrau); "" é a letra normal (.8em) e o
-# último degrau não tem máximo. Os máximos foram calibrados medindo cada quadro no Chrome
-# (scripts/verificar_deck_navegador.py --calibrar); o piso é a letra da linha "Fonte:" (.52em).
-LIMITES = (("", 290), ("compacto", 340), ("mini", 385), ("micro", None))      # até duas linhas por degrau
-DEGRAUS = ("", "compacto", "mini", "micro")
-# Degrau mínimo de quadros cujo corpo não deixa espaço para o lembrete na letra que a lista pediria (medido no
-# Chrome a 1280x720, 1920x1080 e 1024x768); vazio quando a lista já decide.
-DEGRAU_MINIMO = {"S15": "micro", "S16": "compacto", "S19": "compacto", "S21": "micro"}
-# Orçamento de caracteres só onde o menor degrau não basta (id do quadro -> máximo); vazio quando nenhum
-# quadro precisa de corte. Onde há corte, o item fixo "demais termos: tecla g" avisa que o painel tem o resto.
-CORTES = {}
+# Letra do lembrete por quadro, em degraus: "" é a letra normal (.8em), "compacto" (.68em) e "mini" (.6em, o piso de
+# legibilidade; não há degrau menor). A escolha é por MEDIÇÃO no Chrome, não por contagem de caracteres: o modo
+# `--calibrar` de scripts/verificar_deck_navegador.py mede, a 1280x720, 1920x1080 e 1024x768, o maior degrau em
+# que o quadro não estoura nem sobrepõe, deixando o lembrete ocupar as linhas que precisar, e imprime esta tabela
+# pronta para colar. Sem a tabela o gerador não sabe o espaço de cada quadro; o modo padrão do script do navegador
+# falha quando a tabela deixa de ser a ótima (por exemplo, depois de mudar o texto de um quadro).
+DEGRAUS = ("", "compacto", "mini")
+# quadro -> (degrau, itens mantidos). Itens mantidos None = lista inteira; um número = corte: ficam os N primeiros
+# na ordem de prioridade (siglas antes de termos, cada nível na ordem de aparição), mais o item fixo
+# "demais termos: tecla g". Regra da calibração: (a) mostrar o MAIOR NÚMERO de itens que couber em algum degrau (normal, compacto ou mini),
+# no pior caso entre os três viewports, e, em empate no número de itens, o degrau de maior letra;
+# (b) nas reservas, um degrau de densidade do corpo a menos (DESCIDAS) quando isso aumenta o número de itens;
+# (c) corte, quando a lista inteira não cabe nem em mini.
+# <AJUSTES>
+AJUSTES = {
+    "R01": ('compacto', None),
+    "R02": ('', None),
+    "R03": ('', None),
+    "R04": ('', None),
+    "R05": ('', None),
+    "R06": ('compacto', None),
+    "R07": ('', None),
+    "R08": ('', None),
+    "R09": ('compacto', None),
+    "R10": ('', None),
+    "R11": ('', None),
+    "R12": ('', None),
+    "R13": ('', None),
+    "R14": ('', None),
+    "R15": ('', None),
+    "R16": ('compacto', None),
+    "R17": ('', None),
+    "R18": ('compacto', None),
+    "R19": ('mini', None),
+    "R20": ('', None),
+    "R21": ('', None),
+    "R22": ('', None),
+    "R23": ('', None),
+    "R24": ('', None),
+    "R25": ('compacto', None),
+    "R26": ('', None),
+    "S02": ('', None),
+    "S03": ('', None),
+    "S04": ('', None),
+    "S05": ('', None),
+    "S06": ('', None),
+    "S07": ('', None),
+    "S08": ('', None),
+    "S09": ('', None),
+    "S10": ('', None),
+    "S11": ('', None),
+    "S12": ('', None),
+    "S13": ('', None),
+    "S14": ('', None),
+    "S15": ('mini', 4),
+    "S16": ('compacto', None),
+    "S17": ('', None),
+    "S18": ('', None),
+    "S19": ('compacto', None),
+    "S20": ('', None),
+    "S21": ('mini', 8),
+    "S22": ('', None),
+    "S23": ('mini', 12),
+    "S24": ('compacto', None),
+    "S25": ('', None),
+    "S26": ('', None),
+    "S27": ('', None),
+}
+# </AJUSTES>
+# Reservas cujo corpo desceu um degrau de densidade (classe da <section>, escrita à mão no HTML) para o lembrete
+# caber inteiro: quadro -> classe de partida ("" = padrão). No máximo um degrau por quadro.
+DESCIDAS = {"R25": "denso"}
+DENSIDADES = ("", "denso", "denso1", "denso2", "denso3")
+DEMAIS = ("demais termos", "tecla g")      # item fixo, quando há corte
 DEMAIS = ("demais termos", "tecla g")      # item fixo, quando o orçamento retira termos
 SEPARADOR = " · "
 
@@ -264,14 +326,14 @@ def definidos_no_quadro(bloco):
 
 
 def termos_do_lembrete(html, glossario=None):
-    """Termos de nível sigla ou termo que o quadro usa e não define, na ordem de aparição."""
+    """Termos de nível sigla ou termo que o quadro usa e não define, em ordem de prioridade (siglas antes de termos)."""
     glossario = glossario if glossario is not None else ler_glossario(html)
     nivel = {e.chave: e.nivel for e in glossario}
     todos = termos_por_quadro(html, glossario)
     saida = {}
     for q in quadros(html):
         definidos = set(definidos_no_quadro(html[q.ini:q.fim]))
-        saida[q.id] = [c for c in todos[q.id] if nivel[c] in NO_LEMBRETE and c not in definidos]
+        saida[q.id] = por_prioridade([c for c in todos[q.id] if nivel[c] in NO_LEMBRETE and c not in definidos], nivel)
     return saida
 
 
@@ -281,18 +343,9 @@ def id_do_quadro(bloco):
     return re.search(r' id="([SR]\d\d)"', ABERTURA.search(bloco).group(0)).group(1)
 
 
-def orcamento_do_quadro(bloco):
-    """Caracteres permitidos ao lembrete: None (sem corte) em todo quadro fora de CORTES."""
-    return CORTES.get(id_do_quadro(bloco))
-
-
-def degrau_do_lembrete(n, minimo=""):
-    """Classe de letra do lembrete para uma lista de n caracteres ("" é a letra normal), nunca mais
-    leve que o degrau mínimo do quadro."""
-    for classe, maximo in LIMITES:
-        if maximo is None or n <= maximo:
-            return max(classe, minimo, key=DEGRAUS.index)
-    return max(LIMITES[-1][0], minimo, key=DEGRAUS.index)
+def ajuste_do_quadro(qid):
+    """(degrau, itens mantidos) do quadro; sem entrada em AJUSTES, letra normal e lista inteira."""
+    return AJUSTES.get(qid, ("", None))
 
 
 def texto_do_item(e):
@@ -303,37 +356,24 @@ def caracteres(textos):
     return len(SEPARADOR.join(textos))
 
 
-def selecionar_itens(chaves, glossario, orcamento):
-    """(mantidos, retirados): se a lista passa do orçamento, retira primeiro os itens de nível termo, do
-    fim para o começo, e só depois os de nível sigla, do fim para o começo; o item fixo "demais termos:
-    tecla g" entra na conta quando algo é retirado. A ordem de aparição dos que ficam é mantida."""
-    por = {e.chave: e for e in glossario}
-    mantidos, retirados = list(chaves), []
-    if orcamento is None:
-        return mantidos, retirados
+def selecionar_itens(chaves, mantidos_n):
+    """(mantidos, retirados): `chaves` já está na ordem de prioridade; com corte (mantidos_n não nulo) ficam os
+    N primeiros, o que retira os termos do fim para o começo e só depois as siglas, do fim para o começo."""
+    if mantidos_n is None:
+        return list(chaves), []
+    return list(chaves[:mantidos_n]), list(chaves[mantidos_n:])
 
-    def custo():
-        textos = [texto_do_item(por[c]) for c in mantidos]
-        if retirados:
-            textos.append(f"{DEMAIS[0]}: {DEMAIS[1]}")
-        return caracteres(textos)
 
-    for nivel in ("termo", "sigla"):
-        while custo() > orcamento:
-            candidatos = [c for c in mantidos if por[c].nivel == nivel]
-            if not candidatos:
-                break
-            mantidos.remove(candidatos[-1])
-            retirados.append(candidatos[-1])
-    return mantidos, retirados
+def por_prioridade(chaves, nivel):
+    """Siglas antes de termos, cada nível na ordem de aparição."""
+    return [c for n in NO_LEMBRETE for c in chaves if nivel[c] == n]
 
 
 def lembrete_do_quadro(html, glossario=None):
     """id do quadro -> (itens mantidos, itens retirados pelo orçamento)."""
     glossario = glossario if glossario is not None else ler_glossario(html)
     todos = termos_do_lembrete(html, glossario)
-    return {q.id: selecionar_itens(todos[q.id], glossario, orcamento_do_quadro(html[q.ini:q.fim]))
-            for q in quadros(html)}
+    return {q.id: selecionar_itens(todos[q.id], ajuste_do_quadro(q.id)[1]) for q in quadros(html)}
 
 
 def textos_do_lembrete(mantidos, retirados, glossario):
@@ -349,9 +389,22 @@ def degraus_do_quadro(html, glossario=None):
     """id do quadro -> classe de letra do lembrete ("" = normal), pelo tamanho da lista que ele mostra."""
     glossario = glossario if glossario is not None else ler_glossario(html)
     selecao = lembrete_do_quadro(html, glossario)
-    return {q.id: degrau_do_lembrete(caracteres(textos_do_lembrete(*selecao[q.id], glossario)),
-                                     DEGRAU_MINIMO.get(q.id, ""))
-            for q in quadros(html)}
+    return {q.id: ajuste_do_quadro(q.id)[0] for q in quadros(html)}
+
+
+def html_do_item(e):
+    return f'<span class="it"><strong>{e.exibir}</strong>: {e.defin}</span>'
+
+
+FIXO_HTML = f'<span class="it"><strong>{DEMAIS[0]}</strong>: {DEMAIS[1]}</span>'
+
+
+def itens_completos(html, glossario=None):
+    """id do quadro -> HTML de TODOS os itens do lembrete, em ordem de prioridade (sem corte e sem a tabela),
+    para a calibração no navegador; só os quadros com termo no lembrete."""
+    glossario = glossario if glossario is not None else ler_glossario(html)
+    por = {e.chave: e for e in glossario}
+    return {q: [html_do_item(por[c]) for c in chaves] for q, chaves in termos_do_lembrete(html, glossario).items() if chaves}
 
 
 # ------------------------------------------------------------------ geração
@@ -359,9 +412,9 @@ def degraus_do_quadro(html, glossario=None):
 def render_lembrete(chaves, glossario, eol="\n", retirou=False, degrau=""):
     por_chave = {e.chave: e for e in glossario}
     linhas = ["<!-- LEMBRETE -->"]
-    itens = [f'<span class="it"><strong>{por_chave[c].exibir}</strong>: {por_chave[c].defin}</span>' for c in chaves]
+    itens = [html_do_item(por_chave[c]) for c in chaves]
     if retirou:
-        itens.append(f'<span class="it"><strong>{DEMAIS[0]}</strong>: {DEMAIS[1]}</span>')
+        itens.append(FIXO_HTML)
     if itens:
         classe = "lembrete" + (f" {degrau}" if degrau else "")
         linhas.append(f'<aside class="{classe}" aria-label="{ARIA}"><strong class="rot">{ROTULO}</strong> '
@@ -496,8 +549,7 @@ def divergencias(html):
 def verificar_lembretes(html):
     """Defeitos por quadro: termo usado sem lembrete, item divergente do glossário, item sobrando,
     termo de nível base no lembrete, termo definido no quadro repetido no lembrete, ordem diferente da
-    aparição, número de lembretes diferente de um, orçamento de caracteres estourado (só onde há corte),
-    degrau de letra incoerente com o tamanho da lista, item "demais termos" ausente ou indevido, e
+    aparição, número de lembretes diferente de um, degrau de letra ou corte incoerente com a tabela AJUSTES, item "demais termos" ausente ou indevido, e
     data-termos diferente do detectado."""
     erros = []
     glossario = ler_glossario(html)
@@ -505,6 +557,7 @@ def verificar_lembretes(html):
     selecao = lembrete_do_quadro(html, glossario)
     degraus = degraus_do_quadro(html, glossario)
     todos = termos_por_quadro(html, glossario)
+    todos_lembrete = termos_do_lembrete(html, glossario)
     for q in quadros(html):
         bloco = html[q.ini:q.fim]
         mantidos, retirados = selecao[q.id]
@@ -547,13 +600,16 @@ def verificar_lembretes(html):
             erros.append(f"{q.id}: itens fora da ordem de aparição")
         if tem_demais != bool(retirados):
             erros.append(f"{q.id}: item {DEMAIS[0]!r} " + ("ausente" if retirados else "indevido"))
-        orcamento = orcamento_do_quadro(bloco)
-        if orcamento is not None and caracteres(textos) > orcamento:
-            erros.append(f"{q.id}: lembrete com {caracteres(textos)} caracteres (orçamento {orcamento})")
+        degrau, corte = ajuste_do_quadro(q.id)
+        if degrau not in DEGRAUS:
+            erros.append(f"{q.id}: degrau de letra {degrau!r} fora de {DEGRAUS}")
+        if corte is not None and not 1 <= corte < len(todos_lembrete[q.id]):
+            erros.append(f"{q.id}: corte de {corte} itens fora de 1..{len(todos_lembrete[q.id]) - 1} "
+                         f"(lista de {len(todos_lembrete[q.id])}); recalibrar AJUSTES")
         classe = re.search(r'<aside class="lembrete(?: ([a-z]+))?"', bloco)
         if classe is not None and (classe.group(1) or "") != degraus[q.id]:
-            erros.append(f"{q.id}: degrau de letra {classe.group(1) or 'normal'!r} incoerente com a lista de "
-                         f"{caracteres(textos)} caracteres (esperado {degraus[q.id] or 'normal'!r})")
+            erros.append(f"{q.id}: degrau de letra {classe.group(1) or 'normal'!r} incoerente com a tabela "
+                         f"(esperado {degraus[q.id] or 'normal'!r})")
         atrib = re.search(r' data-termos="([^"]*)"', ABERTURA.search(bloco).group(0))
         termos = atrib.group(1).split("|") if atrib and atrib.group(1) else []
         if termos != todos[q.id]:
