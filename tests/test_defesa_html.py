@@ -38,6 +38,7 @@ import registro_invariantes as ri  # noqa: E402
 import test_defesa_slides as bz  # noqa: E402  (funções genéricas do contrato do deck Beamer)
 
 from scripts import figuras_deck_svg as fsvg  # noqa: E402
+from scripts import lembretes_deck as lem  # noqa: E402
 
 DECK = ROOT / "text/slides/defesa.html"
 TESE_DIR = bz.TESE_DIR
@@ -62,7 +63,7 @@ BLOCOS = {"p", "li", "ul", "ol", "div", "h1", "h2", "h3", "h4", "table", "tr", "
           "tbody", "caption", "section", "header", "footer", "blockquote", "figure", "figcaption",
           "br", "nav", "main", "button", "dl", "dt", "dd"}
 _PAPEIS_POR_CLASSE = {"titulo": "titulo", "corpo": "corpo", "ressalva": "ressalva",
-                      "fonte": "fonte", "sr": "sr"}
+                      "fonte": "fonte", "sr": "sr", "lembrete": "lembrete"}
 _PAPEIS_POR_TAG = {"svg": "svg", "script": "script", "style": "style", "code": "code"}
 _CAMPOS = ("titulo", "corpo", "ressalva", "fonte")
 
@@ -86,6 +87,8 @@ class QuadroHtml:
     figuras: list[str] = field(default_factory=list)
     n_titulos: int = 0
     n_fontes: int = 0
+    lembrete: str = ""       # texto do <aside class="lembrete"> (não entra em texto, texto_sc nem na palavra-limite)
+    n_lembretes: int = 0
 
     @property
     def texto(self) -> str:
@@ -142,6 +145,8 @@ class _Extrator(HTMLParser):
             self.bufs["sr"].append(texto)
             return
         self.bufs["visivel"].append(texto)
+        if self.ativos["lembrete"]:
+            self.bufs["lembrete"].append(texto)
         for campo in _CAMPOS:
             if self.ativos[campo]:
                 self.bufs[campo].append(texto)
@@ -173,7 +178,7 @@ class _Extrator(HTMLParser):
             objetivo = attrs.get("data-objetivo")
             self.atual = QuadroHtml(id=attrs.get("id", ""), tipo=attrs.get("data-tipo"),
                                     objetivo=int(objetivo) if (objetivo or "").isdigit() else None)
-            self.bufs = {c: [] for c in ("visivel", "sr", "svg_texto", *_CAMPOS,
+            self.bufs = {c: [] for c in ("visivel", "sr", "svg_texto", "lembrete", *_CAMPOS,
                                           "titulo_sc", "corpo_sc", "ressalva_sc")}
             self.quadros.append(self.atual)
             self.pilha.append((tag, ("__quadro__",)))
@@ -185,6 +190,8 @@ class _Extrator(HTMLParser):
                     self.atual.n_titulos += 1
                 if papel == "fonte":
                     self.atual.n_fontes += 1
+                if papel == "lembrete":
+                    self.atual.n_lembretes += 1
             if tag in BLOCOS:
                 self._escrever(" ", so_espaco=True)
         if vazio:
@@ -217,7 +224,7 @@ class _Extrator(HTMLParser):
 
     def _fechar_quadro(self) -> None:
         q, b = self.atual, self.bufs
-        for campo in ("titulo", "corpo", "ressalva", "fonte", "sr", "visivel", "svg_texto",
+        for campo in ("titulo", "corpo", "ressalva", "fonte", "sr", "visivel", "svg_texto", "lembrete",
                       "titulo_sc", "corpo_sc", "ressalva_sc"):
             setattr(q, campo, _limpar("".join(b[campo])))
         self.atual = None
@@ -576,6 +583,24 @@ def test_h3_tratamento_de_teclado(deck, tecla):
     assert re.search(rf"['\"]{tecla}['\"]", deck.script), f"tecla {tecla} não tratada no <script>"
 
 
+def test_h3_glossario_por_tecla_botao_e_escape(deck, html_bruto):
+    assert re.search(r"case\s+['\"]g['\"]", deck.script), "tecla g não tratada no <script>"
+    assert "abrirGlossario" in deck.script and "fecharGlossario" in deck.script
+    assert re.search(r"k === 'Escape' \|\| k === 'g'", deck.script), "Esc e g não fecham o glossário"
+    assert re.search(r"<button\b[^>]*id=\"botao-glossario\"[^>]*>\s*Glossário\s*</button>", html_bruto), \
+        "sem botão Glossário"
+    assert re.search(r'<div id="glossario"[^>]*role="dialog"[^>]*\bhidden\b', html_bruto), "painel do glossário ausente"
+
+
+def test_h3_glossario_fora_da_contagem_de_quadros_e_impresso_no_fim(deck, html_bruto):
+    assert len(deck.quadros) == 54
+    assert not any("glossario" in q.id for q in deck.quadros)
+    m = re.search(r"@media\s+print\s*\{(?:(?!@media).)*?#glossario(?:(?!@media).)*", deck.style, re.S)
+    assert m and re.search(r"#glossario[^}]*display:\s*block\s*!important", deck.style), \
+        "glossário sem regra de impressão (display: block)"
+    assert re.search(r"#glossario[^}]*break-before:\s*page", deck.style), "glossário sem quebra de página antes"
+
+
 def test_h3_botoes_anterior_e_proximo(html_bruto):
     botoes = re.findall(r"<button\b([^>]*)>(.*?)</button>", html_bruto, re.S)
     assert botoes, "nenhum <button>"
@@ -734,6 +759,15 @@ def test_h7_glosas_de_atributo_nao_contam(deck):
     assert contagem_glosas(d.quadros, "relacionamento de registros") == {}
 
 
+def test_h7_lembrete_nao_conta_como_glosa_em_prosa():
+    d = extrair_deck('<section class="slide" id="S02"><div class="corpo"><p>linkage (relacionamento de registros)</p></div>'
+                     '<footer class="pe"><aside class="lembrete"><span class="rot">Lembrete:</span> '
+                     '<span class="it"><strong>linkage</strong>: relacionamento de registros</span></aside></footer></section>')
+    assert contagem_glosas(d.quadros, "relacionamento de registros") == {"S02": 1}
+    assert "relacionamento de registros" in d.quadros[0].lembrete and d.quadros[0].n_lembretes == 1
+    assert "relacionamento" not in d.quadros[0].texto.replace("relacionamento de registros", "", 1)
+
+
 def test_h7_sintetico_glosa_duplicada_e_ausente():
     dup = extrair_deck('<section class="slide" id="S02"><h2 class="titulo">linkage (relacionamento de registros)</h2>'
                        '<div class="corpo"><p>outra vez (relacionamento de registros)</p></div></section>')
@@ -750,10 +784,12 @@ def test_h7_sintetico_glosa_duplicada_e_ausente():
 # ressalva). Parte da tabela do contrato do deck Beamer, com a renumeração do HTML (.tex S19 virou
 # S20; S20 a S22 viraram S21 a S23; S23 virou S25). As linhas de S19, S24 e S27 são novas: a âncora
 # de cada uma é a que o texto do quadro mais se aproxima (S19 e C13: LLM sem a nota final; S24 e C08r:
-# a recomendação não muda; S27 e C10: contribuição do código aberto); as expressões foram conferidas no
-# quadro antes de fixadas.
+# a recomendação não muda; S26 e C10: a medida, a decomposição e o código aberto); as expressões foram
+# conferidas no quadro antes de fixadas. S27 saiu desta tabela: o quadro do código aberto não corresponde
+# a C10 (grey area e pós-processamento em componentes); suas expressões têm teste de fidelidade próprio
+# (test_fidelidade_s27_e_s26_ao_apendice_do_pacote).
 ANCORAS_HTML = [
-    ("C10", "S03", ["61.485", "grey area"]),
+    ("C10", "S03", ["61.485", "grey area", "referência operacional"]),
     ("C10", "S04", ["grey area", "preservando os vínculos aceitos pelo corte"]),
     ("C01r", "S06", ["post hoc", "coorte única", "revisor perfeito simulado", "a validar",
                      "sem ic que exclua zero", "seis variantes", "nenhuma superou"]),
@@ -761,21 +797,22 @@ ANCORAS_HTML = [
                     "sem ic que exclua zero", "seis variantes", "nenhuma superou"]),
     ("C03r", "S07", ["revisora única", "sem dupla revisão", "hipótese de trabalho"]),
     ("C15", "S11", ["equivalência não demonstrada"]),
-    ("C16", "S12", ["otimistas", "inclui zero"]),
-    ("C05r", "S12", ["otimistas", "inclui zero"]),
+    ("C16", "S12", ["depende da métrica", "inclui zero"]),
+    ("C05r", "S12", ["otimistas", "não fundamentam adoção"]),
     ("C11", "S14", ["estimativa pontual", "sem ic que exclua zero"]),
     ("C12", "S15", ["nenhuma fusão superou o3", "seis variantes"]),
-    ("C12", "S16", ["entre variantes"]),
+    ("C12", "S16", ["frente a o3 em nenhuma meta"]),
     ("C13", "S17", ["16,0", "não deve aceitar vínculos sozinho"]),
-    ("C13", "S18", ["não sustenta superioridade"]),
-    ("C13", "S19", ["16,0", "não altera os 16,0%", "exploração posterior"]),
-    ("C14", "S20", ["42,5", "não demonstra paridade", "raça/cor"]),
+    ("C13", "S18", ["são hipóteses exploratórias"]),
+    ("C13", "S19", ["não sugere vpp maior como aceitador", "não altera os 16,0%", "exploração posterior"]),
+    ("C14", "S20", ["42,5", "não demonstra paridade", "não atributo demográfico"]),
     ("C08r", "S23", ["o3 ou f4", "f3 quando houver as macd", "curva de esforço", "não examinados", "só apoia"]),
     ("C09r", "S23", ["o3 ou f4", "f3 quando houver as macd", "curva de esforço", "não examinados", "só apoia"]),
     ("C13", "S23", ["o3 ou f4", "f3 quando houver as macd", "curva de esforço", "não examinados", "só apoia"]),
-    ("C08r", "S24", ["não alteram a recomendação", "não alimentam os resultados", "o3 e f4 dependem de"]),
+    ("C08r", "S24", ["não alteram a recomendação", "não alimentam os resultados", "o3 e f4 dependem de",
+                     "hipótese para a coorte nova"]),
     ("C02r", "S25", ["25", "dados à vista"]),
-    ("C10", "S27", ["nem reproduz, por si só", "0.7.0", "experimental"]),
+    ("C10", "S26", ["36 abaixo dele", "entre ordenar a fila e automatizar a decisão"]),
 ]
 
 
@@ -800,6 +837,33 @@ def test_h8_quadro_traz_as_expressoes_da_ancora(quadros, ancora, rotulo, express
     texto = quadros[rotulo].texto
     ausentes = expressoes_ausentes(texto, expressoes)
     assert not ausentes, f"{rotulo} ({ancora}): faltam {ausentes}\ntexto do quadro: {texto}"
+
+
+def test_h8_le_titulo_corpo_e_ressalva_e_nao_o_lembrete():
+    d = extrair_deck('<section class="slide" id="S19"><h2 class="titulo">Título</h2>'
+                     '<div class="corpo"><p>corpo sem a expressão</p></div>'
+                     '<footer class="pe"><aside class="lembrete"><span class="it"><strong>VPP</strong>: não altera os 16,0%'
+                     '</span></aside><p class="ressalva">ressalva</p></footer></section>')
+    q = d.quadros[0]
+    assert "não altera os 16,0%" in q.lembrete
+    assert expressoes_ausentes(q.texto, ["não altera os 16,0%"]) == ["não altera os 16,0%"]
+
+
+def test_fidelidade_s27_e_s26_ao_apendice_do_pacote(quadros):
+    """S27 saiu do H8 (não corresponde a C10): as expressões do quadro do código aberto são conferidas
+    aqui, contra o apêndice do pacote (apendice_pacote.tex:65) e as explorações posteriores
+    (apendice_gzcmd.tex:453), e S26 e S27 usam a redação da tese para a auditoria (conclusao.tex:65)."""
+    texto = quadros["S27"].texto
+    assert not expressoes_ausentes(texto, ["nem reproduz, por si só", "0.7.0", "experimental"]), texto
+    pacote = " ".join(APENDICE_PACOTE.read_text(encoding="utf-8").split())
+    gzcmd = " ".join(APENDICE_GZCMD.read_text(encoding="utf-8").split())
+    assert "nem reproduz, por si só" in pacote
+    assert "0.7.0" in gzcmd and "experimental" in gzcmd
+    conclusao = " ".join((TESE_DIR / "conclusao.tex").read_text(encoding="utf-8").split())
+    assert "exercício independente de auditoria das justificativas" in conclusao
+    for rotulo in ("S26", "S27"):
+        assert "exercício independente de auditoria das justificativas" in quadros[rotulo].texto, rotulo
+        assert "sem auditoria independente" not in quadros[rotulo].texto, rotulo
 
 
 # ======================================================================================
@@ -903,3 +967,368 @@ def test_h10_quadros_principais_cabem_em_125_palavras(deck):
     estouros = [f"{r}: {medidas[r]} palavras (limite {MAX_PALAVRAS_QUADRO})" for r in PRINCIPAIS
                 if medidas[r] > MAX_PALAVRAS_QUADRO]
     assert not estouros, "\n".join(estouros)
+
+
+# ======================================================================================
+# H11. Lembretes de siglas e termos e glossário (scripts/lembretes_deck.py)
+# ======================================================================================
+
+SEM_LEMBRETE = {"S01", "S28"}      # quadros sem termo de nível sigla ou termo fora do que o quadro define
+LIMITE_PALAVRAS_DEFINICAO = 7
+EXCECOES_PALAVRAS_DEFINICAO: dict[str, int] = {}
+
+
+def _plano(fragmento: str) -> str:
+    return lem.texto_puro(fragmento)
+
+
+def _item(e) -> str:
+    return f"{_plano(e.exibir)}: {_plano(e.defin)}"
+
+
+def test_h11_glossario_e_lembretes_em_sincronia_com_o_script(html_bruto):
+    assert lem.divergencias(html_bruto) == []
+    assert lem.verificar_lembretes(html_bruto) == []
+
+
+def test_h11_cada_quadro_tem_exatamente_um_lembrete_ou_nenhum_sem_termo(deck, html_bruto):
+    selecao = lem.lembrete_do_quadro(html_bruto)
+    esperado = {q: m + r for q, (m, r) in selecao.items()}
+    assert set(esperado) == {q.id for q in deck.quadros}
+    sem_termo = {q.id for q in deck.quadros if not esperado[q.id]}
+    assert sem_termo <= SEM_LEMBRETE, f"quadros sem lembrete além de {sorted(SEM_LEMBRETE)}: {sorted(sem_termo)}"
+    erros = [f"{q.id}: {q.n_lembretes} lembretes (termos: {len(esperado[q.id])})" for q in deck.quadros
+             if q.n_lembretes != (1 if esperado[q.id] else 0)]
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_todo_termo_sigla_ou_termo_nao_definido_no_quadro_esta_no_lembrete(deck, html_bruto):
+    glossario = {e.chave: e for e in lem.ler_glossario(html_bruto)}
+    erros = []
+    for q in lem.quadros(html_bruto):
+        bloco = html_bruto[q.ini:q.fim]
+        texto = lem.texto_visivel(bloco)
+        definidos = set(lem.definidos_no_quadro(bloco))
+        lembrete = deck.por_id[q.id].lembrete
+        retirados = set(lem.lembrete_do_quadro(html_bruto, list(glossario.values()))[q.id][1])
+        for chave, e in glossario.items():
+            if e.nivel not in lem.NO_LEMBRETE or chave in definidos or not re.search(lem.PADROES[chave], texto):
+                continue
+            if chave in retirados:
+                assert f"{lem.DEMAIS[0]}: {lem.DEMAIS[1]}" in lembrete, f"{q.id}: retirou '{chave}' sem o item fixo"
+            elif _item(e) not in lembrete:
+                erros.append(f"{q.id}: '{chave}' ({e.nivel}) usado no quadro e ausente do lembrete")
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_nenhum_termo_base_nem_termo_definido_no_quadro_aparece_no_lembrete(deck, html_bruto):
+    glossario = {e.chave: e for e in lem.ler_glossario(html_bruto)}
+    base = [e for e in glossario.values() if e.nivel == "base"]
+    assert base, "o glossário não traz termos de nível base"
+    erros = []
+    for q in lem.quadros(html_bruto):
+        bloco = html_bruto[q.ini:q.fim]
+        lembrete = deck.por_id[q.id].lembrete
+        erros += [f"{q.id}: termo base '{e.chave}' no lembrete" for e in base if _item(e) in lembrete]
+        erros += [f"{q.id}: '{c}' definido no quadro e repetido no lembrete"
+                  for c in lem.definidos_no_quadro(bloco) if _item(glossario[c]) in lembrete]
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_dfn_aponta_para_entrada_existente_dentro_de_quadro_que_usa_o_termo(html_bruto):
+    glossario = {e.chave for e in lem.ler_glossario(html_bruto)}
+    usados = lem.termos_por_quadro(html_bruto)
+    total = 0
+    erros = []
+    for q in lem.quadros(html_bruto):
+        for c in lem.definidos_no_quadro(html_bruto[q.ini:q.fim]):
+            total += 1
+            if c not in glossario:
+                erros.append(f"{q.id}: <dfn> para '{c}', fora do glossário")
+            elif c not in usados[q.id]:
+                erros.append(f"{q.id}: <dfn> de '{c}', que o quadro não usa")
+    assert total >= 30, f"poucos <dfn> ({total})"
+    assert not erros, "\n".join(erros)
+    assert not re.findall(r"<dfn(?![^>]*data-termo=)", html_bruto), "<dfn> sem data-termo"
+
+
+def test_h11_todo_quadro_traz_data_termos_com_os_tres_niveis(html_bruto):
+    glossario = {e.chave: e for e in lem.ler_glossario(html_bruto)}
+    detectados = lem.termos_por_quadro(html_bruto)
+    niveis = set()
+    for q in lem.quadros(html_bruto):
+        atrib = re.search(r' data-termos="([^"]*)"', lem.ABERTURA.search(html_bruto[q.ini:q.fim]).group(0))
+        assert atrib is not None, f"{q.id}: sem data-termos"
+        termos = [t for t in atrib.group(1).split("|") if t]
+        assert termos == detectados[q.id], f"{q.id}: data-termos difere dos termos detectados"
+        niveis |= {glossario[t].nivel for t in termos}
+    assert niveis == {"sigla", "termo", "base"}, niveis
+
+
+def test_h11_glossario_sem_entrada_orfa_e_com_fonte_na_tese(html_bruto):
+    glossario = lem.ler_glossario(html_bruto)
+    usadas = {c for chaves in lem.termos_por_quadro(html_bruto, glossario).values() for c in chaves}
+    assert not [e.chave for e in glossario if e.chave not in usadas], "entradas órfãs"
+    assert not [e.chave for e in glossario if not e.fonte.strip()], "entradas sem fonte"
+    assert {e.nivel for e in glossario} == {"sigla", "termo", "base"}
+    for e in glossario:
+        assert re.search(r"\.tex:\d+|definição geral|explicação geral", e.fonte), f"{e.chave}: fonte sem arquivo:linha ({e.fonte!r})"
+
+
+def test_h11_definicoes_curtas_e_nao_circulares(html_bruto):
+    erros = []
+    for e in lem.ler_glossario(html_bruto):
+        if lem.definicao_circular(e):
+            erros.append(f"{e.chave}: definição circular ({_plano(e.defin)!r})")
+        limite = EXCECOES_PALAVRAS_DEFINICAO.get(e.chave, LIMITE_PALAVRAS_DEFINICAO)
+        if lem.palavras_da_definicao(e) > limite:
+            erros.append(f"{e.chave}: {lem.palavras_da_definicao(e)} palavras (limite {limite}): {_plano(e.defin)!r}")
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_fontes_do_glossario_apontam_para_linhas_existentes_da_tese(html_bruto):
+    erros = []
+    for e in lem.ler_glossario(html_bruto):
+        for arquivo, linha in re.findall(r"([\w]+\.tex):(\d+)", e.fonte):
+            caminho = TESE_DIR / arquivo
+            n = len(caminho.read_text(encoding="utf-8").split("\n")) if caminho.exists() else 0
+            if not (1 <= int(linha) <= n):
+                erros.append(f"{e.chave}: {arquivo}:{linha} fora do arquivo ({n} linhas)")
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_lembretes_e_glossario_sem_termos_proibidos(deck, html_bruto):
+    textos = {q.id: q.lembrete for q in deck.quadros}
+    textos["glossário"] = " ".join(f"{_plano(e.exibir)} {_plano(e.defin)}" for e in lem.ler_glossario(html_bruto))
+    erros = [f"{k}: {a}" for k, t in textos.items() for a in bz.termos_proibidos(t)]
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_numeros_do_glossario_estao_na_tese(html_bruto, tese_numeros):
+    texto = " ".join(_plano(e.defin) for e in lem.ler_glossario(html_bruto))
+    achados = numeros_ausentes_html(texto, tese_numeros)
+    assert not achados, f"números do glossário fora da tese: {achados}"
+
+
+def test_h11_glossario_em_ordem_alfabetica_e_com_ocorrencias_como_links(html_bruto):
+    glossario = lem.ler_glossario(html_bruto)
+    ordem = [lem.ordem_alfabetica(_plano(e.exibir)) for e in glossario]
+    assert ordem == sorted(ordem)
+    for e in glossario:
+        m = re.search(rf"<!-- OCOR:{re.escape(e.chave)} -->(.*?)<!-- /OCOR:{re.escape(e.chave)} -->", html_bruto, re.S)
+        assert m and re.findall(r'<a href="#([SR]\d\d)">', m.group(1)), f"{e.chave}: sem links de ocorrência"
+
+
+def test_h11_lembrete_tem_a_letra_da_ressalva_sem_italico_e_dfn_herda_o_estilo(deck):
+    css = deck.style
+
+    def corpo_da_regra(seletor: str) -> str:
+        m = re.search(rf"(?m)^{re.escape(seletor)}\s*\{{([^}}]*)\}}", css)
+        assert m, f"regra {seletor} ausente da folha de estilo"
+        return m.group(1)
+
+    tamanho = lambda regra: re.search(r"font-size:\s*([\d.]+em)", regra).group(1)  # noqa: E731
+    assert tamanho(corpo_da_regra(".lembrete")) == tamanho(corpo_da_regra(".ressalva"))
+    assert re.search(r"font-style:\s*normal", corpo_da_regra(".lembrete"))
+    assert re.search(r"font-weight:\s*(?:700|bold)", corpo_da_regra(".lembrete .rot"))
+    assert re.search(r"font-style:\s*inherit", corpo_da_regra("dfn"))
+
+
+def test_h11_painel_neste_quadro_antes_da_lista_alfabetica(deck, html_bruto):
+    ini_neste = html_bruto.index('<section id="neste-quadro"')
+    ini_lista = html_bruto.index('<dl id="lista-glossario">')
+    assert ini_neste < ini_lista
+    assert "montarNesteQuadro" in deck.script and "data-termos" in deck.script
+    assert re.search(r"montarNesteQuadro\(\);\s*painelGlossario\.hidden = false", deck.script), \
+        "o painel não monta 'Neste quadro' ao abrir"
+    assert re.search(r"#neste-quadro[^}]*display:\s*none\s*!important", deck.style), "sem ocultar 'Neste quadro' na impressão"
+
+
+def test_h11_orcamento_de_caracteres_respeitado_e_item_fixo_so_quando_retira(deck, html_bruto):
+    glossario = lem.ler_glossario(html_bruto)
+    por_chave = {e.chave: e for e in glossario}
+    selecao = lem.lembrete_do_quadro(html_bruto, glossario)
+    fixo = f"{lem.DEMAIS[0]}: {lem.DEMAIS[1]}"
+    erros = []
+    retiraram = 0
+    for q in lem.quadros(html_bruto):
+        mantidos, retirados = selecao[q.id]
+        lembrete = deck.por_id[q.id].lembrete
+        itens = [_item(por_chave[c]) for c in mantidos] + ([fixo] if retirados else [])
+        orcamento = lem.orcamento_do_quadro(html_bruto[q.ini:q.fim])
+        if lem.caracteres(itens) > orcamento:
+            erros.append(f"{q.id}: {lem.caracteres(itens)} caracteres (orçamento {orcamento})")
+        if bool(retirados) != (fixo in lembrete):
+            erros.append(f"{q.id}: item fixo {'ausente' if retirados else 'indevido'}")
+        if any(por_chave[c].nivel == "sigla" for c in retirados) and any(por_chave[c].nivel == "termo" for c in mantidos):
+            erros.append(f"{q.id}: retirou sigla com termo ainda na lista")
+        retiraram += bool(retirados)
+    assert retiraram >= 1, "nenhum quadro precisou do orçamento: a regra não foi exercitada"
+    assert not erros, "\n".join(erros)
+
+
+def test_h11_orcamento_por_tipo_e_classe(html_bruto):
+    esperado = {}
+    for q in lem.quadros(html_bruto):
+        bloco = html_bruto[q.ini:q.fim]
+        classes = re.search(r'class="([^"]*)"', lem.ABERTURA.search(bloco).group(0)).group(1).split()
+        denso = any(c in ("denso", "denso1", "denso2", "denso3") for c in classes)
+        esperado[q.id] = 300 if q.id.startswith("S") else (260 if denso else 400)
+        assert lem.orcamento_do_quadro(bloco) == esperado[q.id], q.id
+    assert {260, 300, 400} <= set(esperado.values())
+
+
+def test_h11_data_define_existe_no_glossario_e_o_termo_aparece_no_quadro(html_bruto):
+    glossario = {e.chave for e in lem.ler_glossario(html_bruto)}
+    usados = lem.termos_por_quadro(html_bruto)
+    achados = {}
+    for q in lem.quadros(html_bruto):
+        for m in lem.DEFINE.finditer(html_bruto[q.ini:q.fim]):
+            for c in m.group(1).split("|"):
+                achados.setdefault(q.id, []).append(c)
+                assert c in glossario, f"{q.id}: data-define de '{c}', fora do glossário"
+                assert c in usados[q.id], f"{q.id}: data-define de '{c}', que o quadro não usa"
+    assert {"S14", "R20"} <= set(achados), "figuras com legenda que define termos sem data-define"
+    assert {"O1", "O2", "O3", "O4"} <= set(achados["S14"])
+    for q in lem.quadros(html_bruto):
+        figura = re.search(r'<figure class="figura"([^>]*)>', html_bruto[q.ini:q.fim])
+        if figura and 'data-define="' in figura.group(1):
+            lembrete = lem.lembrete_do_quadro(html_bruto)[q.id]
+            assert not set(achados[q.id]) & set(lembrete[0] + lembrete[1]), f"{q.id}: termo da legenda repetido no lembrete"
+
+
+def test_h11_definicao_nao_cita_identificador_interno(html_bruto):
+    erros = [f"{e.chave}: {lem.identificadores_na_definicao(e)}" for e in lem.ler_glossario(html_bruto)
+             if lem.identificadores_na_definicao(e)]
+    assert not erros, "\n".join(erros)
+    por = {e.chave: e for e in lem.ler_glossario(html_bruto)}
+    assert "PAR" not in _plano(por["referência operacional"].defin)
+    assert _plano(por["referência operacional"].defin) == "corte mais revisão manual de origem"
+    assert "REFREC" not in _plano(por["bootstrap"].defin)
+
+
+def test_h11_letra_do_lembrete_nas_classes_densas_nao_passa_da_do_corpo(deck):
+    css = deck.style
+    for classe in ("denso", "denso1", "denso2", "denso3"):
+        corpo = re.search(rf"(?m)^\.slide\.{classe} \.corpo \{{[^}}]*?font-size:\s*([\d.]+)em", css)
+        assert corpo, f"classe {classe} sem font-size do corpo"
+        lembrete = re.search(rf"(?m)^\.slide\.{classe} \.lembrete \{{[^}}]*?font-size:\s*([\d.]+)em", css)
+        tamanho_ressalva = float(re.search(r"(?m)^\.ressalva \{[^}]*?font-size:\s*([\d.]+)em", css).group(1))
+        efetivo = float(lembrete.group(1)) if lembrete else tamanho_ressalva
+        assert efetivo <= float(corpo.group(1)) + 1e-9, f"{classe}: lembrete {efetivo}em maior que o corpo {corpo.group(1)}em"
+    assert re.search(r"(?m)^\.slide\.denso3 \.lembrete", css) and re.search(r"(?m)^\.slide\.denso2 \.lembrete", css)
+
+
+# ======================================================================================
+# H12. Estrutura do HTML dos quadros (marcação dentro de atributo, texto solto, rótulo do título)
+# ======================================================================================
+
+class _Estrutura(HTMLParser):
+    VAZIOS = {"br", "hr", "img", "meta", "link", "input", "wbr", "path", "rect", "circle", "line", "stop"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.pilha: list[str] = []
+        self.quadros: list[dict] = []
+        self.atual: dict | None = None
+        self.prof_quadro = 0
+
+    def handle_starttag(self, tag, attrs):
+        a = {k: (v or "") for k, v in attrs}
+        if tag == "section" and "slide" in a.get("class", "").split() and self.atual is None:
+            self.atual = {"id": a.get("id", ""), "aria": a.get("aria-label"), "filhos": [], "texto": [], "asides": 0}
+            self.quadros.append(self.atual)
+            self.prof_quadro = len(self.pilha)
+        elif self.atual is not None:
+            if len(self.pilha) == self.prof_quadro + 1:
+                self.atual["filhos"].append(tag)
+            if tag == "aside" and "lembrete" in a.get("class", "").split():
+                self.atual["asides"] += 1
+        if tag not in self.VAZIOS:
+            self.pilha.append(tag)
+
+    def handle_startendtag(self, tag, attrs):
+        pass
+
+    def handle_endtag(self, tag):
+        if tag in self.pilha:
+            while self.pilha and self.pilha.pop() != tag:
+                pass
+            if self.atual is not None and tag == "section" and len(self.pilha) == self.prof_quadro:
+                self.atual = None
+
+    def handle_data(self, data):
+        if self.atual is not None and len(self.pilha) == self.prof_quadro + 1 and data.strip():
+            self.atual["texto"].append(data.strip())
+
+
+def violacoes_estrutura(html: str) -> list[str]:
+    """Defeitos de marcação: marcação em valor de atributo, texto solto entre os blocos do quadro, blocos
+    fora de header, div e footer, mais de um lembrete e aria-label diferente do título visível."""
+    erros = []
+    topo = html.split("<script>")[0]
+    for m in re.finditer(r'\s([\w-]+)="([^"]*)"', topo):
+        if "<" in m.group(2) or ">" in m.group(2):
+            erros.append(f"atributo {m.group(1)} com marcação: {m.group(2)[:60]!r}")
+    ex = _Estrutura()
+    ex.feed(topo)
+    ex.close()
+    titulos = {q.id: q.titulo for q in extrair_deck(html).quadros}
+    for q in ex.quadros:
+        if q["filhos"] != ["header", "div", "footer"]:
+            erros.append(f"{q['id']}: filhos diretos {q['filhos']} (esperado header, div, footer)")
+        if q["texto"]:
+            erros.append(f"{q['id']}: texto solto no quadro: {q['texto'][0][:60]!r}")
+        if q["asides"] > 1:
+            erros.append(f"{q['id']}: {q['asides']} lembretes")
+        if q["aria"] is None or _limpar(q["aria"]) != titulos.get(q["id"]):
+            erros.append(f"{q['id']}: aria-label difere do título visível")
+        elif any(c in q["aria"] for c in '<>"'):
+            erros.append(f"{q['id']}: aria-label com <, > ou aspas")
+    return erros
+
+
+def test_h12_estrutura_dos_quadros_sem_marcacao_em_atributo_nem_texto_solto(html_bruto):
+    assert violacoes_estrutura(html_bruto) == []
+
+
+def test_h12_numero_de_blocos_por_quadro(html_bruto):
+    topo = html_bruto.split("<script>")[0]
+    assert len(re.findall(r'<section class="slide', topo)) == 54
+    ex = _Estrutura()
+    ex.feed(topo)
+    assert len(ex.quadros) == 54
+    assert sum(q["filhos"].count("header") for q in ex.quadros) == 54
+    assert sum(q["filhos"].count("footer") for q in ex.quadros) == 54
+    assert sum(q["asides"] for q in ex.quadros) == len(re.findall(r'<aside class="lembrete"', topo)) <= 54
+
+
+def test_h12_sintetico_dfn_dentro_de_aria_label_faz_o_teste_falhar():
+    bom = ('<main><section class="slide" id="S01" aria-label="Título com SHAP"><header><h2 class="titulo">Título com '
+           '<dfn data-termo="SHAP">SHAP</dfn></h2></header><div class="corpo"><p>x</p></div>'
+           '<footer class="pe"><p class="fonte">Fonte</p></footer></section></main>')
+    assert violacoes_estrutura(bom) == []
+    ruim = bom.replace('aria-label="Título com SHAP"', 'aria-label="Título com <dfn data-termo="SHAP">SHAP</dfn>"')
+    achados = violacoes_estrutura(ruim)
+    assert any("marcação" in e for e in achados) or any("texto solto" in e for e in achados), achados
+    assert achados
+
+
+def test_h12_sintetico_texto_solto_aria_diferente_e_mais_de_um_lembrete():
+    base = ('<main><section class="slide" id="S01" aria-label="Capa"><header><h2 class="titulo">Capa</h2></header>'
+            '<div class="corpo"><p>x</p></div><footer class="pe">{rodape}</footer></section></main>')
+    assert violacoes_estrutura(base.format(rodape="")) == []
+    com_texto = base.replace("</header>", "</header>sobrou texto")
+    assert any("texto solto" in e for e in violacoes_estrutura(com_texto.format(rodape="")))
+    outro = base.replace('aria-label="Capa"', 'aria-label="Outra coisa"')
+    assert any("aria-label difere" in e for e in violacoes_estrutura(outro.format(rodape="")))
+    dois = '<aside class="lembrete">a</aside><aside class="lembrete">b</aside>'
+    assert any("2 lembretes" in e for e in violacoes_estrutura(base.format(rodape=dois)))
+    sem_div = base.replace('<div class="corpo"><p>x</p></div>', "")
+    assert any("filhos diretos" in e for e in violacoes_estrutura(sem_div.format(rodape="")))
+
+
+def test_h3_modo_verificar_cobre_sobreposicao_corpo_rodape_e_texto_solto(deck):
+    assert re.search(r"corpo\.getBoundingClientRect\(\)\.bottom\s*>\s*pe\.getBoundingClientRect\(\)\.top", deck.script)
+    assert re.search(r"cab\.getBoundingClientRect\(\)\.bottom\s*>\s*corpo\.getBoundingClientRect\(\)\.top", deck.script)
+    assert "nodeType === 3" in deck.script
