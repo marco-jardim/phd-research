@@ -280,7 +280,8 @@ def numeros_sem_apoio_na_linha(celula_numeros: str, celula_fontes: str) -> list[
 EXPRESSOES_FALA = {
     "S03": ["preservado", "não foi medido", "referência operacional", "61.485"],
     "S06": ["veio da ordem", "não da automação", "post hoc", "coorte única", "revisor perfeito simulado",
-            "coorte nova", "seis variantes", "nenhuma fusão superou", "não exclui o zero"],
+            "coorte nova", "seis variantes", "nenhuma fusão teve intervalo da diferença inteiramente abaixo de zero",
+            "não exclui o zero"],
     "S07": ["revisora única", "sem dupla revisão", "hipótese de trabalho", "não são identificáveis",
             "delineamento"],
     "S08": ["preservado", "nenhum componente corrige"],
@@ -303,14 +304,14 @@ EXPRESSOES_FALA = {
             "estrato do processo"],
     "S21": ["otimistas", "seis variantes", "post hoc", "coorte única", "revisor perfeito simulado"],
     "S22": ["revisora única", "não são identificáveis", "247", "revisor perfeito simulado", "post hoc"],
-    "S23": ["o3", "f4", "f3 quando houver as macd", "curva de esforço", "não examinados", "só apoia",
+    "S23": ["o3", "f4", "f3", "curva de esforço", "não examinados", "só apoia",
             "coorte nova", "hipótese de trabalho"],
     "S24": ["um só extrato", "revisor perfeito simulado", "0.7.0", "experimental", "não foi publicada",
             "sem labels", "não alimentam os resultados", "dentro do ruído", "o3 e f4 dependem de",
             "altera a recomendação"],
     "S25": ["25%", "limite inferior", "dados à vista", "não foi testada", "dupla revisão", "não foi estimado"],
-    "S26": ["não reivindica", "sem auditoria independente", "posterior ao registro"],
-    "S27": ["não fornece os modelos ajustados", "reproduz, por si só", "auditoria", "experimental",
+    "S26": ["não reivindica", "sem exercício independente de auditoria das justificativas", "posterior ao registro"],
+    "S27": ["não fornece os modelos ajustados", "reproduz, por si só", "auditoria das justificativas", "experimental",
             "não foi publicada", "perfil histórico"],
 }
 
@@ -820,12 +821,16 @@ def test_r7_mensagem_central_das_ancoras(sec):
     s06 = texto_fala(sec["S06"]).lower()
     assert "veio da ordem" in s06 and "não da automação" in s06
     s21 = texto_fala(sec["S21"]).lower()
-    assert "f3 e f4" in s21 and "reduziram" in s21 and "o1" in s21 and "metas de 9 e de 36" in s21
+    assert re.search(r"\bf3\b[^.]*\breduziram\b[^.]*\bfrente a o1\b", s21), "F3 não preso a 'reduziram' frente a O1"
+    assert re.search(r"\bf4\b[^.]*\breduziram\b[^.]*\bfrente a o1\b", s21), "F4 não preso a 'reduziram' frente a O1"
+    assert "metas de 9 e de 36" in s21
     assert "não sustenta que f3 ou f4 superem o3" in s21 or "não sustenta que f3 ou f4 superem o3" in " ".join(s21.split())
     s15 = texto_fala(sec["S15"]).lower()
     assert "nenhuma fusão teve intervalo inteiramente abaixo de zero" in s15 and "o3 isolada não tem marcador cheio" in s15
     s23 = texto_fala(sec["S23"]).lower()
-    assert "isolada, em o3" in s23 and "em f4" in s23 and "f3 quando houver as macd" in s23
+    assert "isolada, em o3" in s23 and "em f4" in s23 and "f3" in s23
+    assert any(re.search(r"\bf3\b", f.lower()) and "quando houver as macd" in f.lower()
+               for f in frases(texto_fala(sec["S23"]))), "'quando houver as MACD' não preso a F3 na mesma frase"
     assert "curva de esforço" in s23 and "coorte nova" in s23
     s24 = texto_fala(sec["S24"]).lower()
     assert "altera a recomendação" in s24 and "o1 é a mais forte" in s24
@@ -866,6 +871,13 @@ def test_r7_instrucoes_de_uso_do_deck(roteiro):
 # R8. Correções da revisão independente de fidelidade (2026-11-18)
 # ======================================================================================
 
+def test_r8_ressalvas_inteiras_de_r20_e_r01_e_sem_nessa_ordem(sec):
+    r20 = " ".join(texto_fala(sec["R20"]).lower().split())
+    assert "post hoc" in r20 and "reserva r08" in r20
+    assert "nessa ordem" not in r20
+    assert "não do trabalho de revisão" in " ".join(texto_fala(sec["R01"]).lower().split())
+
+
 def test_r8_s07_razao_e_um_par_verdadeiro_para_cada_249_nao_pares(sec):
     t = texto_fala(sec["S07"])
     assert "um par verdadeiro para cada 249 não pares" in t
@@ -874,7 +886,7 @@ def test_r8_s07_razao_e_um_par_verdadeiro_para_cada_249_nao_pares(sec):
 
 def test_r8_s06_qualifica_fusoes_e_situa_automacao_na_vigilancia(sec):
     t = texto_fala(sec["S06"])
-    assert "frente à probabilidade isolada, nenhuma fusão superou com intervalo inteiramente abaixo de zero" in t
+    assert "frente à probabilidade isolada, nenhuma fusão teve intervalo da diferença inteiramente abaixo de zero" in t
     assert "na vigilância, aceitou abaixo do corte 4 pares verdadeiros e 21 falsos positivos" in t
 
 
@@ -911,7 +923,7 @@ def test_r8_r02_comeca_por_sim_e_inclui_exploracoes_posteriores(sec):
 
 def test_r8_r24_nomeia_o_random_forest_com_smote_e_nao_o_xgboost_de_o3(sec):
     t = texto_fala(sec["R24"])
-    assert "Random Forest com SMOTE ajustado na base inteira, que não é o XGBoost que gera O3" in t
+    assert "Random Forest com SMOTE ajustado na base inteira, que não é o XGBoost que gera a O3" in t
     assert "Gini" in t
 
 
@@ -935,3 +947,325 @@ def test_r8_custo_computacional_nas_perguntas_do_s17_com_rastreabilidade(roteiro
     assert "Costa: custo computacional" in p and "US$ 0,94" in p and "US$ 0,11" in p and "755 chamadas" in p
     linhas = [r for r in rastreabilidade(roteiro) if r[0] == "S17"]
     assert any("0,94" in n for _, n, _ in linhas) and any("0,11" in n for _, n, _ in linhas)
+
+
+# ======================================================================================
+# R9. Lembrete de siglas, glossário e apostos (pedido de 2026-11-18: deck compreensivo)
+# ======================================================================================
+#
+# Heurística do aposto (determinística, sobre o texto da fala sem asteriscos). Uma menção de código
+# "tem aposto" quando vale uma destas formas:
+#   (a) o código é seguido de vírgula, de uma palavra de abertura de aposto (o, a, os, as, um, uma, que,
+#       cuja, cujo, isto, ambas, ambos) e de ao menos mais duas palavras antes da próxima pontuação:
+#       "a O3, a fila pela probabilidade calibrada,". "ou", "pelo", "pela", "pelas" e "pelos" não abrem
+#       aposto: "em O3, ou fundida ao escore" e "que O1, pelo limite inferior" não explicam o código;
+#   (b) o código vem depois de um sintagma nominal de ao menos três palavras terminado em vírgula, com ou
+#       sem artigo: "a probabilidade calibrada, O3," e "o Comparador de Registros, o CdR". O trecho antes da
+#       vírgula não pode abrir oração (começar por "que", "quando", "se", "como", "e", "mas"...): em
+#       "No modo de vigilância, que prioriza a sensibilidade, o ASR enviou" o trecho é uma relativa, não
+#       uma descrição do ASR;
+#   (c) o código vem entre parênteses depois de uma descrição: "valor preditivo positivo (VPP)";
+#   (d) o código é o sujeito de uma definição: "A O1 ordena", "F3 e F4 são fusões", "a F3 inclui". O
+#       predicado com "é" ou "são" só conta como definição quando não é comparativo ou superlativo:
+#       "O1 é a mais forte" não define a O1.
+# Limite conhecido: a heurística confere a forma; o conteúdo mínimo do aposto de alguns códigos é conferido
+# pela tabela CONTEUDO_DO_APOSTO, e o restante na leitura do roteiro. A regra por quadro (R9b) exige o
+# aposto na primeira menção, salvo se a fala do quadro anterior já explicou o código.
+
+CODIGOS = ("O1", "O2", "O3", "O4", "F3", "F4", "ASR", "CdR", "MACD", "VPP", "AUC-PR", "QW1", "CM", "C")
+ABRE_APOSTO = {"o", "a", "os", "as", "um", "uma", "que", "cuja", "cujo", "isto", "ambas", "ambos"}
+ABRE_ORACAO = {"que", "quando", "se", "como", "e", "ou", "mas", "onde", "porque", "pois", "cujo", "cuja", "já"}
+COMPARATIVO = r"(?:mais|menos|menor|maior|melhor|pior|única|único|primeir[ao]|segund[ao]|terceir[ao])"
+ARTIGO = r"(?:(?:o|a|os|as|um|uma)\s+)"
+DEFINICAO = (r"(?:(?:ordena|funde|inclui|reúne)\b|(?:é|são)\s+(?!" + ARTIGO + r"?" + COMPARATIVO + r"\b)"
+             + ARTIGO + r"?\w{4,})")
+
+
+def mencoes(texto: str, codigo: str) -> list[re.Match]:
+    return list(re.finditer(rf"(?<![\w/-]){re.escape(codigo)}(?![\w-])", texto))
+
+
+def mencao_tem_aposto(texto: str, m: re.Match) -> bool:
+    depois, antes = texto[m.end():], texto[:m.start()]
+    a = re.match(r",\s+([^\s,.;:()]+)\s+([^,.;:()]+)", depois)
+    if a and a.group(1).lower() in ABRE_APOSTO and len(a.group(2).split()) >= 2:
+        return True
+    clausula = re.split(r"[.;:()]", antes)[-1]
+    b = re.search(r"([^,]+),\s*(?:o |a |os |as )?$", clausula)
+    if b:
+        trecho = b.group(1).split()
+        if len(trecho) >= 3 and trecho[0].lower() not in ABRE_ORACAO:
+            return True
+    if antes.rstrip().endswith("(") and depois.startswith(")") and len(re.findall(r"\w+", antes[-60:])) >= 3:
+        return True
+    codigo = m.group(0)
+    if re.match(rf"{re.escape(codigo)}(?: e \w+)? {DEFINICAO}", texto[m.start():m.end() + 40]):
+        return True
+    if re.search(rf"\b\w+ e {re.escape(codigo)} {DEFINICAO}", texto[max(0, m.start() - 12):m.end() + 40]):
+        return True
+    return False
+
+
+CONTEUDO_DO_APOSTO = {"F3": ("macd",), "F4": ("probabilidade", "escore"), "O1": ("escore",), "O3": ("probabilidade",),
+                      "O4": ("recalibrada", "asr"), "ASR": ("corte",), "CdR": ("subescores",)}
+
+
+def frase_da_mencao(texto: str, m: re.Match) -> str:
+    ini, fim = 0, len(texto)
+    for b in re.finditer(r"(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÂÊÔÃÕÇ*])", texto):
+        if b.end() <= m.start():
+            ini = b.end()
+        elif b.start() >= m.end():
+            fim = b.start()
+            break
+    return texto[ini:fim]
+
+
+def aposto_sem_conteudo(texto: str, codigo: str, palavras) -> list[str]:
+    """Palavras obrigatórias ausentes da frase da primeira menção do código que traz aposto (vazio quando
+    nenhuma menção traz aposto: a regra por quadro cobre esse caso)."""
+    for m in mencoes(texto, codigo):
+        if mencao_tem_aposto(texto, m):
+            frase = frase_da_mencao(texto, m).lower()
+            return [p for p in palavras if p not in frase]
+    return []
+
+
+def primeira_mencao_sem_aposto(texto: str, codigo: str) -> bool:
+    ms = mencoes(texto, codigo)
+    return bool(ms) and not mencao_tem_aposto(texto, ms[0])
+
+
+def explicado_em(texto: str, codigo: str) -> bool:
+    return any(mencao_tem_aposto(texto, m) for m in mencoes(texto, codigo))
+
+
+def codigos_sem_aposto(fala: str, anterior: str = "") -> list[str]:
+    """Códigos cuja primeira menção na fala não tem aposto e que a fala anterior também não explicou."""
+    return [c for c in CODIGOS if primeira_mencao_sem_aposto(fala, c) and not explicado_em(anterior, c)]
+
+
+def fala_com_transicao(s: bz.SecaoRoteiro) -> str:
+    return bz.plano_md("\n\n".join(fala_de(s) + [x.removeprefix("Transição:") for x in paragrafo(s, "Transição:")]))
+
+
+def test_r9_sintetico_aposto_reconhecido():
+    ok = [
+        ("a O3, a fila pela probabilidade calibrada, exigiu 125 revisões", "O3"),
+        ("a probabilidade calibrada, O3, exigiu 125 revisões", "O3"),
+        ("o Comparador de Registros, o CdR, calcula os subescores", "CdR"),
+        ("o valor preditivo positivo (VPP) foi de 16,0%", "VPP"),
+        ("A O1 ordena pelo escore e F3 e F4 são fusões", "O1"),
+        ("A O1 ordena pelo escore e F3 e F4 são fusões", "F4"),
+        ("com o ASR, o arranjo que preserva o corte, enviou 344", "ASR"),
+        ("Pela área sob a curva precisão-sensibilidade, a AUC-PR, a regressão supera", "AUC-PR"),
+        ("A O3 é a fila pela probabilidade calibrada", "O3"),
+    ]
+    for texto, cod in ok:
+        assert not primeira_mencao_sem_aposto(texto, cod), texto
+
+
+def test_r9_sintetico_falta_de_aposto_e_acusada():
+    ruim = [
+        ("a O3 exigiu 125 revisões", "O3"),
+        ("O3, exigiu mais revisões que O1", "O3"),
+        ("o CdR calcula os subescores", "CdR"),
+        ("o ASR enviou 344 potenciais pares", "ASR"),
+        ("o VPP foi de 16,0%", "VPP"),
+        ("a fila C recupera 9", "C"),
+        ("No modo de vigilância, que prioriza a sensibilidade, o ASR enviou 344 potenciais pares", "ASR"),
+        ("A fila segue em O3, ou fundida ao escore", "O3"),
+        ("com 25% menos revisões que O1, pelo limite inferior do intervalo", "O1"),
+        ("O1 é a mais forte delas", "O1"),
+    ]
+    for texto, cod in ruim:
+        assert primeira_mencao_sem_aposto(texto, cod), texto
+
+
+def test_r9_sintetico_conteudo_do_aposto():
+    assert aposto_sem_conteudo("a F3, a fusão que também usa as datas de nascimento, recupera 25", "F3", ("macd",)) == ["macd"]
+    assert aposto_sem_conteudo("a F3, a mesma fusão acrescida da fila pela probabilidade com as MACD, recupera 25",
+                               "F3", ("macd",)) == []
+    assert aposto_sem_conteudo("a O4, a fila pela probabilidade recalibrada, 7", "O4", ("recalibrada", "asr")) == ["asr"]
+    assert aposto_sem_conteudo("a O3 exigiu 125 revisões", "O3", ("probabilidade",)) == []     # sem aposto: nada a conferir
+    dois = "A F4 soma. A F3, a fusão da O3, recupera 25"
+    assert aposto_sem_conteudo(dois, "F3", ("macd",)) == ["macd"]
+
+
+def frases_com_f3_e_datas_de_nascimento(texto: str) -> list[str]:
+    return [f for f in frases(texto) if re.search(r"\bF3\b", f) and "datas de nascimento" in f]
+
+
+def test_r9_sintetico_f3_com_datas_de_nascimento_e_acusada():
+    assert frases_com_f3_e_datas_de_nascimento("A F3, a que usa as datas de nascimento, recupera 25.")
+    assert not frases_com_f3_e_datas_de_nascimento("A F3 recupera 25. As MACD vêm das datas de nascimento.")
+
+
+def test_r9_sintetico_fala_anterior_que_explicou_dispensa_o_aposto():
+    atual = "O CdR calcula os subescores."
+    assert codigos_sem_aposto(atual) == ["CdR"]
+    assert codigos_sem_aposto(atual, "O CdR, o comparador que gera os subescores, existe.") == []
+    assert codigos_sem_aposto(atual, "O CdR existe.") == ["CdR"]
+    assert codigos_sem_aposto("Nada de código aqui.") == []
+
+
+def test_r9_sintetico_c_so_como_palavra_isolada():
+    assert mencoes("Capítulo C, a fila", "C") and not mencoes("CdR e CM", "C")
+
+
+@pytest.mark.parametrize("rotulo", PRINCIPAIS)
+def test_r9_quadro_principal_traz_aposto_na_primeira_mencao_de_cada_codigo(sec, rotulo):
+    i = PRINCIPAIS.index(rotulo)
+    anterior = fala_com_transicao(sec[PRINCIPAIS[i - 1]]) if i else ""
+    faltam = codigos_sem_aposto(fala_com_transicao(sec[rotulo]), anterior)
+    assert not faltam, f"{rotulo}: primeira menção sem aposto (e sem explicação no quadro anterior): {faltam}\n{fala_com_transicao(sec[rotulo])}"
+
+
+@pytest.mark.parametrize("rotulo", RESERVAS)
+def test_r9_reserva_traz_aposto_na_primeira_mencao_de_cada_codigo(sec, rotulo):
+    faltam = codigos_sem_aposto(texto_fala(sec[rotulo]))
+    assert not faltam, f"{rotulo}: primeira menção sem aposto: {faltam}\n{texto_fala(sec[rotulo])}"
+
+
+@pytest.mark.parametrize("rotulo", TODOS)
+def test_r9_aposto_da_primeira_mencao_traz_o_conteudo_do_codigo(sec, rotulo):
+    """A frase da primeira menção com aposto, em cada quadro, traz as palavras que definem o código."""
+    texto = fala_com_transicao(sec[rotulo])
+    faltas = {c: aposto_sem_conteudo(texto, c, p) for c, p in CONTEUDO_DO_APOSTO.items()}
+    faltas = {c: p for c, p in faltas.items() if p}
+    assert not faltas, f"{rotulo}: aposto sem o conteúdo esperado {faltas}\n{texto}"
+
+
+def test_r9_nenhuma_frase_associa_f3_as_datas_de_nascimento(sec):
+    """F3 acrescenta a fila O3 com as MACD (medidas derivadas das datas); O3 e F4 já usam datas."""
+    achados = [f"{r}: {f}" for r in TODOS for f in frases(texto_dito(sec[r]))
+               if re.search(r"\bF3\b", f) and "datas de nascimento" in f]
+    assert not achados, "\n".join(achados)
+
+
+def test_r9_apostos_existem_de_fato_no_roteiro(sec):
+    """Defesa contra aprovação vazia: há apostos reconhecidos em número razoável."""
+    total = sum(1 for r in TODOS for c in CODIGOS if explicado_em(texto_fala(sec[r]), c))
+    assert total >= 60, f"poucos apostos reconhecidos ({total})"
+
+
+# --- uso do deck: lembrete e glossário ----------------------------------------------------
+
+def _uso(roteiro: str) -> str:
+    return roteiro.split("## Uso do deck", 1)[1].split("## Cronometragem", 1)[0]
+
+
+def test_r9_uso_do_deck_descreve_lembrete_e_glossario(roteiro):
+    uso = _uso(roteiro)
+    for item in ("`g`", "Glossário", "Neste quadro", "`Esc`", "Lembrete", "páginas finais", "depois da R26",
+                 "sem sair do quadro", "links para os quadros"):
+        assert item in uso, f"instrução de uso sem '{item}'"
+
+
+def test_r9_o_html_tem_de_fato_os_recursos_descritos(deck, html_bruto_roteiro):
+    script = deck.script
+    assert re.search(r"case 'g'", script), "tecla g ausente do <script>"
+    assert re.search(r"k === 'Escape' \|\| k === 'g'", script), "Esc ou g não fecha o glossário"
+    assert 'id="glossario"' in html_bruto_roteiro and 'id="neste-quadro"' in html_bruto_roteiro
+    assert 'id="botao-glossario"' in html_bruto_roteiro
+    assert len(re.findall(r'<aside class="lembrete"', html_bruto_roteiro)) >= 28
+    assert "#neste-quadro, #glossario h3 { display: none" in html_bruto_roteiro, "impressão do glossário mudou"
+
+
+@pytest.fixture(scope="module")
+def html_bruto_roteiro() -> str:
+    return hh.DECK.read_bytes().decode("utf-8")
+
+
+# --- auditoria das justificativas ----------------------------------------------------------
+
+def auditoria_sem_justificativas(texto: str) -> list[str]:
+    erros = [m.group(0) for m in re.finditer(r"auditoria independente", texto)]
+    erros += [m.group(0) for m in re.finditer(r"exercício independente de auditoria(?! das justificativas)", texto)]
+    return erros
+
+
+def test_r9_sintetico_auditoria():
+    assert auditoria_sem_justificativas("sem auditoria independente")
+    assert auditoria_sem_justificativas("sem exercício independente de auditoria.")
+    assert not auditoria_sem_justificativas("sem exercício independente de auditoria das justificativas")
+
+
+@pytest.mark.parametrize("rotulo", ["S26", "S27", "R19", "R26"])
+def test_r9_auditoria_das_justificativas(sec, rotulo):
+    assert auditoria_sem_justificativas(texto_dito(sec[rotulo])) == []
+
+
+def test_r9_s26_s27_e_r19_dizem_auditoria_das_justificativas(sec):
+    for rotulo in ("S26", "S27", "R19"):
+        assert "auditoria das justificativas" in texto_fala(sec[rotulo]), rotulo
+
+
+# --- vocabulário mínimo por bloco ---------------------------------------------------------
+
+def glossario_do_html(html: str) -> set[str]:
+    import html as _h
+    return {_h.unescape(c) for c in re.findall(r'<dt[^>]*data-chave="([^"]*)"', html)}
+
+
+def vocabulario_do_roteiro(md: str) -> dict[str, tuple[list[tuple[str, str]], list[tuple[str, str]]]]:
+    """``{bloco: (apresentados, trazidos)}``, cada item ``(termo, quadro)``."""
+    if "## Vocabulário mínimo por bloco" not in md:
+        return {}
+    corpo = md.split("## Vocabulário mínimo por bloco", 1)[1].split("## Fala-guia por quadro", 1)[0]
+    saida = {}
+    for linha in corpo.splitlines():
+        m = re.match(r"- \*\*(.+?) \(S\d\d a S\d\d\)\.\*\* Apresentados no bloco: (.*?)\. Trazidos de blocos anteriores: (.*)\.$", linha)
+        if not m:
+            continue
+        def itens(s):
+            return [(t.strip().strip("*"), q) for t, q in re.findall(r"([^;\[\]]+?) \[(S\d\d)\]", s)]
+        saida[m.group(1)] = (itens(m.group(2)), itens(m.group(3)))
+    return saida
+
+
+def test_r9_sintetico_vocabulario():
+    md = ("## Vocabulário mínimo por bloco\n\n- **Abertura (S01 a S06).** Apresentados no bloco: linkage [S02]; "
+          "vigilância (modo) [S06]. Trazidos de blocos anteriores: nenhum.\n\n## Fala-guia por quadro\n")
+    v = vocabulario_do_roteiro(md)
+    assert v == {"Abertura": ([("linkage", "S02"), ("vigilância (modo)", "S06")], [])}
+    assert vocabulario_do_roteiro("sem seção") == {}
+
+
+def secao_vocabulario_gerada(md: str) -> str:
+    """Conteúdo entre os marcadores [//]: # (VOCABULARIO) e [//]: # (/VOCABULARIO), comentários de referência
+    do markdown (sem "--", que o contrato do roteiro proíbe)."""
+    assert md.count("[//]: # (VOCABULARIO)") == 1 and md.count("[//]: # (/VOCABULARIO)") == 1
+    return md.split("[//]: # (VOCABULARIO)", 1)[1].split("[//]: # (/VOCABULARIO)", 1)[0].strip()
+
+
+def test_r9_vocabulario_do_roteiro_e_igual_a_saida_da_funcao_geradora(roteiro, html_bruto_roteiro):
+    import lembretes_deck as lem
+    gerada = lem.vocabulario_markdown(html_bruto_roteiro, lem.blocos_do_roteiro(roteiro))
+    assert list(lem.blocos_do_roteiro(roteiro)) == list(BLOCOS_ESPERADOS)
+    assert secao_vocabulario_gerada(roteiro) == gerada, \
+        "seção desatualizada; regenerar com: python scripts/lembretes_deck.py --vocabulario text/slides/defesa.html"
+
+
+def test_r9_sintetico_secao_gerada_entre_marcadores():
+    assert secao_vocabulario_gerada("a\n\n[//]: # (VOCABULARIO)\n\n- x\n\n[//]: # (/VOCABULARIO)\n\nb") == "- x"
+    with pytest.raises(AssertionError):
+        secao_vocabulario_gerada("sem marcadores")
+
+
+def test_r9_vocabulario_minimo_por_bloco_existe_e_so_traz_termos_do_glossario(roteiro, html_bruto_roteiro):
+    voc = vocabulario_do_roteiro(roteiro)
+    assert list(voc) == list(BLOCOS_ESPERADOS), f"blocos do vocabulário: {list(voc)}"
+    glossario = glossario_do_html(html_bruto_roteiro)
+    assert len(glossario) >= 100
+    total = 0
+    for bloco, (novos, trazidos) in voc.items():
+        for termo, quadro in novos + trazidos:
+            total += 1
+            assert termo in glossario, f"{bloco}: '{termo}' não está no glossário do HTML"
+            assert quadro in PRINCIPAIS, f"{bloco}: quadro {quadro} inexistente"
+        de, ate = BLOCOS_ESPERADOS[bloco]
+        assert all(de <= q <= ate for _, q in novos), f"{bloco}: termo 'apresentado' fora do bloco"
+        assert all(q < de for _, q in trazidos), f"{bloco}: termo 'trazido' não é de bloco anterior"
+    assert total >= 60, f"vocabulário curto demais ({total} entradas)"
+    assert any(t == "linkage" for t, _ in voc["Abertura"][0]) and any(t == "ASR" for t, _ in voc["Material e medida"][0])
