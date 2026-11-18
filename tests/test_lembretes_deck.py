@@ -342,14 +342,23 @@ def test_selecao_retira_termo_do_fim_para_o_comeco_e_so_depois_sigla():
     assert lem.caracteres(["abc", "de"]) == len("abc · de")
 
 
-def test_orcamento_por_tipo_e_por_classe():
+def test_sem_corte_por_padrao_e_orcamento_so_nos_quadros_de_cortes(monkeypatch):
     tipo = lambda i, c: f'<section class="slide {c}" id="{i}" data-tipo="x">'  # noqa: E731
-    assert lem.orcamento_do_quadro(tipo("S05", "")) == lem.ORCAMENTO_PRINCIPAL == 300
-    assert lem.orcamento_do_quadro(tipo("S23", "compacto")) == 300
-    assert lem.orcamento_do_quadro(tipo("R03", "")) == lem.ORCAMENTO_RESERVA == 400
-    assert lem.orcamento_do_quadro(tipo("R03", "amplo")) == 400
-    for classe in ("denso", "denso1", "denso2", "denso3"):
-        assert lem.orcamento_do_quadro(tipo("R10", classe)) == lem.ORCAMENTO_RESERVA_DENSA == 260
+    assert lem.CORTES == {}                                  # valor final medido: nenhum quadro precisa de corte
+    for i, c in (("S05", ""), ("S23", "compacto"), ("R03", ""), ("R03", "amplo"), ("R10", "denso"), ("R17", "denso3")):
+        assert lem.orcamento_do_quadro(tipo(i, c)) is None, i
+    monkeypatch.setitem(lem.CORTES, "R10", 260)
+    assert lem.orcamento_do_quadro(tipo("R10", "denso")) == 260
+    assert lem.orcamento_do_quadro(tipo("R11", "denso")) is None
+
+
+def test_degrau_de_letra_pelos_limites_e_pelo_minimo_do_quadro():
+    (_, n0), (_, n1), (_, n2), _ = lem.LIMITES
+    assert [lem.degrau_do_lembrete(n) for n in (0, n0, n0 + 1, n1, n1 + 1, n2, n2 + 1, 5000)] == \
+        ["", "", "compacto", "compacto", "mini", "mini", "micro", "micro"]
+    assert lem.degrau_do_lembrete(10, "mini") == "mini"          # o mínimo do quadro sobe o degrau
+    assert lem.degrau_do_lembrete(5000, "compacto") == "micro"   # e nunca o desce
+    assert lem.DEGRAUS == tuple(c for c, _ in lem.LIMITES)
 
 
 def html_com_orcamento(entradas, corpo, classe="", quadro="R10"):
@@ -364,29 +373,49 @@ def html_com_orcamento(entradas, corpo, classe="", quadro="R10"):
 PADROES_SINTETICOS = {"A": r"\bAA\b", "B": r"\bBB\b", "C": r"\bCC\b", "D": r"\bDD\b", "E": r"\bEE\b"}
 
 
-def test_aplicar_com_orcamento_insere_demais_termos_so_quando_retira(monkeypatch):
-    monkeypatch.setitem(lem.PADROES, "A", PADROES_SINTETICOS["A"])
+def test_lista_longa_mostra_todos_os_termos_e_reduz_a_letra_sem_item_fixo(monkeypatch):
     for k, v in PADROES_SINTETICOS.items():
         monkeypatch.setitem(lem.PADROES, k, v)
     ent = entradas_do_orcamento()
+    longo = "AA BB CC DD EE"                                      # 5 x 63 = 327 caracteres, mais os separadores
+    h = lem.aplicar(html_com_orcamento(ent, longo))
+    assert itens(h, "R10") == ["A", "B", "C", "D", "E"]           # todos os termos, na ordem de aparição
+    assert "demais termos" not in h[h.index('id="R10"'):h.index("</main>")]
+    assert lem.verificar_lembretes(h) == []
+    assert 'data-termos="A|B|C|D|E"' in h
+    assert '<aside class="lembrete compacto"' in h                 # 327 caracteres: passa de 290 e cabe em 340
+    curto = lem.aplicar(html_com_orcamento(ent, "AA BB"))
+    assert '<aside class="lembrete"' in curto and "lembrete compacto" not in curto
+    muito_longo = [lem.Entrada(e.chave, e.chave, e.nivel, e.exibir, e.defin * 2, "glossario.tex:1") for e in ent]
+    assert '<aside class="lembrete micro"' in lem.aplicar(html_com_orcamento(muito_longo, longo))
+    # o degrau incoerente com o tamanho da lista é acusado
+    errado = h.replace('<aside class="lembrete compacto"', '<aside class="lembrete"')
+    assert any("degrau de letra" in e and "incoerente" in e for e in lem.verificar_lembretes(errado))
+    # o piso por quadro sobe o degrau mesmo com lista curta
+    monkeypatch.setitem(lem.DEGRAU_MINIMO, "R10", "mini")
+    assert '<aside class="lembrete mini"' in lem.aplicar(html_com_orcamento(ent, "AA BB"))
+
+
+def test_aplicar_com_corte_insere_demais_termos_so_onde_retira(monkeypatch):
+    for k, v in PADROES_SINTETICOS.items():
+        monkeypatch.setitem(lem.PADROES, k, v)
+    monkeypatch.setitem(lem.CORTES, "R10", 260)
+    ent = entradas_do_orcamento()
     longo = "AA BB CC DD EE"
-    h = lem.aplicar(html_com_orcamento(ent, longo, classe="denso"))          # 5 x 63 > 260
+    h = lem.aplicar(html_com_orcamento(ent, longo))                  # 5 x 63 > 260: retira termos e depois siglas
     assert itens(h, "R10")[-1] == "demais termos"
     assert lem.verificar_lembretes(h) == []
-    assert 'data-termos="A|B|C|D|E"' in h                                    # o painel continua completo
-    curto = lem.aplicar(html_com_orcamento(ent, "AA BB", classe="denso"))
+    assert 'data-termos="A|B|C|D|E"' in h                            # o painel continua completo
+    curto = lem.aplicar(html_com_orcamento(ent, "AA BB"))
     assert "demais termos" not in " ".join(itens(curto, "R10"))
     # item fixo ausente quando deveria existir, e presente quando não deveria
     sem_fixo = h.replace('<span class="it"><strong>demais termos</strong>: tecla g</span>', "")
     assert any("'demais termos' ausente" in e for e in lem.verificar_lembretes(sem_fixo))
     com_fixo_indevido = curto.replace("</aside>", '<span class="it"><strong>demais termos</strong>: tecla g</span></aside>')
     assert any("'demais termos' indevido" in e for e in lem.verificar_lembretes(com_fixo_indevido))
-    # orçamento estourado
-    estourado = lem.aplicar(html_com_orcamento(ent, longo, classe=""))      # padrão: 400, cabem os 5 itens (327)
-    assert lem.verificar_lembretes(estourado) == []
-    mesmo_html_denso = estourado.replace('class="slide "', 'class="slide denso"')
-    assert any("orçamento 260" in e or "sem uso no quadro ou retirado" in e or "caracteres" in e
-               for e in lem.verificar_lembretes(mesmo_html_denso))
+    # orçamento estourado: o mesmo HTML sem corte, conferido com o corte, é acusado
+    monkeypatch.setitem(lem.CORTES, "R10", 100)
+    assert lem.verificar_lembretes(h)
 
 
 def test_data_define_pula_o_termo_no_lembrete_mas_ele_fica_em_data_termos():

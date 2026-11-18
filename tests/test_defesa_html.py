@@ -1170,38 +1170,91 @@ def test_h11_painel_neste_quadro_antes_da_lista_alfabetica(deck, html_bruto):
     assert re.search(r"#neste-quadro[^}]*display:\s*none\s*!important", deck.style), "sem ocultar 'Neste quadro' na impressão"
 
 
-def test_h11_orcamento_de_caracteres_respeitado_e_item_fixo_so_quando_retira(deck, html_bruto):
+def test_h11_lembrete_inteiro_item_fixo_so_onde_ha_corte_e_nenhum_quadro_cortado(deck, html_bruto):
+    """Todo termo sigla/termo não definido no quadro está no lembrete; o item fixo só existe onde houve
+    retirada; o número de quadros com corte é o valor final medido no Chrome (zero) e coincide com CORTES."""
     glossario = lem.ler_glossario(html_bruto)
     por_chave = {e.chave: e for e in glossario}
     selecao = lem.lembrete_do_quadro(html_bruto, glossario)
+    todos = lem.termos_do_lembrete(html_bruto, glossario)
     fixo = f"{lem.DEMAIS[0]}: {lem.DEMAIS[1]}"
     erros = []
-    retiraram = 0
+    com_corte = []
     for q in lem.quadros(html_bruto):
         mantidos, retirados = selecao[q.id]
         lembrete = deck.por_id[q.id].lembrete
-        itens = [_item(por_chave[c]) for c in mantidos] + ([fixo] if retirados else [])
-        orcamento = lem.orcamento_do_quadro(html_bruto[q.ini:q.fim])
-        if lem.caracteres(itens) > orcamento:
-            erros.append(f"{q.id}: {lem.caracteres(itens)} caracteres (orçamento {orcamento})")
         if bool(retirados) != (fixo in lembrete):
             erros.append(f"{q.id}: item fixo {'ausente' if retirados else 'indevido'}")
+        if retirados:
+            com_corte.append(q.id)
+            orcamento = lem.orcamento_do_quadro(html_bruto[q.ini:q.fim])
+            if lem.caracteres([_item(por_chave[c]) for c in mantidos] + [fixo]) > orcamento:
+                erros.append(f"{q.id}: lembrete cortado acima do orçamento {orcamento}")
+        elif mantidos != todos[q.id]:
+            erros.append(f"{q.id}: lembrete sem corte mas com termos a menos")
         if any(por_chave[c].nivel == "sigla" for c in retirados) and any(por_chave[c].nivel == "termo" for c in mantidos):
             erros.append(f"{q.id}: retirou sigla com termo ainda na lista")
-        retiraram += bool(retirados)
-    assert retiraram >= 1, "nenhum quadro precisou do orçamento: a regra não foi exercitada"
     assert not erros, "\n".join(erros)
+    assert sorted(com_corte) == sorted(lem.CORTES), f"quadros com corte {com_corte} diferem de CORTES {sorted(lem.CORTES)}"
+    assert len(com_corte) == QUADROS_COM_CORTE == 0, f"quadros com lembrete cortado: {com_corte}"
 
 
-def test_h11_orcamento_por_tipo_e_classe(html_bruto):
-    esperado = {}
+QUADROS_COM_CORTE = 0       # valor final medido no Chrome (scripts/verificar_deck_navegador.py): nenhum quadro corta o lembrete
+
+
+def test_h11_degrau_de_letra_do_lembrete_coerente_com_o_tamanho_da_lista(html_bruto):
+    """A classe do <aside> (normal, compacto, mini ou micro) é a do tamanho da lista, nunca mais leve que o
+    degrau mínimo do quadro, e a lista que pede degrau menor tem de ser a mais longa (monotonia)."""
+    glossario = lem.ler_glossario(html_bruto)
+    selecao = lem.lembrete_do_quadro(html_bruto, glossario)
+    esperado = lem.degraus_do_quadro(html_bruto, glossario)
+    vistos = {}
+    for q in lem.quadros(html_bruto):
+        bloco = html_bruto[q.ini:q.fim]
+        m = re.search(r'<aside class="lembrete(?: ([a-z]+))?"', bloco)
+        if m is None:
+            continue
+        degrau = m.group(1) or ""
+        n = lem.caracteres(lem.textos_do_lembrete(*selecao[q.id], glossario))
+        assert degrau == esperado[q.id] == lem.degrau_do_lembrete(n, lem.DEGRAU_MINIMO.get(q.id, "")), q.id
+        assert lem.DEGRAUS.index(degrau) >= lem.DEGRAUS.index(lem.DEGRAU_MINIMO.get(q.id, "")), q.id
+        if q.id not in lem.DEGRAU_MINIMO:
+            vistos[q.id] = (n, lem.DEGRAUS.index(degrau))
+    ordenados = sorted(vistos.values())
+    assert [g for _, g in ordenados] == sorted(g for _, g in ordenados), "degrau não cresce com o tamanho da lista"
+    assert {g for _, g in ordenados} == {0, 1, 2, 3}, "algum degrau de letra não é exercitado pelo deck"
+
+
+def test_h11_letra_do_lembrete_por_degrau_entre_o_piso_da_fonte_e_o_corpo(deck, html_bruto):
+    """Piso: a letra do lembrete nunca fica menor que a da linha "Fonte:" (.52em); teto: nunca passa da do
+    corpo nas classes densas. As regras vêm da folha de estilo, quadro a quadro."""
+    css = deck.style
+    fonte = float(re.search(r"(?m)^\.fonte \{[^}]*?font-size:\s*([\d.]+)em", css).group(1))
+    normal = float(re.search(r"(?m)^\.lembrete \{[^}]*?font-size:\s*([\d.]+)em", css).group(1))
+
+    def regra(seletor):
+        m = re.search(rf"(?m)^{re.escape(seletor)} \{{[^}}]*?font-size:\s*([\d.]+)em", css)
+        return float(m.group(1)) if m else None
+
+    degraus = {d: regra(f".slide .lembrete.{d}") for d in lem.DEGRAUS if d}
+    assert all(v is not None for v in degraus.values()), degraus
+    assert normal > degraus["compacto"] > degraus["mini"] > degraus["micro"] >= fonte, (normal, degraus, fonte)
     for q in lem.quadros(html_bruto):
         bloco = html_bruto[q.ini:q.fim]
         classes = re.search(r'class="([^"]*)"', lem.ABERTURA.search(bloco).group(0)).group(1).split()
-        denso = any(c in ("denso", "denso1", "denso2", "denso3") for c in classes)
-        esperado[q.id] = 300 if q.id.startswith("S") else (260 if denso else 400)
-        assert lem.orcamento_do_quadro(bloco) == esperado[q.id], q.id
-    assert {260, 300, 400} <= set(esperado.values())
+        m = re.search(r'<aside class="lembrete(?: ([a-z]+))?"', bloco)
+        if m is None:
+            continue
+        degrau = m.group(1) or ""
+        dens = [c for c in classes if c in ("denso", "denso1", "denso2", "denso3")]
+        if degrau:
+            efetivo = next((regra(f".slide.{c} .lembrete.{degrau}") for c in dens if regra(f".slide.{c} .lembrete.{degrau}")), degraus[degrau])
+        else:
+            efetivo = next((regra(f".slide.{c} .lembrete") for c in dens if regra(f".slide.{c} .lembrete")), normal)
+        assert efetivo >= fonte - 1e-9, f"{q.id}: lembrete {efetivo}em abaixo da fonte {fonte}em"
+        for c in dens:
+            corpo = regra(f".slide.{c} .corpo")
+            assert efetivo <= corpo + 1e-9, f"{q.id}: lembrete {efetivo}em maior que o corpo {corpo}em ({c})"
 
 
 def test_h11_data_define_existe_no_glossario_e_o_termo_aparece_no_quadro(html_bruto):
@@ -1326,7 +1379,7 @@ def test_h12_numero_de_blocos_por_quadro(html_bruto):
     assert len(ex.quadros) == 54
     assert sum(q["filhos"].count("header") for q in ex.quadros) == 54
     assert sum(q["filhos"].count("footer") for q in ex.quadros) == 54
-    assert sum(q["asides"] for q in ex.quadros) == len(re.findall(r'<aside class="lembrete"', topo)) <= 54
+    assert sum(q["asides"] for q in ex.quadros) == len(re.findall(r'<aside class="lembrete[ "]', topo)) <= 54
 
 
 def test_h12_sintetico_dfn_dentro_de_aria_label_faz_o_teste_falhar():

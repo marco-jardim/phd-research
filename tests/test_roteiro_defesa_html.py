@@ -1186,7 +1186,7 @@ def test_r9_o_html_tem_de_fato_os_recursos_descritos(deck, html_bruto_roteiro):
     assert re.search(r"k === 'Escape' \|\| k === 'g'", script), "Esc ou g não fecha o glossário"
     assert 'id="glossario"' in html_bruto_roteiro and 'id="neste-quadro"' in html_bruto_roteiro
     assert 'id="botao-glossario"' in html_bruto_roteiro
-    assert len(re.findall(r'<aside class="lembrete"', html_bruto_roteiro)) >= 28
+    assert len(re.findall(r'<aside class="lembrete[ "]', html_bruto_roteiro)) >= 28
     assert "#neste-quadro, #glossario h3 { display: none" in html_bruto_roteiro, "impressão do glossário mudou"
 
 

@@ -16,10 +16,12 @@ lembrete) e:
   `<dfn data-termo="chave">...</dfn>` (várias chaves separadas por `|`), e o script o pula;
 * também pula os termos que a legenda de uma figura do quadro define: o contêiner da figura declara
   `data-define="chave|chave"` (o SVG não é editado);
-* limita o lembrete a um orçamento de caracteres (300 nos principais; 400 nas reservas padrão ou
-  `amplo`; 260 nas reservas `denso`, `denso1`, `denso2` e `denso3`): se a lista passa do orçamento, retira
-  primeiro os itens de nível `termo`, do fim para o começo, e só depois os de nível `sigla`, do fim para o
-  começo, e acrescenta o item fixo "demais termos: tecla g" (o painel "Neste quadro" segue completo);
+* mostra TODOS os termos: quando a lista é longa, reduz a letra do lembrete em degraus (classe `compacto`,
+  `mini` ou `micro` no `<aside>`, escolhida pelo tamanho da lista em caracteres; `LIMITES`, com piso
+  por quadro em `DEGRAU_MINIMO`), nunca abaixo da letra da linha "Fonte:". Só nos quadros listados em `CORTES` (onde
+  nem o menor degrau basta) há orçamento de caracteres: retira primeiro os itens de nível `termo`, do fim
+  para o começo, e só depois os de nível `sigla`, e acrescenta o item fixo "demais termos: tecla g" (o painel
+  "Neste quadro" segue completo);
 * reescreve os links de ocorrência de cada entrada, entre `<!-- OCOR:chave -->` e
   `<!-- /OCOR:chave -->`.
 
@@ -47,11 +49,18 @@ ROTULO = "Lembrete:"
 ARIA = "Lembrete de siglas e termos"
 NIVEIS = ("sigla", "termo", "base")
 NO_LEMBRETE = ("sigla", "termo")      # os níveis que entram no lembrete do quadro
-# Orçamento de caracteres do lembrete (texto visível sem o rótulo, itens separados por " · ")
-ORCAMENTO_PRINCIPAL = 300
-ORCAMENTO_RESERVA = 400
-ORCAMENTO_RESERVA_DENSA = 260
-CLASSES_DENSAS = ("denso", "denso1", "denso2", "denso3")
+# Degraus da letra do lembrete, conforme o tamanho da lista (texto visível sem o rótulo, itens separados
+# por " · "): cada par é (classe do <aside>, máximo de caracteres do degrau); "" é a letra normal (.8em) e o
+# último degrau não tem máximo. Os máximos foram calibrados medindo cada quadro no Chrome
+# (scripts/verificar_deck_navegador.py --calibrar); o piso é a letra da linha "Fonte:" (.52em).
+LIMITES = (("", 290), ("compacto", 340), ("mini", 385), ("micro", None))      # até duas linhas por degrau
+DEGRAUS = ("", "compacto", "mini", "micro")
+# Degrau mínimo de quadros cujo corpo não deixa espaço para o lembrete na letra que a lista pediria (medido no
+# Chrome a 1280x720, 1920x1080 e 1024x768); vazio quando a lista já decide.
+DEGRAU_MINIMO = {"S15": "micro", "S16": "compacto", "S19": "compacto", "S21": "micro"}
+# Orçamento de caracteres só onde o menor degrau não basta (id do quadro -> máximo); vazio quando nenhum
+# quadro precisa de corte. Onde há corte, o item fixo "demais termos: tecla g" avisa que o painel tem o resto.
+CORTES = {}
 DEMAIS = ("demais termos", "tecla g")      # item fixo, quando o orçamento retira termos
 SEPARADOR = " · "
 
@@ -209,7 +218,7 @@ def texto_visivel(bloco):
     leitor de tela, link "voltar", marcador de objetivo, <title>/<desc>/<style> dos SVG e atributos."""
     b = bloco
     b = re.sub(r"<!-- LEMBRETE -->.*?<!-- /LEMBRETE -->", " ", b, flags=re.S)
-    b = re.sub(r'<aside class="lembrete".*?</aside>', " ", b, flags=re.S)
+    b = re.sub(r'<aside class="lembrete[^"]*".*?</aside>', " ", b, flags=re.S)
     b = re.sub(r'<p class="fonte">.*?</p>', " ", b, flags=re.S)
     b = re.sub(r'<caption class="sr">.*?</caption>', " ", b, flags=re.S)
     b = re.sub(r'<(\w+) class="sr">.*?</\1>', " ", b, flags=re.S)
@@ -268,14 +277,22 @@ def termos_do_lembrete(html, glossario=None):
 
 # ------------------------------------------------------------------ orçamento
 
+def id_do_quadro(bloco):
+    return re.search(r' id="([SR]\d\d)"', ABERTURA.search(bloco).group(0)).group(1)
+
+
 def orcamento_do_quadro(bloco):
-    """Caracteres permitidos ao lembrete: 300 nos principais; nas reservas, 400 (padrão ou amplo) ou 260
-    (classes denso, denso2 e denso3)."""
-    tag = ABERTURA.search(bloco).group(0)
-    classes = re.search(r'class="([^"]*)"', tag).group(1).split()
-    if re.search(r' id="S\d\d"', tag):
-        return ORCAMENTO_PRINCIPAL
-    return ORCAMENTO_RESERVA_DENSA if any(c in CLASSES_DENSAS for c in classes) else ORCAMENTO_RESERVA
+    """Caracteres permitidos ao lembrete: None (sem corte) em todo quadro fora de CORTES."""
+    return CORTES.get(id_do_quadro(bloco))
+
+
+def degrau_do_lembrete(n, minimo=""):
+    """Classe de letra do lembrete para uma lista de n caracteres ("" é a letra normal), nunca mais
+    leve que o degrau mínimo do quadro."""
+    for classe, maximo in LIMITES:
+        if maximo is None or n <= maximo:
+            return max(classe, minimo, key=DEGRAUS.index)
+    return max(LIMITES[-1][0], minimo, key=DEGRAUS.index)
 
 
 def texto_do_item(e):
@@ -292,6 +309,8 @@ def selecionar_itens(chaves, glossario, orcamento):
     tecla g" entra na conta quando algo é retirado. A ordem de aparição dos que ficam é mantida."""
     por = {e.chave: e for e in glossario}
     mantidos, retirados = list(chaves), []
+    if orcamento is None:
+        return mantidos, retirados
 
     def custo():
         textos = [texto_do_item(por[c]) for c in mantidos]
@@ -317,16 +336,35 @@ def lembrete_do_quadro(html, glossario=None):
             for q in quadros(html)}
 
 
+def textos_do_lembrete(mantidos, retirados, glossario):
+    """Textos dos itens que o lembrete mostra (com o item fixo quando algo foi retirado)."""
+    por = {e.chave: e for e in glossario}
+    textos = [texto_do_item(por[c]) for c in mantidos]
+    if retirados:
+        textos.append(f"{DEMAIS[0]}: {DEMAIS[1]}")
+    return textos
+
+
+def degraus_do_quadro(html, glossario=None):
+    """id do quadro -> classe de letra do lembrete ("" = normal), pelo tamanho da lista que ele mostra."""
+    glossario = glossario if glossario is not None else ler_glossario(html)
+    selecao = lembrete_do_quadro(html, glossario)
+    return {q.id: degrau_do_lembrete(caracteres(textos_do_lembrete(*selecao[q.id], glossario)),
+                                     DEGRAU_MINIMO.get(q.id, ""))
+            for q in quadros(html)}
+
+
 # ------------------------------------------------------------------ geração
 
-def render_lembrete(chaves, glossario, eol="\n", retirou=False):
+def render_lembrete(chaves, glossario, eol="\n", retirou=False, degrau=""):
     por_chave = {e.chave: e for e in glossario}
     linhas = ["<!-- LEMBRETE -->"]
     itens = [f'<span class="it"><strong>{por_chave[c].exibir}</strong>: {por_chave[c].defin}</span>' for c in chaves]
     if retirou:
         itens.append(f'<span class="it"><strong>{DEMAIS[0]}</strong>: {DEMAIS[1]}</span>')
     if itens:
-        linhas.append(f'<aside class="lembrete" aria-label="{ARIA}"><strong class="rot">{ROTULO}</strong> '
+        classe = "lembrete" + (f" {degrau}" if degrau else "")
+        linhas.append(f'<aside class="{classe}" aria-label="{ARIA}"><strong class="rot">{ROTULO}</strong> '
                       + " ".join(itens) + "</aside>")
     linhas.append("<!-- /LEMBRETE -->")
     return eol.join(linhas) + eol
@@ -355,9 +393,10 @@ def aplicar(html):
     glossario = ler_glossario(html)
     por_quadro = termos_por_quadro(html, glossario)
     selecao = lembrete_do_quadro(html, glossario)
+    degraus = degraus_do_quadro(html, glossario)
     for q in reversed(quadros(html)):
         bloco = html[q.ini:q.fim]
-        novo = render_lembrete(selecao[q.id][0], glossario, eol, bool(selecao[q.id][1]))
+        novo = render_lembrete(selecao[q.id][0], glossario, eol, bool(selecao[q.id][1]), degraus[q.id])
         if BLOCO_LEMBRETE.search(bloco):
             bloco = BLOCO_LEMBRETE.sub(lambda _m: novo, bloco, count=1)
         else:
@@ -457,17 +496,19 @@ def divergencias(html):
 def verificar_lembretes(html):
     """Defeitos por quadro: termo usado sem lembrete, item divergente do glossário, item sobrando,
     termo de nível base no lembrete, termo definido no quadro repetido no lembrete, ordem diferente da
-    aparição, número de lembretes diferente de um, orçamento de caracteres estourado, item "demais
-    termos" ausente ou indevido, e data-termos diferente do detectado."""
+    aparição, número de lembretes diferente de um, orçamento de caracteres estourado (só onde há corte),
+    degrau de letra incoerente com o tamanho da lista, item "demais termos" ausente ou indevido, e
+    data-termos diferente do detectado."""
     erros = []
     glossario = ler_glossario(html)
     por_chave = {e.chave: e for e in glossario}
     selecao = lembrete_do_quadro(html, glossario)
+    degraus = degraus_do_quadro(html, glossario)
     todos = termos_por_quadro(html, glossario)
     for q in quadros(html):
         bloco = html[q.ini:q.fim]
         mantidos, retirados = selecao[q.id]
-        n = len(re.findall(r'<aside class="lembrete"', bloco))
+        n = len(re.findall(r'<aside class="lembrete[ "]', bloco))
         itens = [(m.group("exibir"), m.group("defin")) for m in ITEM.finditer(bloco)]
         if (mantidos or retirados) and n != 1:
             erros.append(f"{q.id}: {n} lembretes (esperado 1)")
@@ -506,8 +547,13 @@ def verificar_lembretes(html):
             erros.append(f"{q.id}: itens fora da ordem de aparição")
         if tem_demais != bool(retirados):
             erros.append(f"{q.id}: item {DEMAIS[0]!r} " + ("ausente" if retirados else "indevido"))
-        if caracteres(textos) > orcamento_do_quadro(bloco):
-            erros.append(f"{q.id}: lembrete com {caracteres(textos)} caracteres (orçamento {orcamento_do_quadro(bloco)})")
+        orcamento = orcamento_do_quadro(bloco)
+        if orcamento is not None and caracteres(textos) > orcamento:
+            erros.append(f"{q.id}: lembrete com {caracteres(textos)} caracteres (orçamento {orcamento})")
+        classe = re.search(r'<aside class="lembrete(?: ([a-z]+))?"', bloco)
+        if classe is not None and (classe.group(1) or "") != degraus[q.id]:
+            erros.append(f"{q.id}: degrau de letra {classe.group(1) or 'normal'!r} incoerente com a lista de "
+                         f"{caracteres(textos)} caracteres (esperado {degraus[q.id] or 'normal'!r})")
         atrib = re.search(r' data-termos="([^"]*)"', ABERTURA.search(bloco).group(0))
         termos = atrib.group(1).split("|") if atrib and atrib.group(1) else []
         if termos != todos[q.id]:
